@@ -1,0 +1,80 @@
+:root {
+    --mainBlue:#2a2a72;
+    --lightBlue:#009ffd;
+    --mainWhite:#f3f3f3;
+    --mainDark:#232528;
+    --mainYellow:#ffa400;
+    --mainOrange:#2a2a72;
+    --body-color: #F5F5F5;
+    --primary-color: #17a2b8;
+    --dark-color: #343a40;
+    --light-color: #f4f4f4;
+    --danger-color: #dc3545;
+    --success-color: #28a745;
+}
+
+hr {
+    margin: 5px !important;
+}
+
+.alert {
+    padding: 0.8rem;
+    margin: 1rem 0;
+    opacity: 0.9;
+    background: var(--light-color);
+    color: #333;
+}
+
+.alert-primary {
+    background: var(--primary-color);
+    color: #fff;
+}
+
+.alert-light {
+    background: var(--light-color);
+    color: #333
+}
+
+.alert-dark {
+    background: var(--dark-color);
+    color: #fff;
+}
+
+.alert-danger {
+    background: var(--danger-color);
+    color: #fff;
+}
+
+.alert-success {
+    background: var(--success-color);
+    color: #fff;
+}
+
+.text-title{
+    font-family: 'Permanent Marker', cursive;
+    letter-spacing: 0.3rem;
+    text-transform: uppercase;
+  }
+  .text-blue{
+    color: var(--mainBlue);
+  }
+  .text-bright{
+    color: var(--lightBlue);
+  }
+  .btn-black {
+    background: transparent;
+    text-transform: capitalize;
+    font-size: 0.8rem !important;
+    color: var(--mainDark);
+    border-radius: 0 !important;
+    border: 0.1rem solid var(--mainDark) !important;
+  }
+  .btn-black:hover {
+    background: var(--mainDark) !important;
+    color: var(--mainWhite) !important;
+  }
+  .cart-icon {
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--mainYellow);
+  }
