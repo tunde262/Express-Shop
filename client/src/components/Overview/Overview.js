@@ -92,6 +92,7 @@ const CartOverviewButton = styled.button`
     color: white;
     border-radius: 10px 0 0 10px;
     background: orange;
+    border-color: transparent;
     cursor: pointer;
     position: fixed;
     margin-top: 200px;
