@@ -27,8 +27,14 @@ app.use(session({
     cookie: { maxAge: 180 * 60 * 1000 }
 }));
 
+//Db Config
+const db = require('./config/keys').mongoURI;
+
 //Connect to mongodb
-connectDB();
+mongoose
+    .connect(db)
+    .then(() => console.log('MongodbConnected'))
+    .catch(err => console.log(err));
 
 // Use Routes
 app.use('/api/auth', auth);
