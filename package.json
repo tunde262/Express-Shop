@@ -2,6 +2,9 @@
   "name": "cardboard_express_shop",
   "version": "1.0.0",
   "description": "Official Cardboard Express Marketplace",
+  "engines": {
+    "node": "10.15.0"
+  },
   "main": "server.js",
   "scripts": {
     "client-install": "npm install --prefix client",
