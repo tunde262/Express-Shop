@@ -24,7 +24,7 @@ export const getProducts = () => dispatch => {
 export const addProduct = (newProduct, history) => dispatch => {
     axios
         .post('/api/products', newProduct)
-        .then(res => history.push('/admin'));
+        .then(res => history.push('/admin/all'));
 }
 
 // Delete product

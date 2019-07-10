@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getOrders } from '../../actions/productActions';
@@ -33,6 +34,7 @@ class OrderList extends Component {
 
         return (
             <div style={{textAlign: 'center'}} className="container">
+                <Link to="/admin/all">All Items</Link>
                 <h1>Orders</h1>
                 <hr />
                 {orderList}

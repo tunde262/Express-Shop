@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const stripeLoader = require('stripe');
-
-const stripe = require('stripe')('sk_test_nd4DhaPHh0G5E8j8Ekq5DOlc00dXZR0FYa');
+const keys = require('../../config/keys');
+const stripe = require('stripe')(keys.stripeSecretKey);
 
 const Order = require('../../models/Order');
 const Cart = require('../../models/Cart');

@@ -1,3 +1,6 @@
 node_modules/
-config/default.json
-config/production.json
+package-lock.json
+keys_dev.js
+default.json
+production.json
+/config/db.js
