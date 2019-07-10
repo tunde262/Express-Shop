@@ -46,7 +46,7 @@ class Overview extends Component{
             
                     {this.props.shop ? (
                         <Link 
-                            to="/products" 
+                            to="/" 
                             style={{
                             fontWeight: '400', 
                             color: '#5f6368', 
