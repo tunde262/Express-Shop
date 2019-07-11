@@ -20,13 +20,9 @@ class ExplorePage extends Component{
                 <hr />
                 <CategoryOverview />
                 <ProductOverview />
-                <hr />
                 <ProductOverview />
-                <hr />
                 <ProductOverview />
-                <hr />
                 <ProductOverview />
-                <hr />
                 <ProductOverview />
             </Fragment>
         )
