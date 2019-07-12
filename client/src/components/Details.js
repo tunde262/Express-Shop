@@ -69,7 +69,7 @@ class Details extends Component {
                             <p className="text-muted lead">{detailProduct.info}</p>
                             {/* buttons */}
                             <div>
-                                <Link to='/'>
+                                <Link to='/all'>
                                     <ButtonContainer>back to products</ButtonContainer>
                                 </Link>
                                 <ButtonContainer

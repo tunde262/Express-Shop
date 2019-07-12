@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const connectDB = require('./config/db');
 const session = require('express-session');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');

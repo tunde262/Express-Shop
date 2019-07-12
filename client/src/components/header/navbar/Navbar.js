@@ -8,7 +8,7 @@ class Navbar extends Component {
     render() {
         return (
             <HorizontalNav>
-                <Link to="/">
+                <Link to="/all">
                     <NavItem background="red">All</NavItem>
                 </Link>
                 <Link to="/explore">
@@ -131,7 +131,7 @@ class Navbar extends Component {
                         {' '}Home Decor
                     </NavItem>
                 </Link>
-                <Link to="/kitchen-and-dining">
+                <Link to="/kitchen-dining">
                     <NavItem background="MediumSlateBlue">
                         <i 
                             className="fas fa-utensils" 
@@ -155,7 +155,7 @@ class Navbar extends Component {
                         {' '}Party Supplies
                     </NavItem>
                 </Link>
-                <Link to="/school-and-office-supplies">
+                <Link to="/school-office">
                     <NavItem background="DeepSkyBlue">
                         <i 
                             className="fas fa-chalkboard-teacher" 

@@ -3,9 +3,11 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import './App.css';
 
+import Landing from './pages/Landing';
 import Navbar from './components/layout/Navbar/Navbar';
 import SideDrawer from './components/layout/SideDrawer/SideDrawer';
 import Backdrop from './components/layout/Backdrop/Backdrop';
+import Footer from './components/layout/Footer/Footer';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Alert from './components/layout/alert';
@@ -83,7 +85,8 @@ const App = () => {
             <main>
               <Alert />
               <Switch>
-                <Route exact path="/" component={ProductsPage} />
+              <Route exact path="/" component={Landing} />
+                <Route exact path="/all" component={ProductsPage} />
                 <Route exact path="/apparel" component={ApparelPage} />
                 <Route exact path="/baby" component={Baby} />
                 <Route exact path="/beauty" component={Beauty} />
@@ -113,6 +116,7 @@ const App = () => {
             </main>
           </div>
           <Modal />
+          <Footer />
         </Router>
       </StripeProvider>
     </Provider>
