@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export default class Dropdown extends Component {
@@ -30,7 +31,7 @@ export default class Dropdown extends Component {
                     <option value="3">Frisco</option>
                 </select>
                 <div class="input-group-append">
-                    <button style={{background: 'red', color: 'white', borderColor: 'transparent'}} class="btn btn-outline-secondary" type="button"><strong>Shop</strong></button>
+                    <Link to="/explore"><button style={{background: 'red', color: 'white', borderColor: 'transparent'}} class="btn btn-outline-secondary" type="button"><strong>Shop</strong></button></Link>
                 </div>
             </div>
         )
