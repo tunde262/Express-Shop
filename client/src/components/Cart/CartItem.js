@@ -18,14 +18,14 @@ class CartItem extends Component {
 
     render() {
         const item = this.props.item;
-        const { _id, title, img, price } = item.item;
+        const { _id, title, img_name, price } = item.item;
         const count = item.qty;
         const total = item.price;
 
         return (
             <div className="row my-2 text-capitalize text-center">
                 <div className="col-10 mx-auto col-lg-2">
-                    <img src={img} style={{width:'5rem', height:"5rem"}} className="img-fluid" alt="product" />
+                    <img src={`/api/products/image/${img_name}`} style={{width:'5rem', height:"5rem"}} className="img-fluid" alt="product" />
                 </div>
                 <div className="col-10 mx-auto col-lg-2">
                     <span className="d-lg-none">product : </span>

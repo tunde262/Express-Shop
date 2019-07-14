@@ -21,7 +21,7 @@ class Modal extends Component {
             modal = null;
         }
         else {
-            const { title, img, price } = modalProduct;
+            const { title, img_name, price } = modalProduct;
 
             modal = (
                 <ModalContainer>
@@ -29,7 +29,7 @@ class Modal extends Component {
                         <div className="row">
                             <div id="modal" className="col-8 mx-auto col-md-6 col-lg-4 text-center text-capitalize p-5">
                                 <h5>item added to the cart</h5>
-                                <img src={img} className="img-fluid" alt="product" />
+                                <img src={`/api/products/image/${img_name}`} className="img-fluid" alt="product" />
                                 <h5>{title}</h5>
                                 <h5 className="text-muted">price : $ {price}</h5>
                                 <Link to='/all'>

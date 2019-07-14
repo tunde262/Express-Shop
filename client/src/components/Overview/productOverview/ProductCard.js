@@ -44,7 +44,7 @@ class ProductCard extends Component {
                         onClick={this.onHandleDetailClick.bind(this, _id)}
                     >
                         <Link to={"/" + _id}>
-                            <img src={`http://localhost:5000/api/products/image/${img_name}`} alt="product" className="card-img-top" />
+                            <img src={`/api/products/image/${img_name}`} alt="product" className="card-img-top" />
                         </Link>
                         <button 
                             className="cart-btn" 

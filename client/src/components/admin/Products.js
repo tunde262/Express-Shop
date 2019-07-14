@@ -13,7 +13,7 @@ class Products extends Component {
     render() {
         let product = this.props.products.map(prod => (
             <tr key={prod._id}>
-                <td><img style={{width: '50px'}} src={prod.img} alt="img" /></td>
+                <td><img style={{width: '50px'}} src={`/api/products/image/${prod.img_name}`} alt="img" /></td>
                 <td><Link to={`/` + prod._id}>{prod.title}</Link></td>
                 <td>{prod.price}</td>
                 <td><div><i className="fas fa-trash" onClick={this.onDeleteClick.bind(this, prod._id)}></i></div></td>

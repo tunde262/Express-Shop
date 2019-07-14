@@ -52,7 +52,7 @@ class Details extends Component {
                     {/* product info */}
                     <div className="row">
                         <div className="col-10 mx-auto col-md-6 my-3">
-                            <img src={detailProduct.img} className="img-fluid" alt="product" />
+                            <img src={`/api/products/image/${detailProduct.img_name}`} className="img-fluid" alt="product" />
                         </div>
                         {/* product text */}
                         <div className="col-10 mx-auto col-md-6 my-3 text-capitalize">

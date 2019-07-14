@@ -18,10 +18,10 @@ class Order extends Component {
         
         orderItems = arr.map(item => {
             const { qty, price } = item;
-            const { title, img, company } = item.item;
+            const { title, img_name, company } = item.item;
             return (
                 <li key={item.item._id} style={{display: 'flex'}} className="list-group-item">
-                    <img src={img} style={{width:'3rem', height:"3rem"}} className="img-fluid" alt="img" />
+                    <img src={`/api/products/image/${img_name}`} style={{width:'3rem', height:"3rem"}} className="img-fluid" alt="img" />
                     <p>{title} | {qty} Units</p>
                     <div style={{flex: '1'}}></div>
                     <h5 className="text-blue font-italic mb-0">

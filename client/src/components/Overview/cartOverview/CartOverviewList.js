@@ -28,12 +28,12 @@ class CartOverviewList extends Component {
                 <HorizontalNav background="var(--body-color)">
                     {this.props.cart.map(item => {
                         const { qty } = item;
-                        const { _id, img } = item.item;
+                        const { _id, img_name } = item.item;
                         return (
                                 <CartOverviewItem key={item.item.id}>
                                     <Link to={"/" + _id}>
                                         <div style={{width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                                            <img src={img} style={{width:'6rem', height:'6rem'}} alt="product" />
+                                            <img src={`/api/products/image/${img_name}`} style={{width:'6rem', height:'6rem'}} alt="product" />
                                         </div>
                                     </Link>
                                     <div className="btn-container">
