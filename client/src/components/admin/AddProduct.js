@@ -9,7 +9,7 @@ class AddProduct extends Component {
         super(props);
         this.state = {
             title: '',
-            img: '',
+            file: '',
             price: '',
             company: '',
             info: '',
@@ -18,6 +18,14 @@ class AddProduct extends Component {
 
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.fileChanged = this.fileChanged.bind(this);
+    }
+
+    fileChanged(e) {
+        const f = e.target.files[0];
+        this.setState({
+            file: f
+        });
     }
     
     onChange(e) {
@@ -27,16 +35,24 @@ class AddProduct extends Component {
     onSubmit(e) {
         e.preventDefault();
 
-        const newProduct = {
-            title: this.state.title,
-            img: this.state.img,
-            price: this.state.price,
-            company: this.state.company,
-            info: this.state.info,
-            category: this.state.category,
-        }
+        let data = new FormData();
+        data.append('file', this.state.file);
+        data.append('title', this.state.title);
+        data.append('price', this.state.price);
+        data.append('company', this.state.company);
+        data.append('info', this.state.info);
+        data.append('category', this.state.category);
 
-        this.props.addProduct(newProduct, this.props.history);
+        // const newProduct = {
+        //     title: this.state.title,
+        //     img: this.state.img,
+        //     price: this.state.price,
+        //     company: this.state.company,
+        //     info: this.state.info,
+        //     category: this.state.category,
+        // }
+
+        this.props.addProduct(data, this.props.history);
     }
 
     
@@ -64,14 +80,15 @@ class AddProduct extends Component {
                         />
                         </div>
                         <div className="form-group">
-                        <label>Img Path</label>
+                        <label>Img</label>
                         <input
-                            type="text"
-                            name="img"
+                            type="file"
+                            name="file"
+                            id="file"
                             className="form-control"
                             placeholder="Start with ../img/"
                             value={this.state.img}
-                            onChange={this.onChange}
+                            onChange={this.fileChanged}
                         />
                         </div>
                         <div className="form-group">

@@ -1,11 +1,53 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const path = require('path');
+//gridfs
+const crypto = require('crypto');
+const multer = require('multer');
+const GridFsStorage = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
 
 // Load Product Model
 const Product = require('../../models/Product');
 // Load Cart Model
 const Cart = require('../../models/Cart');
+
+//Db Config
+const db = require('../../config/keys').mongoURI;
+
+// Create Mongo Connection
+const conn = mongoose.createConnection(db);
+
+// Init gfs
+let gfs;
+
+conn.once('open', () => {
+    // Init stream
+    gfs = Grid(conn.db, mongoose.mongo);
+    gfs.collection('images');
+})
+
+// Create Storage engine
+const storage = new GridFsStorage({
+    url: db,
+    file: (req, file) => {
+        return new Promise((resolve, reject) => {
+            crypto.randomBytes(16, (err, buf) => {
+                if (err) {
+                    return reject(err);
+                }
+                const filename = buf.toString('hex') + path.extname(file.originalname);
+                const fileInfo = {
+                    filename: filename,
+                    bucketName: 'images'
+                };
+                resolve(fileInfo);
+            });
+        });
+    }
+});
+const upload = multer({ storage });
 
 // @route GET api/products
 // @desc Get Products
@@ -29,11 +71,13 @@ router.get('/category/:category', (req, res) => {
 // @route POST api/products
 // @desc Create A Product
 // @access Public
-router.post('/', (req, res) => {
+router.post('/', upload.single('file'), (req, res) => {
+    console.log(req.file)
     // Add single product
     const newProduct = new Product({
         title: req.body.title,
-        img: req.body.img,
+        img: req.file.id,
+        img_name: req.file.filename,
         price: req.body.price,
         company: req.body.company,
         info: req.body.info,
@@ -61,6 +105,72 @@ router.get('/:prod_id', (req, res) => {
             res.json(prod);
         })
         .catch(err => res.status(404).json({prod: 'This Product was never added'}));
+});
+
+//@route GET /files
+//@desc Display all image files in JSON
+router.get('/files', (req, res) => {
+    gfs.files.find().toArray((err, files) => {
+        // Check if files
+        if(!files || files.length === 0) {
+            return res.status(404).json({
+                err: 'No files exist'
+            });
+        }
+
+        //Files exist
+        return res.json(files);
+    });
+});
+
+//@route GET /files/:filename
+//@desc Display single image object
+router.get('/files/:filename', (req, res) => {
+    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+        // Check if file
+        if(!file || file.length === 0) {
+            return res.status(404).json({
+                err: 'No files exist'
+            });
+        }
+        //File exists
+        return res.json(file);
+    });
+});
+
+//@route GET /image/:filename
+//@desc Display Image
+router.get('/image/:filename', (req, res) => {
+    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+        // Check if file
+        if(!file || file.length === 0) {
+            return res.status(404).json({
+                err: 'No files exist'
+            });
+        }
+        
+        //Check if image
+        if(file.contentType === 'image/jpeg' || file.contentType === 'img/png' || file.contentType === 'image/png') {
+            //  Read output to browser
+            const readstream = gfs.createReadStream(file.filename);
+            readstream.pipe(res);
+        } else {
+            res.status(404).json({
+                err: 'Not an image'
+            });
+        }
+    });
+});
+
+//@route DELETE /files/:id
+//@desc Delete image
+router.delete('/files/:id', (req, res) => {
+    gfs.remove({ _id: req.params.id }, (err) => {
+        if (err) {
+            return res.status(500).json({ success: false })
+        }
+        return res.json({ success: true });
+    });
 });
 
 // @desc Add to cart

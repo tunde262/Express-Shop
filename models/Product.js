@@ -7,8 +7,11 @@ const ProductSchema = new Schema({
         required: true
     },
     img: {
-        type: String,
-        required: true
+        type: Schema.Types.ObjectId, // There is no need to create references here
+        ref: 'uploads'
+    },
+    img_name: {
+        type: String
     },
     price: {
         type: Number,

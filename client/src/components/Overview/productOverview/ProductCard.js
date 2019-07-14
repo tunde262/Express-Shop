@@ -34,7 +34,7 @@ class ProductCard extends Component {
     }
 
     render() {
-        const { _id, title, img, price, inCart } = this.props.product;
+        const { _id, title, img_name, price, inCart } = this.props.product;
 
         return (
             <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
@@ -44,7 +44,7 @@ class ProductCard extends Component {
                         onClick={this.onHandleDetailClick.bind(this, _id)}
                     >
                         <Link to={"/" + _id}>
-                            <img src={img} alt="product" className="card-img-top" />
+                            <img src={`http://localhost:5000/api/products/image/${img_name}`} alt="product" className="card-img-top" />
                         </Link>
                         <button 
                             className="cart-btn" 

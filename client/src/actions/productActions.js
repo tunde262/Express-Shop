@@ -21,9 +21,9 @@ export const getProducts = () => dispatch => {
 };
 
 // Add product
-export const addProduct = (newProduct, history) => dispatch => {
+export const addProduct = (prodData, history) => dispatch => {
     axios
-        .post('/api/products', newProduct)
+        .post('/api/products', prodData)
         .then(res => history.push('/admin/all'));
 }
 

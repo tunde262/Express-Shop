@@ -85,7 +85,7 @@ const App = () => {
             <main>
               <Alert />
               <Switch>
-              <Route exact path="/" component={Landing} />
+                <Route exact path="/" component={Landing} />
                 <Route exact path="/all" component={ProductsPage} />
                 <Route exact path="/apparel" component={ApparelPage} />
                 <Route exact path="/baby" component={Baby} />
