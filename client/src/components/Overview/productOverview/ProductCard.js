@@ -34,19 +34,19 @@ class ProductCard extends Component {
     }
 
     render() {
-        const { _id, title, img_name, price, inCart } = this.props.product;
+        const { _id, title, img_name, price, company, inCart } = this.props.product;
 
         return (
             <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
-                <div className="card">
+                <div className="product">
                     <div 
-                        className="img-container p-5" 
+                        className="imgbox" 
                         onClick={this.onHandleDetailClick.bind(this, _id)}
                     >
                         <Link to={"/" + _id}>
-                            <img src={`/api/products/image/${img_name}`} alt="product" className="card-img-top" />
+                            <img src={`/api/products/image/${img_name}`} alt="product" />
                         </Link>
-                        <button 
+                        {/* <button 
                             className="cart-btn" 
                             disabled={inCart ? true : false} 
                             onClick={this.todo.bind(this, _id)}
@@ -59,19 +59,30 @@ class ProductCard extends Component {
                             ) : (
                                 <i className="fas fa-cart-plus" />
                             )}
-                        </button>
+                        </button> */}
                     </div>
-                        
-                    
-                    {/* card footer */ }
-                    <div className="card-footer d-flex justify-content-between">
-                        <p className="align-self-center mb-0">
-                            {title}
-                        </p>
-                        <h5 className="text-blue font-italic mb-0">
-                            <span className="mr-1">$</span>
-                            {price}
-                        </h5>
+                    <div className="specifice">
+                        <div className="titles">
+                            <h2>{title}<br/><span>{company}</span></h2>
+                        </div>
+                        <div className="price">${price}</div>
+                        <label>Size</label>
+                        <ul>
+                            <li>20mm</li>
+                            <li>25mm</li>
+                            <li>30mm</li>
+                            <li>35mm</li>
+                            <li>40mm</li>
+                        </ul>
+                        <label>Colors</label>
+                        <ul className="colors"> 
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                        <button onClick={this.todo.bind(this, _id)}>Add To Cart</button>
                     </div>
                 </div>
             </ProductWrapper>
@@ -95,68 +106,114 @@ ProductCard.propTypes = {
 
 const ProductWrapper = styled.div`
     display: inline-block;
-    .card {
-        border: 0.04rem solid rgba(0,0,0,0.2);
-        transition: all 0.5s linear;
-    }
-    .card-footer {
-        background: transparent;
-        border-top: transparent;
-        display: flex;
-        transition: all 1s linear;
-        width: 100%;
-        overflow: hidden;
-    }
-    &:hover {
-        .card {
-            border: 0.04rem solid rgba(0,0,0,0.2);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-            -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-            -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-        }
-        .card-footer {
-            background: rgba(247,247,247);
-        }
-    }
-    .img-container {
+    .product {
         position: relative;
+        background: #fff;
+        width: 300px;
+        height: 500px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
         overflow: hidden;
     }
-    .card-img-top {
-        transition: all 0.5s linear
+    .product .imgbox {
+        height: 80%;
+        box-sizing: border-box;
     }
-    .img-container:hover .card-img-top{
-        transform: scale(1.2);
+    .product .imgbox img {
+        display: block;
+        width: 100%;
     }
-    .cart-btn {
+    .specifice {
         position: absolute;
+        width: 100%;
+        bottom: -168px;
+        background: #fff;
+        padding: 10px;
+        box-sizing: border-box;
+        transition: .5s;
+    }
+    .product:hover .specifice {
         bottom: 0;
-        right: 0;
-        padding: 0.2rem 0.4rem;
-        background: var(--lightBlue);
-        border: none;
-        color: var(--mainWhite);
-        font-size: 1.4rem;
-        border-radius: 0.5rem 0 0 0;
-        transform: translate(100%, 100%);
-        transition: all 0.5s linear;
     }
-    .img-container:hover .cart-btn {
-        transform: translate(0, 0);
+    .specifice .titles {
+        width: 60%;
+        overflow: hidden;
     }
-    .cart-btn:hover {
-        color: var(--mainBlue);
+    .specifice h2 {
+        margin: 0;
+        padding: 0;
+        font-size: 20px;
+        width: 100%;
+    }
+    .specifice h2 span {
+        font-size: 15px;
+        color: #ccc;
+        font-weight: normal;
+    }
+    .specifice .price {
+        position: absolute;
+        top: 12px;
+        right: 25px;
+        font-weight: bold;
+        color: #000;
+        font-size: 1.3rem;
+    }
+    label {
+        display: block;
+        margin-top: 5px;
+        font-weight: bold;
+        font-size: 15px;
+    }
+    ul {
+        display: flex;
+        margin: 0;
+        padding: 0;
+    }
+    ul li {
+        list-style: none;
+        margin: 5px 5px 0;
+        font-size: 15px;
+        font-weight: normal;
+        color: #ccc;
+    }
+    ul li:first-child {
+        margin-left: 0;
+    }
+    
+    ul.colors li {
+        width: 15px;
+        height: 15px;
+    }
+    ul.colors li:nth-child(1) {
+        background: #00f;
+    }
+    ul.colors li:nth-child(2) {
+        background: #f00;
+    }
+    ul.colors li:nth-child(3) {
+        background: #0ff;
+    }
+    ul.colors li:nth-child(4) {
+        background: #ff0;
+    }
+    ul.colors li:nth-child(5) {
+        background: #f0f;
+    }
+    button {
+        display: block;
+        padding: 5px;
+        color: #fff;
+        margin: 10px 0 0;
+        background: #45b90e;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: .02s;
         cursor: pointer;
     }
-
-    @media (max-width: 765px) {
-        .card {
-            border-color: transparent;
-        }
-        .card-footer {
-            flex-direction: column;
-        }
-      }
+    button:hover {
+        background: #5acef4;
+    }
 
 `;
 
