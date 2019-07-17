@@ -5,10 +5,12 @@ import { connect } from 'react-redux';
 import { clearCart } from '../../../actions/productActions';
 
 import CheckoutForm from './CheckoutForm';
+import { stat } from 'fs';
 
 class Checkout extends Component {
     render() {
         const { cartTotal, cart } = this.props.product;
+        const { _id } = this.props.auth.user;
         
         let checkoutView;
 
@@ -18,6 +20,7 @@ class Checkout extends Component {
                     <CheckoutForm 
                         total={Math.floor(cartTotal)} 
                         clearCart={clearCart} 
+                        user={_id}
                         history={this.props.history}
                     />
                 </Elements>
@@ -36,11 +39,13 @@ class Checkout extends Component {
 
 Checkout.propTypes = {
     product: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
     clearCart: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
-    product: state.product
+    product: state.product,
+    auth: state.auth
 });
 
 export default connect(mapStateToProps, { clearCart })(Checkout);

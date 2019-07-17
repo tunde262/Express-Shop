@@ -32,7 +32,7 @@ router.post('/donate', async (req, res, next) => {
     }))
     .then(charge => {
         const order = new Order({
-            user: req.user,
+            user: req.body.user,
             cart: cart,
             address: req.body.address,
             name: req.body.name,

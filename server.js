@@ -15,7 +15,7 @@ const admin = require('./routes/api/admin');
 const app = express();
 
 // Body parser middleware
-app.use(express.json());
+app.use(express.json({ extended: false }));
 
 app.use(cookieParser());
 app.use(session({
@@ -31,7 +31,10 @@ const db = require('./config/keys').mongoURI;
 
 //Connect to mongodb
 mongoose
-    .connect(db)
+    .connect(db, {
+        useNewUrlParser: true,
+        useCreateIndex: true
+    })
     .then(() => console.log('MongodbConnected'))
     .catch(err => console.log(err));
 

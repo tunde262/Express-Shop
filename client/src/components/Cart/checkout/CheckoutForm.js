@@ -7,6 +7,7 @@ class CheckoutForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            user: `${this.props.user}`,
             name: '',
             email: '',
             address: '',
@@ -26,6 +27,7 @@ class CheckoutForm extends Component {
         
         let { token } = await this.props.stripe.createToken({ name: this.state.name });
         const data = {
+            user: this.state.user,
             name: this.state.name,
             email: this.state.email,
             address: this.state.address,
