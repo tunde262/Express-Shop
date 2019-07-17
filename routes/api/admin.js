@@ -18,6 +18,18 @@ router.get('/orders', (req, res) => {
         .catch(err => res.status(404).json(err));
 });
 
+router.get('/:profile', (req, res) => {
+    Order.find({ user: req.params.profile })
+        .then(orders => {
+            orders.forEach((order) => {
+                const cart = new Cart(order.cart);
+                order.items = cart.generateArray();
+            });
+            res.json(orders);
+        })
+        .catch(err => res.status(404).json(err));
+});
+
 
 
 module.exports = router;

@@ -3,14 +3,19 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import './App.css';
 
+// Private Route
+import PrivateRoute from './components/routing/PrivateRoute';
+// Layout
 import Landing from './pages/Landing';
 import Navbar from './components/layout/Navbar/Navbar';
 import SideDrawer from './components/layout/SideDrawer/SideDrawer';
 import Backdrop from './components/layout/Backdrop/Backdrop';
 import Footer from './components/layout/Footer/Footer';
+// Auth & Alerts
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Alert from './components/layout/alert';
+// Pages
 import CategoryPage from './pages/CategoryPage';
 import ApparelPage from './pages/ApparelPage';
 import ExplorePage from './pages/ExplorePage';
@@ -21,9 +26,11 @@ import Cart from './components/Cart/Cart';
 import Default from './components/Default';
 import Modal from './components/Modal';
 import Checkout from './components/Cart/checkout/Checkout';
+// Admin pages
 import Admin from './components/admin/Admin';
 import AddProduct from './components/admin/AddProduct';
 import ProductList from './components/admin/ProductList';
+// Category Pages
 import Baby from './pages/Baby';
 import Beauty from './pages/Beauty';
 import Health from './pages/Health';
@@ -36,6 +43,8 @@ import SchoolOffice from './pages/SchoolOffice';
 import Sports from './pages/Sports';
 import Toys from './pages/Toys';
 import Pets from './pages/Pets';
+// Profile Pages
+import Profile from './components/profile/Profile';
 
 import { Provider } from 'react-redux';
 import { StripeProvider } from 'react-stripe-elements';
@@ -85,6 +94,7 @@ const App = () => {
             <main>
               <Alert />
               <Switch>
+                {/* Category Pages */}
                 <Route exact path="/" component={Landing} />
                 <Route exact path="/all" component={ProductsPage} />
                 <Route exact path="/apparel" component={ApparelPage} />
@@ -102,15 +112,21 @@ const App = () => {
                 <Route exact path="/toys" component={Toys} />
                 <Route exact path="/brand" component={BrandPage} />
                 <Route exact path="/explore" component={ExplorePage} />
+                {/* Auth Pages */}
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
+                {/* Cart & Checkout */}
                 <Route exact path="/cart" component={Cart} />
-                <Route exact path="/checkout" component={Checkout} />
+                <PrivateRoute exact path="/checkout" component={Checkout} />
                 <Route exact path="/admin" component={Admin} />
+                {/* Profile  */}
+                <PrivateRoute exact path="/profile" component={Profile} />
+                {/* Admin Pages */}
                 <Route exact path="/admin/all" component={ProductList} />
                 <Route exact path="/admin/add" component={AddProduct} />
-                {/* <Route exact path="/category/:category" component={CategoryPage} /> */}
+                {/* Product Page */}
                 <Route exact path="/:id" component={Details} />
+                {/* Page not found */}
                 <Route component={Default} />
               </Switch>
             </main>

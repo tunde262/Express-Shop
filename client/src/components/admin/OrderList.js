@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Fragment, Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getOrders } from '../../actions/productActions';
+import { getOrders, getCustomerOrders } from '../../actions/productActions';
 
 import Spinner from '../common/Spinner';
 import Title from '../Title';
@@ -10,7 +10,13 @@ import Order from './Order';
 
 class OrderList extends Component {
     componentDidMount() {
-        this.props.getOrders();
+        if(this.props.admin) {
+            this.props.getOrders();
+        }
+
+        if(this.props.profile) {
+            this.props.getCustomerOrders(this.props.user);
+        }
     }
 
     render() {
@@ -28,15 +34,34 @@ class OrderList extends Component {
                 ))
             }
             else {
-                orderList = <Title name="No Orders" title="Available" />
+                orderList = <Title name="N Orders" title="Available" />
             }
         }
 
+        let headingContent;
+
+        if(this.props.admin) {
+            headingContent = (
+                <Fragment>
+                    <Link to="/admin/all">All Items</Link>
+                    <h1>Orders</h1>
+                    <hr />
+                </Fragment>
+            )
+        } else {
+            headingContent = (
+                <Fragment>
+                    <h1>Orders</h1>
+                    <hr />
+                </Fragment>
+            );
+        }
+
+        
+
         return (
             <div style={{textAlign: 'center'}} className="container">
-                <Link to="/admin/all">All Items</Link>
-                <h1>Orders</h1>
-                <hr />
+                {headingContent}
                 {orderList}
             </div>
         )
@@ -45,11 +70,14 @@ class OrderList extends Component {
 
 OrderList.propTypes = {
     getOrders: PropTypes.func.isRequired,
-    product: PropTypes.object.isRequired
+    getCustomerOrders: PropTypes.func.isRequired,
+    product: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-    product: state.product
+    product: state.product,
+    auth: state.auth
 });
 
-export default connect(mapStateToProps, { getOrders })(OrderList);
+export default connect(mapStateToProps, { getOrders, getCustomerOrders })(OrderList);

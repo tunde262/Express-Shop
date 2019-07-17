@@ -25,7 +25,7 @@ const SideDrawer = ({ auth: { isAuthenticated, loading }, logout, show}) => {
                     <span className="hide-sm">Logout</span>
                 </a>
             </li>
-            <li><a href="#">Orders</a></li>
+            <li><Link to="/profile">Orders</Link></li>
         </ul>
     );
 

@@ -47,7 +47,7 @@ class CheckoutForm extends Component {
         
         console.log("The payment was succeeded!");
         this.props.clearCart();
-        this.props.history.push('/all');
+        this.props.history.push('/profile');
 
         // redirect, clear inputs, thank alert
     }
