@@ -1,6 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+import ReactGA from 'react-ga';
+
 import './App.css';
 
 // Private Route
@@ -62,6 +64,11 @@ if(localStorage.token) {
 }
 
 const App = () => {
+  const initializeReactGA = () => {
+    ReactGA.initialize('UA-144191515-1');
+    ReactGA.pageview('/homepage');
+  }
+
   useEffect(() => {
     store.dispatch(loadUser());
     store.dispatch(getCart());
