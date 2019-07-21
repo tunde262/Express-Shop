@@ -61,8 +61,8 @@ class Details extends Component {
                     {/* end title */}
                     {/* product info */}
                     <div className="row">
-                        <div className="col-10 mx-auto col-md-6 my-3" style={{maxHeight: 'calc(100vh - 60px)'}}>
-                            <img src={`/api/products/image/${detailProduct.img_name}`} style={{height: '100%'}} className="img-fluid" alt="product" />
+                        <div className="col-10 mx-auto col-md-6 my-3">
+                            <img src={`/api/products/image/${detailProduct.img_name}`} className="img-fluid" alt="product" />
                         </div>
                         {/* product text */}
                         <div className="col-10 mx-auto col-md-6 my-3 text-capitalize">
