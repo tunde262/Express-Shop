@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { handleTags, setSortedProducts } from '../../../actions/productActions';
+import { handleTags, setSortedProducts, removeTags } from '../../../actions/productActions';
 
 import { HorizontalNav } from '../../common/HorizontalNav';
 
@@ -23,11 +23,12 @@ class CategoryOverview extends Component {
 
     async onFilterClick(filter) { 
         if (this.props.product.tags.includes(filter)) {
-            console.log('already there');
+            await this.props.removeTags(filter);
+            this.unFilterProducts();
         } else {
             await this.props.handleTags(filter);
+            this.filterProducts();
         }
-        this.filterProducts();
     }
 
     filterProducts() {
@@ -46,14 +47,38 @@ class CategoryOverview extends Component {
         // res = [...new Set(res)]
         // console.log(res);
     }
+    unFilterProducts() {
+        if (this.props.product.tags.length > 0) {
+            console.log(this.props.product.tags)
+            let tempProd = [...this.props.products];
+            const tags = [...this.props.product.tags];
+            let res;
+            let sortProd = [];
+            for(var i = 0; i < tags.length; i++) {
+                res = tempProd.filter(prod => prod.tags.includes(tags[i]));
+            }
+            this.props.setSortedProducts(res);
+            console.log(res);
+        } else {
+            this.props.setSortedProducts(this.props.products);
+        }
+        // let res = [];
+        // tempProd.map(product => tags.map(tag => product.tags.includes(tag) ? res.push(product) : null));
+        // res = [...new Set(res)]
+        // console.log(res);
+    }
 
     render() {
         let tags = this.getUnique(this.props.products, 'tags');
-        tags = ['all', ...tags];
         
         tags = tags.map((item, index) => {
             return (
-                <CategoryItem key={index} onClick={this.onFilterClick.bind(this, item)}>
+                <CategoryItem 
+                    style={this.props.product.tags.includes(item) ? 
+                        {border: "0.05rem solid orange", fontWeight: "bold", color: 'orange'} : 
+                        {border: "0.05rem solid #5f6368", fontWeight: '200', color: "#5f6368"}} 
+                    key={index} 
+                    onClick={this.onFilterClick.bind(this, item)}>
                     <p>{item}</p>
                 </CategoryItem>
             );
@@ -67,9 +92,10 @@ class CategoryOverview extends Component {
 }
 
 CategoryOverview.propTypes = {
-    addFilter: PropTypes.func.isRequired,
+    handleTags: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
     setSortedProducts: PropTypes.func.isRequired,
+    removeTags: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -78,18 +104,14 @@ const mapStateToProps = state => ({
 
 const CategoryItem = styled.div`
     padding: 15px 10px 0 10px;
+    min-width: 70px;
     display: inline-block;
     background: white;
-    border: 0.05rem solid #5f6368;
     border-radius: 0.5rem;
     margin: 0 10px;
     text-align: center;
+    font-size: 1rem;
 
-    p {
-        font-weight: 200;
-        color: #5f6368;
-        font-size: 1rem;
-    }
 `;
 
-export default connect(mapStateToProps, { handleTags, setSortedProducts })(CategoryOverview);
+export default connect(mapStateToProps, { handleTags, setSortedProducts, removeTags })(CategoryOverview);
