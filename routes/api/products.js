@@ -73,24 +73,31 @@ router.get('/category/:category', (req, res) => {
 // @access Public
 router.post('/', upload.single('file'), (req, res) => {
     console.log(req.file)
-    // Add single product
-    const newProduct = new Product({
-        title: req.body.title,
-        img: req.file.id,
-        img_name: req.file.filename,
-        price: req.body.price,
-        company: req.body.company,
-        info: req.body.info,
-        category: req.body.category,
-    });
 
-    newProduct.save();
-    res.json(newProduct);
+    // Get fields
+    const productFields = {};
+    if(req.body.title) productFields.title = req.body.title;
+    if(req.file.id) productFields.img = req.file.id;
+    if(req.file.filename) productFields.img_name = req.file.filename;
+    if(req.body.price) productFields.price = req.body.price;
+    if(req.body.qty) productFields.qty = req.body.qty;
+    if(req.body.color) productFields.color = req.body.color;
+    if(req.body.size) productFields.size = req.body.size;
+    if(req.body.company) productFields.company = req.body.company;
+    if(req.body.info) productFields.info = req.body.info;
+    if(req.body.locations) productFields.locations = req.body.locations;
+    if(req.body.category) productFields.category = req.body.category;
+    if(req.body.featured) productFields.featured = req.body.featured;
+    // Tags - Split into array
+    if(typeof req.body.tags !== 'undefined') {
+        productFields.tags = req.body.tags.split(',');
+    }
+    
+    new Product(productFields).save().then(product => res.json(product));
 });
 
 // @route DELETE api/products/:prod_id
 // @desc Delete product 
-// @access Private
 router.delete('/:prod_id', (req, res) => {
     Product.findOneAndRemove({ _id: req.params.prod_id })
         .then()

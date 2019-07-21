@@ -17,6 +17,16 @@ const ProductSchema = new Schema({
         type: Number,
         required: true
     },
+    qty: {
+        type: Number,
+        required: true
+    },
+    color: {
+        type: String,
+    },
+    size: {
+        type: String,
+    },
     company: {
         type: String,
         required: true
@@ -25,9 +35,24 @@ const ProductSchema = new Schema({
         type: String,
         required: true
     },
+    locations: {
+        type: [String],
+        required: true
+    },
     category: {
         type: String,
         required: true
+    },
+    gender: {
+        type: String,
+    },
+    featured: {
+        type: Boolean,
+        default: false
+        
+    },
+    tags: {
+        type: [String]
     }
 });
 

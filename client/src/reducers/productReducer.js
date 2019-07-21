@@ -1,8 +1,17 @@
-import { SET_PRODUCTS, PRODUCTS_LOADING, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, CLOSE_MODAL, CLEAR_CART,ADD_TOTALS, GET_CART, GET_ORDERS } from '../actions/types';
+import { SET_PRODUCTS, SET_SORTED_PRODUCTS, PRODUCTS_LOADING, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, CLOSE_MODAL, CLEAR_CART,ADD_TOTALS, GET_CART, GET_ORDERS, HANDLE_TAGS, REMOVE_TAGS } from '../actions/types';
 
 const initialState = {
     products: null,
+    sortedProducts: null,
+    featuredProducts: [],
     loading: false,
+    location: 'all',
+    category: 'all',
+    tags: [],
+    gender: 'all',
+    price: 0,
+    minPrice: 0,
+    maxPrice: 0,
     detailProduct: null,
     cart: [],
     cartOverview: false,
@@ -22,12 +31,46 @@ export default function(state = initialState, action) {
                 ...state,
                 loading: true
             };
-        case SET_PRODUCTS:
+        case SET_PRODUCTS: {
+            const products = action.payload;
+            let tempProd = products;
+            let featuredProducts = tempProd.filter(product => product.featured === true);
+            let maxPrice = Math.max(...products.map(product => product.price));
+
             return {
                 ...state,
-                products: action.payload,
+                products,
+                sortedProducts: products,
+                featuredProducts,
+                price: maxPrice,
+                maxPrice,
                 loading: false
             };
+        }
+        case SET_SORTED_PRODUCTS: {
+            const products = action.payload;
+            let tempProd = products;
+            let featuredProducts = tempProd.filter(product => product.featured === true);
+            let maxPrice = Math.max(...products.map(product => product.price));
+
+            return {
+                ...state,
+                sortedProducts: products,
+                featuredProducts,
+                price: maxPrice,
+                maxPrice
+            };
+        }
+        case HANDLE_TAGS: 
+            return {
+                ...state,
+                tags: [...state.tags, action.payload]
+            }
+        case REMOVE_TAGS: 
+            return {
+                ...state,
+                tags: [...state.tags.filter(tag => tag !== action.payload)]
+            }
         case HANDLE_DETAIL: 
             return {
                 ...state,

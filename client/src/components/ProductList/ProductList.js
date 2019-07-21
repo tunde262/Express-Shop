@@ -3,15 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getProducts, getCart } from '../../actions/productActions';
 
-import styled from 'styled-components';
-
 import Spinner from '../common/Spinner';
 import ProductCard from '../Overview/productOverview/ProductCard';
 import Title from '../Title';
 
 class ProductList extends Component {
     render() {
-        const { products, loading } = this.props.product;
+        const { products } = this.props;
+        const { loading } = this.props.product;
         
         let productList;
 

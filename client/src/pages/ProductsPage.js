@@ -7,7 +7,7 @@ import Header from '../components/header/Header';
 import CartOverview from '../components/Overview/cartOverview/CartOverview';
 import CategoryOverview from '../components/Overview/categoryOverview/CategoryOverview';
 import ProductList from '../components/ProductList/ProductList';
-
+import Container from '../components/ProductList/Container';
 
 class ProductPage extends Component {
     componentDidMount() {
@@ -19,8 +19,7 @@ class ProductPage extends Component {
             <Fragment>
                 <Header />
                 <hr />
-                <CategoryOverview />
-                <ProductList />
+                <Container />
             </Fragment>
         )
     }

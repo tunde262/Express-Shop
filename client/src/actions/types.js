@@ -13,6 +13,9 @@ export const LOGOUT = 'LOGOUT';
 
 // Products & Cart
 export const SET_PRODUCTS = 'SET_PRODUCTS';
+export const SET_SORTED_PRODUCTS = 'SET_SORTED_PRODUCTS';
+export const HANDLE_TAGS = 'HANDLE_TAGS';
+export const REMOVE_TAGS = 'REMOVE_TAGS';
 export const PRODUCTS_LOADING = 'PRODUCTS_LOADING';
 export const GET_ITEM = 'GET_ITEM';
 export const HANDLE_DETAIL = 'HANDLE_DETAIL';

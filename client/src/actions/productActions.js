@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { SET_PRODUCTS, PRODUCTS_LOADING, ADD_TOTALS, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, CLOSE_MODAL, CLEAR_CART, GET_CART, GET_ORDERS } from './types';
+import { SET_PRODUCTS, SET_SORTED_PRODUCTS, HANDLE_TAGS, REMOVE_TAGS, PRODUCTS_LOADING, ADD_TOTALS, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, CLOSE_MODAL, CLEAR_CART, GET_CART, GET_ORDERS } from './types';
 
 // Get Products
 export const getProducts = () => dispatch => {
@@ -19,6 +19,31 @@ export const getProducts = () => dispatch => {
             })
         );
 };
+
+// Get Products
+export const setSortedProducts = (products) =>  {
+    return {
+        type: SET_SORTED_PRODUCTS,
+        payload: products
+    }
+};
+
+// Add filter to tags
+export const handleTags = (filter) => {
+    return {
+        type: HANDLE_TAGS,
+        payload: filter
+    }
+}
+
+// Add filter to tags
+export const removeTags = (filter) => {
+    return {
+        type: REMOVE_TAGS,
+        payload: filter
+    }
+}
+
 
 // Add product
 export const addProduct = (prodData, history) => dispatch => {
