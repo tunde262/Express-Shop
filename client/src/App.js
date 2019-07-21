@@ -43,6 +43,10 @@ import SchoolOffice from './pages/SchoolOffice';
 import Sports from './pages/Sports';
 import Toys from './pages/Toys';
 import Pets from './pages/Pets';
+import Tops from './pages/Tops';
+import Bottoms from './pages/Bottoms';
+import Hats from './pages/Hats';
+import Socks from './pages/Socks';
 // Profile Pages
 import Profile from './components/profile/Profile';
 
@@ -97,6 +101,10 @@ const App = () => {
                 {/* Category Pages */}
                 {/* <Route exact path="/" component={Landing} /> */}
                 <Route exact path="/" component={ProductsPage} />
+                <Route exact path="/top" component={Tops} />
+                <Route exact path="/bottom" component={Bottoms} />
+                <Route exact path="/hat" component={Hats} />
+                <Route exact path="/socks" component={Socks} />
                 {/* <Route exact path="/apparel" component={ApparelPage} />
                 <Route exact path="/baby" component={Baby} />
                 <Route exact path="/beauty" component={Beauty} />
@@ -110,8 +118,8 @@ const App = () => {
                 <Route exact path="/school-office" component={SchoolOffice} />
                 <Route exact path="/sports" component={Sports} />
                 <Route exact path="/toys" component={Toys} />
-                <Route exact path="/brand" component={BrandPage} />
-                <Route exact path="/explore" component={ExplorePage} /> */}
+                <Route exact path="/brand" component={BrandPage} />*/}
+                <Route exact path="/explore" component={ExplorePage} />
                 {/* Auth Pages */}
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />

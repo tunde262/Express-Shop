@@ -73,8 +73,14 @@ class Details extends Component {
                             <h4 className="text-blue">
                                 <strong>price : <span>$</span>{detailProduct.price}</strong>
                             </h4>
+                            <h4 className="text-blue">
+                                color : {detailProduct.color}
+                            </h4>
+                            <h4 className="text-blue">
+                                size : {detailProduct.size}
+                            </h4>
                             <p className="text-capitalize font-weight-bold mt-3 mb-0">
-                                some info about product:
+                                Description:
                             </p>
                             <p className="text-muted lead">{detailProduct.info}</p>
                             {/* buttons */}

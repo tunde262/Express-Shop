@@ -8,8 +8,8 @@ class Navbar extends Component {
     render() {
         return (
             <HorizontalNav>
-                <Link to="/all">
-                    <NavItem background="red">All</NavItem>
+                <Link to="/">
+                    <NavItem background="var(--mainColor)">All</NavItem>
                 </Link>
                 <Link to="/explore">
                     <NavItem background="Fuchsia">
@@ -23,7 +23,55 @@ class Navbar extends Component {
                         {' '}Explore
                     </NavItem>
                 </Link>
-                <Link to="/apparel">
+                <Link to="/top">
+                    <NavItem background="DeepSkyBlue">
+                        <i 
+                            className="fas fa-tshirt" 
+                            style={{
+                                color: 'white', 
+                                fontSize: '2rem'
+                            }}>
+                        </i>
+                        {' '}Tops
+                    </NavItem>
+                </Link>
+                <Link to="/bottom">
+                    <NavItem background="Teal">
+                        <i 
+                            className="fas fa-shoe-prints" 
+                            style={{
+                                color: 'white', 
+                                fontSize: '2rem'
+                            }}>
+                        </i>
+                        {' '}Bottoms
+                    </NavItem>
+                </Link>
+                <Link to="/hat">
+                    <NavItem background="OrangeRed">
+                        <i 
+                            className="fas fa-graduation-cap" 
+                            style={{
+                                color: 'white', 
+                                fontSize: '2rem'
+                            }}>
+                        </i>
+                        {' '}Hats
+                    </NavItem>
+                </Link>
+                <Link to="/socks">
+                    <NavItem background="MediumSlateBlue">
+                        <i 
+                            className="fas fa-socks" 
+                            style={{
+                                color: 'white', 
+                                fontSize: '2rem'
+                            }}>
+                        </i>
+                        {' '}Socks
+                    </NavItem>
+                </Link>
+                {/* <Link to="/apparel">
                     <NavItem background="DeepSkyBlue">
                         <i 
                             className="fas fa-tshirt" 
@@ -70,8 +118,8 @@ class Navbar extends Component {
                         </i>
                         {' '}Baby
                     </NavItem>
-                </Link>
-                <Link to="/personal-care">
+                </Link> */}
+                {/* <Link to="/personal-care">
                     <NavItem background="MediumSlateBlue">
                         <i 
                             className="fas fa-shower" 
@@ -178,7 +226,7 @@ class Navbar extends Component {
                         </i>
                         {' '}Toys
                     </NavItem>
-                </Link>
+                </Link> */}
             </HorizontalNav>
         );
     }

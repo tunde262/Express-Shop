@@ -9,7 +9,7 @@ class Header extends Component {
         return (
             <HeaderContainer>
                 <CartOverview />
-                {/* <Navbar /> */}
+                <Navbar />
             </HeaderContainer>
         )
     }
