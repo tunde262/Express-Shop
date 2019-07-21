@@ -66,7 +66,6 @@ if(localStorage.token) {
 const App = () => {
   const initializeReactGA = () => {
     ReactGA.initialize('UA-144191515-1');
-    ReactGA.pageview('/homepage');
   }
 
   useEffect(() => {

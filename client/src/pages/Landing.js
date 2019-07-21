@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import Dropdown from '../components/common/Dropdown';
 
+import ReactGA from 'react-ga';
+
 class Landing extends Component {
+    componentDidMount() {
+        this.props.history.listen(location => ReactGA.pageview(location.pathname));
+    }
+
     render() {
         return (
             <header id="landing">
