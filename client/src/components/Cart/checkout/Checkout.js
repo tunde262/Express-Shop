@@ -6,8 +6,18 @@ import { clearCart } from '../../../actions/productActions';
 
 import CheckoutForm from './CheckoutForm';
 import { stat } from 'fs';
+import { BackButton } from '../../common/BackButton';
 
 class Checkout extends Component {
+    constructor(props){
+        super(props);
+        this.goBack = this.goBack.bind(this);
+    }
+
+    goBack(){
+        this.props.history.goBack();
+    }
+
     render() {
         const { cartTotal, cart } = this.props.product;
         const { _id } = this.props.auth.user;
@@ -31,6 +41,7 @@ class Checkout extends Component {
         }
         return (
             <React.Fragment>
+                <BackButton onClick={this.goBack}><i className="fas fa-arrow-left"></i></BackButton>
                 {checkoutView}
             </React.Fragment>
         )

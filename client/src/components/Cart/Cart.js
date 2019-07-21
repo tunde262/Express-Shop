@@ -9,11 +9,22 @@ import CartColumns from './CartColumns';
 import EmptyCart from './EmptyCart';
 import Title from '../Title';
 import Spinner from '../common/Spinner';
+import { BackButton } from '../common/BackButton';
 
 class Cart extends Component {
+    constructor(props){
+        super(props);
+        this.goBack = this.goBack.bind(this);
+    }
+
     componentDidMount() {
         this.props.getCart();
     }
+
+    goBack(){
+        this.props.history.goBack();
+    }
+
     render() {
         const { cart, loading } = this.props.product;
 
@@ -26,6 +37,7 @@ class Cart extends Component {
             if(cart.length > 0) {
                 cartContent = (
                     <React.Fragment>
+                        <BackButton onClick={this.goBack}><i className="fas fa-arrow-left"></i></BackButton>
                         <Title name="your" title="cart" />
                         <CartColumns />
                         <CartList cart={cart} />

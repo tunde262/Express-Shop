@@ -32,7 +32,6 @@ class CategoryOverview extends Component {
     }
 
     filterProducts() {
-        console.log(this.props.product.tags)
         let tempProd = [...this.props.product.sortedProducts];
         const tags = [...this.props.product.tags];
         let res;
@@ -41,15 +40,9 @@ class CategoryOverview extends Component {
             res = tempProd.filter(prod => prod.tags.includes(tags[i]));
         }
         this.props.setSortedProducts(res);
-        console.log(res);
-        // let res = [];
-        // tempProd.map(product => tags.map(tag => product.tags.includes(tag) ? res.push(product) : null));
-        // res = [...new Set(res)]
-        // console.log(res);
     }
     unFilterProducts() {
         if (this.props.product.tags.length > 0) {
-            console.log(this.props.product.tags)
             let tempProd = [...this.props.products];
             const tags = [...this.props.product.tags];
             let res;
@@ -58,7 +51,6 @@ class CategoryOverview extends Component {
                 res = tempProd.filter(prod => prod.tags.includes(tags[i]));
             }
             this.props.setSortedProducts(res);
-            console.log(res);
         } else {
             this.props.setSortedProducts(this.props.products);
         }

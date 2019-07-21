@@ -5,7 +5,9 @@ import { setAlert } from '../../actions/alertActions';
 import { register } from '../../actions/authActions';
 import PropTypes from 'prop-types';
 
-const Register = ({ setAlert, register, isAuthenticated }) => {
+import { BackButton } from '../common/BackButton';
+
+const Register = ({ setAlert, register, isAuthenticated, history }) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -27,11 +29,12 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     }
 
     if(isAuthenticated) {
-        return <Redirect to='/' />;
+        history.goBack();
     }
 
     return (
         <Fragment>
+            <BackButton onClick={history.goBack}><i className="fas fa-arrow-left"></i></BackButton>
             <div className="row mt-5">
                 <div className="col-md-6 m-auto">
                     <div className="card card-body">

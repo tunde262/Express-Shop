@@ -20,7 +20,8 @@ class CartItem extends Component {
         const item = this.props.item;
         const { _id, title, img_name, price } = item.item;
         const count = item.qty;
-        const total = item.price;
+        const tempTotal = item.price;
+        const total = parseFloat(tempTotal.toFixed(2));
 
         return (
             <div className="row my-2 text-capitalize text-center">

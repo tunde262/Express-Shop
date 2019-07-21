@@ -15,7 +15,7 @@ class Overview extends Component{
         this.props.closeOverview();
     }
     render() {
-        const { cartOverview } = this.props.product;
+        const { cartOverview, cartQty } = this.props.product;
         return (
             <div style={{marginTop: '10px'}}>
                 <div style={{display: 'flex', alignItems: 'center', padding: '0 50px 0 30px'}}>
@@ -34,6 +34,7 @@ class Overview extends Component{
                                     onClick={this.openOverview.bind(this)}
                                 >
                                     <i class="fas fa-shopping-cart"></i>
+                                    <span style={{position: "absolute", top: "5px", right: "5px", color: "white", fontSize: ".8rem"}} class="badge badge-pill badge-dark"><small><strong>{cartQty}</strong></small></span>
                                 </CartOverviewButton>
                             )}
                         </Fragment>
