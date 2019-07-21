@@ -72,6 +72,7 @@ const App = () => {
   useEffect(() => {
     store.dispatch(loadUser());
     store.dispatch(getCart());
+    initializeReactGA();
   }, []);
   
   const [sideDrawer, setSideDrawer] = useState({
