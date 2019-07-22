@@ -11,9 +11,16 @@ class AddProduct extends Component {
             title: '',
             file: '',
             price: '',
+            qty: '',
+            color: '',
+            size: '',
             company: '',
             info: '',
-            category: ''
+            locations: '',
+            category: '',
+            gender: '',
+            featured: '',
+            tags: ''
         };
 
         this.onChange = this.onChange.bind(this);
@@ -39,9 +46,16 @@ class AddProduct extends Component {
         data.append('file', this.state.file);
         data.append('title', this.state.title);
         data.append('price', this.state.price);
+        data.append('qty', this.state.qty);
+        data.append('color', this.state.color);
+        data.append('size', this.state.size);
         data.append('company', this.state.company);
         data.append('info', this.state.info);
         data.append('category', this.state.category);
+        data.append('locations', this.state.locations);
+        data.append('gender', this.state.gender);
+        data.append('featured', this.state.featured);
+        data.append('tags', this.state.tags);
 
         // const newProduct = {
         //     title: this.state.title,
@@ -87,7 +101,7 @@ class AddProduct extends Component {
                             id="file"
                             className="form-control"
                             placeholder="Start with ../img/"
-                            value={this.state.img}
+                            value={this.state.file}
                             onChange={this.fileChanged}
                         />
                         </div>
@@ -101,6 +115,39 @@ class AddProduct extends Component {
                             value={this.state.price}
                             onChange={this.onChange}
                         />
+                        </div>
+                        <div className="form-group">
+                            <label>Qty</label>
+                            <input
+                                type="text"
+                                name="qty"
+                                className="form-control"
+                                placeholder="Qty?"
+                                value={this.state.qty}
+                                onChange={this.onChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Color</label>
+                            <input
+                                type="text"
+                                name="color"
+                                className="form-control"
+                                placeholder="color?"
+                                value={this.state.color}
+                                onChange={this.onChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Size</label>
+                            <input
+                                type="text"
+                                name="size"
+                                className="form-control"
+                                placeholder="size?"
+                                value={this.state.size}
+                                onChange={this.onChange}
+                            />
                         </div>
                         <div className="form-group">
                         <label>Company</label>
@@ -125,6 +172,17 @@ class AddProduct extends Component {
                         />
                         </div>
                         <div className="form-group">
+                            <label>Locations</label>
+                            <input
+                                type="text"
+                                name="locations"
+                                className="form-control"
+                                placeholder="Seperate By Commas"
+                                value={this.state.locations}
+                                onChange={this.onChange}
+                            />
+                        </div>
+                        <div className="form-group">
                         <label>Category</label>
                         <input
                             type="text"
@@ -134,6 +192,39 @@ class AddProduct extends Component {
                             value={this.state.category}
                             onChange={this.onChange}
                         />
+                        </div>
+                        <div className="form-group">
+                            <label>Gender</label>
+                            <input
+                                type="text"
+                                name="gender"
+                                className="form-control"
+                                placeholder="gender?"
+                                value={this.state.gender}
+                                onChange={this.onChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Featured</label>
+                            <input
+                                type="text"
+                                name="featured"
+                                className="form-control"
+                                placeholder="featured?"
+                                value={this.state.featured}
+                                onChange={this.onChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Tags</label>
+                            <input
+                                type="text"
+                                name="tags"
+                                className="form-control"
+                                placeholder="tags?"
+                                value={this.state.tags}
+                                onChange={this.onChange}
+                            />
                         </div>
                         <button type="submit" className="btn btn-primary btn-block">
                         Add Product

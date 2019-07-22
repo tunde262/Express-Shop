@@ -85,7 +85,11 @@ router.post('/', upload.single('file'), (req, res) => {
     if(req.body.size) productFields.size = req.body.size;
     if(req.body.company) productFields.company = req.body.company;
     if(req.body.info) productFields.info = req.body.info;
-    if(req.body.locations) productFields.locations = req.body.locations;
+    if(req.body.gender) productFields.gender = req.body.gender;
+    // Locations - Split into array
+    if(typeof req.body.locations !== 'undefined') {
+        productFields.locations = req.body.locations.split(',');
+    }
     if(req.body.category) productFields.category = req.body.category;
     if(req.body.featured) productFields.featured = req.body.featured;
     // Tags - Split into array
