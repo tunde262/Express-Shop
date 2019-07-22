@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { handleTags, setSortedProducts, removeTags } from '../../../actions/productActions';
 
+import ReactGA from 'react-ga';
+
 import { HorizontalNav } from '../../common/HorizontalNav';
 
 class CategoryOverview extends Component {
@@ -22,6 +24,12 @@ class CategoryOverview extends Component {
     }
 
     async onFilterClick(filter) { 
+        ReactGA.event({
+            category: 'Filter',
+            action: 'Category-Overview',
+            label: filter
+        });
+          
         if (this.props.product.tags.includes(filter)) {
             await this.props.removeTags(filter);
             this.unFilterProducts();

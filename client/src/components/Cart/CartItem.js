@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { decrement, removeItem, addToCart } from '../../actions/productActions';
 
+import ReactGA from 'react-ga';
+
 class CartItem extends Component {
     handleIncrement(id) {
         this.props.addToCart(id);
@@ -12,8 +14,13 @@ class CartItem extends Component {
         this.props.decrement(id);
     }
 
-    onRemoveItem(id) {
+    onRemoveItem(id, title) {
         this.props.removeItem(id);
+        ReactGA.event({
+            category: 'Cart',
+            action: 'Removed From Cart',
+            label: title
+        });
     }
 
     render() {
@@ -51,7 +58,7 @@ class CartItem extends Component {
                 </div>
                 {/* */}
                 <div className="col-10 mx-auto col-lg-2">
-                    <div className="cart-icon" onClick={this.onRemoveItem.bind(this, _id)}>
+                    <div className="cart-icon" onClick={this.onRemoveItem.bind(this, _id, title)}>
                         <i className="fas fa-trash"></i>
                     </div>
                 </div>

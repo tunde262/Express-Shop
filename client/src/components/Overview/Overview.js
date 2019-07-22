@@ -4,15 +4,27 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { openOverview, closeOverview } from '../../actions/productActions';
 
+import ReactGA from 'react-ga';
+
 import styled from 'styled-components';
 
 class Overview extends Component{
     openOverview(e) {
         this.props.openOverview();
+        ReactGA.event({
+            category: 'Cart',
+            action: 'Cart-Overview',
+            label: 'Opened'
+        });
     }
 
     closeOverview(e) {
         this.props.closeOverview();
+        ReactGA.event({
+            category: 'Cart',
+            action: 'Cart-Overview',
+            label: 'closed'
+        });
     }
     render() {
         const { cartOverview, cartQty } = this.props.product;
@@ -34,7 +46,10 @@ class Overview extends Component{
                                     onClick={this.openOverview.bind(this)}
                                 >
                                     <i class="fas fa-shopping-cart"></i>
-                                    <span style={{position: "absolute", top: "5px", right: "5px", color: "white", fontSize: ".8rem"}} class="badge badge-pill badge-dark"><small><strong>{cartQty}</strong></small></span>
+                                    {cartQty ? 
+                                        <span style={{position: "absolute", top: "5px", right: "5px", color: "white", fontSize: ".8rem"}} class="badge badge-pill badge-dark"><small><strong>{cartQty}</strong></small></span> :
+                                        null
+                                    }
                                 </CartOverviewButton>
                             )}
                         </Fragment>

@@ -78,7 +78,15 @@ const App = () => {
     sideDrawerOpen: false 
   });
 
+  const clicked = () => {
+    ReactGA.event({
+      category: 'Account',
+      action: 'Toggled'
+    });
+  }
+
   const drawerToggleClickHandler = () => {
+    clicked();
     setSideDrawer((prevState) => {
       return {sideDrawerOpen: !prevState.sideDrawerOpen};
     });

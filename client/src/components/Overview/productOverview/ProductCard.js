@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { handleDetail, addToCart, openModal, closeModal, addTotals } from '../../../actions/productActions';
 
+import ReactGA from 'react-ga';
+
 class ProductCard extends Component {
     // componentDidMount() {
     //     console.log(this.props.product);
@@ -27,10 +29,19 @@ class ProductCard extends Component {
         this.props.closeModal();
     }
 
-    todo(id){
+    todo(id, title){
         this.onAddToCart(id);
         // this.onHandleDetailClick(id);
         this.openModal(id);
+        this.clicked(title);
+    }
+
+    clicked(title) {
+        ReactGA.event({
+            category: 'Cart',
+            action: 'Added From Product Card',
+            label: title
+        });
     }
 
     render() {
@@ -82,7 +93,7 @@ class ProductCard extends Component {
                             <li></li>
                             <li></li>
                         </ul>
-                        <button onClick={this.todo.bind(this, _id)}>Add To Cart</button>
+                        <button onClick={this.todo.bind(this, _id, title)}>Add To Cart</button>
                     </div>
                 </div>
             </ProductWrapper>

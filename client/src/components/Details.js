@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { handleDetail, addToCart, openModal, addTotals, getCart } from '../actions/productActions';
 
+import ReactGA from 'react-ga';
+
 import { ButtonContainer } from './Button';
 import { BackButton } from './common/BackButton';
 import Spinner from './common/Spinner';
@@ -35,9 +37,18 @@ class Details extends Component {
         this.props.openModal(id);
     }
 
-    todo(id){
+    todo(id, title){
         this.onAddToCart(id);
         this.openModal(id);
+        this.clicked(title);
+    }
+
+    clicked(title) {
+        ReactGA.event({
+            category: 'Cart',
+            action: 'Added From Product Page',
+            label: title
+        });
     }
 
     render() {
@@ -89,7 +100,7 @@ class Details extends Component {
                                 <ButtonContainer
                                     cart
                                     disabled={detailProduct.inCart ? true : false}
-                                    onClick={this.todo.bind(this, detailProduct._id)}
+                                    onClick={this.todo.bind(this, detailProduct._id, detailProduct.title)}
                                 >
                                     {detailProduct.inCart ? 'inCart' : 'add to cart'}
                                 </ButtonContainer>

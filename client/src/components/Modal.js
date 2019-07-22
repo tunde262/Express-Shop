@@ -32,13 +32,11 @@ class Modal extends Component {
                                 <img src={`/api/products/image/${img_name}`} className="img-fluid" alt="product" />
                                 <h5>{title}</h5>
                                 <h5 className="text-muted">price : $ {price}</h5>
-                                <Link to='/all'>
-                                    <ButtonContainer
-                                        onClick={this.closeModal.bind(this)}
-                                    >
-                                        Continue Shopping
-                                    </ButtonContainer>
-                                </Link>
+                                <ButtonContainer
+                                    onClick={this.closeModal.bind(this)}
+                                >
+                                    Continue Shopping
+                                </ButtonContainer>
                                 <Link to='/cart'>
                                     <ButtonContainer
                                         cart
