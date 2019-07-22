@@ -5,6 +5,8 @@ import { setAlert } from '../../actions/alertActions';
 import { register } from '../../actions/authActions';
 import PropTypes from 'prop-types';
 
+import ReactGA from 'react-ga';
+
 import { BackButton } from '../common/BackButton';
 
 const Register = ({ setAlert, register, isAuthenticated, history }) => {
@@ -26,6 +28,15 @@ const Register = ({ setAlert, register, isAuthenticated, history }) => {
         } else {
             register({ name, email, password });
         }
+
+        clicked();
+    }
+
+    const clicked = () => {
+        ReactGA.event({
+            category: 'Account',
+            action: 'Created An Account'
+        });
     }
 
     if(isAuthenticated) {

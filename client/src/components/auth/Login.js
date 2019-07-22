@@ -5,6 +5,8 @@ import { setAlert } from '../../actions/alertActions';
 import { login } from '../../actions/authActions';
 import PropTypes from 'prop-types';
 
+import ReactGA from 'react-ga';
+
 import { BackButton } from '../common/BackButton';
 
 const Login = ({ isAuthenticated, login, history }) => {
@@ -20,6 +22,15 @@ const Login = ({ isAuthenticated, login, history }) => {
     const onSubmit = async e => {
         e.preventDefault();
         login(email, password);
+        
+        clicked();
+    }
+
+    const clicked = () => {
+        ReactGA.event({
+            category: 'Account',
+            action: 'Logged Into Account'
+        });
     }
 
     // Redirect if logged in
