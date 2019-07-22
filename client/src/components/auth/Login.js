@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';
 
 import { BackButton } from '../common/BackButton';
+import { Container } from './Form';
 
 const Login = ({ isAuthenticated, login, history }) => {
     const [formData, setFormData] = useState({
@@ -41,41 +42,35 @@ const Login = ({ isAuthenticated, login, history }) => {
     return (
         <Fragment>
             <BackButton onClick={history.goBack}><i className="fas fa-arrow-left"></i></BackButton>
-            <div className="row mt-5">
-                <div className="col-md-6 m-auto">
-                    <div className="card card-body">
-                    <h1 className="text-center mb-3"><i className="fas fa-sign-in-alt"></i>  Login</h1>
+            <Container>
+                <div className="container">
+                    <h1><i style={{color: '#ffbf00'}} className="fas fa-sign-in-alt"></i>  Login</h1>
                     <form onSubmit={e => onSubmit(e)}>
-                        <div className="form-group">
-                        <label for="email">Email</label>
-                        <input
-                            type="email"
-                            name="email"
-                            className="form-control"
-                            placeholder="Enter Email"
-                            value={email}
-                            onChange={e => onChange(e)}
-                        />
-                        </div>
-                        <div className="form-group">
-                        <label for="password">Password</label>
-                        <input
-                            type="password"
-                            name="password"
-                            className="form-control"
-                            placeholder="Enter Password"
-                            value={password}
-                            onChange={e => onChange(e)}
-                        />
-                        </div>
-                        <button type="submit" className="btn btn-primary btn-block">Login</button>
+                        <label for="email">Email
+                            <input
+                                type="email"
+                                name="email"
+                                className="input_line"
+                                placeholder="Enter Email"
+                                value={email}
+                                onChange={e => onChange(e)}
+                            />
+                        </label>
+                        <label for="password">Password
+                            <input
+                                type="password"
+                                name="password"
+                                className="input_line"
+                                placeholder="Enter Password"
+                                value={password}
+                                onChange={e => onChange(e)}
+                            />
+                        </label>
+                        <button type="submit">Login</button>
+                        <Link to="/register">Don't yet have an account?</Link>
                     </form>
-                    <p className="lead mt-4">
-                        No Account? <Link to="/register">Register</Link>
-                    </p>
-                    </div>
                 </div>
-            </div>
+            </Container>
         </Fragment>
     )
 }

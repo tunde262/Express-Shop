@@ -4,10 +4,12 @@ import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alertActions';
 import { register } from '../../actions/authActions';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import ReactGA from 'react-ga';
 
 import { BackButton } from '../common/BackButton';
+import { Container } from './Form';
 
 const Register = ({ setAlert, register, isAuthenticated, history }) => {
     const [formData, setFormData] = useState({
@@ -46,65 +48,55 @@ const Register = ({ setAlert, register, isAuthenticated, history }) => {
     return (
         <Fragment>
             <BackButton onClick={history.goBack}><i className="fas fa-arrow-left"></i></BackButton>
-            <div className="row mt-5">
-                <div className="col-md-6 m-auto">
-                    <div className="card card-body">
-                    <h1 className="text-center mb-3">
-                        <i className="fas fa-user-plus"></i> Register
-                    </h1>   
+            <Container>
+                <div className="container">
+                    <h1><i style={{color: '#ffbf00'}} className="fas fa-user-plus"></i> Sign Up</h1>
                     <form onSubmit={e => onSubmit(e)}>
-                        <div className="form-group">
-                        <label for="name">Name</label>
-                        <input
-                            type="name"
-                            name="name"
-                            className="form-control"
-                            placeholder="Enter Name"
-                            value={name}
-                            onChange={e => onChange(e)}
-                        />
-                        </div>
-                        <div className="form-group">
-                        <label for="email">Email</label>
-                        <input
-                            type="email"
-                            name="email"
-                            className="form-control"
-                            placeholder="Enter Email"
-                            value={email}
-                            onChange={e => onChange(e)}
-                        />
-                        </div>
-                        <div className="form-group">
-                        <label for="password">Password</label>
-                        <input
-                            type="password"
-                            name="password"
-                            className="form-control"
-                            placeholder="Create Password"
-                            value={password}
-                            onChange={e => onChange(e)}
-                        />
-                        </div>
-                        <div className="form-group">
-                        <label for="password2">Confirm Password</label>
-                        <input
-                            type="password"
-                            name="password2"
-                            className="form-control"
-                            placeholder="Confirm Password"
-                            value={password2}
-                            onChange={e => onChange(e)}
-                        />
-                        </div>
-                        <button type="submit" className="btn btn-primary btn-block">
-                        Register
-                        </button>
+                        <label for="name">Name
+                            <input
+                                type="name"
+                                name="name"
+                                className="input_line"
+                                placeholder="Enter Name"
+                                value={name}
+                                onChange={e => onChange(e)}
+                            />
+                        </label>
+                        <label for="email">Email
+                            <input
+                                type="email"
+                                name="email"
+                                className="input_line"
+                                placeholder="Enter Email"
+                                value={email}
+                                onChange={e => onChange(e)}
+                            />
+                        </label>
+                        <label for="password">Password
+                            <input
+                                type="password"
+                                name="password"
+                                className="input_line"
+                                placeholder="Create Password"
+                                value={password}
+                                onChange={e => onChange(e)}
+                            />
+                        </label>
+                        <label for="password2">Confirm Password
+                            <input
+                                type="password"
+                                name="password2"
+                                className="input_line"
+                                placeholder="Confirm Password"
+                                value={password2}
+                                onChange={e => onChange(e)}
+                            />
+                        </label>
+                        <button type="submit">Register</button>
+                        <Link to="/login" style={{marginBottom: '1rem'}}>I already have an account</Link>
                     </form>
-                    <p className="lead mt-4">Have An Account? <Link to="/login">Login</Link></p>
-                    </div>
                 </div>
-            </div>
+            </Container>
         </Fragment>
     )
 }
