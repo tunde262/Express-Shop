@@ -101,7 +101,7 @@ class AddProduct extends Component {
                             id="file"
                             className="form-control"
                             placeholder="Start with ../img/"
-                            value={this.state.file}
+                            value={this.state.img}
                             onChange={this.fileChanged}
                         />
                         </div>
