@@ -50,8 +50,6 @@ class CartOverviewList extends Component {
                     <CartOverviewFooter>
                         <h4><strong>Qty: </strong>{cartQty}</h4>
                         <h4><strong>subtotal: </strong>${cartSubtotal}</h4>
-                        <h4><strong>tax: </strong>${cartTax}</h4>
-                        <h4><strong>total: </strong>${cartTotal}</h4>
                     </CartOverviewFooter>
                 ) : null}
             </div>
