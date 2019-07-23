@@ -27,7 +27,7 @@ class Hats extends Component {
                 </Logo>
                 <Header />
                 <hr />
-                <Container />
+                <Container title="Hats" />
             </Fragment>
         )
     }

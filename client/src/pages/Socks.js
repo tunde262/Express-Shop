@@ -27,7 +27,7 @@ class Socks extends Component {
                 </Logo>
                 <Header />
                 <hr />
-                <Container />
+                <Container title="Socks" />
             </Fragment>
         )
     }

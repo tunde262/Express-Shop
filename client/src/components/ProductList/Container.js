@@ -23,6 +23,7 @@ class Container extends Component {
                 productList = (
                     <Fragment>
                         <CategoryOverview products={products} />
+                        <h1 style={{margin: '0 0 -2rem 2rem'}}>{this.props.title}</h1>
                         <ProductList products={sortedProducts} />
                     </Fragment>
                 );
