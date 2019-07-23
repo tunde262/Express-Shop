@@ -45,7 +45,7 @@ class ProductCard extends Component {
     }
 
     render() {
-        const { _id, title, img_name, price, company, inCart } = this.props.product;
+        const { _id, title, img_name, price, size, color, company, category, inCart } = this.props.product;
 
         return (
             <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
@@ -74,24 +74,16 @@ class ProductCard extends Component {
                     </div>
                     <div className="specifice">
                         <div className="titles">
-                            <h2>{title}<br/><span>{company}</span></h2>
+                            <h2>{title}<br/><span>{category}</span></h2>
                         </div>
                         <div className="price">${price}</div>
                         <label>Size</label>
                         <ul>
-                            <li>20mm</li>
-                            <li>25mm</li>
-                            <li>30mm</li>
-                            <li>35mm</li>
-                            <li>40mm</li>
+                            <li>{size}</li>
                         </ul>
                         <label>Colors</label>
-                        <ul className="colors"> 
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
+                        <ul className="color"> 
+                            <li>{color}</li>
                         </ul>
                         <button onClick={this.todo.bind(this, _id, title)}>Add To Cart</button>
                     </div>
