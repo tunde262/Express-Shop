@@ -91,7 +91,7 @@ class Details extends Component {
                                 size : {detailProduct.size}
                             </h4>
                             <p className="text-capitalize font-weight-bold mt-3 mb-0">
-                                Description:
+                                Details:
                             </p>
                             <p className="text-muted lead">{detailProduct.info}</p>
                             {/* buttons */}
