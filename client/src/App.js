@@ -155,7 +155,7 @@ const App = () => {
             </main>
           </div>
           <Modal />
-          <Footer />
+          {/* <Footer /> */}
         </Router>
       </StripeProvider>
     </Provider>

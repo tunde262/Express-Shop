@@ -85,8 +85,9 @@ export default function(state = initialState, action) {
             }
 
             let subTotal = action.payload.totalPrice;
-            const tempTax = subTotal * 0.1;
-            const tax = parseFloat(tempTax.toFixed(2));
+            // const tempTax = subTotal * 0.1;
+            // const tax = parseFloat(tempTax.toFixed(2));
+            const tax = 5;
             const total = subTotal + tax;
             const totalQty = action.payload.totalQty;
             return {
