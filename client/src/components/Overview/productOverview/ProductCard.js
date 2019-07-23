@@ -129,7 +129,7 @@ const ProductWrapper = styled.div`
     .specifice {
         position: absolute;
         width: 100%;
-        bottom: -168px;
+        bottom: -172px;
         background: #fff;
         padding: 10px;
         box-sizing: border-box;
