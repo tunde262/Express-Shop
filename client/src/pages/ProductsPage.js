@@ -10,6 +10,8 @@ import CartOverview from '../components/Overview/cartOverview/CartOverview';
 import CategoryOverview from '../components/Overview/categoryOverview/CategoryOverview';
 import ProductList from '../components/ProductList/ProductList';
 import Container from '../components/ProductList/Container';
+import logo from '../components/common/CE_logo.jpg';
+import { Logo } from '../components/Logo';
 
 class ProductPage extends Component {
     componentDidMount() {
@@ -20,6 +22,9 @@ class ProductPage extends Component {
     render() {
         return (
             <Fragment>
+                <Logo>
+                    <img src={logo} style={{maxHeight: '70px'}} alt="cardboard express logo" />
+                </Logo>
                 <Header />
                 <hr />
                 <Container />

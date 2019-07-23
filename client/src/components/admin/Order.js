@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 class Order extends Component {
     render() {
         const order = this.props.order;
-        const { _id, address, name, paymentId } = order;
+        const { _id, address, name, paymentId, date } = order;
         const { totalPrice, totalQty } = order.cart;
 
         const arr = [];
@@ -50,7 +50,7 @@ class Order extends Component {
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
                         <p><strong>Total: </strong> ${totalPrice}</p>
                         <p><strong>Qty: </strong> {totalQty}</p>
-                        <p><strong>PaymentId: </strong> {paymentId}</p>    
+                        <p><strong>Date: </strong> {date}</p>    
                     </div>
                 </div>
             </div>
