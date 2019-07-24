@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Moment from 'react-moment';
+import 'moment-timezone';
 
 class Order extends Component {
     render() {
@@ -50,7 +52,7 @@ class Order extends Component {
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
                         <p><strong>Total: </strong> ${totalPrice}</p>
                         <p><strong>Qty: </strong> {totalQty}</p>
-                        <p><strong>Date: </strong> {date}</p>    
+                        <p><strong>Date: </strong> <Moment>{date}</Moment></p>    
                     </div>
                 </div>
             </div>
