@@ -41,7 +41,6 @@ class Checkout extends Component {
         }
         return (
             <React.Fragment>
-                <BackButton onClick={this.goBack}><i className="fas fa-arrow-left"></i></BackButton>
                 {checkoutView}
             </React.Fragment>
         )

@@ -38,6 +38,16 @@ export const Container = styled.div`
         padding: 10px 0;
         font-size: 25px;
     }
+    .container a {
+        display: block;
+        margin-top: 10px;
+        text-align: right;
+        color: #9FB1BC;
+        font-size: 1rem;
+    }
+    .container a:hover {
+        color: #000;
+    }
     .container form {
         padding: 0 35px;
     }
