@@ -50,7 +50,7 @@ class CartOverviewList extends Component {
                 {this.props.cart.length > 0 ? (
                     <CartOverviewFooter>
                         <h4><strong>Qty: </strong>{cartQty}</h4>
-                        <h4><strong>subtotal: </strong>${cartSubtotal}</h4>
+                        <h4><strong>Total: </strong>${cartSubtotal}</h4>
                     </CartOverviewFooter>
                 ) : null}
             </div>

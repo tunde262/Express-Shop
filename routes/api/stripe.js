@@ -26,7 +26,7 @@ router.post('/donate', async (req, res, next) => {
     })
     .then(customer => stripe.charges.create({
         amount: amount * 100,
-        description: 'Cardboard Shop Test',
+        description: 'Cardboard Express',
         currency: 'usd',
         customer: customer.id
     }))
