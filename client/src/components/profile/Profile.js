@@ -9,6 +9,7 @@ import { BackButton } from '../common/BackButton';
 class Profile extends Component {
     constructor(props){
         super(props);
+        
         this.goBack = this.goBack.bind(this);
     }
 
