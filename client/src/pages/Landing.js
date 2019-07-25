@@ -11,7 +11,7 @@ class Landing extends Component {
     render() {
         return (
             <header id="landing">
-                <h1>Same Day Delivery For All Clothing.</h1>
+                <h1>Same Day Delivery On All Clothing.</h1>
                 <p>Get Your Order Delivered In As Little As 2 Hours!</p>
                 <Dropdown />
                 {/* <a href="#" className="button">Read More</a> */}
