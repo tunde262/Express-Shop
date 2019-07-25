@@ -8,7 +8,8 @@ import CategoryOverview from '../components/Overview/categoryOverview/CategoryOv
 import ProductOverview from '../components/Overview/productOverview/ProductOverview';
 import Spinner from '../components/common/Spinner';
 import Title from '../components/Title';
-
+import logo from '../components/common/CE_logo.jpg';
+import { Logo } from '../components/Logo';
 
 class ExplorePage extends Component{
     componentDidMount() {
@@ -28,6 +29,7 @@ class ExplorePage extends Component{
         else {
             productList = (
                 <Fragment>
+
                     <div style={{marginBottom: '-1rem'}}><Title title="Explore" /></div>
                     <ProductOverview title="Tops" products={exploreTops} link="/top" />
                     <ProductOverview title="Bottoms" products={exploreBottoms} link="/bottom" />
@@ -39,6 +41,9 @@ class ExplorePage extends Component{
         
         return (
             <Fragment>
+                <Logo>
+                    <img src={logo} style={{maxHeight: '70px'}} alt="cardboard express logo" />
+                </Logo>
                 <Header />
                 <hr />
                 {productList}

@@ -135,9 +135,6 @@ const ProductWrapper = styled.div`
         box-sizing: border-box;
         transition: .5s;
     }
-    .product:hover .specifice {
-        bottom: 0;
-    }
     .specifice .titles {
         width: 60%;
         overflow: hidden;
@@ -216,6 +213,12 @@ const ProductWrapper = styled.div`
     }
     button:hover {
         background: #5acef4;
+    }
+
+    @media (min-width: 768px){
+        .product:hover .specifice {
+            bottom: 0;
+        }
     }
 
 `;
