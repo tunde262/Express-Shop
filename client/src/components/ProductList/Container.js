@@ -12,6 +12,8 @@ import Title from '../Title';
 class Container extends Component {
     render() {
         const { products, sortedProducts, loading } = this.props.product;
+
+        const header = this.props.title;
         
         let productList;
 
@@ -22,8 +24,8 @@ class Container extends Component {
             if(products.length > 0) {
                 productList = (
                     <Fragment>
-                        <CategoryOverview products={products} />
-                        <h1 style={{margin: '0 0 -2rem 2rem'}}>{this.props.title}</h1>
+                        <CategoryOverview products={products} category={this.props.category} />
+                        <div style={{marginBottom: '-3rem'}}><Title title={header} /></div>
                         <ProductList products={sortedProducts} />
                     </Fragment>
                 );

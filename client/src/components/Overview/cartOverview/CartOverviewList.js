@@ -23,7 +23,10 @@ class CartOverviewList extends Component {
 
     render() {
         let { cartSubtotal, cartTax, cartTotal, cartQty } = this.props.product;
-        cartSubtotal = parseFloat(cartSubtotal.toFixed(2));
+        if(cartSubtotal !== null || cartSubtotal !== undefined) {
+            cartSubtotal = parseFloat(cartSubtotal.toFixed(2));
+        }
+
         return (
             <div style={{background: 'var(--body-color)'}}>
                 <HorizontalNav background="var(--body-color)">

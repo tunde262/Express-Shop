@@ -20,7 +20,7 @@ export const getProducts = () => dispatch => {
         );
 };
 
-// Get Products
+// Get Filtered Products
 export const setSortedProducts = (products) =>  {
     return {
         type: SET_SORTED_PRODUCTS,

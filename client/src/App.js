@@ -114,8 +114,8 @@ const App = () => {
               <Alert />
               <Switch>
                 {/* Category Pages */}
-                {/* <Route exact path="/" component={Landing} /> */}
-                <Route exact path="/" component={ProductsPage} />
+                <Route exact path="/" component={Landing} />
+                {/* <Route exact path="/" component={ProductsPage} /> */}
                 <Route exact path="/top" component={Tops} />
                 <Route exact path="/bottom" component={Bottoms} />
                 <Route exact path="/hat" component={Hats} />

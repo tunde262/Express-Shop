@@ -8,10 +8,10 @@ class Navbar extends Component {
     render() {
         return (
             <HorizontalNav>
-                <Link to="/">
+                {/* <Link to="/">
                     <NavItem background="var(--mainColor)">All</NavItem>
-                </Link>
-                {/* <Link to="/explore">
+                </Link> */}
+                <Link to="/explore">
                     <NavItem background="Fuchsia">
                         <i 
                             className="fab fa-wpexplorer" 
@@ -22,7 +22,7 @@ class Navbar extends Component {
                         </i>
                         {' '}Explore
                     </NavItem>
-                </Link> */}
+                </Link>
                 <Link to="/top">
                     <NavItem background="DeepSkyBlue">
                         <i 

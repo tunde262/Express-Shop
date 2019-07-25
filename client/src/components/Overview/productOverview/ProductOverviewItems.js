@@ -14,10 +14,11 @@ import { HorizontalNav } from '../../common/HorizontalNav';
 class ProductOverviewItems extends Component {
     render() {
         const { products } = this.props;
+        const { loading } = this.props.product;
         
         let productList;
 
-        if(products === null) {
+        if(products === null || loading) {
             productList = <Spinner />;
         }
         else {

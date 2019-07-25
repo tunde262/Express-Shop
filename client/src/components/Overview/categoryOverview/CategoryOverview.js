@@ -69,7 +69,21 @@ class CategoryOverview extends Component {
     }
 
     render() {
-        let tags = this.getUnique(this.props.products, 'tags');
+        // let tags = this.getUnique(this.props.products, 'tags');
+        let tags = [];
+        if(this.props.category === 'socks') {
+            tags =  ["boats", "french fries", "tacos", "dotted", "striped", "USA"];
+        }
+
+        if(this.props.category === 'hats') {
+            tags =  ["white", "red", "black", "dad cap"];
+        }
+        if(this.props.category === 'bottoms') {
+            tags =  ["men", "women", "small", "medium", "large", "shorts", "pants", "joggers", "activewear", "swim", "leggings", "denim", "white", "black", "red", "grey", "blue", "navy", "floral", "fruit"];
+        }
+        if(this.props.category === 'tops') {
+            tags =  ["men", "women", "small", "medium", "large", "pink", "white", "black", "yellow", "brown", "short-sleeve", "long-sleeve", "shirt", "tank top", "graphic tee"];
+        }
         
         tags = tags.map((item, index) => {
             return (

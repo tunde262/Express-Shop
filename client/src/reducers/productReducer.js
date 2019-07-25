@@ -3,6 +3,10 @@ import { SET_PRODUCTS, SET_SORTED_PRODUCTS, PRODUCTS_LOADING, HANDLE_DETAIL, ADD
 const initialState = {
     products: null,
     sortedProducts: null,
+    exploreTops: [],
+    exploreBottoms: [],
+    exploreHats: [],
+    exploreSocks: [],
     featuredProducts: [],
     loading: false,
     location: 'all',
@@ -35,6 +39,10 @@ export default function(state = initialState, action) {
             const products = action.payload;
             let tempProd = products;
             let featuredProducts = tempProd.filter(product => product.featured === true);
+            let exploreTops = tempProd.filter(product => product.category === 'top');
+            let exploreBottoms = tempProd.filter(product => product.category === 'bottom');
+            let exploreHats = tempProd.filter(product => product.category === 'hat');
+            let exploreSocks = tempProd.filter(product => product.category === 'socks');
             let maxPrice = Math.max(...products.map(product => product.price));
 
             return {
@@ -42,6 +50,10 @@ export default function(state = initialState, action) {
                 products,
                 sortedProducts: products,
                 featuredProducts,
+                exploreTops,
+                exploreBottoms,
+                exploreHats,
+                exploreSocks,
                 price: maxPrice,
                 maxPrice,
                 loading: false

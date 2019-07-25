@@ -8,7 +8,7 @@ import './Navbar.css';
 const Navbar = props => (
     <header className="navbar">
         <nav className="navbar_navigation">
-            <div className="navbar_logo"><Link to="/"><i class="fas fa-home"></i></Link></div>
+            <div className="navbar_logo"><Link to="/explore"><i class="fas fa-home"></i></Link></div>
             <div className="spacer" />
             <div className="navbar_navigation-items">
                 <ul>

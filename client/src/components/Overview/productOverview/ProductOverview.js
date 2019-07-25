@@ -7,12 +7,10 @@ import ProductOverviewItems from './ProductOverviewItems';
 
 class ProductOverview extends Component { 
     render() {
-        const { products } = this.props.product;
-
-        console.log(products);
+        const { products } = this.props;
 
         return (
-            <Overview shop title="Hoodies">
+            <Overview shop title={this.props.title} link={this.props.link}>
                 <ProductOverviewItems products={products} />
             </Overview>
         )
