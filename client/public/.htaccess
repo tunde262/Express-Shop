@@ -1,0 +1,2 @@
+RewriteEngine On RewriteCond %{HTTP_HOST} ^cardboardexpress\.com 
+RewriteRule (.*) http://www.cardboardexpress.com/$1 [R=301,L]
