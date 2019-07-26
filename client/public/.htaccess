@@ -1,2 +1,3 @@
-RewriteEngine On RewriteCond %{HTTP_HOST} ^cardboardexpress\.com 
-RewriteRule (.*) http://www.cardboardexpress.com/$1 [R=301,L]
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
