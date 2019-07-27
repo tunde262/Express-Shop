@@ -16,6 +16,10 @@ class CheckoutForm extends Component {
             name: '',
             email: '',
             address: '',
+            city: '',
+            state: '',
+            zipcode: '',
+            telephone: '',
             amount: `${this.props.total}`
         };
 
@@ -79,8 +83,8 @@ class CheckoutForm extends Component {
 
     render() {
         const { step } = this.state;
-        const { name, email, address, amount, user } = this.state;
-        const values = { name, email, address, amount, user };
+        const { name, email, address, city, state, zipcode, telephone, amount, user } = this.state;
+        const values = { name, email, address, city, state, zipcode, telephone, amount, user };
 
         switch(step) {
             case 1:

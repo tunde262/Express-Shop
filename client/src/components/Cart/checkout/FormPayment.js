@@ -9,14 +9,15 @@ export class FormPayment extends Component {
     continue = async (e) => {
         e.preventDefault();
 
-        const { values: { name, email, address, amount, user } } = this.props;
+        const { values: { name, email, address, city, state, zipcode, telephone, amount, user } } = this.props;
 
         let { token } = await this.props.stripe.createToken({ name });
         const data = {
             user,
             name,
             email,
-            address,
+            address: `${address} ${city}, ${state} ${zipcode}`,
+            telephone,
             token,
             amount
         }

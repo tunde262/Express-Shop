@@ -8,7 +8,7 @@ import 'moment-timezone';
 class Order extends Component {
     render() {
         const order = this.props.order;
-        const { _id, address, name, paymentId, date } = order;
+        const { _id, address, telephone, name, paymentId, date } = order;
         const { totalPrice, totalQty } = order.cart;
 
         const arr = [];
@@ -37,9 +37,9 @@ class Order extends Component {
         return (
             <div style={{margin: '15px'}} class="card card-default">
                 <div className="card-header">
-                    <div style={{display: 'flex'}}>
+                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
                         <p><strong>Name: </strong>{name}</p>
-                        <div style={{flex: '1'}}></div>
+                        <p><strong>Phone: </strong>{telephone}</p>
                         <p><strong>Address: </strong>{address}</p>
                     </div>
                 </div>

@@ -20,7 +20,7 @@ export class FormAddress extends Component {
             <Fragment>
                 <Container>
                     <div className="container">
-                        <h1>Address</h1>
+                        <h1>Delivery</h1>
                         <form onSubmit={this.continue}>
                             <label>Address</label>
                             <input 
@@ -31,6 +31,43 @@ export class FormAddress extends Component {
                                 onChange={onChange('address')}
                                 placeholder="1234 Example Street Drive"
                             />
+                            <label>City</label>
+                            <input 
+                                type="text"
+                                name="city"
+                                className="input_line"
+                                value={values.city}
+                                onChange={onChange('city')}
+                                placeholder="city"
+                            />
+                            <label>State</label>
+                            <input 
+                                type="text"
+                                name="state"
+                                className="input_line"
+                                value={values.state}
+                                onChange={onChange('state')}
+                                placeholder="state"
+                            />
+                            <label>Zipcode</label>
+                            <input 
+                                type="text"
+                                name="zipcode"
+                                className="input_line"
+                                value={values.zipcode}
+                                onChange={onChange('zipcode')}
+                                placeholder="zipcode"
+                            />
+                            <label>Phone Number</label>
+                            <input 
+                                type="text"
+                                name="telephone"
+                                className="input_line"
+                                value={values.telephone}
+                                onChange={onChange('telephone')}
+                                placeholder="123-456-7890"
+                            />
+                            <small className='invalid_feedback'>We may need to contact you during delivery.</small>
                             <a style={{marginRight: '1rem'}}onClick={this.back}>Back</a>
                             <ButtonContainer>
                                 Continue

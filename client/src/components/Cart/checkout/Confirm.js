@@ -15,7 +15,7 @@ export class Confirm extends Component {
     };
 
     render() {
-        const { values: { name, email, address, amount } } = this.props;
+        const { values: { name, email, address, city, state, zipcode, telephone, amount } } = this.props;
         return (
             <Fragment>
                 <Container>
@@ -26,6 +26,10 @@ export class Confirm extends Component {
                             <li><p style={{fontSize: '20px'}}><strong>Full Name:</strong> {name}</p></li>
                             <li><p style={{fontSize: '20px'}}><strong>Email:</strong> {email}</p></li>
                             <li><p style={{fontSize: '20px'}}><strong>Address:</strong> {address}</p></li>
+                            <li><p style={{fontSize: '20px'}}><strong>City:</strong> {city}</p></li>
+                            <li><p style={{fontSize: '20px'}}><strong>State:</strong> {state}</p></li>
+                            <li><p style={{fontSize: '20px'}}><strong>Zipcode:</strong> {zipcode}</p></li>
+                            <li><p style={{fontSize: '20px'}}><strong>Telephone:</strong> {telephone}</p></li>
                             <li><p style={{fontSize: '20px'}}><strong>Total:</strong> ${amount}</p></li>
                         </ul>
                         <a style={{marginRight: '1rem'}}onClick={this.back}>Back</a>

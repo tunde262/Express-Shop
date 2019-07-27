@@ -16,7 +16,7 @@ export const Container = styled.div`
     }
 
     .invalid_feedback {
-    color: red;
+    color: #9FB1BC;
     }
 
     .container {
@@ -77,7 +77,7 @@ export const Container = styled.div`
         color: #9FB1BC;
     }
     .container form label.is_invalid{
-        color: red;
+        color: #9FB1BC;
     }
     
     .container button[type="submit"] {
