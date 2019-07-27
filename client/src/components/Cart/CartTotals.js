@@ -24,15 +24,15 @@ export default function CartTotals({totals, history}) {
                             </button>
                         </Link> */}
                         <h5>
-                            <span>subtotal : </span>
+                            <span>Subtotal : </span>
                             <strong>$ {cartSubtotal}</strong>
                         </h5>
                         <h5>
-                            <span>shipping : </span>
+                            <span>Same Day Delivery : </span>
                             <strong>$ {cartTax}</strong>
                         </h5>
                         <h5>
-                            <span>total : </span>
+                            <span>Total : </span>
                             <strong>$ {cartTotal}</strong>
                         </h5>
                         {/* <PayPalButton 

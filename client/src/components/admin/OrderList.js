@@ -34,7 +34,7 @@ class OrderList extends Component {
                 ))
             }
             else {
-                orderList = <Title name="N Orders" title="Available" />
+                orderList = <Title name="No Orders" title="Available" />
             }
         }
 
