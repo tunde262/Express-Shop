@@ -104,7 +104,7 @@ const App = () => {
   
   return (
     <Provider store={store}>
-      <StripeProvider apiKey="pk_test_Hbz4uQovQLzsxsEZ4clF5WfI00TSBRJTac">
+      <StripeProvider apiKey="pk_live_TGJb7MssdJJyke7Wg6WpDj1e00gVdDNGxd">
         <Router>
           <div style={{height: '100%'}}>
             <Navbar drawerClickHandler={drawerToggleClickHandler} />
