@@ -31,9 +31,9 @@ export default class Dropdown extends Component {
             <div class="input-group">
                 <select name="selected" value={this.state.selected} onChange={this.onChange.bind(this)} style={{borderColor: 'transparent'}} class="custom-select" id="inputGroupSelect04">
                     <option selected>What city are you in?</option>
-                    <option value="1">Plano</option>
-                    <option value="2">Carrollton</option>
-                    <option value="3">Frisco</option>
+                    <option value="1">DFW</option>
+                    {/* <option value="2">Carrollton</option>
+                    <option value="3">Frisco</option> */}
                 </select>
                 <div class="input-group-append">
                     {this.state.selected ? 
