@@ -120,17 +120,17 @@ const App = () => {
                 <Route exact path="/bottom" component={Bottoms} />
                 <Route exact path="/hat" component={Hats} />
                 <Route exact path="/socks" component={Socks} />
-                {/* <Route exact path="/apparel" component={ApparelPage} />
                 <Route exact path="/baby" component={Baby} />
-                <Route exact path="/beauty" component={Beauty} />
                 <Route exact path="/health" component={Health} />
-                <Route exact path="/home-decor" component={HomeDecor} />
                 <Route exact path="/household-essentials" component={HouseholdEssentials} />
                 <Route exact path="/pets" component={Pets} />
                 <Route exact path="/kitchen-dining" component={KitchenDining} />
                 <Route exact path="/party-supplies" component={PartySupplies} />
                 <Route exact path="/personal-care" component={PersonalCare} />
                 <Route exact path="/school-office" component={SchoolOffice} />
+                {/* <Route exact path="/apparel" component={ApparelPage} />
+                <Route exact path="/beauty" component={Beauty} />
+                <Route exact path="/home-decor" component={HomeDecor} />
                 <Route exact path="/sports" component={Sports} />
                 <Route exact path="/toys" component={Toys} />
                 <Route exact path="/brand" component={BrandPage} />*/}

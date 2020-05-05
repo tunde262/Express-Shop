@@ -35,6 +35,7 @@ router.post('/donate', async (req, res, next) => {
             user: req.body.user,
             cart: cart,
             address: req.body.address,
+            telephone: req.body.telephone,
             name: req.body.name,
             paymentId: charge.id
         });

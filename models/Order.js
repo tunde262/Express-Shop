@@ -14,6 +14,10 @@ const OrderSchema = new Schema({
         type: String,
         required: true
     },
+    telephone: {
+        type: Number,
+        required: true
+    },
     name: {
         type: String,
         required: true

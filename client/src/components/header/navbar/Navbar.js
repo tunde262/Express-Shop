@@ -71,18 +71,6 @@ class Navbar extends Component {
                         {' '}Socks
                     </NavItem>
                 </Link>
-                {/* <Link to="/apparel">
-                    <NavItem background="DeepSkyBlue">
-                        <i 
-                            className="fas fa-tshirt" 
-                            style={{
-                                color: 'white', 
-                                fontSize: '2rem'
-                            }}>
-                        </i>
-                        {' '}Apparel
-                    </NavItem>
-                </Link>
                 <Link to="/household-essentials">
                     <NavItem background="Teal">
                         <i 
@@ -93,6 +81,18 @@ class Navbar extends Component {
                             }}>
                         </i>
                         {' '}Household Essentials
+                    </NavItem>
+                </Link>
+                <Link to="/personal-care">
+                    <NavItem background="MediumSlateBlue">
+                        <i 
+                            className="fas fa-shower" 
+                            style={{
+                                color: 'white', 
+                                fontSize: '2rem'
+                            }}>
+                        </i>
+                        {' '}Personal Care
                     </NavItem>
                 </Link>
                 <Link to="/pets">
@@ -117,66 +117,6 @@ class Navbar extends Component {
                             }}>
                         </i>
                         {' '}Baby
-                    </NavItem>
-                </Link> */}
-                {/* <Link to="/personal-care">
-                    <NavItem background="MediumSlateBlue">
-                        <i 
-                            className="fas fa-shower" 
-                            style={{
-                                color: 'white', 
-                                fontSize: '2rem'
-                            }}>
-                        </i>
-                        {' '}Personal Care
-                    </NavItem>
-                </Link>
-                <Link to="/beauty">
-                    <NavItem background="Magenta">
-                        <i 
-                            className="far fa-eye" 
-                            style={{
-                                color: 'white',
-                                fontSize: '2rem'
-                            }}>
-                        </i>
-                        {' '}Beauty
-                    </NavItem>
-                </Link>
-                <Link to="/health">
-                    <NavItem background="LawnGreen">
-                        <i 
-                            className="fas fa-band-aid" 
-                            style={{
-                                color: 'white',
-                                fontSize: '2rem'
-                            }}>
-                        </i>
-                        {' '}Health
-                    </NavItem>
-                </Link>
-                <Link to="/sports">
-                    <NavItem background="OrangeRed">
-                        <i 
-                            className="fas fa-basketball-ball" 
-                            style={{
-                                color: 'white',
-                                fontSize: '2rem'
-                            }}>
-                        </i>
-                        {' '}Sports
-                    </NavItem>
-                </Link>
-                <Link to="/home-decor">
-                    <NavItem background="Goldenrod">
-                        <i 
-                            className="fas fa-couch" 
-                            style={{
-                                color: 'white',
-                                fontSize: '2rem'
-                            }}>
-                        </i>
-                        {' '}Home Decor
                     </NavItem>
                 </Link>
                 <Link to="/kitchen-dining">
@@ -212,7 +152,56 @@ class Navbar extends Component {
                                 fontSize: '2rem'
                             }}>
                         </i>
-                        {' '}School 3 Office Supplies
+                        {' '}School & Office Supplies
+                    </NavItem>
+                </Link>
+                <Link to="/health">
+                    <NavItem background="LawnGreen">
+                        <i 
+                            className="fas fa-band-aid" 
+                            style={{
+                                color: 'white',
+                                fontSize: '2rem'
+                            }}>
+                        </i>
+                        {' '}Health
+                    </NavItem>
+                </Link>
+                {/* 
+                <Link to="/apparel">
+                    <NavItem background="DeepSkyBlue">
+                        <i 
+                            className="fas fa-tshirt" 
+                            style={{
+                                color: 'white', 
+                                fontSize: '2rem'
+                            }}>
+                        </i>
+                        {' '}Apparel
+                    </NavItem>
+                </Link>
+                <Link to="/beauty">
+                    <NavItem background="Magenta">
+                        <i 
+                            className="far fa-eye" 
+                            style={{
+                                color: 'white',
+                                fontSize: '2rem'
+                            }}>
+                        </i>
+                        {' '}Beauty
+                    </NavItem>
+                </Link>
+                <Link to="/sports">
+                    <NavItem background="OrangeRed">
+                        <i 
+                            className="fas fa-basketball-ball" 
+                            style={{
+                                color: 'white',
+                                fontSize: '2rem'
+                            }}>
+                        </i>
+                        {' '}Sports
                     </NavItem>
                 </Link>
                 <Link to="/toys">
@@ -225,6 +214,18 @@ class Navbar extends Component {
                             }}>
                         </i>
                         {' '}Toys
+                    </NavItem>
+                </Link>
+                <Link to="/home-decor">
+                    <NavItem background="Goldenrod">
+                        <i 
+                            className="fas fa-couch" 
+                            style={{
+                                color: 'white',
+                                fontSize: '2rem'
+                            }}>
+                        </i>
+                        {' '}Home Decor
                     </NavItem>
                 </Link> */}
             </HorizontalNav>
