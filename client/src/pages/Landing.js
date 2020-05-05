@@ -12,7 +12,7 @@ class Landing extends Component {
         return (
             <header id="landing">
                 <h1>Same Day Delivery On All Clothing.</h1>
-                <p>Don't let social distancing stop you from looking good.</p>
+                <p>Don't let social distancing stop you from looking good:)</p>
                 <Dropdown />
                 {/* <a href="#" className="button">Read More</a> */}
             </header>
