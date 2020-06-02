@@ -59,7 +59,7 @@ class Navbar extends Component {
                         {' '}Hats
                     </NavItem>
                 </Link>
-                <Link to="/socks">
+                {/* <Link to="/socks">
                     <NavItem background="MediumSlateBlue">
                         <i 
                             className="fas fa-socks" 
@@ -166,7 +166,7 @@ class Navbar extends Component {
                         </i>
                         {' '}Health
                     </NavItem>
-                </Link>
+                </Link> */}
                 {/* 
                 <Link to="/apparel">
                     <NavItem background="DeepSkyBlue">

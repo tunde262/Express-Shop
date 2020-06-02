@@ -34,7 +34,6 @@ class ExplorePage extends Component{
                     <ProductOverview title="Tops" products={exploreTops} link="/top" />
                     <ProductOverview title="Bottoms" products={exploreBottoms} link="/bottom" />
                     <ProductOverview title="Hats" products={exploreHats} link="/hat" />
-                    <ProductOverview title="Socks" products={exploreSocks} link="/socks" />
                 </Fragment>
             );
         }
