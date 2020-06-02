@@ -33,7 +33,7 @@ class Overview extends Component{
                 <div style={{display: 'flex', alignItems: 'center', padding: '0 50px 0 30px'}}>
                     <h3>{this.props.title}</h3>
                     <div style={{flex: '1'}} />
-                    {this.props.toggle ? (
+                    {/* {this.props.toggle ? (
                         <Fragment>
                             {cartOverview ? (
                                 <CartOverviewButton 
@@ -53,7 +53,7 @@ class Overview extends Component{
                                 </CartOverviewButton>
                             )}
                         </Fragment>
-                    ) : null}
+                    ) : null} */}
                     {/* {cartOverview ? (
                         <div onClick={this.closeOverview.bind(this)}><i class="fas fa-minus"></i></div>
                     ) : (
