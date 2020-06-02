@@ -22,9 +22,9 @@ class Bottoms extends Component {
     render() {
         return (
             <Fragment>
-                <Logo>
+                {/* <Logo>
                     <img src={logo} style={{maxHeight: '70px'}} alt="cardboard express logo" />
-                </Logo>
+                </Logo> */}
                 <Header />
                 <hr />
                 <Container title="Bottoms" category="bottoms"  />
