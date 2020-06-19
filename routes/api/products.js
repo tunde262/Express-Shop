@@ -14,10 +14,14 @@ const Product = require('../../models/Product');
 const Cart = require('../../models/Cart');
 
 //Db Config
-const db = require('../../config/keys').mongoURI;
+const config = require('config');
+const db = config.get('mongoURI');
 
 // Create Mongo Connection
-const conn = mongoose.createConnection(db);
+const conn = mongoose.createConnection(db, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+});
 
 // Init gfs
 let gfs;

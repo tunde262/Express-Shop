@@ -1,7 +1,7 @@
 const express = require('express');
+const connectDB = require('./config/db');
 const mongoose = require('mongoose');
 const session = require('express-session');
-const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const MongoStore = require('connect-mongo')(session);
 const path = require('path');
@@ -14,6 +14,8 @@ const admin = require('./routes/api/admin');
 
 const app = express();
 
+connectDB();
+
 // Body parser middleware
 app.use(express.json({ extended: false }));
 
@@ -25,18 +27,6 @@ app.use(session({
     store: new MongoStore({ mongooseConnection: mongoose.connection }),
     cookie: { maxAge: 180 * 60 * 1000 }
 }));
-
-//Db Config
-const db = require('./config/keys').mongoURI;
-
-//Connect to mongodb
-mongoose
-    .connect(db, {
-        useNewUrlParser: true,
-        useCreateIndex: true
-    })
-    .then(() => console.log('MongodbConnected'))
-    .catch(err => console.log(err));
 
 // Use Routes
 app.use('/api/auth', auth);

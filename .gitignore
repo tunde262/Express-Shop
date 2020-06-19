@@ -2,5 +2,3 @@ node_modules/
 package-lock.json
 keys_dev.js
 default.json
-production.json
-/config/db.js
