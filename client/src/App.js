@@ -114,7 +114,7 @@ const App = () => {
               <Alert />
               <Switch>
                 {/* Category Pages */}
-                <Route exact path="/" component={Landing} />
+                {/* <Route exact path="/" component={Landing} /> */}
                 {/* <Route exact path="/" component={ProductsPage} /> */}
                 <Route exact path="/top" component={Tops} />
                 <Route exact path="/bottom" component={Bottoms} />
@@ -134,7 +134,7 @@ const App = () => {
                 <Route exact path="/sports" component={Sports} />
                 <Route exact path="/toys" component={Toys} />
                 <Route exact path="/brand" component={BrandPage} />*/}
-                <Route exact path="/explore" component={ExplorePage} />
+                <Route exact path="/" component={ExplorePage} />
                 {/* Auth Pages */}
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />

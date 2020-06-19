@@ -11,7 +11,7 @@ class Navbar extends Component {
                 {/* <Link to="/">
                     <NavItem background="var(--mainColor)">All</NavItem>
                 </Link> */}
-                <Link to="/explore">
+                <Link to="/">
                     <NavItem background="Fuchsia">
                         <i 
                             className="fab fa-wpexplorer" 
