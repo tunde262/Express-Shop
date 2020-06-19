@@ -17,6 +17,10 @@ const VariantSchema = new Schema({
     sku: {
         type: String
     },
+    show: {
+        type: Boolean,
+        default: true
+    },
     variants: {
         var1: {
             type: String

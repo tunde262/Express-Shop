@@ -17,8 +17,18 @@ const ProductSchema = new Schema({
         type: String,
         required: true
     },
+    price: {
+        type: Number,
+    },
+    qty: {
+        type: Number
+    },
     tags: {
         type: [String]
+    },
+    price: {
+        type: Number,
+        required: true
     },
     description: {
         type: String,
@@ -38,6 +48,33 @@ const ProductSchema = new Schema({
             },
             var4: {
                 type: [String],
+            },
+        }
+    ],
+    likes: [
+        {
+            user: {
+                type: Schema.Types.ObjectId,
+                ref: 'users'
+            }
+        }
+    ],
+    comments: [
+        {
+            user: {
+                type: Schema.Types.ObjectId,
+                ref: 'users'
+            },
+            text: {
+                type: String,
+                required: true
+            },
+            name: {
+                type: String
+            },
+            date: {
+                type: Date,
+                default: Date.now
             }
         }
     ],
