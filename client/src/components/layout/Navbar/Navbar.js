@@ -8,14 +8,16 @@ import './Navbar.css';
 const Navbar = props => (
     <header className="navbar">
         <nav className="navbar_navigation">
-            <div className="navbar_logo"><Link to="/explore"><i class="fas fa-home"></i></Link></div>
+            <div className="navbar_logo"><Link to="/"><h3><i class="fas fa-home"></i></h3></Link></div>
             <div className="spacer" />
             <div className="navbar_navigation-items">
                 <ul>
-                    <li onClick={props.drawerClickHandler}><i class="far fa-user"></i></li>
+                    <li onClick={props.drawerClickHandler}><h3><i class="far fa-user"></i></h3></li>
                     <li>
                         <Link to="/cart">
-                            <i class="fas fa-shopping-cart"></i>
+                            <h3>
+                                <i class="fas fa-shopping-cart"></i>
+                            </h3>
                         </Link>
                     </li>
                 </ul>

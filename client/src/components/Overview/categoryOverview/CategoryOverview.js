@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState, Fragment } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -7,6 +7,7 @@ import { handleTags, setSortedProducts, removeTags } from '../../../actions/prod
 import ReactGA from 'react-ga';
 
 import { HorizontalNav } from '../../common/HorizontalNav';
+import { NavItem } from '../../header/navbar/NavItem';
 
 class CategoryOverview extends Component {
     constructor(props) {
@@ -68,8 +69,13 @@ class CategoryOverview extends Component {
         // console.log(res);
     }
 
+    handleOrders(show) {
+        this.props.handleOrders(show);
+    }
+
     render() {
-        // let tags = this.getUnique(this.props.products, 'tags');
+    
+        // let tags = getUnique(props.products, 'tags');
         let tags = [];
         if(this.props.category === 'socks') {
             tags =  ["boats", "french fries", "tacos", "dotted", "striped", "USA"];
@@ -84,19 +90,54 @@ class CategoryOverview extends Component {
         if(this.props.category === 'tops') {
             tags =  ["men", "women", "small", "medium", "large", "pink", "white", "black", "yellow", "brown", "short-sleeve", "long-sleeve", "shirt", "tank top", "graphic tee"];
         }
+        if(this.props.category === 'admin') {
+            tags =  ["products", "orders", "collections"]; //, "collections", "inventory", "storage locations"
+        }
+
+        // if(products === null || loading) {
+        //     productList = <Spinner />;
+        // }
+        // else {
+        //     if(products.length > 0) {
+        //         productList = products.map(product => (
+        //             <ProductCard key={product._id} product={product} />
+        //         ))
+        //     }
+        //     else {
+        //         productList = <Title name="No Products" title="Available" />
+        //     }
+        // }
         
-        tags = tags.map((item, index) => {
-            return (
-                <CategoryItem 
-                    style={this.props.product.tags.includes(item) ? 
-                        {border: "0.05rem solid orange", fontWeight: "bold", color: 'orange'} : 
-                        {border: "0.05rem solid #5f6368", fontWeight: '200', color: "#5f6368"}} 
-                    key={index} 
-                    onClick={this.onFilterClick.bind(this, item)}>
-                    <p>{item}</p>
-                </CategoryItem>
-            );
-        })
+        if(this.props.category === 'admin') {
+            tags = tags.map((item, index) => {
+                return (
+                    <NavItem 
+                        style={this.props.product.tags.includes(item) ? 
+                            {background: `${this.props.background}`, color: 'white'} : 
+                            {borderColor: `${this.props.background}`, fontWeight: '200'}} 
+                        key={index} 
+                        background={this.props.background}
+                        onClick={this.handleOrders.bind(this, item)}>
+                        <b>{item}</b>
+                    </NavItem>
+                );
+            })
+        } else {
+            tags = tags.map((item, index) => {
+                return (
+                    <NavItem 
+                        style={this.props.product.tags.includes(item) ? 
+                            {background: `${this.props.background}`, color: 'white'} : 
+                            {borderColor: `${this.props.background}`, fontWeight: '200'}} 
+                        key={index} 
+                        background={this.props.background}
+                        onClick={this.onFilterClick.bind(this, item)}>
+                        <b>{item}</b>
+                    </NavItem>
+                );
+            })
+        }
+    
         return (
             <HorizontalNav background="white">
                 {tags}
@@ -120,12 +161,21 @@ const CategoryItem = styled.div`
     padding: 15px 10px 0 10px;
     min-width: 70px;
     display: inline-block;
-    background: white;
-    border-radius: 0.5rem;
+    border-width: 2px;
+    border-style: solid;
+    color: ${props => props.background}
+    border-color: ${props => props.background};
+    border-radius: 56px;
     margin: 0 10px;
     text-align: center;
     font-size: 1rem;
+    font-weight: bold;
 
+    &:hover {
+        transform: scale(1.05);
+        color: white;
+        background: ${props => props.background};
+    }
 `;
 
 export default connect(mapStateToProps, { handleTags, setSortedProducts, removeTags })(CategoryOverview);

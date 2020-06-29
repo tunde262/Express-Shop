@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ProductSchema = new Schema({
+    store: {
+        type: Schema.Types.ObjectId,
+        ref: 'store'
+    },
     name: {
         type: String,
         required: true
@@ -13,49 +17,44 @@ const ProductSchema = new Schema({
     img_name: {
         type: String
     },
-    category: {
-        type: String,
-        required: true
-    },
     price: {
         type: Number,
     },
-    qty: {
+    sale_price: {
+        type: String
+    },
+    inventory_qty: {
         type: Number
+    },
+    category: {
+        type: String
     },
     tags: {
         type: [String]
     },
-    price: {
-        type: Number,
-        required: true
+    sku: {
+        type: String
     },
     description: {
-        type: String,
-        required: true
+        type: String
     },
-    varInfo: [
-        {
-            var1: {
-                type: [String],
-                required: true
-            },
-            var2: {
-                type: [String],
-            },
-            var3: {
-                type: [String],
-            },
-            var4: {
-                type: [String],
-            },
-        }
-    ],
+    website_link: {
+        type: String
+    },
+    visible: {
+        type: Boolean
+    },
+    in_stock: {
+        type: Boolean
+    },
+    condition: {
+        type: String
+    },
     likes: [
         {
             user: {
                 type: Schema.Types.ObjectId,
-                ref: 'users'
+                ref: 'user'
             }
         }
     ],
@@ -63,7 +62,7 @@ const ProductSchema = new Schema({
         {
             user: {
                 type: Schema.Types.ObjectId,
-                ref: 'users'
+                ref: 'user'
             },
             text: {
                 type: String,

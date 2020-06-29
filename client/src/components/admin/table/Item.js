@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getProducts } from '../../../actions/productActions';
+import { getStoreProducts, deleteProduct } from '../../../actions/productActions';
 import Spinner from '../../common/Spinner';
 import 'react-responsive-modal/styles.css';
 
-const Item = ({ product: {loading, products}, getProducts }) => {
+
+const Item = ({ product: {loading, products}, getStoreProducts, deleteProduct }) => {
     useEffect(() => {
-        getProducts();
-      }, [getProducts])
+        getStoreProducts();
+      }, [getStoreProducts])
 
     const [modalShow, setModal] = useState(false);
      
@@ -30,36 +31,36 @@ const Item = ({ product: {loading, products}, getProducts }) => {
         if(products.length > 0) {
             productList = products.map(product => (
                 <tr key={product._id}>
+                    <td>
+                        <input type="checkbox" value=""/>
+                    </td>
                     <td><img style={{width: '50px'}} src={`/api/products/image/${product.img_name}`} alt="img" /></td>
-                    <td className="hide-sm">{product.title}</td>
+                    <td><Link to={"/admin/product/" + product._id}>{product.name}</Link></td>
+                    <td>5 Stock / 2 Variants</td>
                     <td>{product.price}</td>
-                    <td><i className="fas fa-trash"></i></td>
+                    <td><i onClick={() => deleteProduct(product._id)} className="fas fa-trash"></i></td>
                 </tr>
 
             ));
         } else {
-            productList = <h3>No Products</h3>
+            productList = <h3>No Items</h3>
         }
     }
 
     return (
         <Fragment>
-            <div className="row">
-                <div className="col-sm-6">
-                    <h2 className="my-2">Items</h2>
-                </div>
-                <div className="col-sm-6 flex-end">
-                    <Link to="/admin/add" onClick={openModal}>
-                        Add Item
-                    </Link>
-                </div>
-            
-            </div>
+            <section>
+                <p style={{alignSelf: 'flex-end'}}>50 Items</p>
+                <Link to="/admin/add-product" style={{background: '#42b499', color:'#fff'}} className="btn">Add Item</Link>
+            </section>
             <table className="table">
                 <thead>
                     <tr>
+                        <th>
+                            <input type="checkbox" value=""/>
+                        </th>
                         <th>Img</th>
-                        <th className="hide-sm">Title</th>
+                        <th>Name</th>
                         <th>Stock</th>
                         <th>Price</th>
                         <th />
@@ -78,7 +79,7 @@ const Item = ({ product: {loading, products}, getProducts }) => {
 Item.propTypes = {
     product: PropTypes.object.isRequired,
     deleteProduct: PropTypes.func.isRequired,
-    getProducts: PropTypes.func.isRequired,
+    getStoreProducts: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -86,4 +87,4 @@ const mapStateToProps = state => ({
     product: state.product
 })
 
-export default connect(mapStateToProps, { getProducts })(Item);
+export default connect(mapStateToProps, { getStoreProducts, deleteProduct })(Item);

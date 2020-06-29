@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const StoreSchema = new mongoose.Schema({
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'user'
+const StoreSchema = new Schema({
+    profile: {
+        type: Schema.Types.ObjectId,
+        ref: 'profile'
     },
     img: {
-        type: mongoose.Schema.Types.ObjectId, // There is no need to create references here
+        type: Schema.Types.ObjectId, // There is no need to create references here
         ref: 'uploads'
     },
     img_name: {
@@ -22,10 +23,39 @@ const StoreSchema = new mongoose.Schema({
     tags: {
         type: [String]
     },
-    status: {
-        type: String,
-        required: true
-    },
+    products: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'product'
+        }
+    ],
+    favorites: [
+        {
+            user: {
+                type: Schema.Types.ObjectId,
+                ref: 'users'
+            }
+        }
+    ],
+    reviews: [
+        {
+            user: {
+                type: Schema.Types.ObjectId,
+                ref: 'users'
+            },
+            text: {
+                type: String,
+                required: true
+            },
+            name: {
+                type: String
+            },
+            date: {
+                type: Date,
+                default: Date.now
+            }
+        }
+    ],
     social: {
         youtube: {
             type: String,
@@ -36,12 +66,12 @@ const StoreSchema = new mongoose.Schema({
         facebook: {
             type: String,
         },
-        linkedin: {
-            type: String,
-        },
         instagram: {
             type: String,
         },
+        website: {
+            type: String
+        }
     },
     date: {
         type: Date,

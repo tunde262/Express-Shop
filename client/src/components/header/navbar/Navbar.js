@@ -12,11 +12,11 @@ class Navbar extends Component {
                     <NavItem background="var(--mainColor)">All</NavItem>
                 </Link> */}
                 <Link to="/">
-                    <NavItem background="Fuchsia">
+                    <NavItem background="OrangeRed">
                         <i 
                             className="fab fa-wpexplorer" 
                             style={{
-                                color: 'white', 
+                                color: 'OrangeRed', 
                                 fontSize: '2rem'
                             }}>
                         </i>
@@ -28,47 +28,47 @@ class Navbar extends Component {
                         <i 
                             className="fas fa-tshirt" 
                             style={{
-                                color: 'white', 
+                                color: 'DeepSkyBlue', 
                                 fontSize: '2rem'
                             }}>
                         </i>
-                        {' '}Tops
+                        {' '}Clothing & Fashion
                     </NavItem>
                 </Link>
                 <Link to="/bottom">
-                    <NavItem background="Teal">
+                    <NavItem background="MediumSlateBlue">
                         <i 
                             className="fas fa-shoe-prints" 
                             style={{
-                                color: 'white', 
+                                color: 'MediumSlateBlue', 
                                 fontSize: '2rem'
                             }}>
                         </i>
-                        {' '}Bottoms
+                        {' '}Shoes
                     </NavItem>
                 </Link>
                 <Link to="/hat">
-                    <NavItem background="OrangeRed">
+                    <NavItem background="Fuchsia">
                         <i 
                             className="fas fa-graduation-cap" 
                             style={{
-                                color: 'white', 
+                                color: 'Fuchsia', 
                                 fontSize: '2rem'
                             }}>
                         </i>
-                        {' '}Hats
+                        {' '}Household Essentials
                     </NavItem>
                 </Link>
-                {/* <Link to="/socks">
-                    <NavItem background="MediumSlateBlue">
+                <Link to="/socks">
+                    <NavItem background="Tan">
                         <i 
                             className="fas fa-socks" 
                             style={{
-                                color: 'white', 
+                                color: 'Tan', 
                                 fontSize: '2rem'
                             }}>
                         </i>
-                        {' '}Socks
+                        {' '}Personal Care
                     </NavItem>
                 </Link>
                 <Link to="/household-essentials">
@@ -80,7 +80,7 @@ class Navbar extends Component {
                                 fontSize: '2rem'
                             }}>
                         </i>
-                        {' '}Household Essentials
+                        {' '}Pets
                     </NavItem>
                 </Link>
                 <Link to="/personal-care">
@@ -92,19 +92,19 @@ class Navbar extends Component {
                                 fontSize: '2rem'
                             }}>
                         </i>
-                        {' '}Personal Care
+                        {' '}School & Office Supplies
                     </NavItem>
                 </Link>
                 <Link to="/pets">
-                    <NavItem background="Gold">
+                    <NavItem background="Fuchsia">
                         <i 
                             className="fas fa-paw" 
                             style={{
-                                color: 'white',
+                                color: 'Fuchsia',
                                 fontSize: '2rem'
                             }}>
                         </i>
-                        {' '}Pets
+                        {' '}Women 
                     </NavItem>
                 </Link>
                 <Link to="/baby">
@@ -116,7 +116,7 @@ class Navbar extends Component {
                                 fontSize: '2rem'
                             }}>
                         </i>
-                        {' '}Baby
+                        {' '}Men
                     </NavItem>
                 </Link>
                 <Link to="/kitchen-dining">
@@ -140,15 +140,15 @@ class Navbar extends Component {
                                 fontSize: '2rem'
                             }}>
                         </i>
-                        {' '}Party Supplies
+                        {' '}Bathroom
                     </NavItem>
                 </Link>
                 <Link to="/school-office">
-                    <NavItem background="DeepSkyBlue">
+                    <NavItem background="OrangeRed">
                         <i 
                             className="fas fa-chalkboard-teacher" 
                             style={{
-                                color: 'white', 
+                                color: 'OrangeRed', 
                                 fontSize: '2rem'
                             }}>
                         </i>
@@ -156,19 +156,18 @@ class Navbar extends Component {
                     </NavItem>
                 </Link>
                 <Link to="/health">
-                    <NavItem background="LawnGreen">
+                    <NavItem background="DeepSkyBlue">
                         <i 
                             className="fas fa-band-aid" 
                             style={{
-                                color: 'white',
+                                color: 'DeepSkyBlue',
                                 fontSize: '2rem'
                             }}>
                         </i>
-                        {' '}Health
+                        {' '}Laundry Items
                     </NavItem>
-                </Link> */}
-                {/* 
-                <Link to="/apparel">
+                </Link> 
+                {/* <Link to="/apparel">
                     <NavItem background="DeepSkyBlue">
                         <i 
                             className="fas fa-tshirt" 

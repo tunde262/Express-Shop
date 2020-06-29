@@ -3,27 +3,27 @@ import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import Spinner from '../../common/Spinner';
-import { getOrders } from '../../../actions/order';
+import { getOrders } from '../../../actions/productActions';
 
-const Order = ({ order: {loading, orders}, deleteOrder }) => {
+const Order = ({ order, getOrders }) => {
     useEffect(() => {
         getOrders();
     }, [getOrders]);
 
     let orderList; 
     
-    if(orders === null || loading) {
+    if(order === null || order.loading) {
         orderList = <Spinner />; 
     } else {
-        if(orders.length > 0) {
-            orderList = orders.map(order => (
+        if(order.length > 0) {
+            orderList = order.map(order => (
                 <tr key={order._id}>
                     <td>{order._id}</td>
                     <td className="hide-sm"><Moment format='MM/DD/YYYY'>{order.date}</Moment></td>
                     <td>{order.name}</td>
                     <td>{order.status}</td>
                     <td>{order.cart.totalPrice}</td>
-                    <td><i style={{transform: "scale(1.5)"}} className="fas fa-trash" onClick={() => deleteOrder(order._id)}></i></td>
+                    <td><i style={{transform: "scale(1.5)"}} className="fas fa-trash"></i></td>
                 </tr>
 
             ));
@@ -58,7 +58,7 @@ Order.propTypes = {
 
 const mapStateToProps = state => ({
     profile: state.profile,
-    order: state.order
+    order: state.product.orders
 })
 
-export default connect(mapStateToProps, null)(Order);
+export default connect(mapStateToProps, {getOrders})(Order);

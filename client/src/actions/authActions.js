@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { setAlert } from './alertActions';
+import { getCurrentProfile } from './profileActions';
 import { REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from './types';
 import setAuthToken from '../utils/setAuthToken';
 
@@ -42,6 +43,7 @@ export const register = ({ name, email, password }) => async dispatch => {
         });
 
         dispatch(loadUser());
+        dispatch(getCurrentProfile());
     } catch (err) {
         const errors = err.response.data.errors;
 

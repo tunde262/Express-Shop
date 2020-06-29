@@ -1,0 +1,330 @@
+const express = require('express');
+const router = express.Router();
+const mongoose = require('mongoose');
+const path = require('path');
+const auth = require('../../middleware/auth');
+const { check, validationResult } = require('express-validator');
+//gridfs
+const crypto = require('crypto');
+const multer = require('multer');
+const GridFsStorage = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+
+// Load Models
+const Product = require('../../models/Product');
+const Darkstore = require('../../models/Darkstore');
+const Store = require('../../models/Store');
+const Profile = require('../../models/Profile');
+
+//Db Config
+const config = require('config');
+const db = config.get('mongoURI');
+
+// Create Mongo Connection
+const conn = mongoose.createConnection(db, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+});
+
+// Init gfs
+let gfs;
+
+conn.once('open', () => {
+    // Init stream
+    gfs = Grid(conn.db, mongoose.mongo);
+    gfs.collection('images');
+})
+
+// Create Storage engine
+const storage = new GridFsStorage({
+    url: db,
+    file: (req, file) => {
+        return new Promise((resolve, reject) => {
+            crypto.randomBytes(16, (err, buf) => {
+                if (err) {
+                    return reject(err);
+                }
+                const filename = buf.toString('hex') + path.extname(file.originalname);
+                const fileInfo = {
+                    filename: filename,
+                    bucketName: 'images'
+                };
+                resolve(fileInfo);
+            });
+        });
+    }
+});
+const upload = multer({ storage });
+
+// @route GET api/darkstores
+// @desc Get Darkstores
+// @access Public
+router.get('/', auth, async (req, res) => {
+    try {
+    const darkstores = await Darkstore.find().populate('variants', ['name', 'category', '_id', 'img_name']);
+    res.json(darkstores);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Servor Error');
+    }
+});
+
+// @route GET api/darkstores
+// @desc Get Store's Darkstore (storage) locations
+// @access Private
+router.get('/store/:id', auth, async (req, res) => {
+    try {
+        const darkstores = await Darkstore.find({ store: req.params.id });
+
+        res.json(darkstores);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
+//@route GET /:category_id
+//@desc Get single Darkstore 
+router.get('/:id', async (req, res) => {
+    try {
+        const darkstore = await Darkstore.findById(req.params.id);
+
+        if(!darkstore) {
+            return res.status(404).json({ msg: 'Location not found' });
+        }
+
+        res.json(darkstore);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+// @route POST api/darkstores
+// @desc Create A Darkstore
+// @access Public
+router.post('/', upload.single('file'), [ auth, [
+        check('name', 'Name is required').not().isEmpty()
+    ]], async(req, res) => {
+        const errors = validationResult(req);
+        if(!errors.isEmpty()) {
+            return res.status(400).json({errors: errors.array() });
+        }
+
+        const {
+            name,
+            street,
+            city,
+            state, 
+            zipcode
+        } = req.body;
+
+        // Get fields. Build darkstore object
+        const darkstoreFields = {};
+        if(name) darkstoreFields.name = name;
+        if(req.file) darkstoreFields.img = req.file.id;
+        if(req.file) darkstoreFields.img_name = req.file.filename;
+        
+        // Build social array
+        darkstoreFields.address = {};
+        if(street) darkstoreFields.address.street = street;
+        if(city) darkstoreFields.address.city = city;
+        if(state) darkstoreFields.address.state = state;
+        if(zipcode) darkstoreFields.address.zipcode = zipcode;
+
+        try {
+            const profile = await Profile.findOne({ user: req.user.id });
+            const store = await Store.findOne({ profile: profile.id });
+            darkstoreFields.store = store.id;
+            // Create
+            const newDarkstore = new Darkstore(darkstoreFields);
+            
+            const darkstore = await newDarkstore.save();
+            res.json(darkstore);
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send('Server Error');
+        }
+    }
+);
+
+// @route POST api/darkstores/:id
+// @desc Edit A Darkstore
+// @access Public
+router.post('/:id', upload.single('file'), [ auth, [
+    check('name', 'Name is required').not().isEmpty()
+    ]], async(req, res) => {
+        const errors = validationResult(req);
+        if(!errors.isEmpty()) {
+            return res.status(400).json({errors: errors.array() });
+        }
+
+        const {
+            name,
+            street,
+            city,
+            state, 
+            zipcode
+        } = req.body;
+
+        // Get fields. Build darkstore object
+        const darkstoreFields = {};
+        if(name) darkstoreFields.name = name;
+        if(req.file) darkstoreFields.img = req.file.id;
+        if(req.file) darkstoreFields.img_name = req.file.filename;
+
+        // Build social array
+        darkstoreFields.address = {};
+        if(street) darkstoreFields.address.street = street;
+        if(city) darkstoreFields.address.city = city;
+        if(state) darkstoreFields.address.state = state;
+        if(zipcode) darkstoreFields.address.zipcode = zipcode;
+
+        try {
+            const profile = await Profile.findOne({ user: req.user.id });
+            const store = await Store.findOne({ profile: profile.id });
+            darkstoreFields.store = store.id;
+
+            let darkstore = await Darkstore.findById(req.params.id );
+
+            if(!darkstore) {
+                return res.status(404).json({ msg: 'Darkstore not found' });
+            }
+
+            // Update
+            darkstore = await Darkstore.findOneAndUpdate(
+                { _id: req.params.id }, 
+                { $set: darkstoreFields }, 
+                { new: true }
+            );
+
+            return res.json(darkstore);
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send('Server Error');
+        }
+    }
+);
+
+// @route DELETE api/darkstores/:id
+// @desc Delete darkstore
+router.delete('/:id', auth, async (req, res) => {
+    try {
+        const darkstore = await Darkstore.findById(req.params.id);
+
+        if(!darkstore) {
+            return res.status(404).json({ msg: 'Darkstore not found' });
+        }
+
+        // TODO
+        // if(darkstore.store.toString() !== req.params.store_id) {
+        //     return res.status(401).json({ msg: 'User not authorized' });
+        // }
+        
+        await darkstore.remove();
+
+        res.json({ msg: 'Location removed' });
+    } catch (err) {
+        console.error(err.message);
+        if(err.name == 'CastError') {
+            return res.status(404).json({ msg: 'Location not found' });
+        }
+        res.status(500).send('Server Error'); 
+    }
+});
+
+// @route PUT api/darkstores/product/:id
+// @desc Add & Remove New Item to Darkstore's products
+// @access Private
+router.put('/product/:id', auth, async (req, res) => {
+    try {
+        const darkstore = await Darkstore.findById(req.params.id);
+
+        // Check if product already liked by same user
+        if(darkstore.products.filter(product => product.toString() === req.body.id).length > 0) {
+            // Get remove index
+            const removeIndex = darkstore.products.map(product => product.toString()).indexOf(req.body.id);
+
+            darkstore.products.splice(removeIndex, 1);
+        } else {
+            darkstore.products.unshift(req.body.id);
+        }
+
+        await darkstore.save();
+
+        res.json(darkstore.products);
+    } catch (err) {
+        console.error(err.message);
+        
+        res.status(500).send('Server Error'); 
+    }
+});
+
+//@route GET /files
+//@desc Display all image files in JSON
+router.get('/files', (req, res) => {
+    gfs.files.find().toArray((err, files) => {
+        // Check if files
+        if(!files || files.length === 0) {
+            return res.status(404).json({
+                err: 'No files exist'
+            });
+        }
+
+        //Files exist
+        return res.json(files);
+    });
+});
+
+//@route GET /files/:filename
+//@desc Display single image object
+router.get('/files/:filename', (req, res) => {
+    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+        // Check if file
+        if(!file || file.length === 0) {
+            return res.status(404).json({
+                err: 'No files exist'
+            });
+        }
+        //File exists
+        return res.json(file);
+    });
+});
+
+//@route GET /image/:filename
+//@desc Display Image
+router.get('/image/:filename', (req, res) => {
+    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+        // Check if file
+        if(!file || file.length === 0) {
+            return res.status(404).json({
+                err: 'No files exist'
+            });
+        }
+        
+        //Check if image
+        if(file.contentType === 'image/jpeg' || file.contentType === 'img/png' || file.contentType === 'image/png') {
+            //  Read output to browser
+            const readstream = gfs.createReadStream(file.filename);
+            readstream.pipe(res);
+        } else {
+            res.status(404).json({
+                err: 'Not an image'
+            });
+        }
+    });
+});
+
+//@route DELETE /files/:id
+//@desc Delete image
+router.delete('/files/:id', (req, res) => {
+    gfs.remove({ _id: req.params.id }, (err) => {
+        if (err) {
+            return res.status(500).json({ success: false })
+        }
+        return res.json({ success: true });
+    });
+});
+
+module.exports = router;
+

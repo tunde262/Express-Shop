@@ -1,12 +1,17 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../../actions/authActions';
+import { getCurrentProfile, deleteAccount } from '../../../actions/profileActions';
 
 import './SideDrawer.css';
 
-const SideDrawer = ({ auth: { isAuthenticated, loading }, logout, show}) => {
+const SideDrawer = ({ getCurrentProfile, deleteAccount, profile: { profile }, auth: { isAuthenticated, loading }, logout, show}) => {
+    useEffect(() => {
+        getCurrentProfile();
+    }, [getCurrentProfile]);
+
     let drawerClasses = 'side-drawer';
     if (show) {
         drawerClasses = 'side-drawer open';
@@ -25,7 +30,19 @@ const SideDrawer = ({ auth: { isAuthenticated, loading }, logout, show}) => {
                     <span className="hide-sm">Logout</span>
                 </a>
             </li>
-            <li><Link to="/profile">Orders</Link></li>
+            <li><Link to="/">Explore</Link></li>
+            <li><Link to="/categories">Categories</Link></li>
+            <li><Link to="/stores">Stores</Link></li>
+            <li><Link to="/deals">Deals</Link></li>
+            <li><Link to="/profile">Same Day Delivery</Link></li>
+            <li><Link to="/profile">Reorder</Link></li>
+            <li><Link to="/profile">Track Order</Link></li>
+            <li><Link to="/profile">Contact Us</Link></li>
+            <li>    
+                <Link to='/admin' className="btn btn-primary my-1">
+                    Open A Store
+                </Link>
+            </li>
         </ul>
     );
 
@@ -33,8 +50,16 @@ const SideDrawer = ({ auth: { isAuthenticated, loading }, logout, show}) => {
         <ul className={authClasses}>
             <li><Link to="/login">Login</Link></li>
             <li><Link to="/register">Create An Account</Link></li>
+            <hr />
+            <li><Link to="/profile">Track Order</Link></li>
+            <li><Link to="/profile">Reorder</Link></li>
+            <li><Link to="/profile">FAQ</Link></li>
+            <li><Link to="/profile">Contact Us</Link></li>
+            
         </ul>
     );
+
+
     return (
         <nav className={drawerClasses}>
             { !loading && (<Fragment>{ isAuthenticated ? authLinks : guestLinks }</Fragment>) }
@@ -43,12 +68,16 @@ const SideDrawer = ({ auth: { isAuthenticated, loading }, logout, show}) => {
 }
 
 SideDrawer.propTypes = {
+    getCurrentProfile: PropTypes.func.isRequired,
     logout: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
+    profile: PropTypes.object.isRequired,
+    deleteAccount: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.auth,
+    profile: state.profile
 });
 
-export default connect(mapStateToProps, { logout })(SideDrawer);
+export default connect(mapStateToProps, { getCurrentProfile, deleteAccount, logout })(SideDrawer);

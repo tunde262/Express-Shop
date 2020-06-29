@@ -27,7 +27,7 @@ class Tops extends Component {
                 </Logo> */}
                 <Header />
                 <hr />
-                <Container title="Tops" category="tops"  />
+                <Container title="Tops" category="tops" background="DeepSkyBlue" />
             </Fragment>
         )
     }

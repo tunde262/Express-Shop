@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const OrderSchema = new Schema({
+    store: {
+        type: Schema.Types.ObjectId,
+        ref: 'store'
+    },
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User'
@@ -11,8 +15,22 @@ const OrderSchema = new Schema({
         required: true
     },
     address: {
-        type: String,
-        required: true
+        street: {
+            type: String,
+            required: true
+        },
+        city: {
+            type: String,
+            required: true
+        },
+        state:{
+            type: String,
+            required: true
+        },
+        zipcode: {
+            type: String,
+            required: true
+        }
     },
     telephone: {
         type: Number,

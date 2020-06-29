@@ -1,20 +1,28 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const path = require('path');
+
+const auth = require('../../middleware/auth');
+const { check, validationResult } = require('express-validator');
+
 //gridfs
 const crypto = require('crypto');
 const multer = require('multer');
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
+const path = require('path');
 
-// Load Product Model
+// Load Models
 const Product = require('../../models/Product');
-// Load Cart Model
+const Variant = require('../../models/Variant');
 const Cart = require('../../models/Cart');
+const User = require('../../models/User');
+const Profile = require('../../models/Profile');
+const Store = require('../../models/Store');
 
 //Db Config
 const config = require('config');
+const { listIndexes } = require('../../models/Product');
 const db = config.get('mongoURI');
 
 // Create Mongo Connection
@@ -56,71 +64,406 @@ const upload = multer({ storage });
 // @route GET api/products
 // @desc Get Products
 // @access Public
-router.get('/', (req, res) => {
-    Product.find()
-        .then(products => {
-            res.json(products);
-        })
-        .catch(err => res.status(404).json(err));
+router.get('/', async (req, res) => {
+    try {
+        const products = await Product.find();
+
+        res.json(products);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
 });
 
-router.get('/category/:category', (req, res) => {
-    Product.find({ 'category': req.params.category })
-        .then(prod => {
-            res.json(prod);
-        })
-        .catch(err => res.status(404).json({prod: 'This is not a category'}));
+// @route GET api/products
+// @desc Get Products by user 
+// @access Public
+router.get('/store', auth, async (req, res) => {
+    try {
+        const profile = await Profile.findOne({ user: req.user.id });
+        const store = await Store.findOne({ profile: profile.id });
+        const products = await Product.find({ store: store.id });
+
+        res.json(products);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
+// @route GET api/products
+// @desc Get Products by store ID
+// @access Public
+router.get('/store/:id', async (req, res) => {
+    try {
+        const products = await Product.find({ store: req.params.id });
+
+        res.json(products);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
+//@route GET /:id
+//@desc Get single product by id
+router.get('/:id', async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+
+        if(!product) {
+            return res.status(404).json({ msg: 'Product not found' });
+        }
+
+        res.json(product);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
+// @route GET api/products
+// @desc Get Product by category
+// @access Public
+router.get('/category/:category', async (req, res) => {
+    try {
+        const products = await Product.find({ category: req.params.category });
+
+        res.json(products);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
 });
 
 // @route POST api/products
 // @desc Create A Product
 // @access Public
-router.post('/', upload.single('file'), (req, res) => {
-    console.log(req.file)
+router.post('/', upload.single('file'),[ auth, [
+        check('name', 'Name is required').not().isEmpty(),
+        check('description', 'Description is required').not().isEmpty()
+    ]], async (req, res) => {
+        const errors = validationResult(req);
+        if(!errors.isEmpty()) {
+            return res.status(400).json({errors: errors.array() });
+        }
 
-    // Get fields
-    const productFields = {};
-    if(req.body.title) productFields.title = req.body.title;
-    if(req.file.id) productFields.img = req.file.id;
-    if(req.file.filename) productFields.img_name = req.file.filename;
-    if(req.body.price) productFields.price = req.body.price;
-    if(req.body.qty) productFields.qty = req.body.qty;
-    if(req.body.color) productFields.color = req.body.color;
-    if(req.body.size) productFields.size = req.body.size;
-    if(req.body.company) productFields.company = req.body.company;
-    if(req.body.info) productFields.info = req.body.info;
-    if(req.body.gender) productFields.gender = req.body.gender;
-    // Locations - Split into array
-    if(typeof req.body.locations !== 'undefined') {
-        productFields.locations = req.body.locations.split(',');
+        const {
+            name,
+            category,
+            price,
+            sale_price,
+            inventory_qty,
+            tags, 
+            description,
+            sku,
+            website_link,
+            visible,
+            in_stock,
+            condition
+        } = req.body;
+
+        // Get fields
+        const productFields = {};
+        if(name) productFields.name = name;
+        if(req.file) productFields.img = req.file.id;
+        if(req.file) productFields.img_name = req.file.filename;
+        if(price) productFields.price = price;
+        if(sale_price) productFields.sale_price = sale_price;
+        if(inventory_qty) productFields.inventory_qty = inventory_qty;
+        if(description) productFields.description = description;
+        if(sku) productFields.sku = sku;
+        if(category) productFields.category = category;
+        if(website_link) productFields.website_link = website_link;
+        if(visible) productFields.visible = visible;
+        if(in_stock) productFields.in_stock = in_stock;
+        if(condition) productFields.condition = condition;
+        
+        // Tags - Split into array
+        if(tags) {
+            productFields.tags = tags.split(',').map(tag => tag.trim());
+        } 
+        
+        try {
+            const profile = await Profile.findOne({ user: req.user.id });
+            const store = await Store.findOne({ profile: profile.id });
+            productFields.store = store.id;
+            
+            // Create
+            const newProduct = new Product(productFields);
+        
+            await newProduct.save();
+            res.json(newProduct);
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send('Server Error');
+        }
     }
-    if(req.body.category) productFields.category = req.body.category;
-    if(req.body.featured) productFields.featured = req.body.featured;
-    // Tags - Split into array
-    if(typeof req.body.tags !== 'undefined') {
-        productFields.tags = req.body.tags.split(',');
+);
+
+// @route POST api/products
+// @desc Edit A Product
+// @access Public
+router.post('/:id', upload.single('file'),[ auth, [
+        check('name', 'Name is required').not().isEmpty(),
+        check('description', 'Description is required').not().isEmpty()
+    ]], async (req, res) => {
+        const errors = validationResult(req);
+        if(!errors.isEmpty()) {
+            return res.status(400).json({errors: errors.array() });
+        }
+
+        const {
+            name,
+            category,
+            price,
+            sales_price,
+            inventory_qty,
+            tags, 
+            description,
+            website_link,
+            visible,
+            in_stock,
+            condition
+        } = req.body;
+
+        // Get fields
+        const productFields = {};
+        if(name) productFields.name = name;
+        if(req.file) productFields.img = req.file.id;
+        if(req.file) productFields.img_name = req.file.filename;
+        if(price) productFields.price = price;
+        if(sales_price) productFields.sales_price = sales_price;
+        if(inventory_qty) productFields.inventory_qty = inventory_qty;
+        if(description) productFields.description = description;
+        if(category) productFields.category = category;
+        if(website_link) productFields.website_link = website_link;
+        if(visible) productFields.visible = visible;
+        if(in_stock) productFields.in_stock = in_stock;
+        if(condition) productFields.condition = condition;
+        
+        // Tags - Split into array
+        if(tags) {
+            productFields.tags = tags.split(',').map(tag => tag.trim());
+        } 
+        
+        try {
+            const profile = await Profile.findOne({ user: req.user.id });
+            const store = await Store.findOne({ profile: profile.id });
+            productFields.store = store.id;
+            
+            let product = await Product.findById(req.params.id);
+
+            if(!product) {
+                return res.status(404).json({ msg: 'Product not found' });
+            }
+
+            // Update
+            product = await Product.findOneAndUpdate(
+                { _id: req.params.id }, 
+                { $set: productFields }, 
+                { new: true }
+            );
+
+            return res.json(product);
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send('Server Error');
+        }
     }
-    
-    new Product(productFields).save().then(product => res.json(product));
-});
+);
 
 // @route DELETE api/products/:prod_id
-// @desc Delete product 
-router.delete('/:prod_id', (req, res) => {
-    Product.findOneAndRemove({ _id: req.params.prod_id })
-        .then()
-        .catch(err => res.status(404).json('Product not found'));
+// @desc Delete product & all its variants
+router.delete('/:id', auth, async (req, res) => {
+    try {
+        // Remove product variants
+        await Variant.deleteMany({ product: req.params.id });
+
+        const product = await Product.findById(req.params.id);
+
+        if(!product) {
+            return res.status(404).json({ msg: 'Product not found' });
+        }
+
+        // TODO
+        // if(product.store.toString() !== req.params.store_id) {
+        //     return res.status(401).json({ msg: 'User not authorized' });
+        // }
+
+        await product.remove();
+
+        res.json({ msg: 'Product removed' });
+    } catch (err) {
+        console.error(err.message);
+        if(err.name == 'CastError') {
+            return res.status(404).json({ msg: 'Product not found' });
+        }
+        res.status(500).send('Server Error');
+    }
 });
 
-//@route GET /:prod_id
-//@desc Get single product 
-router.get('/:prod_id', (req, res) => {
-    Product.findById(req.params.prod_id)
-        .then(prod => {
-            res.json(prod);
-        })
-        .catch(err => res.status(404).json({prod: 'This Product was never added'}));
+// ---- Interactions -----
+
+// @route PUT api/products/like/:id
+// @desc Like a Product
+// @access Private
+router.put('/like/:id', auth, async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+
+        // Check if product already liked by same user
+        if(product.likes.filter(like => like.user.toString() === req.user.id).length > 0) {
+            // Get remove index
+            const removeIndex = product.likes.map(like => like.user.toString()).indexOf(req.user.id);
+
+            product.likes.splice(removeIndex, 1);
+        } else {
+            product.likes.unshift({ user: req.user.id });
+        }
+
+        await product.save();
+
+        res.json(product.likes);
+    } catch (err) {
+        console.error(err.message);
+        
+        res.status(500).send('Server Error'); 
+    }
+})
+
+// // @route PUT api/products/unlike/:id
+// // @desc Unlike a Product
+// // @access Private
+// router.put('/unlike/:id', auth, async (req, res) => {
+//     try {
+//         const product = await Product.findById(req.params.id);
+
+//         // Check if product has been liked by same user
+//         if(product.likes.filter(like => like.user.toString() === req.user.id).length === 0) {
+//             return res.status(400).json({ msg: 'Product has not yet been liked'});
+//         }
+
+//         // Get remove index
+//         const removeIndex = product.likes.map(like => like.user.toString()).indexOf(req.user.id);
+
+//         product.likes.splice(removeIndex, 1);
+
+//         await product.save();
+
+//         res.json(product.likes);
+//     } catch (err) {
+//         console.error(err.message);
+        
+//         res.status(500).send('Server Error'); 
+//     }
+// });
+
+// @route POST api/products/comment/:id
+// @desc Comment on a product
+// @access Private
+router.post('/comment/:id', [ auth, [
+    check('text', 'Text is required').not().isEmpty()
+]], async (req, res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const user = await User.findById(req.user.id).select('-password');
+    const product = await Product.findById(req.params.id);
+
+    try {
+        const newComment = {
+            text: req.body.text,
+            name: user.name,
+            user: req.user.id
+        };
+
+        product.comments.unshift(newComment);
+        await product.save()
+
+        res.json(product.comments);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
 });
+
+// @route DELETE api/products/comment/:id/:comment_id
+// @desc Remove comment on a product
+// @access Private
+router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+
+        // Pull out comment
+        const comment = product.comments.find(comment => comment.id === req.params.comment_id); // Will return comment or 'false'
+
+        // Make sure comment exists
+        if(!comment) {
+            return res.status(404).json({ msg: 'Comment does not exist' });
+        }
+
+        // Check user is creator of post
+        if(comment.user.toString() !== req.user.id) {
+            return res.status(401).json({ msg: 'User not authorized'})
+        }
+
+        // Get remove index
+        const removeIndex = product.comments.map(comment => comment.id.toString()).indexOf(comment.id);
+
+        product.comments.splice(removeIndex, 1);
+
+        await product.save();
+
+        res.json(product.comments);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
+// ---- Cart -----
+
+// @desc Add to cart
+router.get('/add-to-cart/:id', (req, res, next) => {
+    const productId = req.params.id;
+    const cart = new Cart(req.session.cart ? req.session.cart : {});
+
+    Product.findById(productId, (err, product) => {
+        if(err) throw err;
+
+        cart.add(product, product.id);
+        req.session.cart = cart;
+        console.log(req.session.cart);
+        res.json(req.session.cart);
+    });
+});
+
+router.get('/reduce/:id', function(req, res, next) {
+    const productId = req.params.id;
+    const cart = new Cart(req.session.cart ? req.session.cart : {});
+  
+    cart.reduceByOne(productId);
+    req.session.cart = cart;
+    res.json(req.session.cart);
+});
+  
+router.get('/remove/:id', function(req, res, next) {
+    const productId = req.params.id;
+    const cart = new Cart(req.session.cart ? req.session.cart : {});
+  
+    cart.removeItem(productId);
+    req.session.cart = cart;
+    res.json(req.session.cart);
+});
+
+router.get('/cart/all', (req, res) => {
+    res.json(req.session.cart);
+});
+
+// ---- GridFs -----
 
 //@route GET /files
 //@desc Display all image files in JSON
@@ -186,43 +529,6 @@ router.delete('/files/:id', (req, res) => {
         }
         return res.json({ success: true });
     });
-});
-
-// @desc Add to cart
-router.get('/add-to-cart/:id', (req, res, next) => {
-    const productId = req.params.id;
-    const cart = new Cart(req.session.cart ? req.session.cart : {});
-
-    Product.findById(productId, (err, product) => {
-        if(err) throw err;
-
-        cart.add(product, product.id);
-        req.session.cart = cart;
-        console.log(req.session.cart);
-        res.json(req.session.cart);
-    });
-});
-
-router.get('/reduce/:id', function(req, res, next) {
-    const productId = req.params.id;
-    const cart = new Cart(req.session.cart ? req.session.cart : {});
-  
-    cart.reduceByOne(productId);
-    req.session.cart = cart;
-    res.json(req.session.cart);
-});
-  
-router.get('/remove/:id', function(req, res, next) {
-    const productId = req.params.id;
-    const cart = new Cart(req.session.cart ? req.session.cart : {});
-  
-    cart.removeItem(productId);
-    req.session.cart = cart;
-    res.json(req.session.cart);
-});
-
-router.get('/cart/all', (req, res) => {
-    res.json(req.session.cart);
 });
 
 module.exports = router;

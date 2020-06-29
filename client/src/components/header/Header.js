@@ -15,10 +15,10 @@ class Header extends Component {
     }
 }
 
-const HeaderContainer = styled.header`
-    position: sticky;
+const HeaderContainer = styled.div`
     top: 0;
     z-index: 200;
 `;
+// position: sticky;
 
 export default Header;

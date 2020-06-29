@@ -27,7 +27,7 @@ class Bottoms extends Component {
                 </Logo> */}
                 <Header />
                 <hr />
-                <Container title="Bottoms" category="bottoms"  />
+                <Container title="Bottoms" category="bottoms" background="MediumSlateBlue"  />
             </Fragment>
         )
     }

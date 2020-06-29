@@ -24,7 +24,7 @@ class Container extends Component {
             if(products.length > 0) {
                 productList = (
                     <Fragment>
-                        {/* <CategoryOverview products={products} category={this.props.category} /> */}
+                        <CategoryOverview products={products} category={this.props.category} background={this.props.background} />
                         <div style={{marginBottom: '-3rem'}}><Title title={header} /></div>
                         <ProductList products={sortedProducts} />
                     </Fragment>

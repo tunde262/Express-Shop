@@ -18,7 +18,7 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Alert from './components/layout/alert';
 // Pages
-import CategoryPage from './pages/CategoryPage';
+import StoresPage from './pages/StoresPage';
 import ApparelPage from './pages/ApparelPage';
 import ExplorePage from './pages/ExplorePage';
 import ProductsPage from './pages/ProductsPage';
@@ -30,7 +30,10 @@ import Modal from './components/Modal';
 import Checkout from './components/Cart/checkout/Checkout';
 // Admin pages
 import Admin from './components/admin/Admin';
-import AddProduct from './components/admin/AddProduct';
+import ProductPage from './components/admin/ProductPage';
+import AddProduct from './components/admin/forms/AddProduct';
+import StoreForm from './components/admin/forms/StoreForm';
+import AddCollection from './components/admin/forms/AddCollection';
 import ProductList from './components/admin/ProductList';
 // Category Pages
 import Baby from './pages/Baby';
@@ -132,8 +135,8 @@ const App = () => {
                 <Route exact path="/beauty" component={Beauty} />
                 <Route exact path="/home-decor" component={HomeDecor} />
                 <Route exact path="/sports" component={Sports} />
-                <Route exact path="/toys" component={Toys} />
-                <Route exact path="/brand" component={BrandPage} />*/}
+                <Route exact path="/toys" component={Toys} />*/}
+                <Route exact path="/stores" component={StoresPage} />
                 <Route exact path="/" component={ExplorePage} />
                 {/* Auth Pages */}
                 <Route exact path="/register" component={Register} />
@@ -141,12 +144,15 @@ const App = () => {
                 {/* Cart & Checkout */}
                 <Route exact path="/cart" component={Cart} />
                 <PrivateRoute exact path="/checkout" component={Checkout} />
-                <Route exact path="/admin" component={Admin} />
                 {/* Profile  */}
                 <PrivateRoute exact path="/profile" component={Profile} />
                 {/* Admin Pages */}
                 <Route exact path="/admin/all" component={ProductList} />
-                <Route exact path="/admin/add" component={AddProduct} />
+                <Route exact path="/admin/add-product" component={AddProduct} />
+                <Route exact path="/admin" component={Admin} />
+                <Route exact path="/admin/product/:id" component={ProductPage} />
+                <Route exact path="/create-store" component={StoreForm} />
+                <Route exact path="/admin/collection/add" component={AddCollection} />
                 {/* Product Page */}
                 <Route exact path="/:id" component={Details} />
                 {/* Page not found */}

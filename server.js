@@ -11,6 +11,12 @@ const auth = require('./routes/api/auth');
 const stripe = require('./routes/api/stripe');
 const products = require('./routes/api/products');
 const admin = require('./routes/api/admin');
+const categories = require('./routes/api/categories');
+const darkstores = require('./routes/api/darkstores');
+const orders = require('./routes/api/orders');
+const profile = require('./routes/api/profile');
+const stores = require('./routes/api/stores');
+const variants = require('./routes/api/variants');
 
 const app = express();
 
@@ -34,6 +40,12 @@ app.use('/api/stripe', stripe);
 app.use('/api/products', products);
 app.use('/api/users', users);
 app.use('/api/admin', admin);
+app.use('/api/categories', categories);
+app.use('/api/darkstores', darkstores);
+app.use('/api/orders', orders);
+app.use('/api/profile', profile);
+app.use('/api/stores', stores);
+app.use('/api/variants', variants);
 
 // Serve static assets if in production
 if(process.env.NODE_ENV === 'production') {

@@ -1,13 +1,18 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const DarkstoreSchema = new mongoose.Schema({
+const DarkstoreSchema = new Schema({
+    store: {
+        type: Schema.Types.ObjectId,
+        ref: 'store'
+    },
     name: {
         type: String,
         required: true
     },
-    location: {
-        address: {
-            type:String,
+    address: {
+        street: {
+            type: String,
             required: true
         },
         city: {
@@ -23,9 +28,9 @@ const DarkstoreSchema = new mongoose.Schema({
             required: true
         }
     },
-    items: [
+    variants: [
         {
-            type: [mongoose.Schema.Types.ObjectId],
+            type: [Schema.Types.ObjectId],
             ref: 'variant'
         }
     ],          

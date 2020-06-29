@@ -3,9 +3,24 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const VariantSchema = new Schema({
+    store: {
+        type: Schema.Types.ObjectId,
+        ref: 'store'
+    },
     product: {
         type: Schema.Types.ObjectId,
         ref: 'product'
+    },
+    name: {
+        type: String,
+        required: true
+    },
+    category: {
+        type: String,
+        required: true
+    },
+    tags: {
+        type: [String]
     },
     img: {
         type: Schema.Types.ObjectId, // There is no need to create references here
@@ -17,25 +32,53 @@ const VariantSchema = new Schema({
     sku: {
         type: String
     },
-    show: {
+    inventory_qty: {
+        type: Number
+    },
+    price: {
+        type: Number,
+    },
+    sale_price: {
+        type: String
+    },
+    visible: {
         type: Boolean,
         default: true
     },
-    variants: {
-        var1: {
-            type: String
-        },
-        var2: {
-            type: String
-        },
-        var3: {
-            type: String
-        },
-        var4: {
-            type: String
-        }
+    in_stock: {
+        type: Boolean
     },
-    location: [
+    website_link: {
+        type: String
+    },
+    condition: {
+        type: String
+    },
+    color: {
+        type: String
+    },
+    size: {
+        type: String,
+    },
+    weight: {
+        type: String,
+    },
+    bundle: {
+        type: String,
+    },
+    scent: {
+        type: String,
+    },
+    fit: {
+        type: String
+    },
+    flavor: {
+        type: String
+    },
+    material: {
+        type: String
+    },
+    locations: [
         {
             darkstore: {
                 type: Schema.Types.ObjectId,
@@ -47,6 +90,33 @@ const VariantSchema = new Schema({
             price: {
                 type: Number
             },
+        }
+    ],
+    likes: [
+        {
+            user: {
+                type: Schema.Types.ObjectId,
+                ref: 'users'
+            }
+        }
+    ],
+    comments: [
+        {
+            user: {
+                type: Schema.Types.ObjectId,
+                ref: 'users'
+            },
+            text: {
+                type: String,
+                required: true
+            },
+            name: {
+                type: String
+            },
+            date: {
+                type: Date,
+                default: Date.now
+            }
         }
     ]
 });

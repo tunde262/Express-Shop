@@ -20,6 +20,42 @@ export const getProducts = () => dispatch => {
         );
 };
 
+// Get Products by user's store
+export const getStoreProducts = () => dispatch => {
+    dispatch(setProductsLoading());
+    axios.get('/api/products/store')
+        .then(res =>
+            dispatch({
+                type: SET_PRODUCTS,
+                payload: res.data
+            })
+        )
+        .catch(err => 
+            dispatch({
+                type: SET_PRODUCTS,
+                payload: {}
+            })
+        );
+};
+
+// Get Product By Store Id
+export const getProductsByStoreId = id => async dispatch => {
+    dispatch(setProductsLoading());
+    try {
+        const res = await axios.get(`/api/products/store/${id}`);
+
+        dispatch({
+            type: SET_PRODUCTS,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: SET_PRODUCTS,
+            payload: {}
+        })
+    }
+};
+
 // Get Filtered Products
 export const setSortedProducts = (products) =>  {
     return {
@@ -49,7 +85,7 @@ export const removeTags = (filter) => {
 export const addProduct = (prodData, history) => dispatch => {
     axios
         .post('/api/products', prodData)
-        .then(res => history.push('/admin/all'));
+        .then(res => history.push('/admin'));
 }
 
 // Delete product
@@ -64,7 +100,7 @@ export const deleteProduct = (prod_id) => dispatch => {
 // Get Orders
 export const getOrders = () => dispatch => {
     dispatch(setProductsLoading());
-    axios.get('/api/admin/orders')
+    axios.get('/api/orders')
         .then(res =>
             dispatch({
                 type: GET_ORDERS,
@@ -79,10 +115,28 @@ export const getOrders = () => dispatch => {
         );
 };
 
+// Get Store Orders
+export const getStoreOrders = (id) => async dispatch => {
+    dispatch(setProductsLoading());
+    try {
+        const res = await axios.get(`/api/orders/store/${id}`);
+
+        dispatch({
+            type: GET_ORDERS,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: GET_ORDERS,
+            payload: []
+        })
+    }
+};
+
 // Get Customer Orders
 export const getCustomerOrders = (id) => dispatch => {
     dispatch(setProductsLoading());
-    axios.get(`/api/admin/${id}`)
+    axios.get(`/api/orders/${id}`)
         .then(res =>
             dispatch({
                 type: GET_ORDERS,
