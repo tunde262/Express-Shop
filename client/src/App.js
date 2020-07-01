@@ -1,12 +1,23 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import ReactGA from 'react-ga';
+// CSS - controlled by /scss
+import './css/main.css';
 
-import './App.css';
+// Redux
+import { Provider } from 'react-redux';
+import { StripeProvider } from 'react-stripe-elements';
+import store from './store';
+import { loadUser } from './actions/authActions';
+import setAuthToken from './utils/setAuthToken';
+import { getProducts, getCart } from './actions/productActions';
+
+// Google Analytics
+import ReactGA from 'react-ga';
 
 // Private Route
 import PrivateRoute from './components/routing/PrivateRoute';
+
 // Layout
 import Landing from './pages/Landing';
 import Navbar from './components/layout/Navbar/Navbar';
@@ -28,6 +39,7 @@ import Cart from './components/Cart/Cart';
 import Default from './components/Default';
 import Modal from './components/Modal';
 import Checkout from './components/Cart/checkout/Checkout';
+
 // Admin pages
 import Admin from './components/admin/Admin';
 import ProductPage from './components/admin/ProductPage';
@@ -35,32 +47,15 @@ import AddProduct from './components/admin/forms/AddProduct';
 import StoreForm from './components/admin/forms/StoreForm';
 import AddCollection from './components/admin/forms/AddCollection';
 import ProductList from './components/admin/ProductList';
+
 // Category Pages
-import Baby from './pages/Baby';
-import Beauty from './pages/Beauty';
-import Health from './pages/Health';
-import HomeDecor from './pages/HomeDecor';
-import HouseholdEssentials from './pages/HouseholdEssentials';
-import KitchenDining from './pages/KitchenDining';
-import PartySupplies from './pages/PartySupplies';
-import PersonalCare from './pages/PersonalCare';
-import SchoolOffice from './pages/SchoolOffice';
-import Sports from './pages/Sports';
-import Toys from './pages/Toys';
-import Pets from './pages/Pets';
 import Tops from './pages/Tops';
 import Bottoms from './pages/Bottoms';
 import Hats from './pages/Hats';
-import Socks from './pages/Socks';
+
 // Profile Pages
 import Profile from './components/profile/Profile';
 
-import { Provider } from 'react-redux';
-import { StripeProvider } from 'react-stripe-elements';
-import store from './store';
-import { loadUser } from './actions/authActions';
-import setAuthToken from './utils/setAuthToken';
-import { getProducts, getCart } from './actions/productActions';
 
 if(localStorage.token) {
   setAuthToken(localStorage.token);

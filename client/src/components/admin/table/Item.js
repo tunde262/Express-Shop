@@ -11,7 +11,7 @@ import 'react-responsive-modal/styles.css';
 const Item = ({ product: {loading, products}, getStoreProducts, deleteProduct }) => {
     useEffect(() => {
         getStoreProducts();
-      }, [getStoreProducts])
+    }, [getStoreProducts])
 
     const [modalShow, setModal] = useState(false);
      

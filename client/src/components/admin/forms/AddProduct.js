@@ -2,7 +2,10 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Modal from 'react-responsive-modal';
 import { addProduct, handleDetail } from '../../../actions/productActions';
+
+import DragAndDrop from './utils/DragAndDrop';
 
 const initialState = {
   file: '',
@@ -28,6 +31,9 @@ const AddProduct = ({
   match
   }) => {
   const [formData, setFormData] = useState(initialState);
+  const [files, setFiles] = useState([]);
+
+  const [displayModal, toggleModal] = useState(false);
 
   useEffect(() => {
     if(match.params.id) {
@@ -64,6 +70,15 @@ const AddProduct = ({
     setFormData({ ...formData, [e.target.name]: e.target.files[0] });
   }
 
+  const handleDrop = (newFiles) => {
+    let fileList = newFiles;
+    for (var i = 0; i < newFiles.length; i++) {
+      if(!newFiles[i].name) return;
+      setFiles([...files, newFiles[i].name]);
+    }
+    
+  }
+
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -88,20 +103,18 @@ const AddProduct = ({
     addProduct(data, history, detailProduct ? true : false);
   };
 
+  const setModal = () => {
+    toggleModal(!displayModal);
+  }
+
   return (
     <main id="home" style={{textAlign: "center"}}>
       <h1 className="large text-primary">Edit Your Product</h1>
       <small>* = required field</small>
       <form className="form" onSubmit={onSubmit}>
-        <label className='form-group'>Product Img.
-          <input
-              type="file"
-              name="file"
-              id="file"
-              className="form-control"
-              placeholder="Start with ../img/"
-              onChange={fileChanged}
-          />
+        <label className='form-group'>Product Img.<br/>
+          <div onClick={setModal} type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Add</div>
+
         </label>
         <div className="line"></div>
         <label className="form-group">Name
@@ -265,6 +278,27 @@ const AddProduct = ({
           Go Back
         </Link>
       </form>
+
+      <Modal open={displayModal} onClose={setModal} center>
+        <DragAndDrop handleDrop={handleDrop}>
+          <input
+              type="file"
+              name="file"
+              id="file"
+              className="form-control"
+              placeholder="Choose images or Drag/Drop"
+              onChange={fileChanged}
+          />
+          {files.length > 0 ? (
+              <div style={{minHeight: 300, width: 250}}>
+                {files.map((file, i) =>
+                  <div key={i}>{file}</div>
+                )}
+              </div>
+            ) : <h3><small>or</small> <br/>Drag / Drop</h3>
+          }
+        </DragAndDrop>
+      </Modal>
     </main>
   );
 };

@@ -10,6 +10,7 @@ import { getProductVariants, addVariant, deleteVariant } from '../../actions/var
 import Title from '../Title';
 import Table from './table/Table';
 import InputTag from '../common/InputTag/InputTag';
+import Variant from './table/Variant';
 
 
 const initialState = {
@@ -31,7 +32,8 @@ const initialState = {
 const ProductPage = ({ 
     addVariant,
     handleDetail, 
-    deleteProduct, 
+    deleteProduct,
+    deleteVariant, 
     match, 
     product: { 
         detailProduct, 
@@ -323,35 +325,6 @@ const ProductPage = ({
         display = <h3>variants</h3>;
     }
 
-    // if(varTags > 0) {
-    //     // variantList = <Variants variants={variants} />;
-    //     <div class="scrollable">
-    //         <div>
-    //             <table cellpadding="1" cellspacing="1" style={{maxWidth: "200px"}}>
-    //             <tr>
-    //                 <th></th>
-    //                 <th>Price</th>
-    //                 <th>Qty</th>
-    //                 <th>SKU</th>
-    //                 <th></th>
-    //             </tr>
-    //             <tr>
-    //                 <td>Veda</td>
-    //                 <td>feugiat@dolor.net</td>
-    //                 <td>Ap #524-2301 Feugiat Road</td>
-    //                 <td>Daiano</td>
-    //                 <td>25949</td>
-    //                 <td>HR9530357221014204266</td>
-    //                 <td>GB64IAWL50561289057517</td>
-    //             </tr>
-    //             </table>
-    //         </div>
-    //     </div>
-    // }
-    // else {
-    //     variantList = <Title name="No Variants" title="Available" />
-    // }
-
     return (
         <Fragment>
             <div className="container">
@@ -406,40 +379,7 @@ const ProductPage = ({
                                         <p style={{alignSelf: "flex-end"}}>50 Varients</p>
                                         <button onClick={setModal} type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Add</button>
                                     </section>
-                                    <table class="table">
-                                        
-                                        <thead>
-                                        <tr>
-                                            <th>
-                                                <input type="checkbox" value=""/>
-                                            </th>
-                                            <th>Img</th>
-                                            <th>Activity</th>
-                                            <th>Product Name</th>
-                                            <th>Stock</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>
-                                                <input type="checkbox" value=""/>
-                                            </td>
-                                            <td>ipsum</td>
-                                            <td>dolor</td>
-                                            <td>sit</td>
-                                            <td>ipsum</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <input type="checkbox" value=""/>
-                                            </td>
-                                            <td>ipsum</td>
-                                            <td>dolor</td>
-                                            <td>sit</td>
-                                            <td>ipsum</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                    <Variant varId={match.params.id} deleteVariant={deleteVariant} />
                                 </div>
                             </div>
                         </div>
@@ -569,7 +509,7 @@ const ProductPage = ({
                         </tbody>
                     </table>
 
-                    <button onClick={updateList} class="btn btn-primary">Upload</button>
+                    <div onClick={updateList} class="btn btn-primary">Apply</div>
 
                     <table className="table">
                         <thead>
@@ -598,10 +538,11 @@ ProductPage.propTypes = {
     handleDetail: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
     deleteProduct: PropTypes.func.isRequired,
+    deleteVariant: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
     product: state.product
 })
 
-export default connect(mapStateToProps, { addVariant, handleDetail, deleteProduct })(withRouter(ProductPage));
+export default connect(mapStateToProps, { addVariant, handleDetail, deleteProduct, deleteVariant })(withRouter(ProductPage));

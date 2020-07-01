@@ -1,0 +1,54 @@
+$primary-color: #fff;
+$secondary-color: #ff4b2b;
+$third-color: #ff416c;
+$show-home-image: true;
+$dark-color: #343a40;
+$light-color: #f4f4f4;
+$danger-color: #dc3545;
+$success-color: #28a745;
+$home-image: url(../img/background.jpg);
+$background-opacity: 0.7;
+$randomNumber1: 166;
+$randomNumber2: 236;
+$randomNumber3: 251;
+
+@mixin easeOut {
+    transition: all 0.5s ease-out;
+}
+
+@mixin easeInOut {
+    transition: all 0.6s ease-in-out;
+}
+
+// Set text color
+@function set-text-color($color) {
+    @if (lightness($color) > 40) {
+        @return #000;
+    } @else {
+        @return #fff;
+    }
+}
+
+// Media Query Mixins
+@mixin mediaSm {
+    @media screen and (max-width: 500px) {
+        @content;
+    }
+}
+
+@mixin mediaMd {
+    @media screen and (max-width: 768px) {
+        @content;
+    }
+}
+@mixin mediaLg {
+    @media screen and (min-width: 769px) and (max-width: 1170px) {
+        @content;
+    }
+}
+
+@mixin mediaXl {
+    @media screen and (min-width: 1171px) {
+        @content;
+    }
+}
