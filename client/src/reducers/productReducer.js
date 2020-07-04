@@ -50,10 +50,6 @@ export default function(state = initialState, action) {
                 products,
                 sortedProducts: products,
                 // featuredProducts,
-                // exploreTops,
-                // exploreBottoms,
-                // exploreHats,
-                // exploreSocks,
                 // price: maxPrice,
                 // maxPrice,
                 loading: false
