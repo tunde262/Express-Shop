@@ -34,7 +34,7 @@ const Item = ({ product: {loading, products}, getStoreProducts, deleteProduct })
                     <td>
                         <input type="checkbox" value=""/>
                     </td>
-                    <td><img style={{width: '50px'}} src={`/api/products/image/${product.img_name}`} alt="img" /></td>
+                    <td><img style={{width: '50px'}} src={`/api/products/image/${product.img_gallery[0].img_name}`} alt="img" /></td>
                     <td><Link to={"/admin/product/" + product._id}>{product.name}</Link></td>
                     <td>5 Stock / 2 Variants</td>
                     <td>{product.price}</td>
@@ -51,7 +51,7 @@ const Item = ({ product: {loading, products}, getStoreProducts, deleteProduct })
         <Fragment>
             <section>
                 <p style={{alignSelf: 'flex-end'}}>50 Items</p>
-                <Link to="/admin/add-product" style={{background: '#42b499', color:'#fff'}} className="btn">Add Item</Link>
+                <Link to="/admin/add-product"><button onClick={setModal} type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Add Product</button></Link>
             </section>
             <table className="table">
                 <thead>

@@ -11,9 +11,19 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
 
+// Nav
+export const SET_NAV1 = 'SET_NAV1';
+export const SET_NAV2 = 'SET_NAV2';
+export const SET_NAV3 = 'SET_NAV3';
+export const REMOVE_NAV1 = 'REMOVE_NAV1';
+export const REMOVE_NAV2 = 'REMOVE_NAV2';
+export const REMOVE_NAV3 = 'REMOVE_NAV3';
+
 // Products & Cart
 export const SET_PRODUCTS = 'SET_PRODUCTS';
 export const SET_SORTED_PRODUCTS = 'SET_SORTED_PRODUCTS';
+export const UPDATE_PRODUCT_LIKES = 'UPDATE_PRODUCT_LIKES';
+export const PRODUCT_ERROR = 'PRODUCT_ERROR';
 export const HANDLE_TAGS = 'HANDLE_TAGS';
 export const REMOVE_TAGS = 'REMOVE_TAGS';
 export const PRODUCTS_LOADING = 'PRODUCTS_LOADING';

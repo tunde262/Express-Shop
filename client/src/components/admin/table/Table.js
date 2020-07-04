@@ -34,7 +34,7 @@ const Table = ({ product: {loading, products}, getProducts }) => {
             <div id="page-content-wrapper">
                 <div class="content-box container-fluid">
                     <div class="table-responsive table-filter">
-                        <Navbar products={products} handleOrders={handleOrders} category='admin' background='grey' />
+                        <Navbar products={products} handleOrders={handleOrders} category='admin' background='#ff4b2b' />
                         {tableContent}
                     </div>
                 </div>

@@ -141,7 +141,7 @@ router.get('/category/:category', async (req, res) => {
 // @route POST api/products
 // @desc Create A Product
 // @access Public
-router.post('/', upload.single('file'),[ auth, [
+router.post('/', upload.array("file", 10),[ auth, [
         check('name', 'Name is required').not().isEmpty(),
         check('description', 'Description is required').not().isEmpty()
     ]], async (req, res) => {
@@ -149,6 +149,7 @@ router.post('/', upload.single('file'),[ auth, [
         if(!errors.isEmpty()) {
             return res.status(400).json({errors: errors.array() });
         }
+
 
         const {
             name,
@@ -168,8 +169,6 @@ router.post('/', upload.single('file'),[ auth, [
         // Get fields
         const productFields = {};
         if(name) productFields.name = name;
-        if(req.file) productFields.img = req.file.id;
-        if(req.file) productFields.img_name = req.file.filename;
         if(price) productFields.price = price;
         if(sale_price) productFields.sale_price = sale_price;
         if(inventory_qty) productFields.inventory_qty = inventory_qty;
@@ -180,6 +179,17 @@ router.post('/', upload.single('file'),[ auth, [
         if(visible) productFields.visible = visible;
         if(in_stock) productFields.in_stock = in_stock;
         if(condition) productFields.condition = condition;
+
+        // Imgs
+        productFields.img_gallery = [];
+        for (var i = 0; i < req.files.length; i++) {
+            if(req.files[i]) {
+                productFields.img_gallery.push({
+                    img_id: 'name',
+                    img_name: 'file'
+                });
+            }
+        }
         
         // Tags - Split into array
         if(tags) {
@@ -360,6 +370,29 @@ router.put('/like/:id', auth, async (req, res) => {
 //         res.status(500).send('Server Error'); 
 //     }
 // });
+
+// @route POST api/products/image/:id
+// @desc Add img to product
+// @access Private
+router.post('/image/:id', upload.single('file'), async (req, res) => {
+
+    const product = await Product.findById(req.params.id);
+
+    try {
+        const newImg = {
+            img_id: req.file.id,
+            img_name: req.file.filename
+        };
+
+        product.img_gallery.unshift(newImg);
+        await product.save()
+
+        res.json(product);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
 
 // @route POST api/products/comment/:id
 // @desc Comment on a product

@@ -3,40 +3,40 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { handleDetail, addToCart, openModal, closeModal, addTotals } from '../../../actions/productActions';
+import { addLike, handleDetail, addToCart, openModal, closeModal, addTotals } from '../../../actions/productActions';
 
 import ReactGA from 'react-ga';
 
-class ProductCard extends Component {
+const ProductCard = ({addLike, product, handleDetail, addToCart, openModal, closeModal, addTotals}) => {
     // componentDidMount() {
     //     console.log(this.props.product);
     // }
 
-    onHandleDetailClick(id) {
-        this.props.handleDetail(id);
+    const onHandleDetailClick = (id) => {
+        handleDetail(id);
     }
 
-    onAddToCart(id) {
-        this.props.addToCart(id);
-        // this.props.addTotals();
+    const onAddToCart = (id) => {
+        addToCart(id);
+        // addTotals();
     }
 
-    openModal(id) {
-        this.props.openModal(id);
+    const setModalOpen = (id) => {
+        openModal(id);
     }
 
-    closeModal(e) {
-        this.props.closeModal();
+    const setModalClose = (e) => {
+        closeModal();
     }
 
-    todo(id, title){
-        this.onAddToCart(id);
-        // this.onHandleDetailClick(id);
-        this.openModal(id);
-        this.clicked(title);
+    const todo = (id, title) => {
+        onAddToCart(id);
+        // onHandleDetailClick(id);
+        setModalOpen(id);
+        clicked(title);
     }
 
-    clicked(title) {
+    const clicked = (title) => {
         ReactGA.event({
             category: 'Cart',
             action: 'Added From Product Card',
@@ -44,53 +44,70 @@ class ProductCard extends Component {
         });
     }
 
-    render() {
-        const { _id, title, img_name, price, size, color, company, category, inCart } = this.props.product;
+    const { _id, name, img_gallery, price, size, color, company, category, inCart, likes, comments } = product;
 
-        return (
-            <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
-                <div className="product">
-                    <div 
-                        className="imgbox" 
-                        onClick={this.onHandleDetailClick.bind(this, _id)}
+    return (
+        <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
+            <div className="product">
+                <div 
+                    className="imgbox" 
+                    onClick={() => onHandleDetailClick(_id)}
+                >
+                    <Link to={"/" + _id}>
+                        <img src={`/api/products/image/${img_gallery[0].img_name}`} alt="product" />
+                    </Link>
+                    {/* <button 
+                        className="cart-btn" 
+                        disabled={inCart ? true : false} 
+                        onClick={this.todo.bind(this, _id)}
                     >
-                        <Link to={"/" + _id}>
-                            <img src={`/api/products/image/${img_name}`} alt="product" />
-                        </Link>
-                        {/* <button 
-                            className="cart-btn" 
-                            disabled={inCart ? true : false} 
-                            onClick={this.todo.bind(this, _id)}
-                        >
-                            {inCart ? (
-                                <p className="text-capitalize mb-0" disabled>
-                                    {" "}
-                                    in cart
-                                </p>
-                            ) : (
-                                <i className="fas fa-cart-plus" />
-                            )}
-                        </button> */}
+                        {inCart ? (
+                            <p className="text-capitalize mb-0" disabled>
+                                {" "}
+                                in cart
+                            </p>
+                        ) : (
+                            <i className="fas fa-cart-plus" />
+                        )}
+                    </button> */}
+                </div>
+                <div className="specifice">
+                    <div className="titles">
+                        <h2>{name}<br/><span>{category}</span></h2>
                     </div>
-                    <div className="specifice">
-                        <div className="titles">
-                            <h2>{title}<br/><span>{category}</span></h2>
-                        </div>
-                        <div className="price">${price}</div>
-                        <label>Size</label>
-                        <ul>
-                            <li>{size}</li>
-                        </ul>
-                        <label>Colors</label>
-                        <ul className="color"> 
-                            <li>{color}</li>
-                        </ul>
-                        <button onClick={this.todo.bind(this, _id, title)}>Add To Cart</button>
+                    <div className="price">${price}</div>
+                    <label>Size</label>
+                    <ul>
+                        <li>{size}</li>
+                    </ul>
+                    <label>Colors</label>
+                    <ul className="color"> 
+                        <li>{color}</li>
+                    </ul>
+                    <button onClick={() => todo(_id, name)}>Add To Cart</button>
+                </div>
+            </div>
+            <div className="card_stats">
+                <div className="stat">
+                    <div className="value">
+                    <i className="far fa-heart" onClick={() => addLike(_id)}></i>
+                    {' '}
+                    <span>{likes.length > 0 && <span>{likes.length}</span>}</span>
                     </div>
                 </div>
-            </ProductWrapper>
-        );
-    }
+                <div className="stat border">
+                    <div className="value">5123</div>
+                    <div className="type">views</div>
+                </div>
+                <div className="stat border">
+                <i className="far fa-comment-alt"></i>{' '}
+                {comments.length > 0 && (
+                    <span className='comment-count'>{comments.length}</span>
+                )}
+                </div>
+            </div>
+        </ProductWrapper>
+    );
 }
 
 ProductCard.propTypes = {
@@ -100,6 +117,7 @@ ProductCard.propTypes = {
         price: PropTypes.number,
         inCart: PropTypes.bool
     }).isRequired,
+    addLike: PropTypes.func.isRequired,
     handleDetail: PropTypes.func.isRequired,
     addToCart: PropTypes.func.isRequired,
     openModal: PropTypes.func.isRequired,
@@ -158,6 +176,47 @@ const ProductWrapper = styled.div`
         color: #000;
         font-size: 1.3rem;
     }
+    .card_stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+        background: #f4f4f4;
+    }
+
+    .card_stats .stat {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 10px;
+        color: #929292;
+    }
+
+    .fa-heart:hover {
+        color: #ff4b2b;
+    }
+
+    .type {
+        font-size: 11px;
+        font-weight: 300;
+        text-transform: uppercase;
+    }
+
+    .value {
+        font-size: 22px;
+        font-weight: 500;
+
+        sup {
+            font-size: 12px;
+        }
+    }
+
+    .border {
+        border-left: 1px solid #ff4b2b;
+    }
+
     label {
         display: block;
         margin-top: 5px;
@@ -223,5 +282,5 @@ const ProductWrapper = styled.div`
 
 `;
 
-export default connect(null, { handleDetail, addToCart, openModal, closeModal, addTotals })(ProductCard);
+export default connect(null, { addLike, handleDetail, addToCart, openModal, closeModal, addTotals })(ProductCard);
 

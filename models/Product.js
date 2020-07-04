@@ -10,13 +10,17 @@ const ProductSchema = new Schema({
         type: String,
         required: true
     },
-    img: {
-        type: Schema.Types.ObjectId, // There is no need to create references here
-        ref: 'uploads'
-    },
-    img_name: {
-        type: String
-    },
+    img_gallery: [
+        {
+            img_id: {
+                type: Schema.Types.ObjectId, // There is no need to create references here
+                ref: 'uploads'
+            },
+            img_name: {
+                type: String
+            },
+        }
+    ],
     price: {
         type: Number,
     },

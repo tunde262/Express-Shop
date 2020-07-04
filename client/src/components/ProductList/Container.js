@@ -13,7 +13,7 @@ class Container extends Component {
     render() {
         const { products, sortedProducts, loading } = this.props.product;
 
-        const header = this.props.title;
+        // const header = this.props.title;
         
         let productList;
 
@@ -24,8 +24,8 @@ class Container extends Component {
             if(products.length > 0) {
                 productList = (
                     <Fragment>
-                        <CategoryOverview products={products} category={this.props.category} background={this.props.background} />
-                        <div style={{marginBottom: '-3rem'}}><Title title={header} /></div>
+                        {/* <CategoryOverview products={products} category={this.props.category} background={this.props.background} /> */}
+                        {/* <div style={{marginBottom: '-3rem'}}><Title title={header} /></div> */}
                         <ProductList products={sortedProducts} />
                     </Fragment>
                 );

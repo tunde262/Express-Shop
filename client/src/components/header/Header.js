@@ -4,15 +4,13 @@ import styled from 'styled-components';
 import Navbar from './navbar/Navbar';
 import CartOverview from '../Overview/cartOverview/CartOverview';
 
-class Header extends Component {
-    render() {
-        return (
-            <HeaderContainer>
-                <CartOverview />
-                <Navbar />
-            </HeaderContainer>
-        )
-    }
+const Header = props => {
+    return (
+        <HeaderContainer>
+            <CartOverview />
+            <Navbar />
+        </HeaderContainer>
+    )
 }
 
 const HeaderContainer = styled.div`

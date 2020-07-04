@@ -1,4 +1,4 @@
-import { SET_PRODUCTS, SET_SORTED_PRODUCTS, PRODUCTS_LOADING, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, CLOSE_MODAL, CLEAR_CART,ADD_TOTALS, GET_CART, GET_ORDERS, HANDLE_TAGS, REMOVE_TAGS } from '../actions/types';
+import { SET_PRODUCTS, SET_SORTED_PRODUCTS, UPDATE_PRODUCT_LIKES, PRODUCTS_LOADING, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, CLOSE_MODAL, CLEAR_CART,ADD_TOTALS, GET_CART, GET_ORDERS, HANDLE_TAGS, REMOVE_TAGS } from '../actions/types';
 
 const initialState = {
     products: null,
@@ -38,41 +38,48 @@ export default function(state = initialState, action) {
         case SET_PRODUCTS: {
             const products = action.payload;
             let tempProd = products;
-            let featuredProducts = tempProd.filter(product => product.featured === true);
-            let exploreTops = tempProd.filter(product => product.category === 'top');
-            let exploreBottoms = tempProd.filter(product => product.category === 'bottom');
-            let exploreHats = tempProd.filter(product => product.category === 'hat');
-            let exploreSocks = tempProd.filter(product => product.category === 'socks');
-            let maxPrice = Math.max(...products.map(product => product.price));
+            // let featuredProducts = tempProd.filter(product => product.featured === true);
+            // let exploreTops = tempProd.filter(product => product.category === 'top');
+            // let exploreBottoms = tempProd.filter(product => product.category === 'bottom');
+            // let exploreHats = tempProd.filter(product => product.category === 'hat');
+            // let exploreSocks = tempProd.filter(product => product.category === 'socks');
+            // let maxPrice = Math.max(...products.map(product => product.price));
 
             return {
                 ...state,
                 products,
                 sortedProducts: products,
-                featuredProducts,
-                exploreTops,
-                exploreBottoms,
-                exploreHats,
-                exploreSocks,
-                price: maxPrice,
-                maxPrice,
+                // featuredProducts,
+                // exploreTops,
+                // exploreBottoms,
+                // exploreHats,
+                // exploreSocks,
+                // price: maxPrice,
+                // maxPrice,
                 loading: false
             };
         }
         case SET_SORTED_PRODUCTS: {
             const products = action.payload;
             let tempProd = products;
-            let featuredProducts = tempProd.filter(product => product.featured === true);
+            // let featuredProducts = tempProd.filter(product => product.featured === true);
             let maxPrice = Math.max(...products.map(product => product.price));
 
             return {
                 ...state,
                 sortedProducts: products,
-                featuredProducts,
+                // featuredProducts,
                 price: maxPrice,
                 maxPrice
             };
         }
+        case UPDATE_PRODUCT_LIKES:
+            return {
+                ...state,
+                sortedProducts: state.products.map(product =>
+                    product._id === action.payload.id ? { ...product, likes: action.payload.likes } : product
+                )
+            };
         case HANDLE_TAGS: 
             return {
                 ...state,

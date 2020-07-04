@@ -28,6 +28,14 @@ const Admin = ({ getCurrentStore, deleteStore, getStoreProducts, getStoreCollect
                             {store !== null ? (
                                 <Fragment>
                                     {/* Website Overview */}
+                                    <div style={{marginTop: '2rem'}}></div>
+                                    <div id="breadcrumb">
+                                        <nav className="breadcrumb">
+                                            <ol>
+                                                <li><b>My Portfolio</b></li>
+                                            </ol>
+                                        </nav>
+                                    </div>
                                     <div class="panel panel-default">
                                         <div class="panel-heading main-color-bg">
                                             <h3 class="panel-title">Website Overview</h3>

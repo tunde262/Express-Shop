@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import alert from './alertReducer';
 import auth from './authReducer';
+import nav from './navReducer';
 import product from './productReducer';
 import collection from './collectionReducer';
 import profile from './profileReducer';
@@ -11,6 +12,7 @@ import variant from './variantReducer';
 export default combineReducers({
     alert,
     auth,
+    nav,
     product,
     collection,
     profile,

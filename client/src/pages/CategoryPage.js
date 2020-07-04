@@ -1,44 +1,65 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getProducts, categoryProducts } from '../actions/productActions';
+import { getProducts, getCart } from '../actions/productActions';
 
 import Header from '../components/header/Header';
 import CategoryOverview from '../components/Overview/categoryOverview/CategoryOverview';
 import ProductOverview from '../components/Overview/productOverview/ProductOverview';
-import ProductList from '../components/ProductList/ProductList';
-import Navbar from '../components/header/navbar/Navbar';
+import Spinner from '../components/common/Spinner';
+import Title from '../components/Title';
+import logo from '../components/common/CE_logo.jpg';
+import { Logo } from '../components/Logo';
 
-class StoresPage extends Component {
+class CategoryPage extends Component{
     componentDidMount() {
-        if(this.props.match.params.category) {
-            this.props.categoryProducts(this.props.match.params.category);
-        }
+        this.props.getProducts();
     }
 
     render() {
+        const { exploreTops, exploreBottoms, exploreHats, exploreSocks } = this.props.product;
+
+        let productList;
+
+        const { loading } = this.props.product;
+
+        if(exploreTops === null || loading) {
+            productList = <Spinner />;
+        }
+        else {
+            productList = (
+                <Fragment>
+
+                    <div style={{marginBottom: '-1rem'}}><Title title="Explore" /></div>
+                    <ProductOverview title="Tops" products={exploreTops} link="/top" />
+                    <ProductOverview title="Bottoms" products={exploreBottoms} link="/bottom" />
+                    <ProductOverview title="Hats" products={exploreHats} link="/hat" />
+                </Fragment>
+            );
+        }
+        
         return (
             <Fragment>
                 <div className="wrapper">  
-                    <h3>Top Stores</h3>
+                    <h3>Top Categories</h3>
                     <section className="category-boxes">
                         <div className="category-box">
-                            <h3>Forever 21</h3>
+                            <h3>Clothing & Fashion</h3>
                         </div>
                         <div className="category-box">
-                            <h3>Lil Keed Shop</h3>
+                            <h3>Personal Care</h3>
                         </div>
                         <div className="category-box">
-                            <h3>Hot Topic</h3>
+                            <h3>Hair Care</h3>
                         </div>
                         <div className="category-box">
-                            <h3>The Jersey Store</h3>
+                            <h3>Pets</h3>
                         </div>
                         <div className="category-box">
-                            <h3>Pacsun</h3>
+                            <h3>Household Essentials</h3>
                         </div>
                         <div className="category-box">
-                            <h3>Colgate</h3>
+                            <h3>School & Office Supplies</h3>
                         </div>
                     </section>
                     <button>View All</button>
@@ -47,7 +68,7 @@ class StoresPage extends Component {
                     <section className="info">
                         <div className="img"></div>
                         <div>
-                            <h2>Want To Open A Store?</h2>
+                            <h2>Featured Category</h2>
                             <p>Lorem ipsum is tie amet consetucrt afipriiyfm elit.
                                 mode! Hihi; quo minii alkj atufa.Lorem ipsum is tie amet consetucrt afipriiyfm elit.
                                 mode! Hihi; quo minii alkj atufa.</p>
@@ -56,169 +77,193 @@ class StoresPage extends Component {
                     </section>
                 </div>
                 <div className="wrapper"> 
-                    <h3>Stores For Kids</h3>
+                    <h3>Top Brands</h3>
                     <section className="category-boxes">
                         <div className="category-box">
-                            <h3>Gap Kids</h3>
+                            <h3>Yeezy</h3>
                         </div>
                         <div className="category-box">
-                            <h3>Sketchers</h3>
+                            <h3>Cactus Jack</h3>
                         </div>
-                        <div className="category-box">
-                            <h3>Arts & CraftS</h3>
-                        </div>
-                        <div className="category-box">
-                            <h3>Toys R Us</h3>
-                        </div>
-                        <div className="category-box">
-                            <h3>Diaper Shop</h3>
-                        </div>
-                        <div className="category-box">
-                            <h3>Play-Doh</h3>
-                        </div>
-                    </section>
-                    <button>View All</button>
-                </div>
-                <div className="wrapper"> 
-                    <h3>Stores For Back To School</h3>
-                    <section className="category-boxes">
-                        <div className="category-box">
-                            <h3>Crayola</h3>
-                        </div>
-                        <div className="category-box">
-                            <h3>Clorox</h3>
-                        </div>
-                        <div className="category-box">
-                            <h3>Sharpie</h3>
-                        </div>
-                        <div className="category-box">
-                            <h3>Post-It</h3>
-                        </div>
-                        <div className="category-box">
-                            <h3>Office Depot</h3>
-                        </div>
-                        <div className="category-box">
-                            <h3>The Art Store</h3>
-                        </div>
-                    </section>
-                    <button>View All</button>
-                </div>
-                <div className="wrapper"> 
-                    <h3>Stores For Streetwear</h3>
-                    <section className="category-boxes">
-                        <div className="category-box">
-                            <h3>Supreme</h3>
-                        </div>
-                        <div className="category-box">
-                            <h3>Polo Ralph Lauren</h3>
-                        </div>
-                        <div className="category-box">
-                            <h3>Stussy</h3>
-                        </div>
-                        <div className="category-box">
-                            <h3>Champion</h3>
-                        </div>
-                        <div className="category-box">
-                            <h3>Off-White</h3>
-                        </div>
-                        <div className="category-box">
-                            <h3>Lil Keed Shop</h3>
-                        </div>
-                    </section>
-                    <button>View All</button>
-                </div>
-                <div className="wrapper"> 
-                    <h3>Stores For Your Pets</h3>
-                    <section className="category-boxes">
-                        <div className="category-box">
-                            <h3>Iams</h3>
-                        </div>
-                        <div className="category-box">
-                            <h3>Pet Smart</h3>
-                        </div>
-                        <div className="category-box">
-                            <h3>Milk Bone</h3>
-                        </div>
-                        <div className="category-box">
-                            <h3>Authority</h3>
-                        </div>
-                        <div className="category-box">
-                            <h3>Chewy's</h3>
-                        </div>
-                        <div className="category-box">
-                            <h3>ProPlan</h3>
-                        </div>
-                    </section>
-                    <button>View All</button>
-                </div>
-                <div className="wrapper"> 
-                    <h3>Stores For Basketball</h3>
-                    <section className="category-boxes">
                         <div className="category-box">
                             <h3>Nike</h3>
                         </div>
                         <div className="category-box">
-                            <h3>Jordan</h3>
+                            <h3>Supreme</h3>
                         </div>
                         <div className="category-box">
-                            <h3>And 1</h3>
+                            <h3>Iams</h3>
                         </div>
                         <div className="category-box">
-                            <h3>Cool Kicks</h3>
-                        </div>
-                        <div className="category-box">
-                            <h3>PFJPerormance</h3>
-                        </div>
-                        <div className="category-box">
-                            <h3>2K Store</h3>
+                            <h3>Boxed</h3>
                         </div>
                     </section>
                     <button>View All</button>
                 </div>
                 <div className="wrapper"> 
-                    <h3>Stores For Hair Care</h3>
+                    <h3>Clothing & Fashion</h3>
                     <section className="category-boxes">
                         <div className="category-box">
-                            <h3>Shea Butter</h3>
+                            <h3>Baketball Jerseys</h3>
                         </div>
                         <div className="category-box">
-                            <h3>Hair Vitamins</h3>
+                            <h3>Graphic Tees</h3>
                         </div>
                         <div className="category-box">
-                            <h3>Cantu</h3>
+                            <h3>Joggers & Sweatpants</h3>
                         </div>
                         <div className="category-box">
-                            <h3>Halo Hair</h3>
+                            <h3>Hats</h3>
                         </div>
                         <div className="category-box">
-                            <h3>The Wig Store</h3>
+                            <h3>Socks</h3>
                         </div>
                         <div className="category-box">
-                            <h3>Redkin</h3>
+                            <h3>Shoes</h3>
                         </div>
                     </section>
                     <button>View All</button>
                 </div>
                 <div className="wrapper"> 
-                    <h3>Stores For Laundry</h3>
+                    <h3>Household Essentials</h3>
                     <section className="category-boxes">
                         <div className="category-box">
-                            <h3>Store 1</h3>
+                            <h3>Paper & Plastic</h3>
                         </div>
                         <div className="category-box">
-                            <h3>Store 2</h3>
+                            <h3>Cleaning Supplies</h3>
                         </div>
                         <div className="category-box">
-                            <h3>Store 3</h3>
+                            <h3>Laundry Care</h3>
                         </div>
                         <div className="category-box">
-                            <h3>Store 4</h3>
+                            <h3>Kitchen Items</h3>
                         </div>
                         <div className="category-box">
-                            <h3>Store 5</h3>
+                            <h3>Bathroom</h3>
                         </div>
                         <div className="category-box">
-                            <h3>Store 6</h3>
+                            <h3>Party Supplies</h3>
+                        </div>
+                    </section>
+                    <button>View All</button>
+                </div>
+                <div className="wrapper"> 
+                    <h3>Personal Care</h3>
+                    <section className="category-boxes">
+                        <div className="category-box">
+                            <h3>Dog Food & Snacks</h3>
+                        </div>
+                        <div className="category-box">
+                            <h3>Dog Food & Snacks</h3>
+                        </div>
+                        <div className="category-box">
+                            <h3>Development</h3>
+                        </div>
+                        <div className="category-box">
+                            <h3>Support</h3>
+                        </div>
+                        <div className="category-box">
+                            <h3>Analytics</h3>
+                        </div>
+                        <div className="category-box">
+                            <h3>Marketing</h3>
+                        </div>
+                    </section>
+                    <button>View All</button>
+                </div>
+                <div className="wrapper"> 
+                    <h3>Pets</h3>
+                    <section className="category-boxes">
+                        <div className="category-box">
+                            <h3>Dog Food & Snacks</h3>
+                        </div>
+                        <div className="category-box">
+                            <h3>Dog Food & Snacks</h3>
+                        </div>
+                        <div className="category-box">
+                            <h3>Development</h3>
+                        </div>
+                        <div className="category-box">
+                            <h3>Support</h3>
+                        </div>
+                        <div className="category-box">
+                            <h3>Analytics</h3>
+                        </div>
+                        <div className="category-box">
+                            <h3>Marketing</h3>
+                        </div>
+                    </section>
+                    <button>View All</button>
+                </div>
+                <div className="wrapper"> 
+                    <h3>School & Office Supplies</h3>
+                    <section className="category-boxes">
+                        <div className="category-box">
+                            <h3>Dog Food & Snacks</h3>
+                        </div>
+                        <div className="category-box">
+                            <h3>Dog Food & Snacks</h3>
+                        </div>
+                        <div className="category-box">
+                            <h3>Development</h3>
+                        </div>
+                        <div className="category-box">
+                            <h3>Support</h3>
+                        </div>
+                        <div className="category-box">
+                            <h3>Analytics</h3>
+                        </div>
+                        <div className="category-box">
+                            <h3>Marketing</h3>
+                        </div>
+                    </section>
+                    <button>View All</button>
+                </div>
+                <div className="wrapper"> 
+                    <h3>Bathroom</h3>
+                    <section className="category-boxes">
+                        <div className="category-box">
+                            <h3>Dog Food & Snacks</h3>
+                        </div>
+                        <div className="category-box">
+                            <h3>Dog Food & Snacks</h3>
+                        </div>
+                        <div className="category-box">
+                            <h3>Development</h3>
+                        </div>
+                        <div className="category-box">
+                            <h3>Support</h3>
+                        </div>
+                        <div className="category-box">
+                            <h3>Analytics</h3>
+                        </div>
+                        <div className="category-box">
+                            <h3>Marketing</h3>
+                        </div>
+                    </section>
+                    <button>View All</button>
+                </div>
+                <div className="wrapper"> 
+                    <h3>Laundry</h3>
+                    <section className="category-boxes">
+                        <div className="category-box">
+                            <h3>Dog Food & Snacks</h3>
+                        </div>
+                        <div className="category-box">
+                            <h3>Dog Food & Snacks</h3>
+                        </div>
+                        <div className="category-box">
+                            <h3>Development</h3>
+                        </div>
+                        <div className="category-box">
+                            <h3>Support</h3>
+                        </div>
+                        <div className="category-box">
+                            <h3>Analytics</h3>
+                        </div>
+                        <div className="category-box">
+                            <h3>Marketing</h3>
                         </div>
                     </section>
                     <button>View All</button>
@@ -228,9 +273,9 @@ class StoresPage extends Component {
     }
 }
 
-StoresPage.propTypes = {
+CategoryPage.propTypes = {
     getProducts: PropTypes.func.isRequired,
-    categoryProducts: PropTypes.func.isRequired,
+    getCart: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired
 }
 
@@ -238,4 +283,4 @@ const mapStateToProps = state => ({
     product: state.product
 });
 
-export default connect(mapStateToProps, { getProducts, categoryProducts })(StoresPage);
+export default connect(mapStateToProps, { getProducts, getCart })(CategoryPage);

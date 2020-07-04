@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Modal from 'react-responsive-modal';
-import { addProduct, handleDetail } from '../../../actions/productActions';
+import { addProduct, addProductImg, handleDetail } from '../../../actions/productActions';
 
 import DragAndDrop from './utils/DragAndDrop';
 
@@ -51,7 +51,6 @@ const AddProduct = ({
   }, [loading, handleDetail, detailProduct]);
 
   const {
-    file,
     name,
     description,
     sku,
@@ -66,27 +65,44 @@ const AddProduct = ({
     tags
   } = formData;
 
+
   const fileChanged = e => {
-    setFormData({ ...formData, [e.target.name]: e.target.files[0] });
-  }
-
-  const handleDrop = (newFiles) => {
-    let fileList = newFiles;
-    for (var i = 0; i < newFiles.length; i++) {
-      if(!newFiles[i].name) return;
-      setFiles([...files, newFiles[i].name]);
+    console.log(files)
+    let fileList = [];
+    files.map(file => fileList.push(file));
+    for (var i = 0; i < e.target.files.length; i++) {
+      if(!e.target.files[i]) return;
+      fileList.push(e.target.files[i])
     }
-    
+    setFiles(fileList);
+  }
+  // const fileChanged = e => {
+  //   setFormData({ ...formData, [e.target.name]: e.target.files });
+  // }
+
+  const handleDrop = newFiles => {
+    console.log(files)
+    let fileList = [];
+    files.map(file => fileList.push(file));
+    for (var i = 0; i < newFiles.length; i++) {
+      if(!newFiles[i]) return;
+      fileList.push(newFiles[i])
+    }
+    setFiles(fileList);
   }
 
-  const onChange = (e) =>
+
+  const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = (e) => {
+    console.log(files);
+  }
+
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     let data = new FormData();
-    if(file !== '') data.append('file', file);
+    // if(formData.file !== '') data.append('file', formData.file);
     if(name !== '')data.append('name', name);
     if(description !== '')data.append('description', description);
     if(sku !== '')data.append('sku', sku);
@@ -100,7 +116,10 @@ const AddProduct = ({
     if(condition !== '')data.append('condition', condition);
     if(tags !== '')data.append('tags', tags);
 
-    addProduct(data, history, detailProduct ? true : false);
+    addProduct(data, files);
+
+    history.push('/admin');
+
   };
 
   const setModal = () => {
@@ -285,14 +304,19 @@ const AddProduct = ({
               type="file"
               name="file"
               id="file"
+              multiple
               className="form-control"
               placeholder="Choose images or Drag/Drop"
               onChange={fileChanged}
           />
           {files.length > 0 ? (
               <div style={{minHeight: 300, width: 250}}>
-                {files.map((file, i) =>
-                  <div key={i}>{file}</div>
+                {files.map((file, i) => (
+                    <Fragment key={i}>
+                      <div>{file.name}</div>
+                      <br/>
+                    </Fragment>
+                  )
                 )}
               </div>
             ) : <h3><small>or</small> <br/>Drag / Drop</h3>

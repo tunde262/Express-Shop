@@ -7,7 +7,7 @@ import { getCurrentProfile, deleteAccount } from '../../../actions/profileAction
 
 import './SideDrawer.css';
 
-const SideDrawer = ({ getCurrentProfile, deleteAccount, profile: { profile }, auth: { isAuthenticated, loading }, logout, show}) => {
+const SideDrawer = ({ drawerClickHandler, getCurrentProfile, deleteAccount, profile: { profile }, auth: { isAuthenticated, loading }, logout, show}) => {
     useEffect(() => {
         getCurrentProfile();
     }, [getCurrentProfile]);
@@ -30,15 +30,14 @@ const SideDrawer = ({ getCurrentProfile, deleteAccount, profile: { profile }, au
                     <span className="hide-sm">Logout</span>
                 </a>
             </li>
-            <li><Link to="/">Explore</Link></li>
-            <li><Link to="/categories">Categories</Link></li>
-            <li><Link to="/stores">Stores</Link></li>
-            <li><Link to="/deals">Deals</Link></li>
-            <li><Link to="/profile">Same Day Delivery</Link></li>
-            <li><Link to="/profile">Reorder</Link></li>
-            <li><Link to="/profile">Track Order</Link></li>
-            <li><Link to="/profile">Contact Us</Link></li>
-            <li>    
+            <li onClick={drawerClickHandler}><Link to="/">Explore</Link></li>
+            <li onClick={drawerClickHandler}><Link to="/categories">Categories</Link></li>
+            <li onClick={drawerClickHandler}><Link to="/stores">Stores</Link></li>
+            <li onClick={drawerClickHandler}>Same Day Delivery</li>
+            <li onClick={drawerClickHandler}>Reorder</li>
+            <li onClick={drawerClickHandler}>Track Order</li>
+            <li onClick={drawerClickHandler}>Contact Us</li>
+            <li onClick={drawerClickHandler}>    
                 <Link to='/admin' className="btn btn-primary my-1">
                     Open A Store
                 </Link>
@@ -48,13 +47,12 @@ const SideDrawer = ({ getCurrentProfile, deleteAccount, profile: { profile }, au
 
     const guestLinks = (
         <ul className={authClasses}>
-            <li><Link to="/login">Login</Link></li>
-            <li><Link to="/register">Create An Account</Link></li>
+            <li onClick={drawerClickHandler}><Link to="/login">Login</Link></li>
+            <li onClick={drawerClickHandler}><Link to="/register">Create An Account</Link></li>
             <hr />
-            <li><Link to="/profile">Track Order</Link></li>
-            <li><Link to="/profile">Reorder</Link></li>
-            <li><Link to="/profile">FAQ</Link></li>
-            <li><Link to="/profile">Contact Us</Link></li>
+            <li onClick={drawerClickHandler}>Who Are We?</li>
+            <li onClick={drawerClickHandler}>FAQ</li>
+            <li onClick={drawerClickHandler}>Contact Us</li>
             
         </ul>
     );

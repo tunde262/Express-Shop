@@ -278,9 +278,16 @@ const ProductPage = ({
     let display;
 
     if(varInfo.length > 0) {
-        display = varInfo.map((variant, index) => (
+        display = varInfo.map((variant, index) => {
+            let variantList;
+            if(variant.var1) variantList = `${variant.var1}`;
+            if(variant.var2) variantList = `${variant.var1} / ${variant.var2}`;
+            if(variant.var3) variantList = `${variant.var1} / ${variant.var2} / ${variant.var3}`;
+            if(variant.var4) variantList = `${variant.var1} / ${variant.var2} / ${variant.var3} / ${variant.var4}`;
+
+            return (
                 <tr key={index}>
-                    <td>tag1 / tag2 / tag3 / tag4</td>
+                    <td>{variantList}</td>
                     <td>
                         <input
                             type="text"
@@ -319,7 +326,7 @@ const ProductPage = ({
                     </td>
                     <td><i className="fas fa-trash"></i></td>
                 </tr>
-            )
+            )}
         );
     } else {
         display = <h3>variants</h3>;
@@ -327,62 +334,62 @@ const ProductPage = ({
 
     return (
         <Fragment>
-            <div className="container">
-                <div className="row">
-                    <div class="col-md-12">
-                        
-                        <div id="product-content-wrapper">
-                            <div class="breadcrumb">
-                                <h4>Inventory / Product / Flower Dress</h4>
-                            </div>
-                            <div class="product-header container-fluid">
-                                <h3 style={{color: "black"}}>Flower Dress</h3>
-                                <hr/>
-                                <p>Qty 12 in stock for 4 varients</p>
-                                <hr/>
-                            </div>
-                            <div class="product-map"></div>
-                            <div class="product-info">
-                                <div class="product-status-box">
-                                    <div class="product-status-box-title"><p>status</p></div>
-                                    <div class="product-status-box-stats">
-                                        <h2><b>2</b></h2>
-                                        <h2><b>2</b></h2>
-                                        <h2><b>2</b></h2>
-                                        <h2><b>2</b></h2>
-                                    </div>
-                                </div>
-                                <div class="product-description-box">
-                                    <ul class="nav-underline">
-                                        <li><a href="#">Activity</a></li>
-                                        <li><a href="#" class="active">Info</a></li>
-                                        <li><a href="#">Location</a></li>
-                                    </ul>
-                                    <div class="container-fluid">
-                                        <ul class="nav-underline secondary">
-                                            <li><a href="#" class="active">City</a></li>
-                                            <li><a href="#">State</a></li>
-                                            <li><a href="#">Country</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="locations">
-                                        <ul>Dallas</ul>
-                                        <ul>Forth Worth</ul>
-                                        <ul>Allen</ul>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="content-box container-fluid">
-                                <div class="table-responsive table-filter">
-                                    <section>
-                                        <p style={{alignSelf: "flex-end"}}>50 Varients</p>
-                                        <button onClick={setModal} type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Add</button>
-                                    </section>
-                                    <Variant varId={match.params.id} deleteVariant={deleteVariant} />
-                                </div>
-                            </div>
+            <div id="product-content-wrapper">
+                <div id="breadcrumb">
+                    <nav className="breadcrumb">
+                        <ol>
+                            <li><b>My Portfolio</b></li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="product-header container-fluid">
+                    <div style={{display: 'flex'}}>
+                        {detailProduct && <img style={{width: '50px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/products/image/${detailProduct.img_gallery[0].img_name}`} alt="img" />}
+                        <h3 style={{color: "black"}}>Flower Dress</h3>
+                    </div>
+                    <hr/>
+                    <p>Qty 12 in stock for 4 varients</p>
+                    <hr/>
+                </div>
+                <div class="product-map"></div>
+                <div class="product-info">
+                    <div class="product-status-box">
+                        <div class="product-status-box-title"><p>status</p></div>
+                        <div class="product-status-box-stats">
+                            <h2><b>2</b></h2>
+                            <h2><b>2</b></h2>
+                            <h2><b>2</b></h2>
+                            <h2><b>2</b></h2>
                         </div>
+                    </div>
+                    <div class="product-description-box">
+                        <ul class="nav-underline">
+                            <li><a href="#">Activity</a></li>
+                            <li><a href="#" class="active">Info</a></li>
+                            <li><a href="#">Location</a></li>
+                        </ul>
+                        <div class="container-fluid">
+                            <ul class="nav-underline secondary">
+                                <li><a href="#" class="active">City</a></li>
+                                <li><a href="#">State</a></li>
+                                <li><a href="#">Country</a></li>
+                            </ul>
+                        </div>
+                        <div class="locations">
+                            <ul>Dallas</ul>
+                            <ul>Forth Worth</ul>
+                            <ul>Allen</ul>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="content-box container-fluid">
+                    <div class="table-responsive table-filter">
+                        <section>
+                            <p style={{alignSelf: "flex-end"}}>50 Varients</p>
+                            <button onClick={setModal} type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Add Variant</button>
+                        </section>
+                        <Variant varId={match.params.id} deleteVariant={deleteVariant} />
                     </div>
                 </div>
             </div>

@@ -66,18 +66,18 @@ class Details extends Component {
                     {/* title */}
                     <div className="row">
                         <div className="col-10 mx-auto text-center text-slanted text-blue my-5">
-                            <h1>{detailProduct.title}</h1>
+                            <h1>{detailProduct.name}</h1>
                         </div>
                     </div>
                     {/* end title */}
                     {/* product info */}
                     <div className="row">
                         <div className="col-10 mx-auto col-md-6 my-3">
-                            <img src={`/api/products/image/${detailProduct.img_name}`} className="img-fluid" alt="product" />
+                            <img src={`/api/products/image/${detailProduct.img_gallery[0].img_name}`} className="img-fluid" alt="product" />
                         </div>
                         {/* product text */}
                         <div className="col-10 mx-auto col-md-6 my-3 text-capitalize">
-                            <h2>{detailProduct.title}</h2>
+                            <h2>{detailProduct.name}</h2>
                             {/* <h4 className="text-uppercase text-muted mt-3 mb-2">
                                 Brand : <span className="text-uppercase">{detailProduct.company}</span>
                             </h4> */}
