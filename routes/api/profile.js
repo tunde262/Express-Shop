@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const request = require('request');
 const config = require('config');
 const db = config.get('mongoURI');
 const router = express.Router();
