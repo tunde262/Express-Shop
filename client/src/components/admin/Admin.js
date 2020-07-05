@@ -20,9 +20,7 @@ const Admin = ({ getCurrentStore, deleteStore, getStoreProducts, getStoreCollect
     }, [getCurrentStore, {/*getStoreProducts, getStoreCollections, getStoreLocations*/}]);
 
     return (
-        <div className="container">
-            <div className="row">
-                <div class="col-md-12">
+            <Fragment>
                     {loading && store === null ? <Spinner /> : (
                         <Fragment>
                             {store !== null ? (
@@ -79,9 +77,7 @@ const Admin = ({ getCurrentStore, deleteStore, getStoreProducts, getStoreCollect
                             )}
                         </Fragment>
                     )}
-                </div>
-            </div>
-        </div>
+        </Fragment>
     )
 }
 

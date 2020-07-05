@@ -161,33 +161,32 @@ const AddProduct = ({
         <label className="form-group">Category
           <select name="category" value={category} onChange={onChange}>
             <option>* Choose a category</option>
-            <option value="Developer">Developer</option>
-            <option value="Junior Developer">Junior Developer</option>
-            <option value="Senior Developer">Senior Developer</option>
-            <option value="Manager">Manager</option>
-            <option value="Student or Learning">Student or Learning</option>
-            <option value="Instructor">Instructor or Teacher</option>
-            <option value="Intern">Intern</option>
-            <option value="Other">Other</option>
+            <option value="clothing & fashion">Clothing & Fashion</option>
+            <option value="Junior Developer">Bathroom</option>
+            <option value="Senior Developer">Household Essential</option>
+            <option value="Manager">Laundry</option>
+            <option value="Student or Learning">Men</option>
+            <option value="Instructor">Personal Care</option>
+            <option value="Instructor">Pets</option>
+            <option value="Intern">School & Office</option>
+            <option value="Other">Shoes</option>
+            <option value="Other">Women</option>
           </select>
           <small className="form-text">
-            Give us an idea of where you are at in your life?
+            Give us an idea of how we should label this item?
           </small>
         </label>
-        <label className="form-group">condition
+        <label className="form-group">Condition
           <select name="condition" value={condition} onChange={onChange}>
             <option>* Choose a condition</option>
-            <option value="Developer">Developer</option>
-            <option value="Junior Developer">Junior Developer</option>
-            <option value="Senior Developer">Senior Developer</option>
-            <option value="Manager">Manager</option>
-            <option value="Student or Learning">Student or Learning</option>
-            <option value="Instructor">Instructor or Teacher</option>
-            <option value="Intern">Intern</option>
-            <option value="Other">Other</option>
+            <option value="Developer">New</option>
+            <option value="Junior Developer">Refurbished</option>
+            <option value="Senior Developer">Used (fair)</option>
+            <option value="Manager">Used (good)</option>
+            <option value="Student or Learning">Used (like new)</option>
           </select>
           <small className="form-text">
-            Give us an idea of where you are at in your life?
+            Give us an idea of the condition this item is in?
           </small>
         </label>
         <div className="line"></div>
@@ -200,7 +199,7 @@ const AddProduct = ({
             onChange={onChange}
           />
           <small className="form-text">
-            Could be your own or a company website
+            Helps keep track of inventory
           </small>
         </label>
         <div className="line"></div>
@@ -213,7 +212,7 @@ const AddProduct = ({
             onChange={onChange}
           />
           <small className="form-text">
-            City & state suggested (eg. Boston, MA)
+            How much you want use to list this item for.
           </small>
         </label>
         <div className="line"></div>
@@ -226,7 +225,7 @@ const AddProduct = ({
             onChange={onChange}
           />
           <small className="form-text">
-            Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)
+            How much this item cost you.
           </small>
         </label>
         <div className="line"></div>
@@ -259,8 +258,7 @@ const AddProduct = ({
             onChange={onChange}
           />
           <small className="form-text">
-            If you want your latest repos and a Github link, include your
-            username
+            How many units do you want to list?
           </small>
         </label>
         <div className="line"></div>
@@ -273,7 +271,7 @@ const AddProduct = ({
             onChange={onChange}
           />
           <small className="form-text">
-            Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)
+            Please use comma separated values (eg. Blue, Baseball, Bentley)
           </small>
         </label>
         <div className="line"></div>
@@ -286,8 +284,7 @@ const AddProduct = ({
             onChange={onChange}
           />
           <small className="form-text">
-            If you want your latest repos and a Github link, include your
-            username
+            Link to this item on your own website.
           </small>
         </label>
         
