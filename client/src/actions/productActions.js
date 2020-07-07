@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { setAlert } from './alertActions';
 
-import { SET_PRODUCTS, SET_SORTED_PRODUCTS, UPDATE_PRODUCT_LIKES, PRODUCT_ERROR, HANDLE_TAGS, REMOVE_TAGS, PRODUCTS_LOADING, ADD_TOTALS, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, CLOSE_MODAL, CLEAR_CART, GET_CART, GET_ORDERS } from './types';
+import { SET_PRODUCTS, SET_SORTED_PRODUCTS, UPDATE_PRODUCT_LIKES, ADD_PRODUCT_REVIEW, REMOVE_PRODUCT_REVIEW, PRODUCT_ERROR, HANDLE_TAGS, REMOVE_TAGS, PRODUCTS_LOADING, ADD_TOTALS, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, CLOSE_MODAL, CLEAR_CART, GET_CART, GET_ORDERS } from './types';
 
 // Get Products
 export const getProducts = () => dispatch => {
@@ -393,3 +393,51 @@ export const setProductsLoading = () => {
         type: PRODUCTS_LOADING
     }
 }
+
+// INTERACTIONS
+
+
+// Add Review
+export const addReview = (productId, formData) => async dispatch => {
+    try {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const res = await axios.post(`/api/products/comment/${productId}`, formData, config);
+
+        dispatch({
+            type: ADD_PRODUCT_REVIEW,
+            payload: res.data
+        });
+
+        dispatch(setAlert('Review Added', 'success'));
+
+    } catch (err) {
+        dispatch({
+            type: PRODUCT_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+}
+
+// Delete review
+export const deleteReview = (productId, reviewId) => async dispatch => {
+    try {
+        await axios.delete(`/api/products/comment/${productId}/${reviewId}`);
+
+        dispatch({
+        type: REMOVE_PRODUCT_REVIEW,
+        payload: reviewId
+        });
+
+        dispatch(setAlert('Review Removed', 'success'));
+    } catch (err) {
+        dispatch({
+            type: PRODUCT_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+}   

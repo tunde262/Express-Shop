@@ -26,7 +26,7 @@ const Admin = ({ getCurrentStore, deleteStore, getStoreProducts, getStoreCollect
                             {store !== null ? (
                                 <Fragment>
                                     {/* Website Overview */}
-                                    <div style={{marginTop: '2rem'}}></div>
+                                    <div style={{marginTop: '7rem'}}></div>
                                     <div id="breadcrumb">
                                         <nav className="breadcrumb">
                                             <ol>
@@ -34,6 +34,11 @@ const Admin = ({ getCurrentStore, deleteStore, getStoreProducts, getStoreCollect
                                             </ol>
                                         </nav>
                                     </div>
+                                    <div style={{display: 'flex'}}>
+                                        {store.img_name && <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${store.img_name}`} alt="img" />}
+                                        <h3 style={{color: "black"}}>{store.name}</h3>
+                                    </div>
+                                    <hr/>
                                     <div class="panel panel-default">
                                         <div class="panel-heading main-color-bg">
                                             <h3 class="panel-title">Website Overview</h3>

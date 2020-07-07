@@ -33,15 +33,13 @@ const SideDrawer = ({ drawerClickHandler, getCurrentProfile, deleteAccount, prof
             <li onClick={drawerClickHandler}><Link to="/">Explore</Link></li>
             <li onClick={drawerClickHandler}><Link to="/categories">Categories</Link></li>
             <li onClick={drawerClickHandler}><Link to="/stores">Stores</Link></li>
-            <li onClick={drawerClickHandler}>Same Day Delivery</li>
+            {/* <li onClick={drawerClickHandler}>Same Day Delivery</li>
             <li onClick={drawerClickHandler}>Reorder</li>
-            <li onClick={drawerClickHandler}>Track Order</li>
-            <li onClick={drawerClickHandler}>Contact Us</li>
-            <li onClick={drawerClickHandler}>    
-                <Link to='/admin' className="btn btn-primary my-1">
-                    Open A Store
-                </Link>
-            </li>
+            <li onClick={drawerClickHandler}>Track Order</li> */}
+            <li onClick={drawerClickHandler}><Link to="/profile">My Account</Link></li>    
+            <Link onClick={drawerClickHandler} to='/admin' className="btn btn-primary my-1">
+                Open A Store
+            </Link>
         </ul>
     );
 

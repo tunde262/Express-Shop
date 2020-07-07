@@ -44,7 +44,7 @@ export const getStoreById = Id => async dispatch => {
     dispatch({ type: CLEAR_STORE });
 
     try {
-        const res = await axios.get(`/api/store/${Id}`);
+        const res = await axios.get(`/api/stores/${Id}`);
 
         dispatch({
             type: GET_STORE,

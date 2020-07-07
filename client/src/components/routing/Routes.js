@@ -20,6 +20,7 @@ import AddProduct from '../admin/forms/AddProduct';
 import StoreForm from '../admin/forms/StoreForm';
 import AddCollection from '../admin/forms/AddCollection';
 import StoresPage from '../../pages/StoresPage';
+import StorePage from '../../pages/StorePage';
 import CategoryPage from '../../pages/CategoryPage';
 
 import PrivateRoute from './PrivateRoute';
@@ -32,6 +33,8 @@ const Routes = props => {
             {/* Category Pages */}
             <Route exact path="/categories" component={CategoryPage} />
             <Route exact path="/stores" component={StoresPage} />
+            {/* Store Page */}
+            <Route exact path="/store/:id" component={StorePage} />
             {/* Auth Pages */}
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
