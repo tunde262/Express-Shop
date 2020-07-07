@@ -162,15 +162,15 @@ const AddProduct = ({
           <select name="category" value={category} onChange={onChange}>
             <option>* Choose a category</option>
             <option value="clothing & fashion">Clothing & Fashion</option>
-            <option value="Junior Developer">Bathroom</option>
-            <option value="Senior Developer">Household Essential</option>
-            <option value="Manager">Laundry</option>
-            <option value="Student or Learning">Men</option>
-            <option value="Instructor">Personal Care</option>
-            <option value="Instructor">Pets</option>
-            <option value="Intern">School & Office</option>
-            <option value="Other">Shoes</option>
-            <option value="Other">Women</option>
+            <option value="bathroom">Bathroom</option>
+            <option value="household essentials">Household Essential</option>
+            <option value="laundry">Laundry</option>
+            <option value="men">Men</option>
+            <option value="personal care">Personal Care</option>
+            <option value="pets">Pets</option>
+            <option value="school & office">School & Office</option>
+            <option value="shoes">Shoes</option>
+            <option value="women">Women</option>
           </select>
           <small className="form-text">
             Give us an idea of how we should label this item?
@@ -179,11 +179,11 @@ const AddProduct = ({
         <label className="form-group">Condition
           <select name="condition" value={condition} onChange={onChange}>
             <option>* Choose a condition</option>
-            <option value="Developer">New</option>
-            <option value="Junior Developer">Refurbished</option>
-            <option value="Senior Developer">Used (fair)</option>
-            <option value="Manager">Used (good)</option>
-            <option value="Student or Learning">Used (like new)</option>
+            <option value="new">New</option>
+            <option value="refurbished">Refurbished</option>
+            <option value="used fair">Used (fair)</option>
+            <option value="used good">Used (good)</option>
+            <option value="used like new">Used (like new)</option>
           </select>
           <small className="form-text">
             Give us an idea of the condition this item is in?
