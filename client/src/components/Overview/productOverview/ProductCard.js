@@ -44,7 +44,7 @@ const ProductCard = ({addLike, product, handleDetail, addToCart, openModal, clos
         });
     }
 
-    const { _id, name, img_gallery, price, size, color, company, category, inCart, likes, comments } = product;
+    const { _id, name, img_gallery, price, store, category, inCart, likes, comments } = product;
 
     return (
         <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
@@ -73,37 +73,10 @@ const ProductCard = ({addLike, product, handleDetail, addToCart, openModal, clos
                 </div>
                 <div className="specifice">
                     <div className="titles">
-                        <h2>{name}<br/><span>{category}</span></h2>
+                        <h2>{name}<br/><span><Link to={"/store/" + store._id}>{store.name}</Link></span></h2>
                     </div>
                     <div className="price">${price}</div>
-                    <label>Size</label>
-                    <ul>
-                        <li>{size}</li>
-                    </ul>
-                    <label>Colors</label>
-                    <ul className="color"> 
-                        <li>{color}</li>
-                    </ul>
                     <button onClick={() => todo(_id, name)}>Add To Cart</button>
-                </div>
-            </div>
-            <div className="card_stats">
-                <div className="stat">
-                    <div className="value">
-                    <i className="far fa-heart" onClick={() => addLike(_id)}></i>
-                    {' '}
-                    <span>{likes.length > 0 && <span>{likes.length}</span>}</span>
-                    </div>
-                </div>
-                <div className="stat border">
-                    <div className="value">5123</div>
-                    <div className="type">views</div>
-                </div>
-                <div className="stat border">
-                <i className="far fa-comment-alt"></i>{' '}
-                {comments.length > 0 && (
-                    <span className='comment-count'>{comments.length}</span>
-                )}
                 </div>
             </div>
         </ProductWrapper>
@@ -147,7 +120,7 @@ const ProductWrapper = styled.div`
     .specifice {
         position: absolute;
         width: 100%;
-        bottom: -172px;
+        bottom: 0;
         background: #fff;
         padding: 10px;
         box-sizing: border-box;
@@ -163,7 +136,7 @@ const ProductWrapper = styled.div`
         font-size: 20px;
         width: 100%;
     }
-    .specifice h2 span {
+    .specifice h2 span a {
         font-size: 15px;
         color: #ccc;
         font-weight: normal;
