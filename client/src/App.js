@@ -20,6 +20,7 @@ import PrivateRoute from './components/routing/PrivateRoute';
 
 // Layout
 import ExplorePage from './pages/ExplorePage';
+import Landing from './pages/Landing';
 import Navbar from './components/layout/Navbar/Navbar';
 import SideDrawer from './components/layout/SideDrawer/SideDrawer';
 import Backdrop from './components/layout/Backdrop/Backdrop';
@@ -92,7 +93,7 @@ const App = () => {
             {backdrop}
             <main id="home">
               <Switch>
-                <Route exact path="/" component={ExplorePage} />
+                <Route exact path="/" component={Landing} />
                 <Route component={Routes} />
               </Switch>
             </main>

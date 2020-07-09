@@ -34,42 +34,44 @@ const Admin = ({ getCurrentStore, deleteStore, getStoreProducts, getStoreCollect
                                             </ol>
                                         </nav>
                                     </div>
-                                    <div style={{display: 'flex'}}>
-                                        {store.img_name && <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${store.img_name}`} alt="img" />}
-                                        <h3 style={{color: "black"}}>{store.name}</h3>
-                                    </div>
-                                    <hr/>
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading main-color-bg">
-                                            <h3 class="panel-title">Website Overview</h3>
+                                    <section className="container">
+                                        <div style={{display: 'flex'}}>
+                                            {store.img_name && <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${store.img_name}`} alt="img" />}
+                                            <h3 style={{color: "black"}}>{store.name}</h3>
                                         </div>
-                                        <div class="panel-body">
-                                            <div class="col-md-3">
-                                                <div class="well dash-box">
-                                                    <h2> 2</h2>
-                                                    <h4>Sold Today</h4>
-                                                </div>
+                                        <hr/>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading main-color-bg">
+                                                <h3 class="panel-title">Website Overview</h3>
                                             </div>
-                                            <div class="col-md-3">
-                                                <div class="well dash-box">
-                                                    <h2> 34</h2>
-                                                    <h4>Sold Last 7 Days</h4>
+                                            <div class="panel-body">
+                                                <div class="col-md-3">
+                                                    <div class="well dash-box">
+                                                        <h2> 2</h2>
+                                                        <h4>Sold Today</h4>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="well dash-box">
-                                                    <h2> $0.00</h2>
-                                                    <h4>Sales Today</h4>
+                                                <div class="col-md-3">
+                                                    <div class="well dash-box">
+                                                        <h2> 34</h2>
+                                                        <h4>Sold Last 7 Days</h4>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="well dash-box">
-                                                    <h2> $0.00</h2>
-                                                    <h4>Sales Last 7 Days</h4>
+                                                <div class="col-md-3">
+                                                    <div class="well dash-box">
+                                                        <h2> $0.00</h2>
+                                                        <h4>Sales Today</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="well dash-box">
+                                                        <h2> $0.00</h2>
+                                                        <h4>Sales Last 7 Days</h4>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </section>
                                     <Table />
                                 </Fragment>
                             ) : (

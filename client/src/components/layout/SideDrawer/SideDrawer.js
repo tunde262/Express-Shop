@@ -30,7 +30,7 @@ const SideDrawer = ({ drawerClickHandler, getCurrentProfile, deleteAccount, prof
                     <span className="hide-sm">Logout</span>
                 </a>
             </li>
-            <li onClick={drawerClickHandler}><Link to="/">Explore</Link></li>
+            <li onClick={drawerClickHandler}><Link to="/explore">Explore</Link></li>
             <li onClick={drawerClickHandler}><Link to="/categories">Categories</Link></li>
             <li onClick={drawerClickHandler}><Link to="/stores">Stores</Link></li>
             {/* <li onClick={drawerClickHandler}>Same Day Delivery</li>

@@ -27,10 +27,8 @@ const Navbar = ({ drawerClickHandler, auth: { isAuthenticated, loading }, logout
 
     const guestLinks = (
         <Fragment>
-            <li>Who Are We?</li>
-            <li>FAQ</li>
-            <li>Contact Us</li>
-            <li><Link className="cta" to="/register"><button>Sign Up</button></Link></li>
+            <li>For Business</li>
+            <li><Link className="cta" to="/register"><button><i className="fas fa-shopping-bag">{' '}</i> Shop</button></Link></li>
         </Fragment>
     );
 

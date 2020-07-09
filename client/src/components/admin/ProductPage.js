@@ -345,10 +345,10 @@ const ProductPage = ({
                 <div class="product-header container-fluid">
                     <div style={{display: 'flex'}}>
                         {detailProduct && <img style={{width: '50px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/products/image/${detailProduct.img_gallery[0].img_name}`} alt="img" />}
-                        <h3 style={{color: "black"}}>Flower Dress</h3>
+                        <h3 style={{color: "black"}}>{detailProduct && detailProduct.name}</h3>
                     </div>
                     <hr/>
-                    <p>Qty 12 in stock for 4 varients</p>
+                    <p>Qty {detailProduct && detailProduct.inventory_qty} in stock for {detailProduct && detailProduct.variants.length} varients</p>
                     <hr/>
                 </div>
                 <div class="product-map"></div>

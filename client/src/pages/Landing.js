@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import Dropdown from '../components/common/Dropdown';
 import classes from '../components/layout/Landing.module.css';
 
+import StopwatchEmoji from '../utils/imgs/stopwatch.png';
+import BoxEmoji from '../utils/imgs/box.png';
+import MoneyBagEmoji from '../utils/imgs/moneybag.png';
+import DiamondEmoji from '../utils/imgs/diamond.png';
+
 import ReactGA from 'react-ga';
 
 class Landing extends Component {
@@ -14,14 +19,21 @@ class Landing extends Component {
       <div>
         <div style={{height: '100vh'}}>
           <div className={classes.container}>
-            
-              <h1>Hi we're <br/>
-                <div className={classes.cursor}><span className="txt-type" data-wait="3000" data-words='["Cardboard Express", "a last-delivery marketplace"]'></span></div>
-              </h1>
-            <h2>Your customers want things delivered fast..... We can help you with that. </h2>
-            <h2>Cardboard Express is a last mile delivery marketplace that connects online stores with fulfillers.</h2>
-            <h2>Store your inventory within the same neighborhoods as your customers</h2>
-            <h2>We will take care of the rest and get them delivered minutes after purchase.</h2>
+            <div class={classes.landing_container}>
+              <div>
+                <h1>Shop Smart.<br/> Delivered On Time.<img style={{width: '40px', marginLeft: '.1rem', marginTop:'-.7rem'}} src={StopwatchEmoji} alt="img" /></h1>
+                <p><img style={{width: '20px', marginRight: '.1rem'}} src={BoxEmoji} alt="img" />  Nationwide Shipping.<br/><br/>
+                <img style={{width: '20px', marginRight: '.1rem'}} src={MoneyBagEmoji} alt="img" />  Low Prices.<br/><br/>
+                <img style={{width: '20px', marginRight: '.1rem'}} src={DiamondEmoji} alt="img" />  Fashion. Shoes. Essentials. Care.</p>
+              </div>
+              <div class={classes.landing_form}>
+                <input type="text" class="form-control" placeholder="Enter Your Email" aria-label="Recipient's username with two button addons" aria-describedby="button-addon4" />
+                <div class={classes.landing_form_buttons} style={{marginTop: '-.45rem'}} id="button-addon4">
+                  <button class="btn btn-outline-secondary btn-success" style={{marginRight: '0'}} type="button">Log In</button>
+                  <button class="btn btn-outline-secondary" style={{background: '#ff4b2b', color: 'white'}} type="button">Create Account</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div className={classes.info}>

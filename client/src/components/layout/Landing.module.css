@@ -4,6 +4,39 @@
     justify-content: center;
     height: 100%;
     padding: 0 3rem;
+    background: url(../../utils/imgs/bannerexpress.jpg);
+    background-position: center;
+    background-position: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.landing_container {
+    width: 500px;
+    max-width: 100%;
+}
+
+.landing_container > *{
+    margin: 3rem 0;
+}
+
+.landing_form {
+    display: flex;
+    flex-direction: column;
+}
+
+.landing_form_buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 5px;
+    width: 100%;
+}
+
+.landing_form_buttons button {
+    border-radius: 0;
+    height: 50px;
 }
 
 .info {
@@ -109,6 +142,11 @@
 @media(max-width: 800px) {
     .container {
         padding: 0 1rem;
+        justify-content: start;
+        background: url(../../utils/imgs/bannerexpressmobile.jpg);
+        background-position: center;
+        background-size: cover;
+        background-attachment: fixed;
     }
 
     .info {

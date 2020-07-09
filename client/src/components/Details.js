@@ -103,136 +103,138 @@ const Details = ({
     else {
         detailItem = (
             <Fragment>
-            <div id="detail-content-wrapper">
-                <div id="breadcrumb">
-                    <nav className="breadcrumb">
-                        <ol>
-                            <li><b>My Portfolio</b></li>
-                        </ol>
-                    </nav>
-                </div>
-                <div class="detail-map">
-                    <img src={`/api/products/image/${detailProduct.img_gallery[0].img_name}`} className="img-fluid" alt="product" />
-                    <div className="datail-sub-images">
-                        {detailProduct.img_gallery.map((item, index) => {
-                            return <img key={index} src={`/api/products/image/${detailProduct.img_gallery[index].img_name}`} alt={detailProduct.name} />
-                        })}
-                    </div>
-                </div>
-                <div class="detail-info">
-                    <div class="detail-status-box">
-                        <h2>{detailProduct.name}</h2>
-                        <div style={{display:'flex', alignItems: 'center', margin:'1rem 0'}}>
-                            <Link to={"/store/" + detailProduct.store._id}>
-                                <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${detailProduct.store.img_name}`} alt="img" />
-                            </Link>
-                            <Link to={"/store/" + detailProduct.store._id}>
-                                <p>{detailProduct.store.name}</p>
-                            </Link>
+                <section className="container">
+                    <div id="detail-content-wrapper">
+                        <div id="breadcrumb">
+                            <nav className="breadcrumb">
+                                <ol>
+                                    <li><b>My Portfolio</b></li>
+                                </ol>
+                            </nav>
                         </div>
-                        <h2>{detailProduct.price}</h2>
-                        <p>Delivery</p>
-                        <p>Return</p>
+                        <div class="detail-map">
+                            <img src={`/api/products/image/${detailProduct.img_gallery[0].img_name}`} className="img-fluid" alt="product" />
+                            <div className="datail-sub-images">
+                                {detailProduct.img_gallery.map((item, index) => {
+                                    return <img key={index} src={`/api/products/image/${detailProduct.img_gallery[index].img_name}`} alt={detailProduct.name} />
+                                })}
+                            </div>
+                        </div>
+                        <div class="detail-info">
+                            <div class="detail-status-box">
+                                <h2>{detailProduct.name}</h2>
+                                <div style={{display:'flex', alignItems: 'center', margin:'1rem 0'}}>
+                                    <Link to={"/store/" + detailProduct.store._id}>
+                                        <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${detailProduct.store.img_name}`} alt="img" />
+                                    </Link>
+                                    <Link to={"/store/" + detailProduct.store._id}>
+                                        <p>{detailProduct.store.name}</p>
+                                    </Link>
+                                </div>
+                                <h2>{detailProduct.price}</h2>
+                                <p>Delivery</p>
+                                <p>Return</p>
 
+                            </div>
+                            <div class="detail-description-box">
+                                <h4 className="text-blue">
+                                        color : {detailProduct.color}
+                                    </h4>
+                                    <h4 className="text-blue">
+                                        size : {detailProduct.size}
+                                    </h4>
+                                <ButtonContainer onClick={goBack}>back to products</ButtonContainer>
+                                <ButtonContainer
+                                    cart
+                                    disabled={detailProduct.inCart ? true : false}
+                                    onClick={() =>todo(detailProduct._id, detailProduct.title)}
+                                >
+                                    {detailProduct.inCart ? 'inCart' : 'add to cart'}
+                                </ButtonContainer>
+
+                            </div>
+                        </div>
+                        <div class="content-box container-fluid">
+                            <div className="bg-light p-2">
+                                <h2 className="text-primary">Quick Info</h2>
+                                <div className="skills">
+                                    <div className="p-1">
+                                        <i className="fas fa-check"></i> HTML
+                                    </div>
+                                    <div className="p-1">
+                                        <i className="fas fa-check"></i> CSS
+                                    </div>
+                                    <div className="p-1">
+                                        <i className="fas fa-check"></i> FUCK
+                                    </div>
+                                    <div className="p-1">
+                                        <i className="fas fa-check"></i> YOU
+                                    </div>
+                                    <div className="p-1">
+                                        <i className="fas fa-check"></i> TOO
+                                    </div>
+                                </div>
+                                <div className="line"></div>
+                                    <Fragment>
+                                        <h2 className="text-primary">Description</h2>
+                                        <p>
+                                            {detailProduct.description}
+                                        </p>
+                                    </Fragment>
+                            </div>
+                            <div class="table-responsive table-filter">
+                                <section>
+                                    <p style={{alignSelf: "flex-end"}}>50 Reviews</p>
+                                    <button onClick={setModal} type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Write A Review</button>
+                                </section>
+                            </div>
+                        </div>
                     </div>
-                    <div class="detail-description-box">
-                        <h4 className="text-blue">
-                                color : {detailProduct.color}
-                            </h4>
-                            <h4 className="text-blue">
-                                size : {detailProduct.size}
-                            </h4>
-                        <ButtonContainer onClick={goBack}>back to products</ButtonContainer>
-                        <ButtonContainer
-                            cart
-                            disabled={detailProduct.inCart ? true : false}
-                            onClick={() =>todo(detailProduct._id, detailProduct.title)}
+                </section>
+                <ProductOverview title="Tops" products={products} link="/top" />
+                <Modal open={displayModal} onClose={setModal} center>
+                    <h2>Add Variant</h2>
+                    <p>
+                        Add options to create variants
+                    </p>
+                    <MuiThemeProvider>
+                        <form
+                            className='form my-1'
+                            onSubmit={onSubmit}
                         >
-                            {detailProduct.inCart ? 'inCart' : 'add to cart'}
-                        </ButtonContainer>
-
-                    </div>
-                </div>
-                <div class="content-box container-fluid">
-                    <div className="bg-light p-2">
-                        <h2 className="text-primary">Quick Info</h2>
-                        <div className="skills">
-                            <div className="p-1">
-                                <i className="fas fa-check"></i> HTML
-                            </div>
-                            <div className="p-1">
-                                <i className="fas fa-check"></i> CSS
-                            </div>
-                            <div className="p-1">
-                                <i className="fas fa-check"></i> FUCK
-                            </div>
-                            <div className="p-1">
-                                <i className="fas fa-check"></i> YOU
-                            </div>
-                            <div className="p-1">
-                                <i className="fas fa-check"></i> TOO
-                            </div>
-                        </div>
-                        <div className="line"></div>
-                            <Fragment>
-                                <h2 className="text-primary">Description</h2>
-                                <p>
-                                    {detailProduct.description}
-                                </p>
-                            </Fragment>
-                    </div>
-                    <div class="table-responsive table-filter">
-                        <section>
-                            <p style={{alignSelf: "flex-end"}}>50 Reviews</p>
-                            <button onClick={setModal} type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Write A Review</button>
-                        </section>
-                    </div>
-                </div>
-            </div>
-            <ProductOverview title="Tops" products={products} link="/top" />
-            <Modal open={displayModal} onClose={setModal} center>
-                <h2>Add Variant</h2>
-                <p>
-                    Add options to create variants
-                </p>
-                <MuiThemeProvider>
-                    <form
-                        className='form my-1'
-                        onSubmit={onSubmit}
-                    >
-                        <TextField 
-                            hintText="Enter A Title For This Post"
-                            floatingLabelText="Title of Post"
-                            name='title'
+                            <TextField 
+                                hintText="Enter A Title For This Post"
+                                floatingLabelText="Title of Post"
+                                name='title'
+                                onChange={e => onChange(e)}
+                                defaultValue={title}
+                                required
+                                style={{marginBottom: "1rem"}}
+                            />
+                            <div className="line"></div>
+                            <input
+                                type="file"
+                                name="file"
+                                id="file"
+                                className="form-control"
+                                placeholder="Start with ../img/"
+                                onChange={fileChanged}
+                            />
+                            <div className="line"></div>
+                            <textarea
+                            name='text'
+                            style={{width: "100%"}}
+                            rows='5'
+                            placeholder='Tell a story'
+                            value={text}
                             onChange={e => onChange(e)}
-                            defaultValue={title}
                             required
-                            style={{marginBottom: "1rem"}}
-                        />
-                        <div className="line"></div>
-                        <input
-                            type="file"
-                            name="file"
-                            id="file"
-                            className="form-control"
-                            placeholder="Start with ../img/"
-                            onChange={fileChanged}
-                        />
-                        <div className="line"></div>
-                        <textarea
-                        name='text'
-                        style={{width: "100%"}}
-                        rows='5'
-                        placeholder='Tell a story'
-                        value={text}
-                        onChange={e => onChange(e)}
-                        required
-                        />
-                        <div className="line"></div>
-                        <input type='submit' className='btn btn-dark my-1' value='Submit' />
-                    </form>
-                </MuiThemeProvider>
-            </Modal>
+                            />
+                            <div className="line"></div>
+                            <input type='submit' className='btn btn-dark my-1' value='Submit' />
+                        </form>
+                    </MuiThemeProvider>
+                </Modal>
             </Fragment>
             // <div>
             //     <div id="breadcrumb">
