@@ -26,8 +26,26 @@ export const getCollections = () => async dispatch => {
   }
 };
 
+// Get Collections by current user
+export const getStoreCollections = () => async dispatch => {
+  try {
+    const res = await axios.get('/api/categories/store');
+
+    dispatch({
+      type: GET_COLLECTIONS,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_COLLECTIONS,
+      payload: {}
+    })
+  }
+};
+
+
 // Get Store Collections
-export const getStoreCollections = (id) => async dispatch => {
+export const getCollectionsByStoreId = (id) => async dispatch => {
     try {
         const res = await axios.get(`/api/categories/store/${id}`);
 
@@ -63,19 +81,39 @@ export const getCollectionById = id => async dispatch => {
 // Add Collection
 export const addCollection = (formData, history) => async dispatch => {
     try {
-        const config = {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          };
+      const config = {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+      };
       const res = await axios.post(`/api/categories`, formData, config);
+
+      const storeProducts = await axios.get('/api/products/store');
+
+      const categoryTags = [...res.data.tags];
+      
+      for(var i = 0; i < categoryTags.length; i++) {
+        storeProducts.data.map(async product => {
+          try {
+            if(product.tags.includes(categoryTags[i])) {
+              let data = new FormData();
+              data.append('id', product._id);
+  
+              await axios.put(`/api/categories/product/${res.data._id}`, data, config);
+              console.log('Added ' + product._id + ' TO COLLECTION: ' + res.data.name);
+            }
+          } catch (err) {
+            console.log(err);
+          }
+        })
+      }
   
       dispatch({
         type: ADD_COLLECTION,
         payload: res.data
       });
 
-      history.push('/admin');
+      history.push(`/admin/collection/${res.data._id}`);
   
       dispatch(setAlert('Collection Created', 'success'));
     } catch (err) {
@@ -87,7 +125,7 @@ export const addCollection = (formData, history) => async dispatch => {
   };
 
 
-// Delete project
+// Delete collection
 export const deleteCollection = id => async dispatch => {
   try {
     await axios.delete(`/api/categories/${id}`);

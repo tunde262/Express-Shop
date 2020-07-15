@@ -8,11 +8,19 @@ const OrderSchema = new Schema({
     },
     user: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'user'
+    },
+    customer: {
+        type: Schema.Types.ObjectId,
+        ref: 'customer'
     },
     cart: {
         type: Object, 
         required: true
+    },
+    status: {
+        type: String,
+        default:'new order'
     },
     address: {
         street: {
@@ -44,6 +52,20 @@ const OrderSchema = new Schema({
         type: String,
         required: true
     },
+    activity: [
+        {
+            title: {
+                type: String
+            },
+            text: {
+                type: String
+            },
+            date: {
+                type: Date,
+                default: Date.now
+            }
+        }
+    ],
     date: {
         type: Date,
         default: Date.now

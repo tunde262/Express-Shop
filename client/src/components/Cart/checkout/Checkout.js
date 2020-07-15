@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import { Elements } from 'react-stripe-elements';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import { clearCart } from '../../../actions/productActions';
 
 import CheckoutForm from './CheckoutForm';
 import { stat } from 'fs';
 import { BackButton } from '../../common/BackButton';
+
+const stripePromise = loadStripe("pk_test_Hbz4uQovQLzsxsEZ4clF5WfI00TSBRJTac");
 
 class Checkout extends Component {
     constructor(props){
@@ -26,7 +29,7 @@ class Checkout extends Component {
 
         if(cart.length > 0) {
             checkoutView = (
-                <Elements>
+                <Elements stripe={stripePromise}>
                     <CheckoutForm 
                         total={Math.floor(cartTotal)} 
                         clearCart={clearCart} 

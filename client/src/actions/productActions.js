@@ -83,7 +83,7 @@ export const removeTags = (filter) => {
 
 
 // Add product
-export const addProduct = (prodData, imgData) => async dispatch => {
+export const addProduct = (prodData, imgData, varInfo, varName, history) => async dispatch => {
     const config = {
         headers: {
           'Content-Type': 'application/json'
@@ -91,8 +91,31 @@ export const addProduct = (prodData, imgData) => async dispatch => {
     };
     
     try {
-        const res = await axios.post('/api/products', prodData, imgData, config);
+        const res = await axios.post('/api/products', prodData, config);
         console.log(res.data);
+
+        const categoryList = await axios.get('/api/categories/store');
+        let tempTags = [...res.data.tags];
+  
+        categoryList.data.map(async category => {
+            const categoryTags = [...category.tags];
+            
+            try {
+                for(var i = 0; i < categoryTags.length; i++) {
+                    if(tempTags.includes(categoryTags[i])) {
+                        let data = new FormData();
+                        data.append('id', res.data._id);
+
+                        await axios.put(`/api/categories/product/${category._id}`, data, config);
+    
+                        break;
+                    }
+                    console.log('NO MATCH')
+                }
+            } catch (err) {
+                console.log(err)
+            }
+        })
 
         // imgData.map(img => console.log(img));
         // imgData.map(img => addProductImg(img, res.data._id))
@@ -105,7 +128,50 @@ export const addProduct = (prodData, imgData) => async dispatch => {
             await axios.post(`/api/products/image/${res.data._id}`, data, config);
             console.log('img added');
         });
-        // history.push('/admin');
+
+        if (varInfo.length > 0) {
+            varInfo.map(async (variant) => {
+                let data = new FormData();
+                
+                if(varName.var1 !== '')data.append(`${varName.var1}`, variant.var1);
+                if(varName.var2 !== '')data.append(`${varName.var2}`, variant.var2);
+                if(varName.var3 !== '')data.append(`${varName.var3}`, variant.var3);
+                if(varName.var4 !== '')data.append(`${varName.var4}`, variant.var4);
+                if(res.data.name)data.append('name', res.data.name);
+                if(variant.sku !== '')data.append('sku', variant.sku);
+                if(res.data.website_link)data.append('website_link', res.data.website_link);
+                if(variant.sale_price !== '')data.append('sale_price', variant.sale_price);
+                if(variant.price !== '')data.append('price', variant.price);
+                if(res.data.visible)data.append('visible', res.data.visible);
+                if(res.data.in_stock)data.append('in_stock', res.data.in_stock);
+                if(variant.inventory_qty !== '')data.append('inventory_qty', variant.inventory_qty);
+                if(res.data.category)data.append('category', res.data.category);
+                if(res.data.condition)data.append('condition', res.data.condition);
+                if(res.data.tags)data.append('tags', res.data.tags);
+    
+                await axios.post(`/api/variants/product/${res.data._id}`, data, config);
+                console.log('variants added');
+            });
+        } else {
+            let data = new FormData();
+                
+            if(res.data.name !== '')data.append('name', res.data.name);
+            if(res.data.sku !== '')data.append('sku', res.data.sku);
+            if(res.data.website_link !== '')data.append('website_link', res.data.website_link);
+            if(res.data.sale_price !== '')data.append('sale_price', res.data.sale_price);
+            if(res.data.price !== '')data.append('price', res.data.price);
+            if(res.data.visible !== '')data.append('visible', res.data.visible);
+            if(res.data.in_stock !== '')data.append('in_stock', res.data.in_stock);
+            if(res.data.inventory_qty !== '')data.append('inventory_qty', res.data.inventory_qty);
+            if(res.data.category !== '')data.append('category', res.data.category);
+            if(res.data.condition !== '')data.append('condition', res.data.condition);
+            if(res.data.tags !== '')data.append('tags', res.data.tags);
+
+            await axios.post(`/api/variants/product/${res.data._id}`, data, config);
+            console.log('default variant added');
+        }
+
+        history.push(`/admin/product/${res.data._id}`);
         dispatch(setAlert('New Product Created', 'success'));
     } catch (err) {
         dispatch({

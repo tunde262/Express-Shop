@@ -54,6 +54,20 @@ const ProductSchema = new Schema({
     condition: {
         type: String
     },
+    activity: [
+        {
+            title: {
+                type: String
+            },
+            text: {
+                type: String
+            },
+            date: {
+                type: Date,
+                default: Date.now
+            }
+        }
+    ],
     likes: [
         {
             user: {

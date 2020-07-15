@@ -70,8 +70,24 @@ router.get('/', auth, async (req, res) => {
     }
 });
 
+// @route GET api/variants
+// @desc Get Categories by user 
+// @access Public
+router.get('/store', auth, async (req, res) => {
+    try {
+        const profile = await Profile.findOne({ user: req.user.id });
+        const store = await Store.findOne({ profile: profile.id });
+        const categories = await Category.find({ store: store.id }).populate('store', ['name', 'img_name']);
+
+        res.json(categories);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
 // @route GET api/categories
-// @desc Get Store's Categories
+// @desc Get Store's Categories by id
 // @access Private
 router.get('/store/:id', auth, async (req, res) => {
     try {
@@ -227,19 +243,24 @@ router.put('/product/:id', auth, async (req, res) => {
     try {
         const category = await Category.findById(req.params.id);
 
-        // Check if product already liked by same user
-        if(category.products.filter(product => product.toString() === req.body.id).length > 0) {
-            // Get remove index
-            const removeIndex = category.products.map(product => product.toString()).indexOf(req.body.id);
-
-            category.products.splice(removeIndex, 1);
+        // Check if product already in category
+        if(category.items.length > 0) {
+            if(category.items.filter(item => item._id.toString() === req.body.id).length > 0) {
+                // Get remove index
+                const removeIndex = category.items.map(item => item._id.toString()).indexOf(req.body.id);
+    
+                category.items.splice(removeIndex, 1);
+            } else {
+                category.items.unshift({item: req.body.id});
+            }
         } else {
-            category.products.unshift(req.body.id);
+            category.items.unshift({item: req.body.id});
         }
+        
 
         await category.save();
 
-        res.json(category.products);
+        res.json(category.items);
     } catch (err) {
         console.error(err.message);
         

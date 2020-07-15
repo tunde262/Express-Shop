@@ -1,5 +1,6 @@
 import React, { useEffect, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../common/Spinner';
@@ -12,12 +13,57 @@ import OrderList from './OrderList';
 import Table from './table/Table';
 
 const Admin = ({ getCurrentStore, deleteStore, getStoreProducts, getStoreCollections, getStoreLocations, store: { store, loading } }) => {
+    const accountLink = 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=http://localhost:3000/dashboard/&client_id=ca_FFrwAOlKVRTGBrORx2OTVFLXJeM3gHHe&state=SECRET';
     useEffect(() => {
+        var url_string = (window.location.href);
+        var url = new URL(url_string);
+        var urlCode = url.searchParams.get("code");
+        async function getAccountLink() {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+
+            const formData = {
+                "code": `${urlCode}`
+            }
+
+            console.log('pre-request:' + formData.code)
+
+            const res = await axios.post('/api/stripe/create-account-hosted', formData, config);
+            console.log('requested: ' + res.data);
+            const accountNum = res.data;
+            console.log('state: ' + accountNum);
+            // setAccountLink(res.data.url);
+        } 
+        if(urlCode){
+            getAccountLink();
+        }
         getCurrentStore();
         // getStoreProducts();
         // getStoreCollections();
         // getStoreLocations();
-    }, [getCurrentStore, {/*getStoreProducts, getStoreCollections, getStoreLocations*/}]);
+    }, []);
+
+    const viewDashboard = async () => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
+        const formData = {
+            "code": `${store.stripe_id}`
+        }
+
+        console.log('pre-request:' + formData.code)
+
+        const res = await axios.post('/api/stripe/create-login-link', formData, config);
+
+        console.log('data: ' + res.data.url)
+        window.location.href = res.data.url; 
+    }
 
     return (
             <Fragment>
@@ -40,37 +86,42 @@ const Admin = ({ getCurrentStore, deleteStore, getStoreProducts, getStoreCollect
                                             <h3 style={{color: "black"}}>{store.name}</h3>
                                         </div>
                                         <hr/>
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading main-color-bg">
-                                                <h3 class="panel-title">Website Overview</h3>
-                                            </div>
-                                            <div class="panel-body">
-                                                <div class="col-md-3">
-                                                    <div class="well dash-box">
-                                                        <h2> 2</h2>
-                                                        <h4>Sold Today</h4>
+                                        {store.stripe_id ? (
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading main-color-bg">
+                                                    <h3 class="panel-title">Website Overview</h3>
+                                                    <button onClick={viewDashboard}>View Dashboard</button>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="col-md-3">
+                                                        <div class="well dash-box">
+                                                            <h2> 2</h2>
+                                                            <h4>Sold Today</h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="well dash-box">
+                                                            <h2> 34</h2>
+                                                            <h4>Sold Last 7 Days</h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="well dash-box">
+                                                            <h2> $0.00</h2>
+                                                            <h4>Sales Today</h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="well dash-box">
+                                                            <h2> $0.00</h2>
+                                                            <h4>Sales Last 7 Days</h4>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
-                                                    <div class="well dash-box">
-                                                        <h2> 34</h2>
-                                                        <h4>Sold Last 7 Days</h4>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="well dash-box">
-                                                        <h2> $0.00</h2>
-                                                        <h4>Sales Today</h4>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="well dash-box">
-                                                        <h2> $0.00</h2>
-                                                        <h4>Sales Last 7 Days</h4>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            </div> ) : (
+                                                <a className="cta" href={accountLink}><button><i className="fas fa-shopping-bag">{' '}</i> Shop</button></a>
+                                            )
+                                        }
                                     </section>
                                     <Table />
                                 </Fragment>

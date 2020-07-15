@@ -893,9 +893,8 @@ header {
   width: 100%;
   padding: 0;
   display: grid;
-  color: #8c8c8c;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto 3fr 2fr;
+  grid-template-rows: auto auto 3fr auto;
   grid-template-areas: "breadcrumb breadcrumb" "detail-header detail-header" "map detail-info" "table table";
   grid-gap: 1em; }
 
@@ -953,9 +952,12 @@ header {
   grid-area: detail-info; }
 
 .detail-info .detail-status-box {
-  background: #f4f4f4;
+  background: #fff;
+  border-top: 2px solid #f4f4f4;
+  border-right: 2px solid #f4f4f4;
+  border-left: 2px solid #f4f4f4;
   padding: 5px 10px;
-  border-bottom: 2px solid gainsboro; }
+  border-bottom: none; }
 
 .detail-info .detail-status-box .detail-status-box-stats {
   display: flex;
@@ -965,7 +967,10 @@ header {
   margin-top: 0; }
 
 .detail-info .detail-description-box {
-  background: #f4f4f4; }
+  background: #fff;
+  border-left: 2px solid #f4f4f4;
+  border-right: 2px solid #f4f4f4;
+  border-bottom: 2px solid #f4f4f4; }
 
 .detail-info .detail-description-box .nav-underline {
   margin-bottom: 0;
@@ -989,7 +994,7 @@ header {
 
 .detail-info .detail-description-box .nav-underline > li > a:hover, .detail-info .detail-description-box .nav-underline > li > a:focus, .detail-info .detail-description-box .nav-underline > li > a.active {
   text-decoration: none;
-  border-bottom: 2px solid #42b499; }
+  border-bottom: 2px solid #ff4b2b; }
 
 .detail-info .detail-description-box .nav-underline.secondary {
   float: right;
@@ -1000,10 +1005,16 @@ header {
 
 .detail-info .detail-description-box .nav-underline.secondary > li > a:hover, .detail-info .detail-description-box .nav-underline.secondary > li > a:focus, .detail-info .detail-description-box .nav-underline.secondary > li > a.active {
   text-decoration: none;
-  border-bottom: 2px solid #42b499 !important; }
+  border-bottom: 2px solid #ff4b2b !important; }
 
 .content-box {
   grid-area: table; }
+
+/*Cart Page*/
+.cart-container {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  width: 100%; }
 
 #main-footer {
   text-align: center;

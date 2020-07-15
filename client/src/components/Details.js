@@ -131,7 +131,7 @@ const Details = ({
                                         <p>{detailProduct.store.name}</p>
                                     </Link>
                                 </div>
-                                <h2>{detailProduct.price}</h2>
+                                <h2 style={{color:'#ff4b2b'}}>{detailProduct.price}</h2>
                                 <p>Delivery</p>
                                 <p>Return</p>
 

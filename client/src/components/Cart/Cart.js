@@ -38,9 +38,10 @@ class Cart extends Component {
                 cartContent = (
                     <React.Fragment>
                         <Title name="your" title="cart" />
-                        <CartColumns />
-                        <CartList cart={cart} />
-                        <CartTotals totals={this.props.product} history={this.props.history} />
+                        <div className="cart-container">
+                            <CartList cart={cart} />
+                            <CartTotals totals={this.props.product} history={this.props.history} />
+                        </div>
                     </React.Fragment>
                 );
             } 

@@ -41,9 +41,9 @@ export default function CartTotals({totals, history}) {
                             history={history} 
                         /> */}
                         <Link to='/checkout'>
-                            <ButtonContainer>
-                                Checkout
-                            </ButtonContainer>
+                            <button>
+                                Checkout All
+                            </button>
                         </Link>
 
                     </div>

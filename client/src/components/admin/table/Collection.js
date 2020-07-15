@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getCollections, deleteCollection } from '../../../actions/collectionActions';
+import { getStoreCollections, deleteCollection } from '../../../actions/collectionActions';
 import Spinner from '../../common/Spinner';
 import 'react-responsive-modal/styles.css';
 
 
-const Collection = ({ collection: {loading, collections}, getCollections, deleteCollection }) => {
+const Collection = ({ collection: {loading, collections}, getStoreCollections, deleteCollection }) => {
     useEffect(() => {
-        getCollections();
-      }, [getCollections])
+        getStoreCollections();
+      }, [getStoreCollections])
 
     const [modalShow, setModal] = useState(false);
      
@@ -34,7 +34,7 @@ const Collection = ({ collection: {loading, collections}, getCollections, delete
                     <td>
                         <input type="checkbox" value=""/>
                     </td>
-                    <td>{collection.name}</td>
+                    <td><Link to={"/admin/collection/" + collection._id}>{collection.name}</Link></td>
                     <td>{collection.qty}</td>
                     <td>
                         {collection.tags.map( (tag, index) => (  
@@ -55,7 +55,7 @@ const Collection = ({ collection: {loading, collections}, getCollections, delete
         <Fragment>
             <section>
                 <p style={{alignSelf: 'flex-end'}}>40 Collections</p>
-                <Link to="/admin/collection/add" style={{background: '#42b499', color:'#fff'}} className="btn">Add Collection</Link>
+                <Link to="/admin/add-collection" style={{background: '#42b499', color:'#fff'}} className="btn">Add Collection</Link>
             </section>
             <table className="table table-striped table-hover">
                 <thead>
@@ -82,7 +82,7 @@ const Collection = ({ collection: {loading, collections}, getCollections, delete
 Collection.propTypes = {
     collection: PropTypes.object.isRequired,
     deleteCollection: PropTypes.func.isRequired,
-    getCollections: PropTypes.func.isRequired,
+    getStoreCollections: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -90,4 +90,4 @@ const mapStateToProps = state => ({
     collection: state.collection
 })
 
-export default connect(mapStateToProps, { getCollections, deleteCollection })(Collection);
+export default connect(mapStateToProps, { getStoreCollections, deleteCollection })(Collection);

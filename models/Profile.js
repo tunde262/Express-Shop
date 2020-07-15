@@ -34,7 +34,7 @@ const ProfileSchema = new Schema({
             zipcode: {
                 type: Number,
             },
-            apartment_num: {
+            apartment_number: {
                 type: Number
             },
             active: {
@@ -43,6 +43,44 @@ const ProfileSchema = new Schema({
             },
         }
     ],
+    notifications: [
+        {
+            store: {
+                type: Schema.Types.ObjectId,
+                ref: 'user'
+            },
+            order: {
+                type: Schema.Types.ObjectId,
+                ref: 'order'
+            },
+            product: {
+                type: Schema.Types.ObjectId,
+                ref: 'product'
+            },
+            variant: {
+                type: Schema.Types.ObjectId,
+                ref: 'variant'
+            },
+            title: {
+                type: String
+            },
+            text: {
+                type: String
+            },
+            date: {
+                type: Date,
+                default: Date.now
+            }
+        }
+    ],
+    totals: {
+        total_orders: {
+            type: Number
+        },
+        total_spent: {
+            type: Number
+        },
+    },
     orders: [
         {
             type: Schema.Types.ObjectId,

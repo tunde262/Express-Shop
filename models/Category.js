@@ -21,10 +21,12 @@ const CategorySchema = new Schema({
     img_name: {
         type: String
     },
-    products: [
+    items: [
         {
-            type: Schema.Types.ObjectId,
-            ref: ' product'
+            item: {
+                type: Schema.Types.ObjectId,
+                ref: 'product'
+            }
         }
     ]
 });

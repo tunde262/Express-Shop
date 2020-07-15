@@ -109,8 +109,7 @@ const Navbar = ({
         //     filterProducts();
         // }
 
-        await handleTags(filter);
-        filterProducts();
+        handleTags(filter);
     }
 
     const filterProducts = () => {

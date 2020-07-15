@@ -2,7 +2,7 @@ import {
     GET_LOCATIONS,
     LOCATION_ERROR,
     DELETE_LOCATION,
-    UPDATE_LOCATION_ITEMS,
+    UPDATE_LOCATION_VARIANTS,
     ADD_LOCATION,
     GET_LOCATION
   } from '../actions/types';
@@ -48,7 +48,7 @@ import {
           error: payload,
           loading: false
         };
-      case UPDATE_LOCATION_ITEMS:
+      case UPDATE_LOCATION_VARIANTS:
         return {
           ...state,
           locations: state.locations.map(location =>

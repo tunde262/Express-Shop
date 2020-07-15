@@ -27,7 +27,7 @@ import Backdrop from './components/layout/Backdrop/Backdrop';
 import Footer from './components/layout/Footer/Footer';
 
 import Routes from './components/routing/Routes';
-import Modal from './components/Modal';
+import AddToCartModal from './components/modals/AddToCartModal';
 
 
 
@@ -98,7 +98,7 @@ const App = () => {
               </Switch>
             </main>
           </div>
-          <Modal />
+          <AddToCartModal />
           {/* <Footer /> */}
         </Router>
       </StripeProvider>

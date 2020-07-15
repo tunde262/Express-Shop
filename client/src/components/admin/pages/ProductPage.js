@@ -2,15 +2,16 @@ import React, { useEffect, useState, Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Spinner from '../common/Spinner';
+import Spinner from '../../common/Spinner';
 import Modal from 'react-responsive-modal';
-import { handleDetail, deleteProduct } from '../../actions/productActions';
-import { getProductVariants, addVariant, deleteVariant } from '../../actions/variantActions';
+import Map from '../../common/map/Map';
+import { handleDetail, deleteProduct } from '../../../actions/productActions';
+import { getProductVariants, addVariant, deleteVariant } from '../../../actions/variantActions';
 
-import Title from '../Title';
-import Table from './table/Table';
-import InputTag from '../common/InputTag/InputTag';
-import Variant from './table/Variant';
+import Title from '../../Title';
+import Table from '../table/Table';
+import InputTag from '../../common/InputTag/InputTag';
+import Variant from '../table/Variant';
 
 
 const initialState = {
@@ -27,7 +28,7 @@ const initialState = {
     category: '',
     condition: '',
     tags: ''
-  };
+};
 
 const ProductPage = ({ 
     addVariant,
@@ -41,6 +42,18 @@ const ProductPage = ({
     }}) => {
 
     const [formData, setFormData] = useState(initialState);
+    const [varInfo, setVarInfo] = useState([]);
+    const [displayModal, toggleModal] = useState(false);
+    const [varName, setVarName] = useState({
+        var1: '',
+        var2: '',
+        var3: '',
+        var4: ''
+    });
+    const [varTags, setVarTags] = useState([]);
+    const [varTags2, setVarTags2] = useState([]);
+    const [varTags3, setVarTags3] = useState([]);
+    const [varTags4, setVarTags4] = useState([]);
         
     useEffect(() => {
         if(match.params.id) {
@@ -56,33 +69,6 @@ const ProductPage = ({
           setFormData(productData);
         }
     }, [loading, handleDetail, detailProduct]);
-
-    const [varInfo, setVarInfo] = useState([]);
-    const [varSku, setVarSku] = useState([]);
-    const [varSalePrice, setVarSalePrice] = useState([]);
-    const [varPrice, setVarPrice] = useState([]);
-    const [varQty, setVarQty] = useState([]);
-    const [color, setColor] = useState([]);
-    const [size, setSize] = useState([]);
-    const [weight, setWeight] = useState([]);
-    const [bundle, setBundle] = useState([]);
-    const [scent, setScent] = useState([]);
-    const [fit, setFit] = useState([]);
-    const [flavor, setFlavor] = useState([]);
-    const [material, setMaterial] = useState([]);
-
-    const [displayModal, toggleModal] = useState(false);
-
-    const [varName, setVarName] = useState({
-        var1: '',
-        var2: '',
-        var3: '',
-        var4: ''
-    });
-    const [varTags, setVarTags] = useState([]);
-    const [varTags2, setVarTags2] = useState([]);
-    const [varTags3, setVarTags3] = useState([]);
-    const [varTags4, setVarTags4] = useState([]);
 
     let variantList = [];
 
@@ -344,14 +330,16 @@ const ProductPage = ({
                 </div>
                 <div class="product-header container-fluid">
                     <div style={{display: 'flex'}}>
-                        {detailProduct && <img style={{width: '50px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/products/image/${detailProduct.img_gallery[0].img_name}`} alt="img" />}
+                        {detailProduct && detailProduct.img_gallery[0] ? <img style={{width: '50px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/products/image/${detailProduct.img_gallery[0].img_name}`} alt="img" /> : null}
                         <h3 style={{color: "black"}}>{detailProduct && detailProduct.name}</h3>
                     </div>
                     <hr/>
                     <p>Qty {detailProduct && detailProduct.inventory_qty} in stock for {detailProduct && detailProduct.variants.length} varients</p>
                     <hr/>
                 </div>
-                <div class="product-map"></div>
+                <div class="product-map">
+                    <Map />
+                </div>
                 <div class="product-info">
                     <div class="product-status-box">
                         <div class="product-status-box-title"><p>status</p></div>
@@ -416,6 +404,7 @@ const ProductPage = ({
                                         <option value="color">color</option>
                                         <option value="size">size</option>
                                         <option value="weight">weight</option>
+                                        <option value="type">type</option>
                                         <option value="bundle">bundle</option>
                                         <option value="scent">scent</option>
                                         <option value="fit">fit</option>
@@ -442,6 +431,7 @@ const ProductPage = ({
                                         <option value="color">color</option>
                                         <option value="size">size</option>
                                         <option value="weight">weight</option>
+                                        <option value="type">type</option>
                                         <option value="bundle">bundle</option>
                                         <option value="scent">scent</option>
                                         <option value="fit">fit</option>
@@ -468,6 +458,7 @@ const ProductPage = ({
                                         <option value="color">color</option>
                                         <option value="size">size</option>
                                         <option value="weight">weight</option>
+                                        <option value="type">type</option>
                                         <option value="bundle">bundle</option>
                                         <option value="scent">scent</option>
                                         <option value="fit">fit</option>
@@ -494,6 +485,7 @@ const ProductPage = ({
                                         <option value="color">color</option>
                                         <option value="size">size</option>
                                         <option value="weight">weight</option>
+                                        <option value="type">type</option>
                                         <option value="bundle">bundle</option>
                                         <option value="scent">scent</option>
                                         <option value="fit">fit</option>

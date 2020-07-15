@@ -10,8 +10,6 @@ import CategoryOverview from '../components/Overview/categoryOverview/CategoryOv
 import ProductOverview from '../components/Overview/productOverview/ProductOverview';
 import ProductList from '../components/ProductList/ProductList';
 import Container from '../components/ProductList/Container';
-import logo from '../components/common/CE_logo.jpg';
-import { Logo } from '../components/Logo';
 
 class Hats extends Component {
     componentDidMount() {

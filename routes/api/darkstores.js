@@ -70,6 +70,22 @@ router.get('/', auth, async (req, res) => {
     }
 });
 
+// @route GET api/variants
+// @desc Get Darkstores by user 
+// @access Public
+router.get('/store', auth, async (req, res) => {
+    try {
+        const profile = await Profile.findOne({ user: req.user.id });
+        const store = await Store.findOne({ profile: profile.id });
+        const darkstores = await Darkstore.find({ store: store.id }).populate('store', ['name', 'img_name']);
+
+        res.json(darkstores);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
 // @route GET api/darkstores
 // @desc Get Store's Darkstore (storage) locations
 // @access Private
@@ -114,17 +130,23 @@ router.post('/', upload.single('file'), [ auth, [
 
         const {
             name,
+            tags,
             street,
             city,
             state, 
-            zipcode
+            zipcode,
+            phone,
         } = req.body;
 
         // Get fields. Build darkstore object
         const darkstoreFields = {};
         if(name) darkstoreFields.name = name;
-        if(req.file) darkstoreFields.img = req.file.id;
-        if(req.file) darkstoreFields.img_name = req.file.filename;
+        if(phone) darkstoreFields.phone = phone;
+        if(req.file) categoryFields.img = req.file.id;
+        if(req.file) categoryFields.img_name = req.file.filename;
+        if(tags) {
+            darkstoreFields.tags = tags.split(',').map(tag => tag.trim());
+        }
         
         // Build social array
         darkstoreFields.address = {};
@@ -162,17 +184,23 @@ router.post('/:id', upload.single('file'), [ auth, [
 
         const {
             name,
+            tags,
             street,
             city,
             state, 
-            zipcode
+            zipcode,
+            phone
         } = req.body;
 
         // Get fields. Build darkstore object
         const darkstoreFields = {};
         if(name) darkstoreFields.name = name;
-        if(req.file) darkstoreFields.img = req.file.id;
-        if(req.file) darkstoreFields.img_name = req.file.filename;
+        if(phone) darkstoreFields.phone = phone;
+        if(req.file) categoryFields.img = req.file.id;
+        if(req.file) categoryFields.img_name = req.file.filename;
+        if(tags) {
+            darkstoreFields.tags = tags.split(',').map(tag => tag.trim());
+        }
 
         // Build social array
         darkstoreFields.address = {};
@@ -237,23 +265,28 @@ router.delete('/:id', auth, async (req, res) => {
 // @route PUT api/darkstores/product/:id
 // @desc Add & Remove New Item to Darkstore's products
 // @access Private
-router.put('/product/:id', auth, async (req, res) => {
+router.put('/variant/:id', auth, async (req, res) => {
     try {
         const darkstore = await Darkstore.findById(req.params.id);
 
-        // Check if product already liked by same user
-        if(darkstore.products.filter(product => product.toString() === req.body.id).length > 0) {
-            // Get remove index
-            const removeIndex = darkstore.products.map(product => product.toString()).indexOf(req.body.id);
-
-            darkstore.products.splice(removeIndex, 1);
+        // Check if product already in darkstore
+        if(darkstore.variants.length > 0) {
+            if(darkstore.variants.filter(variant => variant._id.toString() === req.body.id).length > 0) {
+                // Get remove index
+                const removeIndex = darkstore.variants.map(variant => variant._id.toString()).indexOf(req.body.id);
+    
+                darkstore.variants.splice(removeIndex, 1);
+            } else {
+                darkstore.variants.unshift({variant: req.body.id});
+            }
         } else {
-            darkstore.products.unshift(req.body.id);
+            darkstore.variants.unshift({variant: req.body.id});
         }
+        
 
         await darkstore.save();
 
-        res.json(darkstore.products);
+        res.json(darkstore.variants);
     } catch (err) {
         console.error(err.message);
         

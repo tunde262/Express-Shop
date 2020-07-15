@@ -29,27 +29,41 @@ const Variant = ({ varId, variant: {loading, variants}, getProductVariants, dele
         variantList = <Spinner />; 
     } else {
         if(variants.length > 0) {
-            variantList = variants.map(variant => (
-                <tr key={variant._id}>
-                    <td>
-                        <input type="checkbox" value=""/>
-                    </td>
-                    <td><img style={{width: '50px'}} src={`/api/variants/image/${variant.img_name}`} alt="img" /></td>
-                    <td>
-                        {variant.color && (<span>{variant.color} </span>)}
-                        {variant.size && (<span>{variant.size} </span>)}
-                        {variant.weight && (<span>{variant.weight} </span>)}
-                        {variant.bundle && (<span>{variant.bundle} </span>)}
-                        {variant.scent && (<span>{variant.scent} </span>)}
-                        {variant.fit && (<span>{variant.fit} </span>)}
-                        {variant.flavor && (<span>{variant.flavor} </span>)}
-                        {variant.material && (<span>{variant.material} </span>)}
-                    </td>
-                    <td>{variant.inventory_qty}</td>
-                    <td>{variant.price}</td>
-                    <td><i onClick={() => deleteVariant(variant._id)} className="fas fa-trash"></i></td>
-                </tr>
-            ));
+            variantList = variants.map(variant => {
+                // let variantList;
+                // if(variant.color) variantList = `${variant.color}`;
+                // if(variant.size) variantList = `${variant.color} / ${variant.size}`;
+                // if(variant.weight) variantList = `${variant.color} / ${variant.size} / ${variant.weight}`;
+                // if(variant.type) variantList = `${variant.color} / ${variant.size} / ${variant.weight} / ${variant.type}`;
+                // if(variant.bundle) variantList = `${variant.color} / ${variant.size} / ${variant.weight} / ${variant.type} / ${variant.bundle}`;
+                // if(variant.scent) variantList = `${variant.color} / ${variant.size} / ${variant.weight} / ${variant.type} / ${variant.bundle} / ${variant.scent}`;
+                // if(variant.fit) variantList = `${variant.color} / ${variant.size} / ${variant.weight} / ${variant.type} / ${variant.bundle} / ${variant.scent} / ${variant.fit}`;
+                // if(variant.flavor) variantList = `${variant.color} / ${variant.size} / ${variant.weight} / ${variant.type} / ${variant.bundle} / ${variant.scent} / ${variant.fit} / ${variant.flavor}`;
+                // if(variant.material) variantList = `${variant.color} / ${variant.size} / ${variant.weight} / ${variant.type} / ${variant.bundle} / ${variant.scent} / ${variant.fit} / ${variant.flavor} / ${variant.material}`;
+
+                return (
+                    <tr key={variant._id}>
+                        <td>
+                            <input type="checkbox" value=""/>
+                        </td>
+                        <td><img style={{width: '50px'}} src={`/api/variants/image/${variant.img_name}`} alt="img" /></td>
+                        <td>
+                            {variant.color && (<span>{variant.color} </span>)}
+                            {variant.size && (<span>{variant.size} </span>)}
+                            {variant.weight && (<span>{variant.weight} </span>)}
+                            {variant.bundle && (<span>{variant.bundle} </span>)}
+                            {variant.type && (<span>{variant.type} </span>)}
+                            {variant.scent && (<span>{variant.scent} </span>)}
+                            {variant.fit && (<span>{variant.fit} </span>)}
+                            {variant.flavor && (<span>{variant.flavor} </span>)}
+                            {variant.material && (<span>{variant.material} </span>)}
+                        </td>
+                        <td>{variant.inventory_qty}</td>
+                        <td>{variant.price}</td>
+                        <td><i onClick={() => deleteVariant(variant._id)} className="fas fa-trash"></i></td>
+                    </tr>
+                )
+            });
         } else {
             variantList = <h3>No Items</h3>
         }
@@ -64,7 +78,7 @@ const Variant = ({ varId, variant: {loading, variants}, getProductVariants, dele
                             <input type="checkbox" value=""/>
                         </th>
                         <th>Img</th>
-                        <th>Name</th>
+                        <th>Options</th>
                         <th>Stock</th>
                         <th>Price</th>
                         <th />

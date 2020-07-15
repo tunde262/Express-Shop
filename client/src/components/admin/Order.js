@@ -20,11 +20,11 @@ class Order extends Component {
         
         orderItems = arr.map(item => {
             const { qty, price } = item;
-            const { title, img_name, company } = item.item;
+            const { name, img_gallery, company } = item.item;
             return (
                 <li key={item.item._id} style={{display: 'flex'}} className="list-group-item">
-                    <img src={`/api/products/image/${img_name}`} style={{width:'3rem', height:"3rem"}} className="img-fluid" alt="img" />
-                    <p>{title} | {qty} Units</p>
+                    <img src={`/api/products/image/${img_gallery[0].img_name}`} style={{width:'3rem', height:"3rem"}} className="img-fluid" alt="img" />
+                    <p>{name} | {qty} Units</p>
                     <div style={{flex: '1'}}></div>
                     <h5 className="text-blue font-italic mb-0">
                         <span className="mr-1">$</span>
@@ -40,7 +40,7 @@ class Order extends Component {
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
                         <p><strong>Name: </strong>{name}</p>
                         <p><strong>Phone: </strong>{telephone}</p>
-                        <p><strong>Address: </strong>{address}</p>
+                        <p><strong>Address: </strong>{address.street} {address.city}, {address.state} {address.zipcode}</p>
                     </div>
                 </div>
                 <div class="card-body">

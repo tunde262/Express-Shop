@@ -66,6 +66,9 @@ const VariantSchema = new Schema({
     bundle: {
         type: String,
     },
+    type: {
+        type: String,
+    },
     scent: {
         type: String,
     },
@@ -78,6 +81,20 @@ const VariantSchema = new Schema({
     material: {
         type: String
     },
+    activity: [
+        {
+            title: {
+                type: String
+            },
+            text: {
+                type: String
+            },
+            date: {
+                type: Date,
+                default: Date.now
+            }
+        }
+    ],
     locations: [
         {
             darkstore: {

@@ -207,7 +207,6 @@ router.delete('/:id', auth, async (req, res) => {
 // @desc Add to profile address book
 // @access Private
 router.put('/address_book', [ auth, [
-    check('name', 'Name is required').not().isEmpty(),
     check('street', 'Street is required').not().isEmpty(),
     check('city', 'City is required').not().isEmpty(),
     check('state', 'State is required').not().isEmpty(),

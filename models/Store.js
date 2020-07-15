@@ -23,17 +23,62 @@ const StoreSchema = new Schema({
     tags: {
         type: [String]
     },
+    stripe_id: {
+        type: String
+    },
     products: [
         {
             type: Schema.Types.ObjectId,
             ref: 'product'
         }
     ],
+    customers: [
+        {
+            customer: {
+                type: Schema.Types.ObjectId,
+                ref: 'customer'
+            }
+        }
+    ],
+    notifications: [
+        {
+            user: {
+                type: Schema.Types.ObjectId,
+                ref: 'user'
+            },
+            customer: {
+                type: Schema.Types.ObjectId,
+                ref: 'user'
+            },
+            order: {
+                type: Schema.Types.ObjectId,
+                ref: 'order'
+            },
+            product: {
+                type: Schema.Types.ObjectId,
+                ref: 'product'
+            },
+            variant: {
+                type: Schema.Types.ObjectId,
+                ref: 'variant'
+            },
+            title: {
+                type: String
+            },
+            text: {
+                type: String
+            },
+            date: {
+                type: Date,
+                default: Date.now
+            }
+        }
+    ],
     favorites: [
         {
             user: {
                 type: Schema.Types.ObjectId,
-                ref: 'users'
+                ref: 'user'
             }
         }
     ],

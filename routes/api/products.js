@@ -216,8 +216,7 @@ router.post('/', upload.array("file", 10),[ auth, [
 // @desc Edit A Product
 // @access Public
 router.post('/:id', upload.single('file'),[ auth, [
-        check('name', 'Name is required').not().isEmpty(),
-        check('description', 'Description is required').not().isEmpty()
+        check('name', 'Name is required').not().isEmpty()
     ]], async (req, res) => {
         const errors = validationResult(req);
         if(!errors.isEmpty()) {

@@ -76,6 +76,22 @@ router.get('/', async (req, res) => {
 });
 
 // @route GET api/variants
+// @desc Get Variants by user 
+// @access Public
+router.get('/store', auth, async (req, res) => {
+    try {
+        const profile = await Profile.findOne({ user: req.user.id });
+        const store = await Store.findOne({ profile: profile.id });
+        const variants = await Variant.find({ store: store.id }).populate('store', ['name', 'img_name']);
+
+        res.json(variants);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
+// @route GET api/variants
 // @desc Get Variants by store ID
 // @access Public
 router.get('/store/:id', async (req, res) => {
@@ -162,6 +178,7 @@ router.post('/product/:id', upload.single('file'), [ auth, [
             size,
             weight,
             bundle,
+            type,
             scent,
             fit,
             flavor,
@@ -184,6 +201,7 @@ router.post('/product/:id', upload.single('file'), [ auth, [
         if(color) variantFields.color = color;
         if(size) variantFields.size = size;
         if(weight) variantFields.weight = weight;
+        if(type) variantFields.type = type;
         if(bundle) variantFields.bundle = bundle;
         if(scent) variantFields.scent = scent;
         if(fit) variantFields.fit = fit;

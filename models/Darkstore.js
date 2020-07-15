@@ -10,6 +10,17 @@ const DarkstoreSchema = new Schema({
         type: String,
         required: true
     },
+    tags: {
+        type: [String],
+        required: true
+    },
+    img: {
+        type: mongoose.Schema.Types.ObjectId, // There is no need to create references here
+        ref: 'uploads'
+    },
+    img_name: {
+        type: String
+    },
     address: {
         street: {
             type: String,
@@ -28,10 +39,29 @@ const DarkstoreSchema = new Schema({
             required: true
         }
     },
+    phone: {
+        type: String
+    },
+    activity: [
+        {
+            title: {
+                type: String
+            },
+            text: {
+                type: String
+            },
+            date: {
+                type: Date,
+                default: Date.now
+            }
+        }
+    ],
     variants: [
         {
-            type: [Schema.Types.ObjectId],
-            ref: 'variant'
+            variant: {
+                type: Schema.Types.ObjectId,
+                ref: 'variant'
+            }
         }
     ],          
     date: {

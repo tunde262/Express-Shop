@@ -91,7 +91,7 @@ class CategoryOverview extends Component {
             tags =  ["men", "women", "small", "medium", "large", "pink", "white", "black", "yellow", "brown", "short-sleeve", "long-sleeve", "shirt", "tank top", "graphic tee"];
         }
         if(this.props.category === 'admin') {
-            tags =  ["products", "orders", "collections"]; //, "collections", "inventory", "storage locations"
+            tags =  ["products", "inventory", "orders", "collections", "customers", "storage locations"];
         }
 
         // if(products === null || loading) {

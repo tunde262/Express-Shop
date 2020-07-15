@@ -6,13 +6,18 @@ import {
     ADD_VARIANT,
     GET_VARIANT,
     ADD_VARIANT_COMMENT,
-    REMOVE_VARIANT_COMMENT
+    REMOVE_VARIANT_COMMENT,
+    SET_SORTED_VARIANTS,
+    HANDLE_VAR_TAGS,
+    REMOVE_VAR_TAGS
 } from '../actions/types';
   
 const initialState = {
     variants: [],
+    sortedVariants: null,
     variant: null,
     loading: true,
+    tags: [],
     error: {}
 };
   
@@ -24,6 +29,7 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 variants: payload,
+                sortedVariants: payload,
                 loading: false
             };
         case GET_VARIANT:
@@ -50,6 +56,32 @@ export default function(state = initialState, action) {
                 error: payload,
                 loading: false
             };
+        case SET_SORTED_VARIANTS: {
+            const variants = payload;
+            console.log(variants);
+    
+            return {
+                ...state,
+                sortedVariants: variants,
+            };
+            }
+        case HANDLE_VAR_TAGS: 
+            let tempVar = [...state.variants];
+            const tags = [...state.tags, payload];
+            let res;
+            for(var i = 0; i < tags.length; i++) {
+                res = tempVar.filter(variant => variant.tags.includes(tags[i]));
+            }
+            return {
+                ...state,
+                tags: [...state.tags, payload],
+                sortedVariants: res,
+            }
+        case REMOVE_VAR_TAGS: 
+            return {
+                ...state,
+                tags: [...state.tags.filter(tag => tag !== payload)]
+                }
         case UPDATE_VARIANT_LIKES:
             return {
                 ...state,

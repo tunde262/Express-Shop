@@ -9,7 +9,10 @@ import {
     ADD_VARIANT,
     GET_VARIANT,
     ADD_VARIANT_COMMENT,
-    REMOVE_VARIANT_COMMENT 
+    REMOVE_VARIANT_COMMENT,
+    SET_SORTED_VARIANTS,
+    HANDLE_VAR_TAGS,
+    REMOVE_VAR_TAGS
 } from './types';
 
 // Get variants
@@ -28,9 +31,27 @@ export const getVariants = () => async dispatch => {
       });
     }
 };
+
+// Get Variants by user's store
+export const getStoreVariants = () => async dispatch => {
+  try {
+    const res = await axios.get('/api/variants/store');
+
+    dispatch({
+      type: GET_VARIANTS,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_VARIANTS,
+      payload: {}
+    })
+  }
+};
+
   
-// Get current store's variants
-export const getStoreVariants = id => async dispatch => {
+// Get variants by store ID
+export const getVariantsByStoreId = id => async dispatch => {
     try {
         const res = await axios.get(`/api/variants/store/${id}`);
 
@@ -80,7 +101,7 @@ export const getVariantsByCategory = id => async dispatch => {
     }
 }
   
-// Get projects by id
+// Get variants by id
 export const getVariantById = id => async dispatch => {
     try {
         const res = await axios.get(`/api/variants/${id}`);
@@ -95,6 +116,30 @@ export const getVariantById = id => async dispatch => {
             payload: { msg: err.response.statusText, status: err.response.status }
         });
     }
+}
+
+// Get Filtered Variants
+export const setSortedVariants = (variants) =>  {
+  return {
+      type: SET_SORTED_VARIANTS,
+      payload: variants
+  }
+};
+
+// Add filter to tags
+export const handleTags = (filter) => {
+  return {
+      type: HANDLE_VAR_TAGS,
+      payload: filter
+  }
+}
+
+// Add filter to tags
+export const removeTags = (filter) => {
+  return {
+      type: REMOVE_VAR_TAGS,
+      payload: filter
+  }
 }
 
 // Add variant

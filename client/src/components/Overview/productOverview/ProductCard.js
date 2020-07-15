@@ -54,7 +54,7 @@ const ProductCard = ({addLike, product, handleDetail, addToCart, openModal, clos
                     onClick={() => onHandleDetailClick(_id)}
                 >
                     <Link to={"/" + _id}>
-                        <img src={`/api/products/image/${img_gallery[0].img_name}`} alt="product" />
+                        {product.img_gallery[0] &&<img src={`/api/products/image/${img_gallery[0].img_name}`} alt="product" />}
                     </Link>
                     {/* <button 
                         className="cart-btn" 

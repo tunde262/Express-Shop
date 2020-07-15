@@ -8,8 +8,6 @@ import CategoryOverview from '../components/Overview/categoryOverview/CategoryOv
 import ProductOverview from '../components/Overview/productOverview/ProductOverview';
 import Spinner from '../components/common/Spinner';
 import Title from '../components/Title';
-import logo from '../components/common/CE_logo.jpg';
-import { Logo } from '../components/Logo';
 
 class CategoryPage extends Component{
     componentDidMount() {

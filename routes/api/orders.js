@@ -23,6 +23,7 @@ router.get('/', auth, async (req, res) => {
     }
 });
 
+// Get orders by Store Id
 router.get('/store/:id', auth, async (req, res) => {
     try {
         const orders = await Order.find({ store: req.params.id });

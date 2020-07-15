@@ -57,7 +57,7 @@ export default function(state = initialState, action) {
         }
         case SET_SORTED_PRODUCTS: {
             const products = action.payload;
-            let tempProd = products;
+            console.log(products);
             // let featuredProducts = tempProd.filter(product => product.featured === true);
             let maxPrice = Math.max(...products.map(product => product.price));
 
@@ -77,9 +77,23 @@ export default function(state = initialState, action) {
                 )
             };
         case HANDLE_TAGS: 
+            let tempProd = [...state.products];
+            const tags = [...state.tags, action.payload];
+            let res;
+            if (action.payload === 'explore') {
+                res = tempProd;
+            } else {
+                for(var i = 0; i < tags.length; i++) {
+                    res = tempProd.filter(prod => prod.tags.includes(tags[i]));
+                }
+            }
+            let maxPrice = Math.max(...res.map(product => product.price));
             return {
                 ...state,
-                tags: [...state.tags, action.payload]
+                tags: [...state.tags, action.payload],
+                sortedProducts: res,
+                price: maxPrice,
+                maxPrice
             }
         case REMOVE_TAGS: 
             return {
