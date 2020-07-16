@@ -1102,12 +1102,15 @@ header {
     flex-direction: column;
     padding: 0; }
     header .nav {
-      padding: 10px; }
+      padding: 0px;
+      margin-top: -10px; }
     header nav ul {
       display: flex;
       flex-direction: column; }
       header nav ul li {
         margin: 1rem; }
+  .force-right {
+    margin-left: 3rem; }
   .nav-bar {
     height: 0;
     overflow: hidden;

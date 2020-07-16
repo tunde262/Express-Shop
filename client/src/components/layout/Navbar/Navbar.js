@@ -53,9 +53,9 @@ const Navbar = ({ drawerClickHandler, auth: { isAuthenticated, loading }, logout
                             onEnter={calcHeight}
                         >
                             <div className="menu">
-                                <a href="#" className="menu-item">
-                                    My Profile
-                                </a>
+                                <Link to="/profile" className="menu-item">
+                                   My Profile
+                                </Link>
                                 <a href="#" className="menu-item">
                                     My Orders
                                 </a>
@@ -152,7 +152,7 @@ const Navbar = ({ drawerClickHandler, auth: { isAuthenticated, loading }, logout
                         <a href="https://twitter.com/cardboardxpress" target="_blank" className="social"><i className="fab fa-twitter"></i></a>
                     </div>
                 </div>
-                <div>
+                <div className="force-right">
                     <button type="button" className="nav-btn" onClick={drawerClickHandler}>
                         <FaAlignRight className="nav-icon" />
                     </button>
