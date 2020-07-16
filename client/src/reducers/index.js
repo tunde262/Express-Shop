@@ -4,6 +4,7 @@ import auth from './authReducer';
 import nav from './navReducer';
 import product from './productReducer';
 import collection from './collectionReducer';
+import customer from './customerReducer';
 import profile from './profileReducer';
 import store from './storeReducer';
 import location from './locationReducer';
@@ -15,6 +16,7 @@ export default combineReducers({
     nav,
     product,
     collection,
+    customer,
     profile,
     store,
     location,

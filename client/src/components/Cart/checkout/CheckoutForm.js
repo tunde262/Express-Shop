@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-
+import React, { useState } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import { Elements } from 'react-stripe-elements';
 import FormDetails from './FormDetails';
 import FormAddress from './FormAddress';
@@ -7,54 +7,48 @@ import FormPayment from './FormPayment';
 import Confirm from './Confirm';
 import Success from './Success';
 
-class CheckoutForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            step: 1,
-            user: `${this.props.user}`,
-            name: '',
-            email: '',
-            address: '',
-            city: '',
-            state: '',
-            zipcode: '',
-            telephone: '',
-            amount: `${this.props.total}`
-        };
+const CheckoutForm = ({total, user, history}) => {
+    const [formData, setFormData] = useState({
+        step: 1,
+        userId: `${user}`,
+        firstname: '',
+        lastname: '',
+        email: '',
+        address: '',
+        city: '',
+        state: '',
+        zipcode: '',
+        telephone: '',
+        amount: `${total}`
+    });
 
-        // this.onChange = this.onChange.bind(this);
-        // this.onSubmit = this.onSubmit.bind(this);
-    };
+
+
 
     // Go To Next Page
-    nextStep = () => {
-        const { step } = this.state;
-        this.setState({
-            step: step + 1
-        });
+    const nextStep = () => {
+        const { step } = formData;
+        setFormData({ ...formData, step: step + 1 });
     }
 
     // Go To Prev Page
-    prevStep = () => {
-        const { step } = this.state;
-        this.setState({
-            step: step - 1
-        });
+    const prevStep = () => {
+        const { step } = formData;
+        setFormData({ ...formData, step: step - 1 });
     }
 
-    history = () => {
-        this.props.history.goBack();
+    const handleHistory = () => {
+        history.goBack();
     }
 
-    onChange = input => e => {
-        this.setState({[input]: e.target.value});
+    const onChange = input => e => {
+        setFormData({ ...formData, [input]: e.target.value });
     };
 
     // onSubmit = async (e) => {
     //     e.preventDefault();
         
-    //     let { token } = await this.props.stripe.createToken({ name: this.state.name });
+    //     let { token } = await stripe.createToken({ name: this.state.name });
     //     const data = {
     //         user: this.state.user,
     //         name: this.state.name,
@@ -68,48 +62,47 @@ class CheckoutForm extends Component {
     //         .then(
     //             () => {
     //                 console.log("The payment was succeeded!");
-    //                 this.props.clearCart();
-    //                 this.props.history.push('/');
+    //                 clearCart();
+    //                 history.push('/');
     //             }
     //         )
     //         .catch(err => console.log(err));
         
     //     console.log("The payment was succeeded!");
-    //     this.props.clearCart();
-    //     this.props.history.push('/profile');
+    //     clearCart();
+    //     history.push('/profile');
 
     //     // redirect, clear inputs, thank alert
     // }
 
-    render() {
-        const { step } = this.state;
-        const { name, email, address, city, state, zipcode, telephone, amount, user } = this.state;
-        const values = { name, email, address, city, state, zipcode, telephone, amount, user };
+        const { step } = formData;
+        const { firstname, lastname, email, address, city, state, zipcode, telephone, amount, userId } = formData;
+        const values = { firstname, lastname, email, address, city, state, zipcode, telephone, amount, userId };
 
         switch(step) {
             case 1:
                 return (
                     <FormDetails
-                        nextStep = {this.nextStep}
-                        onChange = {this.onChange}
-                        history = {this.history}
+                        nextStep = {nextStep}
+                        onChange = {onChange}
+                        history = {handleHistory}
                         values = {values}
                     />
                 )
             case 2:
                 return (
                     <FormAddress
-                        nextStep = {this.nextStep}
-                        prevStep = {this.prevStep}
-                        onChange = {this.onChange}
+                        nextStep = {nextStep}
+                        prevStep = {prevStep}
+                        onChange = {onChange}
                         values = {values}
                     />
                 )
             case 3:
                 return (
                     <Confirm
-                        nextStep = {this.nextStep}
-                        prevStep = {this.prevStep}
+                        nextStep = {nextStep}
+                        prevStep = {prevStep}
                         values = {values}
                     />
                 )
@@ -117,8 +110,8 @@ class CheckoutForm extends Component {
                 return (
                     <Elements>
                         <FormPayment
-                            nextStep = {this.nextStep}
-                            prevStep = {this.prevStep}
+                            nextStep = {nextStep}
+                            prevStep = {prevStep}
                             values = {values}
                         />
                     </Elements>
@@ -163,7 +156,7 @@ class CheckoutForm extends Component {
         //         </form>
         //     </main>
         // )
-    }
 }
 
-export default CheckoutForm;
+export default withRouter(CheckoutForm)
+

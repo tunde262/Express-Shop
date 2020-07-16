@@ -23,6 +23,7 @@ import AddProduct from '../admin/forms/AddProduct';
 import StoreForm from '../admin/forms/StoreForm';
 import AddCollection from '../admin/forms/AddCollection';
 import AddLocation from '../admin/forms/AddLocation';
+import AddCustomer from '../admin/forms/AddCustomer';
 
 // Store pages
 import StoresPage from '../../pages/StoresPage';
@@ -36,7 +37,7 @@ const Routes = props => {
     <Fragment>
         <Alert />
         <Switch>
-            <Route exact path="/explore" component={ExplorePage} />
+            <Route exact path="/home" component={ExplorePage} />
             {/* Category Pages */}
             <Route exact path="/categories" component={CategoryPage} />
             <Route exact path="/stores" component={StoresPage} />
@@ -53,6 +54,7 @@ const Routes = props => {
             {/* Admin Pages */}
             <PrivateRoute exact path="/admin/add-product" component={AddProduct} />
             <PrivateRoute exact path="/admin/add-collection" component={AddCollection} />
+            <PrivateRoute exact path="/admin/add-customer" component={AddCustomer} />
             <PrivateRoute exact path="/admin/add-location" component={AddLocation} />
             <PrivateRoute exact path="/admin" component={Admin} />
             <PrivateRoute exact path="/admin/product/:id" component={ProductPage} />

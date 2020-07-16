@@ -1,7 +1,17 @@
 import axios from 'axios';
 import { setAlert } from './alertActions';
 import { getCurrentProfile } from './profileActions';
-import { REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, UPDATE_AUTH, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from './types';
+import { 
+    SET_PAGE, 
+    REGISTER_SUCCESS, 
+    REGISTER_FAIL, 
+    USER_LOADED, 
+    UPDATE_AUTH, 
+    AUTH_ERROR, 
+    LOGIN_SUCCESS, 
+    LOGIN_FAIL, 
+    LOGOUT 
+} from './types';
 import setAuthToken from '../utils/setAuthToken';
 
 // Load User
@@ -101,3 +111,12 @@ export const login = (email, password ) => async dispatch => {
 export const logout = () => dispatch => {
     dispatch({type: LOGOUT})
 }
+
+// Set page for sidebar
+export const setPage = (page) => {
+    return {
+        type: SET_PAGE,
+        payload: page
+    }
+}
+

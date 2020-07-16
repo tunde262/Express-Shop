@@ -41,9 +41,9 @@ export class FormDetails extends Component {
                                 onChange={onChange('email')}
                                 placeholder="JohnDoe@email.com"
                             />
-                            <ButtonContainer>
+                            <button>
                                 Continue
-                            </ButtonContainer>
+                            </button>
                         </form>
                     </div>
                 </Container>

@@ -44,7 +44,7 @@ const Landing = ({history, isAuthenticated, updateAuth}) => {
   }
 
   if(isAuthenticated) {
-      history.push('/explore');
+      history.push('/home');
   }
   
   return (

@@ -224,6 +224,7 @@ router.put('/add/name/:id', auth, async (req, res) => {
         
     } catch (err) {
         console.error(err.message);
+        console.log('name error')
         res.status(500).send('Servor Error');
     }
 });
@@ -378,7 +379,7 @@ router.delete('/activity/:customer_id/:activity_id', auth, async (req, res) => {
 // @route PUT api/customers/add/tag/:id
 // @desc Add tags to customer tags array
 // @access Private
-router.put('/add/tags/:id', auth, async (req, res) => {
+router.put('/add/tag/:id', auth, async (req, res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -541,7 +542,7 @@ router.put('/add/address_book/:id', [ auth, [
     } = req.body;
 
     const newAddress = {
-        street, city, state, zipcode, apartment_number
+        street, city, state, zipcode
     };
 
     if(name) newAddress.name = name;

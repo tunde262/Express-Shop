@@ -41,9 +41,18 @@ const ProductPage = ({
         loading 
     }}) => {
 
+    // Product Info
     const [formData, setFormData] = useState(initialState);
-    const [varInfo, setVarInfo] = useState([]);
+
+    // Toggle
+    const [displayOption1, toggleOption1] = useState(true);
+    const [displayOption2, toggleOption2] = useState(false);
+    const [displayOption3, toggleOption3] = useState(false);
+    const [displayOption4, toggleOption4] = useState(false);
     const [displayModal, toggleModal] = useState(false);
+
+    // Variant Info
+    const [varInfo, setVarInfo] = useState([]);
     const [varName, setVarName] = useState({
         var1: '',
         var2: '',
@@ -116,6 +125,14 @@ const ProductPage = ({
     const onChangeQty = (e, index) => {
         let newVarInfo = [...varInfo];
         newVarInfo[index].inventory_qty = e.target.value;
+        setVarInfo(newVarInfo);
+
+        console.log(varInfo);
+    }
+
+    const removeVar = (index) => {
+        let newVarInfo = [...varInfo];
+        newVarInfo.splice(index, 1);
         setVarInfo(newVarInfo);
 
         console.log(varInfo);
@@ -310,7 +327,7 @@ const ProductPage = ({
                             onChange={e => onChangeSku(e, index)}
                         />
                     </td>
-                    <td><i className="fas fa-trash"></i></td>
+                    <td><i onClick={() => removeVar(index)} className="fas fa-trash"></i></td>
                 </tr>
             )}
         );
@@ -373,11 +390,7 @@ const ProductPage = ({
                 </div>
                 <div class="content-box container-fluid">
                     <div class="table-responsive table-filter">
-                        <section>
-                            <p style={{alignSelf: "flex-end"}}>50 Varients</p>
-                            <button onClick={setModal} type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Add Variant</button>
-                        </section>
-                        <Variant varId={match.params.id} deleteVariant={deleteVariant} />
+                        <Variant setModal={setModal} page="product" varId={match.params.id} deleteVariant={deleteVariant} />
                     </div>
                 </div>
             </div>
@@ -393,139 +406,148 @@ const ProductPage = ({
                             <tr>
                                 <th>Option</th>
                                 <th>Values</th>
-                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    <select name="var1" value={varName.var1} onChange={onChangeVar} class="form-select" >
-                                        <option>Pick an option</option>
-                                        <option value="color">color</option>
-                                        <option value="size">size</option>
-                                        <option value="weight">weight</option>
-                                        <option value="type">type</option>
-                                        <option value="bundle">bundle</option>
-                                        <option value="scent">scent</option>
-                                        <option value="fit">fit</option>
-                                        <option value="flavor">flavor</option>
-                                        <option value="material">material</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <InputTag  
-                                        onAddTag ={onAddTag}
-                                        onDeleteTag = {onDeleteTag}
-                                        defaultTags={varTags}
-                                        placeholder="enter tags separated by comma"
-                                    />
-                                </td>
-                                <td>
-                                    <button id="add-otp" class="btn">+</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <select name="var2" value={varName.var2} onChange={onChangeVar} class="form-select" >
-                                        <option>Pick an option</option>
-                                        <option value="color">color</option>
-                                        <option value="size">size</option>
-                                        <option value="weight">weight</option>
-                                        <option value="type">type</option>
-                                        <option value="bundle">bundle</option>
-                                        <option value="scent">scent</option>
-                                        <option value="fit">fit</option>
-                                        <option value="flavor">flavor</option>
-                                        <option value="material">material</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <InputTag  
-                                        onAddTag ={onAddTag2}
-                                        onDeleteTag = {onDeleteTag2}
-                                        defaultTags={varTags2}
-                                        placeholder="enter tags separated by comma"
-                                    />
-                                </td>
-                                <td>
-                                    <button id="add-otp" class="btn">+</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <select name="var3" value={varName.var3} onChange={onChangeVar} class="form-select" >
-                                        <option>Pick an option</option>
-                                        <option value="color">color</option>
-                                        <option value="size">size</option>
-                                        <option value="weight">weight</option>
-                                        <option value="type">type</option>
-                                        <option value="bundle">bundle</option>
-                                        <option value="scent">scent</option>
-                                        <option value="fit">fit</option>
-                                        <option value="flavor">flavor</option>
-                                        <option value="material">material</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <InputTag  
-                                        onAddTag ={onAddTag3}
-                                        onDeleteTag = {onDeleteTag3}
-                                        defaultTags={varTags3}
-                                        placeholder="enter tags separated by comma"
-                                    />
-                                </td>
-                                <td>
-                                    <button id="add-otp" class="btn">+</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <select name="var4" value={varName.var4} onChange={onChangeVar} class="form-select" >
-                                        <option>Pick an option</option>
-                                        <option value="color">color</option>
-                                        <option value="size">size</option>
-                                        <option value="weight">weight</option>
-                                        <option value="type">type</option>
-                                        <option value="bundle">bundle</option>
-                                        <option value="scent">scent</option>
-                                        <option value="fit">fit</option>
-                                        <option value="flavor">flavor</option>
-                                        <option value="material">material</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <InputTag  
-                                        onAddTag ={onAddTag4}
-                                        onDeleteTag = {onDeleteTag4}
-                                        defaultTags={varTags4}
-                                        placeholder="enter tags separated by comma"
-                                    />
-                                </td>
-                                <td>
-                                    <button id="add-otp" class="btn">+</button>
-                                </td>
-                            </tr>
+                            {displayOption1 === true ? (
+                                <tr>
+                                    <td>
+                                        <select name="var1" value={varName.var1} onChange={onChangeVar} class="form-select" >
+                                            <option>Pick an option</option>
+                                            <option value="color">color</option>
+                                            <option value="size">size</option>
+                                            <option value="weight">weight</option>
+                                            <option value="type">type</option>
+                                            <option value="bundle">bundle</option>
+                                            <option value="scent">scent</option>
+                                            <option value="fit">fit</option>
+                                            <option value="flavor">flavor</option>
+                                            <option value="material">material</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <Fragment>
+                                            <InputTag  
+                                                onAddTag ={onAddTag}
+                                                onDeleteTag = {onDeleteTag}
+                                                defaultTags={varTags}
+                                                placeholder="enter tags separated by comma"
+                                            />
+                                            <button onClick={() => toggleOption2(!displayOption2)} id="add-otp" style={{width:'100%'}} class="btn">+</button>
+                                        </Fragment>
+                                    </td>
+                             </tr>
+                            ): null}
+                            {displayOption2 === true ? (
+                                <tr>
+                                    <td>
+                                        <select name="var2" value={varName.var2} onChange={onChangeVar} class="form-select" >
+                                            <option>Pick an option</option>
+                                            <option value="color">color</option>
+                                            <option value="size">size</option>
+                                            <option value="weight">weight</option>
+                                            <option value="type">type</option>
+                                            <option value="bundle">bundle</option>
+                                            <option value="scent">scent</option>
+                                            <option value="fit">fit</option>
+                                            <option value="flavor">flavor</option>
+                                            <option value="material">material</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <Fragment>
+                                            <InputTag  
+                                                onAddTag ={onAddTag2}
+                                                onDeleteTag = {onDeleteTag2}
+                                                defaultTags={varTags2}
+                                                placeholder="enter tags separated by comma"
+                                            />
+                                            <button onClick={() => toggleOption3(!displayOption3)} id="add-otp" style={{width:'100%'}} class="btn">+</button>
+                                        </Fragment>
+                                        
+                                    </td>
+                                </tr>
+                                ): null}
+                                {displayOption3 === true ? (
+                                <tr>
+                                    <td>
+                                        <select name="var3" value={varName.var3} onChange={onChangeVar} class="form-select" >
+                                            <option>Pick an option</option>
+                                            <option value="color">color</option>
+                                            <option value="size">size</option>
+                                            <option value="weight">weight</option>
+                                            <option value="type">type</option>
+                                            <option value="bundle">bundle</option>
+                                            <option value="scent">scent</option>
+                                            <option value="fit">fit</option>
+                                            <option value="flavor">flavor</option>
+                                            <option value="material">material</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <Fragment>
+                                            <InputTag  
+                                                onAddTag ={onAddTag3}
+                                                onDeleteTag = {onDeleteTag3}
+                                                defaultTags={varTags3}
+                                                placeholder="enter tags separated by comma"
+                                            />
+                                            <button onClick={() => toggleOption4(!displayOption4)} id="add-otp" style={{width:'100%'}} class="btn">+</button>
+                                        </Fragment>
+                                    </td>
+                                </tr>
+                                ) : null}
+                                {displayOption4 === true ? (
+                                <tr>
+                                    <td>
+                                        <select name="var4" value={varName.var4} onChange={onChangeVar} class="form-select" >
+                                            <option>Pick an option</option>
+                                            <option value="color">color</option>
+                                            <option value="size">size</option>
+                                            <option value="weight">weight</option>
+                                            <option value="type">type</option>
+                                            <option value="bundle">bundle</option>
+                                            <option value="scent">scent</option>
+                                            <option value="fit">fit</option>
+                                            <option value="flavor">flavor</option>
+                                            <option value="material">material</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <InputTag  
+                                            onAddTag ={onAddTag4}
+                                            onDeleteTag = {onDeleteTag4}
+                                            defaultTags={varTags4}
+                                            placeholder="enter tags separated by comma"
+                                        />
+                                    </td>
+                                </tr>
+                            ) : null}
                         </tbody>
                     </table>
 
-                    <div onClick={updateList} class="btn btn-primary">Apply</div>
+                    <div onClick={updateList} class="btn btn-primary my-3">Apply</div>
 
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Price</th>
-                                <th>Sale Price</th>
-                                <th>Qty</th>
-                                <th>Sku</th>
-                                <th />
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {display}
-                        </tbody>
-                    </table>
-                    <button type="submit" id="upload" class="btn btn-primary">Upload</button>
+                    {varInfo.length > 0 && (
+                        <Fragment>
+                            <table className="table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Price</th>
+                                        <th>Sale Price</th>
+                                        <th>Qty</th>
+                                        <th>Sku</th>
+                                        <th />
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {display}
+                                </tbody>
+                            </table>
+                            <button type="submit" id="upload" class="btn btn-primary">Upload</button>
+                        </Fragment>
+                    )}
                 </form>
             </Modal>
         </Fragment>

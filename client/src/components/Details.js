@@ -112,6 +112,7 @@ const Details = ({
                                 </ol>
                             </nav>
                         </div>
+                        <p>{detailProduct.name}</p>
                         <div class="detail-map">
                             <img src={`/api/products/image/${detailProduct.img_gallery[0].img_name}`} className="img-fluid" alt="product" />
                             <div className="datail-sub-images">
@@ -143,14 +144,14 @@ const Details = ({
                                     <h4 className="text-blue">
                                         size : {detailProduct.size}
                                     </h4>
-                                <ButtonContainer onClick={goBack}>back to products</ButtonContainer>
-                                <ButtonContainer
+                                <button onClick={goBack}>back to products</button>
+                                <button
                                     cart
                                     disabled={detailProduct.inCart ? true : false}
                                     onClick={() =>todo(detailProduct._id, detailProduct.title)}
                                 >
                                     {detailProduct.inCart ? 'inCart' : 'add to cart'}
-                                </ButtonContainer>
+                                </button>
 
                             </div>
                         </div>

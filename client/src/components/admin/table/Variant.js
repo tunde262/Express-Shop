@@ -8,19 +8,19 @@ import Spinner from '../../common/Spinner';
 import 'react-responsive-modal/styles.css';
 
 
-const Variant = ({ varId, variant: {loading, variants}, getProductVariants, deleteVariant }) => {
+const Variant = ({ setModal, page, varId, variant: {loading, variants}, getProductVariants, deleteVariant }) => {
     useEffect(() => {
         getProductVariants(varId);
       }, [getProductVariants])
 
-    const [modalShow, setModal] = useState(false);
+    const [modalShow, handleModal] = useState(false);
      
       const openModal = () => {
-        setModal(true);
+        handleModal(true);
       };
 
       const closeModal = () => {
-        setModal(false);
+        handleModal(false);
       };
      
 
@@ -69,8 +69,19 @@ const Variant = ({ varId, variant: {loading, variants}, getProductVariants, dele
         }
     }
 
+    let count;
+    if(variants !== null && !loading) {
+        count = variants.length;
+    }
+
     return (
         <Fragment>
+            {page === 'product' ? (
+                <section>
+                    <p style={{alignSelf: "flex-end"}}>{count} Varients</p>
+                    <button onClick={setModal} type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Add Variant</button>
+                </section>
+            ) : null}
             <table className="table">
                 <thead>
                     <tr>

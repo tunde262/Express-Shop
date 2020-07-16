@@ -8,7 +8,7 @@ import Spinner from '../../common/Spinner';
 import 'react-responsive-modal/styles.css';
 
 
-const Item = ({ product: {loading, sortedProducts}, deleteProduct }) => {  
+const Item = ({ setModal, page, product: {loading, sortedProducts}, deleteProduct }) => {  
 
     let productList;
     if(sortedProducts === null || loading) {
@@ -33,8 +33,26 @@ const Item = ({ product: {loading, sortedProducts}, deleteProduct }) => {
         }
     }
 
+    let count;
+    if(sortedProducts !== null && !loading) {
+        count = sortedProducts.length;
+    }
+
     return (
         <Fragment>
+            {page === 'dashboard' ? (
+                <section>
+                    <p style={{alignSelf: 'flex-end'}}>{count} Items</p>
+                    <Link to="/admin/add-product"><button type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Add Product</button></Link>
+                </section>
+            ) : null}
+            {page === 'collection' ? (
+                <section>
+                    <p style={{alignSelf: "flex-end"}}>{count} Varients</p>
+                    <button onClick={setModal} type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Add Manually</button>
+                </section>
+            ) : null}
+            
             <table className="table">
                 <thead>
                     <tr>

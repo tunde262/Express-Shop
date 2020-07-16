@@ -33,9 +33,9 @@ export class Confirm extends Component {
                             <li><p style={{fontSize: '20px'}}><strong>Total:</strong> ${amount}</p></li>
                         </ul>
                         <a style={{marginRight: '1rem'}}onClick={this.back}>Back</a>
-                        <ButtonContainer onClick={this.continue}>
+                        <button onClick={this.continue}>
                             Continue
-                        </ButtonContainer>
+                        </button>
                     </div>
                 </Container>
             </Fragment>

@@ -51,10 +51,15 @@ const Collection = ({ collection: {loading, collections}, getStoreCollections, d
         }
     }
 
+    let count;
+    if(collections !== null && !loading) {
+        count = collections.length;
+    }
+
     return (
         <Fragment>
             <section>
-                <p style={{alignSelf: 'flex-end'}}>40 Collections</p>
+                <p style={{alignSelf: 'flex-end'}}>{count} Collections</p>
                 <Link to="/admin/add-collection" style={{background: '#42b499', color:'#fff'}} className="btn">Add Collection</Link>
             </section>
             <table className="table table-striped table-hover">

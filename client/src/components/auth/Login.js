@@ -44,7 +44,7 @@ const Login = ({ isAuthenticated, login, history }) => {
             <BackButton onClick={history.goBack}><i className="fas fa-arrow-left"></i></BackButton>
             <Container>
                 <div className="container">
-                    <h1><i style={{color: '#ffbf00'}} className="fas fa-sign-in-alt"></i>  Login</h1>
+                    <h1>Login</h1>
                     <form onSubmit={e => onSubmit(e)}>
                         <label for="email">Email
                             <input

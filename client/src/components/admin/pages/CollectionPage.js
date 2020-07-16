@@ -145,11 +145,7 @@ const CollectionPage = ({
             <Fragment>
                 <div class="content-box container-fluid">
                     <div class="table-responsive table-filter">
-                        <section>
-                            <p style={{alignSelf: "flex-end"}}>50 Varients</p>
-                            <button onClick={setModal} type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Add Manually</button>
-                        </section>
-                        <Item product={{sortedProducts: [...res], loading: false}} />
+                        <Item setModal={setModal} page="collection" product={{sortedProducts: [...res], loading: false}} />
                     </div>
                 </div>
             </Fragment>

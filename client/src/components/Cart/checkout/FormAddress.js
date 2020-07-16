@@ -69,9 +69,9 @@ export class FormAddress extends Component {
                             />
                             <small className='invalid_feedback'>We may need to contact you during delivery.</small>
                             <a style={{marginRight: '1rem'}}onClick={this.back}>Back</a>
-                            <ButtonContainer>
+                            <button>
                                 Continue
-                            </ButtonContainer>
+                            </button>
                         </form>
                     </div>
                 </Container>

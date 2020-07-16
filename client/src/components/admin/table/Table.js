@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { getProducts, getStoreProducts, getStoreOrders } from '../../../actions/productActions';
 import { getStoreVariants } from '../../../actions/variantActions';
 import { getStoreCollections } from '../../../actions/collectionActions';
+import { getStoreCustomers } from '../../../actions/customerActions';
 
 import Item from './Item';
 import Order from './Order';
@@ -21,6 +22,7 @@ const Table = ({
     variant,
     order,
     collection,
+    customer,
     getProducts,
     getStoreProducts,
     getStoreVariants,
@@ -32,7 +34,8 @@ const Table = ({
         getStoreVariants();
         getStoreOrders();
         getStoreCollections();
-    }, [getStoreProducts, getStoreVariants, getStoreOrders, getStoreCollections])
+        getStoreCustomers();
+    }, [getStoreProducts, getStoreVariants, getStoreOrders, getStoreCollections, getStoreCustomers])
 
     const [tableShow, setTableShow] = useState('products');
 
@@ -43,11 +46,7 @@ const Table = ({
     } else if (tableShow === 'products') {
         tableContent = (
             <Fragment>
-                <section>
-                    <p style={{alignSelf: 'flex-end'}}>50 Items</p>
-                    <Link to="/admin/add-product"><button type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Add Product</button></Link>
-                </section>
-                <Item product={product} />
+                <Item page="dashboard" product={product} />
             </Fragment>
         ) 
     } else if (tableShow === 'collections') {
@@ -57,15 +56,19 @@ const Table = ({
     } else if (tableShow === 'inventory') {
         tableContent = (
             <Fragment>
-                <section>
-                    <p style={{alignSelf: 'flex-end'}}>50 Variants</p>
-                    <Link to="/admin/add-variant"><button type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Add Variant</button></Link>
-                </section>
-                <Inventory variant={variant} /> 
+                <Inventory page="dashboard" variant={variant} /> 
             </Fragment>
         );
     } else if (tableShow === 'customers') {
-        tableContent = <Customer /> 
+        tableContent = (
+            <Fragment>
+                <section>
+                    <p style={{alignSelf: 'flex-end'}}>33 Customers</p>
+                    <Link to="/admin/add-customer"><button type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Add Customer</button></Link>
+                </section>
+                <Customer customer={customer} /> 
+            </Fragment>
+        );
     }
 
     const handleOrders = (show) => {
@@ -91,20 +94,23 @@ Table.propTypes = {
     product: PropTypes.object.isRequired,
     variant: PropTypes.object.isRequired,
     collection: PropTypes.object.isRequired,
+    customer: PropTypes.object.isRequired,
     order: PropTypes.object.isRequired,
     getProducts: PropTypes.func.isRequired,
     getStoreProducts: PropTypes.func.isRequired,
     getStoreVariants: PropTypes.func.isRequired,
     getStoreOrders: PropTypes.func.isRequired,
     getStoreCollections: PropTypes.func.isRequired,
+    getStoreCustomers: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
     product: state.product,
     variant: state.variant,
     order: state.product.orders,
-    collection: state.collection
+    collection: state.collection,
+    collection: state.customer
 })
 
-export default connect(mapStateToProps, { getProducts, getStoreProducts, getStoreVariants, getStoreOrders, getStoreCollections })(Table);
+export default connect(mapStateToProps, { getProducts, getStoreProducts, getStoreVariants, getStoreOrders, getStoreCollections, getStoreCustomers })(Table);
 

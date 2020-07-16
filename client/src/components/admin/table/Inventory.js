@@ -8,7 +8,7 @@ import Spinner from '../../common/Spinner';
 import 'react-responsive-modal/styles.css';
 
 
-const Inventory = ({ variant: {loading, sortedVariants}, deleteVariant }) => {
+const Inventory = ({ page, variant: {loading, sortedVariants}, deleteVariant }) => {
     const [modalShow, setModal] = useState(false);
      
     const openModal = () => {
@@ -43,8 +43,25 @@ const Inventory = ({ variant: {loading, sortedVariants}, deleteVariant }) => {
         }
     }
 
+    let count;
+    if(sortedVariants !== null && !loading) {
+        count = sortedVariants.length;
+    }
+
     return (
         <Fragment>
+            {page === 'dashboard' ? (
+                <section>
+                    <p style={{alignSelf: 'flex-end'}}>{count} Variants</p>
+                    <Link to="/admin/add-variant"><button type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Add Variant</button></Link>
+                </section>
+            ) : null}
+            {page === 'location' ? (
+                <section>
+                    <p style={{alignSelf: "flex-end"}}>{count} Varients</p>
+                    <button onClick={setModal} type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Add Manually</button>
+                </section>
+            ) : null}
             <table className="table">
                 <thead>
                     <tr>

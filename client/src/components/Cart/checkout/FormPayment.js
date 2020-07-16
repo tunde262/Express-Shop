@@ -98,9 +98,9 @@ const FormPayment = ({nextStep, prevStep, values: { name, email, address, city, 
                         <label>Credit / Debit Card</label>
                         <CardElement className="my-2 p-2 border" />
                         <a style={{marginRight: '1rem'}}onClick={back}>Back</a>
-                        <ButtonContainer>
+                        <button>
                             Continue
-                        </ButtonContainer>
+                        </button>
                     </form>
                 </div>
             </Container>

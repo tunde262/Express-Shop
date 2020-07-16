@@ -50,7 +50,7 @@ const Register = ({ setAlert, register, isAuthenticated, history }) => {
             <BackButton onClick={history.goBack}><i className="fas fa-arrow-left"></i></BackButton>
             <Container>
                 <div className="container">
-                    <h1><i style={{color: '#ffbf00'}} className="fas fa-user-plus"></i> Sign Up</h1>
+                    <h1>Sign Up</h1>
                     <form onSubmit={e => onSubmit(e)}>
                         <label for="name">Name
                             <input
