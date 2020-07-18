@@ -247,7 +247,11 @@ const ProductWrapper = styled.div`
         background: #5acef4;
     }
 
-    @media (min-width: 768px){
+    @media (max-width: 768px){
+        .product {
+            width: 150px;
+            height: 250px;
+        }
         .product:hover .specifice {
             bottom: 0;
         }

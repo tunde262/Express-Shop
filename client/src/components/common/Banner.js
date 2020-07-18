@@ -1,8 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
 
-const Banner = ({img}) => {
+const Banner = ({imgLarge, imgSmall}) => {
+    const isDesktopOrLaptop = useMediaQuery({
+        query: '(min-device-width: 1224px)'
+    })
+    const isBigScreen = useMediaQuery({ query: '(min-device-width: 1824px)' })
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
+    const isTabletOrMobileDevice = useMediaQuery({
+    query: '(max-width: 760px)'
+    })
+    const isPortrait = useMediaQuery({ query: '(orientation: portrait)' })
+    const isRetina = useMediaQuery({ query: '(min-resolution: 2dppx)' })
+
+    let img;
+    if(isTabletOrMobileDevice) {
+        img = imgSmall;
+    } else {
+        img = imgLarge;
+    }
     return (
         <BannerContainer className="banner p-2">
             <img src={img} alt="img" />

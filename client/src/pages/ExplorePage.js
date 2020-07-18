@@ -12,7 +12,8 @@ import Title from '../components/Title';
 import Container from '../components/ProductList/Container';
 import AuthModal from '../components/modals/AuthModal';
 import Banner from '../components/common/Banner';
-import Img from '../utils/imgs/Banner.jpg';
+import ImgLarge from '../utils/imgs/banner21.jpg';
+import ImgSmall from '../utils/imgs/banner13.jpg';
 
 const ExplorePage = ({getProducts, product, auth: { isAuthenticated, loading}}) => {
     useEffect(() => {
@@ -60,10 +61,7 @@ const ExplorePage = ({getProducts, product, auth: { isAuthenticated, loading}}) 
         
     return (
         <Fragment>
-            {/* <Logo>
-                <img src={logo} style={{maxHeight: '70px'}} alt="cardboard express logo" />
-            </Logo> */}
-            <Banner img={Img} />
+            <Banner imgLarge={ImgLarge} imgSmall={ImgSmall} />
             <Header />
             <Container title="Bottoms" category="bottoms" background="MediumSlateBlue"  />
             {!loading && !isAuthenticated ? <AuthModal /> : null }
