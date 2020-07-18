@@ -1,10 +1,15 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addLocation } from '../../../actions/locationActions';
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
 const AddLocation = ({ addLocation, history }) => {
+    useEffect(() => {
+        
+    }, []);
+
     const [formData, setFormData] = useState({
         name: '',
         tags: '',
@@ -16,6 +21,160 @@ const AddLocation = ({ addLocation, history }) => {
         phone: ''
     });
 
+    const [formattedData, setFormattedData] = useState(null);
+
+    const [address, setAddress] = useState("");
+    const [coordinates, setCoordinates] = useState({
+        lat: null, 
+        lng: null
+    });
+
+
+    const handleSelect = async (value) => {
+        const result = await geocodeByAddress(value);
+        const latLng = await getLatLng(result[0])
+        console.log(result);
+        console.log(latLng);
+
+        let tags = [];
+
+        if(result[0].types && result[0].types.length > 0) {
+            result[0].types.map(type => tags.push(type));
+        };
+        const address = result[0].formatted_address;
+        const placeId = result[0].place_id;
+        const addressArray =  result[0].address_components;
+        const city = getCity(addressArray);
+        const country = getCountry(addressArray );
+        const area = getArea(addressArray);
+        const state = getState(addressArray);
+        const postalCode = getPostalCode(addressArray);
+        const street = getStreet(addressArray);
+        const number = getNumber(addressArray);
+
+
+        console.log('city: ' + city);
+        console.log('country: ' + country);
+        console.log('area: ' + area);
+        console.log('state: ' + state);
+        console.log('number: ' + number);
+        console.log('street: ' + street);
+        console.log('postalCode: ' + postalCode);
+        console.log("formatted address: " + address);
+        console.log("placeId: " + placeId);
+        console.log("tags: ")
+        console.log(tags);
+
+        let newTags;
+        if (Array.isArray(tags)) {
+            newTags = tags.join(', ');
+        }
+
+        setAddress(value);
+        setFormattedData({
+            city: (city) ? city : '',
+            country: (country) ? country : '',
+            area: (area) ? area : '',
+            stateProvince: (state) ? state : '',
+            street_number: (number) ? number : '',
+            formatted_address: (address) ? address : '',
+            street_name: (street) ? street : '',
+            postalCode: (postalCode) ? postalCode : '',
+            placeId: (placeId) ? placeId : '',
+            tags: (newTags) ? newTags : '',
+        })
+        setCoordinates(latLng);
+    };
+
+    const getCity = ( addressArray ) => {
+		let city = '';
+		for( let i = 0; i < addressArray.length; i++ ) {
+			if ( addressArray[ i ].types[0] && 'locality' === addressArray[ i ].types[0] ) {
+				city = addressArray[ i ].long_name;
+				return city;
+			}
+		}
+	};
+
+	const getArea = ( addressArray ) => {
+		let area = '';
+		for( let i = 0; i < addressArray.length; i++ ) {
+			if ( addressArray[ i ].types[0]  ) {
+				for ( let j = 0; j < addressArray[ i ].types.length; j++ ) {
+					if ( 'administrative_area_level_2' === addressArray[ i ].types[j] ) {
+						area = addressArray[ i ].long_name;
+						return area;
+					}
+				}
+			}
+		}
+    };
+    
+    const getCountry = ( addressArray ) => {
+		let area = '';
+		for( let i = 0; i < addressArray.length; i++ ) {
+			if ( addressArray[ i ].types[0]  ) {
+				for ( let j = 0; j < addressArray[ i ].types.length; j++ ) {
+					if ( 'country' === addressArray[ i ].types[j] ) {
+						area = addressArray[ i ].long_name;
+						return area;
+					}
+				}
+			}
+		}
+    };
+
+    const getPostalCode = ( addressArray ) => {
+		let area = '';
+		for( let i = 0; i < addressArray.length; i++ ) {
+			if ( addressArray[ i ].types[0]  ) {
+				for ( let j = 0; j < addressArray[ i ].types.length; j++ ) {
+					if ( 'postal_code' === addressArray[ i ].types[j] ) {
+						area = addressArray[ i ].long_name;
+						return area;
+					}
+				}
+			}
+		}
+    };
+
+	const getState = ( addressArray ) => {
+		let state = '';
+		for( let i = 0; i < addressArray.length; i++ ) {
+			for( let i = 0; i < addressArray.length; i++ ) {
+				if ( addressArray[ i ].types[0] && 'administrative_area_level_1' === addressArray[ i ].types[0] ) {
+					state = addressArray[ i ].long_name;
+					return state;
+				}
+			}
+		}
+    };
+    
+    const getNumber = ( addressArray ) => {
+		let state = '';
+		for( let i = 0; i < addressArray.length; i++ ) {
+			for( let i = 0; i < addressArray.length; i++ ) {
+				if ( addressArray[ i ].types[0] && 'street_number' === addressArray[ i ].types[0] ) {
+					state = addressArray[ i ].long_name;
+					return state;
+				}
+			}
+		}
+    };
+    
+    const getStreet = ( addressArray ) => {
+		let state = '';
+		for( let i = 0; i < addressArray.length; i++ ) {
+			for( let i = 0; i < addressArray.length; i++ ) {
+				if ( addressArray[ i ].types[0] && 'route' === addressArray[ i ].types[0] ) {
+					state = addressArray[ i ].long_name;
+					return state;
+				}
+			}
+		}
+	};
+    
+
     const { name, street, city, state, zipcode, phone, tags, file } = formData;
 
     const fileChanged = e => {
@@ -24,6 +183,7 @@ const AddLocation = ({ addLocation, history }) => {
     
     const onChange = e => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+        console.log(formattedData);
     } 
 
     const onSubmit = (e) => {
@@ -72,6 +232,29 @@ const AddLocation = ({ addLocation, history }) => {
                                 onChange={onChange}
                             />
                         </div>
+                        <PlacesAutocomplete value={address} onChange={setAddress} onSelect={handleSelect}>
+                            {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                <div>
+                                    <p>Latitude: {coordinates.lat}</p>
+                                    <p>Longitude: {coordinates.lng}</p>
+                                    <input {...getInputProps({placeholder: "Type Address"})} />
+
+                                    <div>
+                                        {loading ? (
+                                            <div>...loading</div>
+                                        ) : null} 
+
+                                        {suggestions.map((suggestion) => {
+                                            const style = {
+                                                backgroundColor: suggestion.active ? "#41b6e6" : "#fff"
+                                            }
+                                            console.log(suggestion)
+                                            return <div {...getSuggestionItemProps(suggestion, { style })}>{suggestion.description}</div>
+                                        })}
+                                    </div>
+                                </div>
+                            )}
+                        </PlacesAutocomplete>
                         <div className="form-group">
                             <label>Address</label>
                             <input 

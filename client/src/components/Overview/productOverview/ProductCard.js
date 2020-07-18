@@ -248,16 +248,16 @@ const ProductWrapper = styled.div`
     }
 
     @media (max-width: 768px){
-        .product {
-            width: 150px;
-            height: 250px;
-        }
+
         .product:hover .specifice {
             bottom: 0;
         }
     }
 
 `;
-
+        // .product {
+        //     width: 150px;
+        //     height: 250px;
+        // }
 export default connect(null, { addLike, handleDetail, addToCart, openModal, closeModal, addTotals })(ProductCard);
 
