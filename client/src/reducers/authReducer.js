@@ -1,11 +1,16 @@
-import { SET_PAGE, REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, UPDATE_AUTH, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from '../actions/types';
+import { SET_SIDEBAR, REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, UPDATE_AUTH, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from '../actions/types';
 
 const initialState = {
     token: localStorage.getItem('token'),
     isAuthenticated: null,
     loading: true,
     user: null,
-    page: ''
+    sidebar: 'nav',
+    delivery: false,
+    pickup: false,
+    block:'',
+    date:'',
+    postal_code:''
 }
 
 export default function(state = initialState, action) {
@@ -44,10 +49,10 @@ export default function(state = initialState, action) {
                 isAuthenticated: false,
                 loading: false
             }
-        case SET_PAGE:
+        case SET_SIDEBAR:
             return {
                 ...state,
-                page: payload
+                sidebar: payload
             }
         default:
             return state;

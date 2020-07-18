@@ -448,8 +448,7 @@ input {
 
 .nav-links {
   list-style: none;
-  display: flex;
-  padding: 1rem 5rem 0 0; }
+  display: flex; }
   .nav-links li {
     padding: 0px 20px; }
     .nav-links li a {
@@ -1007,6 +1006,9 @@ header {
 .detail-info {
   grid-area: detail-info; }
 
+.detail-header {
+  justify-content: end; }
+
 .detail-info .detail-status-box {
   background: #fff;
   border-top: 2px solid #f4f4f4;
@@ -1014,6 +1016,12 @@ header {
   border-left: 2px solid #f4f4f4;
   padding: 5px 10px;
   border-bottom: none; }
+  .detail-info .detail-status-box .detail-status-box-header {
+    display: flex;
+    justify-content: space-between; }
+    .detail-info .detail-status-box .detail-status-box-header .detail-heart {
+      margin: 1rem;
+      font-size: 1.4rem; }
 
 .detail-info .detail-status-box .detail-status-box-stats {
   display: flex;
@@ -1028,13 +1036,17 @@ header {
   border-right: 2px solid #f4f4f4;
   border-bottom: 2px solid #f4f4f4; }
 
+.detail-info .detail-description-box .nav {
+  margin: 1rem 0; }
+
 .detail-info .detail-description-box .nav-underline {
   margin-bottom: 0;
   padding-left: 0;
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  text-align: center; }
+  grid-template-columns: repeat(4, 1fr);
+  text-align: center;
+  width: 100%; }
 
 .detail-info .detail-description-box .nav-underline > li {
   position: relative;
@@ -1053,8 +1065,7 @@ header {
   border-bottom: 2px solid #ff4b2b; }
 
 .detail-info .detail-description-box .nav-underline.secondary {
-  float: right;
-  display: block; }
+  float: left; }
 
 .detail-info .detail-description-box .nav-underline.secondary > li > a {
   border-bottom: none; }

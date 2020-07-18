@@ -10,22 +10,22 @@ const CartList = ({cart}) => {
         let storeList = [];
         let storeData = [];
         cart.map(item => storeList.includes(item.item.store) ? null : storeList.push(item.item.store));
-            try {
-                storeList.map(async storeId => {
-                    const res = await axios.get(`/api/stores/${storeId}`);
-                    console.log(res.data);
-                    storeData.push({
-                        id: storeId,
-                        name: res.data.name,
-                        img: res.data.img_name
-                    })
-                });
-                console.log('Data:');
-                console.log(storeData);
-                setStores(storeData)
-            } catch (err) {
-                console.log(err);
-            }
+        try {
+            storeList.map(async storeId => {
+                const res = await axios.get(`/api/stores/${storeId}`);
+                console.log(res.data);
+                storeData.push({
+                    id: storeId,
+                    name: res.data.name,
+                    img: res.data.img_name
+                })
+            });
+            console.log('Data:');
+            console.log(storeData);
+            setStores(storeData)
+        } catch (err) {
+            console.log(err);
+        }
     }, []);
     
     let cartList;

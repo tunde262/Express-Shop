@@ -667,9 +667,9 @@ const AddProduct = ({
         
         <div className="line"></div>
         <input type="submit" className="btn btn-primary my-1" />
-        <Link className="btn btn-light my-1" to="/dashboard">
+        <a onClick={() => history.goBack()} className="btn btn-light my-1">
           Go Back
-        </Link>
+        </a>
       </form>
 
       <Modal open={displayModal} onClose={setModal} center>

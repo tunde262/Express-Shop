@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const Banner = ({type, imgName}) => {
+const Banner = ({img}) => {
     return (
         <BannerContainer className="banner p-2">
-            <img src={`${`/api/categories/image/${imgName}`}`} alt="img" />
+            <img src={img} alt="img" />
         </BannerContainer>
     )
 }

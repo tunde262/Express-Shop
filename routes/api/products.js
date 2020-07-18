@@ -395,7 +395,7 @@ router.post('/image/:id', upload.single('file'), async (req, res) => {
 // @route POST api/products/comment/:id
 // @desc Comment on a product
 // @access Private
-router.post('/comment/:id', [ auth, [
+router.put('/comment/:id', [ auth, [
     check('text', 'Text is required').not().isEmpty()
 ]], async (req, res) => {
     const errors = validationResult(req);
@@ -405,6 +405,7 @@ router.post('/comment/:id', [ auth, [
 
     const user = await User.findById(req.user.id).select('-password');
     const product = await Product.findById(req.params.id);
+    console.log('COMMEN4444')
 
     try {
         const newComment = {
@@ -412,6 +413,9 @@ router.post('/comment/:id', [ auth, [
             name: user.name,
             user: req.user.id
         };
+
+        console.log('COMMENT')
+        console.log(newComment);
 
         product.comments.unshift(newComment);
         await product.save()

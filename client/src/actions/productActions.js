@@ -464,15 +464,19 @@ export const setProductsLoading = () => {
 
 
 // Add Review
-export const addReview = (productId, formData) => async dispatch => {
-    try {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
+export const addReview = (formData, productId) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
         }
-
+    }
+    
+    try {
+        
+        console.log('IN REVIEW!!!!!')
+        console.log(productId);
         const res = await axios.post(`/api/products/comment/${productId}`, formData, config);
+        console.log(res.data);
 
         dispatch({
             type: ADD_PRODUCT_REVIEW,
@@ -486,6 +490,7 @@ export const addReview = (productId, formData) => async dispatch => {
             type: PRODUCT_ERROR,
             payload: { msg: err.response.statusText, status: err.response.status }
         });
+        console.log({msg: err.response.statusText, status: err.response.status})
     }
 }
 

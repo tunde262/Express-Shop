@@ -48,37 +48,37 @@ const ProductCard = ({addLike, product, handleDetail, addToCart, openModal, clos
 
     return (
         <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
-            <div className="product">
-                <div 
-                    className="imgbox" 
-                    onClick={() => onHandleDetailClick(_id)}
-                >
-                    <Link to={"/" + _id}>
-                        {product.img_gallery[0] &&<img src={`/api/products/image/${img_gallery[0].img_name}`} alt="product" />}
-                    </Link>
-                    {/* <button 
-                        className="cart-btn" 
-                        disabled={inCart ? true : false} 
-                        onClick={this.todo.bind(this, _id)}
+            <Link to={"/details/" + _id}>
+                <div className="product">
+                    <div 
+                        className="imgbox" 
+                        onClick={() => onHandleDetailClick(_id)}
                     >
-                        {inCart ? (
-                            <p className="text-capitalize mb-0" disabled>
-                                {" "}
-                                in cart
-                            </p>
-                        ) : (
-                            <i className="fas fa-cart-plus" />
-                        )}
-                    </button> */}
-                </div>
-                <div className="specifice">
-                    <div className="titles">
-                        <h2>{name}<br/><span><Link to={"/store/" + store._id}>{store.name}</Link></span></h2>
+                        {product.img_gallery[0] &&<img src={`/api/products/image/${img_gallery[0].img_name}`} alt="product" />}
+                        {/* <button 
+                            className="cart-btn" 
+                            disabled={inCart ? true : false} 
+                            onClick={this.todo.bind(this, _id)}
+                        >
+                            {inCart ? (
+                                <p className="text-capitalize mb-0" disabled>
+                                    {" "}
+                                    in cart
+                                </p>
+                            ) : (
+                                <i className="fas fa-cart-plus" />
+                            )}
+                        </button> */}
                     </div>
-                    <div className="price">${price}</div>
-                    <button onClick={() => todo(_id, name)}>Add To Cart</button>
+                    <div className="specifice">
+                        <div className="titles">
+                            <h2>{name}<br/><span><Link to={"/store/" + store._id}>{store.name}</Link></span></h2>
+                        </div>
+                        <div className="price">${price}</div>
+                        <button onClick={() => todo(_id, name)}>Add To Cart</button>
+                    </div>
                 </div>
-            </div>
+            </Link>
         </ProductWrapper>
     );
 }

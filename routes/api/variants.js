@@ -111,7 +111,7 @@ router.get('/store/:id', async (req, res) => {
 router.get('/product/:id', async (req, res) => {
     try {
         const variants = await Variant.find({ product: req.params.id });
-
+        console.log(variants);
         res.json(variants);
     } catch (err) {
         console.error(err.message);

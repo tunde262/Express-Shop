@@ -36,7 +36,15 @@ const Landing = ({history, isAuthenticated, updateAuth}) => {
     formData.signup = type;
     console.log(formData);
     updateAuth(formData);
-    history.push('/explore');
+    if(formData.email !== '') {
+      history.push('/home');
+    } else {
+      if(type) {
+        history.push('/register');
+      } else {
+        history.push('/login');
+      }
+    }
     // ReactGA.event({
     //     category: 'Account',
     //     action: 'Created An Account'

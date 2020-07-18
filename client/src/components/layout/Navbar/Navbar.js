@@ -39,6 +39,11 @@ const Navbar = ({ drawerClickHandler, auth: { isAuthenticated, loading }, logout
                 </Link>
             </li>
             <li>
+                <Link to="/cart">
+                    <i class="fas fa-shopping-cart"></i>
+                </Link>
+            </li>
+            <li>
                 <a href="#" onClick={() => setDropdown(!dropdown)}>
                     <i className="fas fa-user-circle"></i>
                 </a>
@@ -63,11 +68,14 @@ const Navbar = ({ drawerClickHandler, auth: { isAuthenticated, loading }, logout
                                     <i className="fas fa-heart"></i>{' '}
                                     Saved
                                 </a>
-                                <a href="#" className="menu-item" onClick={() => setActiveMenu('settings')}>
+                                <Link to="/admin" className="menu-item">
+                                    Admin
+                                </Link>
+                                {/* <a href="#" className="menu-item" onClick={() => setActiveMenu('settings')}>
                                     <i className="fas fa-cog"></i>{' '}
                                     Settings
                                     <i className="fas fa-chevron-right"></i>
-                                </a>
+                                </a> */}
                                 <a href="#" className="menu-item" onClick={logout}>
                                     <i className="fas fa-sign-out-alt" />{' '}
                                     Logout
@@ -121,23 +129,14 @@ const Navbar = ({ drawerClickHandler, auth: { isAuthenticated, loading }, logout
                     </div>
                 )}
             </li>
-            <li>
-                <Link to="/cart">
-                    <i class="fas fa-shopping-cart"></i>
-                </Link>
-            </li>
-            <li>
-                <Link to="/wallet" style={{fontSize:'2rem', color:'#28c101', position:'absolute', marginTop:'-0.5rem'}}>
-                    <i class="far fa-circle"></i>
-                </Link>
-            </li>
         </Fragment>
     );
 
     const guestLinks = (
         <Fragment>
-            <li>For Business</li>
-            <li><Link className="cta" to="/register"><button><i className="fas fa-shopping-bag">{' '}</i> Shop</button></Link></li>
+            <li><Link className="cta" to="/register">New User?</Link></li>
+            <li><Link className="cta" to="/login">Login</Link></li>
+            <li><Link className="cta" to="/register"><button>Sell</button></Link></li>
         </Fragment>
     );
 

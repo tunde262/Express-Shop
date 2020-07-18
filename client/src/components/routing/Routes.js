@@ -62,7 +62,7 @@ const Routes = props => {
             <PrivateRoute exact path="/admin/location/:id" component={LocationPage} />
             <PrivateRoute exact path="/create-store" component={StoreForm} />
             {/* Product Page */}
-            <Route exact path="/:id" component={Details} />
+            <Route exact path="/details/:id" component={Details} />
             {/* Page not found */}
             <Route component={Default} />
         </Switch>

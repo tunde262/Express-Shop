@@ -11,7 +11,7 @@ export const AUTH_ERROR = 'AUTH_ERROR';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
-export const SET_PAGE = 'SET_PAGE';
+export const SET_SIDEBAR = 'SET_SIDEBAR';
 
 // Nav
 export const SET_NAV1 = 'SET_NAV1';

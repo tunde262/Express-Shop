@@ -11,6 +11,8 @@ import Spinner from '../components/common/Spinner';
 import Title from '../components/Title';
 import Container from '../components/ProductList/Container';
 import AuthModal from '../components/modals/AuthModal';
+import Banner from '../components/common/Banner';
+import Img from '../utils/imgs/Banner.jpg';
 
 const ExplorePage = ({getProducts, product, auth: { isAuthenticated, loading}}) => {
     useEffect(() => {
@@ -61,6 +63,7 @@ const ExplorePage = ({getProducts, product, auth: { isAuthenticated, loading}}) 
             {/* <Logo>
                 <img src={logo} style={{maxHeight: '70px'}} alt="cardboard express logo" />
             </Logo> */}
+            <Banner img={Img} />
             <Header />
             <Container title="Bottoms" category="bottoms" background="MediumSlateBlue"  />
             {!loading && !isAuthenticated ? <AuthModal /> : null }

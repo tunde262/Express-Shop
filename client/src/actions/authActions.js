@@ -2,7 +2,7 @@ import axios from 'axios';
 import { setAlert } from './alertActions';
 import { getCurrentProfile } from './profileActions';
 import { 
-    SET_PAGE, 
+    SET_SIDEBAR, 
     REGISTER_SUCCESS, 
     REGISTER_FAIL, 
     USER_LOADED, 
@@ -112,11 +112,11 @@ export const logout = () => dispatch => {
     dispatch({type: LOGOUT})
 }
 
-// Set page for sidebar
-export const setPage = (page) => {
+// Set type sidebar
+export const setSidebar = (type) => {
     return {
-        type: SET_PAGE,
-        payload: page
+        type: SET_SIDEBAR,
+        payload: type
     }
 }
 
