@@ -27,7 +27,7 @@ export const getLocations = () => async dispatch => {
 };
 
 // Get Store Locations
-export const getCollectionsByStoreId = (id) => async dispatch => {
+export const getLocationsByStoreId = (id) => async dispatch => {
     try {
         const res = await axios.get(`/api/darkstores/store/${id}`);
 

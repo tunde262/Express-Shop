@@ -57,6 +57,25 @@ export const getProductsByStoreId = id => async dispatch => {
     }
 };
 
+
+// Get Product By Locations placeId
+export const getProductsByLocationId = id => async dispatch => {
+    dispatch(setProductsLoading());
+    try {
+        const res = await axios.get(`/api/products/location/${id}`);
+
+        dispatch({
+            type: SET_PRODUCTS,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: SET_PRODUCTS,
+            payload: {}
+        })
+    }
+};
+
 // Get Filtered Products
 export const setSortedProducts = (products) =>  {
     return {

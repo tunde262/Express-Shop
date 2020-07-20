@@ -30,7 +30,7 @@ const LocationPage = ({
     variant,
     match,
     addVariant, 
-    location: { 
+    darkstore: { 
         location, 
         loading 
     }}) => {
@@ -130,6 +130,18 @@ const LocationPage = ({
         console.log(variantList);
     }
 
+    let markers = [];
+
+    if(location) {
+        markers.push({
+            position: {
+                lat: location.location.coordinates[0],
+                lng: location.location.coordinates[1]
+            },
+            name: location.name
+        })
+    } 
+
 
     let display;
 
@@ -152,6 +164,23 @@ const LocationPage = ({
         );
     }
 
+    let centerLat;
+    if(location) {
+        centerLat = location.location.coordinates[0]
+    }
+    let centerLng;
+    if(location) {
+        centerLng = location.location.coordinates[1]
+    }
+    let markerLat;
+    if(location) {
+        markerLat = location.location.coordinates[0]
+    }
+    let markerLng;
+    if(location) {
+        markerLng = location.location.coordinates[1]
+    }
+
     return (
         <Fragment>
             <div id="product-content-wrapper">
@@ -169,7 +198,15 @@ const LocationPage = ({
                     <hr/>
                 </div>
                 <div class="product-map">
-                    <Map />
+                    {loading && location === null ? <Spinner /> : (
+                        <Map 
+                            defaultZoom="8"
+                            centerLat={centerLat}
+                            centerLng={centerLng}
+                            markerLat={markerLat}
+                            markerLng={markerLng}
+                        />
+                    )}
                 </div>
                 <div class="product-info">
                     <div class="product-status-box">
@@ -233,7 +270,7 @@ LocationPage.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    location: state.location,
+    darkstore: state.location,
     variant: state.variant
 })
 

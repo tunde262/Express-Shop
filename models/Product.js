@@ -6,6 +6,10 @@ const ProductSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'store'
     },
+    locationId: {
+        type: Schema.Types.ObjectId,
+        ref: 'darkstore'
+    },
     name: {
         type: String,
         required: true
@@ -33,6 +37,14 @@ const ProductSchema = new Schema({
     category: {
         type: String
     },
+    collections: [
+        {
+            category: {
+                type: Schema.Types.ObjectId,
+                ref: 'category'
+            }
+        }
+    ],
     tags: {
         type: [String]
     },
@@ -53,6 +65,9 @@ const ProductSchema = new Schema({
     },
     condition: {
         type: String
+    },
+    featured: {
+        type: Boolean
     },
     activity: [
         {

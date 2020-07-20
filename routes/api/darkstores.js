@@ -131,29 +131,55 @@ router.post('/', upload.single('file'), [ auth, [
         const {
             name,
             tags,
-            street,
+            location_tags,
+            street_name,
+            street_number,
             city,
+            country,
             state, 
-            zipcode,
+            postalcode,
+            formatted_address,
+            area,
+            coordinates,
+            placeId,
             phone,
         } = req.body;
 
         // Get fields. Build darkstore object
         const darkstoreFields = {};
         if(name) darkstoreFields.name = name;
+        if(placeId) darkstoreFields.placeId = placeId;
+        if(area) darkstoreFields.area = area;
+        if(coordinates) darkstoreFields.coordinates = coordinates;
+        if(formatted_address) darkstoreFields.formatted_address = formatted_address;
         if(phone) darkstoreFields.phone = phone;
         if(req.file) categoryFields.img = req.file.id;
         if(req.file) categoryFields.img_name = req.file.filename;
+
         if(tags) {
             darkstoreFields.tags = tags.split(',').map(tag => tag.trim());
         }
+        if(location_tags) {
+            darkstoreFields.location_tags = location_tags.split(',').map(locationTag => locationTag.trim());
+        }
+
+
+        // Build location obj
+        darkstoreFields.location = {};
+        if(coordinates) {
+            darkstoreFields.location.coordinates = coordinates.split(',').map(coordinate => coordinate.trim());
+        }
+
+        // Build address component obj
+        darkstoreFields.address_components = {};
+        if(postalcode) darkstoreFields.address_components.postalcode = postalcode;
+        if(street_name) darkstoreFields.address_components.street_name = street_name;
+        if(street_number) darkstoreFields.address_components.street_number = street_number;
+        if(city) darkstoreFields.address_components.city = city;
+        if(state) darkstoreFields.address_components.state = state;
+        if(country) darkstoreFields.address_components.country = country;
+        if(area) darkstoreFields.address_components.area = area;
         
-        // Build social array
-        darkstoreFields.address = {};
-        if(street) darkstoreFields.address.street = street;
-        if(city) darkstoreFields.address.city = city;
-        if(state) darkstoreFields.address.state = state;
-        if(zipcode) darkstoreFields.address.zipcode = zipcode;
 
         try {
             const profile = await Profile.findOne({ user: req.user.id });

@@ -11,8 +11,10 @@ const DarkstoreSchema = new Schema({
         required: true
     },
     tags: {
+        type: [String]
+    },
+    location_tags: {
         type: [String],
-        required: true
     },
     img: {
         type: mongoose.Schema.Types.ObjectId, // There is no need to create references here
@@ -21,23 +23,45 @@ const DarkstoreSchema = new Schema({
     img_name: {
         type: String
     },
-    address: {
-        street: {
+    location: {
+        type: {
             type: String,
-            required: true
+            default: "Point"
+        },
+        coordinates: {
+            type: [Number]
+        } 
+    },
+    formatted_address: {
+        type: String,
+        required: true
+    },
+    address_components: {
+        street_name: {
+            type: String
+        },
+        street_number: {
+            type: String
         },
         city: {
-            type: String,
-            required: true
+            type: String
         },
         state:{
-            type: String,
-            required: true
+            type: String
         },
-        zipcode: {
+        country: {
+            type: String
+        },
+        postalcode: {
+            type: String
+        },
+        area: {
             type: String,
-            required: true
         }
+    },
+    placeId: {
+        type: String,
+        required: true
     },
     phone: {
         type: String

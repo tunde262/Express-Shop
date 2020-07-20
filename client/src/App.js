@@ -19,12 +19,11 @@ import ReactGA from 'react-ga';
 import PrivateRoute from './components/routing/PrivateRoute';
 
 // Layout
-import ExplorePage from './pages/ExplorePage';
+import HomePage from './pages/HomePage';
 import Landing from './pages/Landing';
 import Navbar from './components/layout/Navbar/Navbar';
 import SideDrawer from './components/layout/SideDrawer/SideDrawer';
 import Backdrop from './components/layout/Backdrop/Backdrop';
-import Footer from './components/layout/Footer/Footer';
 
 import Routes from './components/routing/Routes';
 import AddToCartModal from './components/modals/AddToCartModal';
@@ -99,7 +98,6 @@ const App = () => {
             </main>
           </div>
           <AddToCartModal />
-          {/* <Footer /> */}
         </Router>
       </StripeProvider>
     </Provider>

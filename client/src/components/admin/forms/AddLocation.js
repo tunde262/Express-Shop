@@ -10,18 +10,25 @@ const AddLocation = ({ addLocation, history }) => {
         
     }, []);
 
-    const [formData, setFormData] = useState({
-        name: '',
-        tags: '',
-        file: '',
-        street: '',
-        city: '',
-        state: '',
-        zipcode: '',
-        phone: ''
+    const [fileData, setFileData] = useState({
+        file: ''
     });
 
-    const [formattedData, setFormattedData] = useState(null);
+    const [formattedData, setFormattedData] = useState({
+        name: '',
+        city: '',
+        country: '',
+        area: '',
+        stateProvince: '',
+        street_number: '',
+        formatted_address: '',
+        street_name: '',
+        postalCode: '',
+        placeId: '',
+        location_tags: '',
+        tags: '',
+        latLng: ''
+    });
 
     const [address, setAddress] = useState("");
     const [coordinates, setCoordinates] = useState({
@@ -36,10 +43,10 @@ const AddLocation = ({ addLocation, history }) => {
         console.log(result);
         console.log(latLng);
 
-        let tags = [];
+        let locationTags = [];
 
         if(result[0].types && result[0].types.length > 0) {
-            result[0].types.map(type => tags.push(type));
+            result[0].types.map(type => locationTags.push(type));
         };
         const address = result[0].formatted_address;
         const placeId = result[0].place_id;
@@ -64,14 +71,17 @@ const AddLocation = ({ addLocation, history }) => {
         console.log("placeId: " + placeId);
         console.log("tags: ")
         console.log(tags);
+        console.log("location tags: ")
+        console.log(locationTags);
 
         let newTags;
-        if (Array.isArray(tags)) {
-            newTags = tags.join(', ');
+        if (Array.isArray(locationTags)) {
+            newTags = locationTags.join(', ');
         }
 
         setAddress(value);
         setFormattedData({
+            name: (name) ? name : '',
             city: (city) ? city : '',
             country: (country) ? country : '',
             area: (area) ? area : '',
@@ -81,7 +91,9 @@ const AddLocation = ({ addLocation, history }) => {
             street_name: (street) ? street : '',
             postalCode: (postalCode) ? postalCode : '',
             placeId: (placeId) ? placeId : '',
-            tags: (newTags) ? newTags : '',
+            location_tags: (newTags) ? newTags : '',
+            tags: '',
+            latLng: `${latLng.lat}, ${latLng.lng}`
         })
         setCoordinates(latLng);
     };
@@ -175,14 +187,31 @@ const AddLocation = ({ addLocation, history }) => {
 	};
     
 
-    const { name, street, city, state, zipcode, phone, tags, file } = formData;
+    const { file } = fileData;
+    const { 
+        name, 
+        street_number, 
+        formatted_address, 
+        street_name, 
+        placeId, 
+        stateProvince, 
+        city, 
+        state, 
+        country, 
+        area, 
+        postalCode, 
+        phone, 
+        location_tags,
+        tags,
+        latLng
+    } = formattedData;
 
     const fileChanged = e => {
-        setFormData({ ...formData, [e.target.name]: e.target.files[0] });
+        setFileData({ ...fileData, [e.target.name]: e.target.files[0] });
     }
     
     const onChange = e => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        setFormattedData({ ...formattedData, [e.target.name]: e.target.value });
         console.log(formattedData);
     } 
 
@@ -191,13 +220,21 @@ const AddLocation = ({ addLocation, history }) => {
     
         let data = new FormData();
         if(file !== '') data.append('file', file);
-        data.append('name', name);
-        data.append('street', street);
-        data.append('city', city);
-        data.append('state', state);
-        data.append('zipcode', zipcode);
-        data.append('phone', phone);
-        data.append('tags', tags);
+        if(name !== '')data.append('name', name);
+        if(street_name !== '')data.append('street_name', street_name);
+        if(street_number !== '')data.append('street_number', street_number);
+        if(city !== '')data.append('city', city);
+        if(state !== '')data.append('state', state);
+        if(postalCode !== '')data.append('postalCode', postalCode);
+        if(country !== '')data.append('country', country);
+        if(area !== '')data.append('area', area);
+        if(placeId !== '')data.append('placeId', placeId);
+        if(stateProvince !== '')data.append('stateProvince', stateProvince);
+        if(formatted_address !== '')data.append('formatted_address', formatted_address);
+        if(tags !== '')data.append('tags', tags);
+        if(location_tags !== '')data.append('location_tags', location_tags);
+        if(phone !== '')data.append('phone', phone);
+        if(latLng !== '')data.append('coordinates', latLng);
     
         addLocation(data, history);
     };
@@ -211,33 +248,24 @@ const AddLocation = ({ addLocation, history }) => {
                         <i className="fas fa-user-plus"></i> Add Location
                     </h1>   
                     <form onSubmit={onSubmit}>
-                        <div className="form-group">
-                            <label>Img</label>
-                            <input
-                                type="file"
-                                name="file"
-                                id="file"
-                                className="form-control"
-                                onChange={fileChanged}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Name</label>
-                            <input
-                                type="text"
-                                name="name"
-                                className="form-control"
-                                placeholder="Enter Collection Name"
-                                value={name}
-                                onChange={onChange}
-                            />
-                        </div>
+                        <label>Img</label>
+                        <input
+                            type="file"
+                            name="file"
+                            id="file"
+                            onChange={fileChanged}
+                        />
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Name this location"
+                            value={name}
+                            onChange={onChange}
+                        />
                         <PlacesAutocomplete value={address} onChange={setAddress} onSelect={handleSelect}>
                             {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                                 <div>
-                                    <p>Latitude: {coordinates.lat}</p>
-                                    <p>Longitude: {coordinates.lng}</p>
-                                    <input {...getInputProps({placeholder: "Type Address"})} />
+                                    <input {...getInputProps({placeholder: "Address"})} />
 
                                     <div>
                                         {loading ? (
@@ -255,76 +283,25 @@ const AddLocation = ({ addLocation, history }) => {
                                 </div>
                             )}
                         </PlacesAutocomplete>
-                        <div className="form-group">
-                            <label>Address</label>
-                            <input 
-                                type="text"
-                                name="street"
-                                className="form-control"
-                                value={street}
-                                onChange={onChange}
-                                placeholder="1234 Example Street Drive"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>City</label>
-                            <input 
-                                type="text"
-                                name="city"
-                                className="form-control"
-                                value={city}
-                                onChange={onChange}
-                                placeholder="city"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>State</label>
-                            <input 
-                                type="text"
-                                name="state"
-                                className="form-control"
-                                value={state}
-                                onChange={onChange}
-                                placeholder="state"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Zipcode</label>
-                            <input 
-                                type="text"
-                                name="zipcode"
-                                className="form-control"
-                                value={zipcode}
-                                onChange={onChange}
-                                placeholder="zipcode"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Phone Number</label>
                             <input 
                                 type="text"
                                 name="phone"
-                                className="form-control"
                                 value={phone}
                                 onChange={onChange}
-                                placeholder="123-456-7890"
+                                placeholder="Phone Number"
                             />
-                        </div>
-                        <div className="form-group">
-                            <label>Tags</label>
                             <input
                                 type="text"
-                                placeholder="streetwear, hoodies, joggers..."
+                                placeholder="Tags"
                                 name="tags"
                                 value={tags}
                                 onChange={onChange}
                             />
                             <small className="form-text">
-                                Please use comma separated tags (eg. streetwear, hoodies, joggers...)
+                                Please use comma separated tags (eg. Nike Store, Warehouse1, Mom's House...)
                             </small>
-                        </div>
                         <button type="submit" className="btn btn-primary btn-block">
-                            Add Collection
+                            Add Location
                         </button>
                     </form>
                     <p className="lead mt-4"><Link to="/admin">Back to admin</Link></p>

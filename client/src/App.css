@@ -103,13 +103,6 @@ hr {
   font-size: 20px;
 }
 
-footer {
-  padding: 20px;
-  color: #ffffff;
-  background-color: var(--mainColor);
-  text-align: center;
-}
-
   
   table th,	td {
     white-space: nowrap;

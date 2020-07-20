@@ -9,6 +9,7 @@ import TextField from 'material-ui/TextField';
 
 import ReactGA from 'react-ga';
 
+import Footer from '../components/layout/Footer/Footer';
 import Modal from 'react-responsive-modal';
 import { ButtonContainer } from './Button';
 import { BackButton } from './common/BackButton';
@@ -254,7 +255,15 @@ const Details = ({
                         <div id="breadcrumb">
                             <nav className="breadcrumb">
                                 <ol>
-                                    <li><b>My Portfolio</b></li>
+                                    <li style={{display: 'flex'}}>
+                                        <Link to="/stores">Home</Link>{' '}
+                                        <p style={{margin:'0 5px'}}> /
+                                            <span style={{fontWeight:'bold'}}>
+                                                {' '}
+                                                {detailProduct.name}
+                                            </span>
+                                        </p>
+                                    </li>
                                 </ol>
                             </nav>
                             <BackButton onClick={goBack}><i className="fas fa-arrow-left"></i></BackButton>
@@ -285,7 +294,7 @@ const Details = ({
                                         <Link to={"/store/" + detailProduct.store._id}>
                                             {detailProduct.store.name}
                                         </Link>
-                                        <a style={{color:'#808080'}}><i class="fas fa-map-marker-alt"></i> Plano, Tx</a>
+                                        <Link to={"/location/" + detailProduct.locationId._id} style={{color:'#808080'}}><i class="fas fa-map-marker-alt"></i> Plano, Tx</Link>
                                     </div>
                                 </div>
                                 <hr style={{marginTop:'0.5rem'}}/>
@@ -367,6 +376,7 @@ const Details = ({
                 </section>
                 <BrandOverview />
                 <ProductOverview title="Tops" products={products} link="/top" />
+                <Footer />
                 <Modal open={displayModal} onClose={setModal} center>
                     <p>
                         Write a quick review...

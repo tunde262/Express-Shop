@@ -9,6 +9,8 @@ import logo from '../../common/logo.png';
 
 
 const Navbar = ({ drawerClickHandler, auth: { isAuthenticated, loading }, logout }) => {
+    // Page
+    const [navHighlight, setNavHighlight] = useState('home');
     // Toggle Sidebar
     const [isOpen, setIsOpen] = useState(false);
     // Toggle Dropdwon
@@ -28,23 +30,23 @@ const Navbar = ({ drawerClickHandler, auth: { isAuthenticated, loading }, logout
     }
     const authLinks = (
         <Fragment>
-            <li>
-                <Link to="/home">
+            <li onClick={e => setNavHighlight('home')}>
+                <Link to="/home" className={navHighlight === "home" && "active"}>
                     <i class="fas fa-home"></i>
                 </Link>
             </li>
-            <li>
-                <Link to="/explore">
+            <li onClick={e => setNavHighlight('explore')}>
+                <Link to="/explore" className={navHighlight === "explore" && "active"}>
                     <i class="far fa-compass"></i>
                 </Link>
             </li>
-            <li>
-                <Link to="/cart">
+            <li onClick={e => setNavHighlight('cart')}>
+                <Link to="/cart" className={navHighlight === "cart" && "active"}>
                     <i class="fas fa-shopping-cart"></i>
                 </Link>
             </li>
-            <li>
-                <a href="#" onClick={() => setDropdown(!dropdown)}>
+            <li onClick={e => setNavHighlight('profile')}>
+                <a className={navHighlight === "profile" && "active"} href="#" onClick={() => setDropdown(!dropdown)}>
                     <i className="fas fa-user-circle"></i>
                 </a>
 
@@ -134,8 +136,10 @@ const Navbar = ({ drawerClickHandler, auth: { isAuthenticated, loading }, logout
 
     const guestLinks = (
         <Fragment>
-            <li><Link className="cta" to="/register">New User?</Link></li>
-            <li><Link className="cta" to="/login">Login</Link></li>
+            <li className="nav-offset"><Link style={{marginTop: '15px', fontSize: '1rem'}}
+style={{marginTop: '15px', fontSize: '1rem'}} className="cta" to="/register">New User?</Link></li>
+            <li className="nav-offset"><Link style={{marginTop: '15px', fontSize: '1rem'}}
+style={{marginTop: '15px', fontSize: '1rem'}} className="cta" to="/login">Login</Link></li>
             <li><Link className="cta" to="/register"><button>Sell</button></Link></li>
         </Fragment>
     );
@@ -152,9 +156,11 @@ const Navbar = ({ drawerClickHandler, auth: { isAuthenticated, loading }, logout
                     </div>
                 </div>
                 <div className="force-right">
-                    <button type="button" className="nav-btn" onClick={drawerClickHandler}>
-                        <FaAlignRight className="nav-icon" />
+                <Link className="cta" to="/register">
+                    <button type="button" className="nav-btn nav-icon" onClick={drawerClickHandler}>
+                        Sell
                     </button>
+                </Link>
                 </div>
             </div>
             <div className={isOpen ? "nav-bar show-nav" : "nav-bar"}>

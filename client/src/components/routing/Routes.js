@@ -15,7 +15,6 @@ import Profile from '../profile/Profile';
 
 // Admin pages
 import Admin from '../admin/Admin';
-import ExplorePage from '../../pages/ExplorePage';
 import ProductPage from '../admin/pages/ProductPage';
 import CollectionPage from '../admin/pages/CollectionPage';
 import LocationPage from '../admin/pages/LocationPage';
@@ -26,8 +25,11 @@ import AddLocation from '../admin/forms/AddLocation';
 import AddCustomer from '../admin/forms/AddCustomer';
 
 // Store pages
+import HomePage from '../../pages/HomePage';
+import ExplorePage from '../../pages/ExplorePage';
 import StoresPage from '../../pages/StoresPage';
 import StorePage from '../../pages/StorePage';
+import LocationShopPage from '../../pages/LocationPage';
 import CategoryPage from '../../pages/CategoryPage';
 
 import PrivateRoute from './PrivateRoute';
@@ -37,12 +39,15 @@ const Routes = props => {
     <Fragment>
         <Alert />
         <Switch>
-            <Route exact path="/home" component={ExplorePage} />
+            <Route exact path="/home" component={HomePage} />
+            <Route exact path="/explore" component={ExplorePage} />
             {/* Category Pages */}
             <Route exact path="/categories" component={CategoryPage} />
             <Route exact path="/stores" component={StoresPage} />
-            {/* Store Page */}
+            {/* Store Shop Page */}
             <Route exact path="/store/:id" component={StorePage} />
+            {/* Location Shop Page */}
+            <Route exact path="/location/:id" component={LocationShopPage} />
             {/* Auth Pages */}
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />

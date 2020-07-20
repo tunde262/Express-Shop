@@ -185,6 +185,12 @@
     .post button {
     padding: 0.3rem 0.4rem;
     }
+
+    footer .footer-content {
+        height: auto;
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 // Smartphones

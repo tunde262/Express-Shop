@@ -8,16 +8,16 @@ import Spinner from '../../common/Spinner';
 import 'react-responsive-modal/styles.css';
 
 
-const Inventory = ({ page, variant: {loading, sortedVariants}, deleteVariant }) => {
-    const [modalShow, setModal] = useState(false);
+const Inventory = ({ page, setModal, variant: {loading, sortedVariants}, deleteVariant }) => {
+    // const [modalShow, setModal] = useState(false);
      
-    const openModal = () => {
-    setModal(true);
-    };
+    // const openModal = () => {
+    // setModal(true);
+    // };
 
-    const closeModal = () => {
-    setModal(false);
-    };
+    // const closeModal = () => {
+    // setModal(false);
+    // };
      
 
     let variantList;

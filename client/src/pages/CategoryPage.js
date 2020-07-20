@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getProducts, getCart } from '../actions/productActions';
 
+import Footer from '../components/layout/Footer/Footer';
 import Header from '../components/header/Header';
 import CategoryOverview from '../components/Overview/categoryOverview/CategoryOverview';
 import ProductOverview from '../components/Overview/productOverview/ProductOverview';
@@ -266,6 +267,8 @@ class CategoryPage extends Component{
                     </section>
                     <button>View All</button>
                 </div>
+
+                <Footer />
             </Fragment>
         )
     }

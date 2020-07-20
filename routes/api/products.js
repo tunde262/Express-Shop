@@ -68,7 +68,7 @@ const upload = multer({ storage });
 // @access Public
 router.get('/', async (req, res) => {
     try {
-        const products = await Product.find().populate('store', ['name', 'img_name']);
+        const products = await Product.find().populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
 
         res.json(products);
     } catch (err) {
@@ -84,7 +84,7 @@ router.get('/store', auth, async (req, res) => {
     try {
         const profile = await Profile.findOne({ user: req.user.id });
         const store = await Store.findOne({ profile: profile.id });
-        const products = await Product.find({ store: store.id }).populate('store', ['name', 'img_name']);
+        const products = await Product.find({ store: store.id }).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
 
         res.json(products);
     } catch (err) {
@@ -98,7 +98,21 @@ router.get('/store', auth, async (req, res) => {
 // @access Public
 router.get('/store/:id', async (req, res) => {
     try {
-        const products = await Product.find({ store: req.params.id }).populate('store', ['name', 'img_name']);
+        const products = await Product.find({ store: req.params.id }).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
+
+        res.json(products);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
+// @route GET api/products
+// @desc Get Products by location ID
+// @access Public
+router.get('/location/:id', async (req, res) => {
+    try {
+        const products = await Product.find({ locationId: req.params.id }).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']).populate('store', ['name', 'img_name']);
 
         res.json(products);
     } catch (err) {
@@ -111,7 +125,7 @@ router.get('/store/:id', async (req, res) => {
 //@desc Get single product by id
 router.get('/:id', async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id).populate('store', ['name', 'img_name']);
+        const product = await Product.findById(req.params.id).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
 
         if(!product) {
             return res.status(404).json({ msg: 'Product not found' });
@@ -129,7 +143,7 @@ router.get('/:id', async (req, res) => {
 // @access Public
 router.get('/category/:category', async (req, res) => {
     try {
-        const products = await Product.find({ category: req.params.category }).populate('store', ['name', 'img_name']);
+        const products = await Product.find({ category: req.params.category }).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
 
         res.json(products);
     } catch (err) {

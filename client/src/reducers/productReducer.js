@@ -38,33 +38,33 @@ export default function(state = initialState, action) {
         case SET_PRODUCTS: {
             const products = action.payload;
             let tempProd = products;
-            // let featuredProducts = tempProd.filter(product => product.featured === true);
+            let featuredProducts = tempProd.filter(product => product.featured === true);
             // let exploreTops = tempProd.filter(product => product.category === 'top');
             // let exploreBottoms = tempProd.filter(product => product.category === 'bottom');
             // let exploreHats = tempProd.filter(product => product.category === 'hat');
             // let exploreSocks = tempProd.filter(product => product.category === 'socks');
-            // let maxPrice = Math.max(...products.map(product => product.price));
+            let maxPrice = Math.max(...products.map(product => product.price));
 
             return {
                 ...state,
                 products,
                 sortedProducts: products,
-                // featuredProducts,
-                // price: maxPrice,
-                // maxPrice,
+                featuredProducts,
+                price: maxPrice,
+                maxPrice,
                 loading: false
             };
         }
         case SET_SORTED_PRODUCTS: {
             const products = action.payload;
             console.log(products);
-            // let featuredProducts = tempProd.filter(product => product.featured === true);
+            let featuredProducts = tempProd.filter(product => product.featured === true);
             let maxPrice = Math.max(...products.map(product => product.price));
 
             return {
                 ...state,
                 sortedProducts: products,
-                // featuredProducts,
+                featuredProducts,
                 price: maxPrice,
                 maxPrice
             };

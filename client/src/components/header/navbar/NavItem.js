@@ -10,7 +10,7 @@ export const NavItem = styled.button`
     padding: 0rem 2rem;
     cursor: pointer;
     margin: 0.5rem 0.5rem 0 0;
-    min-width: 100px;
+    width: auto;
     height: 2rem;
     text-align: center;
     transition: all .1s ease-out;
