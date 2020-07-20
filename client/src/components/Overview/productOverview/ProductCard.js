@@ -48,13 +48,14 @@ const ProductCard = ({addLike, product, handleDetail, addToCart, openModal, clos
 
     return (
         <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
-            <Link to={"/details/" + _id}>
                 <div className="product">
                     <div 
                         className="imgbox" 
                         onClick={() => onHandleDetailClick(_id)}
                     >
-                        {product.img_gallery[0] &&<img src={`/api/products/image/${img_gallery[0].img_name}`} alt="product" />}
+                        <Link to={"/details/" + _id}>
+                            {product.img_gallery[0] &&<img src={`/api/products/image/${img_gallery[0].img_name}`} alt="product" />}
+                        </Link>
                         {/* <button 
                             className="cart-btn" 
                             disabled={inCart ? true : false} 
@@ -72,13 +73,12 @@ const ProductCard = ({addLike, product, handleDetail, addToCart, openModal, clos
                     </div>
                     <div className="specifice">
                         <div className="titles">
-                            <h2>{name}<br/><span><Link to={"/store/" + store._id}>{store.name}</Link></span></h2>
+                            <h2><Link to={"/details/" + _id}>{name}</Link><br/><span><Link to={"/store/" + store._id}>{store.name}</Link></span></h2>
                         </div>
                         <div className="price">${price}</div>
                         <button onClick={() => todo(_id, name)}>Add To Cart</button>
                     </div>
                 </div>
-            </Link>
         </ProductWrapper>
     );
 }
