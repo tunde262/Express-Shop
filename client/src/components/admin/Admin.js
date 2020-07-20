@@ -52,6 +52,7 @@ const Admin = ({ getCurrentStore, deleteStore, getStoreProducts, getStoreCollect
                 'Content-Type': 'application/json'
             }
         };
+        console.log('DASHBOARD!!!!!');
 
         const formData = {
             "code": `${store.stripe_id}`
