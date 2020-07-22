@@ -11,6 +11,7 @@ import { getStoreLocations } from '../../actions/locationActions';
 
 import OrderList from './OrderList';
 import Table from './table/Table';
+import JoinCreate from './JoinCreate';
 
 const Admin = ({ getCurrentStore, deleteStore, getStoreProducts, getStoreCollections, getStoreLocations, store: { store, loading } }) => {
     const accountLink = 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=http://localhost:3000/dashboard/&client_id=ca_FFrwAOlKVRTGBrORx2OTVFLXJeM3gHHe&state=SECRET';
@@ -127,12 +128,7 @@ const Admin = ({ getCurrentStore, deleteStore, getStoreProducts, getStoreCollect
                                     <Table />
                                 </Fragment>
                             ) : (
-                                <Fragment>
-                                    <p>You have not setup a store</p>
-                                    <Link to='/create-store' className="btn btn-primary my-1">
-                                        Create A Store
-                                    </Link>
-                                </Fragment> 
+                                <JoinCreate />
                             )}
                         </Fragment>
                     )}

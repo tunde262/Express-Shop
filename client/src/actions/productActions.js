@@ -4,9 +4,8 @@ import { setAlert } from './alertActions';
 import { SET_PRODUCTS, SET_SORTED_PRODUCTS, UPDATE_PRODUCT_LIKES, ADD_PRODUCT_REVIEW, REMOVE_PRODUCT_REVIEW, PRODUCT_ERROR, HANDLE_TAGS, REMOVE_TAGS, PRODUCTS_LOADING, ADD_TOTALS, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, CLOSE_MODAL, CLEAR_CART, GET_CART, GET_ORDERS } from './types';
 
 // Get Products
-export const getProducts = () => dispatch => {
-    dispatch(setProductsLoading());
-    axios.get('/api/products')
+export const getProducts = (skip) => dispatch => {
+    axios.get(`/api/products?skip=${skip}`)
         .then(res =>
             dispatch({
                 type: SET_PRODUCTS,

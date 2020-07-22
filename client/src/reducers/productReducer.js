@@ -1,14 +1,14 @@
 import { SET_PRODUCTS, SET_SORTED_PRODUCTS, UPDATE_PRODUCT_LIKES, PRODUCTS_LOADING, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, CLOSE_MODAL, CLEAR_CART,ADD_TOTALS, GET_CART, GET_ORDERS, HANDLE_TAGS, REMOVE_TAGS } from '../actions/types';
 
 const initialState = {
-    products: null,
-    sortedProducts: null,
+    products: [],
+    sortedProducts: [],
     exploreTops: [],
     exploreBottoms: [],
     exploreHats: [],
     exploreSocks: [],
     featuredProducts: [],
-    loading: false,
+    loading: true,
     location: 'all',
     category: 'all',
     tags: [],
@@ -37,8 +37,13 @@ export default function(state = initialState, action) {
             };
         case SET_PRODUCTS: {
             const products = action.payload;
-            let tempProd = products;
+            let tempProd = products; 
             let featuredProducts = tempProd.filter(product => product.featured === true);
+            
+            if(state.products.length > 0) {
+                tempProd = [...state.products, ...tempProd, ];
+            }
+
             // let exploreTops = tempProd.filter(product => product.category === 'top');
             // let exploreBottoms = tempProd.filter(product => product.category === 'bottom');
             // let exploreHats = tempProd.filter(product => product.category === 'hat');
@@ -47,8 +52,8 @@ export default function(state = initialState, action) {
 
             return {
                 ...state,
-                products,
-                sortedProducts: products,
+                products: tempProd,
+                sortedProducts: tempProd,
                 featuredProducts,
                 price: maxPrice,
                 maxPrice,

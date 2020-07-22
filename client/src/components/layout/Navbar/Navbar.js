@@ -30,22 +30,22 @@ const Navbar = ({ drawerClickHandler, auth: { isAuthenticated, loading }, logout
     }
     const authLinks = (
         <Fragment>
-            <li onClick={e => setNavHighlight('home')}>
+            <li className="nav-offset" onClick={e => setNavHighlight('home')}>
                 <Link to="/home" className={navHighlight === "home" && "active"}>
                     <i class="fas fa-home"></i>
                 </Link>
             </li>
-            <li onClick={e => setNavHighlight('explore')}>
+            <li className="nav-offset" onClick={e => setNavHighlight('explore')}>
                 <Link to="/explore" className={navHighlight === "explore" && "active"}>
                     <i class="far fa-compass"></i>
                 </Link>
             </li>
-            <li onClick={e => setNavHighlight('cart')}>
+            <li className="nav-offset" onClick={e => setNavHighlight('cart')}>
                 <Link to="/cart" className={navHighlight === "cart" && "active"}>
                     <i class="fas fa-shopping-cart"></i>
                 </Link>
             </li>
-            <li onClick={e => setNavHighlight('profile')}>
+            <li className="nav-offset" onClick={e => setNavHighlight('profile')}>
                 <a className={navHighlight === "profile" && "active"} href="#" onClick={() => setDropdown(!dropdown)}>
                     <i className="fas fa-user-circle"></i>
                 </a>
@@ -66,13 +66,13 @@ const Navbar = ({ drawerClickHandler, auth: { isAuthenticated, loading }, logout
                                 <a href="#" className="menu-item">
                                     My Orders
                                 </a>
+                                <Link to="/admin" className="menu-item">
+                                    My Stores
+                                </Link>
                                 <a href="#" className="menu-item">
                                     <i className="fas fa-heart"></i>{' '}
                                     Saved
                                 </a>
-                                <Link to="/admin" className="menu-item">
-                                    Admin
-                                </Link>
                                 {/* <a href="#" className="menu-item" onClick={() => setActiveMenu('settings')}>
                                     <i className="fas fa-cog"></i>{' '}
                                     Settings
@@ -136,11 +136,17 @@ const Navbar = ({ drawerClickHandler, auth: { isAuthenticated, loading }, logout
 
     const guestLinks = (
         <Fragment>
-            <li className="nav-offset"><Link style={{marginTop: '15px', fontSize: '1rem'}}
-style={{marginTop: '15px', fontSize: '1rem'}} className="cta" to="/register">New User?</Link></li>
-            <li className="nav-offset"><Link style={{marginTop: '15px', fontSize: '1rem'}}
-style={{marginTop: '15px', fontSize: '1rem'}} className="cta" to="/login">Login</Link></li>
-            <li><Link className="cta" to="/register"><button>Sell</button></Link></li>
+            <li className="nav-offset">
+                <Link style={{fontSize:'1rem'}} className="cta" to="/register">New User?</Link>
+            </li>
+            <li className="nav-offset">
+                <Link style={{fontSize:'1rem'}} className="cta" to="/login">Login</Link>
+            </li>
+            <li>
+                <Link className="cta" to="/register">
+                    <button>Sell</button>
+                </Link>
+            </li>
         </Fragment>
     );
 

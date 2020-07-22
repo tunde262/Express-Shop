@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getProducts } from '../actions/productActions';
@@ -21,9 +21,18 @@ import catImg1 from '../utils/imgs/paper_towels.jpeg';
 import boxesImg from '../utils/imgs/banner13.jpg';
 
 const ExplorePage = ({getProducts, product: { loading, products, featuredProducts}}) => {
+    const [skip, setSkip] = useState(0)
     useEffect(() => {
-        getProducts();
-    }, []); 
+        getProducts(skip);
+    }, [skip]);
+
+    const handleScroll = (e) => {
+        const { offsetHeight, scrollTop, scrollHeight} = e.target
+    
+        if (offsetHeight + scrollTop === scrollHeight) {
+          setSkip(products.length)
+        }
+    }
 
     const settings1 = {
         dots: true,
@@ -49,7 +58,7 @@ const ExplorePage = ({getProducts, product: { loading, products, featuredProduct
     return (
         <Fragment>
             {/* First Slider */}
-            <div className="container-fluid">
+            <div className="container-fluid" onScroll={handleScroll} style={{height:"100vh"}}>
                 <div className="site-slider">
                     <Slider {...settings1}>
                         <div>

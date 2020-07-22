@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getProducts } from '../../actions/productActions';
@@ -9,38 +9,38 @@ import CategoryOverview from '../Overview/categoryOverview/CategoryOverview';
 import Spinner from '../common/Spinner';
 import Title from '../Title';
 
-class Container extends Component {
-    render() {
-        const { products, sortedProducts, loading } = this.props.product;
+const Container = ({ product, getProducts }) => {
 
-        // const header = this.props.title;
-        
-        let productList;
+    const { products, sortedProducts, loading } = product;
 
-        if(products === null || loading) {
-            productList = <Spinner />;
+    // const header = this.props.title;
+    
+    let productList;
+
+    if(products === null || loading) {
+        productList = <Spinner />;
+    }
+    else {
+        if(products.length > 0) {
+            productList = (
+                <Fragment>
+                    {/* <CategoryOverview products={products} category={this.props.category} background={this.props.background} /> */}
+                    {/* <div style={{marginBottom: '-3rem'}}><Title title={header} /></div> */}
+                    <ProductList products={sortedProducts} />
+                    <Spinner />
+                </Fragment>
+            );
         }
         else {
-            if(products.length > 0) {
-                productList = (
-                    <Fragment>
-                        {/* <CategoryOverview products={products} category={this.props.category} background={this.props.background} /> */}
-                        {/* <div style={{marginBottom: '-3rem'}}><Title title={header} /></div> */}
-                        <ProductList products={sortedProducts} />
-                    </Fragment>
-                );
-            }
-            else {
-                productList = <Title name="No Products" title="Available" />
-            }
+            productList = <Title name="No Products" title="Available" />
         }
-
-        return (
-            <Fragment>
-                {productList}
-            </Fragment>
-        )
     }
+
+    return (
+        <Fragment>
+            {productList}
+        </Fragment>
+    )
 }
 
 Container.propTypes = {

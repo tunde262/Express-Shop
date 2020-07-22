@@ -17,9 +17,18 @@ import ImgLarge from '../utils/imgs/banner21.jpg';
 import ImgSmall from '../utils/imgs/banner13.jpg';
 
 const ExplorePage = ({getProducts, product, auth: { isAuthenticated, loading}}) => {
+    const [skip, setSkip] = useState(0)
     useEffect(() => {
-        getProducts();
-    }, [getProducts]);
+        getProducts(skip);
+    }, [skip]);
+
+    const handleScroll = (e) => {
+        const { offsetHeight, scrollTop, scrollHeight} = e.target
+    
+        if (offsetHeight + scrollTop === scrollHeight) {
+          setSkip(product.products.length)
+        }
+    }
 
     // const [displayModal, toggleModal] = useState(false);
 
@@ -62,10 +71,12 @@ const ExplorePage = ({getProducts, product, auth: { isAuthenticated, loading}}) 
         
     return (
         <Fragment>
-            <Banner imgLarge={ImgLarge} imgSmall={ImgSmall} />
-            <Header />
-            <Container title="Bottoms" category="bottoms" background="MediumSlateBlue"  />
-            <Footer />
+            <div onScroll={handleScroll} style={{height:"100vh", overflowY:'scroll'}}>
+                <Banner imgLarge={ImgLarge} imgSmall={ImgSmall} />
+                <Header />
+                <Container title="Bottoms" category="bottoms" background="MediumSlateBlue"  />
+            </div>
+            {/* <Footer /> */}
             {!loading && !isAuthenticated ? <AuthModal /> : null }
         </Fragment>
     )

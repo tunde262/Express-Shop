@@ -68,7 +68,10 @@ const upload = multer({ storage });
 // @access Public
 router.get('/', async (req, res) => {
     try {
-        const products = await Product.find().populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
+        const skip =
+            req.query.skip && /^\d+$/.test(req.query.skip) ? Number(req.query.skip) : 0
+
+        const products = await Product.find({}, null, { skip, limit: 8 }).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
 
         res.json(products);
     } catch (err) {
