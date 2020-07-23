@@ -5,148 +5,90 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../common/Spinner';
 import { getCurrentStore, deleteStore } from '../../actions/storeActions';
-import { getStoreProducts } from '../../actions/productActions';
-import { getStoreCollections } from '../../actions/collectionActions';
-import { getStoreLocations } from '../../actions/locationActions';
 
-import OrderList from './OrderList';
 import Table from './table/Table';
 import JoinCreate from './JoinCreate';
+import StoreMain from './pages/StoreMain';
+import logo from '../common/logo.jpg';
+import { Logo } from '../Logo';
 
-const Admin = ({ getCurrentStore, deleteStore, getStoreProducts, getStoreCollections, getStoreLocations, store: { store, loading } }) => {
-    const accountLink = 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=http://localhost:3000/dashboard/&client_id=ca_FFrwAOlKVRTGBrORx2OTVFLXJeM3gHHe&state=SECRET';
+const Admin = ({ getCurrentStore, store: { store, loading } }) => {
     useEffect(() => {
-        var url_string = (window.location.href);
-        var url = new URL(url_string);
-        var urlCode = url.searchParams.get("code");
-        async function getAccountLink() {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            };
-
-            const formData = {
-                "code": `${urlCode}`
-            }
-
-            console.log('pre-request:' + formData.code)
-
-            const res = await axios.post('/api/stripe/create-account-hosted', formData, config);
-            console.log('requested: ' + res.data);
-            const accountNum = res.data;
-            console.log('state: ' + accountNum);
-            // setAccountLink(res.data.url);
-        } 
-        if(urlCode){
-            getAccountLink();
-        }
         getCurrentStore();
-        // getStoreProducts();
-        // getStoreCollections();
-        // getStoreLocations();
     }, []);
-
-    const viewDashboard = async () => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        };
-        console.log('DASHBOARD!!!!!');
-
-        const formData = {
-            "code": `${store.stripe_id}`
-        }
-
-        console.log('pre-request:' + formData.code)
-
-        const res = await axios.post('/api/stripe/create-login-link', formData, config);
-
-        console.log('data: ' + res.data.url)
-        window.location.href = res.data.url; 
-    }
-
     return (
-            <Fragment>
-                    {loading && store === null ? <Spinner /> : (
-                        <Fragment>
-                            {store !== null ? (
-                                <Fragment>
-                                    {/* Website Overview */}
-                                    <div style={{marginTop: '7rem'}}></div>
-                                    <div id="breadcrumb">
-                                        <nav className="breadcrumb">
-                                            <ol>
-                                                <li><b>My Portfolio</b></li>
-                                            </ol>
-                                        </nav>
-                                    </div>
-                                    <section className="container">
-                                        <div style={{display: 'flex'}}>
-                                            {store.img_name && <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${store.img_name}`} alt="img" />}
-                                            <h3 style={{color: "black"}}>{store.name}</h3>
+        <Fragment>
+            {loading && store === null ? <Spinner /> : (
+                <Fragment>
+                    {store !== null ? (
+                        <div id="home" style={{ display:'flex', flexDirection:'column', alignItems:'center'}}>
+                            <div style={{ padding:'50px',textAlign:'center', border: '2px solid #ccc', borderRadius:'15px', width: '50%' }}>
+                                <Logo>
+                                    <img src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" />
+                                </Logo>
+                                <div>
+                                    <p className="text-primary">Choose A Store</p>
+                                    <div>
+                                        <div style={{padding: '1rem 2rem', borderBottom:'2px solid #ccc', minHeight: '100px', display: 'flex', justifyContent: 'space-between', alignItems:'center', boxSizing: 'border-box'}}>
+                                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                                <div style={{background:'#333', height:'50px', width:'50px', borderRadius:'50px'}}></div>
+                                                <Link to="/admin/wer23r" style={{fontSize: '1.3rem', fontWeight:'500', margin: ' 0.3rem 1rem'}}>The Cardboard Store</Link>
+                                            </div>
+                                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                                <div style={{display: 'grid', gridGap: '10px', color:'#808080', textAlign: 'center', marginRight: '10px'}}>
+                                                    <p style={{margin: '0'}}>$0</p> 
+                                                    <p style={{margin: '0'}}>Sales</p>
+                                                </div>
+                                                <div style={{display: 'grid', gridGap: '10px', color:'#808080', textAlign: 'center'}}>
+                                                    <p style={{margin: '0'}}>0</p> 
+                                                    <p style={{margin: '0'}}>Items</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <hr/>
-                                        {store.stripe_id ? (
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading main-color-bg">
-                                                    <h3 class="panel-title">Website Overview</h3>
-                                                    <button onClick={viewDashboard}>View Dashboard</button>
+                                        <div style={{padding: '1rem 2rem', minHeight: '100px', display: 'flex', justifyContent: 'space-between', alignItems:'center', boxSizing: 'border-box'}}>
+                                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                                <div style={{background:'#333', height:'50px', width:'50px', borderRadius:'50px'}}></div>
+                                                <p style={{fontSize: '1.3rem', fontWeight:'500', margin: '0.3rem 1rem'}}>Stonebriar</p>
+                                            </div>
+                                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                                <div style={{display: 'grid', gridGap: '10px', color:'#808080', textAlign: 'center', marginRight: '10px'}}>
+                                                    <p style={{margin: '0'}}>$0</p> 
+                                                    <p style={{margin: '0'}}>Sales</p>
                                                 </div>
-                                                <div class="panel-body">
-                                                    <div class="col-md-3">
-                                                        <div class="well dash-box">
-                                                            <h2> 2</h2>
-                                                            <h4>Sold Today</h4>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <div class="well dash-box">
-                                                            <h2> 34</h2>
-                                                            <h4>Sold Last 7 Days</h4>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <div class="well dash-box">
-                                                            <h2> $0.00</h2>
-                                                            <h4>Sales Today</h4>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <div class="well dash-box">
-                                                            <h2> $0.00</h2>
-                                                            <h4>Sales Last 7 Days</h4>
-                                                        </div>
-                                                    </div>
+                                                <div style={{display: 'grid', gridGap: '10px', color:'#808080', textAlign: 'center'}}>
+                                                    <p style={{margin: '0'}}>0</p> 
+                                                    <p style={{margin: '0'}}>Items</p>
                                                 </div>
-                                            </div> ) : (
-                                                <a className="cta" href={accountLink}><button><i className="fas fa-shopping-bag">{' '}</i> Shop</button></a>
-                                            )
-                                        }
-                                    </section>
-                                    <Table />
-                                </Fragment>
-                            ) : (
-                                <JoinCreate />
-                            )}
-                        </Fragment>
+                                            </div>
+                                        </div>
+                                        <div style={{padding: '1rem 2rem', minHeight: '100px', display: 'flex', justifyContent: 'center', alignItems:'center', boxSizing: 'border-box'}}>
+                                            <div style={{background:'#333', height:'50px', width:'50px', borderRadius:'50px'}}></div>
+                                            <Link to="/create-store" style={{fontSize: '1.3rem', fontWeight:'500', margin: '0.3rem 1rem'}}>Create A Store</Link>
+                                        </div>
+                                        <div style={{padding: '1rem 2rem', minHeight: '100px', display: 'flex', justifyContent: 'center', alignItems:'center', boxSizing: 'border-box'}}>
+                                            <div style={{background:'#333', height:'50px', width:'50px', borderRadius:'50px'}}></div>
+                                            <p style={{fontSize: '1.3rem', fontWeight:'500', margin: '0.3rem 1rem'}}>Join A Store</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ) : (
+                        <JoinCreate />
                     )}
+                </Fragment>
+            )}
         </Fragment>
     )
 }
 
 Admin.propTypes = {
     getCurrentStore: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired,
-    profile: PropTypes.object.isRequired,
-    deleteAccount: PropTypes.func.isRequired,
-    getMyProjects: PropTypes.func.isRequired,
-    getMyPosts: PropTypes.func.isRequired,
+    store: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
     store: state.store
 })
 
-export default connect(mapStateToProps, { getCurrentStore, deleteStore, getStoreProducts, getStoreCollections, getStoreLocations })(Admin);
+export default connect(mapStateToProps, { getCurrentStore, deleteStore })(Admin);

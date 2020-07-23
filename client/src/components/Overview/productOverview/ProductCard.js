@@ -47,7 +47,7 @@ const ProductCard = ({addLike, product, handleDetail, addToCart, openModal, clos
     const { _id, name, img_gallery, price, store, category, inCart, likes, comments } = product;
 
     return (
-        <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
+        <ProductWrapper className="mx-auto my-3">
                 <div className="product">
                     <div 
                         className="imgbox" 
@@ -73,9 +73,12 @@ const ProductCard = ({addLike, product, handleDetail, addToCart, openModal, clos
                     </div>
                     <div className="specifice">
                         <div className="titles">
-                            <h2><Link to={"/details/" + _id}>{name}</Link><br/><span><Link to={"/store/" + store._id}>{store.name}</Link></span></h2>
+                            <h2><Link to={"/details/" + _id}>{name}</Link></h2>
                         </div>
                         <div className="price">${price}</div>
+                        <div className="sellers">
+                            <Link to={"/store/" + store._id}>{store.name}</Link>
+                        </div>
                         <button onClick={() => todo(_id, name)}>Add To Cart</button>
                     </div>
                 </div>
@@ -103,8 +106,8 @@ const ProductWrapper = styled.div`
     .product {
         position: relative;
         background: #fff;
-        width: 300px;
-        height: 500px;
+        width: 21vw;
+        height: calc(21vw + 200px);
         border: 1px solid #ccc;
         border-radius: 5px;
         overflow: hidden;
@@ -129,6 +132,7 @@ const ProductWrapper = styled.div`
     .specifice .titles {
         width: 60%;
         overflow: hidden;
+        max-height: 50px;
     }
     .specifice h2 {
         margin: 0;
@@ -136,7 +140,7 @@ const ProductWrapper = styled.div`
         font-size: 20px;
         width: 100%;
     }
-    .specifice h2 span a {
+    .specifice .sellers a {
         font-size: 15px;
         color: #ccc;
         font-weight: normal;
@@ -247,10 +251,32 @@ const ProductWrapper = styled.div`
         background: #5acef4;
     }
 
-    @media (max-width: 768px){
+    @media screen and (max-width: 1000px){
+        .product {
+            width: 30vw;
+        }
+
+        .specifice .titles {
+            width: 100%;
+            max-height: 50px;
+        }
+        .specifice .price {
+            position: relative;
+            top: 0;
+            margin: 10px 0 5px 1.5rem;
+            font-size: 1rem;
+        }
 
         .product:hover .specifice {
             bottom: 0;
+        }
+    }
+
+    
+    @media (max-width: 500px){
+        .product {
+            width: 40vw;
+            height: 350px;
         }
     }
 

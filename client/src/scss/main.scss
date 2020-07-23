@@ -184,7 +184,9 @@ button {
 }
 
 .text-primary {
-  color: $secondary-color;
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: #333;
 }
 
 .text-dark {
@@ -1260,6 +1262,50 @@ header {
 .detail-info .detail-description-box .nav-underline.secondary > li > a:hover, .detail-info .detail-description-box .nav-underline.secondary > li > a:focus, .detail-info .detail-description-box .nav-underline.secondary > li > a.active {
     text-decoration: none;
     border-bottom: 2px solid #ff4b2b !important; 
+}
+
+.admin-underline {
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    text-align: center; 
+    color: #808080;
+    
+    & > li {
+      position: relative;
+      display: block;
+      float: left; 
+    }
+
+    & > li > a {
+      position: relative;
+      display: block;
+      padding: 10px 15px 5px 15px;
+      text-decoration: none;
+      border-bottom: 2px solid gainsboro; 
+    }
+
+    & > li > a:hover, & > li > a:focus, & > li > a.active {
+      text-decoration: none;
+      border-bottom: 2px solid #ff4b2b; 
+      color: #333;
+    }
+
+    &.secondary {
+      float: right;
+      display: block; 
+    }
+
+      &.secondary > li > a {
+        border-bottom: none; 
+    }
+
+    &.secondary > li > a:hover, &.secondary > li > a:focus, &.secondary > li > a.active {
+        text-decoration: none;
+        border-bottom: 2px solid #ff4b2b !important; 
+    }
 }
   
 .content-box {

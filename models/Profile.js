@@ -6,10 +6,14 @@ const ProfileSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'user'
     },
-    store: {
-        type: Schema.Types.ObjectId,
-        ref: 'store'
-    },
+    stores: [
+        {
+            store: {
+                type: Schema.Types.ObjectId,
+                ref: 'store'
+            }
+        }
+    ],
     img: {
         type: Schema.Types.ObjectId, // There is no need to create references here
         ref: 'uploads'

@@ -20,9 +20,6 @@ class Hats extends Component {
     render() {
         return (
             <Fragment>
-                {/* <Logo>
-                    <img src={logo} style={{maxHeight: '70px'}} alt="cardboard express logo" />
-                </Logo> */}
                 <Header />
                 <hr />
                 <Container title="Hats" category="hats" background="Fuchsia" />
