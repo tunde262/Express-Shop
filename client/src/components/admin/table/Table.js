@@ -51,7 +51,7 @@ const Table = ({
         ) 
     } else if (tableShow === 'collections') {
         tableContent = <Collection collection={collection} /> 
-    } else if (tableShow === 'storage locations') {
+    } else if (tableShow === 'locations') {
         tableContent = <Location /> 
     } else if (tableShow === 'inventory') {
         tableContent = (

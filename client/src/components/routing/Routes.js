@@ -31,7 +31,7 @@ import StoresPage from '../../pages/StoresPage';
 import StorePage from '../../pages/StorePage';
 import LocationShopPage from '../../pages/LocationPage';
 import CategoryPage from '../../pages/CategoryPage';
-import StoreMain from '../admin/pages/StoreMain';
+import Dashboard from '../admin/pages/Dashboard';
 
 import PrivateRoute from './PrivateRoute';
 
@@ -62,11 +62,11 @@ const Routes = props => {
             <PrivateRoute exact path="/admin/add-collection" component={AddCollection} />
             <PrivateRoute exact path="/admin/add-customer" component={AddCustomer} />
             <PrivateRoute exact path="/admin/add-location" component={AddLocation} />
-            <PrivateRoute exact path="/admin" component={Admin} />
+            <PrivateRoute exact path="/admin" component={Dashboard} />
             <PrivateRoute exact path="/admin/product/:id" component={ProductPage} />
             <PrivateRoute exact path="/admin/collection/:id" component={CollectionPage} />
             <PrivateRoute exact path="/admin/location/:id" component={LocationPage} />
-            <PrivateRoute exact path="/admin/:id" component={StoreMain} />
+            <PrivateRoute exact path="/admin/:id" component={Dashboard} />
             <PrivateRoute exact path="/create-store" component={StoreForm} />
             {/* Product Page */}
             <Route exact path="/details/:id" component={Details} />

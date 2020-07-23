@@ -6,10 +6,8 @@ import { getProductsByStoreId, getCart } from '../actions/productActions';
 import { getStoreById } from '../actions/storeActions';
 
 import Footer from '../components/layout/Footer/Footer';
-import Header from '../components/header/Header';
 import Spinner from '../components/common/Spinner';
-import Title from '../components/Title';
-import Container from '../components/ProductList/Container';
+import StoreMain from '../components/page_components/StoreMain';
 
 const StorePage = ({getProductsByStoreId, getStoreById, store, product: { products, loading }, history, match}) => {
     useEffect( async () => {
@@ -26,8 +24,8 @@ const StorePage = ({getProductsByStoreId, getStoreById, store, product: { produc
             {store.loading && store.store === null ? <Spinner /> : (
                 <Fragment>
                     {store.store !== null ? (
-                        <Fragment>
-                            <div id="store-content-wrapper">
+                        <Fragment>   
+                            <div class="store-header container-fluid">
                                 <div id="breadcrumb">
                                     <nav className="breadcrumb">
                                         <ol>
@@ -43,27 +41,13 @@ const StorePage = ({getProductsByStoreId, getStoreById, store, product: { produc
                                         </ol>
                                     </nav>
                                 </div>
-                                <div class="store-header container-fluid">
-                                    <div style={{display: 'flex'}}>
-                                        {store.store.img_name && <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${store.store.img_name}`} alt="img" />}
-                                        <h3 style={{color: "black"}}>{store.store.name}</h3>
-                                    </div>
-                                    <hr/>
-                                    <div style={{display: 'flex'}} className="p-1">
-                                        {store.store.tags.map( (tag, index) => (  
-                                            <Fragment key={index}>
-                                                <i className="fas fa-check"></i>
-                                                <p> {tag}</p>
-                                            </Fragment>
-                                        ))}
-                                    </div>
-                                    <hr/>
+                                <div style={{display: 'flex'}}>
+                                    {store.store.img_name && <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${store.store.img_name}`} alt="img" />}
+                                    <h3 style={{color: "black"}}>{store.store.name}</h3>
                                 </div>
-                                <div class="store-main">
-                                    <Header />
-                                    <Container title="Bottoms" category="bottoms" background="MediumSlateBlue"  />
-                                </div>
+                                <hr/>
                             </div>
+                            <StoreMain />
                             <Footer />
                         </Fragment>
                     ) : (

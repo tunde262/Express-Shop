@@ -22,14 +22,16 @@ const Banner = ({imgLarge, imgSmall}) => {
         img = imgLarge;
     }
     return (
-        <BannerContainer className="banner p-2">
-            <img src={img} alt="img" />
-        </BannerContainer>
+        <div style={{display:'flex', justifyContent:'center'}}>
+            <BannerContainer className="banner p-2">
+                <img src={img} alt="img" />
+            </BannerContainer>
+        </div>
     )
 }
 
 const BannerContainer = styled.div`
-    width: 100%;
+    width: 80%;
     height: 300px;
     overflow: hidden;
     display: flex;
@@ -38,7 +40,7 @@ const BannerContainer = styled.div`
     img {
         width: 100%;
         height: 300px;
-        border-radius: 3rem;
+        border-radius: 1rem;
     }
 `;
 

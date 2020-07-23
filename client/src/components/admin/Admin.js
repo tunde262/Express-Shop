@@ -8,7 +8,6 @@ import { getCurrentStore, deleteStore } from '../../actions/storeActions';
 
 import Table from './table/Table';
 import JoinCreate from './JoinCreate';
-import StoreMain from './pages/StoreMain';
 import logo from '../common/logo.jpg';
 import { Logo } from '../Logo';
 

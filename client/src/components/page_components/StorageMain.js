@@ -2,10 +2,9 @@ import React, { useEffect, useState, Fragment } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getCurrentStore, deleteStore } from '../../../actions/storeActions';
-import Table from '../table/Table';
+import Table from '../admin/table/Table';
 
-const StoreMain = ({ getCurrentStore, store: { store, loading } }) => {
+const StoreMain = ({ store: { store, loading } }) => {
     const accountLink = 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=http://localhost:3000/dashboard/&client_id=ca_FFrwAOlKVRTGBrORx2OTVFLXJeM3gHHe&state=SECRET';
     useEffect(() => {
         var url_string = (window.location.href);
@@ -33,13 +32,7 @@ const StoreMain = ({ getCurrentStore, store: { store, loading } }) => {
         if(urlCode){
             getAccountLink();
         }
-        getCurrentStore();
-        // getStoreProducts();
-        // getStoreCollections();
-        // getStoreLocations();
     }, []);
-
-    const [tableShow1, setTableShow1] = useState('store');
 
     const viewDashboard = async () => {
         const config = {
@@ -63,30 +56,7 @@ const StoreMain = ({ getCurrentStore, store: { store, loading } }) => {
 
     return (
         <Fragment>
-            {/* Website Overview */}
-            <div style={{marginTop: '7rem'}}></div>
-            <div id="breadcrumb">
-                <nav className="breadcrumb">
-                    <ol>
-                        <li><b>My Portfolio</b></li>
-                    </ol>
-                </nav>
-            </div>
             <section className="container">
-                <div style={{display: 'flex'}}>
-                    {store.img_name && <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${store.img_name}`} alt="img" />}
-                    <h3 style={{color: "black"}}>{store.name}</h3>
-                </div>
-                <ul class="admin-underline">
-                    <li><a class={tableShow1 === "store" && "active"} onClick={e => setTableShow1('store')}><i class="fas fa-store"></i> Store</a></li>
-                    <li><a class={tableShow1 === "storage" && "active"} onClick={e => setTableShow1('storage')}><i class="fas fa-boxes"></i> Storage</a></li>
-                    <li><a class={tableShow1 === "delivery" && "active"} onClick={e => setTableShow1('delivery')}><i class="fas fa-truck"></i> Delivery</a></li>
-                    <li><a class={tableShow1 === "people" && "active"} onClick={e => setTableShow1('people')}><i class="fas fa-users"></i> People</a></li>
-                </ul>
-                <div style={{display: 'flex', justifyContent:'flex-end'}}>
-                    <i class="fas fa-pencil-alt"></i>
-                    <i class="fas fa-cog"></i>
-                </div>
                 {store.stripe_id ? (
                     <div class="panel panel-default">
                         <div class="panel-heading main-color-bg">
@@ -130,8 +100,6 @@ const StoreMain = ({ getCurrentStore, store: { store, loading } }) => {
 }
 
 StoreMain.propTypes = {
-    getCurrentStore: PropTypes.func.isRequired,
-    deleteStore: PropTypes.func.isRequired,
     store: PropTypes.object.isRequired,
 };
 
@@ -139,4 +107,4 @@ const mapStateToProps = state => ({
     store: state.store
 })
 
-export default connect(mapStateToProps, { getCurrentStore, deleteStore })(StoreMain);
+export default connect(mapStateToProps)(StoreMain);

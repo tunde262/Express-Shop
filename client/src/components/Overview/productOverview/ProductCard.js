@@ -79,7 +79,10 @@ const ProductCard = ({addLike, product, handleDetail, addToCart, openModal, clos
                         <div className="sellers">
                             <Link to={"/store/" + store._id}>{store.name}</Link>
                         </div>
-                        <button onClick={() => todo(_id, name)}>Add To Cart</button>
+                        <div className="actions">
+                            <button onClick={() => todo(_id, name)}>Add To Cart</button>
+                            <i style={{color:'#808080', marginRight:'1rem', fontSize: '20px'}} class="far fa-heart detail-heart"></i>
+                        </div>
                     </div>
                 </div>
         </ProductWrapper>
@@ -152,6 +155,12 @@ const ProductWrapper = styled.div`
         font-weight: bold;
         color: #000;
         font-size: 1.3rem;
+    }
+    .specifice .actions {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        align-items: flex-end;
     }
     .card_stats {
         display: grid;
