@@ -2,9 +2,13 @@ import React, { useEffect, useState, Fragment } from 'react';
 import axios from 'axios';
 import CartItem from './CartItem';
 import CartColumns from './CartColumns';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-const CartList = ({cart}) => {
-    const [stores, setStores] = useState([]);
+import { setStores } from '../../actions/storeActions';
+
+const CartList = ({cart, setStores}) => {
+    const [stores, setStoreList] = useState([]);
 
     useEffect( async () => {
         let storeList = [];
@@ -22,13 +26,17 @@ const CartList = ({cart}) => {
             });
             console.log('Data:');
             console.log(storeData);
-            setStores(storeData)
+            setStoreList(storeData);
+            setStores(storeData);
         } catch (err) {
             console.log(err);
         }
     }, []);
     
     let cartList;
+
+    console.log('STORES DATA');
+    console.log(stores);
 
     cartList = stores.map(store => (
         <div style={{margin: '15px'}} class="card card-default">
@@ -62,4 +70,13 @@ const CartList = ({cart}) => {
     )
 }
 
-export default CartList;
+CartList.propTypes = {
+    setStores: PropTypes.func.isRequired,
+    store: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+    store: state.store
+});
+
+export default connect(mapStateToProps, { setStores })(CartList);

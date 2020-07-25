@@ -19,6 +19,10 @@ import sliderImg2 from '../utils/imgs/foodbag.jpg';
 import sliderImg3 from '../utils/imgs/porchdeliv.jpg';
 import catImg1 from '../utils/imgs/paper_towels.jpeg';
 import boxesImg from '../utils/imgs/banner13.jpg';
+import Banner from '../components/common/Banner';
+import carousell1 from '../utils/imgs/carousell1.jpg';
+import carousell2 from '../utils/imgs/carousell2.jpg';
+import Container from '../components/ProductList/Container';
 
 const ExplorePage = ({getProducts, product: { loading, products, featuredProducts}}) => {
     const [skip, setSkip] = useState(0)
@@ -58,7 +62,7 @@ const ExplorePage = ({getProducts, product: { loading, products, featuredProduct
     return (
         <Fragment>
             {/* First Slider */}
-            <div className="container-fluid" onScroll={handleScroll} style={{height:"100vh"}}>
+            {/* <div className="container-fluid" onScroll={handleScroll} style={{height:"100vh"}}>
                 <div className="site-slider">
                     <Slider {...settings1}>
                         <div>
@@ -80,10 +84,77 @@ const ExplorePage = ({getProducts, product: { loading, products, featuredProduct
                         </span>
                     </div>
                 </div>
+            </div> */}
+
+            <Banner imgLarge={carousell1} imgSmall={carousell2} />
+
+            <div className="grid-rows">
+                <div>
+                    <h3>For Kids</h3>
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                </div>
+                <div>
+                    <h3>For Pets</h3>
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                </div>
+                <div>
+                    <h3>For Health</h3>
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                </div>
             </div>
 
+            {/* Featured Promotion */}
+            <div className="promotion-block">
+                <img src={boxesImg} alt="home delivery boxes" />
+                <div className="promotion-block-content">
+                    <h3>Title here</h3>
+                    <p>$10</p>
+                    <p>description of offer goes here for those who dont know what it is</p>
+                </div>
+            </div>
+
+            {/* Featured Stores */}
+            <div style={{margin:'1rem 0 3rem 0'}}>
+                <BrandOverview />
+            </div>
+
+            <div className="grid-rows">
+                <div>
+                    <h3>For Kids</h3>
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                </div>
+                <div>
+                    <h3>For Pets</h3>
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                </div>
+                <div>
+                    <h3>For Health</h3>
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                </div>
+            </div>
+
+            <Banner imgLarge={carousell1} imgSmall={carousell2} />
+
             {/* Second Slider */}
-            <div className="container-fluid">
+            {/* <div className="container-fluid">
                 <div className="site-slider-two px-md-4">
                     <Slider {...settings2} className="row slider-two text-center">
                         <div className="col-md-2 product pt-md-5 pt-4">
@@ -120,33 +191,12 @@ const ExplorePage = ({getProducts, product: { loading, products, featuredProduct
                         </span>
                     </div>
                 </div>
-            </div>
+            </div> */}
+
 
             {/* Featured Products */}
-            <div className="container-fluid" style={{textAlign: 'center', padding: '5rem 2rem'}}>
-                <h1>Featured Products</h1>
-                <p>Sed ut perspiciatis unde omnis iste natus error sit 
-                    voluptatem accusantium doloremque laudantium. Nemo enim ipsam voluptatem 
-                    quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui 
-                    ratione voluptatem sequi nesciunt.</p>
-            </div>
-
             <ProductOverview title="Toilet Paper" products={featuredProducts} link="/top" />
 
-            {/* Featured Promotion */}
-            <div className="promotion-block">
-                <img src={boxesImg} alt="home delivery boxes" />
-                <div className="promotion-block-content">
-                    <h3>Title here</h3>
-                    <p>$10</p>
-                    <p>description of offer goes here for those who dont know what it is</p>
-                </div>
-            </div>
-
-            {/* Featured Stores */}
-            <div style={{marginTop: '15rem'}}>
-                <BrandOverview />
-            </div>
 
             <div className="promotion-grid">
                 <div>1</div>
@@ -162,32 +212,11 @@ const ExplorePage = ({getProducts, product: { loading, products, featuredProduct
                     voluptatem accusantium doloremque laudantium. Nemo enim ipsam voluptatem 
                     quia voluptas sit aspernatur aut odit aut fugit.</p>
             </div>
-            <div className="grid-rows">
-                <div>
-                    <h3>For Kids</h3>
-                    <div>1</div>
-                    <div>2</div>
-                    <div>3</div>
-                    <div>4</div>
-                </div>
-                <div>
-                    <h3>For Pets</h3>
-                    <div>1</div>
-                    <div>2</div>
-                    <div>3</div>
-                    <div>4</div>
-                </div>
-                <div>
-                    <h3>For Health</h3>
-                    <div>1</div>
-                    <div>2</div>
-                    <div>3</div>
-                    <div>4</div>
-                </div>
-            </div>
+
+            <Banner imgLarge={carousell1} imgSmall={carousell2} />
             
             {/* First Slider */}
-            <div className="container-fluid">
+            {/* <div className="container-fluid">
                 <div className="site-slider">
                     <Slider {...settings1}>
                         <div>
@@ -209,7 +238,7 @@ const ExplorePage = ({getProducts, product: { loading, products, featuredProduct
                         </span>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             <div className="info" style={{margin: '4rem 0'}}>
                 <div>
@@ -233,7 +262,22 @@ const ExplorePage = ({getProducts, product: { loading, products, featuredProduct
                     <p>Get instant updates about your items status and watch the items delivery on a map in realtime on your dashboard</p>
                 </div>
             </div>
-            <Footer />
+
+            <div onScroll={handleScroll} style={{height:"100vh", overflowY:'scroll'}}>
+                <Container />
+            </div>
+            {/* <ProductOverview title="Toilet Paper" products={featuredProducts} link="/top" />
+
+            <ProductOverview title="Toilet Paper" products={featuredProducts} link="/top" />
+
+            <ProductOverview title="Toilet Paper" products={featuredProducts} link="/top" />
+
+            <ProductOverview title="Toilet Paper" products={featuredProducts} link="/top" />
+
+            <ProductOverview title="Toilet Paper" products={featuredProducts} link="/top" />
+
+            <ProductOverview title="Toilet Paper" products={featuredProducts} link="/top" /> */}
+            {/* <Footer /> */}
         </Fragment>
     )
 }

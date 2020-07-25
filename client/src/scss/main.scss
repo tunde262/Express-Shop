@@ -36,9 +36,7 @@ h1, h2, h3 {
 p {
     font-size: 14px;
     font-weight: 100;
-    line-height: 20px;
     letter-spacing: 0.5px;
-    margin: 20px 0 30px;
 }
 
 span {
@@ -66,87 +64,114 @@ a {
     color: $secondary-color;
 }
 
+.toggle-button {
+    position: relative;
+    width: 40px;
+    height: calc(40px / 2);
+    -webkit-appearance: none;
+    background-color: #C6C6C6;
+    border-radius: calc(40px / 2);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: background-color .5s;
+    cursor: pointer;
+    outline: none;
+}
+
+.toggle-button:checked {
+    background-color: $secondary-color;
+}
+
+.toggle-button:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(40px / 2);
+    height: calc(40px / 2);
+    background-color: #fff;
+    border-radius: calc(40px / 2);
+    transform: scale(1.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: .5s;
+}
+
+.toggle-button:checked:before {
+    left: calc(40px / 2);
+}
+
 /* Forms */
 .form .form-group {
     margin: 1.2rem 0;
-  }
+}
   
-  .form .form-text {
+.form .form-text {
     display: block;
     margin-top: 0.3rem;
     color: #888;
-  }
-  
-  .form input[type='text'],
-  .form input[type='email'],
-  .form input[type='password'],
-  .form input[type='date'],
-  .form select,
-  .form textarea {
+}
+
+.form input[type='text'],
+.form input[type='email'],
+.form input[type='password'],
+.form input[type='date'],
+.form select,
+.form textarea {
     display: block;
     width: 100%;
     padding: 0.4rem;
     font-size: 1.2rem;
     border: 1px solid #ccc;
-  }
-  
-  .form input[type='submit'],
-  button {
+}
+
+.form input[type='submit'],
+button {
     font: inherit;
-  }
-  
-  .form .social-input {
+}
+
+.form .social-input {
     display: flex;
-  }
-  
-  .form .social-input i {
+}
+
+.form .social-input i {
     padding: 0.5rem;
     width: 4rem;
-  }
-  
-  .form .social-input i.fa-twitter {
+}
+
+.form .social-input i.fa-twitter {
     color: #38a1f3;
-  }
-  .form .social-input i.fa-facebook {
+}
+.form .social-input i.fa-facebook {
     color: #3b5998;
-  }
-  .form .social-input i.fa-instagram {
+}
+.form .social-input i.fa-instagram {
     color: #3f729b;
-  }
-  .form .social-input i.fa-youtube {
+}
+.form .social-input i.fa-youtube {
     color: #c4302b;
-  }
-  .form .social-input i.fa-linkedin {
+}
+.form .social-input i.fa-linkedin {
     color: #0077b5;
-  }
-  .form .social-input i.fa-github {
+}
+.form .social-input i.fa-github {
     color: #444;
-  }
+}
 
 button {
-    border-radius: 20px;
-    border: 1px solid $secondary-color;
-    background: $secondary-color;
-    color: #fff;
-    font-size: 12px;
-    font-weight: bold;
-    padding: 12px 45px;
-    margin-top: 15px;
-    letter-spacing: 1px;
     text-transform: uppercase;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ffbf00;
+    background: #ffbf00;
+    color: #fff;
     cursor: pointer;
-    transition: transoform 80ms ease-in;
-
-    &:active {
-        transform: scale(0.95);
-    }
-    &:focus {
-        outline: none;
-    }
+    transition: opacity .5s;
+    font-size: 12px;
+    margin-top: 15px;
+    font-weight: bold;
 
     &.fill {
         background: #fff;
-        color: set-text-color($primary-color);
+        
     }
 
     &.ghost {
@@ -159,6 +184,9 @@ button {
         border-color: $secondary-color;
         color: $secondary-color;
     }
+}
+button:hover {
+    opacity: .8;
 }
 
 /* Text Styles*/
@@ -476,7 +504,7 @@ header {
     .social-container{
         margin-left: 1rem;
         a{
-            margin: 0 8px;
+            margin: 0 0 0 8px;
         }
     }
 }
@@ -525,7 +553,7 @@ header {
     position: absolute;
     top: 58px;
     width: 300px;
-    transform: translateX(-45%);
+    transform: translateX(-70%);
     background: #fff;
     border: 1px solid #939393;
     border-radius: 8px;
@@ -555,7 +583,7 @@ header {
 }
 
 #home {
-    margin-top: 100px;
+    margin-top: 56px;
     .jumbotron {
         min-height: calc(100vh - 100px);
         padding: 4rem;
@@ -1224,6 +1252,8 @@ header {
     border-left: 2px solid #f4f4f4;
     border-right: 2px solid #f4f4f4;
     border-bottom: 2px solid #f4f4f4;
+    display: flex;
+    flex-direction: column;
 }
 .detail-info .detail-description-box .nav {
     margin: 1rem 0;
@@ -1265,7 +1295,8 @@ header {
 }
 
 .admin-underline {
-    margin-bottom: 1rem;
+    width: 100%;
+    margin: 1rem 0;
     padding-left: 0;
     list-style: none;
     display: grid;
@@ -1274,9 +1305,20 @@ header {
     color: #808080;
     
     & > li {
-      position: relative;
-      display: block;
-      float: left; 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      border-bottom: 2px solid gainsboro; 
+
+      i{
+        color: #808080;
+      }
+
+      p {
+          margin: 0;
+          color: #808080;
+      }
     }
 
     & > li > a {
@@ -1284,10 +1326,9 @@ header {
       display: block;
       padding: 10px 15px 5px 15px;
       text-decoration: none;
-      border-bottom: 2px solid gainsboro; 
     }
 
-    & > li > a:hover, & > li > a:focus, & > li > a.active {
+    & > li:hover, & > li:focus, & > li.active {
       text-decoration: none;
       border-bottom: 2px solid #ff4b2b; 
       color: #333;
@@ -1305,6 +1346,37 @@ header {
     &.secondary > li > a:hover, &.secondary > li > a:focus, &.secondary > li > a.active {
         text-decoration: none;
         border-bottom: 2px solid #ff4b2b !important; 
+    }
+}
+
+.store-actions-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 1rem;
+
+    .store-actions {
+        display: flex;
+        align-items: center;
+        width: 80%;
+        padding: 0 2rem;
+        color: #808080;
+
+        a {
+            color:#808080;
+            margin: 0 10px;
+        }
+
+        i {
+            margin: 0 10px;
+
+            &:hover {
+                transform: scale(1.1);
+                transition: all .2s;
+                cursor: pointer;
+                color: #333;
+            }
+        }
     }
 }
   
@@ -1385,14 +1457,16 @@ header {
 
 .promotion-block {
     display:grid; 
-    padding: 5rem; 
+    padding: 2rem 5rem; 
     width: 100%; 
     height: 300px; 
     grid-auto-flow: row; 
     grid-template-columns: 1fr 1fr;
+    margin-bottom: 5rem;
 
     img {
         max-width: 100%;
+        height: 300px;
     }
 
     .promotion-block-content {
@@ -1450,6 +1524,69 @@ header {
     width: 100%;
     min-height: fit-content;
     grid-template-columns: repeat(4, 1fr);
+}
+
+.column-center {
+    height: 100vh;
+    display:flex; 
+    flex-direction:column; 
+    align-items:center;
+    justify-content: flex-start;
+
+} 
+
+.stores-box {
+    padding:50px;
+    text-align:center;
+    width: 50%; 
+}
+
+.stores-box-option { 
+    padding: 1rem 2rem; 
+    border-bottom:2px solid #ccc; 
+    min-height: 100px; 
+    display: flex; 
+    justify-content: space-between;
+    align-items:center;
+    box-sizing: border-box;
+
+    & > div {
+        display: flex; 
+        align-items: center;
+    }
+
+    .stores-box-option-title a {
+        font-size: 1.3rem; 
+        font-weight:500; 
+        margin: 0.3rem 1rem;
+    }
+}
+
+.stores-box-option-numbers > div {
+    display: grid; 
+    grid-gap: 10px; 
+    color:#808080; 
+    text-align: center;
+
+    & > p {
+        margin: 0;
+    }
+}
+
+.stats {
+    margin: 2rem 5rem 1rem 5rem;
+}
+
+.stats-box {
+    display: flex;
+    justify-content: space-around; 
+    align-items: center;
+
+    & > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 footer {

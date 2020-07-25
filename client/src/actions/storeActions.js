@@ -39,6 +39,16 @@ export const getStores = () => async dispatch => {
     }
 }
 
+// Get all stores
+export const setStores = (stores) => dispatch => {
+    dispatch({ type: CLEAR_STORE });
+
+    dispatch({
+        type: GET_STORES,
+        payload: stores
+    });
+}
+
 // Get store by ID
 export const getStoreById = Id => async dispatch => {
     dispatch({ type: CLEAR_STORE });

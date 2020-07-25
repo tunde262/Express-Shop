@@ -2,17 +2,11 @@ import React, { useEffect, useState, Fragment } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Table from '../admin/table/Table';
+import Table from '../../admin/table/Table';
+import Owners from './Owners';
+import Team from './Team';
 
-import BoxEmoji from '../../utils/imgs/box.png'; 
-import ClosedLockEmoji from '../../utils/imgs/closedlock.jpg'; 
-import OpenLockEmoji from '../../utils/imgs/openlock.png'; 
-import CarEmoji from '../../utils/imgs/car.jpg'; 
-import EyeballsEmoji from '../../utils/imgs/eyeballs.png'; 
-import PencilEmoji from '../../utils/imgs/pencil.png'; 
-
-
-const StoreMain = ({ store: { store, loading } }) => {
+const OrdersMain = ({ store: { store, loading } }) => {
     const accountLink = 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=http://localhost:3000/dashboard/&client_id=ca_FFrwAOlKVRTGBrORx2OTVFLXJeM3gHHe&state=SECRET';
     useEffect(() => {
         var url_string = (window.location.href);
@@ -65,31 +59,32 @@ const StoreMain = ({ store: { store, loading } }) => {
     return (
         <Fragment>
             <section className="stats">
+                {/* <p onClick={viewDashboard}>View Dashboard</p> */}
                 <div className="stats-box">
                     <div>
-                        <img style={{width: '28px'}} src={CarEmoji} alt="img" />
-                        <h2 style={{color:'#333', fontWeight:'300'}}>2,000</h2>
+                        <h4 style={{color:'#808080'}}>Sold Today</h4>
+                        <h2 style={{color:'#333', fontWeight:'300'}}> 2</h2>
                     </div>
                     <div>  
-                        <img style={{width: '28px'}} src={ClosedLockEmoji} alt="img" /> 
-                        <h2 style={{color:'#333', fontWeight:'300'}}>2,000</h2>
+                        <h4 style={{color:'#808080'}}>Sold Last 7 Days</h4>
+                        <h2 style={{color:'#333', fontWeight:'300'}}> 2</h2>
                     </div>
                     <div>   
-                        <img style={{width: '28px'}} src={OpenLockEmoji} alt="img" />
-                        <h2 style={{color:'#333', fontWeight:'300'}}>2,056</h2>
+                        <h4 style={{color:'#808080'}}>Sales Today</h4>
+                        <h2 style={{color:'#333', fontWeight:'300'}}>$0.00</h2>
                     </div>
                     <div>   
-                        <img style={{width: '28px'}} src={BoxEmoji} alt="img" />
-                        <h2 style={{color:'#333', fontWeight:'300'}}>2000</h2>
+                        <h4 style={{color:'#808080'}}>Sales Last 7 Days</h4>
+                        <h2 style={{color:'#333', fontWeight:'300'}}>$0.00</h2>
                     </div>
                 </div>
             </section>
-            <Table page="storage" />
+            <Table page="orders" />
         </Fragment>
     )
 }
 
-StoreMain.propTypes = {
+OrdersMain.propTypes = {
     store: PropTypes.object.isRequired,
 };
 
@@ -97,4 +92,5 @@ const mapStateToProps = state => ({
     store: state.store
 })
 
-export default connect(mapStateToProps)(StoreMain);
+export default connect(mapStateToProps)(OrdersMain);
+

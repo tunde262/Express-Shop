@@ -7,7 +7,7 @@ import { getStoreById } from '../actions/storeActions';
 
 import Footer from '../components/layout/Footer/Footer';
 import Spinner from '../components/common/Spinner';
-import StoreMain from '../components/page_components/StoreMain';
+import StoreMain from '../components/page_components/store/StoreMain';
 
 const StorePage = ({getProductsByStoreId, getStoreById, store, product: { products, loading }, history, match}) => {
     useEffect( async () => {
@@ -47,7 +47,7 @@ const StorePage = ({getProductsByStoreId, getStoreById, store, product: { produc
                                 </div>
                                 <hr/>
                             </div>
-                            <StoreMain />
+                            <StoreMain admin='false' />
                             <Footer />
                         </Fragment>
                     ) : (

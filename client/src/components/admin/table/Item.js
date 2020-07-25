@@ -48,7 +48,7 @@ const Item = ({ setModal, page, product: {loading, sortedProducts}, deleteProduc
             ) : null}
             {page === 'collection' ? (
                 <section>
-                    <p style={{alignSelf: "flex-end"}}>{count} Varients</p>
+                    <p style={{alignSelf: "flex-end"}}>{count} Variants</p>
                     <button onClick={setModal} type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Add Manually</button>
                 </section>
             ) : null}

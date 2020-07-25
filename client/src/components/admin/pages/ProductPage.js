@@ -12,6 +12,16 @@ import Title from '../../Title';
 import Table from '../table/Table';
 import InputTag from '../../common/InputTag/InputTag';
 import Variant from '../table/Variant';
+import TableDetails from '../../TableDetails/TableDetails';
+
+import BoxEmoji from '../../../utils/imgs/box.png'; 
+import ClosedLockEmoji from '../../../utils/imgs/closedlock.jpg'; 
+import OpenLockEmoji from '../../../utils/imgs/openlock.png'; 
+import CarEmoji from '../../../utils/imgs/car.jpg'; 
+import EyeballsEmoji from '../../../utils/imgs/eyeballs.png'; 
+import PencilEmoji from '../../../utils/imgs/pencil.png'; 
+
+
 
 
 const initialState = {
@@ -137,6 +147,10 @@ const ProductPage = ({
 
         console.log(varInfo);
     }
+
+    const setModal = () => {
+        toggleModal(!displayModal);
+    }
     
 
     const onSubmit = (e) => {
@@ -209,10 +223,6 @@ const ProductPage = ({
         return (t !== tag);
         });
         setVarTags4([...remainingTags]);
-    }
-
-    const setModal = () => {
-        toggleModal(!displayModal);
     }
 
     const updateList = () => {
@@ -338,54 +348,50 @@ const ProductPage = ({
     return (
         <Fragment>
             <div id="product-content-wrapper">
-                <div id="breadcrumb">
-                    <nav className="breadcrumb">
-                        <ol>
-                            <li><b>My Portfolio</b></li>
-                        </ol>
-                    </nav>
-                </div>
                 <div class="product-header container-fluid">
-                    <div style={{display: 'flex'}}>
-                        {detailProduct && detailProduct.img_gallery[0] ? <img style={{width: '50px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/products/image/${detailProduct.img_gallery[0].img_name}`} alt="img" /> : null}
-                        <h3 style={{color: "black"}}>{detailProduct && detailProduct.name}</h3>
+                    <div id="breadcrumb">
+                        <nav className="breadcrumb">
+                            <ol>
+                                <li><b>My Portfolio</b></li>
+                            </ol>
+                        </nav>
                     </div>
-                    <hr/>
-                    <p>Qty {detailProduct && detailProduct.inventory_qty} in stock for {detailProduct && detailProduct.variants.length} varients</p>
-                    <hr/>
+                    <div style={{display: 'flex', height:'auto', marginBottom:'10px', alignItems:'center'}}>
+                        {detailProduct && detailProduct.img_gallery[0] ? <img style={{width: '50px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/products/image/${detailProduct.img_gallery[0].img_name}`} alt="img" /> : null}
+                        <h3 style={{color: "black"}}>
+                            {detailProduct && detailProduct.name}
+                        </h3>
+                    </div>
+                    <hr style={{margin:'0'}} />
+                    <div style={{display:'flex', justifyContent:'space-between', height:'50px', alignItems:'center'}}>
+                        <p style={{margin:'0'}}>Qty <span style={{fontWeight:'bold'}}>{detailProduct && detailProduct.inventory_qty}</span> in stock for <span style={{fontWeight:'bold'}}>{detailProduct && detailProduct.variants.length}</span> variants</p>
+                        <div style={{display:'flex', height:'100%', alignItems:'center'}}>
+                            <button style={{ margin:'0 1rem 0 0' }}>Request Storage</button>
+                        </div>
+                        {' '}
+                    </div>
+                    <hr style={{margin:'0'}} />
                 </div>
                 <div class="product-map">
                     <Map />
                 </div>
                 <div class="product-info">
                     <div class="product-status-box">
-                        <div class="product-status-box-title"><p>status</p></div>
+                        <div class="product-status-box-title">
+                            <div style={{display:'flex', color:'#808080', height:'50px', alignItems:'flex-start'}}>
+                                <i style={{margin:'0 1rem', fontSize:'1.4rem'}} class="fas fa-share-alt"></i>
+                                <i style={{margin:'0 1rem', fontSize:'1.4rem'}} class="fas fa-pencil-alt"></i>
+                            </div>
+                        </div>
                         <div class="product-status-box-stats">
-                            <h2><b>2</b></h2>
-                            <h2><b>2</b></h2>
-                            <h2><b>2</b></h2>
-                            <h2><b>2</b></h2>
+                            <h2 style={{color:'#333', fontWeight:'300'}}><b>2</b><br/><img style={{width: '28px'}} src={CarEmoji} alt="img" /></h2>
+                            <h2 style={{color:'#333', fontWeight:'300'}}><b>2</b><br/><img style={{width: '28px'}} src={ClosedLockEmoji} alt="img" /></h2>
+                            <h2 style={{color:'#333', fontWeight:'300'}}><b>2</b><br/><img style={{width: '25px'}} src={OpenLockEmoji} alt="img" /></h2>
+                            <h2 style={{color:'#333', fontWeight:'300'}}><b>2</b><br/><img style={{width: '20px'}} src={BoxEmoji} alt="img" /></h2>
                         </div>
                     </div>
                     <div class="product-description-box">
-                        <ul class="nav-underline">
-                            <li><a href="#">Activity</a></li>
-                            <li><a href="#" class="active">Info</a></li>
-                            <li><a href="#">Location</a></li>
-                        </ul>
-                        <div class="container-fluid">
-                            <ul class="nav-underline secondary">
-                                <li><a href="#" class="active">City</a></li>
-                                <li><a href="#">State</a></li>
-                                <li><a href="#">Country</a></li>
-                            </ul>
-                        </div>
-                        <div class="locations">
-                            <ul>Dallas</ul>
-                            <ul>Forth Worth</ul>
-                            <ul>Allen</ul>
-                        </div>
-
+                        <TableDetails admin setModal={setModal} description={detailProduct && detailProduct.description} />
                     </div>
                 </div>
                 <div class="content-box container-fluid">

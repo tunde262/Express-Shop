@@ -2,10 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const OrderSchema = new Schema({
-    store: {
-        type: Schema.Types.ObjectId,
-        ref: 'store'
-    },
+    stores: [
+        {
+            store: {
+                type: Schema.Types.ObjectId,
+                ref: 'store'
+            }
+        }
+    ],
     user: {
         type: Schema.Types.ObjectId,
         ref: 'user'

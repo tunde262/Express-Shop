@@ -72,7 +72,7 @@ const ExplorePage = ({getProducts, product, auth: { isAuthenticated, loading}}) 
     return (
         <Fragment>
             <div onScroll={handleScroll} style={{height:"100vh", overflowY:'scroll'}}>
-                <Banner imgLarge={ImgLarge} imgSmall={ImgSmall} />
+                {/* <Banner imgLarge={ImgLarge} imgSmall={ImgSmall} /> */}
                 <Header />
                 <Container title="Bottoms" category="bottoms" background="MediumSlateBlue"  />
             </div>

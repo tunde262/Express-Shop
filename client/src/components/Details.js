@@ -326,14 +326,12 @@ const Details = ({
                                     <option value="shoes">Shoes</option>
                                     <option value="women">Women</option>
                                 </select>
-                                <ButtonContainer onClick={goBack}>back to products</ButtonContainer>
-                                <ButtonContainer
-                                    buy
-                                    disabled={detailProduct.inCart ? true : false}
-                                    onClick={() =>todo(detailProduct._id, detailProduct.title)}
-                                >
-                                    {detailProduct.inCart ? 'inCart' : 'add to cart'}
-                                </ButtonContainer>
+                                <div style={{display:'flex'}}>
+                                    <button style={{background:'transparent', color:'#cd00cd', borderColor:'#cd00cd'}}>Make an Offer</button>
+                                    <button onClick={() =>todo(detailProduct._id, detailProduct.title)}>
+                                        Add to Cart
+                                    </button>
+                                </div>
                                 <TableDetails setModal={setModal} description={detailProduct.description} />
                             </div>
                         </div>
@@ -396,7 +394,7 @@ const Details = ({
                             required
                             />
                             <div className="line"></div>
-                            <input type='submit' className='btn btn-dark my-1' value='Submit' />
+                            <button type='submit' style={{width:'100%'}}>Submit</button>
                         </form>
                     </MuiThemeProvider>
                 </Modal>

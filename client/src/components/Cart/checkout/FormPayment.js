@@ -6,7 +6,7 @@ import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
 import { Container } from '../../auth/Form';
 import { ButtonContainer } from '../../Button';
 
-const FormPayment = ({nextStep, prevStep, values: { name, email, address, city, state, zipcode, telephone, amount, user }}) => {
+const FormPayment = ({nextStep, prevStep, values: { firstname, lastname, email, address, city, state, zipcode, telephone, amount, userId }}) => {
     const stripe = useStripe();
     const elements = useElements();
     const complete = async (e) => {
@@ -14,8 +14,8 @@ const FormPayment = ({nextStep, prevStep, values: { name, email, address, city, 
 
         try {
             const data = {
-                user,
-                name,
+                user: userId,
+                name: `${firstname} ${lastname}`,
                 email,
                 address: {
                     street: address,
@@ -44,7 +44,7 @@ const FormPayment = ({nextStep, prevStep, values: { name, email, address, city, 
                 payment_method: {
                   card: elements.getElement(CardElement),
                   billing_details: {
-                    name,
+                    name: `${firstname} ${lastname}`,
                     email,
                     phone: telephone,
                     address: {

@@ -4,7 +4,7 @@ import Info from './Info';
 import Reviews from './Reviews';
 import Locations from './Locations';
 
-const TableDetails = ({description, setModal}) => {
+const TableDetails = ({description, setModal, admin}) => {
 
     const [tableShow1, setTableShow1] = useState('info');
     // const [tableShow2, setTableShow2] = useState('info');
@@ -21,11 +21,11 @@ const TableDetails = ({description, setModal}) => {
     return (
         <Fragment>
             <div className="nav">
-                <ul class="nav-underline">
-                    <li><a class={tableShow1 === "info" && "active"} onClick={e => setTableShow1('info')}>Info</a></li>
-                    <li><a class={tableShow1 === "reviews" && "active"} onClick={e => setTableShow1('reviews')}>reviews</a></li>
-                    <li><a class={tableShow1 === "photos" && "active"} onClick={e => setTableShow1('photos')}>Photos</a></li>
-                    <li><a class={tableShow1 === "locations" && "active"} onClick={e => setTableShow1('locations')}>Locations</a></li>
+                <ul class={admin ? "admin-underline" : "nav-underline"}>
+                    <li class={tableShow1 === "info" && "active"} onClick={e => setTableShow1('info')}><i class="fas fa-info"></i><p>Info</p></li>
+                    <li class={tableShow1 === "photos" && "active"} onClick={e => setTableShow1('photos')}><i class="fas fa-camera"></i><p>Photos</p></li>
+                    <li class={tableShow1 === "reviews" && "active"} onClick={e => setTableShow1('reviews')}><i style={{fontSize:'15px'}} class="fas fa-comment-dots"></i><p>Reviews</p></li>
+                    <li class={tableShow1 === "locations" && "active"} onClick={e => setTableShow1('locations')}><i style={{fontSize:'15px'}} class="fas fa-map-marker-alt"></i><p>Locations</p></li>
                 </ul>
                 {/* <ul class="nav-underline secondary">
                     <li><a href="#" class="active">City</a></li>

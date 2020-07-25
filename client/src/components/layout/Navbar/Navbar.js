@@ -40,11 +40,6 @@ const Navbar = ({ drawerClickHandler, auth: { isAuthenticated, loading }, logout
                     <i class="far fa-compass"></i>
                 </Link>
             </li>
-            <li className="nav-offset" onClick={e => setNavHighlight('cart')}>
-                <Link to="/cart" className={navHighlight === "cart" && "active"}>
-                    <i class="fas fa-shopping-cart"></i>
-                </Link>
-            </li>
             <li className="nav-offset" onClick={e => setNavHighlight('profile')}>
                 <a className={navHighlight === "profile" && "active"} href="#" onClick={() => setDropdown(!dropdown)}>
                     <i className="fas fa-user-circle"></i>
@@ -60,24 +55,31 @@ const Navbar = ({ drawerClickHandler, auth: { isAuthenticated, loading }, logout
                             onEnter={calcHeight}
                         >
                             <div className="menu">
-                                <Link to="/profile" className="menu-item">
-                                   My Profile
-                                </Link>
-                                <a href="#" className="menu-item">
-                                    My Orders
-                                </a>
-                                <Link to="/admin" className="menu-item">
-                                    My Stores
-                                </Link>
+                                <div style={{display:'flex', alignItems:'center'}}>
+                                    <div style={{background:'#333', height:'50px', width:'50px', borderRadius:'50px'}}></div>
+                                    <Link to="/profile" className="menu-item">My Profile</Link>
+                                    <i className="fas fa-chevron-right"></i>
+                                </div>
+                                <hr style={{margin:'10px 0'}} />
                                 <a href="#" className="menu-item">
                                     <i className="fas fa-heart"></i>{' '}
                                     Saved
                                 </a>
-                                {/* <a href="#" className="menu-item" onClick={() => setActiveMenu('settings')}>
+                                <hr style={{margin:'10px 0'}} />
+                                <a href="#" className="menu-item">
+                                    My Orders
+                                </a>
+                                <hr style={{margin:'10px 0'}} />
+                                <Link to="/admin" className="menu-item">
+                                    My Stores
+                                </Link>
+                                <hr style={{margin:'10px 0'}} />
+                                <a href="#" className="menu-item" onClick={() => setActiveMenu('settings')}>
                                     <i className="fas fa-cog"></i>{' '}
                                     Settings
                                     <i className="fas fa-chevron-right"></i>
-                                </a> */}
+                                </a>
+                                <hr style={{margin:'10px 0'}} />
                                 <a href="#" className="menu-item" onClick={logout}>
                                     <i className="fas fa-sign-out-alt" />{' '}
                                     Logout
@@ -131,6 +133,11 @@ const Navbar = ({ drawerClickHandler, auth: { isAuthenticated, loading }, logout
                     </div>
                 )}
             </li>
+            <li className="nav-offset" onClick={e => setNavHighlight('cart')}>
+                <Link to="/cart" className={navHighlight === "cart" && "active"}>
+                    <i class="fas fa-shopping-cart"></i>
+                </Link>
+            </li>
         </Fragment>
     );
 
@@ -161,13 +168,11 @@ const Navbar = ({ drawerClickHandler, auth: { isAuthenticated, loading }, logout
                         <a href="https://twitter.com/cardboardxpress" target="_blank" className="social"><i className="fab fa-twitter"></i></a>
                     </div>
                 </div>
-                <div className="force-right">
                 <Link className="cta" to="/register">
                     <button type="button" className="nav-btn nav-icon" onClick={drawerClickHandler}>
                         Sell
                     </button>
                 </Link>
-                </div>
             </div>
             <div className={isOpen ? "nav-bar show-nav" : "nav-bar"}>
                 <nav>

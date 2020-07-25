@@ -80,8 +80,8 @@ const ProductCard = ({addLike, product, handleDetail, addToCart, openModal, clos
                             <Link to={"/store/" + store._id}>{store.name}</Link>
                         </div>
                         <div className="actions">
-                            <button onClick={() => todo(_id, name)}>Add To Cart</button>
-                            <i style={{color:'#808080', marginRight:'1rem', fontSize: '20px'}} class="far fa-heart detail-heart"></i>
+                            <i onClick={() => todo(_id, name)} className="far fa-plus-square"></i>
+                            <i className="far fa-heart detail-heart"></i>
                         </div>
                     </div>
                 </div>
@@ -160,7 +160,14 @@ const ProductWrapper = styled.div`
         display: flex;
         justify-content: space-between;
         width: 100%;
-        align-items: flex-end;
+        padding: 10px 0 0 10px;
+        align-items: center;
+    }
+
+    .specifice .actions i {
+        color: #808080; 
+        margin-right: 1rem; 
+        font-size: 20px;
     }
     .card_stats {
         display: grid;
@@ -284,8 +291,10 @@ const ProductWrapper = styled.div`
     
     @media (max-width: 500px){
         .product {
-            width: 40vw;
-            height: 350px;
+            border: none
+            border-radius:0;
+            width: 45vw;
+            height: calc(45vw + 200px);
         }
     }
 

@@ -30,13 +30,60 @@
         grid-template-columns: repeat(2, minmax(200px, 1fr));
     }
 
+    .stores-box {
+        padding:1rem;
+        width: 100%; 
+    }
+
+    .stores-box-option {  
+        padding: 0.5rem 0rem; 
+        .stores-box-option-title a {
+            font-size: 1rem; 
+            font-weight:500; 
+            margin: 0.3rem 1rem;
+        }
+    }
+
+    .stats {
+        margin: 0 0 1rem 0;
+    }
+
+    .stats-box {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 1rem;
+    }
+
+    .admin-underline > li { 
+        i {
+            margin: 1rem;
+        }
+
+        p {
+            display: none;
+        }
+    }
+
+    .store-actions-container .store-actions {
+        width: 98%;
+        padding: 0 2rem;
+    }
+
+    .store-actions {
+        width: 98%;
+    }
+
     header {
         flex-direction: column;
         padding: 0;
 
         .nav {
             padding: 0px;
-            margin-top: -10px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 1rem;
         }
 
         nav ul {
@@ -48,10 +95,7 @@
             }
         }
     }
-
-    .force-right {
-        margin-left: 3rem;
-    }
+    
     .nav-bar {
         height: 0;
         overflow: hidden;

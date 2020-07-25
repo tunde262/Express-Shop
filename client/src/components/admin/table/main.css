@@ -888,8 +888,8 @@ header {
       grid-template-rows: auto auto 3fr 2fr;
       grid-template-areas: "breadcrumb"
       "product-header"
-      "map"
       "product-info"
+      "map"
       "table";
     }
       }

@@ -77,21 +77,13 @@ class CategoryOverview extends Component {
     
         // let tags = getUnique(props.products, 'tags');
         let tags = [];
-        if(this.props.category === 'socks') {
-            tags =  ["boats", "french fries", "tacos", "dotted", "striped", "USA"];
+
+        if(this.props.page === 'storage') {
+            tags =  ["products", "inventory", "collections", "Low Stock", "locations"];
         }
 
-        if(this.props.category === 'hats') {
-            tags =  ["white", "red", "black", "dad cap"];
-        }
-        if(this.props.category === 'bottoms') {
-            tags =  ["men", "women", "small", "medium", "large", "shorts", "pants", "joggers", "activewear", "swim", "leggings", "denim", "white", "black", "red", "grey", "blue", "navy", "floral", "fruit"];
-        }
-        if(this.props.category === 'tops') {
-            tags =  ["men", "women", "small", "medium", "large", "pink", "white", "black", "yellow", "brown", "short-sleeve", "long-sleeve", "shirt", "tank top", "graphic tee"];
-        }
-        if(this.props.category === 'admin') {
-            tags =  ["products", "inventory", "orders", "collections", "customers", "locations"];
+        if(this.props.page === 'orders') {
+            tags =  ["all orders", "not fulfilled", "not delivered", "delivering", "completed"];
         }
 
         // if(products === null || loading) {
@@ -108,15 +100,15 @@ class CategoryOverview extends Component {
         //     }
         // }
         
-        if(this.props.category === 'admin') {
+        if(this.props.page === 'storage') {
             tags = tags.map((item, index) => {
                 return (
                     <NavItem 
                         style={this.props.product.tags.includes(item) ? 
-                            {background: `${this.props.background}`, color: 'white'} : 
-                            {borderColor: `${this.props.background}`, fontWeight: '200'}} 
+                            {background: 'white', color: `${this.props.background}`} : 
+                            {borderColor: '#808080', fontWeight: '200', color: '#808080'}} 
                         key={index} 
-                        background={this.props.background}
+                        background='white'
                         onClick={this.handleOrders.bind(this, item)}>
                         <b>{item}</b>
                     </NavItem>

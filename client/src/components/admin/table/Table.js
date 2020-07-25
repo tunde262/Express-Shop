@@ -14,6 +14,7 @@ import Location from './Location';
 import Inventory from './Inventory.js';
 import Customer from './Customer';
 import Navbar from '../../Overview/categoryOverview/CategoryOverview';
+import Spinner from '../../common/Spinner';
 
 import './main.css';
 
@@ -23,21 +24,27 @@ const Table = ({
     order,
     collection,
     customer,
-    getProducts,
+    page,
     getStoreProducts,
     getStoreVariants,
     getStoreOrders,
     getStoreCollections
 }) => {
+    const [tableShow, setTableShow] = useState('');
+
     useEffect(() => {
         getStoreProducts();
         getStoreVariants();
         getStoreOrders();
         getStoreCollections();
         getStoreCustomers();
-    }, [getStoreProducts, getStoreVariants, getStoreOrders, getStoreCollections, getStoreCustomers])
-
-    const [tableShow, setTableShow] = useState('products');
+        
+        if (page === 'storage') {
+            setTableShow('products');
+        } else if (page === 'orders') {
+            setTableShow('orders');
+        }
+    }, [])
 
     let tableContent;
 
@@ -69,6 +76,8 @@ const Table = ({
                 <Customer customer={customer} /> 
             </Fragment>
         );
+    } else {
+        tableContent = <Spinner />
     }
 
     const handleOrders = (show) => {
@@ -81,7 +90,7 @@ const Table = ({
             <div id="page-content-wrapper">
                 <div class="content-box container-fluid">
                     <div class="table-responsive table-filter">
-                        <Navbar products={product.products} handleOrders={handleOrders} category='admin' background='#ff4b2b' />
+                        <Navbar products={product.products} handleOrders={handleOrders} page={page} background='#ff4b2b' />
                         {tableContent}
                     </div>
                 </div>
