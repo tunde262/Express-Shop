@@ -81,15 +81,15 @@ const CartDrawer = ({
                 <div style={{width:'100%', maxHeight:'119px', height:'119px', position:'absolute', bottom:0, background:'#fff', boxShadow: '0 -2px 2px 0 rgba(0, 0, 0, 0.2)'}}>
                     <div style={{padding:'1rem 1rem 0 1rem', boxSizing:'border-box'}}>
                         <h5>
-                            <span>Subtotal : </span>
+                            <span>Subtotal: </span>
                             <strong>$ {cartSubtotal}</strong>
                         </h5>
                         <h5>
-                            <span>Same Day Delivery : </span>
+                            <span>Same Day Delivery: </span>
                             <strong>$ {cartTax}</strong>
                         </h5>
                         <h5>
-                            <span>Total : </span>
+                            <span>Total: </span>
                             <strong>$ {cartTotal}</strong>
                         </h5>
                     </div>
