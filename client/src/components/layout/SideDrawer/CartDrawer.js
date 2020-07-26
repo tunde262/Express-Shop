@@ -41,7 +41,7 @@ const CartDrawer = ({
         removeItem(id);
     }
 
-    if(cartSubtotal !== null || cartSubtotal !== undefined) {
+    if(cartSubtotal !== null && cartSubtotal !== undefined && cart) {
         cartSubtotal = parseFloat(cartSubtotal.toFixed(2));
         cartTax = parseFloat(cartTax.toFixed(2));
         cartTotal = parseFloat(cartTotal.toFixed(2));
