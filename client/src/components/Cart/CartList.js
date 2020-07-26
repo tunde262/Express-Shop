@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 import { setStores } from '../../actions/storeActions';
 
-const CartList = ({cart, setStores}) => {
+const CartList = ({cart, setStores }) => {
     const [stores, setStoreList] = useState([]);
 
     useEffect( async () => {

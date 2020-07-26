@@ -7,11 +7,14 @@ import { logout } from '../../../actions/authActions';
 import { getCurrentProfile, deleteAccount } from '../../../actions/profileActions';
 
 import './SideDrawer.css';
+import paper_towels from '../../../utils/imgs/paper_towels.jpeg';
 
-const SideDrawer = ({ drawerClickHandler, getCurrentProfile, deleteAccount, profile: { profile }, auth: { isAuthenticated, loading }, logout, show}) => {
+const SideDrawer = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, getCurrentProfile, deleteAccount, profile: { profile }, auth: { isAuthenticated, loading }, logout, show}) => {
     useEffect(() => {
         getCurrentProfile();
     }, [getCurrentProfile]);
+
+    // const [cart, toggleCart] = useState(false);
 
     const [dropdown, setDropdown] = useState(false);
     // show dropdown submenu
@@ -22,6 +25,16 @@ const SideDrawer = ({ drawerClickHandler, getCurrentProfile, deleteAccount, prof
     const calcHeight = (el) => {
         const height = el.offsetHeight;
         setMenuHeight(height + 30);
+    }
+
+    const toggleCart = () => {
+        drawerClickHandler();
+        toggleCartDrawer();
+    }
+
+    const toggleAuth = () => {
+        drawerClickHandler();
+        toggleAuthDrawer();
     }
 
     let drawerClasses = 'side-drawer';
@@ -46,98 +59,15 @@ const SideDrawer = ({ drawerClickHandler, getCurrentProfile, deleteAccount, prof
                     <i class="far fa-compass"></i>
                 </Link>
             </li>
-            <li onClick={drawerClickHandler}>
-                <a href="#" onClick={() => setDropdown(!dropdown)}>
+            <li onClick={toggleAuth}>
+                <a href="#">
                     <i className="fas fa-user-circle"></i>
                 </a>
-
-                {dropdown && (
-                    <div className="dropdown" style={{height: menuHeight}}>
-                        <CSSTransition 
-                            in={activeMenu === 'main'} 
-                            unmountOnExit 
-                            timeout={500}
-                            classNames="menu-primary"
-                            onEnter={calcHeight}
-                        >
-                            <div className="menu">
-                                <Link to="/profile" className="menu-item">
-                                   My Profile
-                                </Link>
-                                <a href="#" className="menu-item">
-                                    My Orders
-                                </a>
-                                <a href="#" className="menu-item">
-                                    <i className="fas fa-heart"></i>{' '}
-                                    Saved
-                                </a>
-                                <a href="#" className="menu-item" onClick={() => setActiveMenu('settings')}>
-                                    <i className="fas fa-cog"></i>{' '}
-                                    Settings
-                                    <i className="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#" className="menu-item" onClick={logout}>
-                                    <i className="fas fa-sign-out-alt" />{' '}
-                                    Logout
-                                </a>
-                            </div>
-                        </CSSTransition>
-
-                        <CSSTransition 
-                            in={activeMenu === 'settings'} 
-                            unmountOnExit 
-                            timeout={500}
-                            classNames="menu-secondary"
-                            onEnter={calcHeight}
-                        >
-                            <div className="menu">
-                                <a href="#" className="menu-item" onClick={() => setActiveMenu('main')}>
-                                    <i class="fas fa-arrow-left"></i>
-                                </a>
-                                <a href="#" className="menu-item">
-                                    <i className="fas fa-cog"></i>
-                                    Settings
-                                    <i className="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#" className="menu-item">
-                                    <i className="fas fa-cog"></i>
-                                    Settings
-                                    <i className="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#" className="menu-item">
-                                    <i className="fas fa-cog"></i>
-                                    Settings
-                                    <i className="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#" className="menu-item">
-                                    <i className="fas fa-cog"></i>
-                                    Settings
-                                    <i className="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#" className="menu-item">
-                                    <i className="fas fa-cog"></i>
-                                    Settings
-                                    <i className="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#" className="menu-item">
-                                    <i className="fas fa-cog"></i>
-                                    Settings
-                                    <i className="fas fa-chevron-right"></i>
-                                </a>
-                            </div>
-                        </CSSTransition>
-                    </div>
-                )}
             </li>
-            <li onClick={drawerClickHandler}>
-                <Link to="/cart">
+            <li onClick={toggleCart}>
+                <a href="#">
                     <i class="fas fa-shopping-cart"></i>
-                </Link>
-            </li>
-            <li onClick={drawerClickHandler}>
-                <Link to="/wallet" style={{fontSize:'2rem', color:'#28c101', position:'absolute', marginTop:'-0.5rem'}}>
-                    <i class="far fa-circle"></i>
-                </Link>
+                </a>
             </li>
             {/* <li>
                 <a onClick={logout} href="#!">
@@ -158,22 +88,63 @@ const SideDrawer = ({ drawerClickHandler, getCurrentProfile, deleteAccount, prof
         </ul>
     );
 
-    const guestLinks = (
-        <ul className={authClasses}>
-            <li onClick={drawerClickHandler}><Link to="/login">Login</Link></li>
-            <li onClick={drawerClickHandler}><Link to="/register">Create An Account</Link></li>
-            <hr />
-            <li onClick={drawerClickHandler}>Who Are We?</li>
-            <li onClick={drawerClickHandler}>FAQ</li>
-            <li onClick={drawerClickHandler}>Contact Us</li>
-            
-        </ul>
-    );
-
 
     return (
         <nav className={drawerClasses}>
-            { !loading && (<Fragment>{ isAuthenticated ? authLinks : guestLinks }</Fragment>) }
+            <div style={{display:'flex'}}>
+                { !loading && (<Fragment>{authLinks}</Fragment>) }
+                <div style={{margin:'0 0 0 1rem', width:'100%',}}>
+                    <button style={{marginBottom:'1rem'}}>Checkout</button>
+                    <div style={{display:'grid', gridTemplateColumns:'repeat(4,1fr)', gridGap:'10px', height:'100px', width:'100%', padding:'10px', alignItems:'center', borderBottom:'1px solid #cecece'}}>
+                        <div style={{display:'flex', height:'100%', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+                            <i style={{color:'#ff4b2b'}} class="fas fa-chevron-up"></i>
+                            <p>2</p>
+                            <i style={{color:'#cecece'}} class="fas fa-chevron-down"></i>
+                        </div>
+                        <img style={{height: '100%'}} src={paper_towels} alt="img" />
+                        <div style={{display:'flex', height:'100%', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+                            <p>$2.42</p>
+                        </div>
+                        <i style={{color:'#ff4b2b'}} className="fas fa-times"></i>
+                    </div>
+                    <div style={{display:'grid', gridTemplateColumns:'repeat(4,1fr)', gridGap:'10px', height:'100px', width:'100%', padding:'10px', alignItems:'center', borderBottom:'1px solid #cecece'}}>
+                        <div style={{display:'flex', height:'100%', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+                            <i style={{color:'#ff4b2b'}} class="fas fa-chevron-up"></i>
+                            <p>2</p>
+                            <i style={{color:'#cecece'}} class="fas fa-chevron-down"></i>
+                        </div>
+                        <img style={{height: '100%'}} src={paper_towels} alt="img" />
+                        <div style={{display:'flex', height:'100%', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+                            <p>$2.42</p>
+                        </div>
+                        <i style={{color:'#ff4b2b'}} className="fas fa-times"></i>
+                    </div>
+                    <div style={{display:'grid', gridTemplateColumns:'repeat(4,1fr)', gridGap:'10px', height:'100px', width:'100%', padding:'10px', alignItems:'center', borderBottom:'1px solid #cecece'}}>
+                        <div style={{display:'flex', height:'100%', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+                            <i style={{color:'#ff4b2b'}} class="fas fa-chevron-up"></i>
+                            <p>2</p>
+                            <i style={{color:'#cecece'}} class="fas fa-chevron-down"></i>
+                        </div>
+                        <img style={{height: '100%'}} src={paper_towels} alt="img" />
+                        <div style={{display:'flex', height:'100%', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+                            <p>$2.42</p>
+                        </div>
+                        <i style={{color:'#ff4b2b'}} className="fas fa-times"></i>
+                    </div>
+                    <div style={{display:'grid', gridTemplateColumns:'repeat(4,1fr)', gridGap:'10px', height:'100px', width:'100%', padding:'10px', alignItems:'center', borderBottom:'1px solid #cecece'}}>
+                        <div style={{display:'flex', height:'100%', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+                            <i style={{color:'#ff4b2b'}} class="fas fa-chevron-up"></i>
+                            <p>2</p>
+                            <i style={{color:'#cecece'}} class="fas fa-chevron-down"></i>
+                        </div>
+                        <img style={{height: '100%'}} src={paper_towels} alt="img" />
+                        <div style={{display:'flex', height:'100%', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+                            <p>$2.42</p>
+                        </div>
+                        <i style={{color:'#ff4b2b'}} className="fas fa-times"></i>
+                    </div>
+                </div>
+            </div>
         </nav>
     )
 }

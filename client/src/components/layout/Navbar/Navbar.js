@@ -8,13 +8,14 @@ import { FaAlignRight } from 'react-icons/fa';
 import logo from '../../common/logo.png';
 
 
-const Navbar = ({ drawerClickHandler, auth: { isAuthenticated, loading }, logout }) => {
+const Navbar = ({ drawerClickHandler, toggleCartDrawer, backdrop, backdropClickHandler, auth: { isAuthenticated, loading }, logout }) => {
     // Page
     const [navHighlight, setNavHighlight] = useState('home');
     // Toggle Sidebar
     const [isOpen, setIsOpen] = useState(false);
     // Toggle Dropdwon
     const [dropdown, setDropdown] = useState(false);
+    const [cart, toggleCart] = useState(false);
     // show dropdown submenu
     const [activeMenu, setActiveMenu] = useState('main');
     // dropdown height
@@ -26,7 +27,11 @@ const Navbar = ({ drawerClickHandler, auth: { isAuthenticated, loading }, logout
     }
 
     const handleToggle = () => {
-        setIsOpen(!isOpen);
+        if(backdrop) {
+            backdropClickHandler()
+        } else {
+            drawerClickHandler();
+        }
     }
     const authLinks = (
         <Fragment>
@@ -134,9 +139,97 @@ const Navbar = ({ drawerClickHandler, auth: { isAuthenticated, loading }, logout
                 )}
             </li>
             <li className="nav-offset" onClick={e => setNavHighlight('cart')}>
-                <Link to="/cart" className={navHighlight === "cart" && "active"}>
+                <a onClick={() => toggleCartDrawer()} href="#" className={navHighlight === "cart" && "active"}>
                     <i class="fas fa-shopping-cart"></i>
-                </Link>
+                </a>
+
+                {cart && (
+                    <div className="dropdown" style={{height: menuHeight}}>
+                        <CSSTransition 
+                            in={activeMenu === 'main'} 
+                            unmountOnExit 
+                            timeout={500}
+                            classNames="menu-primary"
+                            onEnter={calcHeight}
+                        >
+                            <div className="menu">
+                                <div style={{display:'flex', alignItems:'center'}}>
+                                    <div style={{background:'#333', height:'50px', width:'50px', borderRadius:'50px'}}></div>
+                                    <Link to="/profile" className="menu-item">My Profile</Link>
+                                    <i className="fas fa-chevron-right"></i>
+                                </div>
+                                <hr style={{margin:'10px 0'}} />
+                                <a href="#" className="menu-item">
+                                    <i className="fas fa-heart"></i>{' '}
+                                    Saved
+                                </a>
+                                <hr style={{margin:'10px 0'}} />
+                                <a href="#" className="menu-item">
+                                    My Orders
+                                </a>
+                                <hr style={{margin:'10px 0'}} />
+                                <Link to="/admin" className="menu-item">
+                                    My Stores
+                                </Link>
+                                <hr style={{margin:'10px 0'}} />
+                                <a href="#" className="menu-item" onClick={() => setActiveMenu('settings')}>
+                                    <i className="fas fa-cog"></i>{' '}
+                                    Settings
+                                    <i className="fas fa-chevron-right"></i>
+                                </a>
+                                <hr style={{margin:'10px 0'}} />
+                                <a href="#" className="menu-item" onClick={logout}>
+                                    <i className="fas fa-sign-out-alt" />{' '}
+                                    Logout
+                                </a>
+                            </div>
+                        </CSSTransition>
+
+                        <CSSTransition 
+                            in={activeMenu === 'settings'} 
+                            unmountOnExit 
+                            timeout={500}
+                            classNames="menu-secondary"
+                            onEnter={calcHeight}
+                        >
+                            <div className="menu">
+                                <a href="#" className="menu-item" onClick={() => setActiveMenu('main')}>
+                                    <i class="fas fa-arrow-left"></i>
+                                </a>
+                                <a href="#" className="menu-item">
+                                    <i className="fas fa-cog"></i>
+                                    Settings
+                                    <i className="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#" className="menu-item">
+                                    <i className="fas fa-cog"></i>
+                                    Settings
+                                    <i className="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#" className="menu-item">
+                                    <i className="fas fa-cog"></i>
+                                    Settings
+                                    <i className="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#" className="menu-item">
+                                    <i className="fas fa-cog"></i>
+                                    Settings
+                                    <i className="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#" className="menu-item">
+                                    <i className="fas fa-cog"></i>
+                                    Settings
+                                    <i className="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#" className="menu-item">
+                                    <i className="fas fa-cog"></i>
+                                    Settings
+                                    <i className="fas fa-chevron-right"></i>
+                                </a>
+                            </div>
+                        </CSSTransition>
+                    </div>
+                )}
             </li>
         </Fragment>
     );
@@ -168,11 +261,18 @@ const Navbar = ({ drawerClickHandler, auth: { isAuthenticated, loading }, logout
                         <a href="https://twitter.com/cardboardxpress" target="_blank" className="social"><i className="fab fa-twitter"></i></a>
                     </div>
                 </div>
-                <Link className="cta" to="/register">
-                    <button type="button" className="nav-btn nav-icon" onClick={drawerClickHandler}>
+                {/* <Link className="cta" to="/register">
+                    {/* <button type="button" className="nav-btn nav-icon" onClick={drawerClickHandler}>
                         Sell
-                    </button>
-                </Link>
+                    </button> */}
+                    
+                {/* </Link> */} 
+                <div className="mobile">
+                    {backdrop ? (
+                        <i style={{fontSize:'1.5rem'}} className={backdrop ? "fas fa-times menu-btn nav-btn close" : "fas fa-times nav-btn menu-btn"} onClick={handleToggle}></i>
+                    ) : (<i style={{fontSize:'1.5rem'}} className={backdrop ? "fas fa-bars nav-btn menu-btn close" : "fas fa-bars nav-btn menu-btn"} onClick={handleToggle}></i>
+                    )}
+                </div>
             </div>
             <div className={isOpen ? "nav-bar show-nav" : "nav-bar"}>
                 <nav>

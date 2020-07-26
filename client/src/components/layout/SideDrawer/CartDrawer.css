@@ -1,4 +1,4 @@
-.side-drawer {
+.cart-drawer {
     height: 100%;
     background: white;
     position: fixed;
@@ -11,42 +11,38 @@
     z-index: 300;
 }
 
-.side-drawer.open {
+.cart-drawer.open {
     transform: translateX(0);
-    width: 100px;
-}
-
-.side-drawer.cart {
     width: 300px;
 }
 
-.sidedrawer-items {
+.cartdrawer-items {
     height: 100%;
     list-style: none;
 }
 
-.sidedrawer-items.guest {
+.cartdrawer-items.guest {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.sidedrawer-items.auth li {
+.cartdrawer-items.auth li {
     padding: 15px 10px;
 }
 
-.side-drawer li {
+.cart-drawer li {
     margin: 0.5rem 0;
 }
 
-.side-drawer a {
+.cart-drawer a {
     color: #521751;
     text-decoration: none;
     font-size: 1.2rem;
 }
 
-.side-drawer a:hover,
-.side-drawer a:active {
+.cart-drawer a:hover,
+.cart-drawer a:active {
     color: #fa923f;
 }
 

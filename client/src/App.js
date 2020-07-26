@@ -23,6 +23,8 @@ import HomePage from './pages/HomePage';
 import Landing from './pages/Landing';
 import Navbar from './components/layout/Navbar/Navbar';
 import SideDrawer from './components/layout/SideDrawer/SideDrawer';
+import CartDrawer from './components/layout/SideDrawer/CartDrawer';
+import AuthDrawer from './components/layout/SideDrawer/AuthDrawer';
 import Backdrop from './components/layout/Backdrop/Backdrop';
 
 import Routes from './components/routing/Routes';
@@ -58,6 +60,16 @@ const App = () => {
     sideDrawerOpen: false 
   });
 
+  const [cartDrawer, setCartDrawer] = useState({
+    cartDrawerOpen: false 
+  });
+
+  const [authDrawer, setAuthDrawer] = useState({
+    authDrawerOpen: false 
+  });
+
+  const [drawer, showDrawer] = useState(false);
+
   const clicked = () => {
     ReactGA.event({
       category: 'Account',
@@ -70,15 +82,39 @@ const App = () => {
     setSideDrawer((prevState) => {
       return {sideDrawerOpen: !prevState.sideDrawerOpen};
     });
+    showDrawer(true);
   };
+
+  const toggleCartDrawer = () => {
+    clicked();
+    setCartDrawer((prevState) => {
+      return {cartDrawerOpen: !prevState.cartDrawerOpen};
+    });
+    showDrawer(true);
+  };
+
+  const toggleAuthDrawer = () => {
+    clicked();
+    setAuthDrawer((prevState) => {
+      return {authDrawerOpen: !prevState.authDrawerOpen};
+    });
+    showDrawer(true);
+  };
+
 
   const backdropClickHandler = () => {
     setSideDrawer({sideDrawerOpen: false });
+
+    setCartDrawer({cartDrawerOpen: false });
+
+    setAuthDrawer({authDrawerOpen: false });
+
+    showDrawer(false);
   }
 
   let backdrop;
 
-  if (sideDrawer.sideDrawerOpen) {
+  if (sideDrawer.sideDrawerOpen || cartDrawer.cartDrawerOpen || authDrawer.authDrawerOpen) {
     backdrop = <Backdrop click={backdropClickHandler} />;
   }
   
@@ -87,8 +123,10 @@ const App = () => {
       <StripeProvider apiKey="pk_live_TGJb7MssdJJyke7Wg6WpDj1e00gVdDNGxd">
         <Router>
           <div style={{height: '100%'}}>
-            <Navbar drawerClickHandler={drawerToggleClickHandler} />
-            <SideDrawer show={sideDrawer.sideDrawerOpen} drawerClickHandler={drawerToggleClickHandler} />
+            <Navbar backdrop={drawer} backdropClickHandler={backdropClickHandler} drawerClickHandler={drawerToggleClickHandler} toggleCartDrawer={toggleCartDrawer} />
+            <SideDrawer show={sideDrawer.sideDrawerOpen} toggleAuthDrawer={toggleAuthDrawer} toggleCartDrawer={toggleCartDrawer} drawerClickHandler={drawerToggleClickHandler} />
+            <CartDrawer show={cartDrawer.cartDrawerOpen} toggleCartDrawer={toggleCartDrawer} drawerClickHandler={drawerToggleClickHandler} />
+            <AuthDrawer show={authDrawer.authDrawerOpen} toggleAuthDrawer={toggleAuthDrawer} drawerClickHandler={drawerToggleClickHandler} />
             {backdrop}
             <main id="home">
               <Switch>
