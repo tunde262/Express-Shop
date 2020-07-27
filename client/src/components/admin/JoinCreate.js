@@ -1,12 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../common/Spinner';
 
 
-const JoinCreate = ({ auth: { user }, profile: { loading } }) => {
+const JoinCreate = ({ auth: { isAuthenticated, user }, profile: { loading }, history }) => {
 
+    // Redirect if logged in
+    if(!isAuthenticated) {
+        history.push("/register");
+    }
     return (
         <main id="home">
             {loading ? <Spinner /> : (
@@ -32,4 +36,4 @@ const mapStateToProps = state => ({
     profile: state.profile
 });
 
-export default connect(mapStateToProps)(JoinCreate);
+export default connect(mapStateToProps)(withRouter(JoinCreate));

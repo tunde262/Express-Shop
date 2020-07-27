@@ -22,10 +22,10 @@ const TableDetails = ({description, setModal, admin}) => {
         <Fragment>
             <div className="nav">
                 <ul class={admin ? "admin-underline" : "nav-underline"}>
-                    <li class={tableShow1 === "info" && "active"} onClick={e => setTableShow1('info')}><i class="fas fa-info"></i><p>Info</p></li>
-                    <li class={tableShow1 === "photos" && "active"} onClick={e => setTableShow1('photos')}><i class="fas fa-camera"></i><p>Photos</p></li>
-                    <li class={tableShow1 === "reviews" && "active"} onClick={e => setTableShow1('reviews')}><i style={{fontSize:'15px'}} class="fas fa-comment-dots"></i><p>Reviews</p></li>
-                    <li class={tableShow1 === "locations" && "active"} onClick={e => setTableShow1('locations')}><i style={{fontSize:'15px'}} class="fas fa-map-marker-alt"></i><p>Locations</p></li>
+                    <li class={tableShow1 === "info" && "active"} onClick={e => setTableShow1('info')}><i class="fas fa-info"></i></li>
+                    <li class={tableShow1 === "photos" && "active"} onClick={e => setTableShow1('photos')}><i class="fas fa-camera"></i></li>
+                    <li class={tableShow1 === "reviews" && "active"} onClick={e => setTableShow1('reviews')}><i style={{fontSize:'15px'}} class="fas fa-comment-dots"></i></li>
+                    <li class={tableShow1 === "locations" && "active"} onClick={e => setTableShow1('locations')}><i style={{fontSize:'15px'}} class="fas fa-map-marker-alt"></i></li>
                 </ul>
                 {/* <ul class="nav-underline secondary">
                     <li><a href="#" class="active">City</a></li>

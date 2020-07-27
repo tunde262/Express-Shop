@@ -80,16 +80,36 @@ router.get('/', async (req, res) => {
 // @desc Ge current user's store
 // @access Private
 router.get('/me', auth, async (req, res) => {
+    let tempArray;
+    let storesArray = [];
+    let newStore;
     try {
         const profile = await Profile.findOne({ user: req.user.id });
 
-        let store = await Store.findOne({ profile: profile.id });
+        console.log('PROFILE');
+        console.log(profile);
 
-        if(!store) {
+        for(var i = 0; i < profile.stores.length; i++) {
+            console.log('STORE ID');
+            console.log(profile.stores[i].store);
+            newStore = await Store.findById(profile.stores[i].store);
+            console.log(newStore);
+            storesArray.push(newStore);
+            console.log('STORESS ARRAY');
+            console.log(storesArray);
+        }
+
+        console.log('FETCHED STORESSSSSS');
+        console.log(storesArray);
+    
+
+        // let store = await Store.findOne({ profile: profile.id });
+
+        if(!storesArray.length === 0) {
             return res.status(400).json({ msg: 'There is no store for this user' });
         }
 
-        res.json(store);
+        res.json(storesArray);
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');   
@@ -161,23 +181,28 @@ router.post('/', upload.single('file'), [ auth, [
 
             storeFields.profile = profile.id;
 
-            let store = await Store.findOne({ profile: profile.id });
+            // let store = await Store.findOne({ profile: profile.id });
 
-            if(store) {
-                // Update
-                store = await Store.findOneAndUpdate(
-                    { profile: profile.id }, 
-                    { $set: storeFields }, 
-                    { new: true }
-                );
+            // if(store) {
+            //     // Update
+            //     store = await Store.findOneAndUpdate(
+            //         { profile: profile.id }, 
+            //         { $set: storeFields }, 
+            //         { new: true }
+            //     );
 
-                return res.json(store);
-            }
+            //     return res.json(store);
+            // }
             
             // Create
             const newStore = new Store(storeFields);
         
             await newStore.save();
+
+            profile.stores.unshift({ store: newStore._id });
+
+            await profile.save();
+            
             res.json(newStore);
         } catch (err) {
             console.error(err.message);

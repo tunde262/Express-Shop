@@ -1,17 +1,18 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getCurrentStore, deleteStore } from '../../../actions/storeActions';
+import { getStoreById, deleteStore } from '../../../actions/storeActions';
 import StorageMain from '../../page_components/StorageMain';
 import StoreMain from '../../page_components/store/StoreMain';
 import StoreSettings from '../../page_components/store/StoreSettings';
 import OrdersMain from '../../page_components/orders/OrdersMain';
 import PeopleMain from '../../page_components/people/PeopleMain';
 
-const Dashboard = ({ getCurrentStore, store: { store, loading } }) => {
+const Dashboard = ({ getStoreById, store: { store, loading }, match }) => {
     useEffect(() => { 
-        getCurrentStore();
+        getStoreById(match.params.id);
     }, []);
 
     const [tableShow1, setTableShow1] = useState('store');
@@ -47,8 +48,8 @@ const Dashboard = ({ getCurrentStore, store: { store, loading } }) => {
                     </nav>
                 </div>
                 <div style={{display: 'flex'}}>
-                    {store.img_name && <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${store.img_name}`} alt="img" />}
-                    <h3 style={{color: "black"}}>{store.name}</h3>
+                    {store && store.img_name ? <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${store.img_name}`} alt="img" /> : null}
+                    <h3 style={{color: "black"}}>{store && store.name}</h3>
                 </div>
                 <ul class="admin-underline">
                     <li onClick={e => setTableShow1('store')} className={tableShow1 === "store" ? "active" : "nav-underline-item"}><i className="fas fa-store"></i><p>Store</p></li>
@@ -57,13 +58,13 @@ const Dashboard = ({ getCurrentStore, store: { store, loading } }) => {
                     <li onClick={e => setTableShow1('people')} className={tableShow1 === "people" ? "active" : "nav-underline-item"}><i className="fas fa-users"></i><p>People</p></li>
                 </ul>
             </div>
-            {dashboardContent}
+            {store && dashboardContent}
         </Fragment>
     )
 }
 
 Dashboard.propTypes = {
-    getCurrentStore: PropTypes.func.isRequired,
+    getStoreById: PropTypes.func.isRequired,
     deleteStore: PropTypes.func.isRequired,
     store: PropTypes.object.isRequired,
 };
@@ -72,4 +73,4 @@ const mapStateToProps = state => ({
     store: state.store
 })
 
-export default connect(mapStateToProps, { getCurrentStore, deleteStore })(Dashboard);
+export default connect(mapStateToProps, { getStoreById, deleteStore })(withRouter(Dashboard));

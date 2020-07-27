@@ -7,7 +7,7 @@ import Spinner from '../common/Spinner';
 import ProductCard from '../Overview/productOverview/ProductCard';
 import Title from '../Title';
 
-const ProductList = ({products, product, handleScroll}) => {
+const ProductList = ({products, product, auth: { user }, handleScroll}) => {
  
     const { loading } = product;
     
@@ -18,9 +18,18 @@ const ProductList = ({products, product, handleScroll}) => {
     }
     else {
         if(products.length > 0) {
-            productList = products.map(product => (
-                <ProductCard key={product._id} product={product} />
-            ))
+            productList = products.map(product => {
+                let liked = false;
+                if (user) {
+                    if(product.likes.filter(like => like.user.toString() === user._id).length > 0){
+                        liked = true
+                        console.log('LIKED!!!!!');
+                    }
+                }
+                return (
+                    <ProductCard liked={liked} key={product._id} product={product} />
+                )
+            })
         }
         else {
             productList = <Title name="No Products" title="Available" />
@@ -39,11 +48,13 @@ const ProductList = ({products, product, handleScroll}) => {
 }
 
 ProductList.propTypes = {
-    product: PropTypes.object.isRequired
+    product: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-    product: state.product
+    product: state.product,
+    auth: state.auth
 });
 
 export default connect(mapStateToProps, null)(ProductList);

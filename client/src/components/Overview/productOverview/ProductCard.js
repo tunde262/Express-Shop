@@ -7,7 +7,7 @@ import { addLike, handleDetail, addToCart, openModal, closeModal, addTotals } fr
 
 import ReactGA from 'react-ga';
 
-const ProductCard = ({addLike, product, handleDetail, addToCart, openModal, closeModal, addTotals}) => {
+const ProductCard = ({addLike, liked, product, handleDetail, addToCart, openModal, closeModal, addTotals}) => {
     // componentDidMount() {
     //     console.log(this.props.product);
     // }
@@ -81,7 +81,10 @@ const ProductCard = ({addLike, product, handleDetail, addToCart, openModal, clos
                         </div>
                         <div className="actions">
                             <i onClick={() => todo(_id, name)} className="far fa-plus-square"></i>
-                            <i className="far fa-heart detail-heart"></i>
+                            <div>
+                                <span>{likes.length > 0 && <span>{likes.length}</span>}</span>{' '}
+                                {liked ? <i style={{color:'#ff4b2b'}} onClick={() => addLike(_id)} class="fas fa-heart"></i> : <i onClick={() => addLike(_id)} className="far fa-heart detail-heart"></i>}
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -7,6 +7,7 @@ import Table from '../../admin/table/Table';
 import Header from '../../header/Header';
 import Container from '../../ProductList/Container';
 import Banner from '../../common/Banner';
+import DefaultBanner from '../../../utils/imgs/placeholderimg.jpg';
 import carousell1 from '../../../utils/imgs/carousell1.jpg';
 import carousell2 from '../../../utils/imgs/carousell2.jpg';
 
@@ -29,7 +30,7 @@ const StoreMain = ({ store: { store, loading }, admin, setTable }) => {
             )}
             {store.store !== null ? (
                 <div className="store-main"> 
-                    <Banner admin={admin} imgLarge={carousell1} imgSmall={carousell2} />
+                    <Banner admin={admin} imgLarge={DefaultBanner} imgSmall={DefaultBanner} />
                     <Header />
                     <Container title="Bottoms" category="bottoms" background="MediumSlateBlue"  />
                 </div>

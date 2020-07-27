@@ -24,7 +24,9 @@ class ProductOverviewItems extends Component {
         else {
             if(products.length > 0) {
                 productList = products.map(product => (
-                    <ProductCard key={product._id} product={product} />
+                    <div style={{margin:'0 1.5rem'}}>
+                        <ProductCard key={product._id} product={product} />
+                    </div>
                 ))
             }
             else {
@@ -33,7 +35,7 @@ class ProductOverviewItems extends Component {
         }
 
         return (
-            <HorizontalNav style={{padding: '0 15px'}} background="var(--body-color)">
+            <HorizontalNav style={{padding: '0 1rem'}} background="var(--body-color)">
                 {productList}
             </HorizontalNav>
         )

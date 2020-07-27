@@ -1,5 +1,6 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getProducts } from '../actions/productActions';
 import Slider from "react-slick";
@@ -23,6 +24,8 @@ import Banner from '../components/common/Banner';
 import carousell1 from '../utils/imgs/carousell1.jpg';
 import carousell2 from '../utils/imgs/carousell2.jpg';
 import Container from '../components/ProductList/Container';
+
+import gainLogo from '../utils/imgs/gainlogo.jpg';
 
 const ExplorePage = ({getProducts, product: { loading, products, featuredProducts}}) => {
     const [skip, setSkip] = useState(0)
@@ -86,29 +89,198 @@ const ExplorePage = ({getProducts, product: { loading, products, featuredProduct
                 </div>
             </div> */}
 
+            <div style={{marginTop:'5rem'}}></div>
             <Banner imgLarge={carousell1} imgSmall={carousell2} />
 
             <div className="grid-rows">
                 <div>
                     <h3>For Kids</h3>
-                    <div>1</div>
-                    <div>2</div>
-                    <div>3</div>
-                    <div>4</div>
+                    <div className="grid-columns">
+                        <div className="grid-element">
+                            <img src={gainLogo}/>{' '}
+                            <div className="grid-element-title">
+                                <a>Nike</a>
+                                <p>clothing & fashion</p>
+                            </div>
+                        </div>
+                        <div className="grid-element-footer">
+                            <button>
+                                <i class="fas fa-shopping-bag"></i>
+                                <p>Shop</p>
+                            </button>
+                        </div>
+                    </div>
+                    <div className="grid-columns">
+                        <div className="grid-element">
+                            <img src={gainLogo}/>{' '}
+                            <div className="grid-element-title">
+                                <a>Nike</a>
+                                <p>clothing & fashion</p>
+                            </div>
+                        </div>
+                        <div className="grid-element-footer">
+                            <button>
+                                <i class="fas fa-shopping-bag"></i>
+                                <p>Shop</p>
+                            </button>
+                        </div>
+                    </div>
+                    <div className="grid-columns">
+                        <div className="grid-element">
+                            <img src={gainLogo}/>{' '}
+                            <div className="grid-element-title">
+                                <a>Nike</a>
+                                <p>clothing & fashion</p>
+                            </div>
+                        </div>
+                        <div className="grid-element-footer">
+                            <button>
+                                <i class="fas fa-shopping-bag"></i>
+                                <p>Shop</p>
+                            </button>
+                        </div>
+                    </div>
+                    <div className="grid-columns">
+                        <div className="grid-element">
+                            <img src={gainLogo}/>{' '}
+                            <div className="grid-element-title">
+                                <a>Nike</a>
+                                <p>clothing & fashion</p>
+                            </div>
+                        </div>
+                        <div className="grid-element-footer">
+                            <button>
+                                <i class="fas fa-shopping-bag"></i>
+                                <p>Shop</p>
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div>
                     <h3>For Pets</h3>
-                    <div>1</div>
-                    <div>2</div>
-                    <div>3</div>
-                    <div>4</div>
+                    <div className="grid-columns">
+                        <div className="grid-element">
+                            <img src={gainLogo}/>{' '}
+                            <div className="grid-element-title">
+                                <a>Nike</a>
+                                <p>clothing & fashion</p>
+                            </div>
+                        </div>
+                        <div className="grid-element-footer">
+                            <button>
+                                <i class="fas fa-shopping-bag"></i>
+                                <p>Shop</p>
+                            </button>
+                        </div>
+                    </div>
+                    <div className="grid-columns">
+                        <div className="grid-element">
+                            <img src={gainLogo}/>{' '}
+                            <div className="grid-element-title">
+                                <a>Nike</a>
+                                <p>clothing & fashion</p>
+                            </div>
+                        </div>
+                        <div className="grid-element-footer">
+                            <button>
+                                <i class="fas fa-shopping-bag"></i>
+                                <p>Shop</p>
+                            </button>
+                        </div>
+                    </div>
+                    <div className="grid-columns">
+                        <div className="grid-element">
+                            <img src={gainLogo}/>{' '}
+                            <div className="grid-element-title">
+                                <a>Nike</a>
+                                <p>clothing & fashion</p>
+                            </div>
+                        </div>
+                        <div className="grid-element-footer">
+                            <button>
+                                <i class="fas fa-shopping-bag"></i>
+                                <p>Shop</p>
+                            </button>
+                        </div>
+                    </div>
+                    <div className="grid-columns">
+                        <div className="grid-element">
+                            <img src={gainLogo}/>{' '}
+                            <div className="grid-element-title">
+                                <a>Nike</a>
+                                <p>clothing & fashion</p>
+                            </div>
+                        </div>
+                        <div className="grid-element-footer">
+                            <button>
+                                <i class="fas fa-shopping-bag"></i>
+                                <p>Shop</p>
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div>
                     <h3>For Health</h3>
-                    <div>1</div>
-                    <div>2</div>
-                    <div>3</div>
-                    <div>4</div>
+                    <div className="grid-columns">
+                        <div className="grid-element">
+                            <img src={gainLogo}/>{' '}
+                            <div className="grid-element-title">
+                                <a>Nike</a>
+                                <p>clothing & fashion</p>
+                            </div>
+                        </div>
+                        <div className="grid-element-footer">
+                            <button>
+                                <i class="fas fa-shopping-bag"></i>
+                                <p>Shop</p>
+                            </button>
+                        </div>
+                    </div>
+                    <div className="grid-columns">
+                        <div className="grid-element">
+                            <img src={gainLogo}/>{' '}
+                            <div className="grid-element-title">
+                                <a>Nike</a>
+                                <p>clothing & fashion</p>
+                            </div>
+                        </div>
+                        <div className="grid-element-footer">
+                            <button>
+                                <i class="fas fa-shopping-bag"></i>
+                                <p>Shop</p>
+                            </button>
+                        </div>
+                    </div>
+                    <div className="grid-columns">
+                        <div className="grid-element">
+                            <img src={gainLogo}/>{' '}
+                            <div className="grid-element-title">
+                                <a>Nike</a>
+                                <p>clothing & fashion</p>
+                            </div>
+                        </div>
+                        <div className="grid-element-footer">
+                            <button>
+                                <i class="fas fa-shopping-bag"></i>
+                                <p>Shop</p>
+                            </button>
+                        </div>
+                    </div>
+                    <div className="grid-columns">
+                        <div className="grid-element">
+                            <img src={gainLogo}/>{' '}
+                            <div className="grid-element-title">
+                                <a>Nike</a>
+                                <p>clothing & fashion</p>
+                            </div>
+                        </div>
+                        <div className="grid-element-footer">
+                            <button>
+                                <i class="fas fa-shopping-bag"></i>
+                                <p>Shop</p>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -130,24 +302,192 @@ const ExplorePage = ({getProducts, product: { loading, products, featuredProduct
             <div className="grid-rows">
                 <div>
                     <h3>For Kids</h3>
-                    <div>1</div>
-                    <div>2</div>
-                    <div>3</div>
-                    <div>4</div>
+                    <div className="grid-columns">
+                        <div className="grid-element">
+                            <img src={gainLogo}/>{' '}
+                            <div className="grid-element-title">
+                                <a>Nike</a>
+                                <p>clothing & fashion</p>
+                            </div>
+                        </div>
+                        <div className="grid-element-footer">
+                            <button>
+                                <i class="fas fa-shopping-bag"></i>
+                                <p>Shop</p>
+                            </button>
+                        </div>
+                    </div>
+                    <div className="grid-columns">
+                        <div className="grid-element">
+                            <img src={gainLogo}/>{' '}
+                            <div className="grid-element-title">
+                                <a>Nike</a>
+                                <p>clothing & fashion</p>
+                            </div>
+                        </div>
+                        <div className="grid-element-footer">
+                            <button>
+                                <i class="fas fa-shopping-bag"></i>
+                                <p>Shop</p>
+                            </button>
+                        </div>
+                    </div>
+                    <div className="grid-columns">
+                        <div className="grid-element">
+                            <img src={gainLogo}/>{' '}
+                            <div className="grid-element-title">
+                                <a>Nike</a>
+                                <p>clothing & fashion</p>
+                            </div>
+                        </div>
+                        <div className="grid-element-footer">
+                            <button>
+                                <i class="fas fa-shopping-bag"></i>
+                                <p>Shop</p>
+                            </button>
+                        </div>
+                    </div>
+                    <div className="grid-columns">
+                        <div className="grid-element">
+                            <img src={gainLogo}/>{' '}
+                            <div className="grid-element-title">
+                                <a>Nike</a>
+                                <p>clothing & fashion</p>
+                            </div>
+                        </div>
+                        <div className="grid-element-footer">
+                            <button>
+                                <i class="fas fa-shopping-bag"></i>
+                                <p>Shop</p>
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div>
                     <h3>For Pets</h3>
-                    <div>1</div>
-                    <div>2</div>
-                    <div>3</div>
-                    <div>4</div>
+                    <div className="grid-columns">
+                        <div className="grid-element">
+                            <img src={gainLogo}/>{' '}
+                            <div className="grid-element-title">
+                                <a>Nike</a>
+                                <p>clothing & fashion</p>
+                            </div>
+                        </div>
+                        <div className="grid-element-footer">
+                            <button>
+                                <i class="fas fa-shopping-bag"></i>
+                                <p>Shop</p>
+                            </button>
+                        </div>
+                    </div>
+                    <div className="grid-columns">
+                        <div className="grid-element">
+                            <img src={gainLogo}/>{' '}
+                            <div className="grid-element-title">
+                                <a>Nike</a>
+                                <p>clothing & fashion</p>
+                            </div>
+                        </div>
+                        <div className="grid-element-footer">
+                            <button>
+                                <i class="fas fa-shopping-bag"></i>
+                                <p>Shop</p>
+                            </button>
+                        </div>
+                    </div>
+                    <div className="grid-columns">
+                        <div className="grid-element">
+                            <img src={gainLogo}/>{' '}
+                            <div className="grid-element-title">
+                                <a>Nike</a>
+                                <p>clothing & fashion</p>
+                            </div>
+                        </div>
+                        <div className="grid-element-footer">
+                            <button>
+                                <i class="fas fa-shopping-bag"></i>
+                                <p>Shop</p>
+                            </button>
+                        </div>
+                    </div>
+                    <div className="grid-columns">
+                        <div className="grid-element">
+                            <img src={gainLogo}/>{' '}
+                            <div className="grid-element-title">
+                                <a>Nike</a>
+                                <p>clothing & fashion</p>
+                            </div>
+                        </div>
+                        <div className="grid-element-footer">
+                            <button>
+                                <i class="fas fa-shopping-bag"></i>
+                                <p>Shop</p>
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div>
                     <h3>For Health</h3>
-                    <div>1</div>
-                    <div>2</div>
-                    <div>3</div>
-                    <div>4</div>
+                    <div className="grid-columns">
+                        <div className="grid-element">
+                            <img src={gainLogo}/>{' '}
+                            <div className="grid-element-title">
+                                <a>Nike</a>
+                                <p>clothing & fashion</p>
+                            </div>
+                        </div>
+                        <div className="grid-element-footer">
+                            <button>
+                                <i class="fas fa-shopping-bag"></i>
+                                <p>Shop</p>
+                            </button>
+                        </div>
+                    </div>
+                    <div className="grid-columns">
+                        <div className="grid-element">
+                            <img src={gainLogo}/>{' '}
+                            <div className="grid-element-title">
+                                <a>Nike</a>
+                                <p>clothing & fashion</p>
+                            </div>
+                        </div>
+                        <div className="grid-element-footer">
+                            <button>
+                                <i class="fas fa-shopping-bag"></i>
+                                <p>Shop</p>
+                            </button>
+                        </div>
+                    </div>
+                    <div className="grid-columns">
+                        <div className="grid-element">
+                            <img src={gainLogo}/>{' '}
+                            <div className="grid-element-title">
+                                <a>Nike</a>
+                                <p>clothing & fashion</p>
+                            </div>
+                        </div>
+                        <div className="grid-element-footer">
+                            <button>
+                                <i class="fas fa-shopping-bag"></i>
+                                <p>Shop</p>
+                            </button>
+                        </div>
+                    </div>
+                    <div className="grid-columns">
+                        <div className="grid-element">
+                            <img src={gainLogo}/>{' '}
+                            <div className="grid-element-title">
+                                <a>Nike</a>
+                                <p>clothing & fashion</p>
+                            </div>
+                        </div>
+                        <div className="grid-element-footer">
+                            <button>
+                                <i class="fas fa-shopping-bag"></i>
+                                <p>Shop</p>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -195,6 +535,7 @@ const ExplorePage = ({getProducts, product: { loading, products, featuredProduct
 
 
             {/* Featured Products */}
+            <div style={{marginTop:'5rem'}}></div>
             <ProductOverview title="Toilet Paper" products={featuredProducts} link="/top" />
 
 
@@ -205,13 +546,6 @@ const ExplorePage = ({getProducts, product: { loading, products, featuredProduct
                 <div>4</div>
             </div>
 
-            {/* Featured Collection */}
-            <div className="container-fluid" style={{textAlign: 'center'}}>
-                <h1>Featured Collections</h1>
-                <p>Sed ut perspiciatis unde omnis iste natus error sit 
-                    voluptatem accusantium doloremque laudantium. Nemo enim ipsam voluptatem 
-                    quia voluptas sit aspernatur aut odit aut fugit.</p>
-            </div>
 
             <Banner imgLarge={carousell1} imgSmall={carousell2} />
             

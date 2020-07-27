@@ -16,6 +16,23 @@
     }
 }
 
+@media screen and (max-width: 1000px) { 
+    .grid-rows {
+        padding: 4rem 1rem;
+        grid-template-columns: repeat(2, 1fr); /* see notes below */
+        grid-gap: 1em;
+
+        & > div {
+            margin-top: 1rem;
+
+            h3 {
+                margin-bottom: 1rem;
+            }
+        }
+    }
+}
+
+
 // Tablets & Small Laptops
 @include mediaMd {
     .mobile {
@@ -71,6 +88,12 @@
 
     .store-actions {
         width: 98%;
+    }
+
+    .grid-rows {
+        padding: 4rem 1rem;
+        grid-template-columns: repeat(1, 100%); /* see notes below */
+        grid-gap: 1em;
     }
 
     header {

@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { handleDetail, addToCart, openModal, addTotals, getCart, addReview, deleteReview } from '../actions/productActions';
+import { handleDetail, addToCart, addLike, openModal, addTotals, getCart, addReview, deleteReview } from '../actions/productActions';
 import { getProductVariants } from '../actions/variantActions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
@@ -24,6 +24,9 @@ const Details = ({
         loading,
         products
     }, 
+    auth: {
+        user
+    },
     variant,
     match, 
     history, 
@@ -33,6 +36,7 @@ const Details = ({
     openModal,
     getProductVariants,
     addReview,
+    addLike,
     deleteReview,
     handleDetail
 }) => {
@@ -248,6 +252,12 @@ const Details = ({
         detailItem = <Spinner />;
     }
     else {
+        let liked = false;
+        if (user) {
+            if(detailProduct.likes.filter(like => like.user.toString() === user._id).length > 0){
+                liked = true
+            }
+        }
         detailItem = (
             <Fragment>
                 <section className="container">
@@ -280,7 +290,10 @@ const Details = ({
                             <div class="detail-status-box">
                                 <div className="detail-status-box-header">
                                     <p style={{color:'#333', fontWeight:'bold'}}>{detailProduct.name}</p>
-                                    <i style={{color:'#808080'}} class="far fa-heart detail-heart"></i>
+                                    <div>
+                                        <span>{detailProduct.likes.length > 0 && <span>{detailProduct.likes.length}</span>}</span>{' '}
+                                        {liked ? <i style={{color:'#ff4b2b', fontSize:'1.4rem', margin:'1rem 1rem 0 0'}} onClick={() => addLike(detailProduct._id)} class="fas fa-heart"></i> : <i onClick={() => addLike(detailProduct._id)} style={{color:'#808080', margin:'1rem 1rem 0 0'}} className="far fa-heart detail-heart"></i>}
+                                    </div>
                                 </div>
                                 <h3 style={{color:'#ff4b2b', marginTop:'-1rem', fontWeight:'bold'}}>{detailProduct.price}</h3>
                                 <p><i style={{color:'#808080'}} class="fas fa-truck"></i> Next Delivery Time: <span style={{fontWeight:'bold', color:'#ff4b2b'}}>1pm</span></p>
@@ -460,6 +473,7 @@ Details.propTypes = {
     product: PropTypes.object.isRequired,
     variant: PropTypes.object.isRequired,
     addToCart: PropTypes.func.isRequired,
+    addLike: PropTypes.func.isRequired,
     openModal: PropTypes.func.isRequired,
     addTotals: PropTypes.func.isRequired,
     handleDetail: PropTypes.func.isRequired,
@@ -470,7 +484,8 @@ Details.propTypes = {
 
 const mapStateToProps = state => ({
     product: state.product,
-    variant: state.variant
+    variant: state.variant,
+    auth: state.auth
 });
 
-export default connect(mapStateToProps, { getProductVariants, addToCart, getCart, openModal, addTotals, handleDetail, addReview })(Details);
+export default connect(mapStateToProps, { getProductVariants, addToCart, addLike, getCart, openModal, addTotals, handleDetail, addReview })(Details);

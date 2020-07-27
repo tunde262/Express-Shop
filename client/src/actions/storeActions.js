@@ -9,7 +9,7 @@ export const getCurrentStore = () => async dispatch => {
         const res = await axios.get('/api/stores/me');
 
         dispatch({
-            type: GET_STORE,
+            type: GET_STORES,
             payload: res.data
         });
     } catch (err) {
@@ -187,4 +187,9 @@ export const deleteStore = id => async dispatch => {
             payload: { msg: err.response.statusText, status: err.response.status }
         });
     }
+}
+
+// Store Banner
+export const addStoreBanner = fileData => async dispatch => {
+
 }
