@@ -30,6 +30,17 @@
             }
         }
     }
+
+    .promotion-block {
+        padding: 2rem 0;
+        .promotion-block-content {
+            padding: 0;
+        }
+    }
+
+    .info {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 
@@ -79,6 +90,37 @@
         p {
             display: none;
         }
+    }
+
+    .promotion-block {
+        display:flex;
+        flex-direction: column; 
+        align-items: center;
+        padding: 2rem 1rem; 
+        width: 100%; 
+        height: auto; 
+
+        img {
+            max-width: 500px;
+        }
+    
+        .promotion-block-content {
+            padding: 1rem;
+        }
+    }
+
+    .promotion-grid {
+        padding: 4rem 1rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .info {
+        display: flex;
+        flex-direction: column;
+        padding: 40px 1rem;
+        align-items: center;
+        text-align: center;
     }
 
     .store-actions-container .store-actions {
