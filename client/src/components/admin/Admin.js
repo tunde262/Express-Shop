@@ -26,7 +26,7 @@ const Admin = ({ getCurrentStore, store: { stores, loading } }) => {
             storeList = stores.map(store => (
                 <div className="stores-box-option">
                     <div className="stores-box-option-title">
-                        <div style={{background:'#333', height:'50px', width:'50px', borderRadius:'50px'}}></div>
+                        <img src={`/api/products/image/${store.img_name}`} style={{height:'50px', width:'50px', borderRadius:'50px'}} />
                         <Link to={`/admin/${store._id}`}>{store.name}</Link>
                     </div>
                     <div className="stores-box-option-numbers">
