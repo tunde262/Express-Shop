@@ -38,7 +38,7 @@ export default function(state = initialState, action) {
         case SET_PRODUCTS: {
             const products = action.payload;
             let tempProd = products; 
-            let featuredProducts = tempProd.filter(product => product.featured === true);
+            // let featuredProducts = tempProd.filter(product => product.featured === true);
             
             if(state.products.length > 0) {
                 tempProd = [...state.products, ...tempProd, ];
@@ -48,30 +48,30 @@ export default function(state = initialState, action) {
             // let exploreBottoms = tempProd.filter(product => product.category === 'bottom');
             // let exploreHats = tempProd.filter(product => product.category === 'hat');
             // let exploreSocks = tempProd.filter(product => product.category === 'socks');
-            let maxPrice = Math.max(...products.map(product => product.price));
+            // let maxPrice = Math.max(...products.map(product => product.price));
 
             return {
                 ...state,
                 products: tempProd,
                 sortedProducts: tempProd,
-                featuredProducts,
-                price: maxPrice,
-                maxPrice,
+                // featuredProducts,
+                // price: maxPrice,
+                // maxPrice,
                 loading: false
             };
         }
         case SET_SORTED_PRODUCTS: {
             const products = action.payload;
             console.log(products);
-            let featuredProducts = tempProd.filter(product => product.featured === true);
-            let maxPrice = Math.max(...products.map(product => product.price));
+            // let featuredProducts = tempProd.filter(product => product.featured === true);
+            // let maxPrice = Math.max(...products.map(product => product.price));
 
             return {
                 ...state,
                 sortedProducts: products,
-                featuredProducts,
-                price: maxPrice,
-                maxPrice
+                // featuredProducts,
+                // price: maxPrice,
+                // maxPrice
             };
         }
         case UPDATE_PRODUCT_LIKES:
@@ -92,13 +92,13 @@ export default function(state = initialState, action) {
                     res = tempProd.filter(prod => prod.tags.includes(tags[i]));
                 }
             }
-            let maxPrice = Math.max(...res.map(product => product.price));
+            // let maxPrice = Math.max(...res.map(product => product.price));
             return {
                 ...state,
                 tags: [...state.tags, action.payload],
                 sortedProducts: res,
-                price: maxPrice,
-                maxPrice
+                // price: maxPrice,
+                // maxPrice
             }
         case REMOVE_TAGS: 
             return {
