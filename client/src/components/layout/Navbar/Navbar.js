@@ -60,7 +60,7 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, backdrop, backdropClickH
                             onEnter={calcHeight}
                         >
                             <div className="menu">
-                                <div style={{display:'flex', alignItems:'center'}}>
+                                <div style={{display:'flex', alignItems:'center'}} onClick={() => setActiveMenu('profile')}>
                                     <div style={{background:'#333', height:'50px', width:'50px', borderRadius:'50px'}}></div>
                                     <Link to="/profile" className="menu-item">My Profile</Link>
                                     <i className="fas fa-chevron-right"></i>
@@ -79,12 +79,6 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, backdrop, backdropClickH
                                     My Stores
                                 </Link>
                                 <hr style={{margin:'10px 0'}} />
-                                <a href="#" className="menu-item" onClick={() => setActiveMenu('settings')}>
-                                    <i className="fas fa-cog"></i>{' '}
-                                    Settings
-                                    <i className="fas fa-chevron-right"></i>
-                                </a>
-                                <hr style={{margin:'10px 0'}} />
                                 <a href="#" className="menu-item" onClick={logout}>
                                     <i className="fas fa-sign-out-alt" />{' '}
                                     Logout
@@ -93,7 +87,7 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, backdrop, backdropClickH
                         </CSSTransition>
 
                         <CSSTransition 
-                            in={activeMenu === 'settings'} 
+                            in={activeMenu === 'profile'} 
                             unmountOnExit 
                             timeout={500}
                             classNames="menu-secondary"
@@ -104,34 +98,24 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, backdrop, backdropClickH
                                     <i class="fas fa-arrow-left"></i>
                                 </a>
                                 <a href="#" className="menu-item">
-                                    <i className="fas fa-cog"></i>
-                                    Settings
-                                    <i className="fas fa-chevron-right"></i>
+                                    <div style={{background:'#333', height:'50px', width:'50px', borderRadius:'50px'}}></div>
+                                    <div style={{marginLeft:'1rem'}}>
+                                        <p style={{margin:0}}>Tunde Adepitan</p>
+                                        <p style={{margin:0}}>4.5 / 5 stars</p>
+                                    </div>
                                 </a>
                                 <a href="#" className="menu-item">
-                                    <i className="fas fa-cog"></i>
-                                    Settings
-                                    <i className="fas fa-chevron-right"></i>
+                                    payment
                                 </a>
                                 <a href="#" className="menu-item">
-                                    <i className="fas fa-cog"></i>
-                                    Settings
-                                    <i className="fas fa-chevron-right"></i>
+                                    address
                                 </a>
                                 <a href="#" className="menu-item">
-                                    <i className="fas fa-cog"></i>
-                                    Settings
-                                    <i className="fas fa-chevron-right"></i>
+                                    orders
                                 </a>
                                 <a href="#" className="menu-item">
-                                    <i className="fas fa-cog"></i>
+                                    <i className="fas fa-cog"></i>{' '}
                                     Settings
-                                    <i className="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#" className="menu-item">
-                                    <i className="fas fa-cog"></i>
-                                    Settings
-                                    <i className="fas fa-chevron-right"></i>
                                 </a>
                             </div>
                         </CSSTransition>
@@ -172,59 +156,9 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, backdrop, backdropClickH
                                     My Stores
                                 </Link>
                                 <hr style={{margin:'10px 0'}} />
-                                <a href="#" className="menu-item" onClick={() => setActiveMenu('settings')}>
-                                    <i className="fas fa-cog"></i>{' '}
-                                    Settings
-                                    <i className="fas fa-chevron-right"></i>
-                                </a>
-                                <hr style={{margin:'10px 0'}} />
                                 <a href="#" className="menu-item" onClick={logout}>
                                     <i className="fas fa-sign-out-alt" />{' '}
                                     Logout
-                                </a>
-                            </div>
-                        </CSSTransition>
-
-                        <CSSTransition 
-                            in={activeMenu === 'settings'} 
-                            unmountOnExit 
-                            timeout={500}
-                            classNames="menu-secondary"
-                            onEnter={calcHeight}
-                        >
-                            <div className="menu">
-                                <a href="#" className="menu-item" onClick={() => setActiveMenu('main')}>
-                                    <i class="fas fa-arrow-left"></i>
-                                </a>
-                                <a href="#" className="menu-item">
-                                    <i className="fas fa-cog"></i>
-                                    Settings
-                                    <i className="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#" className="menu-item">
-                                    <i className="fas fa-cog"></i>
-                                    Settings
-                                    <i className="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#" className="menu-item">
-                                    <i className="fas fa-cog"></i>
-                                    Settings
-                                    <i className="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#" className="menu-item">
-                                    <i className="fas fa-cog"></i>
-                                    Settings
-                                    <i className="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#" className="menu-item">
-                                    <i className="fas fa-cog"></i>
-                                    Settings
-                                    <i className="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#" className="menu-item">
-                                    <i className="fas fa-cog"></i>
-                                    Settings
-                                    <i className="fas fa-chevron-right"></i>
                                 </a>
                             </div>
                         </CSSTransition>

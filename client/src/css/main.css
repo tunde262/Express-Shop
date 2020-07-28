@@ -1536,6 +1536,30 @@ header {
   .stores-box-option-numbers > div > p {
     margin: 0; }
 
+.backbutton {
+  color: #808080;
+  position: absolute;
+  margin: 2rem 0 0 5rem;
+  font-size: 2rem; }
+
+.store-settings-container {
+  margin: 2rem 0;
+  width: 100%;
+  display: flex;
+  justify-content: center; }
+  .store-settings-container .store-settings-box {
+    width: 75vw;
+    padding: 2rem; }
+    .store-settings-container .store-settings-box h2 {
+      color: #333;
+      font-weight: 300; }
+    .store-settings-container .store-settings-box .store-settings-box-element {
+      display: flex;
+      margin: 1rem 0;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center; }
+
 .stats {
   margin: 2rem 5rem 1rem 5rem; }
 
@@ -1671,7 +1695,12 @@ footer .footer-bottom {
     .promotion-block .promotion-block-content {
       padding: 0; }
   .info {
-    grid-template-columns: repeat(2, 1fr); } }
+    grid-template-columns: repeat(2, 1fr); }
+  .store-settings-container {
+    width: 100%; }
+    .store-settings-container .store-settings-box {
+      width: 75vw;
+      padding: 1rem; } }
 
 @media screen and (max-width: 768px) {
   .mobile {
@@ -1691,6 +1720,17 @@ footer .footer-bottom {
       font-size: 1rem;
       font-weight: 500;
       margin: 0.3rem 1rem; }
+  .backbutton {
+    color: #808080;
+    position: absolute;
+    margin: 10px 0 0 1rem;
+    font-size: 1.3rem; }
+  .store-settings-container {
+    margin: 2rem 0;
+    width: 100%; }
+    .store-settings-container .store-settings-box {
+      width: 100%;
+      padding: 1rem; }
   .stats {
     margin: 0 0 1rem 0; }
   .stats-box {

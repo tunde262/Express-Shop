@@ -64,7 +64,7 @@ const Admin = ({ getCurrentStore, store: { stores, loading } }) => {
                                             <Link to="/create-store" style={{fontSize: '1.3rem', fontWeight:'500', margin: '0.3rem 1rem'}}>Create A Store</Link>
                                         </div>
                                         <div style={{padding: '1rem 2rem', minHeight: '100px', display: 'flex', justifyContent: 'center', alignItems:'center', boxSizing: 'border-box'}}>
-                                            <p style={{fontSize: '1.3rem', fontWeight:'500', margin: '0.3rem 1rem'}}>Join A Store</p>
+                                            <Link to="/join-store" style={{fontSize: '1.3rem', fontWeight:'500', margin: '0.3rem 1rem'}}>Join A Store</Link>
                                         </div>
                                     </div>
                                 </div>
