@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Fragment } from 'react';
 import axios from 'axios';
 
 import { injectStripe } from 'react-stripe-elements';
@@ -6,7 +6,7 @@ import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
 import { Container } from '../../auth/Form';
 import { ButtonContainer } from '../../Button';
 
-const FormPayment = ({nextStep, prevStep, values: { firstname, lastname, email, address, city, state, zipcode, telephone, amount, userId }}) => {
+const FormPayment = ({ cartStores, nextStep, prevStep, values: { firstname, lastname, email, address, city, state, zipcode, telephone, amount, userId }}) => {
     const stripe = useStripe();
     const elements = useElements();
     const complete = async (e) => {
@@ -15,6 +15,7 @@ const FormPayment = ({nextStep, prevStep, values: { firstname, lastname, email, 
         try {
             const data = {
                 user: userId,
+                stores: cartStores,
                 name: `${firstname} ${lastname}`,
                 email,
                 address: {

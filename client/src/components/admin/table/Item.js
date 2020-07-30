@@ -8,7 +8,7 @@ import Spinner from '../../common/Spinner';
 import 'react-responsive-modal/styles.css';
 
 
-const Item = ({ setModal, page, product: {loading, sortedProducts}, deleteProduct }) => {  
+const Item = ({ setModal, store, page, product: {loading, sortedProducts}, deleteProduct }) => {  
 
     let productList;
     if(sortedProducts === null || loading) {
@@ -21,7 +21,7 @@ const Item = ({ setModal, page, product: {loading, sortedProducts}, deleteProduc
                         <input type="checkbox" value=""/>
                     </td>
                     <td>{product.img_gallery[0] && <img style={{width: '50px'}} src={`/api/products/image/${product.img_gallery[0].img_name}`} alt="img" />}</td>
-                    <td><Link to={"/admin/product/" + product._id}>{product.name}</Link></td>
+                    <td><Link to={"/admin/" + store.store._id + "/" + product._id}>{product.name}</Link></td>
                     <td>5 Stock / 2 Variants</td>
                     <td>{product.price}</td>
                     <td><i onClick={() => deleteProduct(product._id)} className="fas fa-trash"></i></td>
@@ -78,10 +78,13 @@ const Item = ({ setModal, page, product: {loading, sortedProducts}, deleteProduc
 
 Item.propTypes = {
     deleteProduct: PropTypes.func.isRequired,
+    profile: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
     profile: state.profile,
+    store: state.store
 })
 
 export default connect(mapStateToProps, { deleteProduct })(Item);

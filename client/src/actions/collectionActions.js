@@ -79,14 +79,14 @@ export const getCollectionById = id => async dispatch => {
 }
 
 // Add Collection
-export const addCollection = (formData, history) => async dispatch => {
+export const addCollection = (formData, storeId, history) => async dispatch => {
     try {
       const config = {
           headers: {
             'Content-Type': 'application/json'
           }
       };
-      const res = await axios.post(`/api/categories`, formData, config);
+      const res = await axios.post(`/api/categories/add/${storeId}`, formData, config);
 
       const storeProducts = await axios.get('/api/products/store');
 

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { addLocation } from '../../../actions/locationActions';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
-const AddLocation = ({ addLocation, history }) => {
+const AddLocation = ({ addLocation, store, history }) => {
     useEffect(() => {
         
     }, []);
@@ -236,7 +236,7 @@ const AddLocation = ({ addLocation, history }) => {
         if(phone !== '')data.append('phone', phone);
         if(latLng !== '')data.append('coordinates', latLng);
     
-        addLocation(data, history);
+        addLocation(data, store.store._id, history);
     };
 
     return (
@@ -314,6 +314,11 @@ const AddLocation = ({ addLocation, history }) => {
 
 AddLocation.propTypes = {
     addLocation: PropTypes.func.isRequired,
+    store: PropTypes.object.isRequired,
 }
 
-export default connect(null, { addLocation })(AddLocation);
+const mapStateToProps = (state) => ({
+    store: state.store
+});
+
+export default connect(mapStateToProps, { addLocation })(AddLocation);

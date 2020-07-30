@@ -143,7 +143,7 @@ export const removeTags = (filter) => {
 }
 
 // Add variant
-export const addVariant = (formData, id) => async dispatch => {
+export const addVariant = (formData, id, storeId) => async dispatch => {
     const config = {
       headers: {
         'Content-Type': 'application/json'
@@ -151,7 +151,7 @@ export const addVariant = (formData, id) => async dispatch => {
     };
   
     try {
-      const res = await axios.post(`/api/variants/product/${id}`, formData, config);
+      const res = await axios.post(`/api/variants/product/add/${id}/${storeId}`, formData, config);
   
       dispatch({
         type: ADD_VARIANT,

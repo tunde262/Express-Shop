@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { setAlert } from './alertActions';
 
-import { GET_STORE, GET_STORES, STORE_ERROR, UPDATE_STORE_FAVORITES, ADD_STORE_REVIEW, REMOVE_STORE_REVIEW, CLEAR_STORE, STORE_DELETED } from './types';
+import { GET_STORE, GET_STORES, SET_CART_STORES, STORE_ERROR, UPDATE_STORE_FAVORITES, ADD_STORE_REVIEW, REMOVE_STORE_REVIEW, CLEAR_STORE, STORE_DELETED } from './types';
 
 // Get Current users Store 
 export const getCurrentStore = () => async dispatch => {
@@ -39,12 +39,9 @@ export const getStores = () => async dispatch => {
     }
 }
 
-// Get all stores
-export const setStores = (stores) => dispatch => {
-    dispatch({ type: CLEAR_STORE });
-
+export const setCartStores = (stores) => dispatch => {
     dispatch({
-        type: GET_STORES,
+        type: SET_CART_STORES,
         payload: stores
     });
 }

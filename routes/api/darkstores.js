@@ -120,7 +120,7 @@ router.get('/:id', async (req, res) => {
 // @route POST api/darkstores
 // @desc Create A Darkstore
 // @access Public
-router.post('/', upload.single('file'), [ auth, [
+router.post('/add/:storeId', upload.single('file'), [ auth, [
         check('name', 'Name is required').not().isEmpty()
     ]], async(req, res) => {
         const errors = validationResult(req);
@@ -182,9 +182,7 @@ router.post('/', upload.single('file'), [ auth, [
         
 
         try {
-            const profile = await Profile.findOne({ user: req.user.id });
-            const store = await Store.findOne({ profile: profile.id });
-            darkstoreFields.store = store.id;
+            darkstoreFields.store = req.params.storeId;
             // Create
             const newDarkstore = new Darkstore(darkstoreFields);
             

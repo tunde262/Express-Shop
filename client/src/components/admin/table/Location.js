@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getStoreLocations, deleteLocation } from '../../../actions/locationActions';
+import { getLocationsByStoreId, deleteLocation } from '../../../actions/locationActions';
 import Spinner from '../../common/Spinner';
 import 'react-responsive-modal/styles.css';
 
 
-const Location = ({ location: {loading, locations}, getStoreLocations, deleteLocation }) => {
+const Location = ({ location: {loading, locations}, store, getLocationsByStoreId, deleteLocation }) => {
     useEffect(() => {
-        getStoreLocations();
-      }, [getStoreLocations])
+        getLocationsByStoreId(store.store._id);
+      }, [])
 
     const [modalShow, setModal] = useState(false);
      
@@ -82,12 +82,13 @@ const Location = ({ location: {loading, locations}, getStoreLocations, deleteLoc
 Location.propTypes = {
     location: PropTypes.object.isRequired,
     deleteLocation: PropTypes.func.isRequired,
-    getStoreLocations: PropTypes.func.isRequired,
+    getLocationsByStoreId: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
     profile: state.profile,
-    location: state.location
+    location: state.location,
+    store: state.store
 })
 
-export default connect(mapStateToProps, { getStoreLocations, deleteLocation })(Location);
+export default connect(mapStateToProps, { getLocationsByStoreId, deleteLocation })(Location);

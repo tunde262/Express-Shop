@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Modal from 'react-responsive-modal';
-import { addProduct, addProductImg, handleDetail } from '../../../actions/productActions';
+import { addProduct, editProduct, addProductImg, handleDetail } from '../../../actions/productActions';
 
 import DragAndDrop from './utils/DragAndDrop';
 import InputTag from '../../common/InputTag/InputTag';
@@ -26,7 +26,9 @@ const initialState = {
 
 const AddProduct = ({
   product: { detailProduct, loading },
+  store,
   addProduct,
+  editProduct,
   handleDetail,
   history,
   match
@@ -66,6 +68,11 @@ const AddProduct = ({
       setFormData(productData);
     }
   }, [loading, handleDetail, detailProduct]);
+
+  // Redirect if store is null
+  if(store.store === null ) {
+    history.push('/admin');
+  }
 
 
   // for Update Vars func
@@ -171,7 +178,11 @@ const AddProduct = ({
     if(tags !== '')data.append('tags', tags);
 
     console.log(varInfo);
-    addProduct(data, files, varInfo, varName, history);
+    if(!detailProduct) {
+      addProduct(data, files, varInfo, varName, store.store._id, history);
+    } else {
+      editProduct(data, detailProduct._id, store.store._id, history);
+    }
 
   };
 
@@ -703,14 +714,17 @@ const AddProduct = ({
 
 AddProduct.propTypes = {
   addProduct: PropTypes.func.isRequired,
+  editProduct: PropTypes.func.isRequired,
   handleDetail: PropTypes.func.isRequired,
-  product: PropTypes.object.isRequired
+  product: PropTypes.object.isRequired,
+  store: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  product: state.product
+  product: state.product,
+  store: state.store
 });
 
-export default connect(mapStateToProps, { addProduct, handleDetail })(
+export default connect(mapStateToProps, { addProduct, editProduct, handleDetail })(
   withRouter(AddProduct)
 );

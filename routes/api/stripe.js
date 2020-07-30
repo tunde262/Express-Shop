@@ -112,6 +112,7 @@ router.post('/donate', async (req, res, next) => {
         console.log('Sent: ' + paymentIntent.client_secret)
         const order = new Order({
             user: req.body.user,
+            stores: req.body.stores,
             cart: cart,
             address: req.body.address,
             telephone: req.body.telephone,

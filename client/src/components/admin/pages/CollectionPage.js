@@ -57,7 +57,7 @@ const CollectionPage = ({
             const tags = [...collectionData.tags];
             console.log(tags);
         }
-    }, [loading, getCollectionById, collection]);
+    }, [loading]);
     
 
     const onSubmit = (e) => {

@@ -60,11 +60,12 @@ const Routes = props => {
             <PrivateRoute exact path="/profile" component={Profile} />
             {/* Admin Pages */}
             <PrivateRoute exact path="/admin/add-product" component={AddProduct} />
+            <PrivateRoute exact path="/admin/edit-product" component={AddProduct} />
             <PrivateRoute exact path="/admin/add-collection" component={AddCollection} />
             <PrivateRoute exact path="/admin/add-customer" component={AddCustomer} />
             <PrivateRoute exact path="/admin/add-location" component={AddLocation} />
             <PrivateRoute exact path="/admin" component={Admin} />
-            <PrivateRoute exact path="/admin/product/:id" component={ProductPage} />
+            <PrivateRoute exact path="/admin/:storeId/:id" component={ProductPage} />
             <PrivateRoute exact path="/admin/collection/:id" component={CollectionPage} />
             <PrivateRoute exact path="/admin/location/:id" component={LocationPage} />
             <PrivateRoute exact path="/admin/:id" component={Dashboard} />

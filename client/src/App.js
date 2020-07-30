@@ -50,6 +50,8 @@ const App = () => {
     ReactGA.initialize('UA-144191515-1');
   }
 
+  const [cartStores, setStoresList] = useState([]);
+
   useEffect(() => {
     store.dispatch(loadUser());
     store.dispatch(getCart());
@@ -125,7 +127,7 @@ const App = () => {
           <div style={{height: '100%'}}>
             <Navbar backdrop={drawer} backdropClickHandler={backdropClickHandler} drawerClickHandler={drawerToggleClickHandler} toggleCartDrawer={toggleCartDrawer} />
             <SideDrawer show={sideDrawer.sideDrawerOpen} toggleAuthDrawer={toggleAuthDrawer} toggleCartDrawer={toggleCartDrawer} drawerClickHandler={drawerToggleClickHandler} />
-            <CartDrawer show={cartDrawer.cartDrawerOpen} toggleCartDrawer={toggleCartDrawer} drawerClickHandler={drawerToggleClickHandler} />
+            <CartDrawer cartStores={cartStores} setStoresList={setStoresList} show={cartDrawer.cartDrawerOpen} toggleCartDrawer={toggleCartDrawer} drawerClickHandler={drawerToggleClickHandler} />
             <AuthDrawer show={authDrawer.authDrawerOpen} toggleAuthDrawer={toggleAuthDrawer} drawerClickHandler={drawerToggleClickHandler} />
             {backdrop}
             <main id="home">

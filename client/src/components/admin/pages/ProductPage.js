@@ -2,24 +2,21 @@ import React, { useEffect, useState, Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import { setSortedProducts, getProductsByStoreId, handleDetail, editProduct, deleteProduct } from '../../../actions/productActions';
+import { getProductVariants, addVariant, deleteVariant } from '../../../actions/variantActions';
+import { getStoreById } from '../../../actions/storeActions';
+import { addItem } from '../../../actions/collectionActions';
+
 import Spinner from '../../common/Spinner';
 import Modal from 'react-responsive-modal';
-import Map from '../../common/map/Map';
-import { handleDetail, deleteProduct } from '../../../actions/productActions';
-import { getProductVariants, addVariant, deleteVariant } from '../../../actions/variantActions';
-
-import Title from '../../Title';
-import Table from '../table/Table';
 import InputTag from '../../common/InputTag/InputTag';
-import Variant from '../table/Variant';
-import TableDetails from '../../TableDetails/TableDetails';
+import Item from '../table/Item';
+import ShortItem from '../table/ShortItem';
 
-import BoxEmoji from '../../../utils/imgs/box.png'; 
-import ClosedLockEmoji from '../../../utils/imgs/closedlock.jpg'; 
-import OpenLockEmoji from '../../../utils/imgs/openlock.png'; 
-import CarEmoji from '../../../utils/imgs/car.jpg'; 
-import EyeballsEmoji from '../../../utils/imgs/eyeballs.png'; 
-import PencilEmoji from '../../../utils/imgs/pencil.png'; 
+import EditProduct from '../forms/EditProduct';
+import StorageRequest from '../forms/StorageRequest';
+import ProductDetail from './page_components/ProductDetail';
 
 
 
@@ -43,13 +40,24 @@ const initialState = {
 const ProductPage = ({ 
     addVariant,
     handleDetail, 
+    editProduct,
     deleteProduct,
     deleteVariant, 
+    getStoreById,
     match, 
-    product: { 
-        detailProduct, 
+    history,
+    setSortedProducts,
+    getProductsByStoreId,
+    addItem,
+    product,
+    store
+}) => {
+
+    const { 
+        detailProduct,
+        products, 
         loading 
-    }}) => {
+    } = product;
 
     // Product Info
     const [formData, setFormData] = useState(initialState);
@@ -60,6 +68,9 @@ const ProductPage = ({
     const [displayOption3, toggleOption3] = useState(false);
     const [displayOption4, toggleOption4] = useState(false);
     const [displayModal, toggleModal] = useState(false);
+    const [tableShow1, setTableShow1] = useState('detail');
+    const [displayStorageModal, toggleStorageModal] = useState(false);
+    const [displayLocationModal, toggleLocationModal] = useState(false);
 
     // Variant Info
     const [varInfo, setVarInfo] = useState([]);
@@ -73,11 +84,22 @@ const ProductPage = ({
     const [varTags2, setVarTags2] = useState([]);
     const [varTags3, setVarTags3] = useState([]);
     const [varTags4, setVarTags4] = useState([]);
+
+    // Storage item list
+    const [itemList, setItemListData] = useState([]);
+
+    
+
+    
         
     useEffect(() => {
         if(match.params.id) {
             if (!detailProduct) handleDetail(match.params.id);
         }
+        if(store.store === null) {
+            getStoreById(match.params.storeId);
+        };
+
         if (!loading && detailProduct) {
           const productData = { ...initialState };
           for (const key in detailProduct) {
@@ -87,7 +109,12 @@ const ProductPage = ({
             productData.tags = productData.tags.join(', ');
           setFormData(productData);
         }
-    }, [loading, handleDetail, detailProduct]);
+    }, [loading]);
+
+    // Redirect if store is null
+    // if(store.store === null ) {
+    //     history.push('/admin');
+    // }
 
     let variantList = [];
 
@@ -174,13 +201,63 @@ const ProductPage = ({
             if(condition !== '')data.append('condition', condition);
             if(tags !== '')data.append('tags', tags);
 
-            addVariant(data, detailProduct._id);
+            addVariant(data, detailProduct._id, store.store._id);
         });
         
     };
+
+    const onSubmitStorage = (e) => {
+        e.preventDefault();
+
+        itemList.map(item => {
+            let data = new FormData();
+            data.append('id', item);
+
+            // addItem(data, collection._id);
+            console.log(item);
+        });
+        
+    };
+
+    const filterItems = (tag) => {
+        let tempProd = [...products];
+        const tags = [...varTags, tag];
+        for(var i = 0; i < tags.length; i++) {
+            tempProd = tempProd.filter(prod => prod.tags.includes(tags[i]));
+        }
+        setSortedProducts(tempProd);
+    }
+
+    const unFilterItems = (tag) => {
+        let tempProd = [...products];
+        let remainingTags = varTags.filter ((t) => {
+            return (t !== tag);
+        });
+        for(var i = 0; i < remainingTags.length; i++) {
+            tempProd = tempProd.filter(prod => prod.tags.includes(remainingTags[i]));
+        }
+        setSortedProducts(tempProd);
+    }
+
+    const handleItemClick = (newItem) => {
+        if(itemList.filter(item => item === newItem).length > 0) {
+            // Get remove index
+            const removeIndex = itemList.indexOf(newItem);
+
+            const newList = itemList.splice(removeIndex, 1);
+
+            setItemListData([...newList]);
+        } else {
+            setItemListData([...itemList, newItem]);
+        }
+        console.log('ITEM');
+        console.log(newItem);
+        console.log(itemList);
+    }
   
     const onAddTag = (tag) => {
         setVarTags([...varTags, tag]);
+        filterItems(tag);
         console.log(varName)
     }
     
@@ -190,6 +267,7 @@ const ProductPage = ({
         return (t !== tag);
         });
         setVarTags([...remainingTags]);
+        unFilterItems(tag);
     }
     const onAddTag2 = (tag) => {
         setVarTags2([...varTags2, tag]);
@@ -223,6 +301,20 @@ const ProductPage = ({
         return (t !== tag);
         });
         setVarTags4([...remainingTags]);
+    }
+
+    const setTable = (show) => {
+        setTableShow1(show)
+    }
+
+    let pageContent;
+
+    if(tableShow1 === 'detail') {
+        pageContent = <ProductDetail detailProduct={detailProduct} setModal={setModal} setTable={setTable} />;
+    } else if(tableShow1 === 'storage request') {
+        pageContent = <StorageRequest products={products} getProductsByStoreId={getProductsByStoreId} setModal={toggleStorageModal} setLocationModal={toggleLocationModal} store={store.store} detail="true" setTable={setTable} /> 
+    } else if (tableShow1 === 'edit') {
+        pageContent = <EditProduct detailProduct={detailProduct} editProduct={editProduct} store={store.store} setTable={setTable} /> 
     }
 
     const updateList = () => {
@@ -356,6 +448,7 @@ const ProductPage = ({
                             </ol>
                         </nav>
                     </div>
+                    <i onClick={() => history.goBack()} style={{fontSize:'20px'}} class="fas fa-arrow-left"></i>
                     <div style={{display: 'flex', height:'auto', marginBottom:'10px', alignItems:'center'}}>
                         {detailProduct && detailProduct.img_gallery[0] ? <img style={{width: '50px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/products/image/${detailProduct.img_gallery[0].img_name}`} alt="img" /> : null}
                         <h3 style={{color: "black"}}>
@@ -363,43 +456,55 @@ const ProductPage = ({
                         </h3>
                     </div>
                     <hr style={{margin:'0'}} />
-                    <div style={{display:'flex', justifyContent:'space-between', height:'50px', alignItems:'center'}}>
-                        <p style={{margin:'0'}}>Qty <span style={{fontWeight:'bold'}}>{detailProduct && detailProduct.inventory_qty}</span> in stock for <span style={{fontWeight:'bold'}}>{detailProduct && detailProduct.variants.length}</span> variants</p>
-                        <div style={{display:'flex', height:'100%', alignItems:'center'}}>
-                            <button style={{ margin:'0 1rem 0 0' }}>Request Storage</button>
-                        </div>
-                        {' '}
-                    </div>
-                    <hr style={{margin:'0'}} />
                 </div>
-                <div class="product-map">
-                    <Map />
-                </div>
-                <div class="product-info">
-                    <div class="product-status-box">
-                        <div class="product-status-box-title">
-                            <div style={{display:'flex', color:'#808080', height:'50px', alignItems:'flex-start'}}>
-                                <i style={{margin:'0 1rem', fontSize:'1.4rem'}} class="fas fa-share-alt"></i>
-                                <i style={{margin:'0 1rem', fontSize:'1.4rem'}} class="fas fa-pencil-alt"></i>
-                            </div>
-                        </div>
-                        <div class="product-status-box-stats">
-                            <h2 style={{color:'#333', fontWeight:'300'}}><b>2</b><br/><img style={{width: '28px'}} src={CarEmoji} alt="img" /></h2>
-                            <h2 style={{color:'#333', fontWeight:'300'}}><b>2</b><br/><img style={{width: '28px'}} src={ClosedLockEmoji} alt="img" /></h2>
-                            <h2 style={{color:'#333', fontWeight:'300'}}><b>2</b><br/><img style={{width: '25px'}} src={OpenLockEmoji} alt="img" /></h2>
-                            <h2 style={{color:'#333', fontWeight:'300'}}><b>2</b><br/><img style={{width: '20px'}} src={BoxEmoji} alt="img" /></h2>
-                        </div>
-                    </div>
-                    <div class="product-description-box">
-                        <TableDetails admin setModal={setModal} description={detailProduct && detailProduct.description} />
-                    </div>
-                </div>
-                <div class="content-box container-fluid">
-                    <div class="table-responsive table-filter">
-                        <Variant setModal={setModal} page="product" varId={match.params.id} deleteVariant={deleteVariant} />
-                    </div>
-                </div>
+                {pageContent}
             </div>
+
+            <Modal open={displayLocationModal} onClose={toggleLocationModal} center>
+                <h5>Choose A Locations</h5>
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <input type="checkbox" name="name1" />
+                            </th>
+                            <th>Details</th>
+                            <th><i class="fas fa-map-marker-alt"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <div style={{display:'flex', flexDirection:'column', width:'100%', padding:'1rem', border:'2px solid #f4f4f4'}}>
+                                <h5>6100 Glenhollow dr.</h5>
+                                <p style={{color:'#808080'}}><i class="fas fa-map-marker-alt"></i>Plano, Tx</p>
+                                <p>On the corner of communications in pkwy and main next to the kroger store but on the back of the corner of the back fencing.</p>
+                                <p style={{margin:'1rem'}}>
+                                    <input 
+                                        type="checkbox" 
+                                        name="visible"
+                                        style={{margin:0}}
+                                    />
+                                    <label style={{margin:0}} className="form-group">Default location</label>
+                                </p>
+                            </div>
+                        </tr>
+                    </tbody>
+                </table>
+            </Modal>
+
+            <Modal open={displayStorageModal} onClose={toggleStorageModal} center>
+                <div style={{display:'flex'}}>
+                    <InputTag
+                        onAddTag ={onAddTag}
+                        onDeleteTag = {onDeleteTag}
+                        defaultTags={varTags}  
+                        placeholder="enter tags separated by comma"
+                    />
+                    <button onClick={onSubmitStorage}>Add</button>
+                </div>
+                
+               <ShortItem product={product} handleClick={handleItemClick} itemList={itemList} />
+            </Modal>
 
             <Modal open={displayModal} onClose={setModal} center>
                 <h2>Add Variant</h2>
@@ -563,13 +668,20 @@ const ProductPage = ({
 ProductPage.propTypes = {
     addVariant: PropTypes.func.isRequired,
     handleDetail: PropTypes.func.isRequired,
+    editProduct: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired,
     deleteProduct: PropTypes.func.isRequired,
     deleteVariant: PropTypes.func.isRequired,
+    getStoreById: PropTypes.func.isRequired,
+    setSortedProducts: PropTypes.func.isRequired,
+    getProductsByStoreId: PropTypes.func.isRequired,
+    addItem: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-    product: state.product
+    product: state.product,
+    store: state.store
 })
 
-export default connect(mapStateToProps, { addVariant, handleDetail, deleteProduct, deleteVariant })(withRouter(ProductPage));
+export default connect(mapStateToProps, { addVariant, editProduct, handleDetail, getStoreById, deleteProduct, deleteVariant, addItem, setSortedProducts, getProductsByStoreId })(withRouter(ProductPage));

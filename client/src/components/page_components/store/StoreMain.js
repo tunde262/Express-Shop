@@ -3,7 +3,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Table from '../../admin/table/Table';               
+import Table from '../../admin/table/Table';   
+import { getProductsByStoreId } from '../../../actions/productActions';            
 import Header from '../../header/Header';
 import Container from '../../ProductList/Container';
 import Banner from '../../common/Banner';
@@ -11,9 +12,9 @@ import DefaultBanner from '../../../utils/imgs/placeholderimg.jpg';
 import carousell1 from '../../../utils/imgs/carousell1.jpg';
 import carousell2 from '../../../utils/imgs/carousell2.jpg';
 
-const StoreMain = ({ store: { store, loading }, admin, setTable }) => {
+const StoreMain = ({ store: { store, loading }, getProductsByStoreId, admin, setTable }) => {
     useEffect(() => {
- 
+        getProductsByStoreId(store._id)
     }, []);
 
 
@@ -43,10 +44,11 @@ const StoreMain = ({ store: { store, loading }, admin, setTable }) => {
 
 StoreMain.propTypes = {
     store: PropTypes.object.isRequired,
+    getProductsByStoreId: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
     store: state.store
 })
 
-export default connect(mapStateToProps)(StoreMain);
+export default connect(mapStateToProps, { getProductsByStoreId })(StoreMain);

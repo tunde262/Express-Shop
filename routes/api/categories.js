@@ -73,11 +73,11 @@ router.get('/', auth, async (req, res) => {
 // @route GET api/variants
 // @desc Get Categories by user 
 // @access Public
-router.get('/store', auth, async (req, res) => {
+router.get('/storeid/:storeId', auth, async (req, res) => {
     try {
         const profile = await Profile.findOne({ user: req.user.id });
-        const store = await Store.findOne({ profile: profile.id });
-        const categories = await Category.find({ store: store.id }).populate('store', ['name', 'img_name']);
+        const store = await Store.findById(req.params.storeId);
+        const categories = await Category.find({ store: store._id }).populate('store', ['name', 'img_name']);
 
         res.json(categories);
     } catch (err) {
@@ -125,7 +125,7 @@ router.get('/:id', auth, async (req, res) => {
 // @route POST api/categories
 // @desc Create A Category
 // @access Private
-router.post('/', upload.single('file'), [ auth, [ 
+router.post('/add/:storeId', upload.single('file'), [ auth, [ 
         check('name', 'Name is required').not().isEmpty(),
     ]], async (req, res) => {
         const errors = validationResult(req);
@@ -148,9 +148,7 @@ router.post('/', upload.single('file'), [ auth, [
         }
 
         try {
-            const profile = await Profile.findOne({ user: req.user.id });
-            const store = await Store.findOne({ profile: profile.id });
-            categoryFields.store = store.id;
+            categoryFields.store = req.params.storeId;
             
             // Create
             const newCategory = new Category(categoryFields);

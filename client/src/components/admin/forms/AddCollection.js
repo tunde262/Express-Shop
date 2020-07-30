@@ -4,12 +4,17 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addCollection } from '../../../actions/collectionActions';
 
-const AddCollection = ({ addCollection, history }) => {
+const AddCollection = ({ addCollection, store, history }) => {
     const [formData, setFormData] = useState({
         name: '',
         tags: '',
         file: '',
     });
+
+    // Redirect if store is null
+    if(store.store === null ) {
+        history.push('/admin');
+    }
 
     const { name, tags, file } = formData;
 
@@ -29,7 +34,7 @@ const AddCollection = ({ addCollection, history }) => {
         data.append('name', name);
         data.append('tags', tags);
     
-        addCollection(data, history);
+        addCollection(data, store.store._id, history);
     };
 
     return (
@@ -89,6 +94,11 @@ const AddCollection = ({ addCollection, history }) => {
 
 AddCollection.propTypes = {
     addCollection: PropTypes.func.isRequired,
+    store: PropTypes.object.isRequired,
 }
 
-export default connect(null, { addCollection })(AddCollection);
+const mapStateToProps = (state) => ({
+    store: state.store
+});
+
+export default connect(mapStateToProps, { addCollection })(AddCollection);

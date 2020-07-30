@@ -21,6 +21,12 @@ const AddCustomer = ({ store, addCustomer, history }) => {
         notes: '',
         tags: '',
     });
+
+    // Redirect if store is null
+    if(store.store === null ) {
+        history.push('/admin');
+    }
+
     const [varTags, setVarTags] = useState([]);
 
     const { firstname, lastname, email, phone, street, city, state, zipcode, apartment_number, address_name, address_active, notes } = formData;

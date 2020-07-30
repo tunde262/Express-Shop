@@ -1,4 +1,4 @@
-import { SET_PRODUCTS, SET_SORTED_PRODUCTS, UPDATE_PRODUCT_LIKES, PRODUCTS_LOADING, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, CLOSE_MODAL, CLEAR_CART,ADD_TOTALS, GET_CART, GET_ORDERS, HANDLE_TAGS, REMOVE_TAGS } from '../actions/types';
+import { SET_PRODUCTS, SET_SORTED_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, PRODUCTS_LOADING, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, CLOSE_MODAL, CLEAR_CART,ADD_TOTALS, GET_CART, GET_ORDERS, HANDLE_TAGS, REMOVE_TAGS } from '../actions/types';
 
 const initialState = {
     products: [],
@@ -18,6 +18,7 @@ const initialState = {
     maxPrice: 0,
     detailProduct: null,
     cart: [],
+    cartStores: [],
     cartOverview: false,
     modalOpen: false,
     modalProduct: null,
@@ -74,6 +75,18 @@ export default function(state = initialState, action) {
                 // maxPrice
             };
         }
+        case ADD_PRODUCT:
+            return {
+            ...state,
+            products: [action.payload, ...state.products],
+            loading: false
+            };
+        case EDIT_PRODUCT:
+            return {
+                ...state,
+                detailProduct: action.payload,
+                loading: false
+            };
         case UPDATE_PRODUCT_LIKES:
             return {
                 ...state,
@@ -114,9 +127,15 @@ export default function(state = initialState, action) {
             };
         case GET_CART: {
             const arr = [];
+            const storeList = [];
+
             for (const id in action.payload.items) {
                 arr.push(action.payload.items[id]);
             }
+
+            arr.map(item => storeList.includes(item.item.store) ? null : storeList.push({
+                store: item.item.store
+            }));
 
             let subTotal = action.payload.totalPrice;
             // const tempTax = subTotal * 0.1;
@@ -127,10 +146,12 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 cart: arr,
+                cartStores: storeList,
                 cartSubtotal: subTotal,
                 cartTax: tax,
                 cartTotal: total,
-                cartQty: totalQty
+                cartQty: totalQty,
+                loading: false
             }
         }
         case ADD_TO_CART: {

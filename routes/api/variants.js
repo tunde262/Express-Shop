@@ -154,7 +154,7 @@ router.get('/category/:category', async (req, res) => {
 // @route POST api/variants
 // @desc Create A Variant
 // @access Public
-router.post('/product/:id', upload.single('file'), [ auth, [
+router.post('/product/add/:id/:storeId', upload.single('file'), [ auth, [
         check('name', 'Name is required').not().isEmpty()
     ]], async (req, res) => {
         const errors = validationResult(req);
@@ -216,9 +216,9 @@ router.post('/product/:id', upload.single('file'), [ auth, [
         }
         
         try {
-            const profile = await Profile.findOne({ user: req.user.id });
-            const store = await Store.findOne({ profile: profile.id });
-            variantFields.store = store.id;
+            console.log('ADD VARIANT')
+
+            variantFields.store = req.params.storeId;
             
             // Create
             const newVariant = new Variant(variantFields);
@@ -235,7 +235,7 @@ router.post('/product/:id', upload.single('file'), [ auth, [
 // @route POST api/variants
 // @desc Edit A Variant
 // @access Public
-router.post('/:id', upload.single('file'), [ auth, [
+router.post('/add/:id/:storeId', upload.single('file'), [ auth, [
     check('name', 'Name is required').not().isEmpty()
 ]], async (req, res) => {
     const errors = validationResult(req);
@@ -295,8 +295,9 @@ router.post('/:id', upload.single('file'), [ auth, [
     }
     
     try {
-        const profile = await Profile.findOne({ user: req.user.id });
-        const store = await Store.findOne({ profile: profile.id });
+        const storeId = req.params.storeId;
+        const store = await Store.findById(storeId);
+
         variantFields.store = store.id;
         
         let variant = await Variant.findById(req.params.id);

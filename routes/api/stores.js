@@ -175,11 +175,15 @@ router.post('/', upload.single('file'), [ auth, [
         if(facebook) storeFields.social.facebook = facebook;
         if(twitter) storeFields.social.twitter = twitter;
         if(website) storeFields.social.website = website;
+
+        storeFields.profiles = [];
         
         try {
             const profile = await Profile.findOne({ user: req.user.id });
 
-            storeFields.profile = profile.id;
+            storeFields.profiles.push({
+                profile: profile.id
+            });
 
             // let store = await Store.findOne({ profile: profile.id });
 

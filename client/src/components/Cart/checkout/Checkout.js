@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { clearCart } from '../../../actions/productActions';
@@ -11,43 +12,37 @@ import { BackButton } from '../../common/BackButton';
 
 const stripePromise = loadStripe("pk_test_Hbz4uQovQLzsxsEZ4clF5WfI00TSBRJTac");
 
-class Checkout extends Component {
-    constructor(props){
-        super(props);
-        this.goBack = this.goBack.bind(this);
+const Checkout = ({history, product: { cart, cartStores, cartTotal}, auth: { user }}) => {
+
+    const goBack = () => {
+        history.goBack();
     }
 
-    goBack(){
-        this.props.history.goBack();
-    }
+    const { _id } = user;
+    
+    let checkoutView;
 
-    render() {
-        const { cartTotal, cart } = this.props.product;
-        const { _id } = this.props.auth.user;
-        
-        let checkoutView;
-
-        if(cart.length > 0) {
-            checkoutView = (
-                <Elements stripe={stripePromise}>
-                    <CheckoutForm 
-                        total={Math.floor(cartTotal)} 
-                        clearCart={clearCart} 
-                        user={_id}
-                        history={this.props.history}
-                    />
-                </Elements>
-            );
-        }
-        else {
-            checkoutView = <h1>You have not yet added anything to your cart</h1>;
-        }
-        return (
-            <React.Fragment>
-                {checkoutView}
-            </React.Fragment>
-        )
+    if(cart.length > 0) {
+        checkoutView = (
+            <Elements stripe={stripePromise}>
+                <CheckoutForm 
+                    total={Math.floor(cartTotal)} 
+                    clearCart={clearCart} 
+                    cartStores={cartStores}
+                    user={_id}
+                    history={history}
+                />
+            </Elements>
+        );
     }
+    else {
+        checkoutView = <h1>You have not yet added anything to your cart</h1>;
+    }
+    return (
+        <React.Fragment>
+            {checkoutView}
+        </React.Fragment>
+    )
 }
 
 Checkout.propTypes = {
@@ -61,4 +56,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, { clearCart })(Checkout);
+export default connect(mapStateToProps, { clearCart })(withRouter(Checkout));

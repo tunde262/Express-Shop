@@ -7,7 +7,7 @@ import FormPayment from './FormPayment';
 import Confirm from './Confirm';
 import Success from './Success';
 
-const CheckoutForm = ({total, user, history}) => {
+const CheckoutForm = ({total, user, cartStores, clearCart, history}) => {
     const [formData, setFormData] = useState({
         step: 1,
         userId: `${user}`,
@@ -113,6 +113,7 @@ const CheckoutForm = ({total, user, history}) => {
                             nextStep = {nextStep}
                             prevStep = {prevStep}
                             values = {values}
+                            cartStores = {cartStores}
                         />
                     </Elements>
                 )

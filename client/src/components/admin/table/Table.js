@@ -2,10 +2,10 @@ import React, { useState, Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getProducts, getStoreProducts, getStoreOrders } from '../../../actions/productActions';
-import { getStoreVariants } from '../../../actions/variantActions';
-import { getStoreCollections } from '../../../actions/collectionActions';
-import { getStoreCustomers } from '../../../actions/customerActions';
+import { getProducts, getProductsByStoreId, getStoreOrders } from '../../../actions/productActions';
+import { getVariantsByStoreId } from '../../../actions/variantActions';
+import { getCollectionsByStoreId } from '../../../actions/collectionActions';
+import { getCustomersByStoreId } from '../../../actions/customerActions';
 
 import Item from './Item';
 import Order from './Order';
@@ -24,27 +24,31 @@ const Table = ({
     order,
     collection,
     customer,
+    store: { 
+        store, 
+        loading
+    },
     page,
-    getStoreProducts,
-    getStoreVariants,
+    getProductsByStoreId,
+    getVariantsByStoreId,
     getStoreOrders,
-    getStoreCollections
+    getCollectionsByStoreId
 }) => {
     const [tableShow, setTableShow] = useState('');
 
     useEffect(() => {
-        getStoreProducts();
-        getStoreVariants();
-        getStoreOrders();
-        getStoreCollections();
-        getStoreCustomers();
+        getProductsByStoreId(store._id)
+        getVariantsByStoreId(store._id);
+        getStoreOrders(store._id);
+        getCollectionsByStoreId(store._id);
+        getCustomersByStoreId(store._id);
         
         if (page === 'storage') {
             setTableShow('products');
         } else if (page === 'orders') {
             setTableShow('orders');
         }
-    }, [])
+    }, []);
 
     let tableContent;
 
@@ -57,6 +61,7 @@ const Table = ({
             </Fragment>
         ) 
     } else if (tableShow === 'collections') {
+        console.log(collection);
         tableContent = <Collection collection={collection} /> 
     } else if (tableShow === 'locations') {
         tableContent = <Location /> 
@@ -104,13 +109,14 @@ Table.propTypes = {
     variant: PropTypes.object.isRequired,
     collection: PropTypes.object.isRequired,
     customer: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired,
     order: PropTypes.object.isRequired,
     getProducts: PropTypes.func.isRequired,
-    getStoreProducts: PropTypes.func.isRequired,
-    getStoreVariants: PropTypes.func.isRequired,
+    getProductsByStoreId: PropTypes.func.isRequired,
+    getVariantsByStoreId: PropTypes.func.isRequired,
     getStoreOrders: PropTypes.func.isRequired,
-    getStoreCollections: PropTypes.func.isRequired,
-    getStoreCustomers: PropTypes.func.isRequired,
+    getCollectionsByStoreId: PropTypes.func.isRequired,
+    getCustomersByStoreId: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -118,8 +124,9 @@ const mapStateToProps = state => ({
     variant: state.variant,
     order: state.product.orders,
     collection: state.collection,
-    collection: state.customer
+    collection: state.customer,
+    store: state.store
 })
 
-export default connect(mapStateToProps, { getProducts, getStoreProducts, getStoreVariants, getStoreOrders, getStoreCollections, getStoreCustomers })(Table);
+export default connect(mapStateToProps, { getProducts, getProductsByStoreId, getVariantsByStoreId, getStoreOrders, getCollectionsByStoreId, getCustomersByStoreId })(Table);
 

@@ -78,14 +78,14 @@ export const getLocationById = id => async dispatch => {
 }
 
 // Add Location
-export const addLocation = (formData, history) => async dispatch => {
+export const addLocation = (formData, storeId, history) => async dispatch => {
     try {
         const config = {
             headers: {
               'Content-Type': 'application/json'
             }
           };
-      const res = await axios.post(`/api/darkstores`, formData, config);
+      const res = await axios.post(`/api/darkstores/add/${storeId}`, formData, config);
 
       const storeVariants = await axios.get('/api/variants/store');
 

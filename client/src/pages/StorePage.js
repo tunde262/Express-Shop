@@ -2,18 +2,17 @@ import React, { useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getProductsByStoreId, getCart } from '../actions/productActions';
+import { getCart } from '../actions/productActions';
 import { getStoreById } from '../actions/storeActions';
 
 import Footer from '../components/layout/Footer/Footer';
 import Spinner from '../components/common/Spinner';
 import StoreMain from '../components/page_components/store/StoreMain';
 
-const StorePage = ({getProductsByStoreId, getStoreById, store, product: { products, loading }, history, match}) => {
+const StorePage = ({getStoreById, store, product: { products, loading }, history, match}) => {
     useEffect( async () => {
         getStoreById(match.params.id);
-        getProductsByStoreId(match.params.id);
-    }, [getStoreById, getProductsByStoreId]);
+    }, []);
 
     const goBack = () => {
         history.goBack();
@@ -61,7 +60,6 @@ const StorePage = ({getProductsByStoreId, getStoreById, store, product: { produc
 }
 
 StorePage.propTypes = {
-    getProductsByStoreId: PropTypes.func.isRequired,
     getStoreById: PropTypes.func.isRequired,
     getCart: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
@@ -73,4 +71,4 @@ const mapStateToProps = state => ({
     store: state.store
 });
 
-export default connect(mapStateToProps, { getProductsByStoreId, getStoreById, getCart })(StorePage);
+export default connect(mapStateToProps, { getStoreById, getCart })(StorePage);

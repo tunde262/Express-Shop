@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { setAlert } from './alertActions';
 
-import { SET_PRODUCTS, SET_SORTED_PRODUCTS, UPDATE_PRODUCT_LIKES, ADD_PRODUCT_REVIEW, REMOVE_PRODUCT_REVIEW, PRODUCT_ERROR, HANDLE_TAGS, REMOVE_TAGS, PRODUCTS_LOADING, ADD_TOTALS, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, CLOSE_MODAL, CLEAR_CART, GET_CART, GET_ORDERS } from './types';
+import { SET_PRODUCTS, SET_SORTED_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, ADD_PRODUCT_REVIEW, REMOVE_PRODUCT_REVIEW, PRODUCT_ERROR, HANDLE_TAGS, REMOVE_TAGS, PRODUCTS_LOADING, ADD_TOTALS, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, CLOSE_MODAL, CLEAR_CART, GET_CART, GET_ORDERS } from './types';
+import store from '../store';
 
 // Get Products
 export const getProducts = (skip) => dispatch => {
@@ -101,7 +102,7 @@ export const removeTags = (filter) => {
 
 
 // Add product
-export const addProduct = (prodData, imgData, varInfo, varName, history) => async dispatch => {
+export const addProduct = (prodData, imgData, varInfo, varName, storeId, history) => async dispatch => {
     const config = {
         headers: {
           'Content-Type': 'application/json'
@@ -109,10 +110,10 @@ export const addProduct = (prodData, imgData, varInfo, varName, history) => asyn
     };
     
     try {
-        const res = await axios.post('/api/products', prodData, config);
+        const res = await axios.post(`/api/products/add/${storeId}`, prodData, config);
         console.log(res.data);
 
-        const categoryList = await axios.get('/api/categories/store');
+        const categoryList = await axios.get(`/api/categories/storeid/${storeId}`);
         let tempTags = [...res.data.tags];
   
         categoryList.data.map(async category => {
@@ -151,43 +152,48 @@ export const addProduct = (prodData, imgData, varInfo, varName, history) => asyn
             varInfo.map(async (variant) => {
                 let data = new FormData();
                 
-                if(varName.var1 !== '')data.append(`${varName.var1}`, variant.var1);
-                if(varName.var2 !== '')data.append(`${varName.var2}`, variant.var2);
-                if(varName.var3 !== '')data.append(`${varName.var3}`, variant.var3);
-                if(varName.var4 !== '')data.append(`${varName.var4}`, variant.var4);
-                if(res.data.name)data.append('name', res.data.name);
-                if(variant.sku !== '')data.append('sku', variant.sku);
-                if(res.data.website_link)data.append('website_link', res.data.website_link);
-                if(variant.sale_price !== '')data.append('sale_price', variant.sale_price);
-                if(variant.price !== '')data.append('price', variant.price);
-                if(res.data.visible)data.append('visible', res.data.visible);
-                if(res.data.in_stock)data.append('in_stock', res.data.in_stock);
-                if(variant.inventory_qty !== '')data.append('inventory_qty', variant.inventory_qty);
-                if(res.data.category)data.append('category', res.data.category);
-                if(res.data.condition)data.append('condition', res.data.condition);
-                if(res.data.tags)data.append('tags', res.data.tags);
+                if(varName.var1 !== undefined && varName.var1 !== null && varName.var1 !== '')data.append(`${varName.var1}`, variant.var1);
+                if(varName.var2 !== undefined && varName.var2 !== null && varName.var2 !== '')data.append(`${varName.var2}`, variant.var2);
+                if(varName.var3 !== undefined && varName.var3 !== null && varName.var3 !== '')data.append(`${varName.var3}`, variant.var3);
+                if(varName.var4 !== undefined && varName.var4 !== null && varName.var4 !== '')data.append(`${varName.var4}`, variant.var4);
+                if(res.data.name !== undefined && res.data.name !== null && res.data.name !== '')data.append('name', res.data.name);
+                if(variant.sku !== undefined && variant.sku !== null && variant.sku !== '')data.append('sku', variant.sku);
+                if(res.data.website_link !== undefined && res.data.website_link !== null && res.data.website_link !== '')data.append('website_link', res.data.website_link);
+                if(variant.sale_price !== undefined && variant.sale_price !== null && variant.sale_price !== '')data.append('sale_price', variant.sale_price);
+                if(variant.price !== undefined && variant.price !== null && variant.price !== '')data.append('price', variant.price);
+                if(res.data.visible !== undefined && res.data.visible !== null && res.data.visible !== '')data.append('visible', res.data.visible);
+                if(res.data.category !== undefined && res.data.category !== null && res.data.category !== '')data.append('in_stock', res.data.in_stock);
+                if(variant.inventory_qty !== undefined && variant.inventory_qty !== null && variant.inventory_qty !== '')data.append('inventory_qty', variant.inventory_qty);
+                if(res.data.category !== undefined && res.data.category !== null && res.data.category !== '')data.append('category', res.data.category);
+                if(res.data.condition !== undefined && res.data.condition !== null && res.data.condition !== '')data.append('condition', res.data.condition);
+                if(res.data.tags !== undefined && res.data.tags !== null && res.data.tags !== '')data.append('tags', res.data.tags);
     
-                await axios.post(`/api/variants/product/${res.data._id}`, data, config);
+                await axios.post(`/api/variants/product/add/${res.data._id}/${storeId}`, data, config);
                 console.log('variants added');
             });
         } else {
             let data = new FormData();
                 
-            if(res.data.name !== '')data.append('name', res.data.name);
-            if(res.data.sku !== '')data.append('sku', res.data.sku);
-            if(res.data.website_link !== '')data.append('website_link', res.data.website_link);
-            if(res.data.sale_price !== '')data.append('sale_price', res.data.sale_price);
-            if(res.data.price !== '')data.append('price', res.data.price);
-            if(res.data.visible !== '')data.append('visible', res.data.visible);
-            if(res.data.in_stock !== '')data.append('in_stock', res.data.in_stock);
-            if(res.data.inventory_qty !== '')data.append('inventory_qty', res.data.inventory_qty);
-            if(res.data.category !== '')data.append('category', res.data.category);
-            if(res.data.condition !== '')data.append('condition', res.data.condition);
-            if(res.data.tags !== '')data.append('tags', res.data.tags);
+            if(res.data.name !== undefined && res.data.name !== null && res.data.name !== '')data.append('name', res.data.name);
+            if(res.data.sku !== undefined && res.data.sku !== null && res.data.sku !== '')data.append('sku', res.data.sku);
+            if(res.data.website_link !== undefined && res.data.website_link !== null && res.data.website_link !== '')data.append('website_link', res.data.website_link);
+            if(res.data.sale_price !== undefined && res.data.sale_price !== null && res.data.sale_price !== '')data.append('sale_price', res.data.sale_price);
+            if(res.data.price !== undefined && res.data.price !== null && res.data.price !== '')data.append('price', res.data.price);
+            if(res.data.visible !== undefined && res.data.visible !== null && res.data.visible !== '')data.append('visible', res.data.visible);
+            if(res.data.in_stock !== undefined && res.data.in_stock !== null && res.data.in_stock !== '')data.append('in_stock', res.data.in_stock);
+            if(res.data.inventory_qty !== undefined && res.data.inventory_qty !== null && res.data.inventory_qty !== '')data.append('inventory_qty', res.data.inventory_qty);
+            if(res.data.category !== undefined && res.data.category !== null && res.data.category !== '')data.append('category', res.data.category);
+            if(res.data.condition !== undefined && res.data.condition !== null && res.data.condition !== '')data.append('condition', res.data.condition);
+            if(res.data.tags !== undefined && res.data.tags !== null && res.data.tags !== '')data.append('tags', res.data.tags);
 
-            await axios.post(`/api/variants/product/${res.data._id}`, data, config);
+            await axios.post(`/api/variants/product/add/${res.data._id}/${storeId}`, data, config);
             console.log('default variant added');
         }
+
+        dispatch({
+            type: ADD_PRODUCT,
+            payload: res.data
+        });
 
         history.push(`/admin/product/${res.data._id}`);
         dispatch(setAlert('New Product Created', 'success'));
@@ -199,7 +205,33 @@ export const addProduct = (prodData, imgData, varInfo, varName, history) => asyn
     }
 }
 
-// Add product
+// Edit product
+export const editProduct = (prodData, id, storeId) => async dispatch => {
+    const config = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+    };
+    
+    try {
+        const res = await axios.post(`/api/products/edit/${id}/${storeId}`, prodData, config);
+        console.log(res.data);
+
+        dispatch({
+            type: EDIT_PRODUCT,
+            payload: res.data
+        });
+
+        dispatch(setAlert('Product Updated', 'success'));
+    } catch (err) {
+        dispatch({
+          type: PRODUCT_ERROR,
+          payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+}
+
+// Add product Img
 export const addProductImg = (imgData, id) => async dispatch => {
     const config = {
         headers: {
@@ -367,11 +399,13 @@ export const addLike = id => async dispatch => {
 // Get Current Cart
 export const getCart = () => dispatch => {
     axios.get('/api/products/cart/all')
-        .then(res =>
-            dispatch({
-                type: GET_CART,
-                payload: res.data
-            })
+        .then(res => {
+                console.log(res.data);
+                dispatch({
+                    type: GET_CART,
+                    payload: res.data
+                })
+            }
         )
         .catch(err => 
             dispatch({

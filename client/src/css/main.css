@@ -428,10 +428,7 @@ button:hover {
 
 input {
   background: #eee;
-  border: none;
-  padding: 12px 15px;
-  margin: 8px 0;
-  width: 100%; }
+  border: none; }
 
 .social-container {
   margin: 20px 0;

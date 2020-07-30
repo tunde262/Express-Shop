@@ -20,8 +20,7 @@ const VariantSchema = new Schema({
         required: true
     },
     category: {
-        type: String,
-        required: true
+        type: String
     },
     tags: {
         type: [String]

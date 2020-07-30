@@ -13,7 +13,7 @@ const JoinCreate = ({ auth: { isAuthenticated, user }, profile: { loading }, his
     }
     return (
         <main id="home">
-            {loading ? <Spinner /> : (
+            {!loading && user ? (
                 <div className="box-container">
                     <h2>Welcome {user.name}, what would you like to do?</h2>
                     <div>
@@ -21,7 +21,7 @@ const JoinCreate = ({ auth: { isAuthenticated, user }, profile: { loading }, his
                         <Link to="/create-store"><div className="largeButton">Create A Store</div></Link>
                     </div>
                 </div>
-            )}
+            ) : (<Spinner />)}
       </main>
     )
 }

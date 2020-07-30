@@ -23,6 +23,7 @@ const Store = require('../../models/Store');
 //Db Config
 const config = require('config');
 const { listIndexes } = require('../../models/Product');
+const { Console } = require('console');
 const db = config.get('mongoURI');
 
 // Create Mongo Connection
@@ -69,7 +70,7 @@ const upload = multer({ storage });
 router.get('/', async (req, res) => {
     try {
         const skip =
-            req.query.skip && /^\d+$/.test(req.query.skip) ? Number(req.query.skip) : 0
+            req.query.skip && /^\d+$/.test(req.query.skip) ? Number(req.query.skip) : 0;
 
         const products = await Product.find({}, null, { skip, limit: 8 }).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
 
@@ -87,7 +88,7 @@ router.get('/store', auth, async (req, res) => {
     try {
         const profile = await Profile.findOne({ user: req.user.id });
         const store = await Store.findOne({ profile: profile.id });
-        const products = await Product.find({ store: store.id }).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
+        const products = await Product.find({ store: req.query.storeId }).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
 
         res.json(products);
     } catch (err) {
@@ -158,7 +159,7 @@ router.get('/category/:category', async (req, res) => {
 // @route POST api/products
 // @desc Create A Product
 // @access Public
-router.post('/', upload.array("file", 10),[ auth, [
+router.post('/add/:storeId', upload.array("file", 10),[ auth, [
         check('name', 'Name is required').not().isEmpty()
     ]], async (req, res) => {
         const errors = validationResult(req);
@@ -213,9 +214,8 @@ router.post('/', upload.array("file", 10),[ auth, [
         } 
         
         try {
-            const profile = await Profile.findOne({ user: req.user.id });
-            const store = await Store.findOne({ profile: profile.id });
-            productFields.store = store.id;
+            console.log('ADD PRODUCT');
+            productFields.store = req.params.storeId;
             
             // Create
             const newProduct = new Product(productFields);
@@ -232,7 +232,7 @@ router.post('/', upload.array("file", 10),[ auth, [
 // @route POST api/products
 // @desc Edit A Product
 // @access Public
-router.post('/:id', upload.single('file'),[ auth, [
+router.post('/edit/:id/:storeId', upload.single('file'),[ auth, [
         check('name', 'Name is required').not().isEmpty()
     ]], async (req, res) => {
         const errors = validationResult(req);
@@ -275,9 +275,9 @@ router.post('/:id', upload.single('file'),[ auth, [
         } 
         
         try {
-            const profile = await Profile.findOne({ user: req.user.id });
-            const store = await Store.findOne({ profile: profile.id });
-            productFields.store = store.id;
+            console.log('ADDED PRODUCT')
+
+            productFields.store = req.params.storeId;
             
             let product = await Product.findById(req.params.id);
 

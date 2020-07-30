@@ -2,10 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const StoreSchema = new Schema({
-    profile: {
-        type: Schema.Types.ObjectId,
-        ref: 'profile'
-    },
+    profiles: [
+        {
+            profile: {
+                type: Schema.Types.ObjectId,
+                ref: 'profile'
+            }
+        }
+    ],
     img: {
         type: Schema.Types.ObjectId, // There is no need to create references here
         ref: 'uploads'

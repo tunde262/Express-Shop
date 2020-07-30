@@ -9,9 +9,6 @@ import 'react-responsive-modal/styles.css';
 
 
 const Customer = ({ customer: {loading, customers}, getStoreCustomers, deleteCustomer }) => {
-    useEffect(() => {
-        getStoreCustomers();
-      }, [getStoreCustomers])
 
     const [modalShow, setModal] = useState(false);
      

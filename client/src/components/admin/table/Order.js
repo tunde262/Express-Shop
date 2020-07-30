@@ -3,12 +3,8 @@ import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import Spinner from '../../common/Spinner';
-import { getStoreOrders } from '../../../actions/productActions';
 
-const Order = ({ order, getStoreOrders }) => {
-    useEffect(() => {
-        getStoreOrders();
-    }, [getStoreOrders]);
+const Order = ({ order, store: { store, loading } }) => {
 
     let orderList; 
     
@@ -54,11 +50,12 @@ const Order = ({ order, getStoreOrders }) => {
 Order.propTypes = {
     order: PropTypes.object.isRequired,
     getStoreOrders: PropTypes.func.isRequired,
+    store: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
     profile: state.profile,
-    order: state.product.orders
+    store: state.store
 })
 
-export default connect(mapStateToProps, {getStoreOrders})(Order);
+export default connect(mapStateToProps)(Order);

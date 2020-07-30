@@ -9,9 +9,6 @@ import 'react-responsive-modal/styles.css';
 
 
 const Collection = ({ collection: {loading, collections}, getStoreCollections, deleteCollection }) => {
-    useEffect(() => {
-        getStoreCollections();
-      }, [getStoreCollections])
 
     const [modalShow, setModal] = useState(false);
      
