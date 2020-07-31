@@ -125,6 +125,20 @@ router.get('/location/:id', async (req, res) => {
     }
 });
 
+// @route GET api/products/liked/:id
+// @desc Get Like Products by user id
+// @access Private
+router.get('/liked/:id', auth, async (req, res) => {
+    try {
+        const products = await Product.find({likes: {$elemMatch: {user:req.params.id}}}).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']).populate('store', ['name', 'img_name']);
+
+        res.json(products);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
 //@route GET /:id
 //@desc Get single product by id
 router.get('/:id', async (req, res) => {

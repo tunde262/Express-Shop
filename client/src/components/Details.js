@@ -14,6 +14,7 @@ import Modal from 'react-responsive-modal';
 import { ButtonContainer } from './Button';
 import { BackButton } from './common/BackButton';
 import Spinner from './common/Spinner';
+import ButtonSpinner from './common/ButtonSpinner';
 import ProductOverview from './Overview/productOverview/ProductOverview';
 import BrandOverview from './Overview/brandOverview/BrandOverview';
 import TableDetails from './TableDetails/TableDetails';
@@ -21,6 +22,7 @@ import TableDetails from './TableDetails/TableDetails';
 const Details = ({
     product: {
         detailProduct,
+        modalOpen,
         loading,
         products
     }, 
@@ -74,11 +76,22 @@ const Details = ({
     const [varKey9, setVarKey9] = useState('');
     const [varValue9, setVarValue9] = useState([]);
 
+    // Button loader
+    const [cartLoading, setCartLoading] = useState(true);
+
+    // Show Img Index
+    const [showImage, setShowImage] = useState(0);
 
     useEffect(() => {
         handleDetail(match.params.id);
         getProductVariants(match.params.id);
-    }, [handleDetail]);
+
+        if(modalOpen) {
+            setCartLoading(true);
+        } else {
+            setCartLoading(false);
+        }
+    }, [modalOpen]);
 
     const goBack = () => {
         history.goBack();
@@ -97,6 +110,7 @@ const Details = ({
         onAddToCart(id);
         handleModalOpen(id);
         clicked(title);
+        setCartLoading(true);
     }
 
     const clicked = (title) => {
@@ -279,10 +293,10 @@ const Details = ({
                             <BackButton onClick={goBack}><i className="fas fa-arrow-left"></i></BackButton>
                         </div>
                         <div class="detail-map">
-                            <img src={`/api/products/image/${detailProduct.img_gallery[0].img_name}`} className="img-fluid" alt="product" />
+                            <img src={`/api/products/image/${detailProduct.img_gallery[showImage].img_name}`} className="img-fluid" alt="product" />
                             <div className="datail-sub-images">
                                 {detailProduct.img_gallery.map((item, index) => {
-                                    return <img key={index} src={`/api/products/image/${detailProduct.img_gallery[index].img_name}`} alt={detailProduct.name} />
+                                    return <img key={index} onClick={() => setShowImage(index)} src={`/api/products/image/${detailProduct.img_gallery[index].img_name}`} alt={detailProduct.name} />
                                 })}
                             </div>
                         </div>
@@ -307,42 +321,48 @@ const Details = ({
                                         <Link to={"/store/" + detailProduct.store._id}>
                                             {detailProduct.store.name}
                                         </Link>
-                                        <Link to={"/location/" + detailProduct.locationId._id} style={{color:'#808080'}}><i class="fas fa-map-marker-alt"></i> Plano, Tx</Link>
+                                        <p style={{color:'#808080'}}>Wholesaler</p>
+                                        {/* <Link to={"/location/" + detailProduct.locationId._id} style={{color:'#808080'}}>Wholesaler</Link> */}
                                     </div>
                                 </div>
                                 <hr style={{marginTop:'0.5rem'}}/>
                             </div>
                             <div class="detail-description-box">
-                                <select name="category" onChange={onChange}>
-                                    <option>* Choose a category</option>
-                                    <option value="clothing & fashion">Clothing & Fashion</option>
-                                    <option value="bathroom">Bathroom</option>
-                                    <option value="household essentials">Household Essential</option>
-                                    <option value="laundry">Laundry</option>
-                                    <option value="men">Men</option>
-                                    <option value="personal care">Personal Care</option>
-                                    <option value="pets">Pets</option>
-                                    <option value="school & office">School & Office</option>
-                                    <option value="shoes">Shoes</option>
-                                    <option value="women">Women</option>
-                                </select>
-                                <select name="category" onChange={onChange}>
-                                    <option>* Choose a category</option>
-                                    <option value="clothing & fashion">Clothing & Fashion</option>
-                                    <option value="bathroom">Bathroom</option>
-                                    <option value="household essentials">Household Essential</option>
-                                    <option value="laundry">Laundry</option>
-                                    <option value="men">Men</option>
-                                    <option value="personal care">Personal Care</option>
-                                    <option value="pets">Pets</option>
-                                    <option value="school & office">School & Office</option>
-                                    <option value="shoes">Shoes</option>
-                                    <option value="women">Women</option>
-                                </select>
-                                <div style={{display:'flex'}}>
+                                <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}>
+                                    <select className="select" name="category" onChange={onChange}>
+                                        <option>* Choose a category</option>
+                                        <option value="clothing & fashion">Clothing & Fashion</option>
+                                        <option value="bathroom">Bathroom</option>
+                                        <option value="household essentials">Household Essential</option>
+                                        <option value="laundry">Laundry</option>
+                                        <option value="men">Men</option>
+                                        <option value="personal care">Personal Care</option>
+                                        <option value="pets">Pets</option>
+                                        <option value="school & office">School & Office</option>
+                                        <option value="shoes">Shoes</option>
+                                        <option value="women">Women</option>
+                                    </select>
+                                    <select className="select" name="category" onChange={onChange}>
+                                        <option>* Choose a category</option>
+                                        <option value="clothing & fashion">Clothing & Fashion</option>
+                                        <option value="bathroom">Bathroom</option>
+                                        <option value="household essentials">Household Essential</option>
+                                        <option value="laundry">Laundry</option>
+                                        <option value="men">Men</option>
+                                        <option value="personal care">Personal Care</option>
+                                        <option value="pets">Pets</option>
+                                        <option value="school & office">School & Office</option>
+                                        <option value="shoes">Shoes</option>
+                                        <option value="women">Women</option>
+                                    </select>
+                                </div>
+                                <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}>
                                     <button style={{background:'transparent', color:'#cd00cd', borderColor:'#cd00cd'}}>Make an Offer</button>
-                                    <button onClick={() =>todo(detailProduct._id, detailProduct.title)}>
-                                        Add to Cart
+                                    <button 
+                                        onClick={() =>todo(detailProduct._id, detailProduct.title)}
+                                        disabled={cartLoading ? true : false} 
+                                    >
+                                        {cartLoading ? <ButtonSpinner /> : "Add To Cart"}
                                     </button>
                                 </div>
                                 <TableDetails setModal={setModal} description={detailProduct.description} />

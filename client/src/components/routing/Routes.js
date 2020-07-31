@@ -11,7 +11,11 @@ import Details from '../Details';
 import Cart from '../Cart/Cart';
 import Default from '../Default';
 import Checkout from '../Cart/checkout/Checkout';
+
+// Profile Pages
 import Profile from '../profile/Profile';
+import ProfileOrders from '../profile/Orders';
+import LikePage from '../../pages/LikePage';
 
 // Admin pages
 import Admin from '../admin/Admin';
@@ -58,6 +62,8 @@ const Routes = props => {
             <PrivateRoute exact path="/checkout" component={Checkout} />
             {/* Profile  */}
             <PrivateRoute exact path="/profile" component={Profile} />
+            <PrivateRoute exact path="/profile/orders" component={ProfileOrders} />
+            <PrivateRoute exact path="/profile/saved" component={LikePage} />
             {/* Admin Pages */}
             <PrivateRoute exact path="/admin/add-product" component={AddProduct} />
             <PrivateRoute exact path="/admin/edit-product" component={AddProduct} />

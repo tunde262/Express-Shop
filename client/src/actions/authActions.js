@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { setAlert } from './alertActions';
 import { getCurrentProfile } from './profileActions';
+import { clearLocations } from './locationActions';
+
 import { 
     SET_SIDEBAR, 
     REGISTER_SUCCESS, 
@@ -16,6 +18,7 @@ import setAuthToken from '../utils/setAuthToken';
 
 // Load User
 export const loadUser = () => async dispatch => {
+    // dispatch(clearLocations());
     if(localStorage.token) {
         setAuthToken(localStorage.token);
     }

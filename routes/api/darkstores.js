@@ -13,6 +13,7 @@ const Grid = require('gridfs-stream');
 // Load Models
 const Product = require('../../models/Product');
 const Darkstore = require('../../models/Darkstore');
+const Variant = require('../../models/Variant');
 const Store = require('../../models/Store');
 const Profile = require('../../models/Profile');
 
@@ -94,6 +95,41 @@ router.get('/store/:id', auth, async (req, res) => {
         const darkstores = await Darkstore.find({ store: req.params.id });
 
         res.json(darkstores);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
+// @route GET api/darkstores/product/:id
+// @desc Get Product's locations
+// @access Private
+router.get('/product/:id', async (req, res) => {
+    const locationArray = [];
+    let darkstore;
+    try {
+        const product = await Product.findById(req.params.id);
+        const variants = await Variant.find({ product: product.id });
+
+        variants.map(async variant => {
+            for(var i = 0; i < variant.locations.length; i++) {
+                console.log('Location ID');
+                console.log(variant.locations[i].location);
+                darkstore = await Darkstore.findById(variant.locations[i].location);
+                console.log('NEW DARKSTORE');
+                console.log(darkstore);
+                locationArray.push(darkstore);
+                console.log('LOCATIONS ARRAY');
+                console.log(locationArray);
+            }
+            console.log('EXIT FOR LOOP')
+            console.log(locationArray)
+        })
+       
+        console.log('FETCHED LOCATIONSSSSSS');
+        console.log(locationArray);
+
+        res.json(locationArray);
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error'); 

@@ -4,7 +4,9 @@ import {
     DELETE_LOCATION,
     UPDATE_LOCATION_VARIANTS,
     ADD_LOCATION,
-    GET_LOCATION
+    GET_LOCATION,
+    GET_PRODUCT_LOCATIONS,
+    CLEAR_LOCATIONS
   } from '../actions/types';
   
   const initialState = {
@@ -22,6 +24,12 @@ import {
         return {
           ...state,
           locations: payload,
+          loading: false
+        };
+      case GET_PRODUCT_LOCATIONS:
+        return {
+          ...state,
+          locations: [...state.locations, ...payload],
           loading: false
         };
       case GET_LOCATION:
@@ -56,6 +64,13 @@ import {
           ),
           loading: false
         };
+      case CLEAR_LOCATIONS:
+        return {
+            ...state,
+            location: null,
+            locations:[],
+            loading: false
+        }
       default:
         return state;
     }

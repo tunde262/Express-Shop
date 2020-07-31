@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { setAlert } from './alertActions';
 
-import { SET_PRODUCTS, SET_SORTED_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, ADD_PRODUCT_REVIEW, REMOVE_PRODUCT_REVIEW, PRODUCT_ERROR, HANDLE_TAGS, REMOVE_TAGS, PRODUCTS_LOADING, ADD_TOTALS, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, CLOSE_MODAL, CLEAR_CART, GET_CART, GET_ORDERS } from './types';
+import { SET_PRODUCTS, SET_SORTED_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, ADD_PRODUCT_REVIEW, REMOVE_PRODUCT_REVIEW, PRODUCT_ERROR, HANDLE_TAGS, REMOVE_TAGS, PRODUCTS_LOADING, ADD_TOTALS, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, HANDLE_MAP, CLOSE_MODAL, CLEAR_CART, GET_CART, GET_ORDERS } from './types';
 import store from '../store';
 
 // Get Products
@@ -63,6 +63,24 @@ export const getProductsByLocationId = id => async dispatch => {
     dispatch(setProductsLoading());
     try {
         const res = await axios.get(`/api/products/location/${id}`);
+
+        dispatch({
+            type: SET_PRODUCTS,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: SET_PRODUCTS,
+            payload: {}
+        })
+    }
+};
+
+// Get products user liked
+export const getLikedProducts = id => async dispatch => {
+    dispatch(setProductsLoading());
+    try {
+        const res = await axios.get(`/api/products/liked/${id}`);
 
         dispatch({
             type: SET_PRODUCTS,
@@ -471,6 +489,13 @@ export const openModal = (id) => dispatch => {
                 type: PRODUCTS_LOADING
             })
         );
+}
+
+// Set Modal
+export const handleMap = () => dispatch => {
+    dispatch({
+        type: HANDLE_MAP
+    })
 }
 
 // Close Modal

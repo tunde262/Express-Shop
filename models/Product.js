@@ -6,10 +6,14 @@ const ProductSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'store'
     },
-    locationId: {
-        type: Schema.Types.ObjectId,
-        ref: 'darkstore'
-    },
+    locations: [
+        {
+            location: {
+                type: Schema.Types.ObjectId,
+                ref: 'darkstore'
+            }
+        }
+    ],
     name: {
         type: String,
         required: true
@@ -25,6 +29,10 @@ const ProductSchema = new Schema({
             },
         }
     ],
+    show_image: {
+        type: Number,
+        default: 0
+    },
     price: {
         type: Number,
     },

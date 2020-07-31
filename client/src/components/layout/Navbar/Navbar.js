@@ -60,20 +60,22 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, backdrop, backdropClickH
                             onEnter={calcHeight}
                         >
                             <div className="menu">
-                                <div style={{display:'flex', alignItems:'center'}} onClick={() => setActiveMenu('profile')}>
+                                <Link to="/profile" className="menu-item">
                                     <div style={{background:'#333', height:'50px', width:'50px', borderRadius:'50px'}}></div>
-                                    <Link to="/profile" className="menu-item">My Profile</Link>
-                                    <i className="fas fa-chevron-right"></i>
-                                </div>
+                                    <div style={{marginLeft:'1rem'}}>
+                                        <p style={{margin:0}}>Tunde Adepitan</p>
+                                        <p style={{margin:0}}>4.5 / 5 stars</p>
+                                    </div>
+                                </Link>
                                 <hr style={{margin:'10px 0'}} />
-                                <a href="#" className="menu-item">
+                                <Link to="/profile/saved" className="menu-item">
                                     <i className="fas fa-heart"></i>{' '}
                                     Saved
-                                </a>
+                                </Link>
                                 <hr style={{margin:'10px 0'}} />
-                                <a href="#" className="menu-item">
+                                <Link to="/profile/orders" className="menu-item">
                                     My Orders
-                                </a>
+                                </Link>
                                 <hr style={{margin:'10px 0'}} />
                                 <Link to="/admin" className="menu-item">
                                     My Stores
@@ -86,7 +88,7 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, backdrop, backdropClickH
                             </div>
                         </CSSTransition>
 
-                        <CSSTransition 
+                        {/* <CSSTransition 
                             in={activeMenu === 'profile'} 
                             unmountOnExit 
                             timeout={500}
@@ -97,28 +99,28 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, backdrop, backdropClickH
                                 <a href="#" className="menu-item" onClick={() => setActiveMenu('main')}>
                                     <i class="fas fa-arrow-left"></i>
                                 </a>
-                                <a href="#" className="menu-item">
+                                <Link to="/profile" className="menu-item">
                                     <div style={{background:'#333', height:'50px', width:'50px', borderRadius:'50px'}}></div>
                                     <div style={{marginLeft:'1rem'}}>
                                         <p style={{margin:0}}>Tunde Adepitan</p>
                                         <p style={{margin:0}}>4.5 / 5 stars</p>
                                     </div>
-                                </a>
-                                <a href="#" className="menu-item">
+                                </Link>
+                                <Link to="/profile/payments" className="menu-item">
                                     payment
-                                </a>
-                                <a href="#" className="menu-item">
+                                </Link>
+                                <Link to="/profile/addresses" className="menu-item">
                                     address
-                                </a>
-                                <a href="#" className="menu-item">
-                                    orders
-                                </a>
-                                <a href="#" className="menu-item">
+                                </Link>
+                                <Link to="/profile/orders" className="menu-item">
+                                    My Orders
+                                </Link>
+                                <Link to="/profile/settings" className="menu-item">
                                     <i className="fas fa-cog"></i>{' '}
                                     Settings
-                                </a>
+                                </Link>
                             </div>
-                        </CSSTransition>
+                        </CSSTransition> */}
                     </div>
                 )}
             </li>

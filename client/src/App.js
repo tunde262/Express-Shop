@@ -15,9 +15,6 @@ import { getProducts, getCart } from './actions/productActions';
 // Google Analytics
 import ReactGA from 'react-ga';
 
-// Private Route
-import PrivateRoute from './components/routing/PrivateRoute';
-
 // Layout
 import HomePage from './pages/HomePage';
 import Landing from './pages/Landing';
@@ -29,16 +26,6 @@ import Backdrop from './components/layout/Backdrop/Backdrop';
 
 import Routes from './components/routing/Routes';
 import AddToCartModal from './components/modals/AddToCartModal';
-
-
-
-// Category Pages
-import Tops from './pages/Tops';
-import Bottoms from './pages/Bottoms';
-import Hats from './pages/Hats';
-
-// Profile Pages
-import Profile from './components/profile/Profile';
 
 
 if(localStorage.token) {

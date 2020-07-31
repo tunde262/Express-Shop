@@ -96,7 +96,7 @@ const VariantSchema = new Schema({
     ],
     locations: [
         {
-            darkstore: {
+            location: {
                 type: Schema.Types.ObjectId,
                 ref: 'darkstore'
             },

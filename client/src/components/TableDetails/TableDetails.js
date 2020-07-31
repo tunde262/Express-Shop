@@ -17,16 +17,31 @@ const TableDetails = ({description, setModal, admin}) => {
         tableContent = <Reviews setModal={setModal} /> 
     } else if(tableShow1 === 'locations') {
         tableContent = <Locations /> 
+    } else if (tableShow1 === 'activity') {
+        tableContent = <h1>activity</h1>
+    } else if(tableShow1 === 'notes') {
+        tableContent = <h1>notes</h1>
     } 
+
     return (
         <Fragment>
             <div className="nav">
-                <ul class={admin ? "admin-underline" : "nav-underline"}>
-                    <li class={tableShow1 === "info" && "active"} onClick={e => setTableShow1('info')}><i class="fas fa-info"></i></li>
-                    <li class={tableShow1 === "photos" && "active"} onClick={e => setTableShow1('photos')}><i class="fas fa-camera"></i></li>
-                    <li class={tableShow1 === "reviews" && "active"} onClick={e => setTableShow1('reviews')}><i style={{fontSize:'15px'}} class="fas fa-comment-dots"></i></li>
-                    <li class={tableShow1 === "locations" && "active"} onClick={e => setTableShow1('locations')}><i style={{fontSize:'15px'}} class="fas fa-map-marker-alt"></i></li>
-                </ul>
+                {admin ? (
+                    <ul class="admin-underline">
+                        <li class={tableShow1 === "info" && "active"} onClick={e => setTableShow1('info')}><i class="fas fa-info"></i></li>
+                        <li class={tableShow1 === "locations" && "active"} onClick={e => setTableShow1('locations')}><i style={{fontSize:'15px'}} class="fas fa-map-marker-alt"></i></li>
+                        <li class={tableShow1 === "activity" && "active"} onClick={e => setTableShow1('activity')}><i class="fas fa-list"></i></li>
+                        <li class={tableShow1 === "notes" && "active"} onClick={e => setTableShow1('notes')}><i className="fas fa-pencil-alt banner-icon"></i></li>
+                    </ul>
+                ) : (
+                    <ul class="nav-underline">
+                        <li class={tableShow1 === "info" && "active"} onClick={e => setTableShow1('info')}><i class="fas fa-info"></i></li>
+                        <li class={tableShow1 === "photos" && "active"} onClick={e => setTableShow1('photos')}><i class="fas fa-camera"></i></li>
+                        <li class={tableShow1 === "reviews" && "active"} onClick={e => setTableShow1('reviews')}><i style={{fontSize:'15px'}} class="fas fa-comment-dots"></i></li>
+                        <li class={tableShow1 === "locations" && "active"} onClick={e => setTableShow1('locations')}><i style={{fontSize:'15px'}} class="fas fa-map-marker-alt"></i></li>
+                    </ul>
+                )}
+                
                 {/* <ul class="nav-underline secondary">
                     <li><a href="#" class="active">City</a></li>
                     <li><a href="#">State</a></li>

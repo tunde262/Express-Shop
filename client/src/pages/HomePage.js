@@ -74,7 +74,7 @@ const ExplorePage = ({getProducts, product, auth: { isAuthenticated, loading}}) 
             <div onScroll={handleScroll} style={{height:"100vh", overflowY:'scroll'}}>
                 {/* <Banner imgLarge={ImgLarge} imgSmall={ImgSmall} /> */}
                 <Header />
-                <Container title="Bottoms" category="bottoms" background="MediumSlateBlue"  />
+                <Container />
             </div>
             {/* <Footer /> */}
             {!loading && !isAuthenticated ? <AuthModal /> : null }

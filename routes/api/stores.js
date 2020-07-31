@@ -80,7 +80,6 @@ router.get('/', async (req, res) => {
 // @desc Ge current user's store
 // @access Private
 router.get('/me', auth, async (req, res) => {
-    let tempArray;
     let storesArray = [];
     let newStore;
     try {

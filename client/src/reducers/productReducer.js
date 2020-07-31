@@ -1,4 +1,4 @@
-import { SET_PRODUCTS, SET_SORTED_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, PRODUCTS_LOADING, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, CLOSE_MODAL, CLEAR_CART,ADD_TOTALS, GET_CART, GET_ORDERS, HANDLE_TAGS, REMOVE_TAGS } from '../actions/types';
+import { SET_PRODUCTS, SET_SORTED_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, PRODUCTS_LOADING, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, HANDLE_MAP, CLOSE_MODAL, CLEAR_CART,ADD_TOTALS, GET_CART, GET_ORDERS, HANDLE_TAGS, REMOVE_TAGS } from '../actions/types';
 
 const initialState = {
     products: [],
@@ -13,6 +13,7 @@ const initialState = {
     category: 'all',
     tags: [],
     gender: 'all',
+    switchMaps: false,
     price: 0,
     minPrice: 0,
     maxPrice: 0,
@@ -189,6 +190,11 @@ export default function(state = initialState, action) {
                 ...state,
                 modalProduct: action.payload,
                 modalOpen: true
+            }
+        case HANDLE_MAP: 
+            return {
+                ...state,
+                switchMaps: !state.switchMaps
             }
         case CLOSE_MODAL: 
             return {

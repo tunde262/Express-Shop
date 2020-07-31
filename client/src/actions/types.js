@@ -46,6 +46,7 @@ export const REMOVE_ITEM = 'REMOVE_ITEM';
 export const CLEAR_CART = 'CLEAR_CART';
 export const ADD_TOTALS = 'ADD_TOTALS';
 export const GET_CART = 'GET_CART';
+export const HANDLE_MAP = 'HANDLE_MAP';
 
 // Variants
 export const GET_VARIANTS = 'GET_VARIANTS';
@@ -98,6 +99,8 @@ export const DELETE_LOCATION = 'DELETE_LOCATION';
 export const UPDATE_LOCATION_VARIANTS = 'UPDATE_LOCATION_VARIANTS';
 export const ADD_LOCATION = 'ADD_LOCATION';
 export const GET_LOCATION = 'GET_LOCATION';
+export const GET_PRODUCT_LOCATIONS = 'GET_PRODUCT_LOCATIONS';
+export const CLEAR_LOCATIONS = 'CLEAR_LOCATIONS';
 
 // Customer
 export const GET_CUSTOMERS = 'GET_CUSTOMERS';
