@@ -34,7 +34,7 @@ const Location = ({ location: {loading, locations}, store, getLocationsByStoreId
                     <td>
                         <input type="checkbox" value=""/>
                     </td>
-                    <td><Link to={"/admin/location/" + location._id}>{location.name}</Link></td>
+                    <td><Link to={"/admin/location/" + store.store._id + "/" + location._id}>{location.name}</Link></td>
                     <td>{location.qty}</td>
                     <td>
                         {location.tags.map( (tag, index) => (  

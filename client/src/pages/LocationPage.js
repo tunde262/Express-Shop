@@ -24,9 +24,9 @@ const LocationPage = ({getProductsByLocationId, getLocationById, location, produ
 
     return (
         <Fragment>
-            {location.loading && location.location === null ? <Spinner /> : (
+            {location.loading && location.detailLocation === null ? <Spinner /> : (
                 <Fragment>
-                    {location.location !== null ? (
+                    {location.detailLocation !== null ? (
                         <Fragment>
                             <div id="store-content-wrapper">
                                 <div id="breadcrumb">
@@ -38,12 +38,12 @@ const LocationPage = ({getProductsByLocationId, getLocationById, location, produ
                                 </div>
                                 <div class="store-header container-fluid">
                                     <div style={{display: 'flex'}}>
-                                        {location.location.img_name && <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${location.location.img_name}`} alt="img" />}
-                                        <h3 style={{color: "black"}}>{location.location.name}</h3>
+                                        {location.detailLocation.img_name && <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${location.detailLocation.img_name}`} alt="img" />}
+                                        <h3 style={{color: "black"}}>{location.detailLocation.name}</h3>
                                     </div>
                                     <hr/>
                                     <p>
-                                        {location.location.formatted_address}
+                                        {location.detailLocation.formatted_address}
                                     </p>
                                     <hr/>
                                 </div>

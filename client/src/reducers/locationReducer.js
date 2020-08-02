@@ -11,7 +11,7 @@ import {
   
   const initialState = {
     locations: [],
-    location: null,
+    detailLocation: null,
     loading: true,
     error: {}
   };
@@ -35,7 +35,7 @@ import {
       case GET_LOCATION:
         return {
           ...state,
-          location: payload,
+          detailLocation: payload,
           loading: false
         };
       case ADD_LOCATION:
@@ -67,7 +67,7 @@ import {
       case CLEAR_LOCATIONS:
         return {
             ...state,
-            location: null,
+            detailLocation: null,
             locations:[],
             loading: false
         }

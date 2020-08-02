@@ -71,9 +71,9 @@ const Routes = props => {
             <PrivateRoute exact path="/admin/add-customer" component={AddCustomer} />
             <PrivateRoute exact path="/admin/add-location" component={AddLocation} />
             <PrivateRoute exact path="/admin" component={Admin} />
-            <PrivateRoute exact path="/admin/:storeId/:id" component={ProductPage} />
-            <PrivateRoute exact path="/admin/collection/:id" component={CollectionPage} />
-            <PrivateRoute exact path="/admin/location/:id" component={LocationPage} />
+            <PrivateRoute exact path="/admin/product/:storeId/:productId" component={ProductPage} />
+            <PrivateRoute exact path="/admin/collection/:storeId/:collectionId" component={ProductPage} />
+            <PrivateRoute exact path="/admin/location/:storeId/:locationId" component={ProductPage} />
             <PrivateRoute exact path="/admin/:id" component={Dashboard} />
             <PrivateRoute exact path="/create-store" component={StoreForm} />
             <PrivateRoute exact path="/join-store" component={JoinForm} />

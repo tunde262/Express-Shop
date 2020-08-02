@@ -12,7 +12,8 @@ import {
     REMOVE_VARIANT_COMMENT,
     SET_SORTED_VARIANTS,
     HANDLE_VAR_TAGS,
-    REMOVE_VAR_TAGS
+    REMOVE_VAR_TAGS,
+    ADD_TO_VARIANTS
 } from './types';
 
 // Get variants
@@ -139,6 +140,24 @@ export const removeTags = (filter) => {
   return {
       type: REMOVE_VAR_TAGS,
       payload: filter
+  }
+}
+
+export const addToVariants = (id) => async dispatch => {
+  try {
+      console.log('IN ACTION')
+      console.log(id);
+      const res = await axios.get(`/api/variants/${id}`);
+
+      dispatch({
+          type: ADD_TO_VARIANTS,
+          payload: res.data
+      });
+  } catch (err) {
+      dispatch({
+          type: VARIANT_ERROR,
+          payload: { msg: err.response.statusText, status: err.response.status }
+      });
   }
 }
 

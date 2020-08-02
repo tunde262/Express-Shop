@@ -1,4 +1,4 @@
-import { SET_PRODUCTS, SET_SORTED_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, PRODUCTS_LOADING, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, HANDLE_MAP, CLOSE_MODAL, CLEAR_CART,ADD_TOTALS, GET_CART, GET_ORDERS, HANDLE_TAGS, REMOVE_TAGS } from '../actions/types';
+import { SET_PRODUCTS, SET_SORTED_PRODUCTS, ADD_TO_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, PRODUCTS_LOADING, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, HANDLE_MAP, CLOSE_MODAL, CLEAR_CART,ADD_TOTALS, GET_CART, GET_ORDERS, HANDLE_TAGS, REMOVE_TAGS } from '../actions/types';
 
 const initialState = {
     products: [],
@@ -74,6 +74,14 @@ export default function(state = initialState, action) {
                 // featuredProducts,
                 // price: maxPrice,
                 // maxPrice
+            };
+        }
+        case ADD_TO_PRODUCTS: {
+            const newProducts = [...state.products, action.payload];
+
+            return {
+                ...state,
+                products: newProducts,
             };
         }
         case ADD_PRODUCT:

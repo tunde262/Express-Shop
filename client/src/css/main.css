@@ -1393,6 +1393,44 @@ header {
     text-decoration: none;
     border-bottom: 2px solid #ff4b2b !important; }
 
+.collection-underline {
+  width: 100%;
+  margin: 1rem 0;
+  padding-left: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  text-align: center;
+  color: #808080; }
+  .collection-underline > li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    border-bottom: 2px solid gainsboro; }
+    .collection-underline > li i {
+      color: #808080; }
+    .collection-underline > li p {
+      margin: 0;
+      color: #808080; }
+  .collection-underline > li > a {
+    position: relative;
+    display: block;
+    padding: 10px 15px 5px 15px;
+    text-decoration: none; }
+  .collection-underline > li:hover, .collection-underline > li:focus, .collection-underline > li.active {
+    text-decoration: none;
+    border-bottom: 2px solid #ff4b2b;
+    color: #333; }
+  .collection-underline.secondary {
+    float: right;
+    display: block; }
+  .collection-underline.secondary > li > a {
+    border-bottom: none; }
+  .collection-underline.secondary > li:hover, .collection-underline.secondary > li:focus, .collection-underline.secondary > li.active {
+    text-decoration: none;
+    border-bottom: 2px solid #ff4b2b !important; }
+
 .store-actions-container {
   display: flex;
   justify-content: center;

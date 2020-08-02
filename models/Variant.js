@@ -7,10 +7,6 @@ const VariantSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'store'
     },
-    locationId: {
-        type: Schema.Types.ObjectId,
-        ref: 'darkstore'
-    },
     product: {
         type: Schema.Types.ObjectId,
         ref: 'product'

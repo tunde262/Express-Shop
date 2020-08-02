@@ -21,7 +21,7 @@ const Item = ({ setModal, store, page, product: {loading, sortedProducts}, delet
                         <input type="checkbox" value=""/>
                     </td>
                     <td>{product.img_gallery[0] && <img style={{width: '50px'}} src={`/api/products/image/${product.img_gallery[0].img_name}`} alt="img" />}</td>
-                    <td><Link to={"/admin/" + store.store._id + "/" + product._id}>{product.name}</Link></td>
+                    <td><Link to={"/admin/product/" + store.store._id + "/" + product._id}>{product.name}</Link></td>
                     <td>5 Stock / 2 Variants</td>
                     <td>{product.price}</td>
                     <td><i onClick={() => deleteProduct(product._id)} className="fas fa-trash"></i></td>

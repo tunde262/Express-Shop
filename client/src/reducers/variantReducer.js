@@ -9,7 +9,8 @@ import {
     REMOVE_VARIANT_COMMENT,
     SET_SORTED_VARIANTS,
     HANDLE_VAR_TAGS,
-    REMOVE_VAR_TAGS
+    REMOVE_VAR_TAGS,
+    ADD_TO_VARIANTS
 } from '../actions/types';
   
 const initialState = {
@@ -38,6 +39,14 @@ export default function(state = initialState, action) {
                 variant: payload,
                 loading: false
             };
+        case ADD_TO_VARIANTS: {
+            const newVariants = [...state.variants, action.payload];
+
+            return {
+                ...state,
+                variants: newVariants,
+            };
+        }
         case ADD_VARIANT:
             return {
                 ...state,

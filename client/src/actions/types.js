@@ -47,6 +47,7 @@ export const CLEAR_CART = 'CLEAR_CART';
 export const ADD_TOTALS = 'ADD_TOTALS';
 export const GET_CART = 'GET_CART';
 export const HANDLE_MAP = 'HANDLE_MAP';
+export const ADD_TO_PRODUCTS = 'ADD_TO_PRODUCTS';
 
 // Variants
 export const GET_VARIANTS = 'GET_VARIANTS';
@@ -60,6 +61,7 @@ export const REMOVE_VARIANT_COMMENT = 'REMOVE_VARIANT_COMMENT';
 export const SET_SORTED_VARIANTS = 'SET_SORTED_VARIANTS';
 export const HANDLE_VAR_TAGS = 'HANDLE_VAR_TAGS';
 export const REMOVE_VAR_TAGS = 'REMOVE_VAR_TAGS';
+export const ADD_TO_VARIANTS = 'ADD_TO_VARIANTS';
  
 
 // Orders

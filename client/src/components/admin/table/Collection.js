@@ -8,7 +8,7 @@ import Spinner from '../../common/Spinner';
 import 'react-responsive-modal/styles.css';
 
 
-const Collection = ({ collection: {loading, collections}, getStoreCollections, deleteCollection }) => {
+const Collection = ({ collection: {loading, collections}, store, getStoreCollections, deleteCollection }) => {
 
     const [modalShow, setModal] = useState(false);
      
@@ -31,7 +31,7 @@ const Collection = ({ collection: {loading, collections}, getStoreCollections, d
                     <td>
                         <input type="checkbox" value=""/>
                     </td>
-                    <td><Link to={"/admin/collection/" + collection._id}>{collection.name}</Link></td>
+                    <td><Link to={"/admin/collection/" + store.store._id + "/" + collection._id}>{collection.name}</Link></td>
                     <td>{collection.qty}</td>
                     <td>
                         {collection.tags.map( (tag, index) => (  
@@ -85,11 +85,13 @@ Collection.propTypes = {
     collection: PropTypes.object.isRequired,
     deleteCollection: PropTypes.func.isRequired,
     getStoreCollections: PropTypes.func.isRequired,
+    store: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
     profile: state.profile,
-    collection: state.collection
+    collection: state.collection,
+    store: state.store
 })
 
 export default connect(mapStateToProps, { getStoreCollections, deleteCollection })(Collection);

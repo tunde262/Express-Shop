@@ -2,20 +2,14 @@ import React, { Fragment } from 'react'
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 
-import Map from '../../../common/map/Map';
-import Modal from 'react-responsive-modal';
-import Title from '../../../Title';
-import Table from '../../table/Table';
-import Variant from '../../table/Variant';
-import TableDetails from '../../../TableDetails/TableDetails';
+import Variant from '../../../table/Variant';
+import TableDetails from '../../../../TableDetails/TableDetails';
 
 // Imgs
-import BoxEmoji from '../../../../utils/imgs/box.png'; 
-import ClosedLockEmoji from '../../../../utils/imgs/closedlock.jpg'; 
-import OpenLockEmoji from '../../../../utils/imgs/openlock.png'; 
-import CarEmoji from '../../../../utils/imgs/car.jpg'; 
-import EyeballsEmoji from '../../../../utils/imgs/eyeballs.png'; 
-import PencilEmoji from '../../../../utils/imgs/pencil.png'; 
+import BoxEmoji from '../../../../../utils/imgs/box.png'; 
+import ClosedLockEmoji from '../../../../../utils/imgs/closedlock.jpg'; 
+import OpenLockEmoji from '../../../../../utils/imgs/openlock.png'; 
+import CarEmoji from '../../../../../utils/imgs/car.jpg'; 
 
 const ProductDetail = ({ setModal, detailProduct, deleteVariant, setTable, match }) => {
     let imageContent;
@@ -76,12 +70,12 @@ const ProductDetail = ({ setModal, detailProduct, deleteVariant, setTable, match
                     </div>
                 </div>
                 <div class="product-description-box">
-                    <TableDetails admin setModal={setModal} description={detailProduct && detailProduct.description} />
+                    <TableDetails page="product" setModal={setModal} description={detailProduct && detailProduct.description} />
                 </div>
             </div>
             <div class="content-box container-fluid">
                 <div class="table-responsive table-filter">
-                    <Variant setModal={setModal} page="product" varId={match.params.id} deleteVariant={deleteVariant} />
+                    <Variant setModal={setModal} page="product" varId={match.params.productId} deleteVariant={deleteVariant} />
                 </div>
             </div>
         </Fragment>

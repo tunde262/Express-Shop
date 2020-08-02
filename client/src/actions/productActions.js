@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { setAlert } from './alertActions';
 
-import { SET_PRODUCTS, SET_SORTED_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, ADD_PRODUCT_REVIEW, REMOVE_PRODUCT_REVIEW, PRODUCT_ERROR, HANDLE_TAGS, REMOVE_TAGS, PRODUCTS_LOADING, ADD_TOTALS, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, HANDLE_MAP, CLOSE_MODAL, CLEAR_CART, GET_CART, GET_ORDERS } from './types';
+import { SET_PRODUCTS, SET_SORTED_PRODUCTS, ADD_TO_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, ADD_PRODUCT_REVIEW, REMOVE_PRODUCT_REVIEW, PRODUCT_ERROR, HANDLE_TAGS, REMOVE_TAGS, PRODUCTS_LOADING, ADD_TOTALS, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, HANDLE_MAP, CLOSE_MODAL, CLEAR_CART, GET_CART, GET_ORDERS } from './types';
 import store from '../store';
 
 // Get Products
@@ -115,6 +115,24 @@ export const removeTags = (filter) => {
     return {
         type: REMOVE_TAGS,
         payload: filter
+    }
+}
+
+export const addToProducts = (prodId) => async dispatch => {
+    try {
+        console.log('IN ACTION')
+        console.log(prodId);
+        const res = await axios.get(`/api/products/${prodId}`);
+
+        dispatch({
+            type: ADD_TO_PRODUCTS,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: PRODUCT_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
     }
 }
 

@@ -124,6 +124,8 @@ router.get('/product/:id', async (req, res) => {
 // @access Public
 router.get('/:id', async (req, res) => {
     try {
+        console.log('PARAMS ID')
+        console.log(req.params.id)
         const variant = Variant.findById(req.params.id);
 
         if(!variant) {

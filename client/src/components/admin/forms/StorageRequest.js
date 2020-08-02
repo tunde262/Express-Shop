@@ -1,16 +1,27 @@
 import React, { Fragment, useEffect } from 'react'
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
-const StorageRequest = ({setTable, products, getProductsByStoreId, store, setModal, setLocationModal}) => {
-    useEffect(() => {
-        if(!products) getProductsByStoreId(store._id);
-    }, [])
+const StorageRequest = ({match, setTable, products, getProductsByStoreId, store, setModal, setLocationModal}) => {
+    // useEffect(() => {
+    //     if(!products) getProductsByStoreId(store._id);
+    // }, [])
+
+    const handleClick = () => {
+        if(match.params.productId) {
+            setTable('product detail')
+        }
+
+        if(match.params.collectionId) {
+            setTable('collection detail')
+        }
+    }
     return (
         <Fragment>
             <div className="product-actions container-fluid">
                 <div style={{display:'flex', justifyContent:'space-between', height:'50px', alignItems:'center'}}>
                     <div style={{display:'flex', height:'100%', alignItems:'center'}}>
-                        <i onClick={e => setTable('detail')} class="fas fa-arrow-left"></i>{' '}
+                        <i onClick={handleClick} class="fas fa-arrow-left"></i>{' '}
                         <h3 style={{color:'#333', fontWeight:'300'}}>Storage Request</h3>
                     </div>
                     <div style={{display:'flex', height:'100%', alignItems:'center'}}>
@@ -227,4 +238,4 @@ StorageRequest.propTypes = {
 
 }
 
-export default StorageRequest
+export default withRouter(StorageRequest);

@@ -365,7 +365,7 @@ const Details = ({
                                         {cartLoading ? <ButtonSpinner /> : "Add To Cart"}
                                     </button>
                                 </div>
-                                <TableDetails setModal={setModal} description={detailProduct.description} />
+                                <TableDetails page="store" setModal={setModal} description={detailProduct.description} />
                             </div>
                         </div>
                         {/* <div class="content-box container-fluid">

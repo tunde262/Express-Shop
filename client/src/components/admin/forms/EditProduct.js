@@ -85,7 +85,7 @@ const EditProduct = ({
 
   return (
     <div className="product-actions container-fluid">
-        <i onClick={e => setTable('detail')} class="fas fa-arrow-left backbutton"></i>
+        <i onClick={e => setTable('product detail')} class="fas fa-arrow-left backbutton"></i>
         <div style={{width:'100%', marginTop:'2rem', textAlign:'center'}}>
             <h1 className="large text-primary">Edit Your Product</h1>
             <small>* = required field</small>
