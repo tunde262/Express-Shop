@@ -1,14 +1,21 @@
-import React, { useState, Fragment} from 'react'
-import PropTypes from 'prop-types'
+import React, { useState, useEffect, Fragment} from 'react'
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Info from './Info';
 import Reviews from './Reviews';
 import Locations from './Locations';
 
-const TableDetails = ({description, setModal, page}) => {
+import { getProductLocations } from '../../actions/locationActions';
+
+const TableDetails = ({ product: { detailProduct, loading }, description, setModal, page, setStoreLocationModal, getProductLocations }) => {
 
     const [tableShow1, setTableShow1] = useState('info');
     const [tableShow2, setTableShow2] = useState('locations');
     // const [tableShow2, setTableShow2] = useState('info');
+
+    useEffect(() => {
+        getProductLocations(detailProduct._id);
+    }, []);
 
     let pageContent;
     if(page === 'product') {
@@ -45,7 +52,7 @@ const TableDetails = ({description, setModal, page}) => {
     } else if (tableShow1 === 'reviews') {
         tableContent = <Reviews setModal={setModal} /> 
     } else if(tableShow1 === 'locations') {
-        tableContent = <Locations /> 
+        tableContent = <Locations setStoreLocationModal={setStoreLocationModal} /> 
     } else if (tableShow1 === 'activity') {
         tableContent = <h1>activity</h1>
     } else if(tableShow1 === 'notes') {
@@ -70,7 +77,13 @@ const TableDetails = ({description, setModal, page}) => {
 }
 
 TableDetails.propTypes = {
-
+    getProductLocations: PropTypes.func.isRequired,
+    product: PropTypes.object.isRequired,
 }
 
-export default TableDetails
+const mapStateToProps = state => ({
+    product: state.product
+});
+
+export default connect(mapStateToProps, { getProductLocations })(TableDetails);
+

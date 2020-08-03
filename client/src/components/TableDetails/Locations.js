@@ -16,16 +16,14 @@ const Locations = ({
         loading,
         switchMaps
     },
-    location
+    storageLocation,
+    setStoreLocationModal
 }) => {
-    useEffect(() => {
-        getProductLocations(detailProduct._id);
-    }, []);
 
     let locationList;
 
-    if(location.locations.length > 0) {
-        locationList = location.locations.map((location, index) => (
+    if(storageLocation.locations.length > 0) {
+        locationList = storageLocation.locations.map((location, index) => (
             <div key={index} style={{padding: '1rem 2rem', minHeight: '100px', display: 'flex', justifyContent: 'space-between', boxSizing: 'border-box'}}>
                 <div style={{display: 'flex', flexDirection: 'column'}}>
                     <p style={{fontSize: '1.3rem', fontWeight:'500', margin: ' 0.3rem 0'}}>{location.name}</p>
@@ -55,19 +53,21 @@ const Locations = ({
     return (
         <div style={{display: 'grid'}}>
             <div style={{width: '100%', height: '200px', background: '#cecece'}}>
-                {location.locations.length > 0 && !switchMaps ? (
-                    <Map 
-                        defaultZoom="8"
-                        centerLat={location.locations[0].location.coordinates[0]}
-                        centerLng={location.locations[0].location.coordinates[1]}
-                        markerLat={location.locations[0].location.coordinates[0]}
-                        markerLng={location.locations[0].location.coordinates[1]}
-                    />
+                {!storageLocation.loading && storageLocation.locations.length > 0 && !switchMaps ? (
+                    <Map storageLocation={storageLocation} />
                 ) : null}
             </div>
             <div>
                 {locationList}
-                <div style={{padding: '1rem 2rem', minHeight: '100px', display: 'flex', justifyContent: 'center'}}>
+                <div 
+                    style={{
+                        padding: '1rem 2rem', 
+                        minHeight: '100px', 
+                        display: 'flex', 
+                        justifyContent: 'center'
+                    }}
+                    onClick={setStoreLocationModal}
+                >
                     <h5>Add Location<i style={{marginLeft:'1rem'}} class="far fa-plus-square"></i></h5>
                 </div>
             </div>
@@ -79,13 +79,13 @@ Locations.propTypes = {
     getProductLocations: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
     variant: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
+    storageLocation: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
     product: state.product,
     variant: state.variant,
-    location: state.location
+    storageLocation: state.location
 });
 
 export default connect(mapStateToProps, { getProductLocations })(Locations);

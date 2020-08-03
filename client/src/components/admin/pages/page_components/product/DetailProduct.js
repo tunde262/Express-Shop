@@ -1,5 +1,6 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
 import Variant from '../../../table/Variant';
@@ -11,7 +12,8 @@ import ClosedLockEmoji from '../../../../../utils/imgs/closedlock.jpg';
 import OpenLockEmoji from '../../../../../utils/imgs/openlock.png'; 
 import CarEmoji from '../../../../../utils/imgs/car.jpg'; 
 
-const ProductDetail = ({ setModal, detailProduct, deleteVariant, setTable, match }) => {
+const DetailProduct = ({ setModal, detailProduct, deleteVariant, setTable, setStoreLocationModal, match }) => {
+
     let imageContent;
     
     if(detailProduct && detailProduct.img_gallery && detailProduct.img_gallery.length > 0 ) {
@@ -70,7 +72,7 @@ const ProductDetail = ({ setModal, detailProduct, deleteVariant, setTable, match
                     </div>
                 </div>
                 <div class="product-description-box">
-                    <TableDetails page="product" setModal={setModal} description={detailProduct && detailProduct.description} />
+                    <TableDetails page="product" setModal={setModal} setStoreLocationModal={setStoreLocationModal} description={detailProduct && detailProduct.description} />
                 </div>
             </div>
             <div class="content-box container-fluid">
@@ -82,8 +84,5 @@ const ProductDetail = ({ setModal, detailProduct, deleteVariant, setTable, match
     )
 }
 
-ProductDetail.propTypes = {
 
-}
-
-export default withRouter(ProductDetail);
+export default withRouter(DetailProduct);

@@ -42,7 +42,7 @@ const Location = ({ location: {loading, locations}, store, getLocationsByStoreId
                             )
                         )}
                     </td>
-                    <td><a class="btn btn-default" href="edit.html">Edit</a> <a class="btn btn-danger" href="#">Delete</a></td>
+                    <td><a class="btn btn-default" href="edit.html">Edit</a> <i onClick={() => deleteLocation(location._id)} className="fas fa-trash"></i></td>
                 </tr>
 
             ));

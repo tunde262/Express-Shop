@@ -14,6 +14,7 @@ import Modal from 'react-responsive-modal';
 import InputTag from '../../common/InputTag/InputTag';
 import Item from '../table/Item';
 import ShortItem from '../table/ShortItem';
+import ShortLocation from '../table/ShortLocation';
 
 import EditProduct from '../forms/EditProduct';
 import StorageRequest from '../forms/StorageRequest';
@@ -80,6 +81,7 @@ const ProductPage = ({
     const [headerShow, setHeaderShow] = useState('');
     const [displayStorageModal, toggleStorageModal] = useState(false);
     const [displayLocationModal, toggleLocationModal] = useState(false);
+    const [displayStoreLocationModal, toggleStoreLocationModal] = useState(false);
 
     // Variant Info
     const [varInfo, setVarInfo] = useState([]);
@@ -367,15 +369,53 @@ const ProductPage = ({
     let pageContent;
 
     if(tableShow1 === 'product detail') {
-        pageContent = <DetailProduct detailProduct={detailProduct} setModal={setModal} setTable={setTable} />;
+        if(detailProduct) {
+            pageContent = (
+                <DetailProduct 
+                    detailProduct={detailProduct} 
+                    setModal={setModal} 
+                    setTable={setTable} 
+                    setStoreLocationModal={toggleStoreLocationModal}
+                />
+            );
+        } else {
+            pageContent = <Spinner />
+        }
     } else if(tableShow1 === 'collection detail') {
-        pageContent = <DetailCollection setModal={toggleStorageModal} setTable={setTable} />;
+        pageContent = (
+            <DetailCollection 
+                setModal={toggleStorageModal} 
+                setTable={setTable} 
+            />
+        );
     } else if(tableShow1 === 'location detail') {
-        pageContent = <DetailLocation setModal={toggleStorageModal} setTable={setTable} />;
+        pageContent = (
+            <DetailLocation 
+                setModal={toggleStorageModal} 
+                setTable={setTable} 
+            />
+        );
     } else if(tableShow1 === 'storage request') {
-        pageContent = <StorageRequest products={products} getProductsByStoreId={getProductsByStoreId} setModal={toggleStorageModal} setLocationModal={toggleLocationModal} store={store.store} detail="true" setTable={setTable} /> 
+        pageContent = (
+            <StorageRequest 
+                products={products} 
+                getProductsByStoreId={getProductsByStoreId} 
+                setModal={toggleStorageModal} 
+                setLocationModal={toggleLocationModal} 
+                store={store.store} 
+                detail="true" 
+                setTable={setTable} 
+            />
+        ); 
     } else if (tableShow1 === 'edit') {
-        pageContent = <EditProduct detailProduct={detailProduct} editProduct={editProduct} store={store.store} setTable={setTable} />; 
+        pageContent = (
+            <EditProduct 
+                detailProduct={detailProduct} 
+                editProduct={editProduct} 
+                store={store.store} 
+                setTable={setTable} 
+            />
+        ); 
     }
 
     const updateList = () => {
@@ -506,6 +546,20 @@ const ProductPage = ({
                 {pageContent}
             </div>
 
+            <Modal open={displayStoreLocationModal} onClose={toggleStoreLocationModal} center>
+                <div style={{display:'flex'}}>
+                    <InputTag
+                        onAddTag ={onAddTag}
+                        onDeleteTag = {onDeleteTag}
+                        defaultTags={varTags}  
+                        placeholder="enter tags separated by comma"
+                    />
+                    <button onClick={onSubmitStorage}>Add</button>
+                </div>
+                
+               <ShortLocation storageLocation={storageLocation} handleClick={handleItemClick} itemList={itemList} />
+            </Modal>
+            
             <Modal open={displayLocationModal} onClose={toggleLocationModal} center>
                 <h5>Choose A Locations</h5>
                 <table className="table">

@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-const Map = ({centerLat, centerLng}) => {
+const Map = ({ storageLocation }) => {
 
     useEffect(() => {
         renderMap();
@@ -12,22 +14,47 @@ const Map = ({centerLat, centerLng}) => {
     }
 
     const initMap = () => {
+        const markers = []; 
+        console.log('MARKERS LENGTH');
+        console.log(storageLocation.locations.length);
+
+        console.log('LOCARIONS ARRAY');
+        console.log(storageLocation.locations);
+
+        if(storageLocation.locations.length > 0) {
+            storageLocation.locations.map((location, index) => {
+            
+                const latitude = location.location.coordinates[0];
+                const longitude = location.location.coordinates[1];
+    
+                markers.push({
+                    coords:{
+                        lat: latitude,
+                        lng: longitude
+                    },
+                    content:`<h1>${location.name}</h1>`
+                });
+            });
+        }
+
+        console.log('MARKERS');
+        console.log(markers)
+
         // Map options
         const options = {
             zoom: 10,
-            center: {lat: centerLat, lng: centerLng}
+            center: {
+                lat: storageLocation.locations[0].location.coordinates[0], 
+                lng: storageLocation.locations[0].location.coordinates[1]
+            }
         }
-
-        console.log('CENTER')
-        console.log(centerLat)
         
         const map = new window.google.maps.Map(document.getElementById('map'), options);
 
-        // Add marker
-        addMarker({
-            coords:{lat: centerLat, lng: centerLng},
-            content: '<h1>bBob</h1>'
-        }, map)
+        // Add markers
+        for(var i = 0; i < markers.length; i++) {
+            addMarker(markers[i], map)
+        }
     }
 
     const addMarker = (props, map) => {

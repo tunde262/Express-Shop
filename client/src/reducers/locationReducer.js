@@ -27,9 +27,11 @@ import {
           loading: false
         };
       case GET_PRODUCT_LOCATIONS:
+        const tempLocations = [...state.locations, ...payload];
+
         return {
           ...state,
-          locations: [...state.locations, ...payload],
+          locations: tempLocations,
           loading: false
         };
       case GET_LOCATION:
