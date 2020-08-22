@@ -11,6 +11,7 @@ import {
     ADD_VARIANT_COMMENT,
     REMOVE_VARIANT_COMMENT,
     SET_SORTED_VARIANTS,
+    SET_MODAL_VARIANTS,
     HANDLE_VAR_TAGS,
     REMOVE_VAR_TAGS,
     ADD_TO_VARIANTS
@@ -123,6 +124,14 @@ export const getVariantById = id => async dispatch => {
 export const setSortedVariants = (variants) =>  {
   return {
       type: SET_SORTED_VARIANTS,
+      payload: variants
+  }
+};
+
+// Set Variants for displayed modal
+export const setModalVariants = (variants) =>  {
+  return {
+      type: SET_MODAL_VARIANTS,
       payload: variants
   }
 };

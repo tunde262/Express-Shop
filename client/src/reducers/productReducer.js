@@ -1,8 +1,9 @@
-import { SET_PRODUCTS, SET_SORTED_PRODUCTS, ADD_TO_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, PRODUCTS_LOADING, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, HANDLE_MAP, CLOSE_MODAL, CLEAR_CART,ADD_TOTALS, GET_CART, GET_ORDERS, HANDLE_TAGS, REMOVE_TAGS } from '../actions/types';
+import { SET_PRODUCTS, SET_SORTED_PRODUCTS, SET_MODAL_PRODUCTS, ADD_TO_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, PRODUCTS_LOADING, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, HANDLE_MAP, CLOSE_MODAL, CLEAR_CART,ADD_TOTALS, GET_CART, GET_ORDERS, HANDLE_TAGS, REMOVE_TAGS } from '../actions/types';
 
 const initialState = {
     products: [],
     sortedProducts: [],
+    modalProducts: [],
     exploreTops: [],
     exploreBottoms: [],
     exploreHats: [],
@@ -43,7 +44,7 @@ export default function(state = initialState, action) {
             // let featuredProducts = tempProd.filter(product => product.featured === true);
             
             if(state.products.length > 0) {
-                tempProd = [...state.products, ...tempProd, ];
+                tempProd = [...state.products, ...tempProd ];
             }
 
             // let exploreTops = tempProd.filter(product => product.category === 'top');
@@ -71,6 +72,22 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 sortedProducts: products,
+                loading: false
+                // featuredProducts,
+                // price: maxPrice,
+                // maxPrice
+            };
+        }
+        case SET_MODAL_PRODUCTS: {
+            const products = action.payload;
+            console.log(products);
+            // let featuredProducts = tempProd.filter(product => product.featured === true);
+            // let maxPrice = Math.max(...products.map(product => product.price));
+
+            return {
+                ...state,
+                modalProducts: products,
+                loading: false
                 // featuredProducts,
                 // price: maxPrice,
                 // maxPrice

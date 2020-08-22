@@ -322,27 +322,35 @@ router.delete('/:id', auth, async (req, res) => {
     }
 });
 
-// @route PUT api/darkstores/product/:id
-// @desc Add & Remove New Item to Darkstore's products
+// @route PUT api/darkstores/variant/:locationId/:varId
+// @desc Add & Remove New Item to Darkstore's variants
 // @access Private
-router.put('/variant/:id', auth, async (req, res) => {
+router.put('/variant/:locationId/:varId', auth, async (req, res) => {
+    console.log('CONSOLE LOCATION')
+    console.log(req.params.varId);
     try {
-        const darkstore = await Darkstore.findById(req.params.id);
+        const darkstore = await Darkstore.findById(req.params.locationId);
 
-        // Check if product already in darkstore
+        console.log('CONSOLE 1');
+        // Check if variant already in darkstore location
         if(darkstore.variants.length > 0) {
-            if(darkstore.variants.filter(variant => variant._id.toString() === req.body.id).length > 0) {
+            console.log('CONSOLE 2');
+            if(darkstore.variants.filter(variantId => variantId.toString() === req.params.varId).length > 0) {
+                console.log('CONSOLE 3');
                 // Get remove index
-                const removeIndex = darkstore.variants.map(variant => variant._id.toString()).indexOf(req.body.id);
+                const removeIndex = darkstore.variants.map(variantId => variantId.toString()).indexOf(req.params.varId);
+                console.log('CONSOLE 4');
     
                 darkstore.variants.splice(removeIndex, 1);
             } else {
-                darkstore.variants.unshift({variant: req.body.id});
+                console.log('CONSOLE 5');
+                darkstore.variants.unshift({variant: req.params.varId});
             }
         } else {
-            darkstore.variants.unshift({variant: req.body.id});
+            console.log('CONSOLE 6');
+            darkstore.variants.unshift({variant: req.params.varId});
         }
-        
+        console.log('CONSOLE 7');
 
         await darkstore.save();
 

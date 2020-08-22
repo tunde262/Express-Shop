@@ -1,21 +1,31 @@
 import React, { useState, useEffect, Fragment} from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import Info from './Info';
 import Reviews from './Reviews';
 import Locations from './Locations';
 
-import { getProductLocations } from '../../actions/locationActions';
+import { getProductLocations, getCollectionLocations } from '../../actions/locationActions';
 
-const TableDetails = ({ product: { detailProduct, loading }, description, setModal, page, setStoreLocationModal, getProductLocations }) => {
+const TableDetails = ({ 
+    product: { 
+        detailProduct, 
+        loading 
+    }, 
+    storageLocation,
+    description, 
+    setModal, 
+    page, 
+    setStoreLocationModal, 
+    getProductLocations, 
+    getCollectionLocations,
+    match, 
+}) => {
 
     const [tableShow1, setTableShow1] = useState('info');
     const [tableShow2, setTableShow2] = useState('locations');
     // const [tableShow2, setTableShow2] = useState('info');
-
-    useEffect(() => {
-        getProductLocations(detailProduct._id);
-    }, []);
 
     let pageContent;
     if(page === 'product') {
@@ -78,12 +88,16 @@ const TableDetails = ({ product: { detailProduct, loading }, description, setMod
 
 TableDetails.propTypes = {
     getProductLocations: PropTypes.func.isRequired,
+    getCollectionLocations: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
+    storageLocation: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
-    product: state.product
+    product: state.product,
+    collection: state.collection,
+    storageLocation: state.location
 });
 
-export default connect(mapStateToProps, { getProductLocations })(TableDetails);
+export default connect(mapStateToProps, { getProductLocations, getCollectionLocations })(withRouter(TableDetails));
 

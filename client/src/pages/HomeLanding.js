@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { updateAuth } from '../actions/authActions';
 
+import Footer from '../components/layout/Footer/Footer';
 import StopwatchEmoji from '../utils/imgs/stopwatch.png';
 import BoxEmoji from '../utils/imgs/box.png';
 import MoneyBagEmoji from '../utils/imgs/moneybag.png';
@@ -14,7 +15,7 @@ import DesktopMobile from '../utils/imgs/CE_DESKTOP_MOBILE.png';
 
 import ReactGA from 'react-ga';
 
-const Landing = ({history, isAuthenticated, updateAuth}) => {
+const HomeLanding = ({history, isAuthenticated, updateAuth}) => {
   const [formData, setFormData] = useState({
     firstname: '',
     lastname: '',
@@ -68,7 +69,7 @@ const Landing = ({history, isAuthenticated, updateAuth}) => {
               <img style={{width: '20px', marginRight: '.1rem'}} src={DiamondEmoji} alt="img" />  Fashion. Shoes. Essentials. Care.</p>
             </div>
             <div class={classes.landing_form}>
-              <button>Get Started Now</button>
+              <button>Start Shopping Now</button>
               {/* <input
                   type="email"
                   name="email"
@@ -88,50 +89,12 @@ const Landing = ({history, isAuthenticated, updateAuth}) => {
           <img style={{width:'70%'}} src={DesktopMobile} alt="Selling online has never been easier" />
         </div>
       </div>
-      <div className={classes.info}>
-        <div>
-          <i className="fas fa-shipping-fast"></i>
-          <hr />
-          <p>Ship your pre-packaged items to the homes of our fulfillers</p>
-        </div>
-        <div>
-          <i className="fas fa-boxes"></i>
-          <hr />
-          <p>Our fulfillers will keep your items safe in there homes until they are ordered</p>
-        </div>
-        <div>
-          <i className="fas fa-running"></i>
-          <hr />
-          <p>When an item has been ordered by your customer out fulfiller will deliver it straight to their doorstep</p>
-        </div>
-        <div>
-          <i className="fas fa-search-location"></i>
-          <hr />
-          <p>Get instant updates about your items status and watch the items delivery on a map in realtime on your dashboard</p>
-        </div>
-      </div>
-      <div className={classes.how_works}>
-        <div className={classes.how1}>
-          <h1>Create A Store.<br/>Sell Online.<br/>Anywhere.<br/>For Free.</h1>
-          <p>Learn More</p>
-        </div>
-        <div className={classes.picture1}></div>
-        <div className={classes.how2}>
-          <h1>New Customers In Your City and Thousands of Others.</h1>
-          <p>Learn More</p>
-        </div>
-        <div className={classes.picture2}></div>
-        <div className={classes.how3}>
-          <h1>Get Paid.<br/>Easily.<br/>Online.<br/>Anywhere.</h1>
-          <p>Learn More</p>
-        </div>
-        <div className={classes.picture3}></div>
-      </div>
+      <Footer />
     </div>
   )
 }
 
-Landing.propTypes = {
+HomeLanding.propTypes = {
   updateAuth: PropTypes.func.isRequired,
 };
 
@@ -140,4 +103,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, { updateAuth })(withRouter(Landing));
+export default connect(mapStateToProps, { updateAuth })(withRouter(HomeLanding));

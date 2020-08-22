@@ -1,19 +1,21 @@
 import React, { useEffect, useState, Fragment } from 'react';
+import axios from 'axios';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { setSortedProducts, getProductsByStoreId, handleDetail, editProduct, deleteProduct } from '../../../actions/productActions';
-import { getProductVariants, addVariant, deleteVariant } from '../../../actions/variantActions';
+import { setSortedProducts, getProductsByStoreId, handleDetail, editProduct, deleteProduct, setModalProducts } from '../../../actions/productActions';
+import { getProductVariants, addVariant, deleteVariant, setModalVariants } from '../../../actions/variantActions';
 import { getStoreById } from '../../../actions/storeActions';
-import { getCollectionById, addItem } from '../../../actions/collectionActions';
-import { getLocationById } from '../../../actions/locationActions';
+import { getCollectionById, addCollectionItem } from '../../../actions/collectionActions';
+import { getLocationById, getProductLocations, getCollectionLocations, setLocations, addLocationVariant } from '../../../actions/locationActions';
 
 import Spinner from '../../common/Spinner';
 import Modal from 'react-responsive-modal';
 import InputTag from '../../common/InputTag/InputTag';
 import Item from '../table/Item';
 import ShortItem from '../table/ShortItem';
+import ShortVariant from '../table/ShortVariant';
 import ShortLocation from '../table/ShortLocation';
 
 import EditProduct from '../forms/EditProduct';
@@ -52,14 +54,21 @@ const ProductPage = ({
     match, 
     history,
     setSortedProducts,
+    setModalProducts,
+    setModalVariants,
     getProductsByStoreId,
-    addItem,
+    addCollectionItem,
+    addLocationVariant,
     product,
+    variant,
     store,
     collection,
     getCollectionById,
     storageLocation,
     getLocationById,
+    getProductLocations, 
+    getCollectionLocations,
+    setLocations
 }) => {
 
     const { 
@@ -80,6 +89,7 @@ const ProductPage = ({
     const [tableShow1, setTableShow1] = useState('');
     const [headerShow, setHeaderShow] = useState('');
     const [displayStorageModal, toggleStorageModal] = useState(false);
+    const [displayVariantModal, toggleVariantModal] = useState(false);
     const [displayLocationModal, toggleLocationModal] = useState(false);
     const [displayStoreLocationModal, toggleStoreLocationModal] = useState(false);
 
@@ -106,16 +116,19 @@ const ProductPage = ({
     useEffect(() => {
         if(match.params.productId) {
             if (!detailProduct) handleDetail(match.params.productId);
+            getProductLocations(match.params.productId);
             setTableShow1('product detail');
             setHeaderShow('product');
         }
         if(match.params.collectionId) {
             if (!collection.collection) getCollectionById(match.params.collectionId);
+            getCollectionLocations(match.params.collectionId);
             setTableShow1('collection detail');
             setHeaderShow('collection');
         }
         if(match.params.locationId) {
             if (!storageLocation.detailLocation) getLocationById(match.params.locationId);
+            setLocations(match.params.locationId);
             setTableShow1('location detail');
             setHeaderShow('location');
         }
@@ -258,14 +271,16 @@ const ProductPage = ({
     const onSubmitStorage = (e) => {
         e.preventDefault();
 
-        itemList.map(item => {
-            let data = new FormData();
-            data.append('id', item);
-
-            // addItem(data, collection._id);
-            console.log(item);
-        });
+        addCollectionItem(itemList, collection.collection._id);
+        console.log(itemList);
         
+    };
+
+    const onAddVariant = (e) => {
+        e.preventDefault();
+
+        addLocationVariant(itemList, storageLocation.detailLocation._id);
+        console.log(itemList);
     };
 
     const filterItems = (tag) => {
@@ -356,6 +371,22 @@ const ProductPage = ({
         setTableShow1(show)
     }
 
+    const handleStorageModal = async (bool) => {
+        const res = await axios.get(`/api/products/store/${store.store._id}`);
+        console.log('MODAL PRODUCTS');
+        console.log(res.data)
+        setModalProducts(res.data);
+        toggleStorageModal(bool);
+    }
+
+    const handleVariantModal = async (bool) => {
+        const res = await axios.get(`/api/variants/store/${store.store._id}`);
+        console.log('MODAL VARIANTS');
+        console.log(res.data)
+        setModalVariants(res.data);
+        toggleVariantModal(bool);
+    }
+
     let pageHeader;
 
     if(headerShow === 'product') {
@@ -382,19 +413,27 @@ const ProductPage = ({
             pageContent = <Spinner />
         }
     } else if(tableShow1 === 'collection detail') {
-        pageContent = (
-            <DetailCollection 
-                setModal={toggleStorageModal} 
-                setTable={setTable} 
-            />
-        );
+        if(collection.collection && !storageLocation.loading && !product.loading) {
+            pageContent = (
+                <DetailCollection 
+                    setModal={handleStorageModal} 
+                    setTable={setTable} 
+                />
+            ); 
+        } else {
+            pageContent = <Spinner />
+        }
     } else if(tableShow1 === 'location detail') {
-        pageContent = (
-            <DetailLocation 
-                setModal={toggleStorageModal} 
-                setTable={setTable} 
-            />
-        );
+        if(storageLocation.detailLocation && !storageLocation.loading) {
+            pageContent = (
+                <DetailLocation 
+                    setModal={handleVariantModal} 
+                    setTable={setTable} 
+                />
+            );
+        } else {
+            pageContent = <Spinner />
+        }
     } else if(tableShow1 === 'storage request') {
         pageContent = (
             <StorageRequest 
@@ -606,6 +645,20 @@ const ProductPage = ({
                <ShortItem product={product} handleClick={handleItemClick} itemList={itemList} />
             </Modal>
 
+            <Modal open={displayVariantModal} onClose={toggleVariantModal} center>
+                <div style={{display:'flex'}}>
+                    <InputTag
+                        onAddTag ={onAddTag}
+                        onDeleteTag = {onDeleteTag}
+                        defaultTags={varTags}  
+                        placeholder="enter tags separated by comma"
+                    />
+                    <button onClick={onAddVariant}>Add</button>
+                </div>
+                
+               <ShortVariant variant={variant} handleClick={handleItemClick} itemList={itemList} />
+            </Modal>
+
             <Modal open={displayModal} onClose={setModal} center>
                 <h2>Add Variant</h2>
                 <p>
@@ -770,6 +823,7 @@ ProductPage.propTypes = {
     handleDetail: PropTypes.func.isRequired,
     editProduct: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
+    variant: PropTypes.object.isRequired,
     collection: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired,
     deleteProduct: PropTypes.func.isRequired,
@@ -777,17 +831,42 @@ ProductPage.propTypes = {
     getStoreById: PropTypes.func.isRequired,
     setSortedProducts: PropTypes.func.isRequired,
     getProductsByStoreId: PropTypes.func.isRequired,
-    addItem: PropTypes.func.isRequired,
+    addCollectionItem: PropTypes.func.isRequired,
+    addLocationVariant: PropTypes.func.isRequired,
     getCollectionById: PropTypes.func.isRequired,
     storageLocation: PropTypes.object.isRequired,
     getLocationById: PropTypes.func.isRequired,
+    getProductLocations: PropTypes.func.isRequired,
+    getCollectionLocations: PropTypes.func.isRequired,
+    setLocations: PropTypes.func.isRequired,
+    setModalProducts: PropTypes.func.isRequired,
+    setModalVariants: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
     product: state.product,
+    variant: state.variant,
     store: state.store,
     collection: state.collection,
     storageLocation: state.location
 })
 
-export default connect(mapStateToProps, { addVariant, editProduct, handleDetail, getStoreById, deleteProduct, deleteVariant, addItem, setSortedProducts, getProductsByStoreId, getCollectionById, getLocationById })(withRouter(ProductPage));
+export default connect(mapStateToProps, { 
+    addVariant, 
+    editProduct, 
+    handleDetail, 
+    getStoreById, 
+    deleteProduct, 
+    deleteVariant, 
+    addCollectionItem, 
+    addLocationVariant,
+    setSortedProducts, 
+    setModalProducts,
+    setModalVariants,
+    getProductsByStoreId, 
+    getCollectionById, 
+    getLocationById,
+    getProductLocations, 
+    getCollectionLocations,
+    setLocations 
+})(withRouter(ProductPage));

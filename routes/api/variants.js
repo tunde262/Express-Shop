@@ -127,6 +127,7 @@ router.get('/:id', async (req, res) => {
         console.log('PARAMS ID')
         console.log(req.params.id)
         const variant = Variant.findById(req.params.id);
+        console.log(variant)
 
         if(!variant) {
             return res.status(404).json({ msg: 'Variant not found' });

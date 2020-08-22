@@ -237,24 +237,34 @@ router.delete('/:id', auth, async (req, res) => {
 // @route PUT api/products/like/:id
 // @desc Add & Remove New Item to Category products
 // @access Private
-router.put('/product/:id', auth, async (req, res) => {
+router.put('/product/:catId/:prodId', auth, async (req, res) => {
+    console.log('CONSOLE COLLECTION')
+    console.log(mongoose.Types.ObjectId(req.params.prodId));
     try {
-        const category = await Category.findById(req.params.id);
+        const tempId = mongoose.Types.ObjectId(req.params.prodId)
+        const prodId = {tempId};
+        const category = await Category.findById(req.params.catId);
 
+        console.log('CONSOLE 1');
         // Check if product already in category
         if(category.items.length > 0) {
-            if(category.items.filter(item => item._id.toString() === req.body.id).length > 0) {
+            console.log('CONSOLE 2');
+            if(category.items.filter(itemId => itemId.toString() === req.params.prodId).length > 0) {
+                console.log('CONSOLE 3');
                 // Get remove index
-                const removeIndex = category.items.map(item => item._id.toString()).indexOf(req.body.id);
+                const removeIndex = category.items.map(itemId => itemId.toString()).indexOf(req.params.prodId);
+                console.log('CONSOLE 4');
     
                 category.items.splice(removeIndex, 1);
             } else {
-                category.items.unshift({item: req.body.id});
+                console.log('CONSOLE 5');
+                category.items.unshift({item: req.params.prodId});
             }
         } else {
-            category.items.unshift({item: req.body.id});
+            console.log('CONSOLE 6');
+            category.items.unshift({item: req.params.prodId});
         }
-        
+        console.log('CONSOLE 7');
 
         await category.save();
 

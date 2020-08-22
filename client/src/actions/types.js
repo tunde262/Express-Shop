@@ -23,6 +23,7 @@ export const REMOVE_NAV3 = 'REMOVE_NAV3';
 
 // Products & Cart
 export const SET_PRODUCTS = 'SET_PRODUCTS';
+export const SET_IN_CART = 'SET_IN_CART';
 export const SET_SORTED_PRODUCTS = 'SET_SORTED_PRODUCTS';
 export const ADD_PRODUCT = 'ADD_PRODUCT';
 export const EDIT_PRODUCT = 'EDIT_PRODUCT';
@@ -48,6 +49,7 @@ export const ADD_TOTALS = 'ADD_TOTALS';
 export const GET_CART = 'GET_CART';
 export const HANDLE_MAP = 'HANDLE_MAP';
 export const ADD_TO_PRODUCTS = 'ADD_TO_PRODUCTS';
+export const SET_MODAL_PRODUCTS = 'SET_MODAL_PRODUCTS';
 
 // Variants
 export const GET_VARIANTS = 'GET_VARIANTS';
@@ -59,6 +61,7 @@ export const GET_VARIANT = 'GET_VARIANT';
 export const ADD_VARIANT_COMMENT = 'ADD_VARIANT_COMMENT';
 export const REMOVE_VARIANT_COMMENT = 'REMOVE_VARIANT_COMMENT';
 export const SET_SORTED_VARIANTS = 'SET_SORTED_VARIANTS';
+export const SET_MODAL_VARIANTS = 'SET_MODAL_VARIANTS';
 export const HANDLE_VAR_TAGS = 'HANDLE_VAR_TAGS';
 export const REMOVE_VAR_TAGS = 'REMOVE_VAR_TAGS';
 export const ADD_TO_VARIANTS = 'ADD_TO_VARIANTS';
@@ -95,6 +98,7 @@ export const ADD_COLLECTION = 'ADD_COLLECTION';
 export const GET_COLLECTION = 'GET_COLLECTION';
 
 // Locations
+export const SET_LOCATIONS = 'SET_LOCATIONS';
 export const GET_LOCATIONS = 'GET_LOCATIONS';
 export const LOCATION_ERROR = 'LOCATION_ERROR';
 export const DELETE_LOCATION = 'DELETE_LOCATION';

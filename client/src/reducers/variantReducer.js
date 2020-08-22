@@ -8,6 +8,7 @@ import {
     ADD_VARIANT_COMMENT,
     REMOVE_VARIANT_COMMENT,
     SET_SORTED_VARIANTS,
+    SET_MODAL_VARIANTS,
     HANDLE_VAR_TAGS,
     REMOVE_VAR_TAGS,
     ADD_TO_VARIANTS
@@ -16,6 +17,7 @@ import {
 const initialState = {
     variants: [],
     sortedVariants: null,
+    modalVariants: null,
     variant: null,
     loading: true,
     tags: [],
@@ -73,7 +75,17 @@ export default function(state = initialState, action) {
                 ...state,
                 sortedVariants: variants,
             };
-            }
+        }
+        case SET_MODAL_VARIANTS: {
+            const variants = action.payload;
+            console.log(variants);
+
+            return {
+                ...state,
+                modalVariants: variants,
+                loading: false
+            };
+        }
         case HANDLE_VAR_TAGS: 
             let tempVar = [...state.variants];
             const tags = [...state.tags, payload];

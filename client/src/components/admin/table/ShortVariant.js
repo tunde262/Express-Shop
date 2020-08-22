@@ -7,7 +7,7 @@ import Spinner from '../../common/Spinner';
 import 'react-responsive-modal/styles.css';
 
 
-const ShortVariant = ({ variant: {loading, sortedVariants}, handleClick, variantList }) => {  
+const ShortVariant = ({ variant: {loading, modalVariants}, handleClick, variantList }) => {  
     const [listForColor, setListForColor] = useState([]);
     const [colorSwitch, setColorSwitch] = useState(false);
 
@@ -27,12 +27,12 @@ const ShortVariant = ({ variant: {loading, sortedVariants}, handleClick, variant
     }
 
     let varList;
-    if(sortedVariants === null || loading) {
+    if(modalVariants === null || loading) {
         varList = <Spinner />; 
     } else {
-        if(sortedVariants.length > 0) {
+        if(modalVariants.length > 0) {
             
-            varList = sortedVariants.map(variant => {
+            varList = modalVariants.map(variant => {
                 let rowStyle;
                 if(listForColor.includes(variant._id)){
                     rowStyle = {background: 'rgb(0,0,255,0.2)'};

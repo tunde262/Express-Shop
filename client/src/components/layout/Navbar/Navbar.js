@@ -172,15 +172,21 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, backdrop, backdropClickH
 
     const guestLinks = (
         <Fragment>
+            {/* <li className="nav-offset">
+                <Link style={{fontSize:'1rem'}} className="cta" to="/about">About</Link>
+            </li> */}
             <li className="nav-offset">
-                <Link style={{fontSize:'1rem'}} className="cta" to="/register">New User?</Link>
+                <Link style={{fontSize:'1rem'}} className="cta" to="/business">Business</Link>
             </li>
+            {/* <li className="nav-offset">
+                <Link style={{fontSize:'1rem'}} className="cta" to="/blog">Blog</Link>
+            </li> */}
             <li className="nav-offset">
                 <Link style={{fontSize:'1rem'}} className="cta" to="/login">Login</Link>
             </li>
-            <li>
-                <Link className="cta" to="/register">
-                    <button>Sell</button>
+            <li className="nav-offset">
+                <Link style={{fontSize:'1rem'}} className="cta" to="/register">
+                    <button>Sign Up</button>
                 </Link>
             </li>
         </Fragment>

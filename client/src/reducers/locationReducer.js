@@ -1,4 +1,5 @@
 import {
+    SET_LOCATIONS,
     GET_LOCATIONS,
     LOCATION_ERROR,
     DELETE_LOCATION,
@@ -38,6 +39,12 @@ import {
         return {
           ...state,
           detailLocation: payload,
+          loading: false
+        };
+      case SET_LOCATIONS:
+        return {
+          ...state,
+          locations: [payload],
           loading: false
         };
       case ADD_LOCATION:

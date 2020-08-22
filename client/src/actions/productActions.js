@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { setAlert } from './alertActions';
 
-import { SET_PRODUCTS, SET_SORTED_PRODUCTS, ADD_TO_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, ADD_PRODUCT_REVIEW, REMOVE_PRODUCT_REVIEW, PRODUCT_ERROR, HANDLE_TAGS, REMOVE_TAGS, PRODUCTS_LOADING, ADD_TOTALS, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, HANDLE_MAP, CLOSE_MODAL, CLEAR_CART, GET_CART, GET_ORDERS } from './types';
+import { SET_PRODUCTS, SET_IN_CART, SET_SORTED_PRODUCTS, SET_MODAL_PRODUCTS, ADD_TO_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, ADD_PRODUCT_REVIEW, REMOVE_PRODUCT_REVIEW, PRODUCT_ERROR, HANDLE_TAGS, REMOVE_TAGS, PRODUCTS_LOADING, ADD_TOTALS, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, HANDLE_MAP, CLOSE_MODAL, CLEAR_CART, GET_CART, GET_ORDERS } from './types';
 import store from '../store';
 
 // Get Products
@@ -102,13 +102,39 @@ export const setSortedProducts = (products) =>  {
     }
 };
 
-// Add filter to tags
-export const handleTags = (filter) => {
-    return {
-        type: HANDLE_TAGS,
-        payload: filter
+// Get Filtered tags
+export const handleTags = (filter, products) => async dispatch =>  {
+    dispatch(setProductsLoading());
+    try {
+        if (filter === 'explore') {
+            dispatch({
+                type: SET_SORTED_PRODUCTS,
+                payload: products
+            });
+        } else {
+            const res = await axios.get(`/api/products/filter/${filter}`);
+
+            dispatch({
+                type: SET_SORTED_PRODUCTS,
+                payload: res.data
+            });
+        }
+    } catch (err) {
+        dispatch({
+            type: SET_SORTED_PRODUCTS,
+            payload: {}
+        })
     }
-}
+};
+
+
+// Set Products for displayed modal
+export const setModalProducts = (products) =>  {
+    return {
+        type: SET_MODAL_PRODUCTS,
+        payload: products
+    }
+};
 
 // Add filter to tags
 export const removeTags = (filter) => {
@@ -231,7 +257,7 @@ export const addProduct = (prodData, imgData, varInfo, varName, storeId, history
             payload: res.data
         });
 
-        history.push(`/admin/product/${res.data._id}`);
+        history.push(`/admin/product/${storeId}/${res.data._id}`);
         dispatch(setAlert('New Product Created', 'success'));
     } catch (err) {
         dispatch({
@@ -451,15 +477,24 @@ export const getCart = () => dispatch => {
         );
 };
 
+export const setInCart = (id) => dispatch => {
+    dispatch({
+        type: SET_IN_CART,
+        payload: id
+    })
+}
+
 // Add item to cart
 export const addToCart = (id) => dispatch => {
     axios.get(`/api/products/add-to-cart/${id}`)
-        .then(res =>
+        .then(res =>{
             dispatch({
                 type: ADD_TO_CART,
                 payload: res.data
-            })
-        )
+            });
+
+            dispatch(setInCart(id));
+        })
         .catch(err => 
             dispatch({
                 type: ADD_TO_CART,

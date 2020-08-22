@@ -80,7 +80,7 @@ const ProductCard = ({addLike, liked, product, handleDetail, addToCart, openModa
                             <Link to={"/store/" + store._id}>{store.name}</Link>
                         </div>
                         <div className="actions">
-                            <i onClick={() => todo(_id, name)} className="far fa-plus-square"></i>
+                            {inCart ? <i style={{color:'#ff4b2b'}} class="fas fa-check-square"></i> : <i style={{color:'#28c101'}} class="fas fa-check-square"></i>}
                             <div>
                                 <span>{likes.length > 0 && <span>{likes.length}</span>}</span>{' '}
                                 {liked ? <i style={{color:'#ff4b2b'}} onClick={() => addLike(_id)} class="fas fa-heart"></i> : <i onClick={() => addLike(_id)} className="far fa-heart detail-heart"></i>}
@@ -114,7 +114,7 @@ const ProductWrapper = styled.div`
         background: #fff;
         width: 21vw;
         height: calc(21vw + 200px);
-        border: 1px solid #ccc;
+        border: 0.5px solid #dfe1e5;
         border-radius: 5px;
         overflow: hidden;
     }

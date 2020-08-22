@@ -145,26 +145,35 @@ export const deleteCollection = id => async dispatch => {
 };
 
 // add single Item to collection
-export const addItem = (formData, id) => async dispatch => {
+export const addCollectionItem = (itemList, id) => async dispatch => {
   const config = {
     headers: {
       'Content-Type': 'application/json'
     }
   };
 
-  try {
-    const res = await axios.put(`/api/categories/product/${id}`, formData, config);
+  console.log('ITEM LIST ACTION');
+  console.log(itemList);
 
-    dispatch({
-      type: UPDATE_COLLECTION_ITEMS,
-      payload: { id, items: res.data}
-    });
+  itemList.map(async item => {
+    try {
+      const product = await axios.get(`/api/products/${item}`)
+      let data = new FormData();
+      data.append('id', product.data._id);
 
-    // dispatch(setAlert('Collection Created', 'success'));
-  } catch (err) {
-    dispatch({
-      type: COLLECTION_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
-    });
-  }
+      const collection = await axios.put(`/api/categories/product/${id}/${product.data._id}`, config);
+  
+      dispatch({
+        type: UPDATE_COLLECTION_ITEMS,
+        payload: { id, items: collection.data}
+      });
+  
+      // dispatch(setAlert('Collection Created', 'success'));
+    } catch (err) {
+      dispatch({
+        type: COLLECTION_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status }
+      });
+    }
+  })
 };

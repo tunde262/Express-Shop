@@ -17,7 +17,7 @@ import ClosedLockEmoji from '../../../../../utils/imgs/closedlock.jpg';
 import OpenLockEmoji from '../../../../../utils/imgs/openlock.png'; 
 import CarEmoji from '../../../../../utils/imgs/car.jpg'; 
 
-const DetailCollection = ({ setModal, addToProducts, collection: { collection, loading }, product, setTable }) => {
+const DetailCollection = ({ setModal, addToProducts, collection: { collection, loading }, product, setTable, storageLocation }) => {
     // TODO : map markers
     
     // let imageContent;
@@ -38,7 +38,7 @@ const DetailCollection = ({ setModal, addToProducts, collection: { collection, l
             for(var i = 0; i < collection.items.length; i++) {
                 console.log('ITEM ID');
                 console.log(collection.items[i]);
-                addToProducts(collection.items[i])
+                addToProducts(collection.items[i].item)
             }
         }
 
@@ -62,13 +62,9 @@ const DetailCollection = ({ setModal, addToProducts, collection: { collection, l
             </div>
             <div class="product-admin-main">
                 <div style={{width:'100%', height:'100%', border:'2px dashed #cecece'}}>
-                    <Map 
-                        defaultZoom="8"
-                        centerLat={Number("33.1174049")}
-                        centerLng={Number("-96.8270797")}
-                        markerLat={Number("33.1174049")}
-                        markerLng={Number("-96.8270797")}
-                    />
+                    {!storageLocation.loading && storageLocation.locations.length > 0 && !product.switchMaps ? (
+                        <Map storageLocation={storageLocation} />
+                    ) : null}
                 </div>
             </div>
             <div class="product-admin-secondary">
@@ -109,11 +105,13 @@ DetailCollection.propTypes = {
     collection: PropTypes.object.isRequired,
     addToProducts: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
+    storageLocation: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
     collection: state.collection,
-    product: state.product
+    product: state.product,
+    storageLocation: state.location
 })
 
 export default connect(mapStateToProps, { addToProducts })(withRouter(DetailCollection));

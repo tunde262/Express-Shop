@@ -23,8 +23,10 @@ const CategorySchema = new Schema({
     },
     items: [
         {
-            type: Schema.Types.ObjectId,
-            ref: 'product'
+            item: {
+                type: Schema.Types.ObjectId,
+                ref: 'product'
+            }
         }
     ]
 });

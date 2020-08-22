@@ -102,7 +102,21 @@ router.get('/store', auth, async (req, res) => {
 // @access Public
 router.get('/store/:id', async (req, res) => {
     try {
-        const products = await Product.find({ store: req.params.id }).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
+        const products = await Product.find({ store: req.params.id }).sort({_id:-1}).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
+
+        res.json(products);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
+// @route GET api/products
+// @desc Get Products by Filter
+// @access Public
+router.get('/filter/:filter', async (req, res) => {
+    try {
+        const products = await Product.find({ tags: req.params.filter }).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']).populate('store', ['name', 'img_name']);
 
         res.json(products);
     } catch (err) {

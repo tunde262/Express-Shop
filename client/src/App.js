@@ -17,7 +17,7 @@ import ReactGA from 'react-ga';
 
 // Layout
 import HomePage from './pages/HomePage';
-import Landing from './pages/Landing';
+import HomeLanding from './pages/HomeLanding';
 import Navbar from './components/layout/Navbar/Navbar';
 import SideDrawer from './components/layout/SideDrawer/SideDrawer';
 import CartDrawer from './components/layout/SideDrawer/CartDrawer';
@@ -119,7 +119,7 @@ const App = () => {
             {backdrop}
             <main id="home">
               <Switch>
-                <Route exact path="/" component={Landing} />
+                <Route exact path="/" component={HomeLanding} />
                 <Route component={Routes} />
               </Switch>
             </main>

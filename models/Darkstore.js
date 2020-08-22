@@ -82,8 +82,10 @@ const DarkstoreSchema = new Schema({
     ],
     variants: [
         {
-            type: Schema.Types.ObjectId,
-            ref: 'variant'
+            variant: {
+                type: Schema.Types.ObjectId,
+                ref: 'variant'
+            }
         }
     ],          
     date: {

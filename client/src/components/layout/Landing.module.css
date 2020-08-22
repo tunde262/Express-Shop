@@ -1,19 +1,27 @@
-.container {
+.landing_banner {
+    width: 100vw;
+    display: flex;
+    height: 75vh;
+    margin-bottom: 4rem;
+}
+
+.landing_banner_container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     height: 100%;
-    padding: 0 3rem;
-    background: url(../../utils/imgs/bannerexpress.jpg);
-    background-position: center;
-    background-position: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    padding: 0 0 0 3rem;
     max-width: 100%;
     overflow-x: hidden;
+    width: 50%;
 }
 
-.landing_container {
+.landing_banner_img {
+    height: 100%;
+    width: 50%;
+}
+
+.landing_banner_content {
     width: 500px;
     max-width: 100%;
 }
@@ -39,15 +47,25 @@
     height: 50px;
 }
 
-/* hr {
+.info {
+    box-sizing: border-box;
+    display: grid;
+    padding: 40px 30px;
+    width: 100%;
+    min-height: fit-content;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 2rem 0 4rem;
+}
+
+hr {
     background-color: white;
     border: none;
     height: 2px;
     margin: 40px 0;
-} */
+}
 
 .info div {
-    color: white;
+    color: #333;
     font-size: 20px;
     text-align: center;
 }
@@ -61,19 +79,24 @@
 
 .how_works {
     display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
     grid-template-areas: 
-        'how1 picture1'
-        'picture2 how2'
-        'how3 picture3'
-        'picture4 how4';
+        'picture1 how1'
+        'how2 picture2'
+        'picture3 how3';
     height: 200vh;
 }
 
 .how_works h1{
-    font-size: 2.5rem;
-    color: #ffbf00;
-    line-height: 10px;
+    font-size: 3rem;
+    color: #333;
     margin-bottom: 20px;
+}
+
+.how_works h1 span{
+    color: #ffbf00;
+    font-size: 3rem;
 }
 
 .how1 {
@@ -82,17 +105,16 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
-    line-height: 2rem;
+    align-items: center;
 }
 .how2 {
     grid-area: how2;
     margin: 0 30px;
+    padding-left: 125px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-end;
-    line-height: 2rem;
+    align-items: center;
 }
 .how3 {
     grid-area: how3;
@@ -100,8 +122,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
-    line-height: 2rem;
+    align-items: center;
 }
 .how4 {
     grid-area: how4;
@@ -109,24 +130,31 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-end;
-    line-height: 2rem;
+    align-items: center;
 }
 .picture1 {
     grid-area: picture1;
-    background-color: #ffbf00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .picture2 {
     grid-area: picture2;
-    background-color: #ffbf00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .picture3 {
     grid-area: picture3;
-    background-color: #ffbf00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .picture4 {
     grid-area: picture4;
-    background-color: #ffbf00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @media(max-width: 800px) {

@@ -8,7 +8,7 @@ import Spinner from '../../common/Spinner';
 import 'react-responsive-modal/styles.css';
 
 
-const ShortItem = ({ product: {loading, sortedProducts}, deleteProduct, handleClick, itemList }) => {  
+const ShortItem = ({ product: {loading, modalProducts}, deleteProduct, handleClick, itemList }) => {  
     const [listForColor, setListForColor] = useState([]);
     const [colorSwitch, setColorSwitch] = useState(false);
 
@@ -28,12 +28,12 @@ const ShortItem = ({ product: {loading, sortedProducts}, deleteProduct, handleCl
     }
 
     let productList;
-    if(sortedProducts === null || loading) {
+    if(modalProducts === null || loading) {
         productList = <Spinner />; 
     } else {
-        if(sortedProducts.length > 0) {
+        if(modalProducts.length > 0) {
             
-            productList = sortedProducts.map(product => {
+            productList = modalProducts.map(product => {
                 let rowStyle;
                 if(listForColor.includes(product._id)){
                     rowStyle = {background: 'rgb(0,0,255,0.2)'};

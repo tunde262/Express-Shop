@@ -41,11 +41,22 @@ const Map = ({ storageLocation }) => {
         console.log(markers)
 
         // Map options
-        const options = {
-            zoom: 10,
-            center: {
-                lat: storageLocation.locations[0].location.coordinates[0], 
-                lng: storageLocation.locations[0].location.coordinates[1]
+        let options;
+        if(storageLocation.locations.length > 0) { 
+            options = {
+                zoom: 10,
+                center: {
+                    lat: storageLocation.locations[0].location.coordinates[0], 
+                    lng: storageLocation.locations[0].location.coordinates[1]
+                }
+            }
+        } else {
+            options = {
+                zoom: 10,
+                center: {
+                    lat: 32.776664, 
+                    lng: -96.796988
+                }
             }
         }
         

@@ -5,6 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 import Register from '../auth/Register';
 import Login from '../auth/Login';
 import Alert from '../layout/alert';
+import BusinessLanding from '../../pages/BusinessLanding';
 
 // Pages
 import Details from '../Details';
@@ -45,6 +46,9 @@ const Routes = props => {
     <Fragment>
         <Alert />
         <Switch>
+            {/* Landing Pages */}
+            <Route exact path="/business" component={BusinessLanding} />
+
             <Route exact path="/home" component={HomePage} />
             <Route exact path="/explore" component={ExplorePage} />
             {/* Category Pages */}
