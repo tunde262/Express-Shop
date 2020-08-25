@@ -99,6 +99,30 @@ export const createStore = (formData, history, edit = false) => async dispatch =
     }
 }
 
+// Add product Img
+export const addBannerImg = (imgData, id) => async dispatch => {
+    const config = {
+        headers: {
+          'Content-Type': 'image/jpeg'
+        }
+    };
+
+    let data = new FormData();
+    data.append('file', imgData[0]);
+    
+    try {
+        const res = await axios.post(`/api/stores/bannerImg/${id}`, data, config);
+
+        console.log('Banner img added');
+        dispatch(setAlert('Image Added', 'success'));
+    } catch (err) {
+        dispatch({
+          type: STORE_ERROR,
+          payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+}
+
 // Favorite & Unfavorite 
 export const favorite = id => async dispatch => {
     try {
@@ -184,9 +208,4 @@ export const deleteStore = id => async dispatch => {
             payload: { msg: err.response.statusText, status: err.response.status }
         });
     }
-}
-
-// Store Banner
-export const addStoreBanner = fileData => async dispatch => {
-
 }

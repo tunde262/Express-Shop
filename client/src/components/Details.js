@@ -276,7 +276,7 @@ const Details = ({
             <Fragment>
                 <section className="container">
                     <div id="detail-content-wrapper">
-                        <div id="breadcrumb">
+                        {/* <div id="breadcrumb">
                             <nav className="breadcrumb">
                                 <ol>
                                     <li style={{display: 'flex'}}>
@@ -291,7 +291,7 @@ const Details = ({
                                 </ol>
                             </nav>
                             <BackButton onClick={goBack}><i className="fas fa-arrow-left"></i></BackButton>
-                        </div>
+                        </div> */}
                         <div class="detail-map">
                             <img src={`/api/products/image/${detailProduct.img_gallery[showImage].img_name}`} className="img-fluid" alt="product" />
                             <div className="datail-sub-images">
@@ -312,7 +312,7 @@ const Details = ({
                                 <h3 style={{color:'#ff4b2b', marginTop:'-1rem', fontWeight:'bold'}}>{detailProduct.price}</h3>
                                 <p><i style={{color:'#808080'}} class="fas fa-truck"></i> Next Delivery Time: <span style={{fontWeight:'bold', color:'#ff4b2b'}}>1pm</span></p>
                                 <p style={{color:'#808080', marginTop:'-1rem'}}><i className="fas fa-sign-out-alt" /> Return eligible</p>
-                                <hr/>
+                                <hr style={{background:'#dfe1e5', height:'1px', marginBottom:'0.5rem'}}/>
                                 <div style={{display:'flex', alignItems: 'center', marginTop:'-0.6rem'}}>
                                     <Link to={"/store/" + detailProduct.store._id}>
                                         <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${detailProduct.store.img_name}`} alt="img" />
@@ -325,7 +325,7 @@ const Details = ({
                                         {/* <Link to={"/location/" + detailProduct.locationId._id} style={{color:'#808080'}}>Wholesaler</Link> */}
                                     </div>
                                 </div>
-                                <hr style={{marginTop:'0.5rem'}}/>
+                                <hr style={{marginTop:'-0.5rem', background:'#dfe1e5', height:'1px'}}/>
                             </div>
                             <div class="detail-description-box">
                                 <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}>
@@ -356,15 +356,15 @@ const Details = ({
                                         <option value="women">Women</option>
                                     </select>
                                 </div>
-                                <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}>
-                                    <button style={{background:'transparent', color:'#cd00cd', borderColor:'#cd00cd'}}>Make an Offer</button>
+                                {/* <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}> */}
+                                    {/* <button style={{background:'transparent', color:'#cd00cd', borderColor:'#cd00cd'}}>Make an Offer</button> */}
                                     <button 
                                         onClick={() =>todo(detailProduct._id, detailProduct.title)}
                                         disabled={cartLoading ? true : false} 
                                     >
                                         {cartLoading ? <ButtonSpinner /> : "Add To Cart"}
                                     </button>
-                                </div>
+                                {/* </div> */}
                                 <TableDetails page="store" setModal={setModal} description={detailProduct.description} />
                             </div>
                         </div>

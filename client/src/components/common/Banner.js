@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
 import Modal from 'react-responsive-modal';
-import { addStoreBanner } from '../../actions/storeActions';
+import { addBannerImg } from '../../actions/storeActions';
 import img1 from '../../utils/imgs/img_soccer.jpg';
 import img2 from '../../utils/imgs/img_americanfootball.jpg';
 import img3 from '../../utils/imgs/img_soccer.jpg';
@@ -16,7 +16,7 @@ import img7 from '../../utils/imgs/img_volleyball.jpg';
 
 import DragAndDrop from '../admin/forms/utils/DragAndDrop';
 
-const Banner = ({imgLarge, imgSmall, admin}) => {
+const Banner = ({imgLarge, imgSmall, admin, store, addBannerImg}) => {
     const [files, setFiles] = useState([]);
 
     const [tableShow1, setTableShow1] = useState('upload');
@@ -60,6 +60,17 @@ const Banner = ({imgLarge, imgSmall, admin}) => {
     const setModal = () => {
         toggleModal(!displayModal);
     }
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+
+        // if(!detailProduct) {
+        addBannerImg(files, store.store._id);
+        // } else {
+        //   editProduct(data, detailProduct._id, store.store._id, history);
+        // }
+    
+    };
 
     let tableContent;
 
@@ -147,7 +158,7 @@ const Banner = ({imgLarge, imgSmall, admin}) => {
             )}
             <div style={{display:'flex', justifyContent:'center'}}>
                 <BannerContainer className="banner p-2"> 
-                    <img src={img} alt="img" />
+                    {store.store && store.store.banner_imgs[0] ? <img src={`/api/stores/image/${store.store.banner_imgs[0].img_name}`} alt="banner img 1" /> : <img src={img} alt="img" />}
                 </BannerContainer>
             </div>
             <Modal open={displayModal} onClose={setModal} center>
@@ -161,6 +172,7 @@ const Banner = ({imgLarge, imgSmall, admin}) => {
                     <li className={tableShow1 === "sports" && "active"} onClick={e => setTableShow1('sports')}><i class="fas fa-basketball-ball"></i></li>
                 </ul>
                 {tableContent}
+                <button onClick={onSubmit} class="btn btn-primary">Upload</button>
             </Modal>
         </Fragment>
     )
@@ -190,7 +202,7 @@ const BannerContainer = styled.div`
 `;
 
 Banner.propTypes = {
-    addStoreBanner: PropTypes.func.isRequired,
+    addBannerImg: PropTypes.func.isRequired,
     store: PropTypes.object.isRequired
 };
 
@@ -198,6 +210,6 @@ const mapStateToProps = (state) => ({
     store: state.store
 });
 
-export default connect(mapStateToProps, { addStoreBanner })(
+export default connect(mapStateToProps, { addBannerImg })(
     withRouter(Banner)
 );

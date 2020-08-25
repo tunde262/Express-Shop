@@ -345,6 +345,30 @@ router.delete('/review/:id/:review_id', auth, async (req, res) => {
     }
 });
 
+// @route POST api/stores/image/:id
+// @desc Add banner img to store
+// @access Private
+router.post('/bannerImg/:id', upload.single('file'), async (req, res) => {
+
+    const store = await Store.findById(req.params.id);
+
+    try {
+        const newImg = {
+            img_id: req.file.id,
+            img_name: req.file.filename
+        };
+
+        store.banner_imgs.unshift(newImg);
+        await store.save();
+        console.log('Banner Img Added');
+
+        res.json(store);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
 // ---- GridFs -----
 
 //@route GET /files

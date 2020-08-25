@@ -19,13 +19,13 @@ const StoreSchema = new Schema({
     },
     banner_imgs: [
         {
-            img: {
+            img_id: {
                 type: Schema.Types.ObjectId, // There is no need to create references here
                 ref: 'uploads'
             },
             img_name: {
                 type: String
-            }
+            },
         }
     ],
     name: {

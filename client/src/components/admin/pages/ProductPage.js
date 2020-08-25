@@ -404,6 +404,7 @@ const ProductPage = ({
             pageContent = (
                 <DetailProduct 
                     detailProduct={detailProduct} 
+                    variant={variant}
                     setModal={setModal} 
                     setTable={setTable} 
                     setStoreLocationModal={toggleStoreLocationModal}

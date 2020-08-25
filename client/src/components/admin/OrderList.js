@@ -38,30 +38,29 @@ class OrderList extends Component {
             }
         }
 
-        let headingContent;
+        // let headingContent;
 
-        if(this.props.admin) {
-            headingContent = (
-                <Fragment>
-                    <Link to="/admin/all">All Items</Link>
-                    <h1>Orders</h1>
-                    <hr />
-                </Fragment>
-            )
-        } else {
-            headingContent = (
-                <Fragment>
-                    <h1>Orders</h1>
-                    <hr />
-                </Fragment>
-            );
-        }
+        // if(this.props.admin) {
+        //     headingContent = (
+        //         <Fragment>
+        //             <Link to="/admin/all">All Items</Link>
+        //             <h1>Orders</h1>
+        //             <hr />
+        //         </Fragment>
+        //     )
+        // } else {
+        //     headingContent = (
+        //         <Fragment>
+        //             <h1>Orders</h1>
+        //             <hr />
+        //         </Fragment>
+        //     );
+        // }
 
         
 
         return (
             <div style={{textAlign: 'center'}} className="container">
-                {headingContent}
                 {orderList}
             </div>
         )

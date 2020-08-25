@@ -19,13 +19,13 @@ const StorePage = ({getStoreById, store, product: { products, loading }, history
     }
 
     return (
-        <Fragment>
+        <div style={{marginTop:'75px'}}>
             {store.loading && store.store === null ? <Spinner /> : (
                 <Fragment>
                     {store.store !== null ? (
                         <Fragment>   
                             <div class="store-header container-fluid">
-                                <div id="breadcrumb">
+                                {/* <div id="breadcrumb">
                                     <nav className="breadcrumb">
                                         <ol>
                                             <li style={{display: 'flex'}}>
@@ -39,9 +39,9 @@ const StorePage = ({getStoreById, store, product: { products, loading }, history
                                             </li>
                                         </ol>
                                     </nav>
-                                </div>
-                                <div style={{display: 'flex'}}>
-                                    {store.store.img_name && <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${store.store.img_name}`} alt="img" />}
+                                </div> */}
+                                <div style={{display: 'flex', flexDirection:'column', textAlign: 'center', alignItems:'center', justifyContent:'center', boxSizing:'border-box'}}>
+                                    {store.store.img_name && <img style={{height: '120px', width:'120px', margin: '1rem', borderRadius: '50%'}} src={`/api/stores/image/${store.store.img_name}`} alt="img" />}
                                     <h3 style={{color: "black"}}>{store.store.name}</h3>
                                 </div>
                                 <hr/>
@@ -54,7 +54,7 @@ const StorePage = ({getStoreById, store, product: { products, loading }, history
                     )}
                 </Fragment>
             )}
-        </Fragment>
+        </div>
     )
     
 }

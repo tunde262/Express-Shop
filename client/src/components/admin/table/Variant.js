@@ -21,9 +21,9 @@ import EyeballsEmoji from '../../../utils/imgs/eyeballs.png';
 import PencilEmoji from '../../../utils/imgs/pencil.png'; 
 
 
-const Variant = ({ setModal, getProductLocations, handleMap, product: {switchMaps, detailProduct}, location, page, varId, variant: {loading, variants}, getProductVariants, deleteVariant }) => {
+const Variant = ({ setModal, getProductLocations, handleMap, product: {switchMaps, detailProduct}, location, page, prodId, variant: {loading, variants}, getProductVariants, deleteVariant }) => {
     useEffect(() => {
-        getProductVariants(varId);
+        getProductVariants(prodId);
         if(switchMaps) {
             getProductLocations(detailProduct._id);
         }

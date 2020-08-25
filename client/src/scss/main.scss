@@ -476,7 +476,7 @@ input {
         margin-top: 15px;
     }
 
-    li {
+    li:first-child {
         padding: 0px 20px;
 
         a {
@@ -484,14 +484,28 @@ input {
             color: #333;
             font-size: 1.3rem;
             @include easeOut;
+            transition: 0.1s ease-in-out all;
 
             &:hover {
-                color: $secondary-color;
+                transform: scale(1.3);
             }
         }
 
         .active {
-            color: $secondary-color;
+            transform: scale(1.3);
+        }
+    }
+
+    li {
+        padding: 0px 20px;
+
+        a {
+            display: block;
+            color: #333;
+            font-size: 1.3rem;
+            text-decoration: none;
+            @include easeOut;
+            transition: 0.1s ease-in-out all;
         }
     }
 }
@@ -562,11 +576,50 @@ header {
     width: 100%;
     height: $nav-size;
     background: $primary-color;
-    box-shadow: 0 4px 2px -2px $secondary-color;
+    font-size: 1rem;
+    font-weight: 700;
+    // box-shadow: 0 4px 2px -2px $secondary-color;
+
+    .nav li{
+        border-radius: 56px;
+        padding: 0 1rem;
+        width: auto;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 0.5rem;
+
+        a {
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: none;
+                color: #333;
+            }
+        }
+
+        &:hover {
+            background: #dfe1e5;
+        }
+
+        i {
+            font-size: 1.2rem;
+        }
+
+        &.active {
+            background: #333;
+
+            a {
+                color: #fff;
+            }
+        }
+    }
 
     .branding {
         display: flex;
         align-items: center;
+        margin-right: 1rem;
     }
 
     .logo {

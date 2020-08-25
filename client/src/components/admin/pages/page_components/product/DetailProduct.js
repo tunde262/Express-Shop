@@ -12,7 +12,7 @@ import ClosedLockEmoji from '../../../../../utils/imgs/closedlock.jpg';
 import OpenLockEmoji from '../../../../../utils/imgs/openlock.png'; 
 import CarEmoji from '../../../../../utils/imgs/car.jpg'; 
 
-const DetailProduct = ({ setModal, detailProduct, deleteVariant, setTable, setStoreLocationModal, match }) => {
+const DetailProduct = ({ setModal, detailProduct, variant, deleteVariant, setTable, setStoreLocationModal, match }) => {
 
     let imageContent;
     
@@ -29,7 +29,7 @@ const DetailProduct = ({ setModal, detailProduct, deleteVariant, setTable, setSt
         <Fragment>
             <div className="product-actions container-fluid">
                 <div style={{display:'flex', justifyContent:'space-between', height:'50px', alignItems:'center'}}>
-                    <p style={{margin:'0'}}>Qty <span style={{fontWeight:'bold'}}>{detailProduct && detailProduct.inventory_qty}</span> in stock for <span style={{fontWeight:'bold'}}>{detailProduct && detailProduct.variants.length}</span> variants</p>
+                    <p style={{margin:'0'}}>Qty <span style={{fontWeight:'bold'}}>{detailProduct && detailProduct.inventory_qty}</span> in stock for <span style={{fontWeight:'bold'}}>{variant.variants.length}</span> variants</p>
                     <div style={{display:'flex', height:'100%', alignItems:'center'}}>
                         <Link to={detailProduct && `/details/${detailProduct._id}`}><i style={{fontSize:'1.3rem'}} class="fas fa-eye"></i></Link>
                         <i style={{margin:'0 1rem', fontSize:'1.4rem'}} class="fas fa-share-alt"></i>
@@ -77,7 +77,7 @@ const DetailProduct = ({ setModal, detailProduct, deleteVariant, setTable, setSt
             </div>
             <div class="content-box container-fluid">
                 <div class="table-responsive table-filter">
-                    <Variant setModal={setModal} page="product" varId={match.params.productId} deleteVariant={deleteVariant} />
+                    <Variant setModal={setModal} page="product" prodId={match.params.productId} deleteVariant={deleteVariant} />
                 </div>
             </div>
         </Fragment>

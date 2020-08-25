@@ -20,6 +20,9 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, backdrop, backdropClickH
     const [activeMenu, setActiveMenu] = useState('main');
     // dropdown height
     const [menuHeight, setMenuHeight] = useState(null);
+
+    const [isHovering, setIsHovering] = useState(false);
+    const [isHovering2, setIsHovering2] = useState(false);
     
     const calcHeight = (el) => {
         const height = el.offsetHeight;
@@ -33,21 +36,32 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, backdrop, backdropClickH
             drawerClickHandler();
         }
     }
+
+    const handleMouseHover = () => {
+        setIsHovering(!isHovering)
+    }
+
+    const handleMouseHover2 = () => {
+        setIsHovering2(!isHovering2)
+    }
+    
+
     const authLinks = (
         <Fragment>
-            <li className="nav-offset" onClick={e => setNavHighlight('home')}>
-                <Link to="/home" className={navHighlight === "home" && "active"}>
-                    <i class="fas fa-home"></i>
-                </Link>
-            </li>
-            <li className="nav-offset" onClick={e => setNavHighlight('explore')}>
-                <Link to="/explore" className={navHighlight === "explore" && "active"}>
-                    <i class="far fa-compass"></i>
-                </Link>
-            </li>
             <li className="nav-offset" onClick={e => setNavHighlight('profile')}>
-                <a className={navHighlight === "profile" && "active"} href="#" onClick={() => setDropdown(!dropdown)}>
-                    <i className="fas fa-user-circle"></i>
+                <a  
+                    className={navHighlight === "profile" && "active"}
+                    href="#" 
+                    onClick={() => setDropdown(!dropdown)}
+                    onMouseEnter={handleMouseHover}
+                    onMouseLeave={handleMouseHover}
+                >
+                    {navHighlight === "profile" || isHovering ? (
+                        <i style={isHovering && navHighlight !== "profile" ? {transform: 'scale(1.3)', color:'#bebebe'} : {transform: 'scale(1.3)'}} className="fas fa-user-circle"></i>
+                        ) 
+                        : (
+                            <i class="fas fa-user"></i>
+                        )}
                 </a>
 
                 {dropdown && (
@@ -125,8 +139,26 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, backdrop, backdropClickH
                 )}
             </li>
             <li className="nav-offset" onClick={e => setNavHighlight('cart')}>
-                <a onClick={() => toggleCartDrawer()} href="#" className={navHighlight === "cart" && "active"}>
-                    <i class="fas fa-shopping-cart"></i>
+                <a 
+                    onClick={() => toggleCartDrawer()} 
+                    href="#" 
+                    className={navHighlight === "cart" && "active"}
+                    onMouseEnter={handleMouseHover2}
+                    onMouseLeave={handleMouseHover2}
+                >
+                    {navHighlight === "cart" || isHovering2 ? (
+                        <div style={isHovering2 && navHighlight !== "cart" ? {
+                            height: '40px', width:'40px', borderRadius:'56px', background:'#bebebe', color:'#fff', textAlign:'center', display:'flex', justifyContent:'center', alignItems:'center'
+                        } : {
+                            height: '40px', width:'40px', borderRadius:'56px', background:'#333', color:'#fff', textAlign:'center', display:'flex', justifyContent:'center', alignItems:'center'
+                        }}>
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                    ) : (
+                        <div style={{height: '40px', width:'40px', borderRadius:'56px', background:'#fff', textAlign:'center', display:'flex', justifyContent:'center', alignItems:'center'}}>
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                    )}
                 </a>
 
                 {cart && (
@@ -197,12 +229,26 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, backdrop, backdropClickH
             <div className="nav">
                 <div className="branding">
                     <Link to="/"><img src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" /></Link>
-                    <div className="social-container">
+
+                    {/* <div className="social-container">
                         <a href="https://instagram.com/cardboardexpress" target="_blank" className="social"><i className="fab fa-instagram"></i></a>
                         <a href="https://www.facebook.com/Cardboard-Express-106068867830320/?view_public_for=106068867830320" target="_blank" className="social"><i className="fab fa-facebook-f"></i></a>
                         <a href="https://twitter.com/cardboardxpress" target="_blank" className="social"><i className="fab fa-twitter"></i></a>
-                    </div>
+                    </div> */}
                 </div>
+
+                <li className={navHighlight === "home" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('home')}>
+                    <Link to="/home" className={navHighlight === "home" && "active"}>
+                        <i class="fas fa-home"></i>{' '}
+                        Home
+                    </Link>
+                </li>
+                <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
+                    <Link to="/explore">
+                        <i class="far fa-compass"></i>{' '}
+                        Explore
+                    </Link>
+                </li>
                 {/* <Link className="cta" to="/register">
                     {/* <button type="button" className="nav-btn nav-icon" onClick={drawerClickHandler}>
                         Sell

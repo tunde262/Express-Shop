@@ -26,19 +26,6 @@ const Orders = ({deleteAccount, auth: { user }, profile: {profile, loading }}) =
                 <Fragment>
                     {profile !== null ? (
                         <div id="profile-content-wrapper">
-
-                            <div id="breadcrumb">
-                                <div style={{marginTop: '7rem'}}></div>
-                                <nav className="breadcrumb">
-                                    <ol>
-                                        <li><b>My Account</b></li>
-                                    </ol>
-                                </nav>
-                            </div>
-                            <div class="profile-header container-fluid">
-                                <h3 style={{color: "black"}}>Hey, {user.name}</h3>
-                                <hr/>
-                            </div>
                             <div class="store-main">
                                 {orderList}
                             </div>

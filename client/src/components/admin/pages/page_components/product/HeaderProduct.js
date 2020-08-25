@@ -6,16 +6,15 @@ import { withRouter } from 'react-router-dom';
 const ProductHeader = ({product: { detailProduct }, history}) => {
     return (
         <div class="product-header container-fluid">
-            <div id="breadcrumb">
+            {/* <div id="breadcrumb">
                 <nav className="breadcrumb">
                     <ol>
                         <li><b>My Portfolio</b></li>
                     </ol>
                 </nav>
-            </div>
-            <i onClick={() => history.goBack()} style={{fontSize:'20px'}} class="fas fa-arrow-left"></i>
+            </div> */}
             <div style={{display: 'flex', height:'auto', marginBottom:'10px', alignItems:'center'}}>
-                {detailProduct && detailProduct.img_gallery[0] ? <img style={{width: '50px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/products/image/${detailProduct.img_gallery[0].img_name}`} alt="img" /> : null}
+                <i onClick={() => history.goBack()} style={{fontSize:'20px', marginRight:'1rem'}} class="fas fa-arrow-left"></i>
                 <h3 style={{color: "black"}}>
                     {detailProduct && detailProduct.name}
                 </h3>
