@@ -1380,6 +1380,9 @@ header {
     text-decoration: none;
     border-bottom: 2px solid #ff4b2b;
     color: #333; }
+    .admin-underline > li:hover i, .admin-underline > li:hover p, .admin-underline > li:focus i, .admin-underline > li:focus p, .admin-underline > li.active i, .admin-underline > li.active p {
+      color: #ff4b2b;
+      font-weight: 700; }
   .admin-underline.secondary {
     float: right;
     display: block; }

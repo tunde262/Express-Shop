@@ -187,7 +187,7 @@ export const addProduct = (prodData, imgData, varInfo, varName, storeId, history
                         let data = new FormData();
                         data.append('id', res.data._id);
 
-                        await axios.put(`/api/categories/product/${category._id}`, data, config);
+                        await axios.put(`/api/categories/product/${category._id}/${res.data._id}`, data, config);
     
                         break;
                     }
@@ -202,6 +202,8 @@ export const addProduct = (prodData, imgData, varInfo, varName, storeId, history
         // imgData.map(img => addProductImg(img, res.data._id))
         // dispatch(handleDetail(res.data._id));
         // payload: res.data
+        console.log('IMG DATA');
+        console.log(imgData);
         imgData.map(async (img) => {
             let data = new FormData();
             data.append('file', img);

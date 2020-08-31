@@ -407,7 +407,6 @@ const Details = ({
                 </section>
                 <BrandOverview />
                 <ProductOverview title="Tops" products={products} link="/top" />
-                <Footer />
                 <Modal open={displayModal} onClose={setModal} center>
                     <p>
                         Write a quick review...

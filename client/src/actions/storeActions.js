@@ -99,6 +99,33 @@ export const createStore = (formData, history, edit = false) => async dispatch =
     }
 }
 
+// Edit store
+export const editStore = (storeData, storeId) => async dispatch => {
+    const config = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+    };
+    
+    try {
+        console.log('EDIT STORE');
+        const res = await axios.post(`/api/stores/edit/${storeId}`, storeData, config);
+        console.log(res.data);
+
+        dispatch({
+            type: GET_STORE,
+            payload: res.data
+        });
+
+        dispatch(setAlert('Store Updated', 'success'));
+    } catch (err) {
+        dispatch({
+          type: STORE_ERROR,
+          payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+}
+
 // Add product Img
 export const addBannerImg = (imgData, id) => async dispatch => {
     const config = {

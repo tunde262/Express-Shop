@@ -168,11 +168,6 @@ const Profile = ({ product, auth: { user, isAuthenticated, loading }, history}) 
                     </ul>
                     {tableContent}
                 </div>
-                {/* <div style={{marginTop:'100px'}}></div>
-                <Link onClick={() => history.goBack()} to="/profile"><i class="fas fa-arrow-left"></i>Back</Link>
-                <div className="store-settings-container">
-                    {profileContent}
-                </div> */}
             </div>
             {!loading && !isAuthenticated ? <AuthModal /> : null }
         </Fragment>

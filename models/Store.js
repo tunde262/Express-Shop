@@ -133,6 +133,34 @@ const StoreSchema = new Schema({
             type: String
         }
     },
+    show_banner: {
+        type: Boolean,
+        default: true
+    },
+    privacy: {
+        type: Boolean,
+        default: true
+    },
+    passcode: {
+        type: String
+    },
+    // enable_prod_comments: {
+
+    // },
+    // enable_prod_photos: {
+
+    // },
+    // enable_prod_locations: {
+
+    // },
+    taxes_in_prod: {
+        type: Boolean,
+        default: true
+    },
+    delivery_cost_customers: {
+        type: Number,
+        default: 0
+    },
     date: {
         type: Date,
         default: Date.now,

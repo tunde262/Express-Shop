@@ -63,6 +63,10 @@ const EditProduct = ({
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
+  const switchChange = e => {
+    setFormData({ ...formData, [e.target.name]: e.target.checked });
+  }
+
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -187,8 +191,8 @@ const EditProduct = ({
                 <input 
                     type="checkbox" 
                     name="visible"
-                    value={visible}
-                    onChange={onChange}
+                    checked={visible}
+                    onChange={switchChange}
                 />
                 <span class="slider round"></span>
             </label>
@@ -197,8 +201,8 @@ const EditProduct = ({
                 <input 
                     type="checkbox" 
                     name="in_stock"
-                    value={in_stock}
-                    onChange={onChange}
+                    checked={in_stock}
+                    onChange={switchChange}
                 />
                 <span class="slider round"></span>
             </label>

@@ -1662,6 +1662,11 @@ header {
       text-decoration: none;
       border-bottom: 2px solid #ff4b2b; 
       color: #333;
+
+      i, p {
+          color: #ff4b2b;
+          font-weight: 700;
+      }
     }
 
     &.secondary {

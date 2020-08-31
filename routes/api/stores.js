@@ -214,6 +214,82 @@ router.post('/', upload.single('file'), [ auth, [
     }
 );
 
+// @route POST api/stores
+// @desc Edit A Store
+// @access Public
+router.post('/edit/:id/', upload.single('file'),[ auth, [
+    check('name', 'Name is required').not().isEmpty()
+]], async (req, res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        return res.status(400).json({errors: errors.array() });
+    }
+
+    const {
+        name, 
+        description,
+        tags,
+        youtube,
+        instagram,
+        facebook,
+        twitter,
+        website,
+        show_banner,
+        privacy,
+        passcode,
+        taxes_in_prod,
+        delivery_cost_customers
+    } = req.body;
+
+    // Get fields
+    const storeFields = {};
+    if(name) storeFields.name = name;
+    if(show_banner) storeFields.show_banner = show_banner;
+    if(privacy) storeFields.privacy = privacy;
+    if(passcode) storeFields.passcode = passcode;
+    if(taxes_in_prod) storeFields.taxes_in_prod = taxes_in_prod;
+    if(delivery_cost_customers) storeFields.delivery_cost_customers = delivery_cost_customers;
+    if(req.file) storeFields.img = req.file.id;
+    if(req.file) storeFields.img_name = req.file.filename;
+    if(description) storeFields.description = description;
+    
+    // Tags - Split into array
+    if(tags) {
+        storeFields.tags = tags.split(',').map(tag => tag.trim());
+    }
+
+    // Build variant array
+    storeFields.social = {};
+    if(youtube) storeFields.social.youtube = youtube;
+    if(instagram) storeFields.social.instagram = instagram;
+    if(facebook) storeFields.social.facebook = facebook;
+    if(twitter) storeFields.social.twitter = twitter;
+    if(website) storeFields.social.website = website;
+    
+    try {
+        console.log('EDIT STORE')
+        
+        let store = await Store.findById(req.params.id);
+
+        if(!store) {
+            return res.status(404).json({ msg: 'Store not found' });
+        }
+
+        // Update
+        store = await Store.findOneAndUpdate(
+            { _id: req.params.id }, 
+            { $set: storeFields }, 
+            { new: true }
+        );
+
+        return res.json(store);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+}
+);
+
 // @route DELETE api/stores/:id
 // @desc Delete store and all it's data except order history
 router.delete('/:id', auth, async (req, res) => {

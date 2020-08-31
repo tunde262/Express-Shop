@@ -104,6 +104,11 @@ const AddProduct = ({
     }
     setFiles(fileList);
   }
+
+  const switchChange = e => {
+    setFormData({ ...formData, [e.target.name]: e.target.checked });
+  }
+
   // const fileChanged = e => {
   //   setFormData({ ...formData, [e.target.name]: e.target.files });
   // }
@@ -176,6 +181,9 @@ const AddProduct = ({
     if(category !== '')data.append('category', category);
     if(condition !== '')data.append('condition', condition);
     if(tags !== '')data.append('tags', tags);
+
+    console.log('IMG FILES');
+    console.log(files);
 
     console.log(varInfo);
     if(!detailProduct) {
@@ -462,8 +470,8 @@ const AddProduct = ({
             <input 
                 type="checkbox" 
                 name="visible"
-                value={visible}
-                onChange={onChange}
+                checked={visible}
+                onChange={switchChange}
             />
             <span class="slider round"></span>
         </label>
@@ -472,8 +480,8 @@ const AddProduct = ({
             <input 
                 type="checkbox" 
                 name="in_stock"
-                value={in_stock}
-                onChange={onChange}
+                checked={in_stock}
+                onChange={switchChange}
             />
             <span class="slider round"></span>
         </label>
