@@ -92,406 +92,657 @@ const ExplorePage = ({getProducts, product: { loading, products, featuredProduct
             <div style={{marginTop:'5rem'}}></div>
             <Banner imgLarge={carousell1} imgSmall={carousell2} />
 
-            <div className="grid-rows">
-                <div>
-                    <h3>For Kids</h3>
-                    <div className="grid-columns">
-                        <div className="grid-element">
-                            <img src={gainLogo}/>{' '}
-                            <div className="grid-element-title">
-                                <a>Nike</a>
-                                <p>clothing & fashion</p>
-                            </div>
-                        </div>
-                        <div className="grid-element-footer">
-                            <button>
-                                <i class="fas fa-shopping-bag"></i>
-                                <p>Shop</p>
-                            </button>
-                        </div>
-                    </div>
-                    <div className="grid-columns">
-                        <div className="grid-element">
-                            <img src={gainLogo}/>{' '}
-                            <div className="grid-element-title">
-                                <a>Nike</a>
-                                <p>clothing & fashion</p>
-                            </div>
-                        </div>
-                        <div className="grid-element-footer">
-                            <button>
-                                <i class="fas fa-shopping-bag"></i>
-                                <p>Shop</p>
-                            </button>
-                        </div>
-                    </div>
-                    <div className="grid-columns">
-                        <div className="grid-element">
-                            <img src={gainLogo}/>{' '}
-                            <div className="grid-element-title">
-                                <a>Nike</a>
-                                <p>clothing & fashion</p>
-                            </div>
-                        </div>
-                        <div className="grid-element-footer">
-                            <button>
-                                <i class="fas fa-shopping-bag"></i>
-                                <p>Shop</p>
-                            </button>
-                        </div>
-                    </div>
-                    <div className="grid-columns">
-                        <div className="grid-element">
-                            <img src={gainLogo}/>{' '}
-                            <div className="grid-element-title">
-                                <a>Nike</a>
-                                <p>clothing & fashion</p>
-                            </div>
-                        </div>
-                        <div className="grid-element-footer">
-                            <button>
-                                <i class="fas fa-shopping-bag"></i>
-                                <p>Shop</p>
-                            </button>
-                        </div>
-                    </div>
+            {/* Featured Promotion */}
+            <div className="promotion-block">
+                <div style={{backgroundColor:'#333', height:'100%', width:'100%', borderRadius:'15px'}}>
+
                 </div>
-                <div>
-                    <h3>For Pets</h3>
-                    <div className="grid-columns">
-                        <div className="grid-element">
-                            <img src={gainLogo}/>{' '}
-                            <div className="grid-element-title">
-                                <a>Nike</a>
-                                <p>clothing & fashion</p>
-                            </div>
-                        </div>
-                        <div className="grid-element-footer">
-                            <button>
-                                <i class="fas fa-shopping-bag"></i>
-                                <p>Shop</p>
-                            </button>
-                        </div>
-                    </div>
-                    <div className="grid-columns">
-                        <div className="grid-element">
-                            <img src={gainLogo}/>{' '}
-                            <div className="grid-element-title">
-                                <a>Nike</a>
-                                <p>clothing & fashion</p>
-                            </div>
-                        </div>
-                        <div className="grid-element-footer">
-                            <button>
-                                <i class="fas fa-shopping-bag"></i>
-                                <p>Shop</p>
-                            </button>
-                        </div>
-                    </div>
-                    <div className="grid-columns">
-                        <div className="grid-element">
-                            <img src={gainLogo}/>{' '}
-                            <div className="grid-element-title">
-                                <a>Nike</a>
-                                <p>clothing & fashion</p>
-                            </div>
-                        </div>
-                        <div className="grid-element-footer">
-                            <button>
-                                <i class="fas fa-shopping-bag"></i>
-                                <p>Shop</p>
-                            </button>
-                        </div>
-                    </div>
-                    <div className="grid-columns">
-                        <div className="grid-element">
-                            <img src={gainLogo}/>{' '}
-                            <div className="grid-element-title">
-                                <a>Nike</a>
-                                <p>clothing & fashion</p>
-                            </div>
-                        </div>
-                        <div className="grid-element-footer">
-                            <button>
-                                <i class="fas fa-shopping-bag"></i>
-                                <p>Shop</p>
-                            </button>
-                        </div>
-                    </div>
+                <div style={{backgroundColor:'#333', height:'100%', width:'100%', borderRadius:'15px'}}>
+
                 </div>
-                <div>
-                    <h3>For Health</h3>
-                    <div className="grid-columns">
-                        <div className="grid-element">
-                            <img src={gainLogo}/>{' '}
-                            <div className="grid-element-title">
-                                <a>Nike</a>
-                                <p>clothing & fashion</p>
+            </div>
+
+            <div className="store-grid">
+                <h3>Today's Top Stores</h3>
+                <div className="grid-rows">
+                    <div>
+                        <Link to="/store/5f47314b08024b849d6e0d02">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/6f6f58546fce4a516668f6f73dc8b2f5.jpg`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Bounty</a>
+                                        <p>Household Supplies</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <div className="grid-element-footer">
-                            <button>
-                                <i class="fas fa-shopping-bag"></i>
-                                <p>Shop</p>
-                            </button>
-                        </div>
+                        </Link>
+                        <Link to="/store/5f47256c08024b849d6e0c41">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/cfb9f2dc1804e9d464adf26e61341dce.jpg`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Iams</a>
+                                        <p>Pets</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </Link>
+                        <Link to="/store/5f4702a208024b849d6e0b5d">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/41bdd039c9e9603c31d6509fc019cfc1.jpg`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Solo Cup</a>
+                                        <p>Household Supplies</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </Link>
                     </div>
-                    <div className="grid-columns">
-                        <div className="grid-element">
-                            <img src={gainLogo}/>{' '}
-                            <div className="grid-element-title">
-                                <a>Nike</a>
-                                <p>clothing & fashion</p>
+                    <div>
+                        <Link to="/store/5f46e76f08024b849d6e0981">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/79866644f2ec46a13ed9744188fc621b.png`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Cetaphil</a>
+                                        <p>Health & Beauty</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <div className="grid-element-footer">
-                            <button>
-                                <i class="fas fa-shopping-bag"></i>
-                                <p>Shop</p>
-                            </button>
-                        </div>
+                        </Link>
+                        <Link to="/store/5f47327408024b849d6e0d28">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/729077bfd8c2cd5f43f054442a2529bd.jpg`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Kleenex</a>
+                                        <p>Health & Beauty</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </Link>
+                        <Link to="/store/5f47d7fbf85b88a75b1f65a3">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/c71c061bc47fce0fe0610be60a8b0e46.png`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Kroger</a>
+                                        <p>Grocery Store</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </Link>
                     </div>
-                    <div className="grid-columns">
-                        <div className="grid-element">
-                            <img src={gainLogo}/>{' '}
-                            <div className="grid-element-title">
-                                <a>Nike</a>
-                                <p>clothing & fashion</p>
+                    <div>
+                        <Link to="/store/5f47ab5008024b849d6e119c">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/a1ddf1dae0afd88eb8e39fca9ec650c2.jpg`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Febreze</a>
+                                        <p>Househould Supplies</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <div className="grid-element-footer">
-                            <button>
-                                <i class="fas fa-shopping-bag"></i>
-                                <p>Shop</p>
-                            </button>
-                        </div>
-                    </div>
-                    <div className="grid-columns">
-                        <div className="grid-element">
-                            <img src={gainLogo}/>{' '}
-                            <div className="grid-element-title">
-                                <a>Nike</a>
-                                <p>clothing & fashion</p>
+                        </Link>
+                        <Link to="/store/5f47547e08024b849d6e108b">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/49b68073c5d734500e04181fa760aafc.jpeg`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Tide</a>
+                                        <p>Househould Supplies</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <div className="grid-element-footer">
-                            <button>
-                                <i class="fas fa-shopping-bag"></i>
-                                <p>Shop</p>
-                            </button>
-                        </div>
+                        </Link>
+                        <Link to="/store/5f46ea4e08024b849d6e0996">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/67c77c7e5e46afc5564cbd69e583a1cf.png`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Aveeno</a>
+                                        <p>Health & Beauty</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </Link>
                     </div>
                 </div>
             </div>
 
             {/* Featured Promotion */}
-            <div className="promotion-block">
+            <div className="secondary-block">
+                <div style={{height:'100%', width:'100%', marginBottom:'1rem'}}>
+                    <div style={{height:'236px', width:'100%', marginBottom:'10px', backgroundColor:'#333', borderRadius:'15px'}}>
+
+                    </div>  
+                    <h2 style={{fontSize:'12.5px', color:'#808080'}}>Featured Collection</h2>
+                    <h2 style={{fontSize:'20px', margin:'5px 0 10px 0'}}>#WritingGoals</h2>
+                    <p style={{fontWeight:'600',fontSize:'12px', color:'#808080'}}>Ulysses productivty tools keep wordsmith on track.</p>
+                </div>
+                <div style={{height:'100%', width:'100%', marginBottom:'1rem'}}>
+                    <div style={{height:'236px', width:'100%', marginBottom:'10px', backgroundColor:'#333', borderRadius:'15px'}}>
+
+                    </div>  
+                    <h2 style={{fontSize:'12.5px', color:'#808080'}}>Featured Collection</h2>
+                    <h2 style={{fontSize:'20px', margin:'5px 0 10px 0'}}>#WritingGoals</h2>
+                    <p style={{fontWeight:'600',fontSize:'12px', color:'#808080'}}>Ulysses productivty tools keep wordsmith on track.</p>
+                </div>
+                <div style={{height:'100%', width:'100%'}}>
+                    <div style={{height:'236px', width:'100%', marginBottom:'10px', backgroundColor:'#333', borderRadius:'15px'}}>
+
+                    </div>  
+                    <h2 style={{fontSize:'12.5px', color:'#808080'}}>Featured Collection</h2>
+                    <h2 style={{fontSize:'20px', margin:'5px 0 10px 0'}}>#WritingGoals</h2>
+                    <p style={{fontWeight:'600',fontSize:'12px', color:'#808080'}}>Ulysses productivty tools keep wordsmith on track.</p>
+                </div>
+            </div>
+
+            <div className="store-grid">
+                <h3>Keep Your Bathroom Stocked</h3>
+                <div className="grid-rows">
+                    <div>
+                        <Link to="/store/5f472aa208024b849d6e0ca2">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/c7da65d47d41584203b1bf1ca757e003.png`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Method Men</a>
+                                        <p>Household Supplies</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </Link>
+                        <Link to="/store/5f47bd46f85b88a75b1f6505">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/c9966c31e329edd6c8f67de25e67f9bf.png`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Dove</a>
+                                        <p>Health & Beauty</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
+                    <div>
+                        <Link to="/store/5f472be108024b849d6e0cc5">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/ef5d60ca741ec6b33e34d230ea68492d.png`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Colgate</a>
+                                        <p>Health & Beauty</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </Link>
+                        <Link to="/store/5f47aa8908024b849d6e1164">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/ca9dc04602a8ad38a9123eede331072d.jpg`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Crest</a>
+                                        <p>Health & Beauty</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
+                    <div>
+                        <Link to="/store/5f47be28f85b88a75b1f6546">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/9d4dd47018cb40844d9b29d803af6be5.png`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Suave</a>
+                                        <p>Health & Beauty</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </Link>
+                        <Link to="/store/5f47aed308024b849d6e125e">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/4e84b04515f1248410f8599f01696e9b.png`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Charmin</a>
+                                        <p>Household Supplies</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+
+            {/* Featured Promotion */}
+            <div className="secondary-block">
+                <div style={{height:'100%', width:'100%', marginBottom:'1rem'}}>
+                    <div style={{height:'236px', width:'100%', marginBottom:'10px', backgroundColor:'#333', borderRadius:'15px'}}>
+
+                    </div>  
+                    <h2 style={{fontSize:'12.5px', color:'#808080'}}>Featured Collection</h2>
+                    <h2 style={{fontSize:'20px', margin:'5px 0 10px 0'}}>#WritingGoals</h2>
+                    <p style={{fontWeight:'600',fontSize:'12px', color:'#808080'}}>Ulysses productivty tools keep wordsmith on track.</p>
+                </div>
+                <div style={{height:'100%', width:'100%', marginBottom:'1rem'}}>
+                    <div style={{height:'236px', width:'100%', marginBottom:'10px', backgroundColor:'#333', borderRadius:'15px'}}>
+
+                    </div>  
+                    <h2 style={{fontSize:'12.5px', color:'#808080'}}>Featured Collection</h2>
+                    <h2 style={{fontSize:'20px', margin:'5px 0 10px 0'}}>#WritingGoals</h2>
+                    <p style={{fontWeight:'600',fontSize:'12px', color:'#808080'}}>Ulysses productivty tools keep wordsmith on track.</p>
+                </div>
+                <div style={{height:'100%', width:'100%'}}>
+                    <div style={{height:'236px', width:'100%', marginBottom:'10px', backgroundColor:'#333', borderRadius:'15px'}}>
+
+                    </div>  
+                    <h2 style={{fontSize:'12.5px', color:'#808080'}}>Featured Collection</h2>
+                    <h2 style={{fontSize:'20px', margin:'5px 0 10px 0'}}>#WritingGoals</h2>
+                    <p style={{fontWeight:'600',fontSize:'12px', color:'#808080'}}>Ulysses productivty tools keep wordsmith on track.</p>
+                </div>
+            </div>
+
+            {/* Featured Promotion */}
+            {/* <div className="promotion-block">
                 <img src={boxesImg} alt="home delivery boxes" />
                 <div className="promotion-block-content">
                     <h3>Title here</h3>
                     <p>$10</p>
                     <p>description of offer goes here for those who dont know what it is</p>
                 </div>
-            </div>
+            </div> */}
 
             {/* Featured Stores */}
-            <div style={{margin:'1rem 0 3rem 0'}}>
+            {/* <div style={{margin:'1rem 0 3rem 0'}}>
                 <BrandOverview />
-            </div>
+            </div> */}
 
-            <div className="grid-rows">
-                <div>
-                    <h3>For Kids</h3>
-                    <div className="grid-columns">
-                        <div className="grid-element">
-                            <img src={gainLogo}/>{' '}
-                            <div className="grid-element-title">
-                                <a>Nike</a>
-                                <p>clothing & fashion</p>
+            <div className="store-grid">
+                <h3>Stores For Your Pets</h3>
+                <div className="grid-rows">
+                    <div>
+                        <Link to="/store/5f47256c08024b849d6e0c41">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/cfb9f2dc1804e9d464adf26e61341dce.jpg`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Iams</a>
+                                        <p>Pets</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <div className="grid-element-footer">
-                            <button>
-                                <i class="fas fa-shopping-bag"></i>
-                                <p>Shop</p>
-                            </button>
-                        </div>
+                        </Link>
+                        <Link to="/store/5f47380c08024b849d6e0e37">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/24a1947df25c77899cd9508e58bce499.jpg`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Pedigree</a>
+                                        <p>Pets</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </Link>
+                        <Link to="/store/5f4734a508024b849d6e0d99">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/55192da05c76874e86a27152b065c661.png`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Meow Mix</a>
+                                        <p>Pets</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </Link>
                     </div>
-                    <div className="grid-columns">
-                        <div className="grid-element">
-                            <img src={gainLogo}/>{' '}
-                            <div className="grid-element-title">
-                                <a>Nike</a>
-                                <p>clothing & fashion</p>
+                    <div>
+                        <Link to="/store/5f47281008024b849d6e0c66">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/062824fdabc6636e456e5b5fd1576ff8.png`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Purina</a>
+                                        <p>Health & Beauty</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <div className="grid-element-footer">
-                            <button>
-                                <i class="fas fa-shopping-bag"></i>
-                                <p>Shop</p>
-                            </button>
-                        </div>
+                        </Link>
+                        <Link to="/store/5f47ae3d08024b849d6e1214">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/bb9755dba06f87ae11bebc967a3b40c7.png`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Rachel Ray Nutrish</a>
+                                        <p>Pets</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </Link>
+                        <Link to="/store/5f473dc008024b849d6e0f96">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/0fc8664c89b8a42a1bb575529e250f96.png`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>9Lives</a>
+                                        <p>Pets</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </Link>
                     </div>
-                    <div className="grid-columns">
-                        <div className="grid-element">
-                            <img src={gainLogo}/>{' '}
-                            <div className="grid-element-title">
-                                <a>Nike</a>
-                                <p>clothing & fashion</p>
+                    <div>
+                        <Link to="/store/5f473b7f08024b849d6e0f0e">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/38d40cbc20574202f3a2df733e4fb00f.png`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Nature's Recipe</a>
+                                        <p>Pets</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <div className="grid-element-footer">
-                            <button>
-                                <i class="fas fa-shopping-bag"></i>
-                                <p>Shop</p>
-                            </button>
-                        </div>
-                    </div>
-                    <div className="grid-columns">
-                        <div className="grid-element">
-                            <img src={gainLogo}/>{' '}
-                            <div className="grid-element-title">
-                                <a>Nike</a>
-                                <p>clothing & fashion</p>
+                        </Link>
+                        <Link to="/store/5f47292708024b849d6e0c9f">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <div className="grid-element-title">
+                                        <a>Pet Pride</a>
+                                        <p>Household Supplies</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <div className="grid-element-footer">
-                            <button>
-                                <i class="fas fa-shopping-bag"></i>
-                                <p>Shop</p>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <h3>For Pets</h3>
-                    <div className="grid-columns">
-                        <div className="grid-element">
-                            <img src={gainLogo}/>{' '}
-                            <div className="grid-element-title">
-                                <a>Nike</a>
-                                <p>clothing & fashion</p>
+                        </Link>
+                        <Link to="/store/5f47af9f08024b849d6e1262">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/2710db9b83e66edc5f09aa1a0fc64001.jpg`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Luvsome</a>
+                                        <p>Pets</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <div className="grid-element-footer">
-                            <button>
-                                <i class="fas fa-shopping-bag"></i>
-                                <p>Shop</p>
-                            </button>
-                        </div>
-                    </div>
-                    <div className="grid-columns">
-                        <div className="grid-element">
-                            <img src={gainLogo}/>{' '}
-                            <div className="grid-element-title">
-                                <a>Nike</a>
-                                <p>clothing & fashion</p>
-                            </div>
-                        </div>
-                        <div className="grid-element-footer">
-                            <button>
-                                <i class="fas fa-shopping-bag"></i>
-                                <p>Shop</p>
-                            </button>
-                        </div>
-                    </div>
-                    <div className="grid-columns">
-                        <div className="grid-element">
-                            <img src={gainLogo}/>{' '}
-                            <div className="grid-element-title">
-                                <a>Nike</a>
-                                <p>clothing & fashion</p>
-                            </div>
-                        </div>
-                        <div className="grid-element-footer">
-                            <button>
-                                <i class="fas fa-shopping-bag"></i>
-                                <p>Shop</p>
-                            </button>
-                        </div>
-                    </div>
-                    <div className="grid-columns">
-                        <div className="grid-element">
-                            <img src={gainLogo}/>{' '}
-                            <div className="grid-element-title">
-                                <a>Nike</a>
-                                <p>clothing & fashion</p>
-                            </div>
-                        </div>
-                        <div className="grid-element-footer">
-                            <button>
-                                <i class="fas fa-shopping-bag"></i>
-                                <p>Shop</p>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <h3>For Health</h3>
-                    <div className="grid-columns">
-                        <div className="grid-element">
-                            <img src={gainLogo}/>{' '}
-                            <div className="grid-element-title">
-                                <a>Nike</a>
-                                <p>clothing & fashion</p>
-                            </div>
-                        </div>
-                        <div className="grid-element-footer">
-                            <button>
-                                <i class="fas fa-shopping-bag"></i>
-                                <p>Shop</p>
-                            </button>
-                        </div>
-                    </div>
-                    <div className="grid-columns">
-                        <div className="grid-element">
-                            <img src={gainLogo}/>{' '}
-                            <div className="grid-element-title">
-                                <a>Nike</a>
-                                <p>clothing & fashion</p>
-                            </div>
-                        </div>
-                        <div className="grid-element-footer">
-                            <button>
-                                <i class="fas fa-shopping-bag"></i>
-                                <p>Shop</p>
-                            </button>
-                        </div>
-                    </div>
-                    <div className="grid-columns">
-                        <div className="grid-element">
-                            <img src={gainLogo}/>{' '}
-                            <div className="grid-element-title">
-                                <a>Nike</a>
-                                <p>clothing & fashion</p>
-                            </div>
-                        </div>
-                        <div className="grid-element-footer">
-                            <button>
-                                <i class="fas fa-shopping-bag"></i>
-                                <p>Shop</p>
-                            </button>
-                        </div>
-                    </div>
-                    <div className="grid-columns">
-                        <div className="grid-element">
-                            <img src={gainLogo}/>{' '}
-                            <div className="grid-element-title">
-                                <a>Nike</a>
-                                <p>clothing & fashion</p>
-                            </div>
-                        </div>
-                        <div className="grid-element-footer">
-                            <button>
-                                <i class="fas fa-shopping-bag"></i>
-                                <p>Shop</p>
-                            </button>
-                        </div>
+                        </Link>
                     </div>
                 </div>
             </div>
 
-            <Banner imgLarge={carousell1} imgSmall={carousell2} />
+            {/* Featured Promotion */}
+            <div className="secondary-block">
+                <div style={{height:'100%', width:'100%', marginBottom:'1rem'}}>
+                    <div style={{height:'236px', width:'100%', marginBottom:'10px', backgroundColor:'#333', borderRadius:'15px'}}>
+
+                    </div>  
+                    <h2 style={{fontSize:'12.5px', color:'#808080'}}>Featured Collection</h2>
+                    <h2 style={{fontSize:'20px', margin:'5px 0 10px 0'}}>#WritingGoals</h2>
+                    <p style={{fontWeight:'600',fontSize:'12px', color:'#808080'}}>Ulysses productivty tools keep wordsmith on track.</p>
+                </div>
+                <div style={{height:'100%', width:'100%', marginBottom:'1rem'}}>
+                    <div style={{height:'236px', width:'100%', marginBottom:'10px', backgroundColor:'#333', borderRadius:'15px'}}>
+
+                    </div>  
+                    <h2 style={{fontSize:'12.5px', color:'#808080'}}>Featured Collection</h2>
+                    <h2 style={{fontSize:'20px', margin:'5px 0 10px 0'}}>#WritingGoals</h2>
+                    <p style={{fontWeight:'600',fontSize:'12px', color:'#808080'}}>Ulysses productivty tools keep wordsmith on track.</p>
+                </div>
+                <div style={{height:'100%', width:'100%'}}>
+                    <div style={{height:'236px', width:'100%', marginBottom:'10px', backgroundColor:'#333', borderRadius:'15px'}}>
+
+                    </div>  
+                    <h2 style={{fontSize:'12.5px', color:'#808080'}}>Featured Collection</h2>
+                    <h2 style={{fontSize:'20px', margin:'5px 0 10px 0'}}>#WritingGoals</h2>
+                    <p style={{fontWeight:'600',fontSize:'12px', color:'#808080'}}>Ulysses productivty tools keep wordsmith on track.</p>
+                </div>
+            </div>
+
+            <div className="store-grid">
+                <h3>Never Run Out Of Toilet Paper</h3>
+                <div className="grid-rows">
+                    <div>
+                        <Link to="/store/5f47d7fbf85b88a75b1f65a3">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/c71c061bc47fce0fe0610be60a8b0e46.png`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Kroger</a>
+                                        <p>Grocery Store</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </Link>
+                        <Link to="/store/5f47aed308024b849d6e125e">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/4e84b04515f1248410f8599f01696e9b.png`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Charmin</a>
+                                        <p>Household Supplies</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
+                    <div>
+                        <Link to="/store/5f47abee08024b849d6e11d6">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/077cf5c6d85eca2faa73f62746f5951e.png`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Cottonelle</a>
+                                        <p>Household Supplies</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </Link>
+                        <Link to="/store/5f47535a08024b849d6e1057">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/a4c97c0a4389a49e76736fb5aab10163.png`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Quilted Northern</a>
+                                        <p>Household Supplies</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
+                    <div>
+                        <Link to="/store/5f4726ad08024b849d6e0c62">
+                            <div className="grid-columns">
+                                <div className="grid-element">
+                                    <img src={`/api/stores/image/745f8b2caf5b1e9956b54ad214e5c201.jpg`}/>{' '}
+                                    <div className="grid-element-title">
+                                        <a>Angel Soft</a>
+                                        <p>Household Supplies</p>
+                                    </div>
+                                </div>
+                                <div className="grid-element-footer">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <p>Add</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+
+
+            {/* <Banner imgLarge={carousell1} imgSmall={carousell2} /> */}
 
             {/* Second Slider */}
             {/* <div className="container-fluid">
@@ -535,19 +786,19 @@ const ExplorePage = ({getProducts, product: { loading, products, featuredProduct
 
 
             {/* Featured Products */}
-            <div style={{marginTop:'5rem'}}></div>
-            <ProductOverview title="Toilet Paper" products={featuredProducts} link="/top" />
+            {/* <div style={{marginTop:'5rem'}}></div>
+            <ProductOverview title="Toilet Paper" products={featuredProducts} link="/top" /> */}
 
 
-            <div className="promotion-grid">
+            {/* <div className="promotion-grid">
                 <div>1</div>
                 <div>2</div>
                 <div>3</div>
                 <div>4</div>
-            </div>
+            </div> */}
 
 
-            <Banner imgLarge={carousell1} imgSmall={carousell2} />
+            {/* <Banner imgLarge={carousell1} imgSmall={carousell2} /> */}
             
             {/* First Slider */}
             {/* <div className="container-fluid">
@@ -574,7 +825,7 @@ const ExplorePage = ({getProducts, product: { loading, products, featuredProduct
                 </div>
             </div> */}
 
-            <div className="info" style={{margin: '4rem 0'}}>
+            {/* <div className="info" style={{margin: '4rem 0'}}>
                 <div>
                     <i className="fas fa-shipping-fast"></i>
                     <h3>text</h3>
@@ -595,8 +846,9 @@ const ExplorePage = ({getProducts, product: { loading, products, featuredProduct
                     <hr />
                     <p>Get instant updates about your items status and watch the items delivery on a map in realtime on your dashboard</p>
                 </div>
-            </div>
+            </div> */}
 
+            <h3>More Products For You</h3>
             <div onScroll={handleScroll} style={{height:"100vh", overflowY:'scroll'}}>
                 <Container />
             </div>

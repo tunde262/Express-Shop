@@ -807,12 +807,14 @@ header {
     justify-content: center;
     color: white;
     padding: 0 1rem; }
-    .jumbocontent .jumboheading #main-heading {
-      font-size: 3rem; }
-    .jumbocontent .jumboheading #sub-heading {
-      margin-top: 1rem;
-      font-size: 1rem;
-      line-height: 2rem; }
+
+#main-heading {
+  font-size: 3rem; }
+
+#sub-heading {
+  margin-top: 1rem;
+  font-size: 1rem;
+  line-height: 2rem; }
 
 .scroll-down {
   color: white;
@@ -853,6 +855,53 @@ header {
   100% {
     opacity: 0;
     top: 90%; } }
+
+.social {
+  background-color: #F00;
+  border-radius: 100%;
+  width: 70px;
+  height: 70px;
+  position: relative; }
+
+.social-toggle {
+  font-size: 30px;
+  cursor: pointer;
+  width: 70px;
+  height: 70px;
+  text-align: center;
+  padding-top: 20px;
+  color: #FFF; }
+
+.social-drop-hide {
+  height: 0px; }
+
+.social-drop-show {
+  height: 300px; }
+
+.social-drop {
+  width: 70px;
+  background: #F00;
+  border-radius: 30px;
+  transition: all 300ms ease-out;
+  overflow: hidden; }
+  .social-drop ul {
+    margin-top: 10px; }
+  .social-drop li {
+    font-size: 35px;
+    text-align: center;
+    display: block;
+    margin-top: 15px;
+    margin-left: -23px;
+    color: #FFF;
+    width: 40px;
+    height: 40px;
+    cursor: pointer; }
+  .social-drop .tw:hover {
+    color: #00aced; }
+  .social-drop .fb:hover {
+    color: #3b5998; }
+  .social-drop .insta:hover {
+    color: #517fa4; }
 
 #home {
   margin-top: 56px; }
@@ -1225,6 +1274,7 @@ header {
     margin: 2rem; }
   .detail-map .datail-sub-images img {
     width: 50px;
+    height: 50px;
     margin: 1rem;
     display: block; }
 
@@ -1554,12 +1604,18 @@ header {
   height: 300px;
   grid-auto-flow: row;
   grid-template-columns: 1fr 1fr;
-  margin-bottom: 5rem; }
-  .promotion-block img {
-    max-width: 100%;
-    height: 300px; }
-  .promotion-block .promotion-block-content {
-    padding: 5rem; }
+  grid-gap: 1rem;
+  margin-bottom: 1rem; }
+
+.secondary-block {
+  display: grid;
+  padding: 2rem 5rem;
+  width: 100%;
+  min-height: 300px;
+  grid-auto-flow: row;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+  margin-bottom: 1rem; }
 
 .promotion-grid {
   padding: 4rem 5rem;
@@ -1583,8 +1639,11 @@ header {
     grid-column-start: 2;
     grid-column-end: 4; }
 
+.store-grid {
+  padding: 0 5rem; }
+
 .grid-rows {
-  padding: 4rem 5rem;
+  margin-top: 50px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   /* see notes below */
@@ -1603,7 +1662,6 @@ header {
     display: flex;
     align-items: center; }
     .grid-columns .grid-element img {
-      background: #333;
       margin-right: 1rem;
       height: 50px;
       width: 50px;
@@ -1844,6 +1902,8 @@ footer .footer-bottom {
     display: none; }
   .jumbotron {
     background-position: right; }
+  .jumbotron2 {
+    background-position: left; }
   .jumbocontainer {
     display: grid;
     grid-template-columns: 1fr; }

@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect, Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -9,7 +9,9 @@ import Footer from '../components/layout/Footer/Footer';
 import Spinner from '../components/common/Spinner';
 import StoreMain from '../components/page_components/store/StoreMain';
 
+
 const StorePage = ({getStoreById, store, product: { products, loading }, history, match}) => {
+    const [toggleSocial, setToggleSocial] = useState(false);
     useEffect( async () => {
         getStoreById(match.params.id);
     }, []);
@@ -42,7 +44,26 @@ const StorePage = ({getStoreById, store, product: { products, loading }, history
                                 </div> */}
                                 <div style={{display: 'flex', flexDirection:'column', textAlign: 'center', alignItems:'center', justifyContent:'center', boxSizing:'border-box'}}>
                                     {store.store.img_name && <img style={{height: '120px', width:'120px', margin: '1rem', borderRadius: '50%'}} src={`/api/stores/image/${store.store.img_name}`} alt="img" />}
-                                    <h3 style={{color: "black"}}>{store.store.name}</h3>
+                                    <div style={{display:'flex'}}>
+                                        <h3 style={{color: "black"}}>{store.store.name}</h3>
+                                        {store.store.social && (
+                                            <div  class="social" onClick={() => setToggleSocial(!toggleSocial)}>
+                                                <i className={toggleSocial ? "fas fa-minus social-toggle" : "fas fa-plus social-toggle"}></i>
+                                                <div className={toggleSocial ? "social-drop social-drop-show" : "social-drop social-drop-hide"}>
+                                                    <ul>
+                                                        {store.store.social.twitter && <a href={`${store.store.social.twitter}`} target="_blank"><li class="fa fa-twitter tw"></li></a>}
+                                                        {store.store.social.facebook && <a href={`${store.store.social.facebook}`} target="_blank"><li class="fab fa-facebook"></li></a>}
+                                                        {store.store.social.instagram && <a href={`${store.store.social.instagram}`} target="_blank"><li class="fab fa-instagram"></li></a>}
+                                                        {store.store.social.youtube && <a href={`${store.store.social.youtube}`} target="_blank"><li class="fab fa-youtube"></li></a>}
+                                                    </ul>
+                                                    
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div style={{maxWidth:'600px'}}>
+                                        <h1 id="sub-heading">{store.store.description}</h1>
+                                    </div>
                                 </div>
                                 <hr/>
                             </div>
