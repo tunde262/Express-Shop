@@ -1459,14 +1459,10 @@ header {
 @media screen and (max-width: 768px) {
     /* detail Page*/
     #detail-content-wrapper {
+        margin-top: -3rem;
+        display: flex;
+        flex-direction: column;
         padding: 0 0;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto 3fr 2fr;
-        grid-template-areas: "breadcrumb"
-        "detail-header"
-        "map"
-        "detail-info"
-        "table";
     }
 }
 #detail-content-wrapper li a {

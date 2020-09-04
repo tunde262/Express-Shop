@@ -1230,10 +1230,10 @@ header {
 @media screen and (max-width: 768px) {
   /* detail Page*/
   #detail-content-wrapper {
-    padding: 0 0;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto 3fr 2fr;
-    grid-template-areas: "breadcrumb" "detail-header" "map" "detail-info" "table"; } }
+    margin-top: -3rem;
+    display: flex;
+    flex-direction: column;
+    padding: 0 0; } }
 
 #detail-content-wrapper li a {
   color: #8c8c8c; }
@@ -2005,6 +2005,10 @@ footer .footer-bottom {
       flex-direction: column; }
       header nav ul li {
         margin: 1rem; }
+  .detail-map .datail-sub-images {
+    margin: 1rem 2rem; }
+  .detail-map .datail-sub-images img {
+    margin: 0 1rem; }
   .nav-bar {
     height: 0;
     overflow: hidden;

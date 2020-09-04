@@ -480,6 +480,7 @@ const Details = ({
                             <BackButton onClick={goBack}><i className="fas fa-arrow-left"></i></BackButton>
                         </div> */}
                         <div class="detail-map">
+                            <p className="mobile" style={{color:'#333', fontWeight:'bold'}}>{detailProduct.name}</p>
                             <img src={`/api/products/image/${detailProduct.img_gallery[showImage].img_name}`} className="img-fluid" alt="product" />
                             <div className="datail-sub-images">
                                 {detailProduct.img_gallery.map((item, index) => {
@@ -490,7 +491,7 @@ const Details = ({
                         <div class="detail-info">
                             <div class="detail-status-box">
                                 <div className="detail-status-box-header">
-                                    <p style={{color:'#333', fontWeight:'bold'}}>{detailProduct.name}</p>
+                                    <div><p className="desktop" style={{color:'#333', fontWeight:'bold'}}>{detailProduct.name}</p></div>
                                     <div>
                                         <span>{detailProduct.likes.length > 0 && <span>{detailProduct.likes.length}</span>}</span>{' '}
                                         {liked ? <i style={{color:'#ff4b2b', fontSize:'1.4rem', margin:'1rem 1rem 0 0'}} onClick={() => addLike(detailProduct._id)} class="fas fa-heart"></i> : <i onClick={() => addLike(detailProduct._id)} style={{color:'#808080', margin:'1rem 1rem 0 0'}} className="far fa-heart detail-heart"></i>}
