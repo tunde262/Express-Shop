@@ -57,24 +57,35 @@ const Details = ({
 
     // Variant Options
     const [step, setStep] = useState({step: 1});
-    const [varKey1, setVarKey1] = useState('');
-    const [varValue1, setVarValue1] = useState([]);
-    const [varKey2, setVarKey2] = useState('');
-    const [varValue2, setVarValue2] = useState([]);
-    const [varKey3, setVarKey3] = useState('');
-    const [varValue3, setVarValue3] = useState([]);
-    const [varKey4, setVarKey4] = useState('');
-    const [varValue4, setVarValue4] = useState([]);
-    const [varKey5, setVarKey5] = useState('');
-    const [varValue5, setVarValue5] = useState([]);
-    const [varKey6, setVarKey6] = useState('');
-    const [varValue6, setVarValue6] = useState([]);
-    const [varKey7, setVarKey7] = useState('');
-    const [varValue7, setVarValue7] = useState([]);
-    const [varKey8, setVarKey8] = useState('');
-    const [varValue8, setVarValue8] = useState([]);
-    const [varKey9, setVarKey9] = useState('');
-    const [varValue9, setVarValue9] = useState([]);
+    const [colorValue, setColorValue] = useState();
+    const [colorState, setColorState] = useState([]);
+    const [sizeValue, setSizeValue] = useState();
+    const [sizeState, setSizeState] = useState([]);
+    const [weightValue, setWeightValue] = useState();
+    const [weightState, setWeightState] = useState([]);
+    const [typeValue, setTypeValue] = useState();
+    const [typeState, setTypeState] = useState([]);
+    const [bundleValue, setBundleValue] = useState();
+    const [bundleState, setBundleState] = useState([]);
+    const [scentValue, setScentValue] = useState();
+    const [scentState, setScentState] = useState([]);
+    const [fitValue, setFitValue] = useState();
+    const [fitState, setFitState] = useState([]);
+    const [flavorValue, setFlavorValue] = useState();
+    const [flavorState, setFlavorState] = useState([]);
+    const [materialValue, setMaterialValue] = useState();
+    const [materialState, setMaterialState] = useState([]);
+
+
+    const colorArray = [];
+    const sizeArray = [];
+    const weightArray = [];
+    const typeArray = [];
+    const bundleArray = [];
+    const scentArray = [];
+    const fitArray = [];
+    const flavorArray = [];
+    const materialArray = [];
 
     // Button loader
     const [cartLoading, setCartLoading] = useState(true);
@@ -124,15 +135,16 @@ const Details = ({
     const setModal = () => {
         toggleModal(!displayModal);
 
-        console.log('MODAL KEYS')
-        console.log(varKeys);
         console.log('MODAL VAR OPTIONS')
-        console.log(varKey1);
-        console.log(varValue1);
-        console.log(varKey2);
-        console.log(varValue2);
-        console.log(varKey3);
-        console.log(varValue3);
+        console.log(colorState);
+        console.log(sizeState);
+        console.log(weightState);
+        console.log(typeState);
+        console.log(bundleState);
+        console.log(scentState);
+        console.log(fitState);
+        console.log(flavorState);
+        console.log(materialState);
     }
 
     const { text } = reviewData;
@@ -163,93 +175,266 @@ const Details = ({
     
 
     const getVarKeys = () => {
-        variant.sortedVariants.map(varKey => {
-            for (var key in varKey) {
-                varKeyList.includes(key) ? 
-                console.log('k'): 
-                varKeyList.push(key)
-            }
-        })
-        console.log('VAR KEYS');
-        console.log(varKeyList);
-        setVarKeys([...varKeyList]);
+        // variant.sortedVariants.map(varKey => {
+        //     for (var key in varKey) {
+        //         varKeyList.includes(key) ? 
+        //         console.log('k'): 
+        //         varKeyList.push(key)
+        //     }
+        // })
+        // console.log('VAR KEYS');
+        // console.log(varKeyList);
+        // setVarKeys([...varKeyList]);
 
-        variant.sortedVariants.map(varValue => {
-            if(varValue.color) {
-                varValue1.includes(varValue.color) ? 
-                console.log('g'): 
-                setVarValue1([...varValue1, varValue.color])
-                setVarKey1('color')
+        variant.sortedVariants.map(sortedVariant => {
+            if(sortedVariant.color) {
+                colorArray.includes(sortedVariant.color) ? 
+                console.log('COLOR ALREADY THERE'): 
+                colorArray.push(sortedVariant.color);
+                console.log('COLOR ARRAY BELOW')
+                console.log(colorArray);
             }
-            if(varValue.size) {
-                varValue2.includes(varValue.size) ? 
-                console.log('g'): 
-                setVarValue2([...varValue2, varValue.size])
-                setVarKey2('size')
+            if(sortedVariant.size) {
+                sizeArray.includes(sortedVariant.size) ? 
+                console.log('SIZE ALREADY THERE'): 
+                sizeArray.push(sortedVariant.size);
+                console.log('SIZE ARRAY BELOW')
+                console.log(sizeArray);
             }
-            if(varValue.weight) {
-                varValue3.includes(varValue.weight) ? 
-                console.log('g'): 
-                setVarValue3([...varValue3, varValue.weight])
-                setVarKey3('weight')
+            if(sortedVariant.weight) {
+                weightArray.includes(sortedVariant.weight) ? 
+                console.log('WEIGHT ALREADY THERE'): 
+                weightArray.push(sortedVariant.weight);
+                console.log('WEIGHT ARRAY BELOW')
+                console.log(weightArray);
             }
-            if(varValue.type) {
-                varValue4.includes(varValue.type) ? 
-                console.log('g'): 
-                setVarValue4([...varValue4, varValue.type])
-                setVarKey4('type')
+            if(sortedVariant.type) {
+                typeArray.includes(sortedVariant.type) ? 
+                console.log('TYPE ALREADY THERE'): 
+                typeArray.push(sortedVariant.type);
+                console.log('TYPE ARRAY BELOW');
+                console.log(typeArray);
             }
-            if(varValue.bundle) {
-                varValue5.includes(varValue.bundle) ? 
-                console.log('g'): 
-                setVarValue5([...varValue5, varValue.bundle])
-                setVarKey5('bundle')
+            if(sortedVariant.bundle) {
+                bundleArray.includes(sortedVariant.bundle) ? 
+                console.log('BUNDLE ALREADY THERE'): 
+                bundleArray.push(sortedVariant.bundle);
+                console.log('BUNDLE ARRAY BELOW')
+                console.log(bundleArray);
             }
-            if(varValue.scent) {
-                varValue6.includes(varValue.scent) ? 
-                console.log('g'): 
-                setVarValue6([...varValue6, varValue.scent])
-                setVarKey6('scent')
+            if(sortedVariant.scent) {
+                scentArray.includes(sortedVariant.scent) ? 
+                console.log('SCENT ALREADY THERE'): 
+                scentArray.push(sortedVariant.scent);
+                console.log('SCENT ARRAY BELOW')
+                console.log(scentArray);
             }
-            if(varValue.fit) {
-                varValue7.includes(varValue.fit) ? 
-                console.log('g'): 
-                setVarValue7([...varValue7, varValue.fit])
-                setVarKey7('fit')
+            if(sortedVariant.fit) {
+                fitArray.includes(sortedVariant.fit) ? 
+                console.log('FIT ALREADY THERE'): 
+                fitArray.push(sortedVariant.fit);
+                console.log('FIT ARRAY BELOW')
+                console.log(fitArray);
             }
-            if(varValue.flavor) {
-                varValue8.includes(varValue.flavor) ? 
-                console.log('g'): 
-                setVarValue8([...varValue8, varValue.flavor])
-                setVarKey8('flavor')
+            if(sortedVariant.flavor) {
+                flavorArray.includes(sortedVariant.flavor) ? 
+                console.log('FLAVOR ALREADY THERE'): 
+                flavorArray.push(sortedVariant.flavor);
+                console.log('FLAVOR ARRAY BELOW')
+                console.log(flavorArray);
             }
-            if(varValue.material) {
-                varValue9.includes(varValue.material) ? 
-                console.log('g'): 
-                setVarValue9([...varValue9, varValue.material])
-                setVarKey9('material')
+            if(sortedVariant.material) {
+                materialArray.includes(sortedVariant.material) ? 
+                console.log('MATERIAL ALREADY THERE'): 
+                materialArray.push(sortedVariant.material);
+                console.log('MATERIAL ARRAY BELOW')
+                console.log(materialArray);
             }
         });
-        console.log('VALUES');
+        console.log('SHOULD HAVE ARRAYS');
 
         handleOptions();
     }
 
-    let options;
+    let colorOptions;
+    let sizeOptions;
+    let weightOptions;
+    let typeOptions;
+    let bundleOptions;
+    let scentOptions;
+    let fitOptions;
+    let flavorOptions;
+    let materialOptions;
     const handleOptions = () => {
-        console.log('VAR VALUUUE');
-        console.log(varValue1);
-        if(varValue1.length > 0 && varKey1 !== '') {
-            let choses;
-            choses = varValue1.map(option => <option key={option} value={`${option}`}>{option}</option>);
-            options = (
+        console.log('COLOR VALUUUE');
+        console.log(colorArray);
+        setColorState([...colorArray]);
+        console.log('COLOR STATE');
+        console.log(colorState);
+        if(colorArray.length > 0) {
+            console.log('COLOR PASSED');
+            let choices;
+            choices = colorArray.map(option => <option key={option} value={`${option}`}>{option}</option>);
+            setColorValue((
                 <Fragment>
-                    <label>{varKey1}</label>
-                    <select name={`${varKey1}`}>
-                        {choses}
+                    <label>Color</label>
+                    <select name="color">
+                        {choices}
                     </select>
                 </Fragment>
-            )
+            ));
+        }
+
+        console.log('SIZE VALUUUE');
+        console.log(sizeArray);
+        setSizeState([...sizeArray]);
+        console.log('SIZE STATE');
+        console.log(sizeState);
+        if(sizeArray.length > 0) {
+            console.log('SIZE PASSED');
+            let choices;
+            choices = sizeArray.map(option => <option key={option} value={`${option}`}>{option}</option>);
+            setSizeValue((
+                <Fragment>
+                    <label>Size</label>
+                    <select name="size">
+                        {choices}
+                    </select>
+                </Fragment>
+            ))
+        }
+
+        console.log('WEIGHT VALUUUE');
+        console.log(weightArray);
+        setWeightState([...weightArray]);
+        console.log('WEIGHT STATE');
+        console.log(weightState);
+        if(weightArray.length > 0) {
+            console.log('WEIGHT PASSED');
+            let choices;
+            choices = weightArray.map(option => <option key={option} value={`${option}`}>{option}</option>);
+            setWeightValue((
+                <Fragment>
+                    <label>Weight</label>
+                    <select name="weight">
+                        {choices}
+                    </select>
+                </Fragment>
+            ))
+        }
+
+        console.log('TYPE VALUUUE');
+        console.log(typeArray);
+        setTypeState([...typeArray]);
+        console.log('TYPE STATE');
+        console.log(typeState);
+        if(typeArray.length > 0) {
+            console.log('TYPE PASSED');
+            let choices;
+            choices = typeArray.map(option => <option key={option} value={`${option}`}>{option}</option>);
+            setTypeValue((
+                <Fragment>
+                    <label>Type</label>
+                    <select name="type">
+                        {choices}
+                    </select>
+                </Fragment>
+            ))
+        }
+
+        console.log('BUNDLE VALUUUE');
+        console.log(bundleArray);
+        setBundleState([...bundleArray]);
+        console.log('BUNDLE STATE');
+        console.log(bundleState);
+        if(bundleArray.length > 0) {
+            console.log('BUNDLE PASSED');
+            let choices;
+            choices = bundleArray.map(option => <option key={option} value={`${option}`}>{option}</option>);
+            setBundleValue((
+                <Fragment>
+                    <label>Bundle</label>
+                    <select name="material">
+                        {choices}
+                    </select>
+                </Fragment>
+            ));
+        }
+
+        console.log('SCENT VALUUUE');
+        console.log(scentArray);
+        setScentState([...scentArray]);
+        console.log('SCENT STATE');
+        console.log(scentState);
+        if(scentArray.length > 0) {
+            console.log('SCENT PASSED');
+            let choices;
+            choices = scentArray.map(option => <option key={option} value={`${option}`}>{option}</option>);
+            setScentValue((
+                <Fragment>
+                    <label>Scent</label>
+                    <select name="scent">
+                        {choices}
+                    </select>
+                </Fragment>
+            ))
+        }
+
+        console.log('FIT VALUUUE');
+        console.log(fitArray);
+        setFitState([...fitArray]);
+        console.log('FIT STATE');
+        console.log(fitState);
+        if(fitArray.length > 0) {
+            console.log('FIT PASSED');
+            let choices;
+            choices = fitArray.map(option => <option key={option} value={`${option}`}>{option}</option>);
+            setFitValue((
+                <Fragment>
+                    <label>Fit</label>
+                    <select name="fit">
+                        {choices}
+                    </select>
+                </Fragment>
+            ))
+        }
+
+        console.log('FLAVOR VALUUUE');
+        console.log(flavorArray);
+        setFlavorState([...flavorArray]);
+        console.log('FLAVOR STATE');
+        console.log(flavorState);
+        if(flavorArray.length > 0) {
+            console.log('FLAVOR PASSED');
+            let choices;
+            choices = flavorArray.map(option => <option key={option} value={`${option}`}>{option}</option>);
+            setFlavorValue((
+                <Fragment>
+                    <label>Flavor</label>
+                    <select name="flavor">
+                        {choices}
+                    </select>
+                </Fragment>
+            ))
+        }
+
+        console.log('MATERIAL VALUUUE');
+        console.log(materialArray);
+        setMaterialState([...materialArray]);
+        console.log('MATERIAL STATE');
+        console.log(materialState);
+        if(materialArray.length > 0) {
+            console.log('MATERIAL PASSED');
+            let choices;
+            choices = materialArray.map(option => <option key={option} value={`${option}`}>{option}</option>);
+            setMaterialValue((
+                <Fragment>
+                    <label>Material</label>
+                    <select name="material">
+                        {choices}
+                    </select>
+                </Fragment>
+            ))
         }
     }
 
@@ -272,6 +457,8 @@ const Details = ({
                 liked = true
             }
         }
+        console.log('LOOK HERE');
+        console.log(bundleValue);
         detailItem = (
             <Fragment>
                 <section className="container">
@@ -329,32 +516,15 @@ const Details = ({
                             </div>
                             <div class="detail-description-box">
                                 <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}>
-                                    <select className="select" name="category" onChange={onChange}>
-                                        <option>* Choose a category</option>
-                                        <option value="clothing & fashion">Clothing & Fashion</option>
-                                        <option value="bathroom">Bathroom</option>
-                                        <option value="household essentials">Household Essential</option>
-                                        <option value="laundry">Laundry</option>
-                                        <option value="men">Men</option>
-                                        <option value="personal care">Personal Care</option>
-                                        <option value="pets">Pets</option>
-                                        <option value="school & office">School & Office</option>
-                                        <option value="shoes">Shoes</option>
-                                        <option value="women">Women</option>
-                                    </select>
-                                    <select className="select" name="category" onChange={onChange}>
-                                        <option>* Choose a category</option>
-                                        <option value="clothing & fashion">Clothing & Fashion</option>
-                                        <option value="bathroom">Bathroom</option>
-                                        <option value="household essentials">Household Essential</option>
-                                        <option value="laundry">Laundry</option>
-                                        <option value="men">Men</option>
-                                        <option value="personal care">Personal Care</option>
-                                        <option value="pets">Pets</option>
-                                        <option value="school & office">School & Office</option>
-                                        <option value="shoes">Shoes</option>
-                                        <option value="women">Women</option>
-                                    </select>
+                                    {colorValue}
+                                    {sizeValue}
+                                    {weightValue}
+                                    {typeValue}
+                                    {bundleValue}
+                                    {scentValue}
+                                    {fitValue}
+                                    {flavorValue}
+                                    {materialValue}
                                 </div>
                                 {/* <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}> */}
                                     {/* <button style={{background:'transparent', color:'#cd00cd', borderColor:'#cd00cd'}}>Make an Offer</button> */}

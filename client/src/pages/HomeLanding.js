@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import Dropdown from '../components/common/Dropdown';
 import classes from '../components/layout/Landing.module.css';
 import PropTypes from 'prop-types';
@@ -58,39 +58,71 @@ const HomeLanding = ({history, isAuthenticated, updateAuth}) => {
   }
   
   return (
-    <div>
-      <div className={classes.landing_banner}>
-        <div className={classes.landing_banner_container}>
-          <div class={classes.landing_banner_content}>
-            <div>
-              <h1>Shop Smart.<br/> Delivered On Time.<img style={{width: '40px', marginLeft: '.1rem', marginTop:'-.7rem'}} src={StopwatchEmoji} alt="img" /></h1>
-              <p><img style={{width: '20px', marginRight: '.1rem'}} src={BoxEmoji} alt="img" />  Nationwide Shipping.<br/><br/>
-              <img style={{width: '20px', marginRight: '.1rem'}} src={MoneyBagEmoji} alt="img" />  Low Prices.<br/><br/>
-              <img style={{width: '20px', marginRight: '.1rem'}} src={DiamondEmoji} alt="img" />  Fashion. Shoes. Essentials. Care.</p>
+    <Fragment>
+      <div className="jumbotron">
+        <div className="jumbocontainer">
+          <div className="jumbocontent">
+            <div className="jumboheading">
+                <h1 id="main-heading">Shop Local.<br/> Always On Time.</h1>
+                <h1 id="sub-heading" className="desktop">Cardboard Shopping is a local online retail space, that gives you free unlimited access to your favorite stores and brands :)</h1>
             </div>
-            <div class={classes.landing_form}>
-              <button>Start Shopping Now</button>
-              {/* <input
-                  type="email"
-                  name="email"
-                  className="input_line"
-                  placeholder="Enter Email"
-                  value={email}
-                  onChange={e => onChange(e)}
-              />
-              <div class={classes.landing_form_buttons} style={{marginTop: '-.45rem'}} id="button-addon4">
-                <button onClick={() => clicked(false)} class="btn btn-outline-secondary btn-success" style={{marginRight: '0'}} type="button">Log In</button>
-                <button onClick={() => clicked(true)} class="btn btn-outline-secondary" style={{background: '#ff4b2b', color: 'white'}} type="button">Create Account</button>
-              </div> */}
-            </div>
+            <a href="#auth-form">
+              <div className="scroll-down"></div>
+            </a>
+          </div>
+          <div className="desktop">
+
           </div>
         </div>
-        <div style={{width:'100%', display:'flex', justifyContent:'center', alignItems:'center'}}>
-          <img style={{width:'70%'}} src={DesktopMobile} alt="Selling online has never been easier" />
+        
+        {/* <div className={classes.landing_banner}>
+          <div className={classes.landing_banner_container}>
+            <div class={classes.landing_banner_content}>
+              <div>
+                <h1>Shop Smart.<br/> Delivered On Time.<img style={{width: '40px', marginLeft: '.1rem', marginTop:'-.7rem'}} src={StopwatchEmoji} alt="img" /></h1>
+                <p><img style={{width: '20px', marginRight: '.1rem'}} src={BoxEmoji} alt="img" />  Nationwide Shipping.<br/><br/>
+                <img style={{width: '20px', marginRight: '.1rem'}} src={MoneyBagEmoji} alt="img" />  Low Prices.<br/><br/>
+                <img style={{width: '20px', marginRight: '.1rem'}} src={DiamondEmoji} alt="img" />  Fashion. Shoes. Essentials. Care.</p>
+              </div>
+              <div class={classes.landing_form}>
+                <button>Start Shopping Now</button>
+                {/* <input
+                    type="email"
+                    name="email"
+                    className="input_line"
+                    placeholder="Enter Email"
+                    value={email}
+                    onChange={e => onChange(e)}
+                />
+                <div class={classes.landing_form_buttons} style={{marginTop: '-.45rem'}} id="button-addon4">
+                  <button onClick={() => clicked(false)} class="btn btn-outline-secondary btn-success" style={{marginRight: '0'}} type="button">Log In</button>
+                  <button onClick={() => clicked(true)} class="btn btn-outline-secondary" style={{background: '#ff4b2b', color: 'white'}} type="button">Create Account</button>
+                </div> 
+              </div>
+            </div>
+          </div>
+          <div style={{width:'100%', display:'flex', justifyContent:'center', alignItems:'center'}}>
+            <img style={{width:'70%'}} src={DesktopMobile} alt="Selling online has never been easier" />
+          </div>
+        </div>
+        <Footer /> */}
+      </div>
+      <div className="jumbotron2">
+        <div id="auth-form" style={{display:'grid', gridTemplateColumns:'1fr 1fr'}}  className="jumbocontainer">
+            <div className="jumbocontent">
+              <div className="jumboheading">
+                  <h1 id="main-heading">Sign Up To <br/> Start Shopping <br/>Local.</h1>
+              </div>
+              <a href="#auth-form">
+                <div className="scroll-down"></div>
+              </a>
+            </div>
+            <div className="desktop">
+
+            </div>
         </div>
       </div>
-      <Footer />
-    </div>
+    </Fragment>
   )
 }
 
