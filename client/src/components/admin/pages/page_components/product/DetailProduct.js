@@ -18,8 +18,8 @@ const DetailProduct = ({ setModal, detailProduct, variant, deleteVariant, setTab
     
     if(detailProduct && detailProduct.img_gallery && detailProduct.img_gallery.length > 0 ) {
         imageContent = detailProduct.img_gallery.map(image => (
-            <div style={{margin:'10px'}}>
-                <img style={{width: '100%'}} src={`/api/products/image/${image.img_name}`} alt="img" />
+            <div style={{margin:'10px', width: '20vw', height: 'calc(20vw)'}}>
+                <img style={{width: '100%', height: 'calc(20vw)'}} src={`/api/products/image/${image.img_name}`} alt="img" />
             </div>
         ))
     } else {
@@ -41,8 +41,9 @@ const DetailProduct = ({ setModal, detailProduct, variant, deleteVariant, setTab
                 <hr style={{margin:'0'}} />
             </div>
             <div class="product-admin-main">
-                <div style={{width:'100%', height:'100%', display:'grid', gridTemplateColumns:'repeat(3,1fr)', border:'2px dashed #cecece'}}>
+                <div className="product-admin-main-container">
                     {imageContent}
+                    <div style={{margin:'10px',width: '20vw', height: 'calc(20vw)', background:'orange'}}></div>
                 </div>
             </div>
             <div class="product-admin-secondary">
