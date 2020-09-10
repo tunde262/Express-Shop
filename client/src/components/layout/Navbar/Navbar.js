@@ -7,6 +7,9 @@ import { logout } from '../../../actions/authActions';
 import { FaAlignRight } from 'react-icons/fa';
 import logo from '../../common/logo.png';
 
+import mixpanel from 'mixpanel-browser';
+
+
 
 const Navbar = ({ drawerClickHandler, toggleCartDrawer, backdrop, backdropClickHandler, auth: { isAuthenticated, loading }, logout }) => {
     // Page
@@ -43,6 +46,14 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, backdrop, backdropClickH
 
     const handleMouseHover2 = () => {
         setIsHovering2(!isHovering2)
+    }
+
+    const logoClicked = () => {
+        mixpanel.init("1b36d59c8a4e85ea3bb964ac4c4d5889");
+        mixpanel.track("Logo Click", {
+            "Song Title": "Test Song Title",
+            "Song Artist": "Test Artist"
+        });
     }
     
 
@@ -228,7 +239,7 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, backdrop, backdropClickH
         <header>
             <div className="nav">
                 <div className="branding">
-                    <Link to="/"><img src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" /></Link>
+                    <img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" />
 
                     {/* <div className="social-container">
                         <a href="https://instagram.com/cardboardexpress" target="_blank" className="social"><i className="fab fa-instagram"></i></a>

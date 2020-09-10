@@ -46,6 +46,8 @@ const ProductCard = ({addLike, liked, product, handleDetail, addToCart, openModa
 
     const { _id, name, img_gallery, price, store, category, inCart, likes, comments } = product;
 
+    let sorted_img_gallery = img_gallery.sort((a, b) => a.img_order - b.img_order);
+
     return (
         <ProductWrapper className="mx-auto my-3">
                 <div className="product">
@@ -54,7 +56,7 @@ const ProductCard = ({addLike, liked, product, handleDetail, addToCart, openModa
                         onClick={() => onHandleDetailClick(_id)}
                     >
                         <Link to={"/details/" + _id}>
-                            {product.img_gallery[0] &&<img src={`/api/products/image/${img_gallery[0].img_name}`} alt="product" />}
+                            {product.img_gallery[0] &&<img src={`/api/products/image/${sorted_img_gallery[0].img_name}`} alt="product" />}
                         </Link>
                         {/* <button 
                             className="cart-btn" 

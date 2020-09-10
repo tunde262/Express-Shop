@@ -1,4 +1,4 @@
-import { SET_PRODUCTS, SET_SORTED_PRODUCTS, SET_MODAL_PRODUCTS, ADD_TO_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, PRODUCTS_LOADING, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, HANDLE_MAP, CLOSE_MODAL, CLEAR_CART,ADD_TOTALS, GET_CART, GET_ORDERS, HANDLE_TAGS, REMOVE_TAGS } from '../actions/types';
+import { SET_PRODUCTS, SET_SORTED_PRODUCTS, SET_MODAL_PRODUCTS, ADD_TO_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, PRODUCTS_LOADING, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, HANDLE_MAP, CLOSE_MODAL, CLEAR_CART,ADD_TOTALS, GET_CART, GET_ORDERS, HANDLE_TAGS, REMOVE_TAGS, INC_IMG_GALLERY, DEC_IMG_GALLERY } from '../actions/types';
 
 const initialState = {
     products: [],
@@ -120,6 +120,88 @@ export default function(state = initialState, action) {
                     product._id === action.payload.id ? { ...product, likes: action.payload.likes } : product
                 )
             };
+        // case INC_IMG_GALLERY:
+        //     let orderNum;
+        //     let tempProduct = {...state.detailProduct};
+        //     for(var i = 0; i < state.detailProduct.img_gallery.length; i++) {
+        //         if(state.detailProduct.img_gallery[i]['_id'] === action.payload) {
+        //             orderNum = state.detailProduct.img_gallery[i].img_order
+        //             break;
+        //         }
+        //     }
+
+        //     console.log('ORDER NUM');
+        //     console.log(orderNum);
+
+        //     if(orderNum < state.detailProduct.img_gallery.length) {
+        //         const newOrderNum = orderNum + 1;
+        //         console.log('NEW ORDER NUM');
+        //         console.log(newOrderNum);
+
+        //         for(var i = 0; i < state.detailProduct.img_gallery.length; i++) {
+        //             if(state.detailProduct.img_gallery[i]['img_order'] === newOrderNum) {
+        //                 tempProduct.img_gallery.map(image =>
+        //                     image._id === state.detailProduct.img_gallery[i]._id ? { ...image, img_order: orderNum } : image
+        //                 )
+        //                 break;
+        //             }
+        //         }
+
+        //         // Update
+        //         tempProduct.img_gallery.map(image =>
+        //             image._id === action.payload ? { ...image, img_order: newOrderNum } : image
+        //         )
+        //         console.log('TEMP PRODUCT');
+        //         console.log(tempProduct);
+        //     } else {
+        //         console.log('Element order couldnt be changed');
+        //     }
+
+        //     return {
+        //         ...state,
+        //         detailProduct: tempProduct
+        //     };
+        // case DEC_IMG_GALLERY:
+        //     let orderNumDec;
+        //     let tempProductDec = {...state.detailProduct};
+        //     for(var i = 0; i < state.detailProduct.img_gallery.length; i++) {
+        //         if(state.detailProduct.img_gallery[i]['_id'] === action.payload) {
+        //             orderNumDec = state.detailProduct.img_gallery[i].img_order
+        //             break;
+        //         }
+        //     }
+
+        //     console.log('ORDER NUM');
+        //     console.log(orderNumDec);
+
+        //     if(orderNumDec  > 1) {
+        //         const newOrderNumDec = orderNumDec - 1;
+        //         console.log('NEW ORDER NUM');
+        //         console.log(newOrderNumDec);
+
+        //         for(var i = 0; i < state.detailProduct.img_gallery.length; i++) {
+        //             if(state.detailProduct.img_gallery[i]['img_order'] === newOrderNumDec) {
+        //                 tempProductDec.img_gallery.map(image =>
+        //                     image._id === state.detailProduct.img_gallery[i]._id ? { ...image, img_order: orderNumDec } : image
+        //                 )
+        //                 break;
+        //             }
+        //         }
+
+        //         // Update
+        //         tempProductDec.img_gallery.map(image =>
+        //             image._id === action.payload ? { ...image, img_order: newOrderNumDec } : image
+        //         )
+        //         console.log('TEMP PRODUCT');
+        //         console.log(tempProduct);
+        //     } else {
+        //         console.log('Element order couldnt be changed');
+        //     }
+
+        //     return {
+        //         ...state,
+        //         detailProduct: tempProductDec
+        //     };
         case HANDLE_TAGS: 
             let tempProd = [...state.products];
             const tags = [...state.tags, action.payload];

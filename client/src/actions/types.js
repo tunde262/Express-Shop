@@ -50,6 +50,8 @@ export const GET_CART = 'GET_CART';
 export const HANDLE_MAP = 'HANDLE_MAP';
 export const ADD_TO_PRODUCTS = 'ADD_TO_PRODUCTS';
 export const SET_MODAL_PRODUCTS = 'SET_MODAL_PRODUCTS';
+export const INC_IMG_GALLERY = 'INC_IMG_GALLERY';
+export const DEC_IMG_GALLERY = 'DEC_IMG_GALLERY';
 
 // Variants
 export const GET_VARIANTS = 'GET_VARIANTS';

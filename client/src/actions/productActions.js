@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { setAlert } from './alertActions';
 
-import { SET_PRODUCTS, SET_IN_CART, SET_SORTED_PRODUCTS, SET_MODAL_PRODUCTS, ADD_TO_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, ADD_PRODUCT_REVIEW, REMOVE_PRODUCT_REVIEW, PRODUCT_ERROR, HANDLE_TAGS, REMOVE_TAGS, PRODUCTS_LOADING, ADD_TOTALS, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, HANDLE_MAP, CLOSE_MODAL, CLEAR_CART, GET_CART, GET_ORDERS } from './types';
+import { SET_PRODUCTS, SET_IN_CART, SET_SORTED_PRODUCTS, SET_MODAL_PRODUCTS, ADD_TO_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, ADD_PRODUCT_REVIEW, REMOVE_PRODUCT_REVIEW, PRODUCT_ERROR, HANDLE_TAGS, REMOVE_TAGS, PRODUCTS_LOADING, ADD_TOTALS, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, HANDLE_MAP, CLOSE_MODAL, CLEAR_CART, GET_CART, GET_ORDERS, INC_IMG_GALLERY, DEC_IMG_GALLERY } from './types';
 import store from '../store';
 
 // Get Products
@@ -143,6 +143,32 @@ export const removeTags = (filter) => {
         payload: filter
     }
 }
+
+// Add img_order to all products in bulk
+
+// export const reorder = () => async dispatch => {
+//     console.log('REORDER-ING')
+//     try {
+//       const res = await axios.get('/api/products');
+  
+//       res.data.map(async product => {
+//         try {
+//             for(var i = 0; i < product.img_gallery.length; i++) {
+//                 await axios.post(`/api/products/reorder/${product._id}/${product.img_gallery[i]._id}`);
+//                 console.log('IMG PROD ID')
+//                 console.log(product.img_gallery[i]._id);
+//             }
+//         } catch (err) {
+//             console.log(err)
+//         }
+//       })
+//     } catch (err) {
+//       dispatch({
+//         type: PRODUCT_ERROR,
+//         payload: { msg: err.response.statusText, status: err.response.status }
+//       });
+//     }
+// };
 
 export const addToProducts = (prodId) => async dispatch => {
     try {
@@ -304,7 +330,16 @@ export const addProductImg = (imgData, id) => async dispatch => {
     };
     
     try {
-        const res = await axios.post(`/api/products/image/${id}`, imgData, config);
+        console.log('ACTION IMG DATA');
+        console.log(imgData);
+        imgData.map(async (img) => {
+            let data = new FormData();
+            data.append('file', img);
+
+            await axios.post(`/api/products/image/${id}`, data, config);
+            console.log('img added');
+        });
+        // const res = await axios.post(`/api/products/image/${id}`, imgData, config);
         // payload: res.data
         // varData.map((variant, index) => {
         //     let data = new FormData();
@@ -327,7 +362,7 @@ export const addProductImg = (imgData, id) => async dispatch => {
         //     await axios.post(`/api/variants/product/${res.data.id}`, data, config);
         // });
         // history.push('/admin');
-        console.log(res.data);
+        // console.log(res.data);
         dispatch(setAlert('Image Added', 'success'));
     } catch (err) {
         dispatch({
@@ -344,6 +379,50 @@ export const deleteProduct = (prod_id) => dispatch => {
         .then(res =>
             dispatch(getProducts())
         );
+}
+
+// Decrement img order value down 1
+export const decImg = (imgId, prodId) => async dispatch => { 
+    console.log('DEC IMG ACTION');
+    try {
+        await axios.post(`/api/products/reorder/dec/${prodId}/${imgId}`);
+        console.log('img decremented');
+
+        window.location.reload(false);
+
+        // dispatch({
+        //     type: DEC_IMG_GALLERY,
+        //     payload: imgId
+        // });
+        dispatch(setAlert('Img Moved', 'success'));
+    } catch (err) {
+        dispatch({
+          type: PRODUCT_ERROR,
+          payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+}
+
+// Increment img order value up 1
+export const incImg = (imgId, prodId) => async dispatch => { 
+    console.log('INC IMG ACTION');
+    try {
+        await axios.post(`/api/products/reorder/inc/${prodId}/${imgId}`);
+        console.log('img incremented');
+
+        window.location.reload(false);
+
+        // dispatch({
+        //     type: INC_IMG_GALLERY,
+        //     payload: imgId
+        // });
+        dispatch(setAlert('Img Moved', 'success'));
+    } catch (err) {
+        dispatch({
+          type: PRODUCT_ERROR,
+          payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
 }
 
 // Get Orders

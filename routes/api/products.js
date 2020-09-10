@@ -420,14 +420,25 @@ router.put('/like/:id', auth, async (req, res) => {
 router.post('/image/:id', upload.single('file'), async (req, res) => {
 
     const product = await Product.findById(req.params.id);
+    console.log('IMG GALLERY LENGTH');
+    console.log(product.img_gallery.length)
 
     try {
+        let orderNum = 1;
+        
+        if(product.img_gallery && product.img_gallery.length > 0) {
+            orderNum = product.img_gallery.length + 1
+        }
+        console.log('ORDER NUM');
+        console.log(orderNum);
+
         const newImg = {
             img_id: req.file.id,
-            img_name: req.file.filename
+            img_name: req.file.filename,
+            img_order: orderNum
         };
 
-        product.img_gallery.unshift(newImg);
+        product.img_gallery.push(newImg);
         await product.save()
 
         res.json(product);
@@ -435,6 +446,120 @@ router.post('/image/:id', upload.single('file'), async (req, res) => {
         console.error(err.message);
         res.status(500).send('Server Error'); 
     }
+});
+
+// router.post('/reorder/:prodId/:imgId', async (req, res) => {
+//     try {
+//         const item = await Product.findById(req.params.prodId);
+//         let imgIndex = item.img_gallery.map(img => img.id.toString()).indexOf(req.params.imgId);
+//         console.log('INDEX NUM');
+//         console.log(imgIndex);
+//         const orderNum = imgIndex + 1;
+//         console.log('ORDER NUM');
+//         console.log(orderNum);
+
+//         // Update
+//         const product = await Product.updateMany(
+//             { "img_gallery._id": req.params.imgId }, 
+//             { $set: { "img_gallery.$.img_order": orderNum } }
+//         );
+
+//         res.json(product);
+//     } catch (err) {
+//         console.log(err);
+//     }
+
+
+// });
+
+router.post('/reorder/inc/:prodId/:imgId', async (req, res) => {
+    try {
+        const item = await Product.findById(req.params.prodId);
+        let orderNum;
+        for(var i = 0; i < item.img_gallery.length; i++) {
+            if(item.img_gallery[i]['id'] === req.params.imgId) {
+                orderNum = item.img_gallery[i].img_order
+                break;
+            }
+        }
+        console.log('ORDER NUM');
+        console.log(orderNum);
+
+        if(orderNum < item.img_gallery.length) {
+            const newOrderNum = orderNum + 1;
+            console.log('NEW ORDER NUM');
+            console.log(newOrderNum);
+
+            for(var i = 0; i < item.img_gallery.length; i++) {
+                if(item.img_gallery[i]['img_order'] === newOrderNum) {
+                    await Product.updateOne(
+                        { "img_gallery._id": item.img_gallery[i].id }, 
+                        { $set: { "img_gallery.$.img_order": orderNum } }
+                    );
+                    break;
+                }
+            }
+
+            // Update
+            const product = await Product.updateOne(
+                { "img_gallery._id": req.params.imgId }, 
+                { $set: { "img_gallery.$.img_order": newOrderNum } }
+            );
+
+            res.json(product);
+        } else {
+            res.send('Already last element')
+        }
+        
+    } catch (err) {
+        console.log(err);
+    }
+
+
+});
+
+router.post('/reorder/dec/:prodId/:imgId', async (req, res) => {
+    try {
+        const item = await Product.findById(req.params.prodId);
+        let orderNum;
+        for(var i = 0; i < item.img_gallery.length; i++) {
+            if(item.img_gallery[i]['id'] === req.params.imgId) {
+                orderNum = item.img_gallery[i].img_order
+                break;
+            }
+        }
+        console.log('ORDER NUM');
+        console.log(orderNum);
+
+        if(orderNum  > 1) {
+            const newOrderNum = orderNum - 1;
+            console.log('NEW ORDER NUM');
+            console.log(newOrderNum);
+
+            // Update
+            for(var i = 0; i < item.img_gallery.length; i++) {
+                if(item.img_gallery[i]['img_order'] === newOrderNum) {
+                    await Product.updateOne(
+                        { "img_gallery._id": item.img_gallery[i].id }, 
+                        { $set: { "img_gallery.$.img_order": orderNum } }
+                    );
+                }
+            }
+            const product = await Product.updateOne(
+                { "img_gallery._id": req.params.imgId }, 
+                { $set: { "img_gallery.$.img_order": newOrderNum } }
+            );
+
+            res.json(product);
+        } else {
+            res.send('Can not decrement cuz element is lowest element');
+        }
+        
+    } catch (err) {
+        console.log(err);
+    }
+
+
 });
 
 // @route POST api/products/comment/:id

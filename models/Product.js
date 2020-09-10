@@ -27,6 +27,9 @@ const ProductSchema = new Schema({
             img_name: {
                 type: String
             },
+            img_order: {
+                type: Number
+            },
         }
     ],
     show_image: {

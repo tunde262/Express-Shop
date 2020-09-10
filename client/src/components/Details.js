@@ -51,6 +51,9 @@ const Details = ({
     const [displayModal, toggleModal] = useState(false);
     const [varsLoaded, setVarsLoaded] = useState(false);
 
+    // Has Main Image Index Been Gotten
+    const [gotIndex, setGotIndex] = useState(false);
+
 
     const [varKeys, setVarKeys] = useState([]);
     const [varValues, setVarValues] = useState([]);
@@ -145,6 +148,17 @@ const Details = ({
         console.log(fitState);
         console.log(flavorState);
         console.log(materialState);
+    }
+
+    const getImgIndex = (orderNum) => {
+        if(detailProduct !== null && !loading){
+            for(var i = 0; i < detailProduct.img_gallery.length; i++) {
+                if(detailProduct.img_gallery[i]['img_order'] === orderNum) {
+                    return i;
+                }
+            }
+        }
+
     }
 
     const { text } = reviewData;
@@ -459,6 +473,14 @@ const Details = ({
         }
         console.log('LOOK HERE');
         console.log(bundleValue);
+
+        let img_gallery = detailProduct.img_gallery.sort((a, b) => a.img_order - b.img_order);
+
+        if(!gotIndex) {
+            setShowImage(getImgIndex(1))
+            setGotIndex(true);
+        }
+
         detailItem = (
             <Fragment>
                 <section className="container">
@@ -481,10 +503,10 @@ const Details = ({
                         </div> */}
                         <div class="detail-map">
                             <p className="mobile" style={{color:'#333', fontWeight:'bold'}}>{detailProduct.name}</p>
-                            <img src={`/api/products/image/${detailProduct.img_gallery[showImage].img_name}`} className="img-fluid" alt="product" />
+                            {detailProduct && img_gallery && img_gallery.length > 0 && <img src={`/api/products/image/${img_gallery[showImage].img_name}`} className="img-fluid" alt="product" />}
                             <div className="datail-sub-images">
-                                {detailProduct.img_gallery.map((item, index) => {
-                                    return <img key={index} onClick={() => setShowImage(index)} src={`/api/products/image/${detailProduct.img_gallery[index].img_name}`} alt={detailProduct.name} />
+                                {img_gallery.map((item, index) => {
+                                    return <img key={index} onClick={() => setShowImage(index)} src={`/api/products/image/${img_gallery[index].img_name}`} alt={detailProduct.name} />
                                 })}
                             </div>
                         </div>

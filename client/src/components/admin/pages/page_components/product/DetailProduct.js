@@ -6,20 +6,49 @@ import { Link, withRouter } from 'react-router-dom';
 import Variant from '../../../table/Variant';
 import TableDetails from '../../../../TableDetails/TableDetails';
 
+import { incImg, decImg } from '../../../../../actions/productActions';
+
 // Imgs
 import BoxEmoji from '../../../../../utils/imgs/box.png'; 
 import ClosedLockEmoji from '../../../../../utils/imgs/closedlock.jpg'; 
 import OpenLockEmoji from '../../../../../utils/imgs/openlock.png'; 
 import CarEmoji from '../../../../../utils/imgs/car.jpg'; 
 
-const DetailProduct = ({ setModal, detailProduct, variant, deleteVariant, setTable, setStoreLocationModal, match }) => {
+const DetailProduct = ({ setModal, detailProduct, variant, deleteVariant, setTable, setStoreLocationModal, setImageModal, match, incImg, decImg }) => {
 
     let imageContent;
+    let img_gallery = detailProduct.img_gallery.sort((a, b) => a.img_order - b.img_order);
+
+    const imgBack = (imgId) => {
+        console.log('DEC IMG');
+        decImg(imgId, detailProduct._id)
+    }
+
+    const imgForward = (imgId) => {
+        console.log('INC IMG');
+        incImg(imgId, detailProduct._id)
+    }
     
     if(detailProduct && detailProduct.img_gallery && detailProduct.img_gallery.length > 0 ) {
-        imageContent = detailProduct.img_gallery.map(image => (
-            <div style={{margin:'10px', width: '20vw', height: 'calc(20vw)'}}>
-                <img style={{width: '100%', height: 'calc(20vw)'}} src={`/api/products/image/${image.img_name}`} alt="img" />
+        imageContent = img_gallery.map(image => (
+            <div className="product-admin-image-container">
+                <img src={`/api/products/image/${image.img_name}`} alt="img" />
+                <div className="product-admin-image-container-actions">
+                    <div onClick={() => imgBack(image._id)} className="admin-image-icon-container">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+                    <div onClick={() => imgForward(image._id)} className="admin-image-icon-container">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+                <div className="admin-image-overlay">
+                    <div onClick={() => imgBack(image._id)} className="admin-overlay-icon-container">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+                    <div onClick={() => imgForward(image._id)} className="admin-overlay-icon-container">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
             </div>
         ))
     } else {
@@ -43,7 +72,9 @@ const DetailProduct = ({ setModal, detailProduct, variant, deleteVariant, setTab
             <div class="product-admin-main">
                 <div className="product-admin-main-container">
                     {imageContent}
-                    <div style={{margin:'10px',width: '20vw', height: 'calc(20vw)', background:'orange'}}></div>
+                    <div className="addImage" onClick={setImageModal}>
+                        <i class="fas fa-plus"></i>
+                    </div>
                 </div>
             </div>
             <div class="product-admin-secondary">
@@ -85,5 +116,12 @@ const DetailProduct = ({ setModal, detailProduct, variant, deleteVariant, setTab
     )
 }
 
+DetailProduct.propTypes = {
+    incImg: PropTypes.func.isRequired,
+    decImg: PropTypes.func.isRequired,
+};
 
-export default withRouter(DetailProduct);
+export default connect(null, { 
+    incImg,
+    decImg
+})(withRouter(DetailProduct));

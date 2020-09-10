@@ -4,7 +4,7 @@ import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { setSortedProducts, getProductsByStoreId, handleDetail, editProduct, deleteProduct, setModalProducts } from '../../../actions/productActions';
+import { setSortedProducts, getProductsByStoreId, handleDetail, editProduct, deleteProduct, setModalProducts, addProductImg } from '../../../actions/productActions';
 import { getProductVariants, addVariant, deleteVariant, setModalVariants } from '../../../actions/variantActions';
 import { getStoreById } from '../../../actions/storeActions';
 import { getCollectionById, addCollectionItem } from '../../../actions/collectionActions';
@@ -26,6 +26,8 @@ import DetailCollection from './page_components/collection/DetailCollection';
 import HeaderCollection from './page_components/collection/HeaderCollection';
 import DetailLocation from './page_components/location/DetailLocation';
 import HeaderLocation from './page_components/location/HeaderLocation';
+
+import DragAndDrop from '../../admin/forms/utils/DragAndDrop';
 
 
 const initialState = {
@@ -68,7 +70,8 @@ const ProductPage = ({
     getLocationById,
     getProductLocations, 
     getCollectionLocations,
-    setLocations
+    setLocations,
+    addProductImg
 }) => {
 
     const { 
@@ -79,6 +82,7 @@ const ProductPage = ({
 
     // Product Info
     const [formData, setFormData] = useState(initialState);
+    const [files, setFiles] = useState([]);
 
     // Toggle
     const [displayOption1, toggleOption1] = useState(true);
@@ -92,6 +96,7 @@ const ProductPage = ({
     const [displayVariantModal, toggleVariantModal] = useState(false);
     const [displayLocationModal, toggleLocationModal] = useState(false);
     const [displayStoreLocationModal, toggleStoreLocationModal] = useState(false);
+    const [displayImageModal, toggleImageModal] = useState(false);
 
     // Variant Info
     const [varInfo, setVarInfo] = useState([]);
@@ -194,7 +199,18 @@ const ProductPage = ({
         category,
         condition,
         tags
-      } = formData;
+    } = formData;
+
+    const fileChanged = e => {
+        console.log(files)
+        let fileList = [];
+        files.map(file => fileList.push(file));
+        for (var i = 0; i < e.target.files.length; i++) {
+            if(!e.target.files[i]) return;
+            fileList.push(e.target.files[i])
+        }
+        setFiles(fileList);
+    }
 
     const onChangeVar = (e) => {
         setVarName({ ...varName, [e.target.name]: e.target.value });
@@ -240,6 +256,16 @@ const ProductPage = ({
     const setModal = () => {
         toggleModal(!displayModal);
     }
+
+    const onSubmitImage = async (e) => {
+        e.preventDefault();
+    
+        console.log('IMG FILES');
+        console.log(files);
+
+        addProductImg(files, product.detailProduct._id);
+        toggleImageModal();
+    };
     
 
     const onSubmit = (e) => {
@@ -371,6 +397,17 @@ const ProductPage = ({
         setTableShow1(show)
     }
 
+    const handleDrop = newFiles => {
+        console.log(files)
+        let fileList = [];
+        files.map(file => fileList.push(file));
+        for (var i = 0; i < newFiles.length; i++) {
+          if(!newFiles[i]) return;
+          fileList.push(newFiles[i])
+        }
+        setFiles(fileList);
+    }
+
     const handleStorageModal = async (bool) => {
         const res = await axios.get(`/api/products/store/${store.store._id}`);
         console.log('MODAL PRODUCTS');
@@ -408,6 +445,7 @@ const ProductPage = ({
                     setModal={setModal} 
                     setTable={setTable} 
                     setStoreLocationModal={toggleStoreLocationModal}
+                    setImageModal={toggleImageModal} 
                 />
             );
         } else {
@@ -586,6 +624,36 @@ const ProductPage = ({
                 {pageContent}
             </div>
 
+            <Modal open={displayImageModal} onClose={toggleImageModal} center>
+                <DragAndDrop handleDrop={handleDrop}>
+                <input
+                    type="file"
+                    name="file"
+                    id="file"
+                    multiple
+                    className="form-control"
+                    placeholder="Choose images or Drag/Drop"
+                    onChange={fileChanged}
+                />
+                {files.length > 0 ? (
+                    <div style={{minHeight: 300, width: 250}}>
+                        {files.map((file, i) => (
+                            <Fragment key={i}>
+                            <div>{file.name}</div>
+                            <br/>
+                            </Fragment>
+                        )
+                        )}
+                    </div>
+                    ) : <h3><small>or</small> <br/>Drag / Drop</h3>
+                }
+                </DragAndDrop>
+                <label className='form-group'>Product Img.<br/>
+                    <button onClick={onSubmitImage}>Add</button>
+
+                </label>
+            </Modal>
+            
             <Modal open={displayStoreLocationModal} onClose={toggleStoreLocationModal} center>
                 <div style={{display:'flex'}}>
                     <InputTag
@@ -842,6 +910,7 @@ ProductPage.propTypes = {
     setLocations: PropTypes.func.isRequired,
     setModalProducts: PropTypes.func.isRequired,
     setModalVariants: PropTypes.func.isRequired,
+    addProductImg: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -869,5 +938,6 @@ export default connect(mapStateToProps, {
     getLocationById,
     getProductLocations, 
     getCollectionLocations,
-    setLocations 
+    setLocations,
+    addProductImg
 })(withRouter(ProductPage));
