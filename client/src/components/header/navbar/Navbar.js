@@ -19,7 +19,7 @@ const initialNav = [
     {
         text_value: 'Clothing & Fashion',
         img:'https://shop.wwe.com/dw/image/v2/AAIW_PRD/on/demandware.static/-/Sites-main/default/dwfd76d20b/images/large/2423CC1F1A.jpg?sw=800',
-        tag_value: 'clothing',
+        tag_value: 'clothing & fashion',
         background_color: 'DeepSkyBlue',
         icon: 'fas fa-tshirt'
     },
@@ -203,7 +203,7 @@ const Navbar = ({
     if(nav.nav1 !== '') {
         if(nav.nav1 === 'explore') {
             navList2 =  null
-        } else if(nav.nav1 === 'clothing') {
+        } else if(nav.nav1 === 'clothing & fashion') {
             navList2 =  [
                 {
                     text_value: 'Men',
