@@ -14,6 +14,7 @@ import DiamondEmoji from '../utils/imgs/diamond.png';
 import DesktopMobile from '../utils/imgs/CE_DESKTOP_MOBILE.png';
 
 import ReactGA from 'react-ga';
+import mixpanel from 'mixpanel-browser';
 
 const HomeLanding = ({history, isAuthenticated, updateAuth}) => {
   const [formData, setFormData] = useState({
@@ -25,14 +26,24 @@ const HomeLanding = ({history, isAuthenticated, updateAuth}) => {
     signup: true
   });
 
+  const [sentMixpanel, setSentMixpanel] = useState(false);
+
   useEffect(() => {
     history.listen(location => ReactGA.pageview(location.pathname));
-  }, [])
+  }, []);
 
   const { name, email, password, password2, type } = formData;
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value});
 
+
+  const handleMixpanel = () => {
+    mixpanel.init("1b36d59c8a4e85ea3bb964ac4c4d5889");
+    mixpanel.track("Landing Visit", {
+      "Page Name": "Home Landing",
+      "Page Variant": "A"
+    });
+  }
 
   const clicked = (type) => {
     formData.signup = type;
@@ -51,6 +62,11 @@ const HomeLanding = ({history, isAuthenticated, updateAuth}) => {
     //     category: 'Account',
     //     action: 'Created An Account'
     // });
+  }
+
+  if(!sentMixpanel) {
+    handleMixpanel();
+    setSentMixpanel(true);
   }
 
   if(isAuthenticated) {

@@ -1,11 +1,43 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { useState } from 'react'
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-const Settings = props => {
+import mixpanel from 'mixpanel-browser';
+
+const Settings = ({ auth: { user } }) => {
+
+    const [sentMixpanel, setSentMixpanel] = useState(false);
+
+
+    const handleMixpanel = () => {
+        mixpanel.track("View Profile Settings Page", {
+        // "Entry Point": "Home Landing",
+        });
+    }
+
+    const handleInfoUpdate = () => {
+        mixpanel.track("Profile Info Update Completed");
+        mixpanel.people.set({
+            "$name": user.name,
+            // "$last_name": cartSubtotal,
+            // "$email": user.email,
+            // "Birthday": cartCategories,
+            // "Gender": cartNames,
+            // "$phone": cartTotal,
+        });
+        
+        mixpanel.people.increment("Total Profile Updates");
+    }
+
+    if(!sentMixpanel) {
+        handleMixpanel();
+        setSentMixpanel(true);
+    }
+
     return (
         <div className="store-settings-container">
             <div className="store-settings-box" style={{border:'2px solid #cecece', borderRadius:'10px'}}>
-                <h2>Profile Settings</h2>
+                <h2>My Info</h2>
                 <div style={{display:'flex', flexDirection:'column'}}>
                     <label>First Name</label>
                     <input  
@@ -76,7 +108,7 @@ const Settings = props => {
                     />
                 </div>
                 <div className="store-settings-box-element">
-                    <button>Save</button>
+                    <button onClick={handleInfoUpdate} >Save</button>
                 </div>
             </div>
             <div className="store-settings-box" style={{ marginTop:'2rem', border:'2px solid #cecece', borderRadius:'10px'}}>
@@ -122,7 +154,11 @@ const Settings = props => {
 }
 
 Settings.propTypes = {
-
+    auth: PropTypes.object.isRequired,
 }
 
-export default Settings
+const mapStateToProps = state => ({
+    auth: state.auth,
+});
+
+export default connect(mapStateToProps)(Settings);

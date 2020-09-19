@@ -63,7 +63,7 @@ const upload = multer({ storage });
 // @access Public
 router.get('/', auth, async (req, res) => {
     try {
-    const darkstores = await Darkstore.find().populate('variants', ['name', 'category', '_id', 'img_name']);
+    const darkstores = await Darkstore.find().populate('variants', ['name', 'category', '_id', 'img_name']).populate('store', ['name', 'img_name']);
     res.json(darkstores);
     } catch (err) {
         console.error(err.message);
@@ -92,7 +92,7 @@ router.get('/store', auth, async (req, res) => {
 // @access Private
 router.get('/store/:id', auth, async (req, res) => {
     try {
-        const darkstores = await Darkstore.find({ store: req.params.id });
+        const darkstores = await Darkstore.find({ store: req.params.id }).populate('store', ['name', 'img_name']);
 
         res.json(darkstores);
     } catch (err) {
@@ -140,7 +140,7 @@ router.get('/product/:id', async (req, res) => {
 //@desc Get single Darkstore 
 router.get('/:id', async (req, res) => {
     try {
-        const darkstore = await Darkstore.findById(req.params.id);
+        const darkstore = await Darkstore.findById(req.params.id).populate('store', ['name', 'img_name']);
 
         if(!darkstore) {
             return res.status(404).json({ msg: 'Location not found' });

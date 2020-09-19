@@ -565,7 +565,7 @@ router.post('/reorder/dec/:prodId/:imgId', async (req, res) => {
 // @route POST api/products/comment/:id
 // @desc Comment on a product
 // @access Private
-router.put('/comment/:id', [ auth, [
+router.post('/comment/:id', [ auth, [
     check('text', 'Text is required').not().isEmpty()
 ]], async (req, res) => {
     const errors = validationResult(req);

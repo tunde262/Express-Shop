@@ -8,6 +8,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 
 import ReactGA from 'react-ga';
+import mixpanel from 'mixpanel-browser';
 
 import Footer from '../components/layout/Footer/Footer';
 import Modal from 'react-responsive-modal';
@@ -42,6 +43,9 @@ const Details = ({
     deleteReview,
     handleDetail
 }) => {
+    // Mixpanel
+    const [sentMixpanel, setSentMixpanel] = useState(false);
+
     // Reviews
     const [reviewData, setReviewData] = useState({
         text: ''
@@ -99,6 +103,7 @@ const Details = ({
     useEffect(() => {
         handleDetail(match.params.id);
         getProductVariants(match.params.id);
+        
 
         if(modalOpen) {
             setCartLoading(true);
@@ -106,6 +111,23 @@ const Details = ({
             setCartLoading(false);
         }
     }, [modalOpen]);
+
+    const handleMixpanel = () => {
+        mixpanel.identify(user._id);
+        mixpanel.track("View Item Detail Page", {
+            // "Entry Point": "Home Page",
+            "Item Name": detailProduct.name,
+            "Item Category": detailProduct.category,
+            "Item Cost": detailProduct.price,
+            // "Item Rating": "A",
+            // "Suggested Item?": "false",
+            // "Discount %": "0",
+            // "Sale Item?": "A",
+            // "Item ID": detailProduct._id,
+            "Store Name": detailProduct.store.name,
+            // "Store ID": detailProduct.store._id, 
+        });
+    }
 
     const goBack = () => {
         history.goBack();
@@ -120,19 +142,32 @@ const Details = ({
         openModal(id);
     }
 
-    const todo = (id, title) => {
+    const todo = (id, item) => {
         onAddToCart(id);
         handleModalOpen(id);
-        clicked(title);
+        clicked(item);
         setCartLoading(true);
     }
 
-    const clicked = (title) => {
+    const clicked = (item) => {
         ReactGA.event({
             category: 'Cart',
             action: 'Added From Product Page',
-            label: title
+            label: item.name
         });
+        mixpanel.track("Add Item To Cart", {
+            // "Entry Point": "Home Page",
+            "Item Name": item.name,
+            "Item Category": item.category,
+            "Item Cost": item.price,
+            // "Item Rating": "A",
+            // "Suggested Item?": "false",
+            // "Discount %": "0",
+            // "Sale Item?": "A",
+            // "Item ID": item._id,
+            "Store Name": item.store.name,
+            // "Store ID": item.store._id, 
+        });    
     }
 
     const setModal = () => {
@@ -161,6 +196,21 @@ const Details = ({
 
     }
 
+    const changeImage = (index) => {
+        setShowImage(index)
+
+        mixpanel.track("Main Img Change", {
+        //   "Entry Point": "Home Landing",
+          "Item Name": detailProduct.name,
+          "Item Category": detailProduct.category,
+          "Item Cost": detailProduct.price,
+          "Store Name": detailProduct.store.name,
+          "Total Imgs": detailProduct.img_gallery.length,
+          "Total Likes": detailProduct.likes.length,
+          "Total Comments": detailProduct.comments.length,
+        });
+    }
+
     const { text } = reviewData;
 
     const fileChanged = e => {
@@ -181,7 +231,25 @@ const Details = ({
         
         setModal();
         setReviewData({text: ''});
+
+        mixpanel.track("New Item Comment Completed", {
+            "Item Name": detailProduct.name,
+            "Item Category": detailProduct.category,
+            "Item Cost": detailProduct.price,
+            "Store Name": detailProduct.store.name,
+            "Total Imgs": detailProduct.img_gallery.length,
+            "Total Likes": detailProduct.likes.length,
+            "Total Comments": detailProduct.comments.length + 1,
+            "Comment Text": text
+        });
     };
+
+    if(!sentMixpanel && user !== null) {
+        if(detailProduct) {
+            handleMixpanel();
+            setSentMixpanel(true);
+        }
+    }
 
     let varKeyList = [];
     let varValueList = [];
@@ -506,7 +574,7 @@ const Details = ({
                             {detailProduct && img_gallery && img_gallery.length > 0 && <img src={`/api/products/image/${img_gallery[showImage].img_name}`} className="img-fluid" alt="product" />}
                             <div className="datail-sub-images">
                                 {img_gallery.map((item, index) => {
-                                    return <img key={index} onClick={() => setShowImage(index)} src={`/api/products/image/${img_gallery[index].img_name}`} alt={detailProduct.name} />
+                                    return <img key={index} onClick={() => changeImage(index)} src={`/api/products/image/${img_gallery[index].img_name}`} alt={detailProduct.name} />
                                 })}
                             </div>
                         </div>
@@ -552,7 +620,7 @@ const Details = ({
                                 {/* <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}> */}
                                     {/* <button style={{background:'transparent', color:'#cd00cd', borderColor:'#cd00cd'}}>Make an Offer</button> */}
                                     <button 
-                                        onClick={() =>todo(detailProduct._id, detailProduct.title)}
+                                        onClick={() =>todo(detailProduct._id, detailProduct)}
                                         disabled={cartLoading ? true : false} 
                                     >
                                         {cartLoading ? <ButtonSpinner /> : "Add To Cart"}
@@ -607,7 +675,6 @@ const Details = ({
                     <MuiThemeProvider>
                         <form
                             className='form my-1'
-                            onSubmit={onSubmit}
                         >
                             <textarea
                             name='text'
@@ -619,7 +686,7 @@ const Details = ({
                             required
                             />
                             <div className="line"></div>
-                            <button type='submit' style={{width:'100%'}}>Submit</button>
+                            <button onClick={onSubmit} type='submit' style={{width:'100%'}}>Submit</button>
                         </form>
                     </MuiThemeProvider>
                 </Modal>

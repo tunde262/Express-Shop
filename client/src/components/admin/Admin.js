@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import PropTypes from 'prop-types';
@@ -6,15 +6,31 @@ import { connect } from 'react-redux';
 import Spinner from '../common/Spinner';
 import { getCurrentStore, deleteStore } from '../../actions/storeActions';
 
+import mixpanel from 'mixpanel-browser';
+
 import Table from './table/Table';
 import JoinCreate from './JoinCreate';
 import logo from '../common/logo.jpg';
 import { Logo } from '../Logo';
 
 const Admin = ({ getCurrentStore, store: { stores, loading } }) => {
+
+    const [sentMixpanel, setSentMixpanel] = useState(false);
+
     useEffect(() => {
         getCurrentStore();
     }, []);
+
+    const handleMixpanel = () => {
+        mixpanel.track("View Choose-Store Admin Page", {
+        //   "Entry Point": "Home Landing",
+          "# of Stores Returned": stores.length,
+        });
+
+        mixpanel.people.set({
+            "# of stores": stores.length
+        })
+    }
 
     let storeList;
 
@@ -22,6 +38,10 @@ const Admin = ({ getCurrentStore, store: { stores, loading } }) => {
         storeList = <Spinner />;
     }
     else {
+        if(!sentMixpanel) {
+            handleMixpanel();
+            setSentMixpanel(true);
+        }
         if(stores.length > 0) {
             storeList = stores.map(store => (
                 <div className="stores-box-option">

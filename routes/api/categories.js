@@ -62,7 +62,7 @@ const upload = multer({ storage });
 // @access Private
 router.get('/', auth, async (req, res) => {
     try {
-        const categories = await Category.find().populate('variants', ['name', 'category', '_id', 'img_name']);
+        const categories = await Category.find().populate('store', ['name', 'img_name']);
         res.json(categories);
     } catch (err) {
         console.error(err.message);
@@ -91,7 +91,7 @@ router.get('/storeid/:storeId', auth, async (req, res) => {
 // @access Private
 router.get('/store/:id', auth, async (req, res) => {
     try {
-        const categories = await Category.find({ store: req.params.id });
+        const categories = await Category.find({ store: req.params.id }).populate('store', ['name', 'img_name']);
 
         res.json(categories);
     } catch (err) {
@@ -104,7 +104,7 @@ router.get('/store/:id', auth, async (req, res) => {
 //@desc Get single category 
 router.get('/:id', auth, async (req, res) => {
     try {
-        const category = await Category.findById(req.params.id);
+        const category = await Category.findById(req.params.id).populate('store', ['name', 'img_name']);
 
         if(!category) {
             return res.status(404).json({ msg: 'Category not found'})

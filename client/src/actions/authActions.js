@@ -2,6 +2,7 @@ import axios from 'axios';
 import { setAlert } from './alertActions';
 import { getCurrentProfile } from './profileActions';
 import { clearLocations } from './locationActions';
+import mixpanel from 'mixpanel-browser';
 
 import { 
     SET_SIDEBAR, 
@@ -17,7 +18,7 @@ import {
 import setAuthToken from '../utils/setAuthToken';
 
 // Load User
-export const loadUser = () => async dispatch => {
+export const loadUser = (register, login) => async dispatch => {
     // dispatch(clearLocations());
     if(localStorage.token) {
         setAuthToken(localStorage.token);
@@ -25,6 +26,60 @@ export const loadUser = () => async dispatch => {
 
     try {
         const res = await axios.get('/api/auth');
+
+        console.log('LOAD USER');
+        console.log(res.data)
+
+        mixpanel.init("1b36d59c8a4e85ea3bb964ac4c4d5889");
+
+        if(register && !login) {
+            mixpanel.alias(res.data._id);
+            // mixpanel.register({
+            //     "Zipcode": auth.zipcode
+            // });
+
+            mixpanel.track("Complete Registration", {
+                "Name": res.data.name,
+                // "Last Name": res.data.last_name,
+                "Email": res.data.email,
+                "Registration Date": new Date().toISOString(),
+                "Registration Method": "E-mail",
+                "Referred": "No",
+                "Saved Products": 0,
+                "Lifetime Value": 0,
+                "Address": "n/a",
+                "Last Category Filter": "n/a"
+            });
+
+            mixpanel.people.set({
+                "$name": res.data.name,
+                // "First Name": res.data.first_name,
+                // "Last Name": res.data.last_name,
+                "$email": res.data.email,
+                "Registration Date": new Date().toISOString(),
+                "Referred": "No",
+                "Registration Method": "E-mail"
+            })
+        } 
+
+        if(!register && login) {
+            mixpanel.identify(res.data._id);
+            // mixpanel.register({
+            //     "Zipcode": auth.zipcode
+            // });
+
+            mixpanel.track("Login", {
+                "Name": res.data.name,
+                // "Last Name": res.data.last_name,
+                "Email": res.data.email,
+                "Login Method": "E-mail",
+                "Login Date": new Date().toISOString(),
+            });
+
+            mixpanel.people.set({
+                "Last Login Date": new Date().toISOString()
+            });
+        } 
 
         dispatch({
             type: USER_LOADED,
@@ -63,7 +118,7 @@ export const register = ({ name, email, password }) => async dispatch => {
             payload: res.data
         });
 
-        dispatch(loadUser());
+        dispatch(loadUser(true, false));
         dispatch(getCurrentProfile());
     } catch (err) {
         const errors = err.response.data.errors;
@@ -96,7 +151,7 @@ export const login = (email, password ) => async dispatch => {
             payload: res.data
         });
 
-        dispatch(loadUser());
+        dispatch(loadUser(false, true));
     } catch (err) {
         const errors = err.response.data.errors;
 

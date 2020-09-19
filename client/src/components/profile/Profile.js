@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
+import mixpanel from 'mixpanel-browser';
+
 import Spinner from '../common/Spinner';
 import Orders from './Orders';
 import Saved from './Saved';
@@ -12,6 +14,17 @@ import AuthModal from '../modals/AuthModal';
 const Profile = ({ product, auth: { user, isAuthenticated, loading }, history}) => {
     const [skip, setSkip] = useState(0);
     const [tableShow1, setTableShow1] = useState('saved');
+
+    const [sentMixpanel, setSentMixpanel] = useState(false);
+
+
+    const handleMixpanel = () => {
+        mixpanel.init("1b36d59c8a4e85ea3bb964ac4c4d5889");
+        mixpanel.identify(user._id);
+        mixpanel.track("View Profile Page", {
+        // "Entry Point": "Home Landing",
+        });
+    }
 
     const handleScroll = (e) => {
         const { offsetHeight, scrollTop, scrollHeight} = e.target
@@ -29,6 +42,11 @@ const Profile = ({ product, auth: { user, isAuthenticated, loading }, history}) 
         tableContent = <Settings /> 
     } else if(tableShow1 === 'orders') {
         tableContent = <Orders /> 
+    }
+
+    if(!sentMixpanel && user !== null) {
+        handleMixpanel();
+        setSentMixpanel(true);
     }
 
     let profileContent;

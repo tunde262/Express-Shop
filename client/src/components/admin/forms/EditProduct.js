@@ -3,6 +3,8 @@ import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import mixpanel from 'mixpanel-browser';
+
 import { editProduct } from '../../../actions/productActions';
 
 const initialState = {
@@ -85,6 +87,15 @@ const EditProduct = ({
     if(tags !== '')data.append('tags', tags);
 
     editProduct(data, detailProduct._id, store._id);
+
+    mixpanel.track("Edit Product Completed", {
+        "Item Name": name,
+        "Item Category": category,
+        "Item Cost": price,
+        "Store Name": store.name,
+        "Total Imgs": detailProduct.img_gallery.length,
+        "Edit Date": new Date().toISOString(), 
+      });
   };
 
   return (

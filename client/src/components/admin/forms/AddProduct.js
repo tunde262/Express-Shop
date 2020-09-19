@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import Modal from 'react-responsive-modal';
 import { addProduct, editProduct, addProductImg, handleDetail } from '../../../actions/productActions';
 
+import mixpanel from 'mixpanel-browser';
+
 import DragAndDrop from './utils/DragAndDrop';
 import InputTag from '../../common/InputTag/InputTag';
 
@@ -192,6 +194,14 @@ const AddProduct = ({
       editProduct(data, detailProduct._id, store.store._id, history);
     }
 
+    mixpanel.track("Add Product Completed", {
+      "Item Name": name,
+      "Item Category": category,
+      "Item Cost": price,
+      "Store Name": store.store.name,
+      "Creation Date": new Date().toISOString(), 
+    });
+
   };
 
   const onAddTag = (tag) => {
@@ -304,6 +314,16 @@ const AddProduct = ({
     console.log(variantList);
     setVarInfo(variantList);
     console.log(varInfo);
+
+    mixpanel.track("Add Variant Completed", {
+      "Item Name": name,
+      "Item Category": category,
+      "Item Cost": price,
+      "Store Name": store.store.name,
+      // "Variant Options": store.name,
+      // "Variant Values": store.name,
+      "Creation Date": new Date().toISOString(), 
+    });
   }
 
   let display;

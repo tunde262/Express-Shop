@@ -6,8 +6,9 @@ import PropTypes from 'prop-types';
 import { addLike, handleDetail, addToCart, openModal, closeModal, addTotals } from '../../../actions/productActions';
 
 import ReactGA from 'react-ga';
+import mixpanel from 'mixpanel-browser';
 
-const ProductCard = ({addLike, liked, product, handleDetail, addToCart, openModal, closeModal, addTotals}) => {
+const ProductCard = ({ auth: { user }, addLike, liked, product, handleDetail, addToCart, openModal, closeModal, addTotals}) => {
     // componentDidMount() {
     //     console.log(this.props.product);
     // }
@@ -27,6 +28,35 @@ const ProductCard = ({addLike, liked, product, handleDetail, addToCart, openModa
 
     const setModalClose = (e) => {
         closeModal();
+    }
+    
+    const handleLike = (item) => {
+        addLike(item._id);
+
+        // Check if product already liked by same user
+        if(item.likes.filter(like => like.user.toString() === user._id).length > 0) {
+            mixpanel.track("Product Un-Bookmark", {
+                "Product Name": item.name,
+                "Product Category": item.category,
+                // "Product Rating": cartIds,
+                "Total Likes": item.likes.length - 1,
+                "Total Comments": item.comments.length,
+                "Product ID": item._id,
+            });
+            
+            mixpanel.people.increment("Saved Products", -1);
+        } else {
+            mixpanel.track("Product Bookmark", {
+                "Product Name": item.name,
+                "Product Category": item.category,
+                // "Product Rating": cartIds,
+                "Total Likes": item.likes.length + 1,
+                "Total Comments": item.comments.length,
+                "Product ID": item._id,
+            });
+            
+            mixpanel.people.increment("Saved Products");
+        }
     }
 
     const todo = (id, title) => {
@@ -85,7 +115,7 @@ const ProductCard = ({addLike, liked, product, handleDetail, addToCart, openModa
                             {inCart ? <i style={{color:'#ff4b2b'}} class="fas fa-check-square"></i> : <i style={{color:'#28c101'}} class="fas fa-check-square"></i>}
                             <div>
                                 <span>{likes.length > 0 && <span>{likes.length}</span>}</span>{' '}
-                                {liked ? <i style={{color:'#ff4b2b'}} onClick={() => addLike(_id)} class="fas fa-heart"></i> : <i onClick={() => addLike(_id)} className="far fa-heart detail-heart"></i>}
+                                {liked ? <i style={{color:'#ff4b2b'}} onClick={() => handleLike(product)} class="fas fa-heart"></i> : <i onClick={() => handleLike(product)} className="far fa-heart detail-heart"></i>}
                             </div>
                         </div>
                     </div>
@@ -108,6 +138,10 @@ ProductCard.propTypes = {
     closeModal: PropTypes.func.isRequired,
     addTotals: PropTypes.func.isRequired
 };
+
+const mapStateToProps = state => ({
+    auth: state.auth
+});
 
 const ProductWrapper = styled.div`
     display: inline-block;
@@ -308,5 +342,5 @@ const ProductWrapper = styled.div`
         //     width: 150px;
         //     height: 250px;
         // }
-export default connect(null, { addLike, handleDetail, addToCart, openModal, closeModal, addTotals })(ProductCard);
+export default connect(mapStateToProps, { addLike, handleDetail, addToCart, openModal, closeModal, addTotals })(ProductCard);
 

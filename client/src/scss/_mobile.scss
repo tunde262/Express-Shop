@@ -213,12 +213,10 @@
         padding: 0;
 
         .nav {
-            padding: 0px;
+            padding-left: 1rem;
             width: 100%;
-            display: flex;
+            height: 100%;
             justify-content: space-between;
-            align-items: center;
-            margin: 0 1rem;
         }
 
         nav ul {
@@ -267,6 +265,7 @@
         border: none;
         cursor: pointer;
         outline: none;
+        margin-top: -20px;
     }
 
     .portfolio {

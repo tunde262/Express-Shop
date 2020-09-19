@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { setAlert } from './alertActions';
 
+import mixpanel from 'mixpanel-browser';
+
 import { SET_PRODUCTS, SET_IN_CART, SET_SORTED_PRODUCTS, SET_MODAL_PRODUCTS, ADD_TO_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, ADD_PRODUCT_REVIEW, REMOVE_PRODUCT_REVIEW, PRODUCT_ERROR, HANDLE_TAGS, REMOVE_TAGS, PRODUCTS_LOADING, ADD_TOTALS, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, HANDLE_MAP, CLOSE_MODAL, CLEAR_CART, GET_CART, GET_ORDERS, INC_IMG_GALLERY, DEC_IMG_GALLERY } from './types';
 import store from '../store';
 
@@ -105,18 +107,42 @@ export const setSortedProducts = (products) =>  {
 // Get Filtered tags
 export const handleTags = (filter, products) => async dispatch =>  {
     dispatch(setProductsLoading());
+    mixpanel.init("1b36d59c8a4e85ea3bb964ac4c4d5889");
     try {
         if (filter === 'explore') {
             dispatch({
                 type: SET_SORTED_PRODUCTS,
                 payload: products
             });
+
+            mixpanel.track("Category Nav Filter", {
+                "Chosen Category": filter,
+                "# of Results Returned": products.length,
+            });    
+            console.log('CLICKED');
+            console.log(products);
+        
+            mixpanel.people.set({
+                "Last Category Filter": filter,
+            });
+
         } else {
             const res = await axios.get(`/api/products/filter/${filter}`);
 
             dispatch({
                 type: SET_SORTED_PRODUCTS,
                 payload: res.data
+            });
+
+            mixpanel.track("Category Nav Filter", {
+                "Chosen Category": filter,
+                "# of Results Returned": res.data.length,
+            });    
+            console.log('CLICKED');
+            console.log(res.data);
+        
+            mixpanel.people.set({
+                "Last Category Filter": filter,
             });
         }
     } catch (err) {

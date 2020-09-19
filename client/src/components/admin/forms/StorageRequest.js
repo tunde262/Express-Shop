@@ -2,6 +2,8 @@ import React, { Fragment, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
+import mixpanel from 'mixpanel-browser';
+
 const StorageRequest = ({match, setTable, products, getProductsByStoreId, store, setModal, setLocationModal}) => {
     // useEffect(() => {
     //     if(!products) getProductsByStoreId(store._id);
@@ -16,6 +18,11 @@ const StorageRequest = ({match, setTable, products, getProductsByStoreId, store,
             setTable('collection detail')
         }
     }
+
+    const handleStorageRequest = () => {
+        mixpanel.track("Request Storage Completed");
+    }
+
     return (
         <Fragment>
             <div className="product-actions container-fluid">
@@ -25,7 +32,7 @@ const StorageRequest = ({match, setTable, products, getProductsByStoreId, store,
                         <h3 style={{color:'#333', fontWeight:'300'}}>Storage Request</h3>
                     </div>
                     <div style={{display:'flex', height:'100%', alignItems:'center'}}>
-                        <button style={{ margin:'0 1rem 0 0' }}>Submit</button>
+                        <button onClick={handleStorageRequest} style={{ margin:'0 1rem 0 0' }}>Submit</button>
                     </div>
                 </div>
                 <hr style={{margin:'0'}} />

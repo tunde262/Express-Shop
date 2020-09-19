@@ -14,9 +14,11 @@ import img5 from '../../utils/imgs/img_fencing.jpg';
 import img6 from '../../utils/imgs/img_cyclingbmx.jpg';
 import img7 from '../../utils/imgs/img_volleyball.jpg';
 
+import mixpanel from 'mixpanel-browser';
+
 import DragAndDrop from '../admin/forms/utils/DragAndDrop';
 
-const Banner = ({imgLarge, imgSmall, admin, store, addBannerImg}) => {
+const Banner = ({imgLarge, imgSmall, admin, store, product, addBannerImg}) => {
     const [files, setFiles] = useState([]);
 
     const [tableShow1, setTableShow1] = useState('upload');
@@ -69,6 +71,22 @@ const Banner = ({imgLarge, imgSmall, admin, store, addBannerImg}) => {
         // } else {
         //   editProduct(data, detailProduct._id, store.store._id, history);
         // }
+
+        let banner_value = false;
+
+        if (store.store.banner_imgs.length > 0) {
+            banner_value = true;
+        }
+        
+        mixpanel.track("Store Banner Update", {
+            // "Entry Point": "Home Landing",
+            "# of Public Store Items": product.products.length,
+            // "# of People Part of Store": "Home Landing",
+            "Store Name": store.store.name,
+            // "Store Category": "Home Landing",
+            // "Store ID": store._id,
+            "Banner Value": banner_value,
+        });
     
     };
 
@@ -203,11 +221,13 @@ const BannerContainer = styled.div`
 
 Banner.propTypes = {
     addBannerImg: PropTypes.func.isRequired,
-    store: PropTypes.object.isRequired
+    store: PropTypes.object.isRequired,
+    product: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-    store: state.store
+    store: state.store,
+    product: state.product
 });
 
 export default connect(mapStateToProps, { addBannerImg })(

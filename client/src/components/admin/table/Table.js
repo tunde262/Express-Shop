@@ -7,6 +7,8 @@ import { getVariantsByStoreId } from '../../../actions/variantActions';
 import { getCollectionsByStoreId } from '../../../actions/collectionActions';
 import { getCustomersByStoreId } from '../../../actions/customerActions';
 
+import mixpanel from 'mixpanel-browser';
+
 import Item from './Item';
 import Order from './Order';
 import Collection from './Collection';
@@ -35,6 +37,7 @@ const Table = ({
     getCollectionsByStoreId
 }) => {
     const [tableShow, setTableShow] = useState('');
+    const [sentMixpanel, setSentMixpanel] = useState(false);
 
     useEffect(() => {
         getProductsByStoreId(store._id)
@@ -50,11 +53,55 @@ const Table = ({
         }
     }, []);
 
+    const handleMixpanel = () => {
+        let banner_value = false;
+
+        if (store.banner_imgs.length > 0) {
+            banner_value = true;
+        }
+        mixpanel.track("Store Admin Storage View", {
+        // "Entry Point": "Home Landing",
+        "# of Public Store Items": product.products.length,
+        // "# of People Part of Store": "Home Landing",
+        "Store Name": store.name,
+        // "Store Category": "Home Landing",
+        "Store ID": store._id,
+        "Banner Value": banner_value,
+        });
+    }
+
+    const handleMixpanelOrders = () => {
+        let banner_value = false;
+
+        if (store.banner_imgs.length > 0) {
+            banner_value = true;
+        }
+        mixpanel.track("Store Admin Orders View", {
+        // "Entry Point": "Home Landing",
+        "# of Public Store Items": product.products.length,
+        // "# of People Part of Store": "Home Landing",
+        "Store Name": store.name,
+        // "Store Category": "Home Landing",
+        "Store ID": store._id,
+        "Banner Value": banner_value,
+        });
+    }
+
     let tableContent;
 
     if(tableShow === 'orders') {
+        if(!sentMixpanel && store !== null && !product.loading && product.products !== null) {
+            handleMixpanelOrders();
+            setSentMixpanel(true);
+        }
+
         tableContent = <Order order={order} />;
     } else if (tableShow === 'products') {
+        if(!sentMixpanel && store !== null && !product.loading && product.products !== null) {
+            handleMixpanel();
+            setSentMixpanel(true);
+        }
+        
         tableContent = (
             <Fragment>
                 <Item page="dashboard" product={product} />

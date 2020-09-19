@@ -5,19 +5,38 @@ import { connect } from 'react-redux';
 import { getCart } from '../actions/productActions';
 import { getStoreById } from '../actions/storeActions';
 
+import mixpanel from 'mixpanel-browser';
+
 import Footer from '../components/layout/Footer/Footer';
 import Spinner from '../components/common/Spinner';
 import StoreMain from '../components/page_components/store/StoreMain';
 
 
-const StorePage = ({getStoreById, store, product: { products, loading }, history, match}) => {
+const StorePage = ({getStoreById, store, product: { products, sortedProducts, loading }, history, match}) => {
     const [toggleSocial, setToggleSocial] = useState(false);
+    const [sentMixpanel, setSentMixpanel] = useState(false);
+    
     useEffect( async () => {
         getStoreById(match.params.id);
     }, []);
 
     const goBack = () => {
         history.goBack();
+    }
+
+    const handleMixpanel = () => {
+        mixpanel.track("Store Page View", {
+        //   "Entry Point": "Home Landing",
+          "# of Results Returned": products.length,
+          "Store Name": store.store.name,
+        //   "Store Category": store.store.category,
+          "Store ID": store.store._id,
+        });
+    }
+
+    if(!sentMixpanel && store.store !== null && !loading && products.length > 0) {
+        handleMixpanel();
+        setSentMixpanel(true);
     }
 
     return (

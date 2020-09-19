@@ -1,18 +1,35 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import mixpanel from 'mixpanel-browser';
 
 import Spinner from '../common/Spinner';
 import OrderList from '../admin/OrderList';
 import { BackButton } from '../common/BackButton';
 
 const Orders = ({deleteAccount, auth: { user }, profile: {profile, loading }}) => {
+
+    const [sentMixpanel, setSentMixpanel] = useState(false);
+
+
+    const handleMixpanel = () => {
+        mixpanel.track("View Profile Orders Page", {
+        // "Entry Point": "Home Landing",
+        });
+    }
+
     let orderList;
 
     if(user === null || loading) {
         orderList = <Spinner />;
     }
     else {
+        if(!sentMixpanel) {
+            handleMixpanel();
+            setSentMixpanel(true);
+        }
+
         orderList = <OrderList user={user._id} profile />
     }
 

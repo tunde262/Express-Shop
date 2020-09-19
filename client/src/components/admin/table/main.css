@@ -996,6 +996,10 @@ header {
   }
 
   @media screen and (max-width: 768px) {
+    .admin-image-overlay {
+      display: none;
+    }
+
     .product-admin-image-container {
       height: calc(20vw + 30px);
     }

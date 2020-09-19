@@ -11,14 +11,14 @@ import mixpanel from 'mixpanel-browser';
 
 
 
-const Navbar = ({ drawerClickHandler, toggleCartDrawer, backdrop, backdropClickHandler, auth: { isAuthenticated, loading }, logout }) => {
+const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdrop, backdropClickHandler, auth: { isAuthenticated, loading }, logout }) => {
     // Page
     const [navHighlight, setNavHighlight] = useState('home');
     // Toggle Sidebar
     const [isOpen, setIsOpen] = useState(false);
     // Toggle Dropdwon
     const [dropdown, setDropdown] = useState(false);
-    const [cart, toggleCart] = useState(false);
+    // const [cart, toggleCart] = useState(false);
     // show dropdown submenu
     const [activeMenu, setActiveMenu] = useState('main');
     // dropdown height
@@ -49,11 +49,17 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, backdrop, backdropClickH
     }
 
     const logoClicked = () => {
-        mixpanel.init("1b36d59c8a4e85ea3bb964ac4c4d5889");
-        mixpanel.track("Logo Click", {
-            "Song Title": "Test Song Title",
-            "Song Artist": "Test Artist"
-        });
+        mixpanel.track("Logo Click");
+    }
+
+    const toggleCart = () => {
+        drawerClickHandler();
+        toggleCartDrawer();
+    }
+
+    const toggleAuth = () => {
+        drawerClickHandler();
+        toggleAuthDrawer();
     }
     
 
@@ -172,7 +178,7 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, backdrop, backdropClickH
                     )}
                 </a>
 
-                {cart && (
+                {/* {cart && (
                     <div className="dropdown" style={{height: menuHeight}}>
                         <CSSTransition 
                             in={activeMenu === 'main'} 
@@ -208,7 +214,7 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, backdrop, backdropClickH
                             </div>
                         </CSSTransition>
                     </div>
-                )}
+                )} */}
             </li>
         </Fragment>
     );
@@ -237,40 +243,92 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, backdrop, backdropClickH
 
     return (
         <header>
-            <div className="nav">
-                <div className="branding">
-                    <img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" />
+            <div className="desktop">
+                <div className="nav">
+                    <div className="branding">
+                        <Link to="/"><img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" /></Link>
 
-                    {/* <div className="social-container">
-                        <a href="https://instagram.com/cardboardexpress" target="_blank" className="social"><i className="fab fa-instagram"></i></a>
-                        <a href="https://www.facebook.com/Cardboard-Express-106068867830320/?view_public_for=106068867830320" target="_blank" className="social"><i className="fab fa-facebook-f"></i></a>
-                        <a href="https://twitter.com/cardboardxpress" target="_blank" className="social"><i className="fab fa-twitter"></i></a>
+                        {/* <div className="social-container">
+                            <a href="https://instagram.com/cardboardexpress" target="_blank" className="social"><i className="fab fa-instagram"></i></a>
+                            <a href="https://www.facebook.com/Cardboard-Express-106068867830320/?view_public_for=106068867830320" target="_blank" className="social"><i className="fab fa-facebook-f"></i></a>
+                            <a href="https://twitter.com/cardboardxpress" target="_blank" className="social"><i className="fab fa-twitter"></i></a>
+                        </div> */}
+                    </div>
+
+                    <li className={navHighlight === "home" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('home')}>
+                        <Link to="/home" className={navHighlight === "home" && "active"}>
+                            <i class="fas fa-home"></i>{' '}
+                            Home
+                        </Link>
+                    </li>
+                    <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
+                        <Link to="/explore">
+                            <i class="far fa-compass"></i>{' '}
+                            Explore
+                        </Link>
+                    </li>
+                    {/* <Link className="cta" to="/register">
+                        {/* <button type="button" className="nav-btn nav-icon" onClick={drawerClickHandler}>
+                            Sell
+                        </button> */}
+                        
+                    {/* </Link> */} 
+                    {/* <div className="mobile">
+                        {backdrop ? (
+                            <i style={{fontSize:'1.5rem'}} className={backdrop ? "fas fa-times menu-btn nav-btn close" : "fas fa-times nav-btn menu-btn"} onClick={handleToggle}></i>
+                        ) : (<i style={{fontSize:'1.5rem'}} className={backdrop ? "fas fa-bars nav-btn menu-btn close" : "fas fa-bars nav-btn menu-btn"} onClick={handleToggle}></i>
+                        )}
                     </div> */}
                 </div>
+            </div>
 
-                <li className={navHighlight === "home" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('home')}>
-                    <Link to="/home" className={navHighlight === "home" && "active"}>
-                        <i class="fas fa-home"></i>{' '}
-                        Home
-                    </Link>
-                </li>
-                <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
-                    <Link to="/explore">
-                        <i class="far fa-compass"></i>{' '}
-                        Explore
-                    </Link>
-                </li>
-                {/* <Link className="cta" to="/register">
-                    {/* <button type="button" className="nav-btn nav-icon" onClick={drawerClickHandler}>
-                        Sell
-                    </button> */}
+            {/** Mobile Only Nav */}
+            <div style={{height:'100%', width:'100%'}} className="mobile">
+                <div className="nav">
+                    <div className="branding">
+                        <Link to="/"><img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" /></Link>
+
+                        {/* <div className="social-container">
+                            <a href="https://instagram.com/cardboardexpress" target="_blank" className="social"><i className="fab fa-instagram"></i></a>
+                            <a href="https://www.facebook.com/Cardboard-Express-106068867830320/?view_public_for=106068867830320" target="_blank" className="social"><i className="fab fa-facebook-f"></i></a>
+                            <a href="https://twitter.com/cardboardxpress" target="_blank" className="social"><i className="fab fa-twitter"></i></a>
+                        </div> */}
+                    </div>
                     
-                {/* </Link> */} 
-                <div className="mobile">
-                    {backdrop ? (
-                        <i style={{fontSize:'1.5rem'}} className={backdrop ? "fas fa-times menu-btn nav-btn close" : "fas fa-times nav-btn menu-btn"} onClick={handleToggle}></i>
-                    ) : (<i style={{fontSize:'1.5rem'}} className={backdrop ? "fas fa-bars nav-btn menu-btn close" : "fas fa-bars nav-btn menu-btn"} onClick={handleToggle}></i>
-                    )}
+                    <div style={{display:'flex', justifyContent: "flex-end"}}>
+                        <li className={navHighlight === "home" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('home')}>
+                            <Link to="/home" className={navHighlight === "home" && "active"}>
+                                <i class="fas fa-home"></i>
+                            </Link>
+                        </li>
+                        <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
+                            <Link to="/explore">
+                                <i class="far fa-compass"></i>
+                            </Link>
+                        </li>
+                        <li className={navHighlight === "profile" ? "nav-offset active" : "nav-offset"} onClick={toggleAuth}>
+                            <a href="#">
+                                <i className="fas fa-user-circle"></i>
+                            </a>
+                        </li>
+                        <li onClick={toggleCart}>
+                            <a href="#">
+                                <i class="fas fa-shopping-cart"></i>
+                            </a>
+                        </li>
+                        {/* <Link className="cta" to="/register">
+                            {/* <button type="button" className="nav-btn nav-icon" onClick={drawerClickHandler}>
+                                Sell
+                            </button> */}
+                            
+                        {/* </Link> */} 
+                        {/* <div className="mobile">
+                            {backdrop ? (
+                                <i style={{fontSize:'1.5rem'}} className={backdrop ? "fas fa-times menu-btn nav-btn close" : "fas fa-times nav-btn menu-btn"} onClick={handleToggle}></i>
+                            ) : (<i style={{fontSize:'1.5rem'}} className={backdrop ? "fas fa-bars nav-btn menu-btn close" : "fas fa-bars nav-btn menu-btn"} onClick={handleToggle}></i>
+                            )}
+                        </div> */}
+                    </div>
                 </div>
             </div>
             <div className={isOpen ? "nav-bar show-nav" : "nav-bar"}>

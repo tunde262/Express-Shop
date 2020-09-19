@@ -10,7 +10,7 @@ import ReactGA from 'react-ga';
 import { BackButton } from '../common/BackButton';
 import { Container } from './Form';
 
-const Login = ({ isAuthenticated, login, history }) => {
+const Login = ({ auth: { isAuthenticated, user }, login, history }) => {
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -31,7 +31,7 @@ const Login = ({ isAuthenticated, login, history }) => {
         ReactGA.event({
             category: 'Account',
             action: 'Logged Into Account'
-        });
+        });  
     }
 
     // Redirect if logged in
@@ -76,12 +76,12 @@ const Login = ({ isAuthenticated, login, history }) => {
 }
 
 Login.propTypes = {
-    isAuthenticated: PropTypes.bool,
+    auth: PropTypes.object.isRequired,
     login: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
+    auth: state.auth
 });
 
 export default connect(mapStateToProps, { login })(Login);

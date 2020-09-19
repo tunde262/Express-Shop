@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { editStore, getCurrentStore } from '../../../actions/storeActions';
 
+import mixpanel from 'mixpanel-browser';
+
 const initialState = {
     file: '',
     name: '', 
@@ -21,9 +23,11 @@ const initialState = {
     delivery_cost_customers: 0
 };
 
-const StoreSettings = ({ store: { store, loading }, editStore, getCurrentStore, setTable }) => {
+const StoreSettings = ({ store: { store, loading }, product, editStore, getCurrentStore, setTable }) => {
     // Store Settings
     const [formData, setFormData] = useState(initialState);
+
+    const [sentMixpanel, setSentMixpanel] = useState(false);
 
     useEffect(() => {
         if (!store) getCurrentStore();
@@ -92,7 +96,51 @@ const StoreSettings = ({ store: { store, loading }, editStore, getCurrentStore, 
 
         editStore(data, store._id);
 
+        handleSettingsUpdate();
     };
+
+    const handleMixpanel = () => {
+        let banner_value = false;
+
+        if (store.banner_imgs.length > 0) {
+            banner_value = true;
+        }
+        mixpanel.track("Store Admin Settings View", {
+        // "Entry Point": "Home Landing",
+        "# of Public Store Items": product.products.length,
+        // "# of People Part of Store": "Home Landing",
+        "Store Name": store.name,
+        // "Store Category": "Home Landing",
+        "Store ID": store._id,
+        "Banner Value": banner_value,
+        });
+    }
+
+    const handleSettingsUpdate = () => {
+        let banner_value = false;
+
+        if (store.banner_imgs.length > 0) {
+            banner_value = true;
+        }
+        
+        mixpanel.track("Store Settings Update Completed", {
+            "# of Public Store Items": product.products.length,
+            // "# of People Part of Store": "Home Landing",
+            "Store Name": store.name,
+            // "Store Category": "Home Landing",
+            "Store ID": store._id,
+            "Banner Value": banner_value,
+            "Store Public": store.privacy,
+            "taxes_in_prod": banner_value,
+            "Store Delivery Percentage": store.delivery_cost_customers
+        });
+    }
+
+
+    if(!sentMixpanel && store !== null && !product.loading && product.products !== null) {
+        handleMixpanel();
+        setSentMixpanel(true);
+    }
 
 
     return (
@@ -192,11 +240,13 @@ const StoreSettings = ({ store: { store, loading }, editStore, getCurrentStore, 
 StoreSettings.propTypes = {
     store: PropTypes.object.isRequired,
     getCurrentStore: PropTypes.func.isRequired,
-    editStore: PropTypes.func.isRequired
+    editStore: PropTypes.func.isRequired,
+    product: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-    store: state.store
+    store: state.store,
+    product: state.product
 })
 
 export default connect(mapStateToProps, { editStore, getCurrentStore })(StoreSettings);

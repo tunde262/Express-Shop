@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import mixpanel from 'mixpanel-browser';
 
 // CSS - controlled by /scss
 import './css/main.css';
@@ -35,6 +36,7 @@ if(localStorage.token) {
 const App = () => {
   const initializeReactGA = () => {
     ReactGA.initialize('UA-144191515-1');
+    mixpanel.init("1b36d59c8a4e85ea3bb964ac4c4d5889");
   }
 
   const [cartStores, setStoresList] = useState([]);
@@ -112,7 +114,7 @@ const App = () => {
       <StripeProvider apiKey="pk_live_TGJb7MssdJJyke7Wg6WpDj1e00gVdDNGxd">
         <Router>
           <div style={{height: '100%'}}>
-            <Navbar backdrop={drawer} backdropClickHandler={backdropClickHandler} drawerClickHandler={drawerToggleClickHandler} toggleCartDrawer={toggleCartDrawer} />
+            <Navbar backdrop={drawer} backdropClickHandler={backdropClickHandler} drawerClickHandler={drawerToggleClickHandler} toggleAuthDrawer={toggleAuthDrawer} toggleCartDrawer={toggleCartDrawer} />
             <SideDrawer show={sideDrawer.sideDrawerOpen} toggleAuthDrawer={toggleAuthDrawer} toggleCartDrawer={toggleCartDrawer} drawerClickHandler={drawerToggleClickHandler} />
             <CartDrawer cartStores={cartStores} setStoresList={setStoresList} show={cartDrawer.cartDrawerOpen} toggleCartDrawer={toggleCartDrawer} drawerClickHandler={drawerToggleClickHandler} />
             <AuthDrawer show={authDrawer.authDrawerOpen} toggleAuthDrawer={toggleAuthDrawer} drawerClickHandler={drawerToggleClickHandler} />

@@ -1,7 +1,9 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
+
+import mixpanel from 'mixpanel-browser';
 
 import Variant from '../../../table/Variant';
 import TableDetails from '../../../../TableDetails/TableDetails';
@@ -16,23 +18,76 @@ import CarEmoji from '../../../../../utils/imgs/car.jpg';
 
 const DetailProduct = ({ setModal, detailProduct, variant, deleteVariant, setTable, setStoreLocationModal, setImageModal, match, incImg, decImg }) => {
 
+    const [sentMixpanel, setSentMixpanel] = useState(false);
+
     let imageContent;
     let img_gallery = detailProduct.img_gallery.sort((a, b) => a.img_order - b.img_order);
 
     const imgBack = (imgId) => {
         console.log('DEC IMG');
-        decImg(imgId, detailProduct._id)
+        decImg(imgId, detailProduct._id);
+
+        mixpanelImgOrderUpdate();
     }
 
     const imgForward = (imgId) => {
         console.log('INC IMG');
-        incImg(imgId, detailProduct._id)
+        incImg(imgId, detailProduct._id);
+
+        mixpanelImgOrderUpdate();
+    }
+
+    const mixpanelImgOrderUpdate = () => {
+        mixpanel.track("Img Order Update", {
+        //   "Entry Point": "Home Landing",
+          "Item Name": detailProduct.name,
+          "Item Category": detailProduct.category,
+          "Item Cost": detailProduct.price,
+          "Store Name": detailProduct.store.name,
+          "Total Imgs": detailProduct.img_gallery.length,
+          "Total Likes": detailProduct.likes.length,
+          "Total Comments": detailProduct.comments.length,
+          
+        });
+    } 
+
+    const handleMixpanel = () => {
+        mixpanel.track("Admin Product Page View", {
+        //   "Entry Point": "Home Landing",
+          "Item Name": detailProduct.name,
+          "Item Category": detailProduct.category,
+          "Item Cost": detailProduct.price,
+          "Store Name": detailProduct.store.name,
+          "Total Imgs": detailProduct.img_gallery.length,
+          "Total Likes": detailProduct.likes.length,
+          "Total Comments": detailProduct.comments.length,
+          
+        });
+    }
+
+    const handleImgClick = () => {
+        mixpanel.track("Item Img Click", {
+            //   "Entry Point": "Home Landing",
+              "Item Name": detailProduct.name,
+              "Item Category": detailProduct.category,
+              "Item Cost": detailProduct.price,
+              "Store Name": detailProduct.store.name,
+              "Total Imgs": detailProduct.img_gallery.length,
+              "Total Likes": detailProduct.likes.length,
+              "Total Comments": detailProduct.comments.length,
+              
+        });
+    }
+
+    if(!sentMixpanel && detailProduct) {
+        handleMixpanel();
+        setSentMixpanel(true);
     }
     
     if(detailProduct && detailProduct.img_gallery && detailProduct.img_gallery.length > 0 ) {
         imageContent = img_gallery.map(image => (
             <div className="product-admin-image-container">
-                <img src={`/api/products/image/${image.img_name}`} alt="img" />
+                <img onClick={handleImgClick} src={`/api/products/image/${image.img_name}`} alt="img" />
                 <div className="product-admin-image-container-actions">
                     <div onClick={() => imgBack(image._id)} className="admin-image-icon-container">
                         <i class="fas fa-chevron-left"></i>
@@ -41,7 +96,7 @@ const DetailProduct = ({ setModal, detailProduct, variant, deleteVariant, setTab
                         <i class="fas fa-chevron-right"></i>
                     </div>
                 </div>
-                <div className="admin-image-overlay">
+                <div onClick={handleImgClick} className="admin-image-overlay">
                     <div onClick={() => imgBack(image._id)} className="admin-overlay-icon-container">
                         <i class="fas fa-chevron-left"></i>
                     </div>

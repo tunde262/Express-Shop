@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import mixpanel from 'mixpanel-browser';
+
 import { addToVariants } from '../../../../../actions/variantActions';
 
 import Map from '../../../../common/map/Map';
@@ -18,6 +20,9 @@ import OpenLockEmoji from '../../../../../utils/imgs/openlock.png';
 import CarEmoji from '../../../../../utils/imgs/car.jpg'; 
 
 const DetailLocation = ({ setModal, addToVariants, storageLocation, storageLocation: { detailLocation, loading }, variant, setTable }) => {
+
+    const [sentMixpanel, setSentMixpanel] = useState(false);
+    
     // TODO : map markers
     
     // let imageContent;
@@ -43,6 +48,23 @@ const DetailLocation = ({ setModal, addToVariants, storageLocation, storageLocat
         }
 
     }, [loading]);
+
+    const handleMixpanel = () => {
+        mixpanel.track("Admin Location Page View", {
+        //   "Entry Point": "Home Landing",
+          "Location Name": detailLocation.name,
+          "Location City": detailLocation.address_components.city,
+        //   "Location Zipcode": detailLocation.address_components.postalcode,
+          "Store Name": detailLocation.store.name,
+        //   "Item Count": detailLocation.img_gallery.length,
+          
+        });
+    }
+
+    if(!sentMixpanel && detailLocation) {
+        handleMixpanel();
+        setSentMixpanel(true);
+    }
 
 
     return (

@@ -6,7 +6,9 @@ import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
 import { Container } from '../../auth/Form';
 import { ButtonContainer } from '../../Button';
 
-const FormPayment = ({ cartStores, nextStep, prevStep, values: { firstname, lastname, email, address, city, state, zipcode, telephone, amount, userId }}) => {
+import mixpanel from 'mixpanel-browser';
+
+const FormPayment = ({ cartStores, cart, cartQty, cartTax, cartSubtotal, cartTotal, nextStep, prevStep, values: { firstname, lastname, email, address, city, state, zipcode, telephone, amount, userId }}) => {
     const stripe = useStripe();
     const elements = useElements();
     const complete = async (e) => {
@@ -90,6 +92,39 @@ const FormPayment = ({ cartStores, nextStep, prevStep, values: { firstname, last
         prevStep();
     };
 
+    const handleMixpanel = () => {
+        let cartIds = [];
+        let cartNames = [];
+        let cartCategories = [];
+
+        cart.map(cartItemId => {
+            cartIds.push(cartItemId.item._id);
+        });
+
+        cart.map(cartItemCategory => {
+            cartCategories.push(cartItemCategory.item.category);
+        });
+
+        cart.map(cartItemName => {
+            cartNames.push(cartItemName.item.name);
+        })
+        
+        mixpanel.track("Complete Purchase", {
+            // "Delivery Method": deliveryMethod,
+            // "Delivery Amount": deliveryAmount,
+            "Cart Size": cartQty,
+            "Cart Value": cartSubtotal,
+            "Cart Item IDs": cartIds,
+            "Cart Item Categories": cartCategories,
+            "Cart Item Names": cartNames,
+            "Total Amount": cartTotal,
+            "Tax Amount": cartTax,
+            // "Payment Type": paymentMethod,
+        });
+        
+        mixpanel.people.increment("Lifetime Value", cartTotal);
+    }
+
     return (
         <Fragment>
             <Container>
@@ -99,7 +134,7 @@ const FormPayment = ({ cartStores, nextStep, prevStep, values: { firstname, last
                         <label>Credit / Debit Card</label>
                         <CardElement className="my-2 p-2 border" />
                         <a style={{marginRight: '1rem'}}onClick={back}>Back</a>
-                        <button>
+                        <button onClick={handleMixpanel}>
                             Continue
                         </button>
                     </form>

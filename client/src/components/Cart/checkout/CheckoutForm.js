@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { Elements } from 'react-stripe-elements';
 import FormDetails from './FormDetails';
@@ -7,7 +9,7 @@ import FormPayment from './FormPayment';
 import Confirm from './Confirm';
 import Success from './Success';
 
-const CheckoutForm = ({total, user, cartStores, clearCart, history}) => {
+const CheckoutForm = ({total, user, product: { cart, cartStores, cartQty, cartTax, cartSubtotal, cartTotal }, clearCart, history}) => {
     const [formData, setFormData] = useState({
         step: 1,
         userId: `${user}`,
@@ -114,6 +116,11 @@ const CheckoutForm = ({total, user, cartStores, clearCart, history}) => {
                             prevStep = {prevStep}
                             values = {values}
                             cartStores = {cartStores}
+                            cart = {cart}
+                            cartQty = {cartQty} 
+                            cartTax = {cartTax} 
+                            cartSubtotal = {cartSubtotal} 
+                            cartTotal = {cartTotal}
                         />
                     </Elements>
                 )
@@ -159,5 +166,14 @@ const CheckoutForm = ({total, user, cartStores, clearCart, history}) => {
         // )
 }
 
-export default withRouter(CheckoutForm)
+CheckoutForm.propTypes = {
+    product: PropTypes.object.isRequired,
+}
+
+const mapStateToProps = state => ({
+    product: state.product,
+});
+
+export default connect(mapStateToProps, null)(withRouter(CheckoutForm));
+
 

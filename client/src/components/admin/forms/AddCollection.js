@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addCollection } from '../../../actions/collectionActions';
 
+import mixpanel from 'mixpanel-browser';
+
 const AddCollection = ({ addCollection, store, history }) => {
     const [formData, setFormData] = useState({
         name: '',
@@ -35,6 +37,12 @@ const AddCollection = ({ addCollection, store, history }) => {
         data.append('tags', tags);
     
         addCollection(data, store.store._id, history);
+
+        mixpanel.track("Add Collection Completed", {
+            "Collection Name": data.name,
+            "Store Name": store.store.name,
+            "Creation Date": new Date().toISOString(), 
+        });
     };
 
     return (

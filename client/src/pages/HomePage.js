@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getProducts, getCart } from '../actions/productActions';
 
+import mixpanel from 'mixpanel-browser';
+
 import Footer from '../components/layout/Footer/Footer';
 import Header from '../components/header/Header';
 import CategoryOverview from '../components/Overview/categoryOverview/CategoryOverview';
@@ -16,8 +18,11 @@ import Banner from '../components/common/Banner';
 import ImgLarge from '../utils/imgs/banner21.jpg';
 import ImgSmall from '../utils/imgs/banner13.jpg';
 
-const ExplorePage = ({getProducts, product, auth: { isAuthenticated, loading}}) => {
-    const [skip, setSkip] = useState(0)
+const HomePage = ({getProducts, product, auth: { user, isAuthenticated, loading}}) => {
+    const [skip, setSkip] = useState(0);
+
+    const [sentMixpanel, setSentMixpanel] = useState(false);
+    
     useEffect(() => {
         getProducts(skip);
     }, [skip]);
@@ -28,6 +33,16 @@ const ExplorePage = ({getProducts, product, auth: { isAuthenticated, loading}}) 
         if (offsetHeight + scrollTop === scrollHeight) {
           setSkip(product.products.length)
         }
+    }
+
+    const handleMixpanel = () => {
+        mixpanel.init("1b36d59c8a4e85ea3bb964ac4c4d5889");
+        mixpanel.identify(user._id);
+        mixpanel.track("View Main Shopping Page", {
+        //   "Entry Point": "Home Landing",
+        //   "# of Results Returned": "A",
+          "Chosen Category": "All"
+        });
     }
 
     // const [displayModal, toggleModal] = useState(false);
@@ -47,6 +62,11 @@ const ExplorePage = ({getProducts, product, auth: { isAuthenticated, loading}}) 
     // const onSubmit = async e => {
     //     console.log('Modal Form')
     // }
+
+    if(!sentMixpanel && user !== null) {
+        handleMixpanel();
+        setSentMixpanel(true);
+    }
     
     const { exploreTops, exploreBottoms, exploreHats, exploreSocks } = product;
 
@@ -83,7 +103,7 @@ const ExplorePage = ({getProducts, product, auth: { isAuthenticated, loading}}) 
     
 }
 
-ExplorePage.propTypes = {
+HomePage.propTypes = {
     getProducts: PropTypes.func.isRequired,
     getCart: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
@@ -95,4 +115,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, { getProducts, getCart })(ExplorePage);
+export default connect(mapStateToProps, { getProducts, getCart })(HomePage);

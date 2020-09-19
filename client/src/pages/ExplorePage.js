@@ -7,6 +7,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 
+import mixpanel from 'mixpanel-browser';
+
 // Footer
 import Footer from '../components/layout/Footer/Footer';
 
@@ -28,7 +30,9 @@ import Container from '../components/ProductList/Container';
 import gainLogo from '../utils/imgs/gainlogo.jpg';
 
 const ExplorePage = ({getProducts, product: { loading, products, featuredProducts}}) => {
-    const [skip, setSkip] = useState(0)
+    const [skip, setSkip] = useState(0);
+    const [sentMixpanel, setSentMixpanel] = useState(false);
+
     useEffect(() => {
         getProducts(skip);
     }, [skip]);
@@ -39,6 +43,13 @@ const ExplorePage = ({getProducts, product: { loading, products, featuredProduct
         if (offsetHeight + scrollTop === scrollHeight) {
           setSkip(products.length)
         }
+    }
+
+    const handleMixpanel = () => {
+        mixpanel.init("1b36d59c8a4e85ea3bb964ac4c4d5889");
+        mixpanel.track("View Explore Page", {
+        //   "Entry Point": "Home Landing",
+        });
     }
 
     const settings1 = {
@@ -61,6 +72,11 @@ const ExplorePage = ({getProducts, product: { loading, products, featuredProduct
         autoplaySpeed: 3000,
 
     };
+
+    if(!sentMixpanel) {
+        handleMixpanel();
+        setSentMixpanel(true);
+    }
     
     return (
         <Fragment>

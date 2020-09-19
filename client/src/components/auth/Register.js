@@ -11,7 +11,7 @@ import ReactGA from 'react-ga';
 import { BackButton } from '../common/BackButton';
 import { Container } from './Form';
 
-const Register = ({ setAlert, register, isAuthenticated, history }) => {
+const Register = ({ setAlert, register, auth: { isAuthenticated, user }, history }) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -104,11 +104,11 @@ const Register = ({ setAlert, register, isAuthenticated, history }) => {
 Register.propTypes = {
     setAlert: PropTypes.func.isRequired,
     register: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool,
+    auth: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
+    auth: state.auth
 });
 
 export default connect(mapStateToProps, { setAlert, register })(Register);

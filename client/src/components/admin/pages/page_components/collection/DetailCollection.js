@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import mixpanel from 'mixpanel-browser';
+
 import { addToProducts } from '../../../../../actions/productActions';
 
 import Map from '../../../../common/map/Map';
@@ -18,6 +20,8 @@ import OpenLockEmoji from '../../../../../utils/imgs/openlock.png';
 import CarEmoji from '../../../../../utils/imgs/car.jpg'; 
 
 const DetailCollection = ({ setModal, addToProducts, collection: { collection, loading }, product, setTable, storageLocation }) => {
+
+    const [sentMixpanel, setSentMixpanel] = useState(false);
     // TODO : map markers
     
     // let imageContent;
@@ -43,6 +47,22 @@ const DetailCollection = ({ setModal, addToProducts, collection: { collection, l
         }
 
     }, [loading]);
+
+    const handleMixpanel = () => {
+        mixpanel.track("Admin Collection Page View", {
+        //   "Entry Point": "Home Landing",
+          "Collection Name": collection.name,
+        //   "Location Zipcode": collection.address_components.postalcode,
+          "Store Name": collection.store.name,
+          "Item Count": collection.items.length,
+          
+        });
+    }
+
+    if(!sentMixpanel && collection) {
+        handleMixpanel();
+        setSentMixpanel(true);
+    }
 
 
     return (

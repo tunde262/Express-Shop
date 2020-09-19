@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { addLocation } from '../../../actions/locationActions';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
+import mixpanel from 'mixpanel-browser';
+
 const AddLocation = ({ addLocation, store, history }) => {
     useEffect(() => {
         
@@ -237,6 +239,14 @@ const AddLocation = ({ addLocation, store, history }) => {
         if(latLng !== '')data.append('coordinates', latLng);
     
         addLocation(data, store.store._id, history);
+
+        mixpanel.track("Add Location Page Completed", {
+            "Location Name": name,
+            "Location City": city,
+            "location Zipcode": postalCode,
+            "Store Name": store.name,
+            "Creation Date": new Date().toISOString(), 
+        });
     };
 
     return (
