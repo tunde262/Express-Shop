@@ -73,12 +73,12 @@
 
             &.sign-in-container {
                 width: 100%;
-                transform: translateY(100%);
+                transform: translateY(0);
             }
 
             &.sign-up-container {
                 width: 100%;
-                transform: translateY(100%);
+                transform: translateY(0);
             }
         }
 
@@ -106,7 +106,7 @@
                 }
 
                 &-left {
-                    transform: translateY(100%);
+                    transform: translateY(0);
                 }
             }
         }
@@ -121,13 +121,13 @@
 
             /* Move overlay to the left */
             .overlay-container {
-                transform: translateY(100%);
+                transform: translateY(0);
 
                 .overlay {
                     transform: translateX(0);
 
                     &-right {
-                        transform: translateY(-100%);
+                        transform: translateY(0);
                     }
                 }
             }

@@ -1999,10 +1999,10 @@ footer .footer-bottom {
       width: 100%; }
       .jumbotron-slide-form .form-container.sign-in-container {
         width: 100%;
-        transform: translateY(100%); }
+        transform: translateY(0); }
       .jumbotron-slide-form .form-container.sign-up-container {
         width: 100%;
-        transform: translateY(100%); }
+        transform: translateY(0); }
     .jumbotron-slide-form .overlay-container {
       left: 0;
       width: 100%;
@@ -2021,18 +2021,18 @@ footer .footer-bottom {
           right: 0;
           transform: translateY(0); }
         .jumbotron-slide-form .overlay-container .overlay-left {
-          transform: translateY(100%); }
+          transform: translateY(0); }
     .jumbotron-slide-form.right-panel-active {
       /* Move overlay to the left */
       /* Bring sign in over sign up */ }
       .jumbotron-slide-form.right-panel-active .sign-up-container {
         transform: translateY(0); }
       .jumbotron-slide-form.right-panel-active .overlay-container {
-        transform: translateY(100%); }
+        transform: translateY(0); }
         .jumbotron-slide-form.right-panel-active .overlay-container .overlay {
           transform: translateX(0); }
           .jumbotron-slide-form.right-panel-active .overlay-container .overlay-right {
-            transform: translateY(-100%); }
+            transform: translateY(0); }
       .jumbotron-slide-form.right-panel-active .sign-in-container {
         transform: translateY(0); }
   .jumbotron2 {

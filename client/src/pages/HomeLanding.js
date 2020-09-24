@@ -200,7 +200,7 @@ const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) =>
                 <span>Welcome to the fastest place to shop online!</span>
                 <input
                   type="text"
-                  name="Name"
+                  name="name"
                   className="input_line"
                   placeholder="Enter Name"
                   value={name}
@@ -225,7 +225,7 @@ const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) =>
                     onChange={e => onChange(e)}
                     style={{margin:'10px 0', width:'100%', height:'50px'}}
                 />
-                <input
+                {/* <input
                     type="password"
                     name="password2"
                     className="input_line"
@@ -233,7 +233,7 @@ const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) =>
                     value={password2}
                     onChange={e => onChange(e)}
                     style={{margin:'10px 0', width:'100%', height:'50px'}}
-                />
+                /> */}
                 <button style={{width: '100%'}} type="submit">Create An Account</button>
                 <div className="mobile">
                     <span style={{cursor: "pointer"}} onClick={e => formChange(e)}>Already have an account?</span>
@@ -244,11 +244,11 @@ const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) =>
             <div className="overlay">
                 <div className="overlay-panel overlay-left">
                     <h1>Welcome Back!</h1>
-                    <p>
+                    {/* <p>
                         Continue to stay connected within the hacker community.
-                    </p>
+                    </p> */}
                     <div className="desktop">
-                        <button className="ghost" id="signUp" onClick={e => formChange(e)}>Sign Up</button>
+                        <button style={{marginTop:'2rem'}} className="ghost" id="signUp" onClick={e => formChange(e)}>Sign Up</button>
                     </div>
                     <div className="mobile">
                         <button className="ghost" id="exploreBtn">Sign In</button>
@@ -256,11 +256,11 @@ const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) =>
                     </div>
                 </div>
                 <div className="overlay-panel overlay-right">
-                    <h1>Free Portfolio and Project Hosting For Developers.</h1>
-                    <p>
+                    <h1>Sign Up For Free Unlimited Shopping!</h1>
+                    {/* <p>
                         A community driven place to share your ideas and creations with the world.
-                    </p>
-                    <button className="ghost" onClick={e => formChange(e)}>Log In</button>
+                    </p> */}
+                    <button style={{marginTop:'2rem'}} className="ghost" onClick={e => formChange(e)}>Log In</button>
                     {/* <div className="desktop">
                         <button onClick={e => formChange(e)}>Sign In</button>
                     </div> */}
@@ -273,7 +273,7 @@ const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) =>
         </div>
       </div>
       <div className="jumbotron-slide-form mobile" id="auth-form2">
-        <form style={{display:'flex', flexDirection:'column', alignItems:'center', marginBottom: '-2rem'}} onSubmit={e => signIn(e)}>
+        {/* <form style={{display:'flex', flexDirection:'column', alignItems:'center', marginBottom: '-2rem'}} onSubmit={e => signIn(e)}>
             <img src={logo} style={{maxHeight: '60px', marginBottom: '-2rem'}} alt="cardboard express logo" />
             <h1>Sign In</h1>
             <span>Welcome back to our Circle :)</span>
@@ -299,7 +299,54 @@ const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) =>
             <div className="mobile">
                 <Link to="/register">Don't have an account?</Link>
             </div>
-        </form>
+        </form> */}
+        <div className="form-container sign-up-container" id="sign-up-container">
+          <form style={{display:'flex', flexDirection:'column', alignItems:'center', marginBottom: '-2rem'}} id="auth-form" onSubmit={e => signUp(e)}>
+            <img src={logo} style={{maxHeight: '60px', marginBottom: '-2rem'}} alt="cardboard express logo" />
+            <h1>Create Account</h1>
+            <span>Welcome to the fastest place to shop online!</span>
+            <input
+              type="text"
+              name="name"
+              className="input_line"
+              placeholder="Enter Name"
+              value={name}
+              onChange={e => onChange(e)}
+              style={{margin:'10px 0', width:'100%', height:'50px'}}
+            />
+            <input
+              type="email"
+              name="email"
+              className="input_line"
+              placeholder="Enter Email"
+              value={email}
+              onChange={e => onChange(e)}
+              style={{margin:'10px 0', width:'100%', height:'50px'}}
+            />
+            <input
+                type="password"
+                name="password"
+                className="input_line"
+                placeholder="Enter Password"
+                value={password}
+                onChange={e => onChange(e)}
+                style={{margin:'10px 0', width:'100%', height:'50px'}}
+            />
+            {/* <input
+                type="password"
+                name="password2"
+                className="input_line"
+                placeholder="Confirm Password"
+                value={password2}
+                onChange={e => onChange(e)}
+                style={{margin:'10px 0', width:'100%', height:'50px'}}
+            /> */}
+            <button style={{width: '100%'}} type="submit">Create An Account</button>
+            <div className="mobile">
+              <Link to="/login">Already have an account?</Link>
+            </div>
+          </form>
+        </div>
       </div>
     </Fragment>
   )

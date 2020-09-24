@@ -230,12 +230,12 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
             {/* <li className="nav-offset">
                 <Link style={{fontSize:'1rem'}} className="cta" to="/blog">Blog</Link>
             </li> */}
-            <li className="nav-offset">
+            {/* <li className="nav-offset">
                 <Link style={{fontSize:'1rem'}} className="cta" to="/login">Login</Link>
-            </li>
+            </li> */}
             <li className="nav-offset">
                 <Link style={{fontSize:'1rem'}} className="cta" to="/register">
-                    <button>Sign Up</button>
+                    <button>Start Shopping</button>
                 </Link>
             </li>
         </Fragment>
@@ -288,7 +288,7 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
             </li>
             <li className="nav-offset">
                 <Link style={{fontSize:'1rem'}} className="cta" to="/register">
-                    <button>Shop Now</button>
+                    <button>Start Shopping</button>
                 </Link>
             </li>
         </Fragment>
