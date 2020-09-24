@@ -302,8 +302,8 @@ const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) =>
         </form> */}
         <div className="form-container sign-up-container" id="sign-up-container">
           <form style={{display:'flex', flexDirection:'column', alignItems:'center', marginBottom: '-2rem'}} id="auth-form" onSubmit={e => signUp(e)}>
-            <img src={logo} style={{maxHeight: '60px', marginBottom: '-2rem'}} alt="cardboard express logo" />
-            <h1>Create Account</h1>
+            <img src={logo} style={{maxHeight: '60px', marginBottom: '2rem'}} alt="cardboard express logo" />
+            <h3>Create Account</h3>
             <span>Welcome to the fastest place to shop online!</span>
             <input
               type="text"
