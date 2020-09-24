@@ -124,7 +124,10 @@ const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) =>
                 <h1 id="main-heading">The Fastest Place To Shop Online.</h1>
                 <h1 id="sub-heading">Cardboard Shopping is a local online retail space. Enjoy Free Unlimited access to your favorite stores around the world in one place.</h1>
             </div>
-            <a href="#auth-form">
+            <a className="desktop" href="#auth-form">
+              <div className="scroll-down"></div>
+            </a>
+            <a className="mobile" href="#auth-form2">
               <div className="scroll-down"></div>
             </a>
           </div>
@@ -269,7 +272,7 @@ const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) =>
             </div>
         </div>
       </div>
-      <div className="jumbotron-slide-form mobile" id="jumbotron">
+      <div className="jumbotron-slide-form mobile" id="auth-form2">
         <form style={{display:'flex', flexDirection:'column', alignItems:'center', marginBottom: '-2rem'}} onSubmit={e => signIn(e)}>
             <img src={logo} style={{maxHeight: '60px', marginBottom: '-2rem'}} alt="cardboard express logo" />
             <h1>Sign In</h1>
