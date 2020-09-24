@@ -1,10 +1,11 @@
 import React, { useEffect, useState, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import Dropdown from '../components/common/Dropdown';
 import classes from '../components/layout/Landing.module.css';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { updateAuth } from '../actions/authActions';
+import { updateAuth, login, register } from '../actions/authActions';
 
 import Footer from '../components/layout/Footer/Footer';
 import StopwatchEmoji from '../utils/imgs/stopwatch.png';
@@ -12,19 +13,20 @@ import BoxEmoji from '../utils/imgs/box.png';
 import MoneyBagEmoji from '../utils/imgs/moneybag.png';
 import DiamondEmoji from '../utils/imgs/diamond.png';
 import DesktopMobile from '../utils/imgs/CE_DESKTOP_MOBILE.png';
+import logo from '../components/common/logo.png';
 
 import ReactGA from 'react-ga';
 import mixpanel from 'mixpanel-browser';
 
-const HomeLanding = ({history, isAuthenticated, updateAuth}) => {
-  const [formData, setFormData] = useState({
-    firstname: '',
-    lastname: '',
-    email: '',
-    password: '',
-    password2: '',
-    signup: true
-  });
+const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) => {
+  // const [formData, setFormData] = useState({
+  //   firstname: '',
+  //   lastname: '',
+  //   email: '',
+  //   password: '',
+  //   password2: '',
+  //   signup: true
+  // });
 
   const [sentMixpanel, setSentMixpanel] = useState(false);
 
@@ -32,9 +34,9 @@ const HomeLanding = ({history, isAuthenticated, updateAuth}) => {
     history.listen(location => ReactGA.pageview(location.pathname));
   }, []);
 
-  const { name, email, password, password2, type } = formData;
+  // const { name, email, password, password2, type } = formData;
 
-  const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value});
+  // const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value});
 
 
   const handleMixpanel = () => {
@@ -64,6 +66,46 @@ const HomeLanding = ({history, isAuthenticated, updateAuth}) => {
     // });
   }
 
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    password2: ''
+  });
+
+  const [rightPanelActive, setPanel] = useState(false);
+
+  const { name, email, password, password2 } = formData;
+
+  const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+
+  const signIn = async e => {
+      e.preventDefault();
+      login(email, password);
+  }
+
+  const signUp = async e => {
+      e.preventDefault();
+      register({ name, email, password });
+  }
+
+  const formChange = e => {
+      const jumbotron = document.getElementById('jumbotron');
+
+      if(!rightPanelActive) {
+          jumbotron.classList.add('right-panel-active');
+
+          // Set Active Form State
+          setPanel(!rightPanelActive);
+      } else {
+          jumbotron.classList.remove('right-panel-active');
+
+          // Set Active Form State
+          setPanel(!rightPanelActive);
+      }
+  }
+
   if(!sentMixpanel) {
     handleMixpanel();
     setSentMixpanel(true);
@@ -79,15 +121,12 @@ const HomeLanding = ({history, isAuthenticated, updateAuth}) => {
         <div className="jumbocontainer">
           <div className="jumbocontent">
             <div className="jumboheading">
-                <h1 id="main-heading">Shop Local.<br/> Always On Time.</h1>
-                <h1 id="sub-heading" className="desktop">Cardboard Shopping is a local online retail space, that gives you free unlimited access to your favorite stores and brands :)</h1>
+                <h1 id="main-heading">The Fastest Place To Shop Online.</h1>
+                <h1 id="sub-heading">Cardboard Shopping is a local online retail space. Enjoy Free Unlimited access to your favorite stores around the world in one place.</h1>
             </div>
             <a href="#auth-form">
               <div className="scroll-down"></div>
             </a>
-          </div>
-          <div className="desktop">
-
           </div>
         </div>
         
@@ -123,20 +162,141 @@ const HomeLanding = ({history, isAuthenticated, updateAuth}) => {
         </div>
         <Footer /> */}
       </div>
-      <div className="jumbotron2">
-        <div id="auth-form" style={{display:'grid', gridTemplateColumns:'1fr 1fr'}}  className="jumbocontainer">
-            <div className="jumbocontent">
-              <div className="jumboheading">
-                  <h1 id="main-heading">Sign Up To <br/> Start Shopping <br/>Local.</h1>
-              </div>
-              <a href="#auth-form">
-                <div className="scroll-down"></div>
-              </a>
-            </div>
-            <div className="desktop">
-
+      <div className="jumbotron-slide-form desktop" id="jumbotron">
+        <div className="form-container sign-in-container">
+            <form id="auth-form" onSubmit={e => signIn(e)}>
+                <h1>Sign In</h1>
+                <span>Welcome back to our Circle :)</span>
+                <input
+                  type="email"
+                  name="email"
+                  className="input_line"
+                  placeholder="Enter Email"
+                  value={email}
+                  onChange={e => onChange(e)}
+                  style={{margin:'10px 0', width:'100%', height:'50px'}}
+                />
+                <input
+                    type="password"
+                    name="password"
+                    className="input_line"
+                    placeholder="Enter Password"
+                    value={password}
+                    onChange={e => onChange(e)}
+                    style={{margin:'10px 0', width:'100%', height:'50px'}}
+                />
+                <button style={{width: '100%'}} type="submit">Log In</button>
+                <div className="mobile">
+                    <span style={{cursor: "pointer"}} onClick={e => formChange(e)}>Don't have an account?</span>
+                </div>
+            </form>
+        </div>
+        <div className="form-container sign-up-container" id="sign-up-container">
+            <form id="auth-form" onSubmit={e => signUp(e)}>
+                <h1>Create Account</h1>
+                <span>Welcome to the fastest place to shop online!</span>
+                <input
+                  type="text"
+                  name="Name"
+                  className="input_line"
+                  placeholder="Enter Name"
+                  value={name}
+                  onChange={e => onChange(e)}
+                  style={{margin:'10px 0', width:'100%', height:'50px'}}
+                />
+                <input
+                  type="email"
+                  name="email"
+                  className="input_line"
+                  placeholder="Enter Email"
+                  value={email}
+                  onChange={e => onChange(e)}
+                  style={{margin:'10px 0', width:'100%', height:'50px'}}
+                />
+                <input
+                    type="password"
+                    name="password"
+                    className="input_line"
+                    placeholder="Enter Password"
+                    value={password}
+                    onChange={e => onChange(e)}
+                    style={{margin:'10px 0', width:'100%', height:'50px'}}
+                />
+                <input
+                    type="password"
+                    name="password2"
+                    className="input_line"
+                    placeholder="Confirm Password"
+                    value={password2}
+                    onChange={e => onChange(e)}
+                    style={{margin:'10px 0', width:'100%', height:'50px'}}
+                />
+                <button style={{width: '100%'}} type="submit">Create An Account</button>
+                <div className="mobile">
+                    <span style={{cursor: "pointer"}} onClick={e => formChange(e)}>Already have an account?</span>
+                </div>
+            </form>
+        </div>
+        <div className="overlay-container">
+            <div className="overlay">
+                <div className="overlay-panel overlay-left">
+                    <h1>Welcome Back!</h1>
+                    <p>
+                        Continue to stay connected within the hacker community.
+                    </p>
+                    <div className="desktop">
+                        <button className="ghost" id="signUp" onClick={e => formChange(e)}>Sign Up</button>
+                    </div>
+                    <div className="mobile">
+                        <button className="ghost" id="exploreBtn">Sign In</button>
+                        <span style={{cursor: "pointer"}} onClick={e => formChange(e)}>Don't have an account?</span>
+                    </div>
+                </div>
+                <div className="overlay-panel overlay-right">
+                    <h1>Free Portfolio and Project Hosting For Developers.</h1>
+                    <p>
+                        A community driven place to share your ideas and creations with the world.
+                    </p>
+                    <button className="ghost" onClick={e => formChange(e)}>Log In</button>
+                    {/* <div className="desktop">
+                        <button onClick={e => formChange(e)}>Sign In</button>
+                    </div> */}
+                    <div className="mobile">
+                        <a href="#sign-up-container"><button className="ghost" id="signUp">Sign Up</button></a>
+                        <span style={{cursor: "pointer"}} onClick={e => formChange(e)}>Already have an account?</span>
+                    </div>
+                </div>
             </div>
         </div>
+      </div>
+      <div className="jumbotron-slide-form mobile" id="jumbotron">
+        <form style={{display:'flex', flexDirection:'column', alignItems:'center', marginBottom: '-2rem'}} onSubmit={e => signIn(e)}>
+            <img src={logo} style={{maxHeight: '60px', marginBottom: '-2rem'}} alt="cardboard express logo" />
+            <h1>Sign In</h1>
+            <span>Welcome back to our Circle :)</span>
+            <input
+              type="email"
+              name="email"
+              className="input_line"
+              placeholder="Enter Email"
+              value={email}
+              onChange={e => onChange(e)}
+              style={{margin:'10px 0', width:'100%', height:'50px'}}
+            />
+            <input
+                type="password"
+                name="password"
+                className="input_line"
+                placeholder="Enter Password"
+                value={password}
+                onChange={e => onChange(e)}
+                style={{margin:'10px 0', width:'100%', height:'50px'}}
+            />
+            <button style={{width: '100%'}} type="submit">Log In</button>
+            <div className="mobile">
+                <Link to="/register">Don't have an account?</Link>
+            </div>
+        </form>
       </div>
     </Fragment>
   )
@@ -144,6 +304,8 @@ const HomeLanding = ({history, isAuthenticated, updateAuth}) => {
 
 HomeLanding.propTypes = {
   updateAuth: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -151,4 +313,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, { updateAuth })(withRouter(HomeLanding));
+export default connect(mapStateToProps, { updateAuth, register, login })(withRouter(HomeLanding));

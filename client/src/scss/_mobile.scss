@@ -67,6 +67,78 @@
         background-position: right; 
     }
 
+    .jumbotron-slide-form {
+        .form-container {
+            width: 100%;
+
+            &.sign-in-container {
+                width: 100%;
+                transform: translateY(100%);
+            }
+
+            &.sign-up-container {
+                width: 100%;
+                transform: translateY(100%);
+            }
+        }
+
+        .overlay-container {
+            left: 0;
+            width: 100%;
+            transform: translateY(0);
+
+            .overlay {
+                background: linear-gradient($secondary-color, $third-color) no-repeat 0 0 / cover;
+                left: 0;
+                height: calc(100vh-100px);
+                width: 100%;
+                transform: translateY(0);
+
+                &-panel {
+                    height: calc(100vh-100px);
+                    width: 100%;
+                    transform: translateY(0);
+                }
+
+                &-right {
+                    right: 0;
+                    transform: translateY(0);
+                }
+
+                &-left {
+                    transform: translateY(100%);
+                }
+            }
+        }
+
+        /* Animation */
+
+        /* Move sign in to the right */
+        &.right-panel-active {
+            .sign-up-container {
+                transform: translateY(0);
+            }
+
+            /* Move overlay to the left */
+            .overlay-container {
+                transform: translateY(100%);
+
+                .overlay {
+                    transform: translateX(0);
+
+                    &-right {
+                        transform: translateY(-100%);
+                    }
+                }
+            }
+
+            /* Bring sign in over sign up */
+            .sign-in-container {
+                transform: translateY(0);
+            }
+        }
+    }
+
     .jumbotron2 {
         background-position: left;
     }

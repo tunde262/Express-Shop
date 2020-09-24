@@ -241,6 +241,60 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
         </Fragment>
     );
 
+    const authMobileLinks = (
+        <Fragment>
+            <li className={navHighlight === "home" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('home')}>
+                <Link to="/home" className={navHighlight === "home" && "active"}>
+                    <i class="fas fa-home"></i>
+                </Link>
+            </li>
+            <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
+                <Link to="/explore">
+                    <i class="far fa-compass"></i>
+                </Link>
+            </li>
+            <li className={navHighlight === "profile" ? "nav-offset active" : "nav-offset"} onClick={toggleAuth}>
+                <a href="#">
+                    <i className="fas fa-user-circle"></i>
+                </a>
+            </li>
+            <li onClick={toggleCart}>
+                <a href="#">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+            </li>
+            {/* <Link className="cta" to="/register">
+                {/* <button type="button" className="nav-btn nav-icon" onClick={drawerClickHandler}>
+                    Sell
+                </button> */}
+                
+            {/* </Link> */} 
+            {/* <div className="mobile">
+                {backdrop ? (
+                    <i style={{fontSize:'1.5rem'}} className={backdrop ? "fas fa-times menu-btn nav-btn close" : "fas fa-times nav-btn menu-btn"} onClick={handleToggle}></i>
+                ) : (<i style={{fontSize:'1.5rem'}} className={backdrop ? "fas fa-bars nav-btn menu-btn close" : "fas fa-bars nav-btn menu-btn"} onClick={handleToggle}></i>
+                )}
+            </div> */}
+        </Fragment>
+    );
+
+    const guestMobileLinks = (
+        <Fragment>
+            {/* <li className="nav-offset">
+                <Link style={{fontSize:'1rem'}} className="cta" to="/about">About</Link>
+            </li> */}
+            <li className="nav-offset">
+                <a href="https://business.cardboardexpress.com" target="_blank" style={{fontSize:'1rem'}} className="cta" to="/business">Business</a>
+            </li>
+            <li className="nav-offset">
+                <Link style={{fontSize:'1rem'}} className="cta" to="/register">
+                    <button>Shop Now</button>
+                </Link>
+            </li>
+        </Fragment>
+    );
+
+
     return (
         <header>
             <div className="desktop">
@@ -296,38 +350,7 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                     </div>
                     
                     <div style={{display:'flex', justifyContent: "flex-end"}}>
-                        <li className={navHighlight === "home" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('home')}>
-                            <Link to="/home" className={navHighlight === "home" && "active"}>
-                                <i class="fas fa-home"></i>
-                            </Link>
-                        </li>
-                        <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
-                            <Link to="/explore">
-                                <i class="far fa-compass"></i>
-                            </Link>
-                        </li>
-                        <li className={navHighlight === "profile" ? "nav-offset active" : "nav-offset"} onClick={toggleAuth}>
-                            <a href="#">
-                                <i className="fas fa-user-circle"></i>
-                            </a>
-                        </li>
-                        <li onClick={toggleCart}>
-                            <a href="#">
-                                <i class="fas fa-shopping-cart"></i>
-                            </a>
-                        </li>
-                        {/* <Link className="cta" to="/register">
-                            {/* <button type="button" className="nav-btn nav-icon" onClick={drawerClickHandler}>
-                                Sell
-                            </button> */}
-                            
-                        {/* </Link> */} 
-                        {/* <div className="mobile">
-                            {backdrop ? (
-                                <i style={{fontSize:'1.5rem'}} className={backdrop ? "fas fa-times menu-btn nav-btn close" : "fas fa-times nav-btn menu-btn"} onClick={handleToggle}></i>
-                            ) : (<i style={{fontSize:'1.5rem'}} className={backdrop ? "fas fa-bars nav-btn menu-btn close" : "fas fa-bars nav-btn menu-btn"} onClick={handleToggle}></i>
-                            )}
-                        </div> */}
+                        { !loading && ( isAuthenticated ? authMobileLinks : guestMobileLinks )}
                     </div>
                 </div>
             </div>
