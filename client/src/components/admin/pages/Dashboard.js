@@ -40,13 +40,13 @@ const Dashboard = ({ getStoreById, store: { store, loading }, match }) => {
             {/* Website Overview */}
             <div style={{marginTop: '5rem'}}></div>
             <div class="store-header container-fluid">
-                <div id="breadcrumb">
+                {/* <div id="breadcrumb">
                     <nav className="breadcrumb">
                         <ol>
                             <li><b>My Portfolio</b></li>
                         </ol>
                     </nav>
-                </div>
+                </div> */}
                 <div style={{display: 'flex'}}>
                     {store && store.img_name ? <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${store.img_name}`} alt="img" /> : null}
                     <h3 style={{color: "black"}}>{store && store.name}</h3>
