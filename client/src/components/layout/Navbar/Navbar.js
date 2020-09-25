@@ -234,7 +234,7 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                 <Link style={{fontSize:'1rem'}} className="cta" to="/login">Login</Link>
             </li> */}
             <li className="nav-offset">
-                <Link style={{fontSize:'1rem'}} className="cta" to="/register">
+                <Link style={{fontSize:'1rem'}} className="cta" to="/home">
                     <button>Start Shopping</button>
                 </Link>
             </li>
@@ -287,7 +287,7 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                 <a href="https://business.cardboardexpress.com" target="_blank" style={{fontSize:'1rem'}} className="cta" to="/business">Business</a>
             </li>
             <li className="nav-offset">
-                <Link style={{fontSize:'1rem'}} className="cta" to="/register">
+                <Link style={{fontSize:'1rem'}} className="cta" to="/home">
                     <button>Start Shopping</button>
                 </Link>
             </li>

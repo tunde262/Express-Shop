@@ -189,8 +189,8 @@ const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) =>
                     style={{margin:'10px 0', width:'100%', height:'50px'}}
                 />
                 <button style={{width: '100%'}} type="submit">Log In</button>
-                <div className="mobile">
-                    <span style={{cursor: "pointer"}} onClick={e => formChange(e)}>Don't have an account?</span>
+                <div className="desktop">
+                    <span style={{cursor: "pointer", color:'#808080'}} onClick={e => formChange(e)}>Don't have an account?</span>
                 </div>
             </form>
         </div>
@@ -235,8 +235,8 @@ const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) =>
                     style={{margin:'10px 0', width:'100%', height:'50px'}}
                 /> */}
                 <button style={{width: '100%'}} type="submit">Create An Account</button>
-                <div className="mobile">
-                    <span style={{cursor: "pointer"}} onClick={e => formChange(e)}>Already have an account?</span>
+                <div className="desktop">
+                    <span style={{cursor: "pointer", color:'#808080'}} onClick={e => formChange(e)}>Already have an account?</span>
                 </div>
             </form>
         </div>
@@ -342,9 +342,7 @@ const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) =>
                 style={{margin:'10px 0', width:'100%', height:'50px'}}
             /> */}
             <button style={{width: '100%'}} type="submit">Create An Account</button>
-            <div className="mobile">
-              <Link to="/login">Already have an account?</Link>
-            </div>
+            <Link to="/login" style={{color:'#808080', marginTop:'1rem'}}>Already have an account?</Link>
           </form>
         </div>
       </div>
