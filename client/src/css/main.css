@@ -361,6 +361,19 @@ button:hover {
   transition: opacity 0.2s ease-in;
   outline: none; }
 
+.btn-secondary {
+  text-transform: uppercase;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #f4f4f4;
+  background: #f4f4f4;
+  color: #757575;
+  cursor: pointer;
+  transition: opacity .5s;
+  font-size: 12px;
+  margin: 10px;
+  font-weight: bold; }
+
 .badge {
   font-size: 0.8rem;
   padding: 0.1rem;

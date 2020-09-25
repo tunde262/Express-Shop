@@ -122,7 +122,7 @@ const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) =>
           <div className="jumbocontent">
             <div className="jumboheading">
                 <h1 id="main-heading">The Fastest Place To Shop Online.</h1>
-                <h1 id="sub-heading">Cardboard Shopping is a local online retail space. Enjoy Free Unlimited access to your favorite stores around the world in one place.</h1>
+                <h1 id="sub-heading">Cardboard Express is your local online retail store. Enjoy Free Unlimited access to all your favorite stores in one place.</h1>
             </div>
             <a className="desktop" href="#auth-form">
               <div className="scroll-down"></div>

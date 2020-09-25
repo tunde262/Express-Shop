@@ -313,6 +313,20 @@ button:hover {
   outline: none;
 }
 
+.btn-secondary {
+    text-transform: uppercase;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid $light-color;
+    background: $light-color;
+    color: darken($light-color, 50);;
+    cursor: pointer;
+    transition: opacity .5s;
+    font-size: 12px;
+    margin: 10px;
+    font-weight: bold;
+}
+
 .badge {
   font-size: 0.8rem;
   padding: 0.1rem;

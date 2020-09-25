@@ -7,14 +7,13 @@ import { register, login } from '../../actions/authActions';
 import Modal from 'react-responsive-modal';
 
 import { Logo } from '../Logo';
-import logo from '../common/logo.jpg';
+import logo from '../common/logo.png';
 import smallLogo from '../common/logo.png';
 import { ButtonContainer } from '../Button';
 import AuthForm from './forms/authForm';
 
 const initialState = {
-    firstname: '',
-    lastname: '',
+    name: '',
     email: '',
     password: '',
     password2: '',
@@ -52,15 +51,9 @@ const AuthModal = ({ setAlert, register, login, auth: { isAuthenticated, user } 
     const onSubmit = async e => {
         e.preventDefault();
         if(formSignUp) {
-            if(formData.password !== formData.password2) {
-                setAlert('Passwords do not match', 'danger');
-            } else if (formData.firstname === '' || formData.lastname === '') {
-                setAlert('Both First & Last Name are required', 'danger');
-            } else {
-                const { email, password } = formData;
-                const fullName = `${formData.firstname} ${formData.lastname}`
-                register({ name: fullName, email, password });
-            }
+            const { name, email, password } = formData;
+            // const fullName = `${formData.firstname} ${formData.lastname}`
+            register({ name, email, password });
         } else {
             login(formData.email, formData.password);
         }
