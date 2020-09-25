@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const authForm = ({onChange, onSubmit, formData, setFormSignUp, formSignUp, logo, smallLogo}) => {
     return (
         <ModalContainer>
-            <div id="modal" className="col-10 mx-auto col-md-8 col-lg-6 text-center text-capitalize p-5">
+            <div id="modal" className="col-10 mx-auto col-md-8 col-lg-6 text-center text-capitalize py-5">
                 {/* <Logo>
                     <img className="mainLogo" src={logo} style={{maxWidth: '100%', height:'50px'}} alt="cardboard express logo" />
                     <img className="smallLogo" src={smallLogo} style={{height: '50px'}} alt="cardboard express logo" />
