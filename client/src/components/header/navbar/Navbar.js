@@ -19,7 +19,7 @@ const initialNav = [
     {
         text_value: 'Clothing & Fashion',
         img:'https://shop.wwe.com/dw/image/v2/AAIW_PRD/on/demandware.static/-/Sites-main/default/dwfd76d20b/images/large/2423CC1F1A.jpg?sw=800',
-        tag_value: 'clothing & fashion',
+        tag_value: 'clothing and fashion',
         background_color: 'DeepSkyBlue',
         icon: 'fas fa-tshirt'
     },
@@ -54,7 +54,7 @@ const initialNav = [
     {
         text_value: 'School & Office Supplies',
         img:'https://cdn3.iconfinder.com/data/icons/education-210/49/65-512.png',
-        tag_value: 'school & office supplies',
+        tag_value: 'school and office supplies',
         background_color: 'MediumSlateBlue',
         icon: 'fas fa-shower'
     },
@@ -207,19 +207,19 @@ const Navbar = ({
     if(nav.nav1 !== '') {
         if(nav.nav1 === 'explore') {
             navList2 =  null
-        } else if(nav.nav1 === 'clothing & fashion') {
+        } else if(nav.nav1 === 'clothing and fashion') {
             navList2 =  [
                 {
                     text_value: 'Men',
                     img:'https://2j6jnda3hor2rfqci2oskova-wpengine.netdna-ssl.com/wp-content/uploads/2019/04/Yoox-Mens-Clothing-Store-Online.jpg',
-                    tag_value: 'men',
+                    tag_value: 'mens clothing and fashion',
                     background_color: 'DeepSkyBlue',
                     icon: 'fas fa-male'
                 },
                 {
                     text_value: 'Women',
                     img:'https://magiclinen.com/image/cache/catalog/KATEGORIJOS/A-SUB%20KATEGORIJOS/magiclinen-category-dress-adria-600x600.jpg',
-                    tag_value: 'women',
+                    tag_value: 'womens clothing and fashion',
                     background_color: 'DeepSkyBlue',
                     icon: 'fas fa-female'
                 },
@@ -250,7 +250,7 @@ const Navbar = ({
                 {
                     text_value: 'Flip Flops & Slides',
                     img:'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/fab7aezacg7vaptfkfyc/benassi-jdi-slide-TDxhwg.jpg',
-                    tag_value: 'flip flops & slides',
+                    tag_value: 'flip flops and slides',
                     background_color: 'MediumSlateBlue'
                 },
                 {
@@ -274,7 +274,7 @@ const Navbar = ({
                 {
                     text_value: 'Lazy',
                     img:'https://i.pinimg.com/236x/a3/53/ba/a353ba68c4ad0869b1e480c26228721d--dawn-night-time.jpg',
-                    tag_value: 'fun shoes',
+                    tag_value: 'lazy shoes',
                     background_color: 'MediumSlateBlue'
                 },
                 {
@@ -310,7 +310,7 @@ const Navbar = ({
                 {
                     text_value: 'Training & Gym',
                     img:'data:image/jpeg;base64,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',
-                    tag_value: 'training & gym shoes',
+                    tag_value: 'training and gym shoes',
                     background_color: 'MediumSlateBlue'
                 },
                 {
@@ -340,7 +340,7 @@ const Navbar = ({
                 {
                     text_value: 'track & field',
                     img:'https://di2ponv0v5otw.cloudfront.net/posts/2019/01/14/5c3d4428409c15ebb235077c/m_5c3d4ce2c2e9fe388d00e171.jpg',
-                    tag_value: 'track & field shoes',
+                    tag_value: 'track and field shoes',
                     background_color: 'MediumSlateBlue'
                 }
             ];
@@ -349,7 +349,7 @@ const Navbar = ({
                 {
                     text_value: 'Paper & Plastic',
                     img:'https://b3h2.scene7.com/is/image/BedBathandBeyond/216022666259978p?$690$&wid=690&hei=690',
-                    tag_value: 'paper & plastic',
+                    tag_value: 'paper and plastic',
                     background_color: '#00cc84',
                     icon: 'fas fa-toilet-paper'
                 },
@@ -363,7 +363,7 @@ const Navbar = ({
                 {
                     text_value: 'Laundry Items',
                     img:'https://forthemommas.com/wp-content/uploads/2014/07/target-.jpg',
-                    tag_value: 'laundry',
+                    tag_value: 'laundry care',
                     background_color: '#00cc84',
                     icon: 'fas fa-socks'
                 },
@@ -377,7 +377,7 @@ const Navbar = ({
                 {
                     text_value: 'Bathroom Items',
                     img:'https://media.manufactum.de/is/image/Manufactum/750s_shop/stainless-steel-toilet-paper-holder--83490_01.jpg',
-                    tag_value: 'bathroom',
+                    tag_value: 'bathroom essentials',
                     background_color: '#00cc84',
                     icon: 'fas fa-toilet'
                 },
@@ -415,7 +415,7 @@ const Navbar = ({
                 {
                     text_value: 'Bath & Body',
                     img:'https://image.shutterstock.com/image-photo/top-view-baby-bathing-items-260nw-1210568332.jpg',
-                    tag_value: 'bath & body',
+                    tag_value: 'bath and body',
                     background_color: 'Tan',
                     icon: 'fas fa-shower'
                 },
@@ -429,14 +429,14 @@ const Navbar = ({
                 {
                     text_value: 'Health & Wellness',
                     img:'https://www.kleenex.com/-/media/images/kleenex/products-new/cool-touch/boxes-upright/29388-04kft_coltuch_50ct_2_w_tissues1-(1).png',
-                    tag_value: 'health & wellness',
+                    tag_value: 'health and wellness',
                     background_color: 'Tan',
                     icon: 'fas fa-medkit'
                 },
                 {
                     text_value: 'Tools & Accessories',
                     img:'https://www.makeup.com/-/media/project/loreal/brand-sites/mdc/americas/us/articles/2019/10_october/04-face-brush-guide/face-makeup-brush-guide-hero-mudc-072619.jpg?w=400&h=300&blr=False&hash=184165BFDA8E9D1C27166555A7A6A926',
-                    tag_value: 'personal care tools & accessories',
+                    tag_value: 'personal care tools and accessories',
                     background_color: 'Tan',
                     icon: 'fad fa-pencil-paintbrush'
                 },
@@ -458,19 +458,19 @@ const Navbar = ({
                     icon: 'fas fa-cat'
                 },
             ];
-        } else if(nav.nav1 === 'school & office supplies') {
+        } else if(nav.nav1 === 'school and office supplies') {
             navList2 =  [
                 {
                     text_value: 'Writing & Drawing',
                     img:'https://target.scene7.com/is/image/Target/Crayons195367-190925_1569431391584?wid=315&hei=315&qlt=60&fmt=pjpeg',
-                    tag_value: 'writing & drawing',
+                    tag_value: 'writing and drawing',
                     background_color: 'MediumSlateBlue',
                     icon: 'fas fa-pencil-alt'
                 },
                 {
                     text_value: 'Paper Products & Organizers',
                     img:'https://ae01.alicdn.com/kf/HLB1geRYaznuK1RkSmFPq6AuzFXar/Portable-A5-Refillable-Hardcover-Writing-Journal-Notebook-Loose-Leaf-Paper-Mushroom-Holes-Ring-Binder-with-8.jpg',
-                    tag_value: 'paper products & organizers',
+                    tag_value: 'paper products and organizers',
                     background_color: 'MediumSlateBlue',
                     icon: 'fas fa-sticky-note'
                 },
@@ -484,7 +484,7 @@ const Navbar = ({
                 {
                     text_value: 'Tools & Accessories',
                     img:'https://www.dollargeneral.com/media/catalog/product/cache/0729a8e318a86bbdd225c6c8aa5967a3/0/0/00640202_b.jpg',
-                    tag_value: 'school & office supplies tools & accessories',
+                    tag_value: 'school and office tools and accessories',
                     background_color: 'MediumSlateBlue',
                     icon: 'fas fa-cut'
                 },
@@ -522,21 +522,21 @@ const Navbar = ({
                 {
                     text_value: 'Makeup',
                     img:'https://img.jakpost.net/c/2019/12/09/2019_12_09_83333_1575827116._medium.jpg',
-                    tag_value: 'makeup',
+                    tag_value: 'womens makeup',
                     background_color: 'Fuchsia',
                     icon: 'fad fa-pencil-paintbrush'
                 },
                 {
                     text_value: 'Bath & Body',
                     img:'https://image.shutterstock.com/image-photo/top-view-baby-bathing-items-260nw-1210568332.jpg',
-                    tag_value: 'womens bath & body',
+                    tag_value: 'womens bath and body',
                     background_color: 'Fuchsia',
                     icon: 'fas fa-shower'
                 },
                 {
                     text_value: 'Health & Wellness',
                     img:'https://nypost.com/wp-content/uploads/sites/2/2019/10/tampon-1.jpg?quality=80&strip=all',
-                    tag_value: 'womens health & wellness',
+                    tag_value: 'womens health and wellness',
                     background_color: 'Fuchsia',
                     icon: 'fas fa-medkit'
                 }
@@ -581,14 +581,14 @@ const Navbar = ({
                 {
                     text_value: 'Bath & Body',
                     img:'https://image.shutterstock.com/image-photo/top-view-baby-bathing-items-260nw-1210568332.jpg',
-                    tag_value: 'mens bath & body',
+                    tag_value: 'mens bath and body',
                     background_color: 'DeepSkyBlue',
                     icon: 'fas fa-shower'
                 },
                 {
                     text_value: 'Health & Wellness',
                     img:'https://muvs.org/media/filer_public/ad/90/ad90f1d9-2bef-4f4d-ac89-7343ef2ac017/1109_00_dl.jpg',
-                    tag_value: 'mens health & wellness',
+                    tag_value: 'mens health and wellness',
                     background_color: 'DeepSkyBlue',
                     icon: 'fas fa-medkit'
                 }
@@ -619,7 +619,7 @@ const Navbar = ({
                 {
                     text_value: 'Tools & Accessories',
                     img:'https://previews.123rf.com/images/pong0528/pong05281511/pong0528151100034/48700630-closeup-pink-toilet-brush-on-white-background.jpg',
-                    tag_value: 'bathroom tools & accessories',
+                    tag_value: 'bathroom tools and accessories',
                     background_color: 'Tan',
                     icon: 'fas fa-sink'
                 },
@@ -643,7 +643,7 @@ const Navbar = ({
                 {
                     text_value: 'Tools & Accessories',
                     img:'https://ak1.ostkcdn.com/images/products/is/images/direct/5c10dd18ce3f9eee29c2aa3a3308e9ebf90a2cf9/Mocha-Hand-Woven-Oval-Double-Laundry-Hamper-with-Removable-Liner.jpg',
-                    tag_value: 'laundry tools & accessories',
+                    tag_value: 'laundry tools and accessories',
                     background_color: 'DeepSkyBlue',
                     icon: 'fas fa-disease'
                 },
@@ -651,102 +651,104 @@ const Navbar = ({
         } else {
             navList2 = null
         }
+    } else {
+        navList2 =  null
     }
 
     if(nav.nav2 !== '') {
-        if(nav.nav2 === 'men') {
+        if(nav.nav2 === 'mens clothing and fashion') {
             navList3 =  [
                 {
                     text_value: 'Sweatshirts & Hoodies',
                     img:'https://m.media-amazon.com/images/I/A1ZoIF93L0L._SR500,500_.jpg',
-                    tag_value: 'mens sweatshirts & hoodies',
+                    tag_value: 'mens fashion sweatshirts and hoodies',
                     background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Graphic Tees',
                     img:'https://target.scene7.com/is/image/Target/GUEST_3f7dea65-c2df-4b59-b434-b7ac26302cad?wid=488&hei=488&fmt=pjpeg',
-                    tag_value: 'mens graphic tees',
+                    tag_value: 'mens fashion graphic tees',
                     background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Long Sleeves',
                     img:'https://image.spreadshirtmedia.com/image-server/v1/mp/productTypes/486/views/2/appearances/2,width=300,height=300,backgroundColor=e8e8e8.jpg',
-                    tag_value: 'mens long sleeves',
+                    tag_value: 'mens fashion long sleeves',
                     background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Short Sleeves',
                     img:'https://d15udtvdbbfasl.cloudfront.net/catalog/product/large_image/02_138686.jpg',
-                    tag_value: 'mens short sleeves',
+                    tag_value: 'mens fashion short sleeves',
                     background_color: 'DeepSkyBlue',
                 },
                 {
                     text_value: 'Joggers & Sweatpants',
                     img:'https://sfgroup.centracdn.net/client/dynamic/images/953_abad6258bb-120880973_3-full.jpg',
-                    tag_value: 'mens joggers & sweatpants',
+                    tag_value: 'mens fashion joggers and sweatpants',
                     background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Shorts',
                     img:'https://cdni.llbean.net/is/image/wim/503783_30_41?hei=1095&wid=950&resMode=sharp2&defaultImage=llbstage/A0211793_2',
-                    tag_value: 'mens shorts',
+                    tag_value: 'mens fashion shorts',
                     background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Dress Shirts',
                     img:'https://www.polorlpony.com/image/cache/Mens-003/Polo-Ralph-Lauren-Polo-blue-black-white-online-outlet-sale-600x600.jpg',
-                    tag_value: 'dress shirts',
+                    tag_value: 'mens fashion dress shirts',
                     background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Active Wear',
                     img:'https://i.pinimg.com/originals/fd/db/51/fddb51c382d5f017a4f57d45adf68fcf.jpg',
-                    tag_value: 'mens activewear',
+                    tag_value: 'mens fashion activewear',
                     background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Sweaters & Cardigans',
                     img:'https://gloimg.gbtcdn.com/soa/gb/pdm-product-pic/Clothing/2017/08/16/goods_img_big-v1/20170816175815_61987.jpg',
-                    tag_value: 'mens sweaters & cardigans',
+                    tag_value: 'mens fashion sweaters and cardigans',
                     background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Button Down Shirts',
                     img:'https://m.media-amazon.com/images/I/81+fpZtP9nL._SR500,500_.jpg',
-                    tag_value: 'button down shirts',
+                    tag_value: 'mens fashion button down shirts',
                     background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Jackets & Coats',
                     img:'https://images.thenorthface.com/is/image/TheNorthFace/NF0A33RG_KX7_hero?$638x745$',
-                    tag_value: 'mens jackets & coats',
+                    tag_value: 'mens fashion jackets and coats',
                     background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Socks',
                     img:'https://cdn.shopify.com/s/files/1/0052/7237/1293/products/1024x1024-Socks-White-LB1_1024x1024.jpg?v=1561393817',
-                    tag_value: 'mens socks',
+                    tag_value: 'mens fashion socks',
                     background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Swimsuits',
                     img:'https://scene7.lillypulitzer.com/is/image/sugartown/002111_blueibizaaqualavista-sf?$sfraPDP1x$',
-                    tag_value: 'mens swimsuits',
+                    tag_value: 'mens fashion swimsuits',
                     background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Accessories',
                     img:'https://ak1.ostkcdn.com/wp-content/uploads/2017/09/Luxury-Watch-e1504821921702.jpg',
-                    tag_value: 'mens clothing accessories',
+                    tag_value: 'mens clothing and fashion accessories',
                     background_color: 'DeepSkyBlue'
                 }
             ];
-        } else if (nav.nav2 === 'women') {
+        } else if (nav.nav2 === 'womens clothing and fashion') {
             navList3 =  [
                 {
                     text_value: 'Tops',
                     img:'https://ae01.alicdn.com/kf/HTB1BQPcEkCWBuNjy0Faq6xUlXXab.jpg_q50.jpg',
-                    tag_value: 'womens tops',
+                    tag_value: 'womens fashion tops',
                     background_color: 'DeepSkyBlue'
                 },
                 {
@@ -758,55 +760,55 @@ const Navbar = ({
                 {
                     text_value: 'Bottoms',
                     img:'https://cdn.shopify.com/s/files/1/0496/8693/products/womens-charcoal-small-lena-women-s-leggings-12440307433544_1024x.jpg?v=1574245765',
-                    tag_value: 'womens bottoms',
+                    tag_value: 'womens fashion bottoms',
                     background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Swimwear',
                     img:'https://cdn.shopify.com/s/files/1/0529/8037/products/image_27d98702-509f-4b3b-809c-bce8f839d840_1024x.jpg?v=1580832920',
-                    tag_value: 'womens swimwear',
+                    tag_value: 'womens fashion swimwear',
                     background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Rompers & Jumpsuits',
                     img:'https://images.express.com/is/image/expressfashion/0094_07924852_0058?cache=on&wid=361&fmt=jpeg&qlt=75,1&resmode=sharp2&op_usm=1,1,5,0&defaultImage=Photo-Coming-Soon',
-                    tag_value: 'rompers & jumpsuits',
+                    tag_value: 'womens fashion rompers and jumpsuits',
                     background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Active Wear',
                     img:'https://c.static-nike.com/a/images/c_limit,w_318,f_auto/t_product_v1/qnbukspgbjwqcldnpjzd/pro-womens-7-8-tights-HVLN6V.jpg',
-                    tag_value: 'womens activewear',
+                    tag_value: 'womens fashion activewear',
                     background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Graphic Tees',
                     img:'https://m.media-amazon.com/images/I/51LyA6ytEKL._SR500,500_.jpg',
-                    tag_value: 'womens graphic tees',
+                    tag_value: 'womens fashion graphic tees',
                     background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Jackets & Coats',
                     img:'https://ae01.alicdn.com/kf/H31113835d0e44e53b8a429bbbb9610eeg/Black-Cotton-Coats-Women-Casual-Hooded-Jacket-Coat-Fashion-Simple-High-Street-Slim-2018-Winter-Warm.jpg',
-                    tag_value: 'womens jackets & coats',
+                    tag_value: 'womens fashion jackets and coats',
                     background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Sweaters & Cardigans',
                     img:'https://images.express.com/is/image/expressfashion/0096_08411470_2052?cache=on&wid=361&fmt=jpeg&qlt=75,1&resmode=sharp2&op_usm=1,1,5,0&defaultImage=Photo-Coming-Soon',
-                    tag_value: 'womens sweaters & cardigans',
+                    tag_value: 'womens fashion sweaters and cardigans',
                     background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Socks',
                     img:'https://cdn.shopify.com/s/files/1/1811/0467/products/funny-socks-women-goat-yoga-pink.png?v=1580487274',
-                    tag_value: 'womens socks',
+                    tag_value: 'womens fashion socks',
                     background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Accessories',
                     img:'https://cdn.mynamenecklace.com/images/products/Womens-ID-Bracelet-in-Rose-Gold_jumbo.jpg',
-                    tag_value: 'womens clothing accessories',
+                    tag_value: 'womens clothing and fashion accessories',
                     background_color: 'DeepSkyBlue'
                 }
             ];
@@ -821,7 +823,7 @@ const Navbar = ({
                 {
                     text_value: 'Sweatshirts & Hoodies',
                     img:'https://images.express.com/is/image/expressfashion/0096_08411470_2052?cache=on&wid=361&fmt=jpeg&qlt=75,1&resmode=sharp2&op_usm=1,1,5,0&defaultImage=Photo-Coming-Soon',
-                    tag_value: 'sweatshirts & hoodies',
+                    tag_value: 'sweatshirts and hoodies',
                     background_color: 'DeepSkyBlue'
                 },
                 {
@@ -848,7 +850,7 @@ const Navbar = ({
                 {
                     text_value: 'Joggers & Sweatpants',
                     img:'https://content.backcountry.com/images/items/900/PAT/PAT02BZ/BK.jpg',
-                    tag_value: 'joggers & sweatpants',
+                    tag_value: 'joggers and sweatpants',
                     background_color: 'DeepSkyBlue'
                 },
                 {
@@ -1040,51 +1042,51 @@ const Navbar = ({
             navList3 =  null;
         } else if (nav.nav2 === 'boat shoes') {
             navList3 =  null;
-        } else if (nav.nav2 === 'flip flops & slides') {
+        } else if (nav.nav2 === 'flip flops and slides') {
             navList3 =  null;
-        } else if (nav.nav2 === 'paper & plastic') {
+        } else if (nav.nav2 === 'paper and plastic') {
             navList3 =  [
                 {
                     text_value: 'Paper Towels',
                     img:'https://cdn-endpoint-website.azureedge.net/uploads/PhotoModel/25952/image/spdisp2.gallery.jpg?t=1585143193',
                     tag_value: 'paper towels',
-                    background_color: 'Fuchsia'
+                    background_color: '#00cc84'
                 },
                 {
                     text_value: 'Toilet Paper',
                     img:'https://images.homedepot-static.com/productImages/94dc5bfe-ffc8-440c-9987-56e02bacc46b/svn/angel-soft-toilet-paper-gep16880-64_1000.jpg',
                     tag_value: 'toilet paper',
-                    background_color: 'Fuchsia'
+                    background_color: '#00cc84'
                 },
                 {
                     text_value: 'Trash Bags',
                     img:'https://5.imimg.com/data5/XJ/TK/TO/SELLER-35274303/garbage-bag-roll-500x500.jpg',
-                    tag_value: 'trash bags',
-                    background_color: 'Fuchsia'
+                    tag_value: 'plastic trash bags',
+                    background_color: '#00cc84'
                 },
                 {
                     text_value: 'Plastic & Food Storage Bags',
                     img:'https://images.homedepot-static.com/productImages/773fd9fe-70b7-46d6-add2-c828b44643ab/svn/ziploc-lunch-boxes-lunch-bags-624755-64_1000.jpg',
-                    tag_value: 'plastic & food storage bags',
-                    background_color: 'Fuchsia'
+                    tag_value: 'plastic and food storage bags',
+                    background_color: '#00cc84'
                 },
                 {
                     text_value: 'Aluminum Foil',
                     img:'https://sc02.alicdn.com/kf/HTB1VI13X13tHKVjSZSgq6x4QFXax.jpg',
                     tag_value: 'aluminum foil',
-                    background_color: 'Fuchsia'
+                    background_color: '#00cc84'
                 },
                 {
                     text_value: 'Plastic Wraps',
                     img:'https://files.recipetips.com/images/glossary/p/plastic_wrap.jpg',
                     tag_value: 'plastic wraps',
-                    background_color: 'Fuchsia'
+                    background_color: '#00cc84'
                 },
                 {
                     text_value: 'Disposable Tablewear',
                     img:'https://cdn.shopify.com/s/files/1/0020/7598/3935/products/8-silver-forks-spoons-and-knives-sets-disposable-tableware-plst-yy03-silv-5356067029055.jpg?v=1575934668',
                     tag_value: 'disposable tablewear',
-                    background_color: 'Fuchsia'
+                    background_color: '#00cc84'
                 }
             ];
         } else if (nav.nav2 === 'cleaning supplies') {
@@ -1093,52 +1095,52 @@ const Navbar = ({
                     text_value: 'Cleaning Wipes',
                     img:'https://pics.drugstore.com/prodimg/194963/900.jpg',
                     tag_value: 'cleaning wipes',
-                    background_color: 'Fuchsia'
+                    background_color: '#00cc84'
                 },
                 {
                     text_value: 'Cleaning Tools & Accessories',
                     img:'https://cdn.connox.co.uk/m/100030/240127/media/hay/Staubwedel/hay-staubwedel-blau.jpg',
-                    tag_value: 'cleaning tools & accessories',
-                    background_color: 'Fuchsia'
+                    tag_value: 'cleaning tools and accessories',
+                    background_color: '#00cc84'
                 },
-                {
-                    text_value: 'Dish Detergents',
-                    img:'https://images-na.ssl-images-amazon.com/images/I/81GYxyoz15L._SL1500_.jpg',
-                    tag_value: 'dish detergents',
-                    background_color: 'Fuchsia'
-                },
+                // {
+                //     text_value: 'Dish Detergents',
+                //     img:'https://images-na.ssl-images-amazon.com/images/I/81GYxyoz15L._SL1500_.jpg',
+                //     tag_value: 'dish detergents',
+                //     background_color: '#00cc84'
+                // },
                 {
                     text_value: 'Bathroom Cleaners',
                     img:'https://www.meijer.com/content/dam/meijer/product/0044/60/0306/19/0044600306193_a1c1_0600.png',
                     tag_value: 'bathroom cleaners',
-                    background_color: 'Fuchsia'
+                    background_color: '#00cc84'
                 },
                 {
                     text_value: 'Trash Bags',
                     img:'https://5.imimg.com/data5/XJ/TK/TO/SELLER-35274303/garbage-bag-roll-500x500.jpg',
                     tag_value: 'trash bags',
-                    background_color: 'Fuchsia'
+                    background_color: '#00cc84'
                 },
                 {
                     text_value: 'Disinfecting Sprays',
                     img:'https://content.etilize.com/3000/1030264389.jpg',
                     tag_value: 'disinfecting sprays',
-                    background_color: 'Fuchsia'
+                    background_color: '#00cc84'
                 },
             ];
-        } else if (nav.nav2 === 'laundry') {
+        } else if (nav.nav2 === 'laundry care') {
             navList3 =  [
                 {
                     text_value: 'Laundry Detergents',
                     img:'https://azcdn.galileo.pgsitecore.com/en-ca/-/media/Tide_CA/Images/Secondary%20Details/Tide%20Coldwater%20Clean%20Fresh%20Scent%20HE%20Turbo%20Clean%20Liquid%20Laundry%20Detergent/01Coldwater-Packshot_HE_1600.png?v=1-201808230757',
                     tag_value: 'laundry detergents',
-                    background_color: 'Fuchsia'
+                    background_color: '#00cc84'
                 },
                 {
                     text_value: 'Fabric Refreshers',
                     img:'https://www.supplychimp.com/media/extendware/ewimageopt/media/inline/9a/1/febreze-97591-fabric-refresher-odor-eliminator-tide-original-27-oz-spray-bottle-4-carton-25d.jpg',
                     tag_value: 'fabric refreshers',
-                    background_color: 'Fuchsia'
+                    background_color: '#00cc84'
                 }
             ];
         } else if (nav.nav2 === 'kitchen') {
@@ -1147,34 +1149,34 @@ const Navbar = ({
                     text_value: 'Dish Detergents',
                     img:'https://images-na.ssl-images-amazon.com/images/I/81GYxyoz15L._SL1500_.jpg',
                     tag_value: 'dish detergents',
-                    background_color: 'Fuchsia'
+                    background_color: '#00cc84'
                 },
                 {
                     text_value: 'Cleaning Supplies',
                     img:'https://sc01.alicdn.com/kf/HTB1p_QCJVXXXXXvaXXXq6xXFXXX6.jpg_350x350.jpg',
                     tag_value: 'cleaning supplies',
-                    background_color: 'Fuchsia'
+                    background_color: '#00cc84'
                 }
             ];
-        } else if (nav.nav2 === 'bathroom') {
+        } else if (nav.nav2 === 'bathroom essentials') {
             navList3 =  [
                 {
                     text_value: 'Flushable Wipes',
                     img:'https://b3h2.scene7.com/is/image/BedBathandBeyond/384812220561635p?$690$&wid=690&hei=690',
                     tag_value: 'flushable wipes',
-                    background_color: 'Fuchsia'
+                    background_color: '#00cc84'
                 },
                 {
                     text_value: 'Toilet Paper',
                     img:'https://images.homedepot-static.com/productImages/94dc5bfe-ffc8-440c-9987-56e02bacc46b/svn/angel-soft-toilet-paper-gep16880-64_1000.jpg',
-                    tag_value: 'toilet paper',
-                    background_color: 'Fuchsia'
+                    tag_value: 'bathroom toilet paper',
+                    background_color: '#00cc84'
                 },
                 {
                     text_value: 'Bathroom Cleaners',
                     img:'https://www.meijer.com/content/dam/meijer/product/0044/60/0306/19/0044600306193_a1c1_0600.png',
                     tag_value: 'bathroom cleaners',
-                    background_color: 'Fuchsia'
+                    background_color: '#00cc84'
                 }
             ];
         } else if (nav.nav2 === 'party supplies') {
@@ -1182,8 +1184,8 @@ const Navbar = ({
                 {
                     text_value: 'Disposable Tablewear',
                     img:'https://cdn.shopify.com/s/files/1/0020/7598/3935/products/8-silver-forks-spoons-and-knives-sets-disposable-tableware-plst-yy03-silv-5356067029055.jpg?v=1575934668',
-                    tag_value: 'disposable tablewear',
-                    background_color: 'Fuchsia'
+                    tag_value: 'disposable party tablewear',
+                    background_color: '#00cc84'
                 }
             ];
         } else if (nav.nav2 === 'air fresheners') {
@@ -1195,7 +1197,7 @@ const Navbar = ({
                 {
                     text_value: 'Body Lotions & Creams',
                     img:'https://media.beaut.ie/uploads/2018/12/12115356/rawpixel-797133-unsplash-1024x683.jpg',
-                    tag_value: 'body lotions & creams',
+                    tag_value: 'body lotions and creams',
                     background_color: 'Tan'
                 },
                 {
@@ -1211,18 +1213,18 @@ const Navbar = ({
                     background_color: 'Tan'
                 }
             ];
-        } else if (nav.nav2 === 'bath & body') {
+        } else if (nav.nav2 === 'bath and body') {
             navList3 =  [
                 {
                     text_value: 'Deodorants & Antiperspirants',
                     img:'https://i0.wp.com/post.healthline.com/wp-content/uploads/2020/01/267344-best_deodorants_for_men-1500x450-body1.png?w=315&h=840',
-                    tag_value: 'deodorants & antiperspirants',
+                    tag_value: 'deodorants and antiperspirants',
                     background_color: 'Tan'
                 },
                 {
                     text_value: 'Body Wash & Shower Gels',
                     img:'https://target.scene7.com/is/image/Target/5xu1i-BodyWashShowerGel-QUIVER-190614-1560545740021',
-                    tag_value: 'body wash & shower gels',
+                    tag_value: 'body wash and shower gels',
                     background_color: 'Tan'
                 }
             ];
@@ -1247,9 +1249,9 @@ const Navbar = ({
                     background_color: 'Tan'
                 }
             ];
-        } else if (nav.nav2 === 'makeup') {
+        } else if (nav.nav2 === 'womens makeup') {
             navList3 = null;
-        } else if (nav.nav2 === 'health & wellness') {
+        } else if (nav.nav2 === 'health and wellness') {
             navList3 =  [
                 {
                     text_value: 'Facial Tissues',
@@ -1258,7 +1260,7 @@ const Navbar = ({
                     background_color: 'Tan'
                 }
             ];
-        } else if (nav.nav2 === 'personal care tools & accessories') {
+        } else if (nav.nav2 === 'personal care tools and accessories') {
             navList3 =  [
                 {
                     text_value: 'Cotton Swabs',
@@ -1302,7 +1304,7 @@ const Navbar = ({
                 {
                     text_value: 'Dog Supplies & Accessories',
                     img:'https://s7d2.scene7.com/is/image/PetSmart/5164567',
-                    tag_value: 'dog supplies & accessories',
+                    tag_value: 'dog supplies and accessories',
                     background_color: 'Teal'
                 }
             ];
@@ -1323,7 +1325,7 @@ const Navbar = ({
                 {
                     text_value: 'Cat Litter & Accessories',
                     img:'https://previews.123rf.com/images/bullltus/bullltus1803/bullltus180300099/97322987-woman-hand-is-cleaning-of-cat-litter-box-with-pink-scoop-pet-accessories-concept-.jpg',
-                    tag_value: 'cat litter & accessories',
+                    tag_value: 'cat litter and accessories',
                     background_color: 'Teal'
                 },
                 {
@@ -1333,7 +1335,7 @@ const Navbar = ({
                     background_color: 'Teal'
                 }
             ];
-        } else if (nav.nav2 === 'writing & drawing') {
+        } else if (nav.nav2 === 'writing and drawing') {
             navList3 =  [
                 {
                     text_value: 'Pens',
@@ -1350,17 +1352,17 @@ const Navbar = ({
                 {
                     text_value: 'Highlighers & Markers',
                     img:'https://schoolboxkits.com/478-large_default/sharpie-accent-highlighter-fluorescent-yellow.jpg',
-                    tag_value: 'highlighters & markers',
+                    tag_value: 'highlighters and markers',
                     background_color: 'MediumSlateBlue'
                 },
                 {
                     text_value: 'Writing Tools & Accessories',
                     img:'https://thumbs.dreamstime.com/b/pink-eraser-pink-eraser-shot-up-close-against-white-background-109966421.jpg',
-                    tag_value: 'writing tools & accessories',
+                    tag_value: 'writing tools and accessories',
                     background_color: 'MediumSlateBlue'
                 }
             ];
-        } else if (nav.nav2 === 'paper products & organizers') {
+        } else if (nav.nav2 === 'paper products and organizers') {
             navList3 =  [
                 {
                     text_value: 'Binders',
@@ -1389,7 +1391,7 @@ const Navbar = ({
                 {
                     text_value: 'Tools & Accessories',
                     img:'https://cdn.shopify.com/s/files/1/1078/5970/products/40103_1024x1024.jpg?v=1493190691',
-                    tag_value: 'school & office supplies tools & accessories ',
+                    tag_value: 'paper products tools and accessories',
                     background_color: 'MediumSlateBlue'
                 }
             ];
@@ -1416,7 +1418,7 @@ const Navbar = ({
                 {
                     text_value: 'Rompers & Jumpsuits',
                     img:'https://images.express.com/is/image/expressfashion/0094_07924852_0058?cache=on&wid=361&fmt=jpeg&qlt=75,1&resmode=sharp2&op_usm=1,1,5,0&defaultImage=Photo-Coming-Soon',
-                    tag_value: 'rompers & jumpsuits',
+                    tag_value: 'rompers and jumpsuits',
                     background_color: 'Fuchsia'
                 },
                 {
@@ -1434,13 +1436,13 @@ const Navbar = ({
                 {
                     text_value: 'Jackets & Coats',
                     img:'https://ae01.alicdn.com/kf/H31113835d0e44e53b8a429bbbb9610eeg/Black-Cotton-Coats-Women-Casual-Hooded-Jacket-Coat-Fashion-Simple-High-Street-Slim-2018-Winter-Warm.jpg',
-                    tag_value: 'womens jackets & coats',
+                    tag_value: 'womens jackets and coats',
                     background_color: 'Fuchsia'
                 },
                 {
                     text_value: 'Sweaters & Cardigans',
                     img:'https://images.express.com/is/image/expressfashion/0096_08411470_2052?cache=on&wid=361&fmt=jpeg&qlt=75,1&resmode=sharp2&op_usm=1,1,5,0&defaultImage=Photo-Coming-Soon',
-                    tag_value: 'womens sweaters & cardigans',
+                    tag_value: 'womens sweaters and cardigans',
                     background_color: 'Fuchsia'
                 },
                 {
@@ -1455,7 +1457,7 @@ const Navbar = ({
                 {
                     text_value: 'Flip Flops & Slides',
                     img:'https://target.scene7.com/is/image/Target/GUEST_efddf1e6-2f21-4ff1-94c0-14fe8cb708c6?wid=488&hei=488&fmt=pjpeg',
-                    tag_value: 'womens flip flops & slides',
+                    tag_value: 'womens flip flops and slides',
                     background_color: 'Fuchsia'
                 },
                 {
@@ -1509,7 +1511,7 @@ const Navbar = ({
                 {
                     text_value: 'Training & Gym Shoes',
                     img:'data:image/jpeg;base64,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',
-                    tag_value: 'womens training & gym shoes',
+                    tag_value: 'womens training and gym shoes',
                     background_color: 'Fuchsia'
                 },
                 {
@@ -1539,7 +1541,7 @@ const Navbar = ({
                 {
                     text_value: 'Track & Field Shoes',
                     img:'https://di2ponv0v5otw.cloudfront.net/posts/2019/01/14/5c3d4428409c15ebb235077c/m_5c3d4ce2c2e9fe388d00e171.jpg',
-                    tag_value: 'womens track & field shoes',
+                    tag_value: 'womens track and field shoes',
                     background_color: 'Fuchsia'
                 }
             ];
@@ -1550,7 +1552,7 @@ const Navbar = ({
                 {
                     text_value: 'Body Lotions & Creams',
                     img:'https://media.beaut.ie/uploads/2018/12/12115356/rawpixel-797133-unsplash-1024x683.jpg',
-                    tag_value: 'womens body lotions & creams',
+                    tag_value: 'womens body lotions and creams',
                     background_color: 'Fuchsia'
                 },
                 {
@@ -1566,24 +1568,24 @@ const Navbar = ({
                     background_color: 'Fuchsia'
                 }
             ];
-        } else if (nav.nav2 === 'makeup') {
+        } else if (nav.nav2 === 'womens makeup') {
             navList3 = null;
-        } else if (nav.nav2 === 'womens bath & body') {
+        } else if (nav.nav2 === 'womens bath and body') {
             navList3 =  [
                 {
                     text_value: 'Deodorants & Antiperspirants',
                     img:'https://i0.wp.com/post.healthline.com/wp-content/uploads/2020/01/267344-best_deodorants_for_men-1500x450-body1.png?w=315&h=840',
-                    tag_value: 'womens deodorants & antiperspirants',
+                    tag_value: 'womens deodorants and antiperspirants',
                     background_color: 'Fuchsia'
                 },
                 {
                     text_value: 'Body Wash & Shower Gels',
                     img:'https://target.scene7.com/is/image/Target/5xu1i-BodyWashShowerGel-QUIVER-190614-1560545740021',
-                    tag_value: 'womens body wash & shower gels',
+                    tag_value: 'womens body wash and shower gels',
                     background_color: 'Fuchsia'
                 }
             ];
-        } else if (nav.nav2 === 'womens health & wellness') {
+        } else if (nav.nav2 === 'womens health and wellness') {
             navList3 =  [
                 {
                     text_value: 'Tampons',
@@ -1594,7 +1596,7 @@ const Navbar = ({
                 {
                     text_value: 'Facial Tissues',
                     img:'https://www.kleenex.com/-/media/images/kleenex/products-new/cool-touch/boxes-upright/29388-04kft_coltuch_50ct_2_w_tissues1-(1).png',
-                    tag_value: 'facial tissues',
+                    tag_value: 'womens facial tissues',
                     background_color: 'Fuchsia'
                 }
             ];
@@ -1603,80 +1605,80 @@ const Navbar = ({
                 {
                     text_value: 'Sweatshirts & Hoodies',
                     img:'https://m.media-amazon.com/images/I/A1ZoIF93L0L._SR500,500_.jpg',
-                    tag_value: 'mens sweatshirts & hoodies',
-                    background_color: 'Fuchsia'
+                    tag_value: 'mens sweatshirts and hoodies',
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Graphic Tees',
                     img:'https://target.scene7.com/is/image/Target/GUEST_3f7dea65-c2df-4b59-b434-b7ac26302cad?wid=488&hei=488&fmt=pjpeg',
                     tag_value: 'mens graphic tees',
-                    background_color: 'Fuchsia'
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Long Sleeves',
                     img:'https://image.spreadshirtmedia.com/image-server/v1/mp/productTypes/486/views/2/appearances/2,width=300,height=300,backgroundColor=e8e8e8.jpg',
                     tag_value: 'mens long sleeves',
-                    background_color: 'Fuchsia'
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Short Sleeves',
                     img:'https://d15udtvdbbfasl.cloudfront.net/catalog/product/large_image/02_138686.jpg',
                     tag_value: 'mens short sleeves',
-                    background_color: 'Fuchsia'
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Joggers & Sweatpants',
                     img:'https://sfgroup.centracdn.net/client/dynamic/images/953_abad6258bb-120880973_3-full.jpg',
-                    tag_value: 'mens joggers & sweatpants',
-                    background_color: 'Fuchsia'
+                    tag_value: 'mens joggers and sweatpants',
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Shorts',
                     img:'https://cdni.llbean.net/is/image/wim/503783_30_41?hei=1095&wid=950&resMode=sharp2&defaultImage=llbstage/A0211793_2',
                     tag_value: 'mens shorts',
-                    background_color: 'Fuchsia'
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Active Wear',
                     img:'https://i.pinimg.com/originals/fd/db/51/fddb51c382d5f017a4f57d45adf68fcf.jpg',
                     tag_value: 'mens activewear',
-                    background_color: 'Fuchsia'
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Sweaters & Cardigans',
                     img:'https://gloimg.gbtcdn.com/soa/gb/pdm-product-pic/Clothing/2017/08/16/goods_img_big-v1/20170816175815_61987.jpg',
-                    tag_value: 'mens sweaters & cardigans',
-                    background_color: 'Fuchsia'
+                    tag_value: 'mens sweaters and cardigans',
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Button Down Shirts',
                     img:'https://m.media-amazon.com/images/I/81+fpZtP9nL._SR500,500_.jpg',
                     tag_value: 'mens button down shirts',
-                    background_color: 'Fuchsia'
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Jackets & Coats',
                     img:'https://images.thenorthface.com/is/image/TheNorthFace/NF0A33RG_KX7_hero?$638x745$',
-                    tag_value: 'mens jackets & coats',
-                    background_color: 'Fuchsia'
+                    tag_value: 'mens jackets and coats',
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Socks',
                     img:'https://cdn.shopify.com/s/files/1/0052/7237/1293/products/1024x1024-Socks-White-LB1_1024x1024.jpg?v=1561393817',
                     tag_value: 'mens socks',
-                    background_color: 'Fuchsia'
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Swimsuits',
                     img:'https://scene7.lillypulitzer.com/is/image/sugartown/002111_blueibizaaqualavista-sf?$sfraPDP1x$',
                     tag_value: 'mens swimsuits',
-                    background_color: 'Fuchsia'
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Accessories',
                     img:'https://ak1.ostkcdn.com/wp-content/uploads/2017/09/Luxury-Watch-e1504821921702.jpg',
-                    tag_value: 'mens swimsuits',
-                    background_color: 'Fuchsia'
+                    tag_value: 'mens clothing accessories',
+                    background_color: 'DeepSkyBlue'
                 }
             ];
         } else if (nav.nav2 === 'mens shoes') {
@@ -1684,92 +1686,92 @@ const Navbar = ({
                 {
                     text_value: 'Slides & Flip Flops',
                     img:'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/fab7aezacg7vaptfkfyc/benassi-jdi-slide-TDxhwg.jpg',
-                    tag_value: 'mens flip flops & slides',
-                    background_color: 'Fuchsia'
+                    tag_value: 'mens flip flops and slides',
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Boat Shoes',
                     img:'https://www.rancourtandcompany.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/6/0/6024-38_side.jpg',
                     tag_value: 'mens boat shoes',
-                    background_color: 'Fuchsia'
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Basketball Shoes',
                     img:'https://nodawaybroadcasting.com/wp-content/uploads/2019/12/Basketball.jpg',
                     tag_value: 'mens basketball shoes',
-                    background_color: 'Fuchsia'
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Running Shoes',
                     img:'https://media3.s-nbcnews.com/i/newscms/2020_06/3210716/200131-nike-vaporfly-se-1126a_de432ac08eb22348178a1fd09ac99b65.jpg',
                     tag_value: 'mens running shoes',
-                    background_color: 'Fuchsia'
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Soccer Shoes',
                     img:'https://www.bgcdorchester.org/wp-content/uploads/2016/05/product-soccer-ball.jpg',
                     tag_value: 'mens soccer shoes',
-                    background_color: 'Fuchsia'
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Walking Shoes',
                     img:'https://cdn.winsightmedia.com/platform/files/public/cspdn/shoes-walking.png',
                     tag_value: 'mens walking shoes',
-                    background_color: 'Fuchsia'
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Formal Shoes',
                     img:'https://i.frg.im/WaFDbrsr/shoes-3976-1.jpg',
                     tag_value: 'mens formal shoes',
-                    background_color: 'Fuchsia'
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Training & Gym Shoes',
                     img:'data:image/jpeg;base64,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',
-                    tag_value: 'mens training & gym shoes',
-                    background_color: 'Fuchsia'
+                    tag_value: 'mens training and gym shoes',
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Skateboarding Shoes',
                     img:'https://image.made-in-china.com/2f0j00DnltaymcnNgR/Hot-Sale-Cool-Skateboard-Stuff-Canada-Maple-Old-School-Skateboards.jpg',
                     tag_value: 'mens skateboarding shoes',
-                    background_color: 'Fuchsia'
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Football Shoes',
                     img:'https://besto24.com/51062-large_default/football-shoes-puma-one-1-il-lth-fg-ag.jpg',
                     tag_value: 'mens football shoes',
-                    background_color: 'Fuchsia'
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Baseball Shoes',
                     img:'https://upload.wikimedia.org/wikipedia/en/1/1e/Baseball_%28crop%29.jpg',
                     tag_value: 'mens baseball shoes',
-                    background_color: 'Fuchsia'
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Golf Shoes',
                     img:'https://progolfnow.com/wp-content/uploads/getty-images/2016/04/1195470351.jpeg',
                     tag_value: 'mens golf shoes',
-                    background_color: 'Fuchsia'
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Tennis Shoes',
                     img:'https://www.lotto.it/media/catalog/product/cache/image/350x350/beff4985b56e3afdbeabfc89641a4582/2/1/210738_5Z2-01.jpg',
                     tag_value: 'mens tennis shoes',
-                    background_color: 'Fuchsia'
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Track & Field Shoes',
                     img:'https://di2ponv0v5otw.cloudfront.net/posts/2019/01/14/5c3d4428409c15ebb235077c/m_5c3d4ce2c2e9fe388d00e171.jpg',
-                    tag_value: 'mens track & field shoes',
-                    background_color: 'Fuchsia'
+                    tag_value: 'mens track and field shoes',
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Lazy',
                     img:'https://i.pinimg.com/236x/a3/53/ba/a353ba68c4ad0869b1e480c26228721d--dawn-night-time.jpg',
                     tag_value: 'mens lazy shoes',
-                    background_color: 'Fuchsia'
+                    background_color: 'DeepSkyBlue'
                 }
             ];
         } else if (nav.nav2 === 'mens hair care') {
@@ -1779,52 +1781,52 @@ const Navbar = ({
                 {
                     text_value: 'Body Lotions & Creams',
                     img:'https://media.beaut.ie/uploads/2018/12/12115356/rawpixel-797133-unsplash-1024x683.jpg',
-                    tag_value: 'mens body lotions & creams',
-                    background_color: 'Fuchsia'
+                    tag_value: 'mens body lotions and creams',
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Facial Cleansers',
                     img:'https://cdn.shopify.com/s/files/1/0030/0639/8553/products/natural-facial-cleanser-so-clean_1024x1024.jpg?v=1593726708',
                     tag_value: 'mens facial cleansers',
-                    background_color: 'Fuchsia'
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Facial Moisturizers',
                     img:'https://cdn.shopify.com/s/files/1/0838/7991/products/facial-moisturizer.jpg?v=1591289739',
                     tag_value: 'mens facial moisturizers',
-                    background_color: 'Fuchsia'
+                    background_color: 'DeepSkyBlue'
                 }
             ];
         } else if (nav.nav2 === 'shaving') {
             navList3 = null;
-        } else if (nav.nav2 === 'mens bath & body') {
+        } else if (nav.nav2 === 'mens bath and body') {
             navList3 =  [
                 {
                     text_value: 'Deodorants & Antiperspirants',
                     img:'https://i0.wp.com/post.healthline.com/wp-content/uploads/2020/01/267344-best_deodorants_for_men-1500x450-body1.png?w=315&h=840',
-                    tag_value: 'mens deodorants & antiperspirants',
-                    background_color: 'Fuchsia'
+                    tag_value: 'mens deodorants and antiperspirants',
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Body Wash & Shower Gel',
                     img:'https://target.scene7.com/is/image/Target/5xu1i-BodyWashShowerGel-QUIVER-190614-1560545740021',
-                    tag_value: 'mens body wash & shower gel',
-                    background_color: 'Fuchsia'
+                    tag_value: 'mens body wash and shower gel',
+                    background_color: 'DeepSkyBlue'
                 }
             ];
-        } else if (nav.nav2 === 'mens health & wellness') {
+        } else if (nav.nav2 === 'mens health and wellness') {
             navList3 =  [
                 {
                     text_value: 'Condoms',
                     img:'https://muvs.org/media/filer_public/ad/90/ad90f1d9-2bef-4f4d-ac89-7343ef2ac017/1109_00_dl.jpg',
                     tag_value: 'condoms',
-                    background_color: 'Fuchsia'
+                    background_color: 'DeepSkyBlue'
                 },
                 {
                     text_value: 'Facial Tissues',
                     img:'https://www.kleenex.com/-/media/images/kleenex/products-new/cool-touch/boxes-upright/29388-04kft_coltuch_50ct_2_w_tissues1-(1).png',
-                    tag_value: 'facial tissues',
-                    background_color: 'Fuchsia'
+                    tag_value: 'mens facial tissues',
+                    background_color: 'DeepSkyBlue'
                 }
             ];
         } else if (nav.nav2 === 'toilet paper') {
@@ -1833,13 +1835,13 @@ const Navbar = ({
             navList3 = null;
         } else if (nav.nav2 === 'bathroom cleaners') {
             navList3 = null;
-        } else if (nav.nav2 === 'bathroom tools & accessories') {
+        } else if (nav.nav2 === 'bathroom tools and accessories') {
             navList3 = null;
         } else if (nav.nav2 === 'laundry detergents') {
             navList3 = null;
         } else if (nav.nav2 === 'fabric refreshers') {
             navList3 = null;
-        } else if (nav.nav2 === 'laundry tools & accessories') {
+        } else if (nav.nav2 === 'laundry tools and accessories') {
             navList3 = null;
         } else {
             navList3 = null;

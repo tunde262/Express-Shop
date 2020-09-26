@@ -1,7 +1,7 @@
 import { SET_NAV1, REMOVE_NAV1, SET_NAV2, REMOVE_NAV2, SET_NAV3, REMOVE_NAV3 } from '../actions/types';
 
 const initialState = {
-    nav1: 'explore',
+    nav1: '',
     nav2: '',
     nav3: ''
 }

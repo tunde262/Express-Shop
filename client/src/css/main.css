@@ -370,9 +370,13 @@ button:hover {
   color: #757575;
   cursor: pointer;
   transition: opacity .5s;
-  font-size: 12px;
+  font-size: 11px;
   margin: 10px;
   font-weight: bold; }
+  .btn-secondary span {
+    font-size: 12px;
+    font-weight: bold;
+    color: #ffbf00; }
 
 .badge {
   font-size: 0.8rem;

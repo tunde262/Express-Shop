@@ -126,12 +126,12 @@ const authForm = ({onChange, onSubmit, formData, setFormSignUp, formSignUp, logo
                         {formSignUp ? (
                             <Fragment>
                                 <button style={{width: '100%'}} type="submit">Create An Account</button>
-                                <div className="btn-secondary" onClick={() => setFormSignUp(false)} style={{width: '100%'}}>Already have an account?</div>
+                                <div className="btn-secondary" onClick={() => setFormSignUp(false)} style={{width: '100%'}}>Already have an account? <span>Log In</span></div>
                             </Fragment>
                         ): (
                             <Fragment>
                                 <button style={{width: '100%'}} type="submit">Start Shopping!</button>
-                                <div className="btn-secondary" onClick={() => setFormSignUp(true)} style={{width: '100%'}}>Don't have an account?</div>
+                                <div className="btn-secondary" onClick={() => setFormSignUp(true)} style={{width: '100%'}}>Don't have an account? <span>Get Started</span></div>
                             </Fragment>
                         )}
                         

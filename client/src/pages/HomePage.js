@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getProducts, getCart } from '../actions/productActions';
+import { setNav1 } from '../actions/navActions';
 
 import mixpanel from 'mixpanel-browser';
 
@@ -18,13 +19,14 @@ import Banner from '../components/common/Banner';
 import ImgLarge from '../utils/imgs/banner21.jpg';
 import ImgSmall from '../utils/imgs/banner13.jpg';
 
-const HomePage = ({getProducts, product, auth: { user, isAuthenticated, loading}}) => {
+const HomePage = ({getProducts, product, auth: { user, isAuthenticated, loading}, setNav1}) => {
     const [skip, setSkip] = useState(0);
 
     const [sentMixpanel, setSentMixpanel] = useState(false);
     
     useEffect(() => {
         getProducts(skip);
+        setNav1('explore')
     }, [skip]);
 
     const handleScroll = (e) => {
@@ -108,6 +110,7 @@ HomePage.propTypes = {
     getCart: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
+    setNav1: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -115,4 +118,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, { getProducts, getCart })(HomePage);
+export default connect(mapStateToProps, { getProducts, getCart, setNav1 })(HomePage);

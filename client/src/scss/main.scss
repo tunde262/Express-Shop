@@ -322,9 +322,15 @@ button:hover {
     color: darken($light-color, 50);;
     cursor: pointer;
     transition: opacity .5s;
-    font-size: 12px;
+    font-size: 11px;
     margin: 10px;
     font-weight: bold;
+
+    & span {
+        font-size: 12px;
+        font-weight: bold;
+        color: #ffbf00;
+    }
 }
 
 .badge {
