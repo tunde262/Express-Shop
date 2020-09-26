@@ -3,7 +3,7 @@ import { setAlert } from './alertActions';
 
 import mixpanel from 'mixpanel-browser';
 
-import { SET_PRODUCTS, SET_IN_CART, SET_SORTED_PRODUCTS, SET_MODAL_PRODUCTS, ADD_TO_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, ADD_PRODUCT_REVIEW, REMOVE_PRODUCT_REVIEW, PRODUCT_ERROR, HANDLE_TAGS, REMOVE_TAGS, PRODUCTS_LOADING, ADD_TOTALS, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, HANDLE_MAP, CLOSE_MODAL, CLEAR_CART, GET_CART, GET_ORDERS, INC_IMG_GALLERY, DEC_IMG_GALLERY } from './types';
+import { SET_PRODUCTS, CLEAR_PRODUCTS, SET_IN_CART, SET_SORTED_PRODUCTS, SET_MODAL_PRODUCTS, ADD_TO_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, ADD_PRODUCT_REVIEW, REMOVE_PRODUCT_REVIEW, PRODUCT_ERROR, HANDLE_TAGS, REMOVE_TAGS, PRODUCTS_LOADING, ADD_TOTALS, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, HANDLE_MAP, CLOSE_MODAL, CLEAR_CART, GET_CART, GET_ORDERS, INC_IMG_GALLERY, DEC_IMG_GALLERY } from './types';
 import store from '../store';
 
 // Get Products
@@ -18,7 +18,7 @@ export const getProducts = (skip) => dispatch => {
         .catch(err => 
             dispatch({
                 type: SET_PRODUCTS,
-                payload: {}
+                payload: []
             })
         );
 };
@@ -36,7 +36,7 @@ export const getStoreProducts = () => dispatch => {
         .catch(err => 
             dispatch({
                 type: SET_PRODUCTS,
-                payload: {}
+                payload: []
             })
         );
 };
@@ -54,7 +54,7 @@ export const getProductsByStoreId = id => async dispatch => {
     } catch (err) {
         dispatch({
             type: SET_PRODUCTS,
-            payload: {}
+            payload: []
         })
     }
 };
@@ -73,7 +73,7 @@ export const getProductsByLocationId = id => async dispatch => {
     } catch (err) {
         dispatch({
             type: SET_PRODUCTS,
-            payload: {}
+            payload: []
         })
     }
 };
@@ -91,7 +91,7 @@ export const getLikedProducts = id => async dispatch => {
     } catch (err) {
         dispatch({
             type: SET_PRODUCTS,
-            payload: {}
+            payload: []
         })
     }
 };
@@ -105,13 +105,12 @@ export const setSortedProducts = (products) =>  {
 };
 
 // Get Filtered tags
-export const handleTags = (filter, products) => async dispatch =>  {
-    dispatch(setProductsLoading());
+export const handleTags = (filter, products, skip) => async dispatch =>  {
     mixpanel.init("1b36d59c8a4e85ea3bb964ac4c4d5889");
     try {
         if (filter === 'explore') {
             dispatch({
-                type: SET_SORTED_PRODUCTS,
+                type: SET_PRODUCTS,
                 payload: products
             });
 
@@ -127,10 +126,10 @@ export const handleTags = (filter, products) => async dispatch =>  {
             });
 
         } else {
-            const res = await axios.get(`/api/products/filter/${filter}`);
+            const res = await axios.get(`/api/products/filter/${filter}?skip=${skip}`)
 
             dispatch({
-                type: SET_SORTED_PRODUCTS,
+                type: SET_PRODUCTS,
                 payload: res.data
             });
 
@@ -147,8 +146,8 @@ export const handleTags = (filter, products) => async dispatch =>  {
         }
     } catch (err) {
         dispatch({
-            type: SET_SORTED_PRODUCTS,
-            payload: {}
+            type: SET_PRODUCTS,
+            payload: []
         })
     }
 };
@@ -749,3 +748,13 @@ export const deleteReview = (productId, reviewId) => async dispatch => {
         });
     }
 }   
+
+// Remove all items
+export const clearProducts = () => dispatch => {
+    dispatch(setProductsLoading());
+
+    dispatch({
+        type: CLEAR_PRODUCTS
+    });
+
+}

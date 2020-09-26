@@ -116,6 +116,27 @@ router.get('/store/:id', async (req, res) => {
 // @access Public
 router.get('/filter/:filter', async (req, res) => {
     try {
+        const testLength = await Product.find({ tags: req.params.filter });
+
+        const skip =
+        req.query.skip && /^\d+$/.test(req.query.skip) ? Number(req.query.skip) : 0;
+
+        if(testLength.length > skip) {
+            const products = await Product.find({tags: req.params.filter }, null, { skip, limit: 8 }).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
+        
+            res.json(products);
+        }
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
+// @route GET api/products
+// @desc Get Products by Filter without skipping
+// @access Public
+router.get('/filter/full/:filter', async (req, res) => {
+    try {
         const products = await Product.find({ tags: req.params.filter }).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']).populate('store', ['name', 'img_name']);
 
         res.json(products);

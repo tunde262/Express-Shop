@@ -35,6 +35,7 @@ import HomePage from '../../pages/HomePage';
 import ExplorePage from '../../pages/ExplorePage';
 import StoresPage from '../../pages/StoresPage';
 import StorePage from '../../pages/StorePage';
+import ShopCollectionPage from '../../pages/CollectionPage';
 import LocationShopPage from '../../pages/LocationPage';
 import CategoryPage from '../../pages/CategoryPage';
 import Dashboard from '../admin/pages/Dashboard';
@@ -50,6 +51,7 @@ const Routes = props => {
             <Route exact path="/business" component={BusinessLanding} />
 
             <Route exact path="/home" component={HomePage} />
+            <Route exact path="/collection" component={ShopCollectionPage} />
             <Route exact path="/explore" component={ExplorePage} />
             {/* Category Pages */}
             <Route exact path="/categories" component={CategoryPage} />

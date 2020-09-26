@@ -23,6 +23,7 @@ export const REMOVE_NAV3 = 'REMOVE_NAV3';
 
 // Products & Cart
 export const SET_PRODUCTS = 'SET_PRODUCTS';
+export const CLEAR_PRODUCTS = 'CLEAR_PRODUCTS';
 export const SET_IN_CART = 'SET_IN_CART';
 export const SET_SORTED_PRODUCTS = 'SET_SORTED_PRODUCTS';
 export const ADD_PRODUCT = 'ADD_PRODUCT';

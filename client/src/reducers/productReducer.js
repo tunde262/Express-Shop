@@ -1,4 +1,4 @@
-import { SET_PRODUCTS, SET_SORTED_PRODUCTS, SET_MODAL_PRODUCTS, ADD_TO_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, PRODUCTS_LOADING, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, HANDLE_MAP, CLOSE_MODAL, CLEAR_CART,ADD_TOTALS, GET_CART, GET_ORDERS, HANDLE_TAGS, REMOVE_TAGS, INC_IMG_GALLERY, DEC_IMG_GALLERY } from '../actions/types';
+import { SET_PRODUCTS, CLEAR_PRODUCTS, SET_SORTED_PRODUCTS, SET_MODAL_PRODUCTS, ADD_TO_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, PRODUCTS_LOADING, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, HANDLE_MAP, CLOSE_MODAL, CLEAR_CART,ADD_TOTALS, GET_CART, GET_ORDERS, HANDLE_TAGS, REMOVE_TAGS, INC_IMG_GALLERY, DEC_IMG_GALLERY } from '../actions/types';
 
 const initialState = {
     products: [],
@@ -37,6 +37,13 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: true
+            };
+        case CLEAR_PRODUCTS:
+            return {
+                ...state,
+                products: [],
+                sortedProducts: [],
+                loading: false
             };
         case SET_PRODUCTS: {
             const products = action.payload;

@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { handleTags, setSortedProducts, removeTags } from '../../../actions/productActions';
+import { handleTags, setSortedProducts, removeTags, clearProducts } from '../../../actions/productActions';
 import { setNav1, setNav2, setNav3, removeNav1, removeNav2, removeNav3 } from '../../../actions/navActions';
 
 import { HorizontalNav } from '../../common/HorizontalNav';
@@ -99,7 +99,8 @@ const Navbar = ({
     setNav3, 
     removeNav1, 
     removeNav2, 
-    removeNav3
+    removeNav3,
+    clearProducts
 }) => {
     let navList1;
     let navList2;
@@ -155,6 +156,7 @@ const Navbar = ({
 
     const handleNavClick1 = async (filter) => {
         setNav1(filter);
+        clearProducts();
         const tags = [...product.tags];
 
         for(var i = 0; i < tags.length; i++) {
@@ -162,11 +164,12 @@ const Navbar = ({
         }
         unFilterProducts();
 
-        onFilterClick(filter);    
+        // onFilterClick(filter);    
     }
 
     const handleNavClick2 = async (filter) => {
         setNav2(filter);
+        clearProducts();
         const tags = [...product.tags];
 
         if(tags.length > 1) {
@@ -179,11 +182,12 @@ const Navbar = ({
             unFilterProducts();
         } 
 
-        onFilterClick(filter);
+        // onFilterClick(filter);
     }
 
     const handleNavClick3 = async (filter) => {
         setNav3(filter);
+        clearProducts();
         const tags = [...product.tags];
 
         if(tags.length > 2) {
@@ -191,7 +195,7 @@ const Navbar = ({
             unFilterProducts();
         }
 
-        onFilterClick(filter);
+        // onFilterClick(filter);
     }
 
     if(nav.nav1 !== '') {
@@ -1847,74 +1851,80 @@ const Navbar = ({
     let thirdNavList = null;
 
     if(navList1 !== null) {
-        navList = navList1.map((nav_item, index) => 
-            <NavItem 
-                key={index} 
-                background={nav.nav1 === nav_item.tag_value ? nav_item.background_color : "#fff"}
-                hover={nav_item.background_color}
-                color={nav.nav1 === nav_item.tag_value ? "#fff" : "#3c4043"}
-                border={nav.nav1 === nav_item.tag_value ? "#fff" : "#dfe1e5"}
-                onClick={() => handleNavClick1(nav_item.tag_value)}
-            >
-                {nav_item.img && (
-                    <img 
-                        alt="" 
-                        width="50" 
-                        height="50" 
-                        src={nav_item.img}
-                    />
-                )}
-                {/* <i className={nav_item.icon}></i> */}
-                {' '}{nav_item.text_value}
-            </NavItem>
-        );
+        navList = navList1.map((nav_item, index) => (
+            <Link to={`/collection?filter=${nav_item.tag_value}`}>
+                <NavItem 
+                    key={index} 
+                    background={nav.nav1 === nav_item.tag_value ? nav_item.background_color : "#fff"}
+                    hover={nav_item.background_color}
+                    color={nav.nav1 === nav_item.tag_value ? "#fff" : "#3c4043"}
+                    border={nav.nav1 === nav_item.tag_value ? "#fff" : "#dfe1e5"}
+                    onClick={() => handleNavClick1(nav_item.tag_value)}
+                >
+                    {nav_item.img && (
+                        <img 
+                            alt="" 
+                            width="50" 
+                            height="50" 
+                            src={nav_item.img}
+                        />
+                    )}
+                    {/* <i className={nav_item.icon}></i> */}
+                    {' '}{nav_item.text_value}
+                </NavItem>
+            </Link>
+        ));
     };
 
     if(navList2 !== null) {
-        secondNavList = navList2.map((nav_item, index) => 
-            <NavItem 
-                key={index} 
-                background={nav.nav2 === nav_item.tag_value ? nav_item.background_color : "#fff"}
-                hover={nav_item.background_color}
-                color={nav.nav2 === nav_item.tag_value ? "#fff" : "#3c4043"}
-                border={nav.nav2 === nav_item.tag_value ? "#fff" : "#dfe1e5"}
-                onClick={() => handleNavClick2(nav_item.tag_value)}
-            >
-                {nav_item.img && (
-                    <img 
-                        alt="" 
-                        width="50" 
-                        height="50" 
-                        src={nav_item.img}
-                    />
-                )}
-                {' '}{nav_item.text_value}
-            </NavItem>
-        );
+        secondNavList = navList2.map((nav_item, index) => (
+            <Link to={`/collection?filter=${nav_item.tag_value}`}>
+                <NavItem 
+                    key={index} 
+                    background={nav.nav2 === nav_item.tag_value ? nav_item.background_color : "#fff"}
+                    hover={nav_item.background_color}
+                    color={nav.nav2 === nav_item.tag_value ? "#fff" : "#3c4043"}
+                    border={nav.nav2 === nav_item.tag_value ? "#fff" : "#dfe1e5"}
+                    onClick={() => handleNavClick2(nav_item.tag_value)}
+                >
+                    {nav_item.img && (
+                        <img 
+                            alt="" 
+                            width="50" 
+                            height="50" 
+                            src={nav_item.img}
+                        />
+                    )}
+                    {' '}{nav_item.text_value}
+                </NavItem>
+            </Link>
+        ));
     };
 
     if(navList3 !== null) {
-        thirdNavList = navList3.map((nav_item, index) => 
-            <NavItem 
-                key={index} 
-                background={nav.nav3 === nav_item.tag_value ? nav_item.background_color : "#fff"}
-                hover={nav_item.background_color}
-                color={nav.nav3 === nav_item.tag_value ? "#fff" : "#3c4043"}
-                border={nav.nav3 === nav_item.tag_value ? "#fff" : "#dfe1e5"}
-                onClick={() => handleNavClick3(nav_item.tag_value)}
-            >
-                {nav_item.img && (
-                    <img 
-                        alt="" 
-                        width="50" 
-                        height="50" 
-                        src={nav_item.img}
-                    />
-                )}
-                <i className={nav_item.icon}></i>
-                {' '}{nav_item.text_value}
-            </NavItem>
-        );
+        thirdNavList = navList3.map((nav_item, index) => (
+            <Link to={`/collection?filter=${nav_item.tag_value}`}>
+                <NavItem 
+                    key={index} 
+                    background={nav.nav3 === nav_item.tag_value ? nav_item.background_color : "#fff"}
+                    hover={nav_item.background_color}
+                    color={nav.nav3 === nav_item.tag_value ? "#fff" : "#3c4043"}
+                    border={nav.nav3 === nav_item.tag_value ? "#fff" : "#dfe1e5"}
+                    onClick={() => handleNavClick3(nav_item.tag_value)}
+                >
+                    {nav_item.img && (
+                        <img 
+                            alt="" 
+                            width="50" 
+                            height="50" 
+                            src={nav_item.img}
+                        />
+                    )}
+                    <i className={nav_item.icon}></i>
+                    {' '}{nav_item.text_value}
+                </NavItem>
+            </Link>
+        ));
     };
     
     return (
@@ -1949,6 +1959,7 @@ Navbar.propTypes = {
     removeNav1: PropTypes.func.isRequired,
     removeNav2: PropTypes.func.isRequired,
     removeNav3: PropTypes.func.isRequired,
+    clearProducts: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -1956,4 +1967,4 @@ const mapStateToProps = state => ({
     nav: state.nav
 });
 
-export default connect(mapStateToProps, { handleTags, setSortedProducts, removeTags, setNav1, setNav2, setNav3, removeNav1, removeNav2, removeNav3 })(Navbar);
+export default connect(mapStateToProps, { handleTags, setSortedProducts, removeTags, clearProducts, setNav1, setNav2, setNav3, removeNav1, removeNav2, removeNav3 })(Navbar);
