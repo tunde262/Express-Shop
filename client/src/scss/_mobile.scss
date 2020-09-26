@@ -31,6 +31,11 @@
         }
     }
 
+    .secondary-block { 
+        padding: 2rem 3rem; 
+        grid-template-columns: repeat(2, 1fr);
+    }
+
     .promotion-block {
         padding: 2rem 0;
         .promotion-block-content {
@@ -275,7 +280,7 @@
     }
 
     .grid-rows {
-        padding: 4rem 1rem;
+        padding: 4rem 0;
         grid-template-columns: repeat(1, 100%); /* see notes below */
         grid-gap: 1em;
     }
@@ -460,5 +465,10 @@
 
     main#home h1 {
         margin-top: 10vh;
+    }
+
+    .secondary-block { 
+        padding: 2rem 1rem; 
+        grid-template-columns: repeat(1, 1fr);
     }
 }

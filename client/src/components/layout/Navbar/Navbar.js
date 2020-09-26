@@ -248,11 +248,11 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                     <i class="fas fa-home"></i>
                 </Link>
             </li>
-            <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
+            {/* <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
                 <Link to="/explore">
                     <i class="far fa-compass"></i>
                 </Link>
-            </li>
+            </li> */}
             <li className={navHighlight === "profile" ? "nav-offset active" : "nav-offset"} onClick={toggleAuth}>
                 <a href="#">
                     <i className="fas fa-user-circle"></i>
@@ -315,12 +315,12 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                             Home
                         </Link>
                     </li>
-                    <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
+                    {/* <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
                         <Link to="/explore">
                             <i class="far fa-compass"></i>{' '}
                             Explore
                         </Link>
-                    </li>
+                    </li> */}
                     {/* <Link className="cta" to="/register">
                         {/* <button type="button" className="nav-btn nav-icon" onClick={drawerClickHandler}>
                             Sell

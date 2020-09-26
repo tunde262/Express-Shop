@@ -54,11 +54,11 @@ const SideDrawer = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, ge
                     <i class="fas fa-home"></i>
                 </Link>
             </li>
-            <li onClick={drawerClickHandler}>
+            {/* <li onClick={drawerClickHandler}>
                 <Link to="/explore">
                     <i class="far fa-compass"></i>
                 </Link>
-            </li>
+            </li> */}
             <li onClick={toggleAuth}>
                 <a href="#">
                     <i className="fas fa-user-circle"></i>
