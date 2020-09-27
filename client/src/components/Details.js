@@ -211,6 +211,56 @@ const Details = ({
         });
     }
 
+    const decImage = () => {
+        let tempImgIndex = showImage - 1; 
+        const imgLength = detailProduct.img_gallery.length - 1;
+
+        if(showImage > 0) {
+            setShowImage(tempImgIndex);
+        } else {
+            setShowImage(imgLength);
+        }
+
+        mixpanel.track("Main Img Change", {
+        //   "Entry Point": "Home Landing",
+          "Item Name": detailProduct.name,
+          "Item Category": detailProduct.category,
+          "Item Cost": detailProduct.price,
+          "Store Name": detailProduct.store.name,
+          "Total Imgs": detailProduct.img_gallery.length,
+          "Total Likes": detailProduct.likes.length,
+          "Total Comments": detailProduct.comments.length,
+        });
+    }
+
+    const incImage = () => {
+
+        console.log('INCREASE IMG');
+        console.log(detailProduct.img_gallery.length)
+        console.log(showImage)
+        let tempImgIndex = showImage + 1; 
+        const imgLength = detailProduct.img_gallery.length;
+
+        if(showImage < imgLength - 1) {
+            setShowImage(tempImgIndex);
+        } else {
+            setShowImage(0)
+        }
+
+        
+
+        mixpanel.track("Main Img Change", {
+        //   "Entry Point": "Home Landing",
+          "Item Name": detailProduct.name,
+          "Item Category": detailProduct.category,
+          "Item Cost": detailProduct.price,
+          "Store Name": detailProduct.store.name,
+          "Total Imgs": detailProduct.img_gallery.length,
+          "Total Likes": detailProduct.likes.length,
+          "Total Comments": detailProduct.comments.length,
+        });
+    }
+
     const { text } = reviewData;
 
     const fileChanged = e => {
@@ -571,7 +621,15 @@ const Details = ({
                         </div> */}
                         <div class="detail-map">
                             <p className="mobile" style={{color:'#333', fontWeight:'bold'}}>{detailProduct.name}</p>
-                            {detailProduct && img_gallery && img_gallery.length > 0 && <img src={`/api/products/image/${img_gallery[showImage].img_name}`} className="img-fluid" alt="product" />}
+                            <div className="detail-image-container">
+                                <div onClick={decImage} className="detail-image-icon-container">
+                                    <i class="fas fa-chevron-left"></i>
+                                </div>
+                                {detailProduct && img_gallery && img_gallery.length > 0 && <img src={`/api/products/image/${img_gallery[showImage].img_name}`} className="img-fluid" alt="product" />}
+                                <div onClick={incImage} className="detail-image-icon-container">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
                             <div className="datail-sub-images">
                                 {img_gallery.map((item, index) => {
                                     return <img key={index} onClick={() => changeImage(index)} src={`/api/products/image/${img_gallery[index].img_name}`} alt={detailProduct.name} />

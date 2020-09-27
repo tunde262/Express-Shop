@@ -915,6 +915,30 @@ header {
   grid-area: breadcrumb;
  }
 
+ .detail-image-container {
+   display: grid;
+   grid-template-columns: 1fr 8fr 1fr;
+ }
+
+.detail-image-icon-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+
+.detail-image-icon-container:hover {
+  background: rgba(46, 49, 49, 0.2);
+}
+
+@media screen and (max-width: 768px) {
+  .detail-image-icon-container:hover {
+    background: #fff;
+  }
+}
+
 .product-header {
   grid-area: product-header; }
   .product-header h3 {
