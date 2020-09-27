@@ -1643,17 +1643,23 @@ header {
   
 .detail-map {
     grid-area: map;
-    /* background-image: url(../../img/google-street-view.jpg); */
     background-size: cover;
     display: flex;
     flex-direction: column;
     align-items: center; 
+    
+    .datail-sub-image-container {
+        display: grid;
+        grid-template-columns: 1fr 9fr 1fr;
+        max-width: 100%;
+        margin: 0 1rem;
+    }
     .datail-sub-images {
         // display: flex;
         // flex-wrap: wrap;
         // margin: 2rem;
-        padding: 0 15px;
-        width: 300px;
+        padding: 0;
+        width: 100%;
         overflow-x: scroll;
         overflow-y: hidden;
         display: flex;

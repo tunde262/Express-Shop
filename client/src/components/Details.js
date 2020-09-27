@@ -631,8 +631,8 @@ const Details = ({
                                     <i class="fas fa-chevron-right"></i>
                                 </div>
                             </div>
-                            <div style={{display:'flex'}}>
-                                <div style={{ margin:'1rem', textAlign:'center', height: '50px', display:'flex',alignItems:'center',justifyContent:'center'}}>
+                            <div className="datail-sub-image-container">
+                                <div style={{ margin:'1rem 5px', textAlign:'center', height: '50px', display:'flex',alignItems:'center',justifyContent:'center'}}>
                                     <p style={{color:'#808080', fontWeight:'bold', fontSize:'12px'}}>Swipe<br/><i class="fas fa-arrow-left"></i></p>
                                 </div>
                                 <div className="datail-sub-images">
@@ -640,7 +640,7 @@ const Details = ({
                                         return <img key={index} onClick={() => changeImage(index)} src={`/api/products/image/${img_gallery[index].img_name}`} alt={detailProduct.name} />
                                     })}
                                 </div>
-                                <div style={{ margin:'1rem', textAlign:'center', height: '50px', display:'flex',alignItems:'center',justifyContent:'center'}}>
+                                <div style={{ margin:'1rem 5px', textAlign:'center', height: '50px', display:'flex',alignItems:'center',justifyContent:'center'}}>
                                     <p style={{color:'#808080', fontWeight:'bold', fontSize:'12px'}}>Swipe<br/><i class="fas fa-arrow-right"></i></p>
                                 </div>
                             </div>

@@ -1376,14 +1376,18 @@ header {
 
 .detail-map {
   grid-area: map;
-  /* background-image: url(../../img/google-street-view.jpg); */
   background-size: cover;
   display: flex;
   flex-direction: column;
   align-items: center; }
+  .detail-map .datail-sub-image-container {
+    display: grid;
+    grid-template-columns: 1fr 9fr 1fr;
+    max-width: 100%;
+    margin: 0 1rem; }
   .detail-map .datail-sub-images {
-    padding: 0 15px;
-    width: 300px;
+    padding: 0;
+    width: 100%;
     overflow-x: scroll;
     overflow-y: hidden;
     display: flex;
@@ -2162,7 +2166,7 @@ footer .footer-bottom {
       header nav ul li {
         margin: 1rem; }
   .detail-map .datail-sub-images {
-    margin: 1rem 2rem; }
+    margin: 1rem 0; }
   .detail-map .datail-sub-images img {
     margin: 0 1rem; }
   .nav-bar {
