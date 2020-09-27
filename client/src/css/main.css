@@ -1377,11 +1377,19 @@ header {
 .detail-map {
   grid-area: map;
   /* background-image: url(../../img/google-street-view.jpg); */
-  background-size: cover; }
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
   .detail-map .datail-sub-images {
+    padding: 0 15px;
+    width: 300px;
+    overflow-x: scroll;
+    overflow-y: hidden;
     display: flex;
-    flex-wrap: wrap;
-    margin: 2rem; }
+    white-space: nowrap; }
+    .detail-map .datail-sub-images::-webkit-scrollbar {
+      display: none; }
   .detail-map .datail-sub-images img {
     width: 50px;
     height: 50px;
@@ -1396,9 +1404,6 @@ header {
 
 .detail-info .detail-status-box {
   background: #fff;
-  border-top: 2px solid #f4f4f4;
-  border-right: 2px solid #f4f4f4;
-  border-left: 2px solid #f4f4f4;
   padding: 5px 10px;
   border-bottom: none; }
   .detail-info .detail-status-box .detail-status-box-header {
@@ -1417,9 +1422,6 @@ header {
 
 .detail-info .detail-description-box {
   background: #fff;
-  border-left: 2px solid #f4f4f4;
-  border-right: 2px solid #f4f4f4;
-  border-bottom: 2px solid #f4f4f4;
   display: flex;
   flex-direction: column; }
 

@@ -19,6 +19,7 @@ import ButtonSpinner from './common/ButtonSpinner';
 import ProductOverview from './Overview/productOverview/ProductOverview';
 import BrandOverview from './Overview/brandOverview/BrandOverview';
 import TableDetails from './TableDetails/TableDetails';
+import { HorizontalNav } from '../components/common/HorizontalNav';
 
 const Details = ({
     product: {
@@ -620,7 +621,7 @@ const Details = ({
                             <BackButton onClick={goBack}><i className="fas fa-arrow-left"></i></BackButton>
                         </div> */}
                         <div class="detail-map">
-                            <p className="mobile" style={{color:'#333', fontWeight:'bold'}}>{detailProduct.name}</p>
+                            {/* <p className="mobile" style={{color:'#333', fontWeight:'bold'}}>{detailProduct.name}</p> */}
                             <div className="detail-image-container">
                                 <div onClick={decImage} className="detail-image-icon-container">
                                     <i class="fas fa-chevron-left"></i>
@@ -630,16 +631,24 @@ const Details = ({
                                     <i class="fas fa-chevron-right"></i>
                                 </div>
                             </div>
-                            <div className="datail-sub-images">
-                                {img_gallery.map((item, index) => {
-                                    return <img key={index} onClick={() => changeImage(index)} src={`/api/products/image/${img_gallery[index].img_name}`} alt={detailProduct.name} />
-                                })}
+                            <div style={{display:'flex'}}>
+                                <div style={{ margin:'1rem', textAlign:'center', height: '50px', display:'flex',alignItems:'center',justifyContent:'center'}}>
+                                    <p style={{color:'#808080', fontWeight:'bold', fontSize:'12px'}}>Swipe<br/><i class="fas fa-arrow-left"></i></p>
+                                </div>
+                                <div className="datail-sub-images">
+                                    {img_gallery.map((item, index) => {
+                                        return <img key={index} onClick={() => changeImage(index)} src={`/api/products/image/${img_gallery[index].img_name}`} alt={detailProduct.name} />
+                                    })}
+                                </div>
+                                <div style={{ margin:'1rem', textAlign:'center', height: '50px', display:'flex',alignItems:'center',justifyContent:'center'}}>
+                                    <p style={{color:'#808080', fontWeight:'bold', fontSize:'12px'}}>Swipe<br/><i class="fas fa-arrow-right"></i></p>
+                                </div>
                             </div>
                         </div>
                         <div class="detail-info">
                             <div class="detail-status-box">
                                 <div className="detail-status-box-header">
-                                    <div><p className="desktop" style={{color:'#333', fontWeight:'bold'}}>{detailProduct.name}</p></div>
+                                    <div><p style={{color:'#333', fontWeight:'bold'}}>{detailProduct.name}</p></div>
                                     <div>
                                         <span>{detailProduct.likes.length > 0 && <span>{detailProduct.likes.length}</span>}</span>{' '}
                                         {liked ? <i style={{color:'#ff4b2b', fontSize:'1.4rem', margin:'1rem 1rem 0 0'}} onClick={() => addLike(detailProduct._id)} class="fas fa-heart"></i> : <i onClick={() => addLike(detailProduct._id)} style={{color:'#808080', margin:'1rem 1rem 0 0'}} className="far fa-heart detail-heart"></i>}

@@ -1102,7 +1102,8 @@ header {
         flex-direction: column;
         align-items: center;
         justify-content: flex-end;
-        border-bottom: 2px solid gainsboro; }
+        /* border-bottom: 2px solid gainsboro;  */
+      }
         .nav-underline > li i{
           color: #808080;
         }
