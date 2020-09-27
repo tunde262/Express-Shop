@@ -633,7 +633,7 @@ const Details = ({
                             </div>
                             <div className="datail-sub-image-container">
                                 <div style={{ margin:'1rem 5px', textAlign:'center', height: '50px', display:'flex',alignItems:'center',justifyContent:'center'}}>
-                                    <p style={{color:'#808080', fontWeight:'bold', fontSize:'12px'}}>Swipe<br/><i class="fas fa-arrow-left"></i></p>
+                                    {detailProduct && img_gallery && img_gallery.length > 3 && <p style={{color:'#808080', fontWeight:'bold', fontSize:'12px'}}>Swipe<br/><i class="fas fa-arrow-left"></i></p>}
                                 </div>
                                 <div className="datail-sub-images">
                                     {img_gallery.map((item, index) => {
@@ -641,7 +641,7 @@ const Details = ({
                                     })}
                                 </div>
                                 <div style={{ margin:'1rem 5px', textAlign:'center', height: '50px', display:'flex',alignItems:'center',justifyContent:'center'}}>
-                                    <p style={{color:'#808080', fontWeight:'bold', fontSize:'12px'}}>Swipe<br/><i class="fas fa-arrow-right"></i></p>
+                                    {detailProduct && img_gallery && img_gallery.length > 3 && <p style={{color:'#808080', fontWeight:'bold', fontSize:'12px'}}>Swipe<br/><i class="fas fa-arrow-right"></i></p>}
                                 </div>
                             </div>
                         </div>
