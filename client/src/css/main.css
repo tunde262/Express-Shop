@@ -2168,7 +2168,7 @@ footer .footer-bottom {
   .detail-map .datail-sub-images {
     margin: 1rem 0; }
   .detail-map .datail-sub-image-container {
-    max-width: 100vw; }
+    max-width: 300px; }
   .detail-map .datail-sub-images img {
     margin: 0 1rem; }
   .nav-bar {
