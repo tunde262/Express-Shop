@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { handleDetail, addToCart, addLike, openModal, addTotals, getCart, addReview, deleteReview } from '../actions/productActions';
+import { getStoresByTag } from '../actions/storeActions';
 import { getProductVariants } from '../actions/variantActions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
@@ -32,6 +33,7 @@ const Details = ({
         user
     },
     variant,
+    store,
     match, 
     history, 
     addToCart, 
@@ -42,7 +44,8 @@ const Details = ({
     addReview,
     addLike,
     deleteReview,
-    handleDetail
+    handleDetail,
+    getStoresByTag
 }) => {
     // Mixpanel
     const [sentMixpanel, setSentMixpanel] = useState(false);
@@ -100,6 +103,9 @@ const Details = ({
 
     // Show Img Index
     const [showImage, setShowImage] = useState(0);
+
+    // Load Recommended Stores by Item Category
+    const [storesLoaded, setStoresLoaded] = useState(false);
 
     useEffect(() => {
         handleDetail(match.params.id);
@@ -300,6 +306,11 @@ const Details = ({
             handleMixpanel();
             setSentMixpanel(true);
         }
+    }
+
+    if(!storesLoaded && detailProduct) {
+        getStoresByTag(detailProduct.category);
+        setStoresLoaded(true);
     }
 
     let varKeyList = [];
@@ -733,7 +744,12 @@ const Details = ({
                         </div> */}
                     </div>
                 </section>
-                <BrandOverview />
+                {store.stores.length > 0 && detailProduct && (
+                    <div style={{marginTop:'85px'}}>
+                        <BrandOverview title={`Other Stores For ${detailProduct.category}`} stores={store.stores} />
+                    </div>
+                )}
+    
                 <ProductOverview title="Tops" products={products} link="/top" />
                 <Modal open={displayModal} onClose={setModal} center>
                     <p>
@@ -818,6 +834,7 @@ const Details = ({
 Details.propTypes = {
     product: PropTypes.object.isRequired,
     variant: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired,
     addToCart: PropTypes.func.isRequired,
     addLike: PropTypes.func.isRequired,
     openModal: PropTypes.func.isRequired,
@@ -826,12 +843,14 @@ Details.propTypes = {
     getCart: PropTypes.func.isRequired,
     addReview: PropTypes.func.isRequired,
     getProductVariants: PropTypes.func.isRequired,
+    getStoresByTag: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
     product: state.product,
     variant: state.variant,
-    auth: state.auth
+    auth: state.auth,
+    store: state.store,
 });
 
-export default connect(mapStateToProps, { getProductVariants, addToCart, addLike, getCart, openModal, addTotals, handleDetail, addReview })(Details);
+export default connect(mapStateToProps, { getProductVariants, addToCart, addLike, getCart, openModal, addTotals, handleDetail, addReview, getStoresByTag })(Details);

@@ -29,7 +29,7 @@ const CollectionPage = ({ handleTags, clearProducts, product, auth: { isAuthenti
     const getProducts = async () => {
         console.log("MAXSKIP Above: " + maxSkip)
         if(skip < maxSkip && maxSkip !== null) {
-            handleTags(filter, product.products, skip);
+            handleTags(filter, skip);
             setProductsLoaded(true);
         }
     } 
@@ -206,7 +206,7 @@ const CollectionPage = ({ handleTags, clearProducts, product, auth: { isAuthenti
     }
     
     useEffect(() => {
-        handleTags(filter, product.products, skip);
+        handleTags(filter, skip);
 
         if(!productsLoaded) {
             handleNavLists(filter);
@@ -218,7 +218,7 @@ const CollectionPage = ({ handleTags, clearProducts, product, auth: { isAuthenti
     // const getInitialProducts = async () => {
     //     setProductsLoaded(true);
     
-    //     handleTags(filter, product.products, skip);
+    //     handleTags(filter, skip);
     // } 
 
     // if(!productsLoaded) {

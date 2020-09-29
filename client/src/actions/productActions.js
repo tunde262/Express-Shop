@@ -96,7 +96,7 @@ export const getLikedProducts = id => async dispatch => {
     }
 };
 
-// Get Filtered Products
+// Get Sorted Products
 export const setSortedProducts = (products) =>  {
     return {
         type: SET_SORTED_PRODUCTS,
@@ -105,21 +105,23 @@ export const setSortedProducts = (products) =>  {
 };
 
 // Get Filtered tags
-export const handleTags = (filter, products, skip) => async dispatch =>  {
+export const handleTags = (filter, skip) => async dispatch =>  {
     mixpanel.init("1b36d59c8a4e85ea3bb964ac4c4d5889");
     try {
         if (filter === 'explore') {
+            const res = await axios.get(`/api/products?skip=${skip}`)
+            
             dispatch({
                 type: SET_PRODUCTS,
-                payload: products
+                payload: res.data
             });
 
             mixpanel.track("Category Nav Filter", {
                 "Chosen Category": filter,
-                "# of Results Returned": products.length,
+                "# of Results Returned": res.data.length,
             });    
             console.log('CLICKED');
-            console.log(products);
+            console.log(res.data);
         
             mixpanel.people.set({
                 "Last Category Filter": filter,

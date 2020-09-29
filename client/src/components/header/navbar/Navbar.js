@@ -121,7 +121,7 @@ const Navbar = ({
         //     filterProducts();
         // }
 
-        handleTags(filter, product.products);
+        handleTags(filter);
     }
 
     const filterProducts = () => {

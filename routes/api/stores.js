@@ -132,6 +132,41 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+// @route GET api/stores
+// @desc Get Stores by Tag Filter
+// @access Public
+router.get('/filter/:filter', async (req, res) => {
+    try {
+        const testLength = await Store.find({ tags: req.params.filter });
+
+        const skip =
+        req.query.skip && /^\d+$/.test(req.query.skip) ? Number(req.query.skip) : 0;
+
+        if(testLength.length > skip) {
+            const stores = await Store.find({tags: req.params.filter }, null, { skip, limit: 8 })
+        
+            res.json(stores);
+        }
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
+// @route GET api/stores
+// @desc Get Stores by tag Filter without skipping
+// @access Public
+router.get('/filter/full/:filter', async (req, res) => {
+    try {
+        const stores = await Store.find({ tags: req.params.filter });
+
+        res.json(stores);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
 // @route POST api/stores
 // @desc Create or update Store
 // @access Private

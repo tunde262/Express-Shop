@@ -44,7 +44,7 @@ const Admin = ({ getCurrentStore, store: { stores, loading } }) => {
         }
         if(stores.length > 0) {
             storeList = stores.map(store => (
-                <div className="stores-box-option">
+                <div key={store._id} className="stores-box-option">
                     <div className="stores-box-option-title">
                         <img src={`/api/products/image/${store.img_name}`} style={{height:'50px', width:'50px', borderRadius:'50px'}} />
                         <Link to={`/admin/${store._id}`}>{store.name}</Link>

@@ -91,6 +91,7 @@ export const REMOVE_STORE_REVIEW = 'REMOVE_STORE_REVIEW';
 export const CLEAR_STORE = 'CLEAR_STORE';
 export const STORE_DELETED = 'STORE_DELETED';
 export const SET_CART_STORES = 'SET_CART_STORES';
+export const CLEAR_STORES = 'CLEAR_STORES';
 
 // Collections
 export const GET_COLLECTIONS = 'GET_COLLECTIONS';

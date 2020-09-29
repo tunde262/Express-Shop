@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { setAlert } from './alertActions';
 
-import { GET_STORE, GET_STORES, SET_CART_STORES, STORE_ERROR, UPDATE_STORE_FAVORITES, ADD_STORE_REVIEW, REMOVE_STORE_REVIEW, CLEAR_STORE, STORE_DELETED } from './types';
+import { GET_STORE, GET_STORES, SET_CART_STORES, STORE_ERROR, UPDATE_STORE_FAVORITES, ADD_STORE_REVIEW, REMOVE_STORE_REVIEW, CLEAR_STORE, CLEAR_STORES, STORE_DELETED } from './types';
 
 // Get Current users Store 
 export const getCurrentStore = () => async dispatch => {
@@ -64,6 +64,25 @@ export const getStoreById = Id => async dispatch => {
         });
     }
 }
+
+// Get Filtered tags
+export const getStoresByTag = (filter) => async dispatch =>  {
+    dispatch({ type: CLEAR_STORES });
+
+    try {
+        const res = await axios.get(`/api/stores/filter/full/${filter}`)
+
+        dispatch({
+            type: GET_STORES,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: GET_STORES,
+            payload: []
+        })
+    }
+};
 
 
 // Create or update store
@@ -235,4 +254,12 @@ export const deleteStore = id => async dispatch => {
             payload: { msg: err.response.statusText, status: err.response.status }
         });
     }
+}
+
+// Remove all stores
+export const clearStores = () => dispatch => {
+    dispatch({
+        type: CLEAR_STORES
+    });
+
 }

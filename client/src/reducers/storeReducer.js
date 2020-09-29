@@ -1,4 +1,4 @@
-import { GET_STORE, GET_STORES, SET_CART_STORES, STORE_ERROR, UPDATE_STORE_FAVORITES, ADD_STORE_REVIEW, REMOVE_STORE_REVIEW, CLEAR_STORE } from "../actions/types";
+import { GET_STORE, GET_STORES, SET_CART_STORES, STORE_ERROR, UPDATE_STORE_FAVORITES, ADD_STORE_REVIEW, REMOVE_STORE_REVIEW, CLEAR_STORE, CLEAR_STORES } from "../actions/types";
 
 const initialState = {
     store: null,
@@ -66,6 +66,12 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 store: null,
+                loading: false
+            }
+        case CLEAR_STORES:
+            return {
+                ...state,
+                stores: [],
                 loading: false
             }
         default:
