@@ -76,7 +76,7 @@ const Login = ({ auth: { isAuthenticated, user }, login, history }) => {
                             onChange={e => onChange(e)}
                             style={{margin:'10px 0', width:'100%', height:'50px'}}
                         /> */}
-                        <button style={{width: '100%'}} type="submit">Create An Account</button>
+                        <button style={{width: '100%'}} type="submit">Start Shopping!</button>
                         <Link to="/register" style={{color:'#808080', marginTop:'1rem'}}>Don't have an account?</Link>
                     </form>
                 </div>

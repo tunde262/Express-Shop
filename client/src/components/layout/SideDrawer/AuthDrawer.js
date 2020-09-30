@@ -44,10 +44,10 @@ const AuthDrawer = ({ drawerClickHandler, toggleAuthDrawer, getCurrentProfile, d
                     <a href="#" className="menu-item">
                         My Orders
                     </a>
-                    <hr style={{margin:'10px 0'}} />
+                    {/* <hr style={{margin:'10px 0'}} />
                     <Link to="/admin" className="menu-item">
                         My Stores
-                    </Link>
+                    </Link> */}
                     <hr style={{margin:'10px 0'}} />
                     <a href="#" className="menu-item">
                         <i className="fas fa-cog"></i>{' '}
