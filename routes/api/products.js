@@ -311,7 +311,7 @@ router.post('/edit/:id/:storeId', upload.single('file'),[ auth, [
         if(req.file) productFields.img_name = req.file.filename;
         if(price) productFields.price = price;
         if(sales_price) productFields.sales_price = sales_price;
-        if(sku) productFields.sales_price = sku;
+        if(sku) productFields.sku = sku;
         if(inventory_qty) productFields.inventory_qty = inventory_qty;
         if(description) productFields.description = description;
         if(category) productFields.category = category;
