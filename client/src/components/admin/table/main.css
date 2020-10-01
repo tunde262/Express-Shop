@@ -948,6 +948,19 @@ header {
   grid-area: product-actions;
   margin-top: -1rem; }
 
+  .product-detail-main-container {
+    width:100%; 
+    display:grid; 
+    grid-template-columns:repeat(2,1fr);
+    border:2px dashed #cecece;
+  }
+
+  .product-detail-image-container {
+    position: relative;
+    margin: 10px; 
+    width: 50%; 
+  }
+
 .product-admin-main {
   grid-area: main;
   margin-left: 1.5rem; }
@@ -1020,6 +1033,10 @@ header {
   }
 
   @media screen and (max-width: 768px) {
+    .product-detail-main-container {
+      display: none;
+    }
+
     .admin-image-overlay {
       display: none;
     }

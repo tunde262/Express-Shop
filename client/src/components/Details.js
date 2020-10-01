@@ -673,18 +673,42 @@ const Details = ({
                                     </div>
                                 </div>
                             </div>
-                            <div className="datail-sub-image-container">
+                            {/* <div className="datail-sub-image-container desktop">
                                 <div className="desktop" style={{ margin:'1rem 5px', textAlign:'center', height: '50px', display:'flex',alignItems:'center',justifyContent:'center'}}>
                                     {detailProduct && img_gallery && img_gallery.length > 3 && <p className="desktop" style={{color:'#808080', fontWeight:'bold', fontSize:'12px'}}>Scroll<br/><i class="fas fa-arrow-left"></i></p>}
                                 </div>
                                 <div className="datail-sub-images">
                                     {img_gallery.map((item, index) => {
-                                        return <img key={index} onClick={() => changeImage(index)} src={`/api/products/image/${img_gallery[index].img_name}`} alt={detailProduct.name} />
+                                        if (index === showImage) {
+                                            return <img key={index} style={{border:'2px solid #0000FF'}} onClick={() => changeImage(index)} src={`/api/products/image/${img_gallery[index].img_name}`} alt={detailProduct.name} />
+                                        } else {
+                                            return <img key={index} onClick={() => changeImage(index)} src={`/api/products/image/${img_gallery[index].img_name}`} alt={detailProduct.name} />
+                                        }
                                     })}
                                 </div>
                                 <div className="desktop" style={{ margin:'1rem 5px', textAlign:'center', height: '50px', display:'flex',alignItems:'center',justifyContent:'center'}}>
                                     {detailProduct && img_gallery && img_gallery.length > 3 && <p className="desktop" style={{color:'#808080', fontWeight:'bold', fontSize:'12px'}}>Scroll<br/><i class="fas fa-arrow-right"></i></p>}
                                 </div>
+                            </div> */}
+                            <div style={{marginTop:'10px'}}>
+                                <p style={{color:'#808080', fontWeight:'bold', fontSize:'12px'}}><i style={{marginRight:'10px'}} class="far fa-hand-pointer"></i> Click image for more photos...</p>
+                            </div>
+                            <div className="product-detail-main-container">
+                                {img_gallery.map((item, index) => {
+                                    if (index === showImage) {
+                                        return (
+                                            <div className="product-detail-image-container">
+                                                <img key={index} style={{border:'2px solid #0000FF'}} onClick={() => changeImage(index)} src={`/api/products/image/${img_gallery[index].img_name}`} alt={detailProduct.name} />
+                                            </div>
+                                        )
+                                    } else {
+                                        return (
+                                            <div className="product-detail-image-container">
+                                                <img key={index} onClick={() => changeImage(index)} src={`/api/products/image/${img_gallery[index].img_name}`} alt={detailProduct.name} />
+                                            </div>
+                                        ) 
+                                    }
+                                })}
                             </div>
                         </div>
                         <div class="detail-info">

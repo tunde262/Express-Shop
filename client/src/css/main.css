@@ -2230,9 +2230,11 @@ footer .footer-bottom {
       flex-direction: column; }
       header nav ul li {
         margin: 1rem; }
-  .detail-map .datail-sub-images {
-    margin: 1rem 0; }
-  .detail-map .datail-sub-images img {
+  .detail-map .detail-sub-images {
+    margin: 1rem 0;
+    width: 100vw;
+    max-width: 100vw; }
+  .detail-map .detail-sub-images img {
     margin: 0 1rem; }
   .nav-bar {
     height: 0;
