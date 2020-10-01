@@ -734,7 +734,8 @@ const Details = ({
                                     </div>
                                 </div>
                                 <h3 style={{color:'#ff4b2b', marginTop:'-1rem', fontWeight:'bold'}}>{detailProduct.price}</h3>
-                                <p><i style={{color:'#808080'}} class="fas fa-truck"></i> Next Delivery Time: <span style={{fontWeight:'bold', color:'#ff4b2b'}}>1pm</span></p>
+                                {/* <p><i style={{color:'#808080'}} class="fas fa-truck"></i> Next Delivery Time: <span style={{fontWeight:'bold', color:'#ff4b2b'}}>1pm</span></p> */}
+                                <p><i style={{color:'#808080'}} class="fas fa-truck"></i> Est. Delivery Time: <span style={{fontWeight:'bold', color:'#ff4b2b'}}>2 hr</span></p>
                                 <p style={{color:'#808080', marginTop:'-1rem'}}><i className="fas fa-sign-out-alt" /> Return eligible</p>
                                 <hr style={{background:'#dfe1e5', height:'1px', marginBottom:'0.5rem'}}/>
                                 <div style={{display:'flex', alignItems: 'center', marginTop:'-0.6rem'}}>
