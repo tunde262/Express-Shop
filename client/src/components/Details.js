@@ -2,7 +2,17 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { handleDetail, addToCart, addLike, openModal, addTotals, getCart, addReview, deleteReview } from '../actions/productActions';
+import { 
+    handleDetail, 
+    addToCart, 
+    addLike, 
+    openModal, 
+    addTotals, 
+    getCart, 
+    addReview, 
+    deleteReview, 
+    handleTags 
+} from '../actions/productActions';
 import { getStoresByTag } from '../actions/storeActions';
 import { getProductVariants } from '../actions/variantActions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -45,7 +55,8 @@ const Details = ({
     addLike,
     deleteReview,
     handleDetail,
-    getStoresByTag
+    getStoresByTag,
+    handleTags
 }) => {
     // Mixpanel
     const [sentMixpanel, setSentMixpanel] = useState(false);
@@ -106,6 +117,10 @@ const Details = ({
 
     // Load Recommended Stores by Item Category
     const [storesLoaded, setStoresLoaded] = useState(false);
+    // Load Recommended Products by Item Category
+    const [productsLoaded, setProductsLoaded] = useState(false);
+
+    const [skip, setSkip] = useState(0);
 
     useEffect(() => {
         handleDetail(match.params.id);
@@ -311,6 +326,11 @@ const Details = ({
     if(!storesLoaded && detailProduct) {
         getStoresByTag(detailProduct.category);
         setStoresLoaded(true);
+    }
+
+    if(!productsLoaded && detailProduct) {
+        handleTags(detailProduct.category, skip);
+        setProductsLoaded(true);
     }
 
     let varKeyList = [];
@@ -750,7 +770,7 @@ const Details = ({
                     </div>
                 )}
     
-                <ProductOverview title="Tops" products={products} link="/top" />
+                <ProductOverview title="You may also like..." products={products} link={`/collection?filter=${detailProduct.category}`} />
                 <Modal open={displayModal} onClose={setModal} center>
                     <p>
                         Write a quick review...
@@ -844,6 +864,7 @@ Details.propTypes = {
     addReview: PropTypes.func.isRequired,
     getProductVariants: PropTypes.func.isRequired,
     getStoresByTag: PropTypes.func.isRequired,
+    handleTags: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -853,4 +874,4 @@ const mapStateToProps = state => ({
     store: state.store,
 });
 
-export default connect(mapStateToProps, { getProductVariants, addToCart, addLike, getCart, openModal, addTotals, handleDetail, addReview, getStoresByTag })(Details);
+export default connect(mapStateToProps, { getProductVariants, addToCart, addLike, getCart, openModal, addTotals, handleDetail, addReview, getStoresByTag, handleTags })(Details);

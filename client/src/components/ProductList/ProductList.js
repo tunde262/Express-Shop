@@ -32,7 +32,8 @@ const ProductList = ({products, product, auth: { user }, handleScroll}) => {
             })
         }
         else {
-            productList = <Title name="No Products" title="Available" />
+            // productList = <Title name="No Products" title="Available" />
+            productList = <Spinner />;
         }
     }
 

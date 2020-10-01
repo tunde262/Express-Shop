@@ -32,7 +32,8 @@ const Container = ({ product, getProducts }) => {
             );
         }
         else {
-            productList = <Title name="No Products" title="Available" />
+            // productList = <Title name="No Products" title="Available" />
+            productList = <Spinner />;
         }
     }
 

@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import { HorizontalNav } from '../../common/HorizontalNav';
+import Spinner from '../../common/Spinner';
 
 const BrandOverviewItems = ({stores}) => {
     let storeList;
 
-    if(stores.length > 0) {
+    if(stores && stores.length > 0) {
         storeList = stores.map(store => (
             <Link key={store._id} to={`/store/${store._id}`}>
                 <BrandOverviewItem>
@@ -27,7 +28,7 @@ const BrandOverviewItems = ({stores}) => {
         ));
     }
     else {
-        storeList = <h2 style={{color:'#333', fontWeight:'300'}}>No Related Stores</h2>
+        storeList = <h2 style={{color:'#333', fontWeight:'300'}}><Spinner/></h2>
     }
 
     return (
