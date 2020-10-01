@@ -662,7 +662,18 @@ const Details = ({
                                     <i class="fas fa-chevron-right"></i>
                                 </div>
                             </div> */}
-                            <div className="detail-image-container" onClick={incImage}>
+                            <div className="detail-image-container desktop">
+                                {detailProduct && img_gallery && img_gallery.length > 0 && <img src={`/api/products/image/${img_gallery[showImage].img_name}`} className="img-fluid" alt="product" />}
+                                <div className="detail-image-overlay">
+                                    <div onClick={decImage} className="detail-overlay-icon-container">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </div>
+                                    <div onClick={incImage} className="detail-overlay-icon-container">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="detail-image-container mobile" onClick={incImage}>
                                 {detailProduct && img_gallery && img_gallery.length > 0 && <img src={`/api/products/image/${img_gallery[showImage].img_name}`} className="img-fluid" alt="product" />}
                                 <div className="detail-image-overlay">
                                     <div onClick={decImage} className="detail-overlay-icon-container">
