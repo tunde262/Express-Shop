@@ -710,12 +710,14 @@ const Details = ({
                                         return (
                                             <div className="product-detail-image-container">
                                                 <img key={index} style={{border:'2px solid #0000FF'}} onClick={() => changeImage(index)} src={`/api/products/image/${img_gallery[index].img_name}`} alt={detailProduct.name} />
+                                                <div className="detail-image-overlay" onClick={() => changeImage(index)}></div>
                                             </div>
                                         )
                                     } else {
                                         return (
                                             <div className="product-detail-image-container">
                                                 <img key={index} onClick={() => changeImage(index)} src={`/api/products/image/${img_gallery[index].img_name}`} alt={detailProduct.name} />
+                                                <div className="detail-image-overlay" onClick={() => changeImage(index)}></div>
                                             </div>
                                         ) 
                                     }
