@@ -674,16 +674,16 @@ const Details = ({
                                 </div>
                             </div>
                             <div className="datail-sub-image-container">
-                                <div style={{ margin:'1rem 5px', textAlign:'center', height: '50px', display:'flex',alignItems:'center',justifyContent:'center'}}>
-                                    {detailProduct && img_gallery && img_gallery.length > 3 && <p style={{color:'#808080', fontWeight:'bold', fontSize:'12px'}}>Swipe<br/><i class="fas fa-arrow-left"></i></p>}
+                                <div className="desktop" style={{ margin:'1rem 5px', textAlign:'center', height: '50px', display:'flex',alignItems:'center',justifyContent:'center'}}>
+                                    {detailProduct && img_gallery && img_gallery.length > 3 && <p className="desktop" style={{color:'#808080', fontWeight:'bold', fontSize:'12px'}}>Scroll<br/><i class="fas fa-arrow-left"></i></p>}
                                 </div>
                                 <div className="datail-sub-images">
                                     {img_gallery.map((item, index) => {
                                         return <img key={index} onClick={() => changeImage(index)} src={`/api/products/image/${img_gallery[index].img_name}`} alt={detailProduct.name} />
                                     })}
                                 </div>
-                                <div style={{ margin:'1rem 5px', textAlign:'center', height: '50px', display:'flex',alignItems:'center',justifyContent:'center'}}>
-                                    {detailProduct && img_gallery && img_gallery.length > 3 && <p style={{color:'#808080', fontWeight:'bold', fontSize:'12px'}}>Swipe<br/><i class="fas fa-arrow-right"></i></p>}
+                                <div className="desktop" style={{ margin:'1rem 5px', textAlign:'center', height: '50px', display:'flex',alignItems:'center',justifyContent:'center'}}>
+                                    {detailProduct && img_gallery && img_gallery.length > 3 && <p className="desktop" style={{color:'#808080', fontWeight:'bold', fontSize:'12px'}}>Scroll<br/><i class="fas fa-arrow-right"></i></p>}
                                 </div>
                             </div>
                         </div>
@@ -735,7 +735,13 @@ const Details = ({
                                         {cartLoading ? <ButtonSpinner /> : "Add To Cart"}
                                     </button>
                                 {/* </div> */}
-                                <TableDetails page="store" setModal={setModal} description={detailProduct.description} />
+                                {/* <TableDetails page="store" setModal={setModal} description={detailProduct.description} /> */}
+
+                                <div style={{marginTop:'50px'}}>
+                                    <p style={{color:'#808080', fontWeight:'bold'}}>Description</p>
+                                    <hr style={{marginTop:'-0.5rem', background:'#dfe1e5', height:'1px'}}/>
+                                    {detailProduct.description && <p>{detailProduct.description}</p>}
+                                </div>
                             </div>
                         </div>
                         {/* <div class="content-box container-fluid">
