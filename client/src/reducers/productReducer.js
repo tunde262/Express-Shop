@@ -121,11 +121,21 @@ export default function(state = initialState, action) {
                 loading: false
             };
         case UPDATE_PRODUCT_LIKES:
+            let tempDetailProd = state.detailProduct;
+
+            if(tempDetailProd._id === action.payload.id) { 
+                tempDetailProd = {...tempDetailProd, likes: action.payload.likes }
+            }
+
             return {
                 ...state,
+                products: state.products.map(product =>
+                    product._id === action.payload.id ? { ...product, likes: action.payload.likes } : product
+                ),
                 sortedProducts: state.products.map(product =>
                     product._id === action.payload.id ? { ...product, likes: action.payload.likes } : product
-                )
+                ),
+                detailProduct: tempDetailProd
             };
         // case INC_IMG_GALLERY:
         //     let orderNum;

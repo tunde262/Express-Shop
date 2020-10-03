@@ -1467,6 +1467,15 @@ header {
   text-decoration: none;
   border-bottom: 2px solid #ff4b2b !important; }
 
+.likeButton {
+  background: transparent;
+  color: #808080;
+  border-color: #c8c8c8;
+  outline: none; }
+  .likeButton:hover {
+    background: #c8c8c8;
+    color: #fff; }
+
 .card__container {
   width: 200px;
   max-height: 200px;

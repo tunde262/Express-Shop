@@ -25,12 +25,14 @@ import Footer from '../components/layout/Footer/Footer';
 import Modal from 'react-responsive-modal';
 import { ButtonContainer } from './Button';
 import { BackButton } from './common/BackButton';
+import { setNav1 } from '../actions/navActions';
 import Spinner from './common/Spinner';
 import ButtonSpinner from './common/ButtonSpinner';
 import ProductOverview from './Overview/productOverview/ProductOverview';
 import BrandOverview from './Overview/brandOverview/BrandOverview';
 import TableDetails from './TableDetails/TableDetails';
 import { HorizontalNav } from '../components/common/HorizontalNav';
+import Header from './header/Header';
 
 const Details = ({
     product: {
@@ -56,7 +58,8 @@ const Details = ({
     deleteReview,
     handleDetail,
     getStoresByTag,
-    handleTags
+    handleTags,
+    setNav1
 }) => {
     // Mixpanel
     const [sentMixpanel, setSentMixpanel] = useState(false);
@@ -119,13 +122,14 @@ const Details = ({
     const [storesLoaded, setStoresLoaded] = useState(false);
     // Load Recommended Products by Item Category
     const [productsLoaded, setProductsLoaded] = useState(false);
+    // Load Nav
+    const [navLoaded, setNavLoaded] = useState(false);
 
     const [skip, setSkip] = useState(0);
 
     useEffect(() => {
         handleDetail(match.params.id);
         getProductVariants(match.params.id);
-        
 
         if(modalOpen) {
             setCartLoading(true);
@@ -321,6 +325,32 @@ const Details = ({
             handleMixpanel();
             setSentMixpanel(true);
         }
+    }
+
+    if(!navLoaded && detailProduct) {
+        if(detailProduct.category === 'clothing & fashion') {
+            setNav1('clothing & fashion');
+        } else if (detailProduct.category === 'shoes') {
+            setNav1('shoes');
+        } else if (detailProduct.category === 'household essentials') {
+            setNav1('household essentials');
+        } else if (detailProduct.category === 'personal care') {
+            setNav1('personal care');
+        } else if (detailProduct.category === 'pets') {
+            setNav1('pets');
+        } else if (detailProduct.category === 'school & office supplies') {
+            setNav1('school & office supplies');
+        } else if (detailProduct.category === 'women') {
+            setNav1('women');
+        } else if (detailProduct.category === 'men') {
+            setNav1('men');
+        } else if (detailProduct.category === 'bathroom') {
+            setNav1('bathroom');
+        } else if (detailProduct.category === 'laundry') {
+            setNav1('laundry');
+        }
+        
+        setNavLoaded(true);
     }
 
     if(!storesLoaded && detailProduct) {
@@ -729,25 +759,30 @@ const Details = ({
                                 <div className="detail-status-box-header">
                                     <div><p style={{color:'#333', fontWeight:'bold'}}>{detailProduct.name}</p></div>
                                     <div>
-                                        <span>{detailProduct.likes.length > 0 && <span>{detailProduct.likes.length}</span>}</span>{' '}
-                                        {liked ? <i style={{color:'#ff4b2b', fontSize:'1.4rem', margin:'1rem 1rem 0 0'}} onClick={() => addLike(detailProduct._id)} class="fas fa-heart"></i> : <i onClick={() => addLike(detailProduct._id)} style={{color:'#808080', margin:'1rem 1rem 0 0'}} className="far fa-heart detail-heart"></i>}
+                                        {/* <span>{detailProduct.likes.length > 0 && <span>{detailProduct.likes.length}</span>}</span>{' '}
+                                        {liked ? <i style={{color:'#ff4b2b', fontSize:'1.4rem', margin:'1rem 1rem 0 0'}} onClick={() => addLike(detailProduct._id)} class="fas fa-heart"></i> : <i onClick={() => addLike(detailProduct._id)} style={{color:'#808080', margin:'1rem 1rem 0 0'}} className="far fa-heart detail-heart"></i>} */}
                                     </div>
                                 </div>
-                                <h3 style={{color:'#ff4b2b', marginTop:'-1rem', fontWeight:'bold'}}>{detailProduct.price}</h3>
+                                <h3 style={{color:'#ff4b2b', marginTop:'-1rem', fontWeight:'bold'}}>${detailProduct.price}</h3>
                                 {/* <p><i style={{color:'#808080'}} class="fas fa-truck"></i> Next Delivery Time: <span style={{fontWeight:'bold', color:'#ff4b2b'}}>1pm</span></p> */}
                                 <p><i style={{color:'#808080'}} class="fas fa-truck"></i> Est. Delivery Time: <span style={{fontWeight:'bold', color:'#ff4b2b'}}>2 hr</span></p>
                                 <p style={{color:'#808080', marginTop:'-1rem'}}><i className="fas fa-sign-out-alt" /> Return eligible</p>
                                 <hr style={{background:'#dfe1e5', height:'1px', marginBottom:'0.5rem'}}/>
-                                <div style={{display:'flex', alignItems: 'center', marginTop:'-0.6rem'}}>
-                                    <Link to={"/store/" + detailProduct.store._id}>
-                                        <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${detailProduct.store.img_name}`} alt="img" />
-                                    </Link>
-                                    <div style={{ display: 'flex', flexDirection:'column', marginTop:'0.5rem'}}>
+                                <div style={{display:'flex', justifyContent:'space-between', alignItems: 'center', marginTop:'-0.6rem', padding:'0 1rem'}}>
+                                    <div style={{display:'flex', alignItems: 'center'}}>
                                         <Link to={"/store/" + detailProduct.store._id}>
-                                            {detailProduct.store.name}
+                                            <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${detailProduct.store.img_name}`} alt="img" />
                                         </Link>
-                                        <p style={{color:'#808080'}}>Wholesaler</p>
-                                        {/* <Link to={"/location/" + detailProduct.locationId._id} style={{color:'#808080'}}>Wholesaler</Link> */}
+                                        <div style={{ display: 'flex', flexDirection:'column', marginTop:'0.5rem'}}>
+                                            <Link to={"/store/" + detailProduct.store._id}>
+                                                {detailProduct.store.name}
+                                            </Link>
+                                            <p style={{color:'#808080'}}>Wholesaler</p>
+                                            {/* <Link to={"/location/" + detailProduct.locationId._id} style={{color:'#808080'}}>Wholesaler</Link> */}
+                                        </div>
+                                    </div>
+                                    <div style={{display:'flex', paddingTop:'10px', color:'#808080', alignItems: 'center'}}>
+                                        <p style={{fontWeight:500}}>Subscribe <i style={{marginLeft:'10px'}} class="far fa-bookmark"></i></p>
                                     </div>
                                 </div>
                                 <hr style={{marginTop:'-0.5rem', background:'#dfe1e5', height:'1px'}}/>
@@ -765,13 +800,14 @@ const Details = ({
                                     {materialValue}
                                 </div>
                                 {/* <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}> */}
-                                    {/* <button style={{background:'transparent', color:'#cd00cd', borderColor:'#cd00cd'}}>Make an Offer</button> */}
                                     <button 
                                         onClick={() =>todo(detailProduct._id, detailProduct)}
                                         disabled={cartLoading ? true : false} 
                                     >
                                         {cartLoading ? <ButtonSpinner /> : "Add To Cart"}
                                     </button>
+                                    {liked ? <button onClick={() => addLike(detailProduct._id)} style={{background:'#ff4b2b', color:'#fff', borderColor:'#ff4b2b'}}>Added To Favorites <i style={{marginLeft:'10px', color:'#fff', outline:'none', fontSize:'13px'}} className="fas fa-heart"></i> </button> : <button onClick={() => addLike(detailProduct._id)} className="likeButton">Favorite <i style={{marginLeft:'10px', color:'#ff4b2b', fontSize:'13px'}} className="fas fa-heart"></i> </button> }
+                                    {detailProduct.likes.length > 2 && <div style={{width:'100%', textAlign:'center'}}><span style={{color:'#808080',}}> <span>{detailProduct.likes.length}</span> Others favorited</span></div>}
                                 {/* </div> */}
                                 {/* <TableDetails page="store" setModal={setModal} description={detailProduct.description} /> */}
 
@@ -901,6 +937,7 @@ const Details = ({
 
         return (
             <Fragment>
+                <Header />
                 {detailItem}
             </Fragment>
         )
@@ -920,6 +957,7 @@ Details.propTypes = {
     getProductVariants: PropTypes.func.isRequired,
     getStoresByTag: PropTypes.func.isRequired,
     handleTags: PropTypes.func.isRequired,
+    setNav1: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -929,4 +967,4 @@ const mapStateToProps = state => ({
     store: state.store,
 });
 
-export default connect(mapStateToProps, { getProductVariants, addToCart, addLike, getCart, openModal, addTotals, handleDetail, addReview, getStoresByTag, handleTags })(Details);
+export default connect(mapStateToProps, { getProductVariants, addToCart, addLike, getCart, openModal, addTotals, handleDetail, addReview, getStoresByTag, handleTags, setNav1 })(Details);
