@@ -63,7 +63,7 @@ const StorePage = ({getStoreById, store, product: { products, sortedProducts, lo
                                 </div> */}
                                 <div style={{display: 'flex', flexDirection:'column', textAlign: 'center', alignItems:'center', justifyContent:'center', boxSizing:'border-box'}}>
                                     {store.store.img_name && <img style={{height: '120px', width:'120px', margin: '1rem', borderRadius: '50%'}} src={`/api/stores/image/${store.store.img_name}`} alt="img" />}
-                                    <div style={{display:'flex'}}>
+                                    {/* <div style={{display:'flex'}}>
                                         <h3 style={{color: "black"}}>{store.store.name}</h3>
                                         {store.store.social && (
                                             <div  class="social" onClick={() => setToggleSocial(!toggleSocial)}>
@@ -79,7 +79,7 @@ const StorePage = ({getStoreById, store, product: { products, sortedProducts, lo
                                                 </div>
                                             </div>
                                         )}
-                                    </div>
+                                    </div> */}
                                     <div style={{maxWidth:'600px'}}>
                                         <h1 id="sub-heading">{store.store.description}</h1>
                                     </div>

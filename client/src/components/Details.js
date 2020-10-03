@@ -781,9 +781,9 @@ const Details = ({
                                             {/* <Link to={"/location/" + detailProduct.locationId._id} style={{color:'#808080'}}>Wholesaler</Link> */}
                                         </div>
                                     </div>
-                                    <div style={{display:'flex', paddingTop:'10px', color:'#808080', alignItems: 'center'}}>
+                                    {/* <div style={{display:'flex', paddingTop:'10px', color:'#808080', alignItems: 'center'}}>
                                         <p style={{fontWeight:500}}>Subscribe <i style={{marginLeft:'10px'}} class="far fa-bookmark"></i></p>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <hr style={{marginTop:'-0.5rem', background:'#dfe1e5', height:'1px'}}/>
                             </div>
