@@ -329,7 +329,7 @@ const Details = ({
 
     if(!navLoaded && detailProduct) {
         if(detailProduct.category === 'clothing & fashion') {
-            setNav1('clothing & fashion');
+            setNav1('clothing and fashion');
         } else if (detailProduct.category === 'shoes') {
             setNav1('shoes');
         } else if (detailProduct.category === 'household essentials') {
