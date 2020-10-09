@@ -109,7 +109,7 @@ const ProductCard = ({ auth: { user }, addLike, liked, product, handleDetail, ad
                         </div>
                         <div className="price">${price}</div>
                         <div className="sellers">
-                            <Link to={"/store/" + store._id}>{store.name}</Link>
+                            <a href={"https://www.cardboardexpress.com/store/" + store._id}>{store.name}</a>
                         </div>
                         <div className="actions">
                             {inCart ? <i style={{color:'#ff4b2b'}} class="fas fa-check-square"></i> : <i style={{color:'#28c101'}} class="fas fa-check-square"></i>}
