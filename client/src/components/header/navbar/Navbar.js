@@ -1854,7 +1854,7 @@ const Navbar = ({
 
     if(navList1 !== null) {
         navList = navList1.map((nav_item, index) => (
-            <Link to={`/collection?filter=${nav_item.tag_value}`}>
+            <a href={`https://www.cardboardexpress.com/collection?filter=${nav_item.tag_value}`}>
                 <NavItem 
                     key={index} 
                     background={nav.nav1 === nav_item.tag_value ? nav_item.background_color : "#fff"}
@@ -1874,13 +1874,13 @@ const Navbar = ({
                     {/* <i className={nav_item.icon}></i> */}
                     {' '}{nav_item.text_value}
                 </NavItem>
-            </Link>
+            </a>
         ));
     };
 
     if(navList2 !== null) {
         secondNavList = navList2.map((nav_item, index) => (
-            <Link to={`/collection?filter=${nav_item.tag_value}`}>
+            <a href={`https://www.cardboardexpress.com/collection?filter=${nav_item.tag_value}`}>
                 <NavItem 
                     key={index} 
                     background={nav.nav2 === nav_item.tag_value ? nav_item.background_color : "#fff"}
@@ -1899,13 +1899,13 @@ const Navbar = ({
                     )}
                     {' '}{nav_item.text_value}
                 </NavItem>
-            </Link>
+            </a>
         ));
     };
 
     if(navList3 !== null) {
         thirdNavList = navList3.map((nav_item, index) => (
-            <Link to={`/collection?filter=${nav_item.tag_value}`}>
+            <a href={`https://www.cardboardexpress.com/collection?filter=${nav_item.tag_value}`}>
                 <NavItem 
                     key={index} 
                     background={nav.nav3 === nav_item.tag_value ? nav_item.background_color : "#fff"}
@@ -1925,7 +1925,7 @@ const Navbar = ({
                     <i className={nav_item.icon}></i>
                     {' '}{nav_item.text_value}
                 </NavItem>
-            </Link>
+            </a>
         ));
     };
     
