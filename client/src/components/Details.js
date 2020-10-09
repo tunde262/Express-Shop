@@ -795,7 +795,7 @@ const Details = ({
                                             <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${detailProduct.store.img_name}`} alt="img" />
                                         </Link>
                                         <div style={{ display: 'flex', flexDirection:'column', marginTop:'0.5rem'}}>
-                                            <a href={"https://www.cardboardexpress.com//store/" + detailProduct.store._id}>
+                                            <a href={"https://www.cardboardexpress.com/store/" + detailProduct.store._id}>
                                                 {detailProduct.store.name}
                                             </a>
                                             <p style={{color:'#808080'}}>Wholesaler</p>
