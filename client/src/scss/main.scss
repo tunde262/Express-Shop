@@ -1837,6 +1837,24 @@ header {
     font-size: .95rem;
 }
 
+.variant_option {
+    height: 50px; 
+    padding: 0 1rem; 
+    border: 1px solid #dfe1e5; 
+    border-radius: 5px; 
+    margin: 5px; 
+    display: flex; 
+    align-items: center;
+    color: #808080;
+    font-weight: bold;
+    font-size: 12px;
+
+    &:hover {
+        border: 2px solid #ffbf00; 
+        color: #333;
+    }
+}
+
 /* Variant Modal*/
 .modal-content-wrapper {
     width: 100%;

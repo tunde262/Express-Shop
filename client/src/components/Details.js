@@ -84,22 +84,31 @@ const Details = ({
     const [step, setStep] = useState({step: 1});
     const [colorValue, setColorValue] = useState();
     const [colorState, setColorState] = useState([]);
+    const [selectedColor, setSelectedColor] = useState();
     const [sizeValue, setSizeValue] = useState();
     const [sizeState, setSizeState] = useState([]);
+    const [selectedSize, setSelectedSize] = useState();
     const [weightValue, setWeightValue] = useState();
     const [weightState, setWeightState] = useState([]);
+    const [selectedWeight, setSelectedWeight] = useState();
     const [typeValue, setTypeValue] = useState();
     const [typeState, setTypeState] = useState([]);
+    const [selectedType, setSelectedType] = useState();
     const [bundleValue, setBundleValue] = useState();
     const [bundleState, setBundleState] = useState([]);
+    const [selectedBundle, setSelectedBundle] = useState();
     const [scentValue, setScentValue] = useState();
     const [scentState, setScentState] = useState([]);
+    const [selectedScent, setSelectedScent] = useState();
     const [fitValue, setFitValue] = useState();
     const [fitState, setFitState] = useState([]);
+    const [selectedFit, setSelectedFit] = useState();
     const [flavorValue, setFlavorValue] = useState();
     const [flavorState, setFlavorState] = useState([]);
+    const [selectedFlavor, setSelectedFlavor] = useState();
     const [materialValue, setMaterialValue] = useState();
     const [materialState, setMaterialState] = useState([]);
+    const [selectedMaterial, setSelectedMaterial] = useState();
 
 
     const colorArray = [];
@@ -219,7 +228,6 @@ const Details = ({
                 }
             }
         }
-
     }
 
     const changeImage = (index) => {
@@ -380,71 +388,74 @@ const Details = ({
         // console.log(varKeyList);
         // setVarKeys([...varKeyList]);
 
-        variant.sortedVariants.map(sortedVariant => {
-            if(sortedVariant.color) {
-                colorArray.includes(sortedVariant.color) ? 
-                console.log('COLOR ALREADY THERE'): 
-                colorArray.push(sortedVariant.color);
-                console.log('COLOR ARRAY BELOW')
-                console.log(colorArray);
-            }
-            if(sortedVariant.size) {
-                sizeArray.includes(sortedVariant.size) ? 
-                console.log('SIZE ALREADY THERE'): 
-                sizeArray.push(sortedVariant.size);
-                console.log('SIZE ARRAY BELOW')
-                console.log(sizeArray);
-            }
-            if(sortedVariant.weight) {
-                weightArray.includes(sortedVariant.weight) ? 
-                console.log('WEIGHT ALREADY THERE'): 
-                weightArray.push(sortedVariant.weight);
-                console.log('WEIGHT ARRAY BELOW')
-                console.log(weightArray);
-            }
-            if(sortedVariant.type) {
-                typeArray.includes(sortedVariant.type) ? 
-                console.log('TYPE ALREADY THERE'): 
-                typeArray.push(sortedVariant.type);
-                console.log('TYPE ARRAY BELOW');
-                console.log(typeArray);
-            }
-            if(sortedVariant.bundle) {
-                bundleArray.includes(sortedVariant.bundle) ? 
-                console.log('BUNDLE ALREADY THERE'): 
-                bundleArray.push(sortedVariant.bundle);
-                console.log('BUNDLE ARRAY BELOW')
-                console.log(bundleArray);
-            }
-            if(sortedVariant.scent) {
-                scentArray.includes(sortedVariant.scent) ? 
-                console.log('SCENT ALREADY THERE'): 
-                scentArray.push(sortedVariant.scent);
-                console.log('SCENT ARRAY BELOW')
-                console.log(scentArray);
-            }
-            if(sortedVariant.fit) {
-                fitArray.includes(sortedVariant.fit) ? 
-                console.log('FIT ALREADY THERE'): 
-                fitArray.push(sortedVariant.fit);
-                console.log('FIT ARRAY BELOW')
-                console.log(fitArray);
-            }
-            if(sortedVariant.flavor) {
-                flavorArray.includes(sortedVariant.flavor) ? 
-                console.log('FLAVOR ALREADY THERE'): 
-                flavorArray.push(sortedVariant.flavor);
-                console.log('FLAVOR ARRAY BELOW')
-                console.log(flavorArray);
-            }
-            if(sortedVariant.material) {
-                materialArray.includes(sortedVariant.material) ? 
-                console.log('MATERIAL ALREADY THERE'): 
-                materialArray.push(sortedVariant.material);
-                console.log('MATERIAL ARRAY BELOW')
-                console.log(materialArray);
-            }
-        });
+        if(variant.sortedVariants.length > 0) {
+            variant.sortedVariants.map(sortedVariant => {
+                if(sortedVariant.color) {
+                    colorArray.includes(sortedVariant.color) ? 
+                    console.log('COLOR ALREADY THERE'): 
+                    colorArray.push(sortedVariant.color);
+                    console.log('COLOR ARRAY BELOW')
+                    console.log(colorArray);
+                }
+                
+                if(sortedVariant.size) {
+                    sizeArray.includes(sortedVariant.size) ? 
+                    console.log('SIZE ALREADY THERE'): 
+                    sizeArray.push(sortedVariant.size);
+                    console.log('SIZE ARRAY BELOW')
+                    console.log(sizeArray);
+                }
+                if(sortedVariant.weight) {
+                    weightArray.includes(sortedVariant.weight) ? 
+                    console.log('WEIGHT ALREADY THERE'): 
+                    weightArray.push(sortedVariant.weight);
+                    console.log('WEIGHT ARRAY BELOW')
+                    console.log(weightArray);
+                }
+                if(sortedVariant.type) {
+                    typeArray.includes(sortedVariant.type) ? 
+                    console.log('TYPE ALREADY THERE'): 
+                    typeArray.push(sortedVariant.type);
+                    console.log('TYPE ARRAY BELOW');
+                    console.log(typeArray);
+                }
+                if(sortedVariant.bundle) {
+                    bundleArray.includes(sortedVariant.bundle) ? 
+                    console.log('BUNDLE ALREADY THERE'): 
+                    bundleArray.push(sortedVariant.bundle);
+                    console.log('BUNDLE ARRAY BELOW')
+                    console.log(bundleArray);
+                }
+                if(sortedVariant.scent) {
+                    scentArray.includes(sortedVariant.scent) ? 
+                    console.log('SCENT ALREADY THERE'): 
+                    scentArray.push(sortedVariant.scent);
+                    console.log('SCENT ARRAY BELOW')
+                    console.log(scentArray);
+                }
+                if(sortedVariant.fit) {
+                    fitArray.includes(sortedVariant.fit) ? 
+                    console.log('FIT ALREADY THERE'): 
+                    fitArray.push(sortedVariant.fit);
+                    console.log('FIT ARRAY BELOW')
+                    console.log(fitArray);
+                }
+                if(sortedVariant.flavor) {
+                    flavorArray.includes(sortedVariant.flavor) ? 
+                    console.log('FLAVOR ALREADY THERE'): 
+                    flavorArray.push(sortedVariant.flavor);
+                    console.log('FLAVOR ARRAY BELOW')
+                    console.log(flavorArray);
+                }
+                if(sortedVariant.material) {
+                    materialArray.includes(sortedVariant.material) ? 
+                    console.log('MATERIAL ALREADY THERE'): 
+                    materialArray.push(sortedVariant.material);
+                    console.log('MATERIAL ARRAY BELOW')
+                    console.log(materialArray);
+                }
+            });
+        }
         console.log('SHOULD HAVE ARRAYS');
 
         handleOptions();
@@ -468,14 +479,16 @@ const Details = ({
         if(colorArray.length > 0) {
             console.log('COLOR PASSED');
             let choices;
-            choices = colorArray.map(option => <option key={option} value={`${option}`}>{option}</option>);
+            // choices = colorArray.map(option => <option key={option} value={`${option}`}>{option}</option>);
+            choices = colorArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedColor(option)}>{option}</div>);
             setColorValue((
-                <Fragment>
-                    <label>Color</label>
-                    <select name="color">
+                <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
+                    <p style={{fontWeight:'bold', color:'#808080', fontSize:'12px'}}>Color:</p>
+                    <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
+                    <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
-                    </select>
-                </Fragment>
+                    </div>
+                </div>
             ));
         }
 
@@ -487,14 +500,15 @@ const Details = ({
         if(sizeArray.length > 0) {
             console.log('SIZE PASSED');
             let choices;
-            choices = sizeArray.map(option => <option key={option} value={`${option}`}>{option}</option>);
+            choices = sizeArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedSize(option)}>{option}</div>);
             setSizeValue((
-                <Fragment>
-                    <label>Size</label>
-                    <select name="size">
+                <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
+                    <p style={{fontWeight:'bold', color:'#808080', fontSize:'12px'}}>Size:</p>
+                    <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
+                    <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
-                    </select>
-                </Fragment>
+                    </div>
+                </div>
             ))
         }
 
@@ -506,14 +520,15 @@ const Details = ({
         if(weightArray.length > 0) {
             console.log('WEIGHT PASSED');
             let choices;
-            choices = weightArray.map(option => <option key={option} value={`${option}`}>{option}</option>);
+            choices = weightArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedWeight(option)}>{option}</div>);
             setWeightValue((
-                <Fragment>
-                    <label>Weight</label>
-                    <select name="weight">
+                <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
+                    <p style={{fontWeight:'bold', color:'#808080', fontSize:'12px'}}>Weight:</p>
+                    <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
+                    <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
-                    </select>
-                </Fragment>
+                    </div>
+                </div>
             ))
         }
 
@@ -525,14 +540,15 @@ const Details = ({
         if(typeArray.length > 0) {
             console.log('TYPE PASSED');
             let choices;
-            choices = typeArray.map(option => <option key={option} value={`${option}`}>{option}</option>);
+            choices = typeArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedType(option)}>{option}</div>);
             setTypeValue((
-                <Fragment>
-                    <label>Type</label>
-                    <select name="type">
+                <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
+                    <p style={{fontWeight:'bold', color:'#808080', fontSize:'12px'}}>Type:</p>
+                    <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
+                    <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
-                    </select>
-                </Fragment>
+                    </div>
+                </div>
             ))
         }
 
@@ -544,14 +560,15 @@ const Details = ({
         if(bundleArray.length > 0) {
             console.log('BUNDLE PASSED');
             let choices;
-            choices = bundleArray.map(option => <option key={option} value={`${option}`}>{option}</option>);
+            choices = bundleArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedBundle(option)}>{option}</div>);
             setBundleValue((
-                <Fragment>
-                    <label>Bundle</label>
-                    <select name="material">
+                <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
+                    <p style={{fontWeight:'bold', color:'#808080', fontSize:'12px'}}>Bundle:</p>
+                    <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
+                    <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
-                    </select>
-                </Fragment>
+                    </div>
+                </div>
             ));
         }
 
@@ -563,14 +580,15 @@ const Details = ({
         if(scentArray.length > 0) {
             console.log('SCENT PASSED');
             let choices;
-            choices = scentArray.map(option => <option key={option} value={`${option}`}>{option}</option>);
+            choices = scentArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedScent(option)}>{option}</div>);
             setScentValue((
-                <Fragment>
-                    <label>Scent</label>
-                    <select name="scent">
+                <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
+                    <p style={{fontWeight:'bold', color:'#808080', fontSize:'12px'}}>Scent:</p>
+                    <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
+                    <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
-                    </select>
-                </Fragment>
+                    </div>
+                </div>
             ))
         }
 
@@ -582,14 +600,15 @@ const Details = ({
         if(fitArray.length > 0) {
             console.log('FIT PASSED');
             let choices;
-            choices = fitArray.map(option => <option key={option} value={`${option}`}>{option}</option>);
+            choices = fitArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedFit(option)}>{option}</div>);
             setFitValue((
-                <Fragment>
-                    <label>Fit</label>
-                    <select name="fit">
+                <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
+                    <p style={{fontWeight:'bold', color:'#808080', fontSize:'12px'}}>Fit:</p>
+                    <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
+                    <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
-                    </select>
-                </Fragment>
+                    </div>
+                </div>
             ))
         }
 
@@ -601,14 +620,15 @@ const Details = ({
         if(flavorArray.length > 0) {
             console.log('FLAVOR PASSED');
             let choices;
-            choices = flavorArray.map(option => <option key={option} value={`${option}`}>{option}</option>);
+            choices = flavorArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedFlavor(option)}>{option}</div>);
             setFlavorValue((
-                <Fragment>
-                    <label>Flavor</label>
-                    <select name="flavor">
+                <div style={{display:'flex', flexDirection:'column', width:'100%'}}>
+                    <p style={{fontWeight:'bold', color:'#808080', fontSize:'12px'}}>Flavor:</p>
+                    <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
+                    <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
-                    </select>
-                </Fragment>
+                    </div>
+                </div>
             ))
         }
 
@@ -620,14 +640,15 @@ const Details = ({
         if(materialArray.length > 0) {
             console.log('MATERIAL PASSED');
             let choices;
-            choices = materialArray.map(option => <option key={option} value={`${option}`}>{option}</option>);
+            choices = materialArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedMaterial(option)}>{option}</div>);
             setMaterialValue((
-                <Fragment>
-                    <label>Material</label>
-                    <select name="material">
+                <div style={{display:'flex', flexDirection:'column', width:'100%'}}>
+                    <p style={{fontWeight:'bold', color:'#808080', fontSize:'12px'}}>Material:</p>
+                    <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
+                    <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
-                    </select>
-                </Fragment>
+                    </div>
+                </div>
             ))
         }
     }
@@ -757,7 +778,7 @@ const Details = ({
                         <div class="detail-info">
                             <div class="detail-status-box">
                                 <div className="detail-status-box-header">
-                                    <div><p style={{color:'#333', fontWeight:'bold'}}>{detailProduct.name}</p></div>
+                            <div><p style={{color:'#333', fontWeight:'bold'}}>{detailProduct.name}:{selectedColor} {selectedSize} {selectedType} {selectedFit} {selectedWeight} {selectedMaterial} {selectedBundle} {selectedScent} {selectedFlavor}</p></div>
                                     <div>
                                         {/* <span>{detailProduct.likes.length > 0 && <span>{detailProduct.likes.length}</span>}</span>{' '}
                                         {liked ? <i style={{color:'#ff4b2b', fontSize:'1.4rem', margin:'1rem 1rem 0 0'}} onClick={() => addLike(detailProduct._id)} class="fas fa-heart"></i> : <i onClick={() => addLike(detailProduct._id)} style={{color:'#808080', margin:'1rem 1rem 0 0'}} className="far fa-heart detail-heart"></i>} */}
@@ -803,6 +824,7 @@ const Details = ({
                                     <button 
                                         onClick={() =>todo(detailProduct._id, detailProduct)}
                                         disabled={cartLoading ? true : false} 
+                                        style={{marginTop:'50px'}}
                                     >
                                         {cartLoading ? <ButtonSpinner /> : "Add To Cart"}
                                     </button>
