@@ -197,7 +197,7 @@ const Banner = ({imgLarge, imgSmall, admin, store, product, addBannerImg}) => {
 }
 
 const BannerContainer = styled.div`
-    width: 80%;
+    width: 100%;
     height: 300px;
     overflow: hidden;
     display: flex;
@@ -210,7 +210,7 @@ const BannerContainer = styled.div`
     }
 
     @media (max-width: 768px){
-        width: 98%;
+        width: 100%;
         height: 200px;
 
         img {

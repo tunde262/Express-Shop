@@ -1722,6 +1722,12 @@ header {
     text-decoration: none;
     border-bottom: 2px solid #ff4b2b !important; }
 
+.store-img {
+  height: 180px;
+  width: 180px;
+  margin: -3rem 1rem 0 3rem;
+  border-radius: 50%; }
+
 .store-actions-container {
   display: flex;
   justify-content: center;
@@ -2231,6 +2237,10 @@ footer .footer-bottom {
     padding: 40px 1rem;
     align-items: center;
     text-align: center; }
+  .store-img {
+    height: 100px;
+    width: 100px;
+    margin: -2rem 1rem 0 1rem; }
   .store-actions-container .store-actions {
     width: 98%;
     padding: 0 2rem; }

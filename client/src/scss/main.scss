@@ -2098,6 +2098,13 @@ header {
     }
 }
 
+.store-img {
+    height: 180px; 
+    width: 180px; 
+    margin: -3rem 1rem 0 3rem; 
+    border-radius: 50%;
+}
+
 .store-actions-container {
     display: flex;
     justify-content: center;

@@ -10,6 +10,8 @@ import mixpanel from 'mixpanel-browser';
 import Footer from '../components/layout/Footer/Footer';
 import Spinner from '../components/common/Spinner';
 import StoreMain from '../components/page_components/store/StoreMain';
+import DefaultBanner from '../utils/imgs/placeholderimg.jpg';
+import Banner from '../components/common/Banner';
 
 
 const StorePage = ({getStoreById, store, product: { products, sortedProducts, loading }, history, match}) => {
@@ -44,7 +46,8 @@ const StorePage = ({getStoreById, store, product: { products, sortedProducts, lo
             {store.loading && store.store === null ? <Spinner /> : (
                 <Fragment>
                     {store.store !== null ? (
-                        <Fragment>   
+                        <Fragment>  
+                            {store !== null && <Banner imgLarge={DefaultBanner} imgSmall={DefaultBanner} />} 
                             <div class="store-header container-fluid">
                                 {/* <div id="breadcrumb">
                                     <nav className="breadcrumb">
@@ -61,8 +64,9 @@ const StorePage = ({getStoreById, store, product: { products, sortedProducts, lo
                                         </ol>
                                     </nav>
                                 </div> */}
-                                <div style={{display: 'flex', flexDirection:'column', textAlign: 'center', alignItems:'center', justifyContent:'center', boxSizing:'border-box'}}>
-                                    {store.store.img_name && <img style={{height: '120px', width:'120px', margin: '1rem', borderRadius: '50%'}} src={`/api/stores/image/${store.store.img_name}`} alt="img" />}
+                                
+                                <div style={{display: 'flex', flexDirection:'column', textAlign: 'center', justifyContent:'center', boxSizing:'border-box'}}>
+                                    {store.store.img_name && <img className="store-img" src={`/api/stores/image/${store.store.img_name}`} alt="img" />}
                                     {/* <div style={{display:'flex'}}>
                                         <h3 style={{color: "black"}}>{store.store.name}</h3>
                                         {store.store.social && (
