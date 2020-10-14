@@ -449,8 +449,7 @@ input {
 }
 
 .social-container {
-    margin: 20px 0;
-    display: flex;
+    display: flex !important; 
 
     a {
         border: 1px solid #ddd;
@@ -461,6 +460,7 @@ input {
         margin: 0 5px;
         height: 40px;
         width: 40px;
+        text-decoration: none;
     }
 }
 
@@ -470,7 +470,6 @@ input {
 
 .desktop {
     display: flex;
-    flex-direction: column;
 }
 
 .table th,
@@ -1086,11 +1085,15 @@ header {
 }
 
 .social{
-    background-color: #F00;
     border-radius: 100%;
     width: 70px;
     height: 70px;
     position: relative;
+
+    &:hover {
+        border: 2px solid #ff4b2b;
+        color: #ff4b2b;
+    }
 }
 
 .social-toggle{
@@ -1988,6 +1991,92 @@ header {
     }
 }
 
+.nav-underline {
+    width: 100%;
+    margin: 1rem 0 -6rem 0;
+    padding-left: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center; 
+
+    &.store div li p{
+        font-size: 1rem;
+    }
+    
+    & > div {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      height: 56px;
+
+      li {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+        border-radius: 56px;
+        height: 56px;
+        padding: 0 1rem;
+        position: absolute;
+
+
+          i{
+            margin: 0 10px 5px 0;
+            color: #808080;
+          }
+    
+          p {
+              margin: 0;
+              font-weight: 600;
+              color: #333;
+          }
+      }
+    }
+
+    & > li > a {
+      position: relative;
+      display: block;
+      padding: 10px 15px 5px 15px;
+      text-decoration: none;
+    }
+
+    & > div li:hover, & > div li:focus {
+        background: #e8e8e8;
+        cursor: pointer;
+
+        p,i {
+            color: #333;
+        }
+    } 
+    
+    & > div.active {
+      border-bottom: 3px solid #333;
+
+      li {
+          background-color: transparent;
+
+          p,i {
+              color: #333;
+          }
+      }
+    }
+
+    &.secondary {
+      float: right;
+      display: block; 
+    }
+
+      &.secondary > li > a {
+        border-bottom: none; 
+    }
+
+    &.secondary > li:hover, &.secondary > li:focus, &.secondary > li.active {
+        text-decoration: none;
+        border-bottom: 2px solid #ff4b2b !important; 
+    }
+}
+
 .modal-underline {
     width: 100%;
     margin: 1rem 0;
@@ -2095,6 +2184,29 @@ header {
     &.secondary > li:hover, &.secondary > li:focus, &.secondary > li.active {
         text-decoration: none;
         border-bottom: 2px solid #ff4b2b !important; 
+    }
+}
+
+.store-details {
+    width: 100%; 
+    margin: 1rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas: 
+        'titles socials'
+        'description socials'
+    ;
+
+    #store-titles {
+        grid-area: titles;
+    }
+
+    #store-description {
+        grid-area: description;
+    }
+
+    #store-socials {
+        grid-area: socials;
     }
 }
 

@@ -270,6 +270,15 @@
         text-align: center;
     }
 
+    .store-details {
+        margin: 10px 0 1rem 0;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .store-title {
+        font-size: 24px;
+    }
+
     .store-img {
         height: 100px; 
         width: 100px; 

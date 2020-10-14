@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -8,18 +8,26 @@ import { addLike, handleDetail, addToCart, openModal, closeModal, addTotals } fr
 import ReactGA from 'react-ga';
 import mixpanel from 'mixpanel-browser';
 
+import ButtonSpinner from '../../common/ButtonSpinner';
+
 const ProductCard = ({ auth: { user }, addLike, liked, product, handleDetail, addToCart, openModal, closeModal, addTotals}) => {
     // componentDidMount() {
     //     console.log(this.props.product);
     // }
 
+    // Button loader
+    const [cartLoading, setCartLoading] = useState(true);
+
+    useEffect(() => {
+        if(product.modalOpen) {
+            setCartLoading(true);
+        } else {
+            setCartLoading(false);
+        }
+    }, [product.modalOpen]);
+
     const onHandleDetailClick = (id) => {
         handleDetail(id);
-    }
-
-    const onAddToCart = (id) => {
-        addToCart(id);
-        // addTotals();
     }
 
     const setModalOpen = (id) => {
@@ -59,11 +67,20 @@ const ProductCard = ({ auth: { user }, addLike, liked, product, handleDetail, ad
         }
     }
 
-    const todo = (id, title) => {
+    const onAddToCart = (id) => {
+        addToCart(id);
+        addTotals();
+    }
+
+    const handleModalOpen = (id) => {
+        openModal(id);
+    }
+
+    const todo = (id, item) => {
         onAddToCart(id);
-        // onHandleDetailClick(id);
         setModalOpen(id);
-        clicked(title);
+        clicked(item);
+        setCartLoading(true);
     }
 
     const clicked = (title) => {
@@ -85,9 +102,9 @@ const ProductCard = ({ auth: { user }, addLike, liked, product, handleDetail, ad
                         className="imgbox" 
                         onClick={() => onHandleDetailClick(_id)}
                     >
-                        <Link to={"/details/" + _id}>
+                        <a href={"https://www.cardboardexpress.com/details/" + _id}>
                             {product.img_gallery[0] &&<img src={`/api/products/image/${sorted_img_gallery[0].img_name}`} alt="product" />}
-                        </Link>
+                        </a>
                         {/* <button 
                             className="cart-btn" 
                             disabled={inCart ? true : false} 
@@ -105,18 +122,71 @@ const ProductCard = ({ auth: { user }, addLike, liked, product, handleDetail, ad
                     </div>
                     <div className="specifice">
                         <div className="titles">
-                            <h2><Link to={"/details/" + _id}>{name}</Link></h2>
+                            <h2><a href={"https://www.cardboardexpress.com/details/" + _id}>{name}</a></h2>
                         </div>
                         <div className="price">${price}</div>
                         <div className="sellers">
                             <a href={"https://www.cardboardexpress.com/store/" + store._id}>{store.name}</a>
                         </div>
                         <div className="actions">
-                            {inCart ? <i style={{color:'#ff4b2b'}} class="fas fa-check-square"></i> : <i style={{color:'#28c101'}} class="fas fa-check-square"></i>}
-                            <div>
+                            <button 
+                                onClick={() =>todo(_id, name)}
+                                disabled={cartLoading ? true : false} 
+                            >
+                                {cartLoading ? <ButtonSpinner /> : "Add To Cart"}
+                            </button>
+                            {liked ? (
+                                <button 
+                                    onClick={() => addLike(_id)} 
+                                    style={{background:'#ff4b2b', 
+                                    color:'#fff', 
+                                    borderColor:'#ff4b2b'}}
+                                >
+                                    Added To Favorites 
+                                    <i 
+                                        style={{
+                                            marginLeft:'10px', 
+                                            color:'#fff', 
+                                            outline:'none', 
+                                            fontSize:'13px'}} 
+                                            className="fas fa-heart"
+                                    ></i> 
+                                </button> ): (
+                                <button 
+                                    onClick={() => handleLike(product)} 
+                                    className="likeButton"
+                                >
+                                    Favorite 
+                                    <i 
+                                        style={{
+                                            marginLeft:'10px', 
+                                            color:'#ff4b2b', 
+                                            fontSize:'13px'
+                                        }} 
+                                        className="fas fa-heart"
+                                    ></i> 
+                                </button> 
+                            )}
+                            {likes.length > 2 && (
+                                <div style={{width:'100%', textAlign:'center'}}>
+                                    <span style={{color:'#808080',}}> 
+                                        <span>{likes.length} </span> 
+                                        <i 
+                                            style={{
+                                                marginLeft:'5px', 
+                                                color:'#ff4b2b', 
+                                                fontSize:'13px'
+                                            }} 
+                                            className="fas fa-heart"
+                                        ></i>
+                                    </span>
+                                </div>
+                            )}
+                            {/* {inCart ? <i style={{color:'#ff4b2b'}} class="fas fa-check-square"></i> : <i style={{color:'#28c101'}} class="fas fa-check-square"></i>} */}
+                            {/* <div>
                                 <span>{likes.length > 0 && <span>{likes.length}</span>}</span>{' '}
                                 {liked ? <i style={{color:'#ff4b2b'}} onClick={() => handleLike(product)} class="fas fa-heart"></i> : <i onClick={() => handleLike(product)} className="far fa-heart detail-heart"></i>}
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
@@ -197,7 +267,7 @@ const ProductWrapper = styled.div`
     }
     .specifice .actions {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
         width: 100%;
         padding: 10px 0 0 10px;
         align-items: center;
@@ -291,19 +361,7 @@ const ProductWrapper = styled.div`
         background: #f0f;
     }
     button {
-        display: block;
-        padding: 5px;
-        color: #fff;
-        margin: 10px 0 0;
-        background: #45b90e;
-        text-align: center;
-        text-decoration: none;
-        border-radius: 5px;
-        transition: .02s;
-        cursor: pointer;
-    }
-    button:hover {
-        background: #5acef4;
+        width: 100%;
     }
 
     @media screen and (max-width: 1000px){

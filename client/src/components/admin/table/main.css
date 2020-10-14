@@ -1188,48 +1188,7 @@ header {
         margin-top: 0; }
   .product-admin-secondary .product-description-box {
     background: #fff; }
-    .nav-underline {
-      margin-bottom: 0;
-      padding-left: 0;
-      list-style: none;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      text-align: center;
-      color: #808080;
-      width: 100%; }
-      .nav-underline > li {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-end;
-        /* border-bottom: 2px solid gainsboro;  */
-      }
-        .nav-underline > li i{
-          color: #808080;
-        }
-  
-        .nav-underline > li p {
-            margin: 0;
-            color: #808080;
-        }
-      .nav-underline > li > a {
-        position: relative;
-        display: block;
-        padding: 10px 15px 5px 15px;
-        text-decoration: none;
-        border-bottom: 2px solid gainsboro; }
-      .nav-underline > li:hover, .nav-underline > li:focus, .nav-underline > li.active {
-        text-decoration: none;
-        border-bottom: 2px solid #ff4b2b;
-        color: #333; }
-      .nav-underline.secondary {
-        float: right;
-        display: block; }
-        .nav-underline.secondary > li > a {
-          border-bottom: none; }
-        .nav-underline.secondary > li:hover, .nav-underline.secondary > li:focus, .nav-underline.secondary > li.active {
-          text-decoration: none;
-          border-bottom: 2px solid #ff4b2b !important; }
+
 @media screen and (max-width: 768px) {
   /* Product Page*/
   .product-admin-main {
