@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const NavItem = styled.button`
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 600;
     background: ${props => props.background};
     color: ${props => props.color};
     border: 1px solid ${props => props.border};

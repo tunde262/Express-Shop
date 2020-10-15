@@ -227,6 +227,9 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
             <li className="nav-offset">
                 <a href="https://business.cardboardexpress.com" target="_blank" style={{fontSize:'1rem'}} className="cta" to="/business">Business</a>
             </li>
+            <li className="nav-offset">
+                <a href="https://www.cardboardexpress.com/login" target="_blank" style={{fontSize:'1rem'}} className="cta">Login</a>
+            </li>
             {/* <li className="nav-offset">
                 <Link style={{fontSize:'1rem'}} className="cta" to="/blog">Blog</Link>
             </li> */}
@@ -244,9 +247,9 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
     const authMobileLinks = (
         <Fragment>
             <li className={navHighlight === "home" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('home')}>
-                <Link to="/home" className={navHighlight === "home" && "active"}>
+                <a href="https://www.cardboardexpress.com/home" className={navHighlight === "home" && "active"}>
                     <i class="fas fa-home"></i>
-                </Link>
+                </a>
             </li>
             {/* <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
                 <Link to="/explore">
@@ -300,7 +303,7 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
             <div className="desktop">
                 <div className="nav">
                     <div className="branding">
-                        <Link to="/"><img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" /></Link>
+                        <a href="https://www.cardboardexpress.com"><img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" /></a>
 
                         {/* <div className="social-container">
                             <a href="https://instagram.com/cardboardexpress" target="_blank" className="social"><i className="fab fa-instagram"></i></a>
@@ -310,10 +313,10 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                     </div>
 
                     <li className={navHighlight === "home" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('home')}>
-                        <Link to="/home" className={navHighlight === "home" && "active"}>
+                        <a href="https://www.cardboardexpress.com/home" className={navHighlight === "home" && "active"}>
                             <i class="fas fa-home"></i>{' '}
                             Home
-                        </Link>
+                        </a>
                     </li>
                     {/* <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
                         <Link to="/explore">
@@ -340,7 +343,7 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
             <div style={{height:'100%', width:'100%'}} className="mobile">
                 <div className="nav">
                     <div className="branding">
-                        <Link to="/"><img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" /></Link>
+                        <a href="https://www.cardboardexpress.com"><img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" /></a>
 
                         {/* <div className="social-container">
                             <a href="https://instagram.com/cardboardexpress" target="_blank" className="social"><i className="fab fa-instagram"></i></a>

@@ -1859,7 +1859,7 @@ const Navbar = ({
                     key={index} 
                     background={nav.nav1 === nav_item.tag_value ? nav_item.background_color : "#fff"}
                     hover={nav_item.background_color}
-                    color={nav.nav1 === nav_item.tag_value ? "#fff" : "#3c4043"}
+                    color={nav.nav1 === nav_item.tag_value ? "#fff" : "#333"}
                     border={nav.nav1 === nav_item.tag_value ? "#fff" : "#dfe1e5"}
                     onClick={() => handleNavClick1(nav_item.tag_value)}
                 >
@@ -1885,7 +1885,7 @@ const Navbar = ({
                     key={index} 
                     background={nav.nav2 === nav_item.tag_value ? nav_item.background_color : "#fff"}
                     hover={nav_item.background_color}
-                    color={nav.nav2 === nav_item.tag_value ? "#fff" : "#3c4043"}
+                    color={nav.nav2 === nav_item.tag_value ? "#fff" : "#333"}
                     border={nav.nav2 === nav_item.tag_value ? "#fff" : "#dfe1e5"}
                     onClick={() => handleNavClick2(nav_item.tag_value)}
                 >
@@ -1910,7 +1910,7 @@ const Navbar = ({
                     key={index} 
                     background={nav.nav3 === nav_item.tag_value ? nav_item.background_color : "#fff"}
                     hover={nav_item.background_color}
-                    color={nav.nav3 === nav_item.tag_value ? "#fff" : "#3c4043"}
+                    color={nav.nav3 === nav_item.tag_value ? "#fff" : "#333"}
                     border={nav.nav3 === nav_item.tag_value ? "#fff" : "#dfe1e5"}
                     onClick={() => handleNavClick3(nav_item.tag_value)}
                 >
