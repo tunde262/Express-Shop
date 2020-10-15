@@ -130,18 +130,21 @@ const ProductCard = ({ auth: { user }, addLike, liked, modalOpen, product, handl
                         </div>
                         <div className="actions">
                             <div className="desktop-actions" style={{width:'100%', alignItems:'center', paddingRight:'10px'}}>
-                                <button 
+                                {/* <button 
                                     onClick={() =>todo(_id, name)}
                                     disabled={cartLoading ? true : false} 
                                 >
                                     {cartLoading ? <ButtonSpinner /> : "Add To Cart"}
-                                </button>
+                                </button> */}
                                 {liked ? (
                                     <button 
                                         onClick={() => addLike(_id)} 
-                                        style={{background:'#ff4b2b', 
-                                        color:'#fff', 
-                                        borderColor:'#ff4b2b'}}
+                                        style={{
+                                            background:'#ff4b2b', 
+                                            color:'#fff', 
+                                            borderColor:'#ff4b2b',
+                                            marginTop:0
+                                        }}
                                     >
                                         Favorited 
                                         <i 
@@ -149,7 +152,9 @@ const ProductCard = ({ auth: { user }, addLike, liked, modalOpen, product, handl
                                                 marginLeft:'10px', 
                                                 color:'#fff', 
                                                 outline:'none', 
-                                                fontSize:'13px'}} 
+                                                fontSize:'13px',
+                                                marginTop:0
+                                            }} 
                                                 className="fas fa-heart"
                                         ></i> 
                                     </button> ): (
@@ -205,7 +210,8 @@ const ProductCard = ({ auth: { user }, addLike, liked, modalOpen, product, handl
                                                     marginLeft:'10px', 
                                                     color:'#fff', 
                                                     outline:'none', 
-                                                    fontSize:'13px'}} 
+                                                    fontSize:'13px'
+                                                }} 
                                                     className="fas fa-heart"
                                             ></i> 
                                         </div>
@@ -294,16 +300,19 @@ const ProductWrapper = styled.div`
         padding: 10px;
         box-sizing: border-box;
         transition: .5s;
+        display:flex;
+        flex-direction:column;
+        align-items: flex-start;
     }
     .titles {
-        width: 60%;
+        width: 100%;
         overflow: hidden;
         max-height: 50px;
     }
     h2 {
         margin: 0;
         padding: 0;
-        font-size: 20px;
+        font-size: 14px;
         width: 100%;
     }
     .sellers a {
@@ -312,12 +321,9 @@ const ProductWrapper = styled.div`
         font-weight: normal;
     }
     .price {
-        position: absolute;
-        top: 12px;
-        right: 25px;
-        font-weight: bold;
+        margin-top:5px;
         color: #000;
-        font-size: 1.3rem;
+        font-size: 14px;
     }
     .actions {
         width: 100%;
@@ -427,15 +433,21 @@ const ProductWrapper = styled.div`
             width: 30vw;
         }
 
+        .specifice {
+            padding: 10px 0;
+        }
+
         .specifice .titles {
+            padding: 0 10px;
             width: 100%;
             max-height: 50px;
         }
+
+        .specifice .sellers {
+            padding: 0 10px;
+        }
         .specifice .price {
-            position: relative;
-            top: 0;
-            margin: 10px 0 5px 1.5rem;
-            font-size: 1rem;
+            padding: 0 10px;
         }
 
         .product:hover .specifice {
