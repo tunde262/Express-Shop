@@ -877,13 +877,15 @@ const Details = ({
                         </div> */}
                     </div>
                 </section>
+
+                <ProductOverview title="You may also like..." products={products} link={`/collection?filter=${detailProduct.category}`} />
+                
                 {store.stores.length > 0 && detailProduct && (
                     <div style={{marginTop:'85px'}}>
                         <BrandOverview title={`Other Stores For ${detailProduct.category}`} stores={store.stores} />
                     </div>
                 )}
     
-                <ProductOverview title="You may also like..." products={products} link={`/collection?filter=${detailProduct.category}`} />
                 <Modal open={displayModal} onClose={setModal} center>
                     <p>
                         Write a quick review...
