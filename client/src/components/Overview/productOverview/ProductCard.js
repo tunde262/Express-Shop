@@ -10,7 +10,7 @@ import mixpanel from 'mixpanel-browser';
 
 import ButtonSpinner from '../../common/ButtonSpinner';
 
-const ProductCard = ({ auth: { user }, addLike, liked, product, handleDetail, addToCart, openModal, closeModal, addTotals}) => {
+const ProductCard = ({ auth: { user }, addLike, liked, modalOpen, product, handleDetail, addToCart, openModal, closeModal, addTotals}) => {
     // componentDidMount() {
     //     console.log(this.props.product);
     // }
@@ -19,12 +19,12 @@ const ProductCard = ({ auth: { user }, addLike, liked, product, handleDetail, ad
     const [cartLoading, setCartLoading] = useState(true);
 
     useEffect(() => {
-        if(product.modalOpen) {
+        if(modalOpen) {
             setCartLoading(true);
         } else {
             setCartLoading(false);
         }
-    }, [product.modalOpen]);
+    }, [modalOpen]);
 
     const onHandleDetailClick = (id) => {
         handleDetail(id);
@@ -103,7 +103,7 @@ const ProductCard = ({ auth: { user }, addLike, liked, product, handleDetail, ad
                         onClick={() => onHandleDetailClick(_id)}
                     >
                         <a href={"https://www.cardboardexpress.com/details/" + _id}>
-                            {product.img_gallery[0] &&<img src={`/api/products/image/${sorted_img_gallery[0].img_name}`} alt="product" />}
+                            {img_gallery[0] &&<img src={`/api/products/image/${sorted_img_gallery[0].img_name}`} alt="product" />}
                         </a>
                         {/* <button 
                             className="cart-btn" 
@@ -129,64 +129,121 @@ const ProductCard = ({ auth: { user }, addLike, liked, product, handleDetail, ad
                             <a href={"https://www.cardboardexpress.com/store/" + store._id}>{store.name}</a>
                         </div>
                         <div className="actions">
-                            <button 
-                                onClick={() =>todo(_id, name)}
-                                disabled={cartLoading ? true : false} 
-                            >
-                                {cartLoading ? <ButtonSpinner /> : "Add To Cart"}
-                            </button>
-                            {liked ? (
+                            <div className="desktop-actions" style={{width:'100%', alignItems:'center', paddingRight:'10px'}}>
                                 <button 
-                                    onClick={() => addLike(_id)} 
-                                    style={{background:'#ff4b2b', 
-                                    color:'#fff', 
-                                    borderColor:'#ff4b2b'}}
+                                    onClick={() =>todo(_id, name)}
+                                    disabled={cartLoading ? true : false} 
                                 >
-                                    Added To Favorites 
-                                    <i 
-                                        style={{
-                                            marginLeft:'10px', 
-                                            color:'#fff', 
-                                            outline:'none', 
-                                            fontSize:'13px'}} 
-                                            className="fas fa-heart"
-                                    ></i> 
-                                </button> ): (
-                                <button 
-                                    onClick={() => handleLike(product)} 
-                                    className="likeButton"
-                                >
-                                    Favorite 
-                                    <i 
-                                        style={{
-                                            marginLeft:'10px', 
-                                            color:'#ff4b2b', 
-                                            fontSize:'13px'
-                                        }} 
-                                        className="fas fa-heart"
-                                    ></i> 
-                                </button> 
-                            )}
-                            {likes.length > 2 && (
-                                <div style={{width:'100%', textAlign:'center'}}>
-                                    <span style={{color:'#808080',}}> 
-                                        <span>{likes.length} </span> 
+                                    {cartLoading ? <ButtonSpinner /> : "Add To Cart"}
+                                </button>
+                                {liked ? (
+                                    <button 
+                                        onClick={() => addLike(_id)} 
+                                        style={{background:'#ff4b2b', 
+                                        color:'#fff', 
+                                        borderColor:'#ff4b2b'}}
+                                    >
+                                        Favorited 
                                         <i 
                                             style={{
-                                                marginLeft:'5px', 
+                                                marginLeft:'10px', 
+                                                color:'#fff', 
+                                                outline:'none', 
+                                                fontSize:'13px'}} 
+                                                className="fas fa-heart"
+                                        ></i> 
+                                    </button> ): (
+                                    <button 
+                                        onClick={() => handleLike(product)} 
+                                        className="likeButton"
+                                    >
+                                        Favorite 
+                                        <i 
+                                            style={{
+                                                marginLeft:'10px', 
                                                 color:'#ff4b2b', 
                                                 fontSize:'13px'
                                             }} 
                                             className="fas fa-heart"
-                                        ></i>
-                                    </span>
-                                </div>
-                            )}
-                            {/* {inCart ? <i style={{color:'#ff4b2b'}} class="fas fa-check-square"></i> : <i style={{color:'#28c101'}} class="fas fa-check-square"></i>} */}
-                            {/* <div>
-                                <span>{likes.length > 0 && <span>{likes.length}</span>}</span>{' '}
-                                {liked ? <i style={{color:'#ff4b2b'}} onClick={() => handleLike(product)} class="fas fa-heart"></i> : <i onClick={() => handleLike(product)} className="far fa-heart detail-heart"></i>}
-                            </div> */}
+                                        ></i> 
+                                    </button> 
+                                )}
+                                {likes.length > 2 && (
+                                    <div style={{width:'100%', textAlign:'center'}}>
+                                        <span style={{color:'#808080',}}> 
+                                            <span>{likes.length} </span> 
+                                            <i 
+                                                style={{
+                                                    marginLeft:'5px', 
+                                                    color:'#ff4b2b', 
+                                                    fontSize:'13px'
+                                                }} 
+                                                className="fas fa-heart"
+                                            ></i>
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
+                            <div className="mobile" style={{width:'100%', marginLeft:'-5px'}}>
+                                {liked ? (
+                                    <button 
+                                        onClick={() => addLike(_id)} 
+                                        style={{
+                                            background:'#ff4b2b', 
+                                            color:'#fff', 
+                                            borderColor:'#ff4b2b',
+                                            display:'flex',
+                                            justifyContent:'center',
+                                            margin:'auto'
+                                        }}
+                                        className="mobile"
+                                    >
+                                        <div style={{display:'flex', justifyContent:'center', width:'100%', alignItems:'center'}}>
+                                            <span style={{marginTop:0}}>Favorited </span>
+                                            <i 
+                                                style={{
+                                                    marginLeft:'10px', 
+                                                    color:'#fff', 
+                                                    outline:'none', 
+                                                    fontSize:'13px'}} 
+                                                    className="fas fa-heart"
+                                            ></i> 
+                                        </div>
+                                    </button> ): (
+                                    <button 
+                                        onClick={() => handleLike(product)} 
+                                        className="likeButton mobile"
+                                        style={{
+                                            width:'100%',
+                                            margin:'auto',
+                                            display:'flex',
+                                            justifyContent:'center',
+                                        }}
+                                    >
+                                        <div style={{display:'flex', justifyContent:'center', width:'100%', alignItems:'center'}}>
+                                            <span style={{marginTop:0}}>Favorite</span>
+                                            <i 
+                                                style={{
+                                                    marginLeft:'10px', 
+                                                    color:'#ff4b2b', 
+                                                    fontSize:'13px'
+                                                }} 
+                                                className="fas fa-heart"
+                                            ></i> 
+                                        </div>
+                                    </button> 
+                                )}
+                                {/* <button 
+                                    className="mobile"
+                                    onClick={() =>todo(_id, name)}
+                                    disabled={cartLoading ? true : false} 
+                                >
+                                    {cartLoading ? <ButtonSpinner /> : <span style={{margin:'auto'}}>Add To Cart</span>}
+                                </button> */}
+                                {/* <div className="mobile">
+                                    {liked ? <i style={{color:'#ff4b2b'}} onClick={() => handleLike(product)} className="fas fa-heart"></i> : <i onClick={() => handleLike(product)} className="far fa-heart detail-heart"></i>}
+                                </div> */}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -195,22 +252,19 @@ const ProductCard = ({ auth: { user }, addLike, liked, product, handleDetail, ad
 }
 
 ProductCard.propTypes = {
-    product: PropTypes.shape({
-        img: PropTypes.string,
-        title: PropTypes.string,
-        price: PropTypes.number,
-        inCart: PropTypes.bool
-    }).isRequired,
+    modalOpen: PropTypes.bool.isRequired,
+    auth: PropTypes.object.isRequired,
     addLike: PropTypes.func.isRequired,
     handleDetail: PropTypes.func.isRequired,
     addToCart: PropTypes.func.isRequired,
     openModal: PropTypes.func.isRequired,
     closeModal: PropTypes.func.isRequired,
-    addTotals: PropTypes.func.isRequired
+    addTotals: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.auth,
+    modalOpen: state.product.modalOpen
 });
 
 const ProductWrapper = styled.div`
@@ -241,23 +295,23 @@ const ProductWrapper = styled.div`
         box-sizing: border-box;
         transition: .5s;
     }
-    .specifice .titles {
+    .titles {
         width: 60%;
         overflow: hidden;
         max-height: 50px;
     }
-    .specifice h2 {
+    h2 {
         margin: 0;
         padding: 0;
         font-size: 20px;
         width: 100%;
     }
-    .specifice .sellers a {
+    .sellers a {
         font-size: 15px;
         color: #ccc;
         font-weight: normal;
     }
-    .specifice .price {
+    .price {
         position: absolute;
         top: 12px;
         right: 25px;
@@ -265,19 +319,23 @@ const ProductWrapper = styled.div`
         color: #000;
         font-size: 1.3rem;
     }
-    .specifice .actions {
-        display: flex;
-        flex-direction: column;
+    .actions {
         width: 100%;
         padding: 10px 0 0 10px;
         align-items: center;
     }
 
-    .specifice .actions i {
+    .actions i {
         color: #808080; 
         margin-right: 1rem; 
         font-size: 20px;
     }
+
+    .desktop-actions {
+        display: flex;
+        flex-direction: column;
+    }
+
     .card_stats {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
@@ -392,6 +450,12 @@ const ProductWrapper = styled.div`
             border-radius:0;
             width: 45vw;
             height: calc(45vw + 200px);
+        }
+    }
+
+    @media (max-width: 768px){
+        .desktop-actions {
+            display: none;
         }
     }
 

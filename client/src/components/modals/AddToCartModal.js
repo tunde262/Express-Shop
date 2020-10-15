@@ -8,54 +8,52 @@ import Modal from 'react-responsive-modal';
 
 import { ButtonContainer } from '../Button';
 
-class AddToCartModal extends Component {
+const AddToCartModal = (props) => {
 
-    handleModalClose = () => {
-        this.props.closeModal();
+    const handleModalClose = () => {
+        props.closeModal();
     }
 
-    render(){
-        const { modalOpen, modalProduct } = this.props.product; 
+    const { modalOpen, modalProduct } = props.product; 
 
-        let modal;
+    let modal;
 
-        if(!modalOpen) {
-            modal = null;
-        }
-        else {
-            const { title, img_gallery, price } = modalProduct;
+    if(!modalOpen) {
+        modal = null;
+    }
+    else {
+        const { title, img_gallery, price } = modalProduct;
 
-            modal = (
-                <Modal open={modalOpen} onClose={this.handleModalClose} center>
-                    <div style={{width:'300px'}}>
-                        <h5>item added to the cart</h5>
-                        <img src={`/api/products/image/${img_gallery[0].img_name}`} className="img-fluid" alt="product" />
-                        <h5>{title}</h5>
-                        <h5 className="text-muted">price : $ {price}</h5>
+        modal = (
+            <Modal open={modalOpen} onClose={handleModalClose} center>
+                <div style={{width:'300px'}}>
+                    <h5>item added to the cart</h5>
+                    <img src={`/api/products/image/${img_gallery[0].img_name}`} className="img-fluid" alt="product" />
+                    <h5>{title}</h5>
+                    <h5 className="text-muted">price : $ {price}</h5>
+                    <button
+                        onClick={handleModalClose}
+                    >
+                        Continue Shopping
+                    </button>
+                    <Link to='/cart'>
                         <button
-                            onClick={closeModal}
+                            cart
+                            onClick={handleModalClose}
                         >
-                            Continue Shopping
+                            go to cart
                         </button>
-                        <Link to='/cart'>
-                            <button
-                                cart
-                                onClick={this.handleModalClose.bind(this)}
-                            >
-                                go to cart
-                            </button>
-                        </Link>
-                    </div>
-                </Modal>
-            );
-        }
-
-        return (
-            <React.Fragment>
-                {modal}
-            </React.Fragment>
-        )
+                    </Link>
+                </div>
+            </Modal>
+        );
     }
+
+    return (
+        <React.Fragment>
+            {modal}
+        </React.Fragment>
+    )
 }
 
 const ModalContainer = styled.div`
