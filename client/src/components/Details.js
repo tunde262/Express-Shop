@@ -483,7 +483,7 @@ const Details = ({
             choices = colorArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedColor(option)}>{option}</div>);
             setColorValue((
                 <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
-                    <p style={{fontWeight:'bold', color:'#808080', fontSize:'12px'}}>Color:</p>
+                    <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Color:</p>
                     <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
                     <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
@@ -503,7 +503,7 @@ const Details = ({
             choices = sizeArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedSize(option)}>{option}</div>);
             setSizeValue((
                 <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
-                    <p style={{fontWeight:'bold', color:'#808080', fontSize:'12px'}}>Size:</p>
+                    <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Size:</p>
                     <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
                     <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
@@ -523,7 +523,7 @@ const Details = ({
             choices = weightArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedWeight(option)}>{option}</div>);
             setWeightValue((
                 <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
-                    <p style={{fontWeight:'bold', color:'#808080', fontSize:'12px'}}>Weight:</p>
+                    <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Weight:</p>
                     <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
                     <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
@@ -543,7 +543,7 @@ const Details = ({
             choices = typeArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedType(option)}>{option}</div>);
             setTypeValue((
                 <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
-                    <p style={{fontWeight:'bold', color:'#808080', fontSize:'12px'}}>Type:</p>
+                    <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Type:</p>
                     <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
                     <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
@@ -563,7 +563,7 @@ const Details = ({
             choices = bundleArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedBundle(option)}>{option}</div>);
             setBundleValue((
                 <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
-                    <p style={{fontWeight:'bold', color:'#808080', fontSize:'12px'}}>Bundle:</p>
+                    <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Bundle:</p>
                     <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
                     <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
@@ -583,7 +583,7 @@ const Details = ({
             choices = scentArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedScent(option)}>{option}</div>);
             setScentValue((
                 <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
-                    <p style={{fontWeight:'bold', color:'#808080', fontSize:'12px'}}>Scent:</p>
+                    <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Scent:</p>
                     <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
                     <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
@@ -603,7 +603,7 @@ const Details = ({
             choices = fitArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedFit(option)}>{option}</div>);
             setFitValue((
                 <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
-                    <p style={{fontWeight:'bold', color:'#808080', fontSize:'12px'}}>Fit:</p>
+                    <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Fit:</p>
                     <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
                     <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
@@ -623,7 +623,7 @@ const Details = ({
             choices = flavorArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedFlavor(option)}>{option}</div>);
             setFlavorValue((
                 <div style={{display:'flex', flexDirection:'column', width:'100%'}}>
-                    <p style={{fontWeight:'bold', color:'#808080', fontSize:'12px'}}>Flavor:</p>
+                    <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Flavor:</p>
                     <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
                     <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
@@ -643,7 +643,7 @@ const Details = ({
             choices = materialArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedMaterial(option)}>{option}</div>);
             setMaterialValue((
                 <div style={{display:'flex', flexDirection:'column', width:'100%'}}>
-                    <p style={{fontWeight:'bold', color:'#808080', fontSize:'12px'}}>Material:</p>
+                    <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Material:</p>
                     <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
                     <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
@@ -834,7 +834,7 @@ const Details = ({
                                 {/* <TableDetails page="store" setModal={setModal} description={detailProduct.description} /> */}
 
                                 <div style={{marginTop:'50px'}}>
-                                    <p style={{color:'#808080', fontWeight:'bold'}}>Description</p>
+                                    <p style={{color:'#333', fontWeight:'bold'}}>Description</p>
                                     <hr style={{marginTop:'-0.5rem', background:'#dfe1e5', height:'1px'}}/>
                                     {detailProduct.description && <p>{detailProduct.description}</p>}
                                 </div>
