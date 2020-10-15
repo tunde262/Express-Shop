@@ -60,7 +60,7 @@ const StoreMain = ({ store: { store, loading }, product, getProductsByStoreId, a
             {store.store !== null ? (
                 <div className="store-main"> 
                     {admin === "true" && store !== null && <Banner admin={admin} imgLarge={DefaultBanner} imgSmall={DefaultBanner} />}
-                    <Header />
+                    {/* <Header /> */}
                     <Container title="Bottoms" category="bottoms" background="MediumSlateBlue"  />
                 </div>
             ) : (
