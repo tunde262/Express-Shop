@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
-import 'moment-timezone';
+import moment from 'moment'
 
 class Order extends Component {
     render() {
@@ -22,40 +22,69 @@ class Order extends Component {
             const { qty, price } = item;
             const { name, img_gallery, company } = item.item;
             return (
-                <li key={item.item._id} style={{display: 'flex'}} className="list-group-item">
-                    <img src={`/api/products/image/${img_gallery[0].img_name}`} style={{width:'3rem', height:"3rem"}} className="img-fluid" alt="img" />
-                    <p>{name} | {qty} Units</p>
-                    <div style={{flex: '1'}}></div>
-                    <h5 className="text-blue font-italic mb-0">
-                        <span className="mr-1">$</span>
-                        {price}
-                    </h5>
-                </li>
+                <img key={item.item._id} src={`/api/products/image/${img_gallery[0].img_name}`} style={{height:'100%', width:'70px', margin:'0 15px', zIndex:'0'}} alt="product" />
+                // <li key={item.item._id} style={{display: 'flex'}} className="list-group-item">
+                //     <img src={`/api/products/image/${img_gallery[0].img_name}`} style={{width:'3rem', height:"3rem"}} className="img-fluid" alt="img" />
+                //     <p>{name} | {qty} Units</p>
+                //     <div style={{flex: '1'}}></div>
+                //     <h5 className="text-blue font-italic mb-0">
+                //         <span className="mr-1">$</span>
+                //         {price}
+                //     </h5>
+                // </li>
             );
         });
         
         return (
-            <div style={{margin: '15px'}} class="card card-default">
-                <div className="card-header">
-                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                        <p><strong>Name: </strong>{name}</p>
-                        <p><strong>Phone: </strong>{telephone}</p>
-                        <p><strong>Address: </strong>{address.street} {address.city}, {address.state} {address.zipcode}</p>
+            <div style={
+                {marginTop:'1rem', 
+                width:'100%', 
+                border:'1px solid #e8e8e8', 
+                background:'#fff', 
+                height:'100px',
+                display:'flex', 
+                alignItems:'center'
+                }
+            }>
+                <div style={{display:'grid', width: '100%', gridTemplateColumns:'1fr 2fr 1fr 1fr'}}>
+                    <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+                        <div>
+                            <h3 style={{color: '#333',fontWeight: '300',fontSize: '14px'}}>{moment(date).format("MMMM Do")}</h3>
+                            <h3 style={{color: '#808080',fontWeight: '300',fontSize: '12px'}}>{moment(date).format("h:mm a")}</h3>
+                        </div>
                     </div>
-                </div>
-                <div class="card-body">
-                    <ul className="list-group">
+                    <div style={{display:'flex', justifyContent:'flex-start', height:'70px', width:'100%', overflow:'hidden'}}>
                         {orderItems}
-                    </ul>
-                </div>
-                <div class="card-footer">
-                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                        <p><strong>Total: </strong> ${totalPrice}</p>
-                        <p><strong>Qty: </strong> {totalQty}</p>
-                        <p><strong>Date: </strong> <Moment>{date}</Moment></p>    
+                    </div>
+                    <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+                        <h3 style={{color: '#333',fontWeight: '300',fontSize: '14px'}}>${totalPrice}</h3>
+                    </div>
+                    <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+                        <button>View Details</button>
                     </div>
                 </div>
             </div>
+
+
+            // <div style={{margin: '15px'}} class="card card-default">
+            //     <div className="card-header" style={{background:'#fff'}}>
+            //         <div style={{display: 'flex', justifyContent: 'space-between'}}>
+            //             <p><strong>Date: </strong> <Moment>{date}</Moment></p> 
+            //             <p><strong>Total: </strong> ${totalPrice}</p>
+            //         </div>
+            //     </div>
+            //     <div class="card-body">
+            //         <ul className="list-group">
+            //             {orderItems}
+            //         </ul>
+            //     </div>
+            //     <div class="card-footer" style={{background:'#fff'}}>
+            //         <div style={{display: 'flex', justifyContent: 'space-between'}}>
+            //             <p><strong>Address: </strong>{address.street} {address.city}, {address.state} {address.zipcode}</p>
+            //             <p><strong>Qty: </strong> {totalQty}</p>   
+            //         </div>
+            //     </div>
+            // </div>
         )
     }
 }

@@ -73,6 +73,8 @@ const Details = ({
     const [displayModal, toggleModal] = useState(false);
     const [varsLoaded, setVarsLoaded] = useState(false);
 
+    const [tableShow1, setTableShow1] = useState('for you');
+
     // Has Main Image Index Been Gotten
     const [gotIndex, setGotIndex] = useState(false);
 
@@ -684,204 +686,207 @@ const Details = ({
 
         detailItem = (
             <Fragment>
-                <section className="container">
-                    <div id="detail-content-wrapper">
-                        {/* <div id="breadcrumb">
-                            <nav className="breadcrumb">
-                                <ol>
-                                    <li style={{display: 'flex'}}>
-                                        <Link to="/stores">Home</Link>{' '}
-                                        <p style={{margin:'0 5px'}}> /
-                                            <span style={{fontWeight:'bold'}}>
-                                                {' '}
-                                                {detailProduct.name}
-                                            </span>
-                                        </p>
-                                    </li>
-                                </ol>
-                            </nav>
-                            <BackButton onClick={goBack}><i className="fas fa-arrow-left"></i></BackButton>
-                        </div> */}
-                        <div class="detail-map">
-                            {/* <p className="mobile" style={{color:'#333', fontWeight:'bold'}}>{detailProduct.name}</p> */}
-                            {/* <div className="detail-image-container">
-                                <div onClick={decImage} className="detail-image-icon-container">
-                                    <i class="fas fa-chevron-left"></i>
-                                </div>
-                                {detailProduct && img_gallery && img_gallery.length > 0 && <img src={`/api/products/image/${img_gallery[showImage].img_name}`} className="img-fluid" alt="product" />}
-                                <div onClick={incImage} className="detail-image-icon-container">
-                                    <i class="fas fa-chevron-right"></i>
-                                </div>
+                <div style={{background:'#fff', border: '1px solid rgb(214, 214, 214)', margin:'0 10px'}}>
+                    <section className="container">
+                        <div id="detail-content-wrapper">
+                            {/* <div id="breadcrumb">
+                                <nav className="breadcrumb">
+                                    <ol>
+                                        <li style={{display: 'flex'}}>
+                                            <Link to="/stores">Home</Link>{' '}
+                                            <p style={{margin:'0 5px'}}> /
+                                                <span style={{fontWeight:'bold'}}>
+                                                    {' '}
+                                                    {detailProduct.name}
+                                                </span>
+                                            </p>
+                                        </li>
+                                    </ol>
+                                </nav>
+                                <BackButton onClick={goBack}><i className="fas fa-arrow-left"></i></BackButton>
                             </div> */}
-                            <div className="detail-image-container desktop">
-                                {detailProduct && img_gallery && img_gallery.length > 0 && <img src={`/api/products/image/${img_gallery[showImage].img_name}`} className="img-fluid" alt="product" />}
-                                <div className="detail-image-overlay">
-                                    <div onClick={decImage} className="detail-overlay-icon-container">
+                            <div class="detail-map">
+                                {/* <p className="mobile" style={{color:'#333', fontWeight:'bold'}}>{detailProduct.name}</p> */}
+                                {/* <div className="detail-image-container">
+                                    <div onClick={decImage} className="detail-image-icon-container">
                                         <i class="fas fa-chevron-left"></i>
                                     </div>
-                                    <div onClick={incImage} className="detail-overlay-icon-container">
+                                    {detailProduct && img_gallery && img_gallery.length > 0 && <img src={`/api/products/image/${img_gallery[showImage].img_name}`} className="img-fluid" alt="product" />}
+                                    <div onClick={incImage} className="detail-image-icon-container">
                                         <i class="fas fa-chevron-right"></i>
                                     </div>
-                                </div>
-                            </div>
-                            <div className="detail-image-container mobile" onClick={incImage}>
-                                {detailProduct && img_gallery && img_gallery.length > 0 && <img src={`/api/products/image/${img_gallery[showImage].img_name}`} className="img-fluid" alt="product" />}
-                                <div className="detail-image-overlay">
-                                    <div onClick={decImage} className="detail-overlay-icon-container">
-                                        <i class="fas fa-chevron-left"></i>
+                                </div> */}
+                                <div className="detail-image-container desktop">
+                                    {detailProduct && img_gallery && img_gallery.length > 0 && <img src={`/api/products/image/${img_gallery[showImage].img_name}`} className="img-fluid" alt="product" />}
+                                    <div className="detail-image-overlay">
+                                        <div onClick={decImage} className="detail-overlay-icon-container">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </div>
+                                        <div onClick={incImage} className="detail-overlay-icon-container">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </div>
                                     </div>
-                                    <div onClick={incImage} className="detail-overlay-icon-container">
-                                        <i class="fas fa-chevron-right"></i>
+                                </div>
+                                <div className="detail-image-container mobile" onClick={incImage}>
+                                    {detailProduct && img_gallery && img_gallery.length > 0 && <img src={`/api/products/image/${img_gallery[showImage].img_name}`} className="img-fluid" alt="product" />}
+                                    <div className="detail-image-overlay">
+                                        <div onClick={decImage} className="detail-overlay-icon-container">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </div>
+                                        <div onClick={incImage} className="detail-overlay-icon-container">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            {/* <div className="datail-sub-image-container desktop">
-                                <div className="desktop" style={{ margin:'1rem 5px', textAlign:'center', height: '50px', display:'flex',alignItems:'center',justifyContent:'center'}}>
-                                    {detailProduct && img_gallery && img_gallery.length > 3 && <p className="desktop" style={{color:'#808080', fontWeight:'bold', fontSize:'12px'}}>Scroll<br/><i class="fas fa-arrow-left"></i></p>}
+                                {/* <div className="datail-sub-image-container desktop">
+                                    <div className="desktop" style={{ margin:'1rem 5px', textAlign:'center', height: '50px', display:'flex',alignItems:'center',justifyContent:'center'}}>
+                                        {detailProduct && img_gallery && img_gallery.length > 3 && <p className="desktop" style={{color:'#808080', fontWeight:'bold', fontSize:'12px'}}>Scroll<br/><i class="fas fa-arrow-left"></i></p>}
+                                    </div>
+                                    <div className="datail-sub-images">
+                                        {img_gallery.map((item, index) => {
+                                            if (index === showImage) {
+                                                return <img key={index} style={{border:'2px solid #0000FF'}} onClick={() => changeImage(index)} src={`/api/products/image/${img_gallery[index].img_name}`} alt={detailProduct.name} />
+                                            } else {
+                                                return <img key={index} onClick={() => changeImage(index)} src={`/api/products/image/${img_gallery[index].img_name}`} alt={detailProduct.name} />
+                                            }
+                                        })}
+                                    </div>
+                                    <div className="desktop" style={{ margin:'1rem 5px', textAlign:'center', height: '50px', display:'flex',alignItems:'center',justifyContent:'center'}}>
+                                        {detailProduct && img_gallery && img_gallery.length > 3 && <p className="desktop" style={{color:'#808080', fontWeight:'bold', fontSize:'12px'}}>Scroll<br/><i class="fas fa-arrow-right"></i></p>}
+                                    </div>
+                                </div> */}
+                                <div style={{marginTop:'10px'}}>
+                                    <p style={{color:'#808080', fontWeight:'bold', fontSize:'12px'}}><i style={{marginRight:'10px'}} class="far fa-hand-pointer"></i> Click image for more photos...</p>
                                 </div>
-                                <div className="datail-sub-images">
+                                <div className="product-detail-main-container">
                                     {img_gallery.map((item, index) => {
                                         if (index === showImage) {
-                                            return <img key={index} style={{border:'2px solid #0000FF'}} onClick={() => changeImage(index)} src={`/api/products/image/${img_gallery[index].img_name}`} alt={detailProduct.name} />
+                                            return (
+                                                <div className="product-detail-image-container">
+                                                    <img key={index} style={{border:'2px solid #0000FF'}} onClick={() => changeImage(index)} src={`/api/products/image/${img_gallery[index].img_name}`} alt={detailProduct.name} />
+                                                    <div className="detail-image-overlay" onClick={() => changeImage(index)}></div>
+                                                </div>
+                                            )
                                         } else {
-                                            return <img key={index} onClick={() => changeImage(index)} src={`/api/products/image/${img_gallery[index].img_name}`} alt={detailProduct.name} />
+                                            return (
+                                                <div className="product-detail-image-container">
+                                                    <img key={index} onClick={() => changeImage(index)} src={`/api/products/image/${img_gallery[index].img_name}`} alt={detailProduct.name} />
+                                                    <div className="detail-image-overlay" onClick={() => changeImage(index)}></div>
+                                                </div>
+                                            ) 
                                         }
                                     })}
                                 </div>
-                                <div className="desktop" style={{ margin:'1rem 5px', textAlign:'center', height: '50px', display:'flex',alignItems:'center',justifyContent:'center'}}>
-                                    {detailProduct && img_gallery && img_gallery.length > 3 && <p className="desktop" style={{color:'#808080', fontWeight:'bold', fontSize:'12px'}}>Scroll<br/><i class="fas fa-arrow-right"></i></p>}
-                                </div>
-                            </div> */}
-                            <div style={{marginTop:'10px'}}>
-                                <p style={{color:'#808080', fontWeight:'bold', fontSize:'12px'}}><i style={{marginRight:'10px'}} class="far fa-hand-pointer"></i> Click image for more photos...</p>
                             </div>
-                            <div className="product-detail-main-container">
-                                {img_gallery.map((item, index) => {
-                                    if (index === showImage) {
-                                        return (
-                                            <div className="product-detail-image-container">
-                                                <img key={index} style={{border:'2px solid #0000FF'}} onClick={() => changeImage(index)} src={`/api/products/image/${img_gallery[index].img_name}`} alt={detailProduct.name} />
-                                                <div className="detail-image-overlay" onClick={() => changeImage(index)}></div>
-                                            </div>
-                                        )
-                                    } else {
-                                        return (
-                                            <div className="product-detail-image-container">
-                                                <img key={index} onClick={() => changeImage(index)} src={`/api/products/image/${img_gallery[index].img_name}`} alt={detailProduct.name} />
-                                                <div className="detail-image-overlay" onClick={() => changeImage(index)}></div>
-                                            </div>
-                                        ) 
-                                    }
-                                })}
-                            </div>
-                        </div>
-                        <div class="detail-info">
-                            <div class="detail-status-box">
-                                <div className="detail-status-box-header">
-                            <div><p style={{color:'#333', fontWeight:'bold'}}>{detailProduct.name}:{selectedColor} {selectedSize} {selectedType} {selectedFit} {selectedWeight} {selectedMaterial} {selectedBundle} {selectedScent} {selectedFlavor}</p></div>
-                                    <div>
-                                        {/* <span>{detailProduct.likes.length > 0 && <span>{detailProduct.likes.length}</span>}</span>{' '}
-                                        {liked ? <i style={{color:'#ff4b2b', fontSize:'1.4rem', margin:'1rem 1rem 0 0'}} onClick={() => addLike(detailProduct._id)} class="fas fa-heart"></i> : <i onClick={() => addLike(detailProduct._id)} style={{color:'#808080', margin:'1rem 1rem 0 0'}} className="far fa-heart detail-heart"></i>} */}
-                                    </div>
-                                </div>
-                                <h3 style={{color:'#ff4b2b', marginTop:'-1rem', fontWeight:'bold'}}>${detailProduct.price}</h3>
-                                {/* <p><i style={{color:'#808080'}} class="fas fa-truck"></i> Next Delivery Time: <span style={{fontWeight:'bold', color:'#ff4b2b'}}>1pm</span></p> */}
-                                <p><i style={{color:'#808080'}} class="fas fa-truck"></i> Est. Delivery Time: <span style={{fontWeight:'bold', color:'#ff4b2b'}}>2 hr</span></p>
-                                <p style={{color:'#808080', marginTop:'-1rem'}}><i className="fas fa-sign-out-alt" /> Return eligible</p>
-                                <hr style={{background:'#dfe1e5', height:'1px', marginBottom:'0.5rem'}}/>
-                                <div style={{display:'flex', justifyContent:'space-between', alignItems: 'center', marginTop:'-0.6rem', padding:'0 1rem'}}>
-                                    <div style={{display:'flex', alignItems: 'center'}}>
-                                        <Link to={"/store/" + detailProduct.store._id}>
-                                            <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${detailProduct.store.img_name}`} alt="img" />
-                                        </Link>
-                                        <div style={{ display: 'flex', flexDirection:'column', marginTop:'0.5rem'}}>
-                                            <a href={"https://www.cardboardexpress.com/store/" + detailProduct.store._id}>
-                                                {detailProduct.store.name}
-                                            </a>
-                                            <p style={{color:'#808080'}}>Wholesaler</p>
-                                            {/* <Link to={"/location/" + detailProduct.locationId._id} style={{color:'#808080'}}>Wholesaler</Link> */}
+                            <div class="detail-info">
+                                <div class="detail-status-box">
+                                    <div className="detail-status-box-header">
+                                <div><p style={{color:'#333', fontWeight:'bold'}}>{detailProduct.name}:{selectedColor} {selectedSize} {selectedType} {selectedFit} {selectedWeight} {selectedMaterial} {selectedBundle} {selectedScent} {selectedFlavor}</p></div>
+                                        <div>
+                                            {/* <span>{detailProduct.likes.length > 0 && <span>{detailProduct.likes.length}</span>}</span>{' '}
+                                            {liked ? <i style={{color:'#ff4b2b', fontSize:'1.4rem', margin:'1rem 1rem 0 0'}} onClick={() => addLike(detailProduct._id)} class="fas fa-heart"></i> : <i onClick={() => addLike(detailProduct._id)} style={{color:'#808080', margin:'1rem 1rem 0 0'}} className="far fa-heart detail-heart"></i>} */}
                                         </div>
                                     </div>
-                                    {/* <div style={{display:'flex', paddingTop:'10px', color:'#808080', alignItems: 'center'}}>
-                                        <p style={{fontWeight:500}}>Subscribe <i style={{marginLeft:'10px'}} class="far fa-bookmark"></i></p>
-                                    </div> */}
-                                </div>
-                                <hr style={{marginTop:'-0.5rem', background:'#dfe1e5', height:'1px'}}/>
-                            </div>
-                            <div class="detail-description-box">
-                                <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}>
-                                    {colorValue}
-                                    {sizeValue}
-                                    {weightValue}
-                                    {typeValue}
-                                    {bundleValue}
-                                    {scentValue}
-                                    {fitValue}
-                                    {flavorValue}
-                                    {materialValue}
-                                </div>
-                                {/* <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}> */}
-                                    <button 
-                                        onClick={() =>todo(detailProduct._id, detailProduct)}
-                                        disabled={cartLoading ? true : false} 
-                                        style={{marginTop:'50px'}}
-                                    >
-                                        {cartLoading ? <ButtonSpinner /> : "Add To Cart"}
-                                    </button>
-                                    {liked ? <button onClick={() => addLike(detailProduct._id)} style={{background:'#ff4b2b', color:'#fff', borderColor:'#ff4b2b'}}>Added To Favorites <i style={{marginLeft:'10px', color:'#fff', outline:'none', fontSize:'13px'}} className="fas fa-heart"></i> </button> : <button onClick={() => addLike(detailProduct._id)} className="likeButton">Favorite <i style={{marginLeft:'10px', color:'#ff4b2b', fontSize:'13px'}} className="fas fa-heart"></i> </button> }
-                                    {detailProduct.likes.length > 2 && <div style={{width:'100%', textAlign:'center'}}><span style={{color:'#808080',}}> <span>{detailProduct.likes.length}</span> Others favorited</span></div>}
-                                {/* </div> */}
-                                {/* <TableDetails page="store" setModal={setModal} description={detailProduct.description} /> */}
-
-                                <div style={{marginTop:'50px'}}>
-                                    <p style={{color:'#333', fontWeight:'bold'}}>Description</p>
+                                    <h3 style={{color:'#ff4b2b', marginTop:'-1rem', fontWeight:'bold'}}>${detailProduct.price}</h3>
+                                    {/* <p><i style={{color:'#808080'}} class="fas fa-truck"></i> Next Delivery Time: <span style={{fontWeight:'bold', color:'#ff4b2b'}}>1pm</span></p> */}
+                                    <p><i style={{color:'#808080'}} class="fas fa-truck"></i> Est. Delivery Time: <span style={{fontWeight:'bold', color:'#ff4b2b'}}>2 hr</span></p>
+                                    <p style={{color:'#808080', marginTop:'-1rem'}}><i className="fas fa-sign-out-alt" /> Return eligible</p>
+                                    <hr style={{background:'#dfe1e5', height:'1px', marginBottom:'0.5rem'}}/>
+                                    <div style={{display:'flex', justifyContent:'space-between', alignItems: 'center', marginTop:'-0.6rem', padding:'0 1rem'}}>
+                                        <div style={{display:'flex', alignItems: 'center'}}>
+                                            <Link to={"/store/" + detailProduct.store._id}>
+                                                <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${detailProduct.store.img_name}`} alt="img" />
+                                            </Link>
+                                            <div style={{ display: 'flex', flexDirection:'column', marginTop:'0.5rem'}}>
+                                                <a href={"https://www.cardboardexpress.com/store/" + detailProduct.store._id}>
+                                                    {detailProduct.store.name}
+                                                </a>
+                                                <p style={{color:'#808080'}}>Wholesaler</p>
+                                                {/* <Link to={"/location/" + detailProduct.locationId._id} style={{color:'#808080'}}>Wholesaler</Link> */}
+                                            </div>
+                                        </div>
+                                        {/* <div style={{display:'flex', paddingTop:'10px', color:'#808080', alignItems: 'center'}}>
+                                            <p style={{fontWeight:500}}>Subscribe <i style={{marginLeft:'10px'}} class="far fa-bookmark"></i></p>
+                                        </div> */}
+                                    </div>
                                     <hr style={{marginTop:'-0.5rem', background:'#dfe1e5', height:'1px'}}/>
-                                    {detailProduct.description && <p>{detailProduct.description}</p>}
                                 </div>
-                            </div>
-                        </div>
-                        {/* <div class="content-box container-fluid">
-                            <div className="bg-light p-2">
-                                <h2 className="text-primary">Quick Info</h2>
-                                <div className="skills">
-                                    <div className="p-1">
-                                        <i className="fas fa-check"></i> HTML
+                                <div class="detail-description-box">
+                                    <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}>
+                                        {colorValue}
+                                        {sizeValue}
+                                        {weightValue}
+                                        {typeValue}
+                                        {bundleValue}
+                                        {scentValue}
+                                        {fitValue}
+                                        {flavorValue}
+                                        {materialValue}
                                     </div>
-                                    <div className="p-1">
-                                        <i className="fas fa-check"></i> CSS
-                                    </div>
-                                    <div className="p-1">
-                                        <i className="fas fa-check"></i> FUCK
-                                    </div>
-                                    <div className="p-1">
-                                        <i className="fas fa-check"></i> YOU
-                                    </div>
-                                    <div className="p-1">
-                                        <i className="fas fa-check"></i> TOO
-                                    </div>
-                                </div>
-                                <div className="line"></div>
-                                    <Fragment>
-                                        <h2 className="text-primary">Description</h2>
-                                        <p>
-                                            {detailProduct.description}
-                                        </p>
-                                    </Fragment>
-                            </div>
-                            <div class="table-responsive table-filter">
-                                <section>
-                                    <p style={{alignSelf: "flex-end"}}>50 Reviews</p>
-                                    <button onClick={setModal} type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Write A Review</button>
-                                </section>
-                            </div>
-                        </div> */}
-                    </div>
-                </section>
+                                    {/* <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}> */}
+                                        <button 
+                                            onClick={() =>todo(detailProduct._id, detailProduct)}
+                                            disabled={cartLoading ? true : false} 
+                                            style={{marginTop:'50px'}}
+                                        >
+                                            {cartLoading ? <ButtonSpinner /> : "Add To Cart"}
+                                        </button>
+                                        {liked ? <button onClick={() => addLike(detailProduct._id)} style={{background:'#ff4b2b', color:'#fff', borderColor:'#ff4b2b'}}>Added To Favorites <i style={{marginLeft:'10px', color:'#fff', outline:'none', fontSize:'13px'}} className="fas fa-heart"></i> </button> : <button onClick={() => addLike(detailProduct._id)} className="likeButton">Favorite <i style={{marginLeft:'10px', color:'#ff4b2b', fontSize:'13px'}} className="fas fa-heart"></i> </button> }
+                                        {detailProduct.likes.length > 2 && <div style={{width:'100%', textAlign:'center'}}><span style={{color:'#808080',}}> <span>{detailProduct.likes.length}</span> Others favorited</span></div>}
+                                    {/* </div> */}
+                                    {/* <TableDetails page="store" setModal={setModal} description={detailProduct.description} /> */}
 
-                <ProductOverview title="You may also like..." products={products} link={`/collection?filter=${detailProduct.category}`} />
-                
+                                    <div style={{marginTop:'50px'}}>
+                                        <p style={{color:'#333', fontWeight:'bold'}}>Description</p>
+                                        <hr style={{marginTop:'-0.5rem', background:'#dfe1e5', height:'1px'}}/>
+                                        {detailProduct.description && <p>{detailProduct.description}</p>}
+                                    </div>
+                                </div>
+                            </div>
+                            {/* <div class="content-box container-fluid">
+                                <div className="bg-light p-2">
+                                    <h2 className="text-primary">Quick Info</h2>
+                                    <div className="skills">
+                                        <div className="p-1">
+                                            <i className="fas fa-check"></i> HTML
+                                        </div>
+                                        <div className="p-1">
+                                            <i className="fas fa-check"></i> CSS
+                                        </div>
+                                        <div className="p-1">
+                                            <i className="fas fa-check"></i> FUCK
+                                        </div>
+                                        <div className="p-1">
+                                            <i className="fas fa-check"></i> YOU
+                                        </div>
+                                        <div className="p-1">
+                                            <i className="fas fa-check"></i> TOO
+                                        </div>
+                                    </div>
+                                    <div className="line"></div>
+                                        <Fragment>
+                                            <h2 className="text-primary">Description</h2>
+                                            <p>
+                                                {detailProduct.description}
+                                            </p>
+                                        </Fragment>
+                                </div>
+                                <div class="table-responsive table-filter">
+                                    <section>
+                                        <p style={{alignSelf: "flex-end"}}>50 Reviews</p>
+                                        <button onClick={setModal} type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Write A Review</button>
+                                    </section>
+                                </div>
+                            </div> */}
+                        </div>
+                    </section>
+                </div>
+                <div style={{margin:'10px', background:'#fff', border: '1px solid rgb(214, 214, 214)'}}>
+                    <ProductOverview title="You may also like..." products={products} link={`/collection?filter=${detailProduct.category}`} />
+                </div>
+
                 {store.stores.length > 0 && detailProduct && (
-                    <div style={{marginTop:'85px'}}>
+                    <div style={{margin:'10px', background:'#fff', border: '1px solid rgb(214, 214, 214)'}}>
                         <BrandOverview title={`Other Stores For ${detailProduct.category}`} stores={store.stores} />
                     </div>
                 )}
@@ -960,10 +965,24 @@ const Details = ({
         }
 
         return (
-            <Fragment>
-                <Header />
+            <div style={{background:'rgb(247, 247, 247)'}}>
+                <ul class="home-underline store" style={{background:'#fff', margin:'0', border:'1px solid rgb(214, 214, 214)'}}>
+                    <div onClick={e => setTableShow1('for you')} className={tableShow1 === "for you" && "active"}><li><p>For You</p></li></div>
+                    <div onClick={e => setTableShow1('popular')} className={tableShow1 === "popular" && "active"}><li><p>Popular</p></li></div>
+                    <div onClick={e => setTableShow1('nearby')} className={tableShow1 === "nearby" && "active"}><li><p>Nearby</p></li></div>
+                </ul>
+                <div className="header-nav-container">
+                    <div style={{padding:'10px'}}>
+                        <h3 style={{fontSize:'12px', letterSpacing:'1px',color:'#808080'}}>
+                            Pick A Category
+                        </h3>
+                    </div>
+                    <div style={{marginTop:'-2rem'}}>
+                        <Header />
+                    </div>
+                </div>
                 {detailItem}
-            </Fragment>
+            </div>
         )
 }
 

@@ -9,15 +9,19 @@ import logo from '../../common/logo.png';
 
 import mixpanel from 'mixpanel-browser';
 
+import sampleImg from '../../../utils/imgs/20484728.jpeg';
 
 
-const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdrop, backdropClickHandler, auth: { isAuthenticated, loading }, logout }) => {
+
+const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdrop, backdropClickHandler, auth: { isAuthenticated, loading, user }, logout }) => {
     // Page
     const [navHighlight, setNavHighlight] = useState('home');
     // Toggle Sidebar
     const [isOpen, setIsOpen] = useState(false);
     // Toggle Dropdwon
     const [dropdown, setDropdown] = useState(false);
+    // Toggle Cart Popup
+    const [cartPopup, setCartPopup] = useState(false);
     // const [cart, toggleCart] = useState(false);
     // show dropdown submenu
     const [activeMenu, setActiveMenu] = useState('main');
@@ -26,6 +30,8 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
 
     const [isHovering, setIsHovering] = useState(false);
     const [isHovering2, setIsHovering2] = useState(false);
+    const [isHoveringHeart, setIsHoveringHeart] = useState(false);
+    const [isHoveringCat, setIsHoveringCat] = useState(false);
     
     const calcHeight = (el) => {
         const height = el.offsetHeight;
@@ -48,6 +54,15 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
         setIsHovering2(!isHovering2)
     }
 
+
+    const handleMouseHoverHeart = () => {
+        setIsHoveringHeart(!isHoveringHeart)
+    }
+
+    const handleMouseHoverCat = () => {
+        setIsHoveringCat(!isHoveringCat)
+    }
+
     const logoClicked = () => {
         mixpanel.track("Logo Click");
     }
@@ -65,21 +80,92 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
 
     const authLinks = (
         <Fragment>
+            <li className={navHighlight === "favorited" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('favorited')}>
+                <Link to="/profile/saved">
+                    <div
+                        onMouseEnter={handleMouseHoverHeart}
+                        onMouseLeave={handleMouseHoverHeart}
+                    >
+                        {navHighlight === "favorited" || isHoveringHeart ? (
+                            <i style={{marginRight:'-14px', fontSize:'1rem', color:'#ff4b2b'}} class="fas fa-heart"></i>
+                        ) : (
+                            <i style={{marginRight:'-14px', fontSize:'1rem'}} class="far fa-heart"></i>
+                        )}
+                        
+                    </div>  
+                </Link>
+            </li>
+            <li className={navHighlight === "categories" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('categories')}>
+                <a href="#">
+                    <div 
+                        onMouseEnter={handleMouseHoverCat}
+                        onMouseLeave={handleMouseHoverCat}
+                        style={{marginRight:'-14px'}}
+                    >
+                        {navHighlight === "categories" || isHoveringCat ? (
+                            <div style={{display:'flex', alignItems:'center'}}>
+                                <div style={{display:'flex', alignItems:'center'}}>
+                                    <i style={{color:'#ff4b2b', fontSize:'1rem'}} class="fas fa-ellipsis-v"></i>
+                                    <i style={{color:'#ff4b2b', fontSize:'1rem'}} class="fas fa-ellipsis-v"></i>
+                                    <i style={{color:'#ff4b2b', fontSize:'1rem'}} class="fas fa-ellipsis-v"></i>
+                                </div>
+                                <p style={{margin:'10px', color:'#ff4b2b', fontSize:'12px'}}>Categories</p>
+                            </div>
+                        ) : (
+                            <div style={{display:'flex', alignItems:'center'}}>
+                                <div style={{display:'flex', alignItems:'center'}}>
+                                    <i style={{fontSize:'1rem'}}  class="fas fa-ellipsis-v"></i>
+                                    <i style={{fontSize:'1rem'}}  class="fas fa-ellipsis-v"></i>
+                                    <i style={{fontSize:'1rem'}}  class="fas fa-ellipsis-v"></i>
+                                </div>
+                                <p style={{margin:'10px', fontSize:'12px'}}>Categories</p>
+                            </div>
+                        )}
+                    </div>
+                </a>
+            </li>
             <li className="nav-offset" onClick={e => setNavHighlight('profile')}>
-                <a  
+                <div  
+                    style={{display:'flex', alignItems:'center', justifyContent:'center'}}
                     className={navHighlight === "profile" && "active"}
-                    href="#" 
-                    onClick={() => setDropdown(!dropdown)}
                     onMouseEnter={handleMouseHover}
                     onMouseLeave={handleMouseHover}
                 >
                     {navHighlight === "profile" || isHovering ? (
-                        <i style={isHovering && navHighlight !== "profile" ? {transform: 'scale(1.3)', color:'#bebebe'} : {transform: 'scale(1.3)'}} className="fas fa-user-circle"></i>
+                        <Fragment>
+                            <Link to="/profile">
+                                <div className="profile-circle">
+                                    <p style={{fontWeight:'bold', color:'#333'}}>T</p>
+                                </div>
+                            </Link>
+                            <div 
+                                className="profile-toggle"
+                                onClick={() => setDropdown(!dropdown)}
+                            >
+                                <i 
+                                    style={{fontSize:'14px'}} 
+                                    class="fas fa-chevron-down"
+                                ></i>
+                            </div>
+                        </Fragment>
                         ) 
                         : (
-                            <i class="fas fa-user"></i>
+                            <Fragment>
+                                <div style={{display:'flex', justifyContent:'center', paddingTop:'20px', alignItems:'center', width:'40px', height:'40px', borderRadius:'50%', background:'#ececec', border:'2px solid #ff4b2b'}}>
+                                    <p style={{fontWeight:'bold', color:'#333'}}>T</p>
+                                </div>
+                                <div 
+                                    className="profile-toggle"
+                                    onClick={() => setDropdown(!dropdown)}
+                                >
+                                    <i 
+                                        style={{fontSize:'14px'}} 
+                                        class="fas fa-chevron-down"
+                                    ></i>
+                                </div>
+                            </Fragment>
                         )}
-                </a>
+                </div>
 
                 {dropdown && (
                     <div className="dropdown" style={{height: menuHeight}}>
@@ -91,14 +177,16 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                             onEnter={calcHeight}
                         >
                             <div className="menu">
-                                <Link to="/profile" className="menu-item">
-                                    <div style={{background:'#333', height:'50px', width:'50px', borderRadius:'50px'}}></div>
+                                {/* <Link to="/profile" className="menu-item">
+                                    <div style={{display:'flex', justifyContent:'center', paddingTop:'20px', alignItems:'center', width:'40px', height:'40px', borderRadius:'50%', background:'#ececec', border:'2px solid #ff4b2b'}}>
+                                        <p style={{fontWeight:'bold', color:'#333'}}>T</p>
+                                    </div>
                                     <div style={{marginLeft:'1rem'}}>
-                                        <p style={{margin:0}}>Tunde Adepitan</p>
+                                        <p style={{margin:0}}>{user.name}</p>
                                         <p style={{margin:0}}>4.5 / 5 stars</p>
                                     </div>
                                 </Link>
-                                <hr style={{margin:'10px 0'}} />
+                                <hr style={{margin:'10px 0'}} /> */}
                                 <Link to="/profile/saved" className="menu-item">
                                     <i className="fas fa-heart"></i>{' '}
                                     Saved
@@ -156,27 +244,75 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                 )}
             </li>
             <li className="nav-offset" onClick={e => setNavHighlight('cart')}>
-                <a 
+                <div 
                     onClick={() => toggleCartDrawer()} 
-                    href="#" 
                     className={navHighlight === "cart" && "active"}
                     onMouseEnter={handleMouseHover2}
                     onMouseLeave={handleMouseHover2}
                 >
                     {navHighlight === "cart" || isHovering2 ? (
-                        <div style={isHovering2 && navHighlight !== "cart" ? {
-                            height: '40px', width:'40px', borderRadius:'56px', background:'#bebebe', color:'#fff', textAlign:'center', display:'flex', justifyContent:'center', alignItems:'center'
-                        } : {
-                            height: '40px', width:'40px', borderRadius:'56px', background:'#333', color:'#fff', textAlign:'center', display:'flex', justifyContent:'center', alignItems:'center'
-                        }}>
+                        <div style={{height: '40px', fontSize:'1rem', width:'40px', borderRadius:'56px', color:'#ff4b2b', textAlign:'center', display:'flex', justifyContent:'center', alignItems:'center'}}>
                             <i class="fas fa-shopping-cart"></i>
                         </div>
                     ) : (
-                        <div style={{height: '40px', width:'40px', borderRadius:'56px', background:'#fff', textAlign:'center', display:'flex', justifyContent:'center', alignItems:'center'}}>
+                        <div style={{height: '40px', fontSize:'1rem', width:'40px', borderRadius:'56px', background:'#fff', textAlign:'center', display:'flex', justifyContent:'center', alignItems:'center'}}>
                             <i class="fas fa-shopping-cart"></i>
                         </div>
                     )}
-                </a>
+                </div>
+
+                {cartPopup && (
+                    <div className="cartPopup" style={{height: menuHeight}}>
+                        <CSSTransition 
+                            in={activeMenu === 'main'} 
+                            unmountOnExit 
+                            timeout={500}
+                            classNames="menu-primary"
+                            onEnter={calcHeight}
+                        >
+                            <div className="menu">
+                                <img src={sampleImg} style={{height:'100px', width:'100px', margin:'15px', zIndex:'0'}} alt="product" />
+                                <div className="cart-popup-overlay">
+                                    <h2 style={{fontSize:'20px'}}>Added!</h2>
+                                </div>
+                            </div>
+                        </CSSTransition>
+
+                        {/* <CSSTransition 
+                            in={activeMenu === 'profile'} 
+                            unmountOnExit 
+                            timeout={500}
+                            classNames="menu-secondary"
+                            onEnter={calcHeight}
+                        >
+                            <div className="menu">
+                                <a href="#" className="menu-item" onClick={() => setActiveMenu('main')}>
+                                    <i class="fas fa-arrow-left"></i>
+                                </a>
+                                <Link to="/profile" className="menu-item">
+                                    <div style={{background:'#333', height:'50px', width:'50px', borderRadius:'50px'}}></div>
+                                    <div style={{marginLeft:'1rem'}}>
+                                        <p style={{margin:0}}>Tunde Adepitan</p>
+                                        <p style={{margin:0}}>4.5 / 5 stars</p>
+                                    </div>
+                                </Link>
+                                <Link to="/profile/payments" className="menu-item">
+                                    payment
+                                </Link>
+                                <Link to="/profile/addresses" className="menu-item">
+                                    address
+                                </Link>
+                                <Link to="/profile/orders" className="menu-item">
+                                    My Orders
+                                </Link>
+                                <Link to="/profile/settings" className="menu-item">
+                                    <i className="fas fa-cog"></i>{' '}
+                                    Settings
+                                </Link>
+                            </div>
+                        </CSSTransition> */}
+                    </div>
+                )}
 
                 {/* {cart && (
                     <div className="dropdown" style={{height: menuHeight}}>
@@ -228,7 +364,7 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                 <a href="https://business.cardboardexpress.com" target="_blank" style={{fontSize:'1rem'}} className="cta" to="/business">Business</a>
             </li>
             <li className="nav-offset">
-                <a href="https://www.cardboardexpress.com/login" target="_blank" style={{fontSize:'1rem'}} className="cta">Login</a>
+                <a href="https://www.cardboardexpress.com/login" style={{fontSize:'1rem'}} className="cta">Login</a>
             </li>
             {/* <li className="nav-offset">
                 <Link style={{fontSize:'1rem'}} className="cta" to="/blog">Blog</Link>
@@ -245,25 +381,54 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
     );
 
     const authMobileLinks = (
-        <Fragment>
-            <li className={navHighlight === "home" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('home')}>
-                <a href="https://www.cardboardexpress.com/home" className={navHighlight === "home" && "active"}>
-                    <i class="fas fa-home"></i>
+        <div className="nav-mobile-links">
+            <li className="nav-offset" onClick={e => setNavHighlight('home')}>
+                <a href="localhost:3000/home">
+                    {navHighlight === "home" ? (
+                        <i style={{marginLeft:'-8px', color:'#ff4b2b', fontSize:'22px'}} class="fas fa-home"></i>
+                    ) : (
+                        <i style={{marginLeft:'-8px', fontSize:'22px'}} class="fas fa-home"></i>
+                    )}
                 </a>
             </li>
-            {/* <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
+            <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
                 <Link to="/explore">
-                    <i class="far fa-compass"></i>
+                    <i style={{marginLeft:'-8px', fontSize:'22px'}} class="far fa-compass"></i>
                 </Link>
-            </li> */}
-            <li className={navHighlight === "profile" ? "nav-offset active" : "nav-offset"} onClick={toggleAuth}>
-                <a href="#">
-                    <i className="fas fa-user-circle"></i>
+            </li>
+            <li className="nav-offset" onClick={e => setNavHighlight('profile')}>
+                <div  
+                    style={{marginLeft:'-8px', display:'flex', alignItems:'center', justifyContent:'center'}}
+                    className={navHighlight === "profile" && "active"}
+                    onMouseEnter={handleMouseHover}
+                    onMouseLeave={handleMouseHover}
+                >
+                    {navHighlight === "profile" || isHovering ? (
+                        <Fragment>
+                            <Link to="/profile">
+                                <div className="profile-circle">
+                                    <p style={{fontWeight:'bold', color:'#333'}}>T</p>
+                                </div>
+                            </Link>
+                        </Fragment>
+                        ) 
+                        : (
+                            <Fragment>
+                                <div style={{display:'flex', justifyContent:'center', paddingTop:'20px', alignItems:'center', width:'40px', height:'40px', borderRadius:'50%', background:'#ececec', border:'2px solid #ff4b2b'}}>
+                                    <p style={{fontWeight:'bold', color:'#333'}}>T</p>
+                                </div>
+                            </Fragment>
+                        )}
+                </div>
+            </li>
+            <li className={navHighlight === "favorited" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('favorited')}>
+                <a href="localhost:3000/profile/saved">
+                    <i style={{marginLeft:'-14px', fontSize:'22px'}} class="far fa-heart"></i>
                 </a>
             </li>
             <li onClick={toggleCart}>
                 <a href="#">
-                    <i class="fas fa-shopping-cart"></i>
+                    <i style={{marginLeft:'-14px', fontSize:'22px'}} class="fas fa-shopping-cart"></i>
                 </a>
             </li>
             {/* <Link className="cta" to="/register">
@@ -278,7 +443,7 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                 ) : (<i style={{fontSize:'1.5rem'}} className={backdrop ? "fas fa-bars nav-btn menu-btn close" : "fas fa-bars nav-btn menu-btn"} onClick={handleToggle}></i>
                 )}
             </div> */}
-        </Fragment>
+        </div>
     );
 
     const guestMobileLinks = (
@@ -302,6 +467,9 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
         <header>
             <div className="desktop">
                 <div className="nav">
+                    {/* <div style={{margin:'0 20px 0 1rem', cursor:'pointer'}}>
+                        <i style={{fontSize:'1rem'}} class="fas fa-bars"></i>
+                    </div> */}
                     <div className="branding">
                         <a href="https://www.cardboardexpress.com"><img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" /></a>
 
@@ -340,21 +508,9 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
             </div>
 
             {/** Mobile Only Nav */}
-            <div style={{height:'100%', width:'100%'}} className="mobile">
-                <div className="nav">
-                    <div className="branding">
-                        <a href="https://www.cardboardexpress.com"><img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" /></a>
-
-                        {/* <div className="social-container">
-                            <a href="https://instagram.com/cardboardexpress" target="_blank" className="social"><i className="fab fa-instagram"></i></a>
-                            <a href="https://www.facebook.com/Cardboard-Express-106068867830320/?view_public_for=106068867830320" target="_blank" className="social"><i className="fab fa-facebook-f"></i></a>
-                            <a href="https://twitter.com/cardboardxpress" target="_blank" className="social"><i className="fab fa-twitter"></i></a>
-                        </div> */}
-                    </div>
-                    
-                    <div style={{display:'flex', justifyContent: "flex-end"}}>
-                        { !loading && ( isAuthenticated ? authMobileLinks : guestMobileLinks )}
-                    </div>
+            <div style={{height:'100%', width:'100%'}} className="mobile"> 
+                <div className="nav-mobile">
+                    { !loading && ( isAuthenticated ? authMobileLinks : guestMobileLinks )}
                 </div>
             </div>
             <div className={isOpen ? "nav-bar show-nav" : "nav-bar"}>

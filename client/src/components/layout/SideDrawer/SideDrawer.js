@@ -93,7 +93,7 @@ const SideDrawer = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, ge
         <nav className={drawerClasses}>
             <div style={{display:'flex'}}>
                 { !loading && (<Fragment>{authLinks}</Fragment>) }
-                <div style={{margin:'0 0 0 1rem', width:'100%',}}>
+                {/* <div style={{margin:'0 0 0 1rem', width:'100%',}}>
                     <button style={{marginBottom:'1rem'}}>Checkout</button>
                     <div style={{display:'grid', gridTemplateColumns:'repeat(4,1fr)', gridGap:'10px', height:'100px', width:'100%', padding:'10px', alignItems:'center', borderBottom:'1px solid #cecece'}}>
                         <div style={{display:'flex', height:'100%', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
@@ -143,7 +143,7 @@ const SideDrawer = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, ge
                         </div>
                         <i style={{color:'#ff4b2b'}} className="fas fa-times"></i>
                     </div>
-                </div>
+                </div> */}
             </div>
         </nav>
     )

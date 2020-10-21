@@ -65,6 +65,25 @@ export const getStoreById = Id => async dispatch => {
     }
 }
 
+// Get stores user current user subscribed too
+export const getStoreSubscriptions = id => async dispatch => {
+    dispatch({ type: CLEAR_STORE });
+
+    try {
+        const res = await axios.get(`/api/stores/subscriptions/${id}`);
+
+        dispatch({
+            type: GET_STORES,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: GET_STORES,
+            payload: []
+        })
+    }
+};
+
 // Get Filtered tags
 export const getStoresByTag = (filter) => async dispatch =>  {
     dispatch({ type: CLEAR_STORES });

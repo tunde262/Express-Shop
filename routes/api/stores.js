@@ -362,6 +362,20 @@ router.delete('/:id', auth, async (req, res) => {
     }
 });
 
+// @route GET api/stores/subscriptions/:id
+// @desc Get stores current user is subscribed too
+// @access Private
+router.get('/subscriptions/:id', auth, async (req, res) => {
+    try {
+        const stores = await Store.find({favorites: {$elemMatch: {user:req.params.id}}});
+
+        res.json(stores);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
 // ---- Interactions -----
 
 // @route PUT api/stores/favorite/:id

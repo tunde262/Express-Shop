@@ -138,7 +138,7 @@ const ProductCard = ({ auth: { user }, addLike, liked, modalOpen, product, handl
                                 </button> */}
                                 {liked ? (
                                     <button 
-                                        onClick={() => addLike(_id)} 
+                                        onClick={() => handleLike(product)} 
                                         style={{
                                             background:'#ff4b2b', 
                                             color:'#fff', 

@@ -18,6 +18,7 @@ import { setNav1, setNav2, setNav3 } from '../actions/navActions';
 const CollectionPage = ({ handleTags, clearProducts, product, auth: { isAuthenticated, user, loading }, setNav1, setNav2, setNav3 }) => {
 
     const [skip, setSkip] = useState(0);
+    const [tableShow1, setTableShow1] = useState('for you');
     const [productsLoaded, setProductsLoaded] = useState(false);
     const [maxSkip, setMaxSkip] = useState(null);
 
@@ -249,12 +250,31 @@ const CollectionPage = ({ handleTags, clearProducts, product, auth: { isAuthenti
 
         return (
             <Fragment>
-                <div onScroll={handleScroll} style={{height:"100vh", overflowY:'scroll'}}>
+                <div onScroll={handleScroll} style={{height:"100vh", overflowY:'scroll', background:'rgb(247, 247, 247)'}}>
                     {/* <Banner imgLarge={ImgLarge} imgSmall={ImgSmall} /> */}
-                    <Header />
-                    <hr />
+                    <ul class="home-underline store" style={{background:'#fff', margin:'0', border:'1px solid rgb(214, 214, 214)'}}>
+                        <div onClick={e => setTableShow1('for you')} className={tableShow1 === "for you" && "active"}><li><p>For You</p></li></div>
+                        <div onClick={e => setTableShow1('popular')} className={tableShow1 === "popular" && "active"}><li><p>Popular</p></li></div>
+                        <div onClick={e => setTableShow1('nearby')} className={tableShow1 === "nearby" && "active"}><li><p>Nearby</p></li></div>
+                    </ul>
+                    <div className="header-nav-container">
+                        <div style={{padding:'10px'}}>
+                            <h3 style={{fontSize:'12px', letterSpacing:'1px',color:'#808080'}}>
+                                Pick A Category
+                            </h3>
+                        </div>
+                        <div style={{marginTop:'-2rem'}}>
+                            <Header />
+                        </div>
+                    </div>
+                    <div className="filter-container">
+                        <span style={{fontSize:'15px', fontWeight:'bold', color:'#808080', letterSpacing:'2px', margin:'10px'}}>Filter</span>
+                        <i class="fas fa-sliders-h"></i>
+                    </div>
                     {/* <h1>Collection Page</h1> */}
-                    <Container title="Tops" category="tops" background="DeepSkyBlue" />
+                    <div className="product-list-container">
+                        <Container />
+                    </div>
                 </div>
                 {/* <Footer /> */}
                 {!loading && !isAuthenticated ? <AuthModal /> : null }

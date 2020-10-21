@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
@@ -10,12 +10,24 @@ import Orders from './Orders';
 import Saved from './Saved';
 import Settings from './Settings';
 import AuthModal from '../modals/AuthModal';
+import BrandOverview from '../Overview/brandOverview/BrandOverview';
 
-const Profile = ({ product, auth: { user, isAuthenticated, loading }, history}) => {
+import { getStoreSubscriptions } from '../../actions/storeActions';
+
+import sampleImg from '../../utils/imgs/20484728.jpeg';
+
+const Profile = ({ product, store, getStoreSubscriptions, auth: { user, isAuthenticated, loading }, history}) => {
     const [skip, setSkip] = useState(0);
-    const [tableShow1, setTableShow1] = useState('saved');
+    const [tableShow1, setTableShow1] = useState('completed');
+    const [tableShow2, setTableShow2] = useState('orders');
 
     const [sentMixpanel, setSentMixpanel] = useState(false);
+
+    useEffect(() => {
+        if(user) {
+            getStoreSubscriptions(user._id);
+        }
+    }, [user]);
 
 
     const handleMixpanel = () => {
@@ -36,11 +48,11 @@ const Profile = ({ product, auth: { user, isAuthenticated, loading }, history}) 
 
     let tableContent;
 
-    if(tableShow1 === 'saved') {
+    if(tableShow2 === 'saved') {
         tableContent = <Saved />;
-    } else if(tableShow1 === 'settings') {
+    } else if(tableShow2 === 'settings') {
         tableContent = <Settings /> 
-    } else if(tableShow1 === 'orders') {
+    } else if(tableShow2 === 'orders') {
         tableContent = <Orders /> 
     }
 
@@ -176,15 +188,95 @@ const Profile = ({ product, auth: { user, isAuthenticated, loading }, history}) 
 
     return (
         <Fragment>
-            <div onScroll={handleScroll} style={{height:"100vh", overflowY:'scroll'}}>
+            {/* <div onScroll={handleScroll} style={{height:"100vh", overflowY:'scroll'}}>
                 <div style={{textAlign:'center', marginTop:'1rem'}} class="container-fluid">
                     <h3 style={{color: '#333', fontWeight:'300'}}>Hey, {user && user.name}</h3>
-                    <ul class="nav-underline">
-                        <li onClick={e => setTableShow1('saved')} className={tableShow1 === "saved" ? "active" : "nav-underline-item"}><i className="fas fa-heart"></i><p>Saved</p></li>
-                        <li onClick={e => setTableShow1('orders')} className={tableShow1 === "orders" ? "active" : "nav-underline-item"}><i class="fas fa-history"></i><p>My Orders</p></li>
-                        <li onClick={e => setTableShow1('settings')} className={tableShow1 === "settings" ? "active" : "nav-underline-item"}><i class="fas fa-cog"></i><p>Settings</p></li>
+                    <ul class="profile-underline">
+                        <div onClick={e => setTableShow1('orders')} className={tableShow1 === "orders" && "active"}><li><i class="fas fa-history"></i></li></div>
+                        <div onClick={e => setTableShow1('payments')} className={tableShow1 === "payments" && "active"}><li><p>Payment</p></li></div>
+                        <div onClick={e => setTableShow1('addresses')} className={tableShow1 === "addresses" && "active"}><li><p>Address</p></li></div>
+                        <div onClick={e => setTableShow1('subcriptions')} className={tableShow1 === "subcriptions" && "active"}><li><p>Subcriptions</p></li></div>
+                        <div onClick={e => setTableShow1('settings')} className={tableShow1 === "settings" && "active"}><li><i class="fas fa-cog"></i></li></div>
                     </ul>
                     {tableContent}
+                </div>
+            </div> */}
+            <div style={{textAlign:'center', marginTop:'1rem'}} class="container-fluid">
+                {/* <h3 style={{color: '#333', fontWeight:'300'}}>Hey, {user && user.name}</h3> */}
+                <div className="profile-table">
+                    <div className="profile-table-nav">
+                        <div>
+                            <h3 style={{fontWeight:'600'}}>Hey, {user && user.name}</h3>
+                        </div>
+                        <div>
+                            <h3 style={{fontWeight:'600'}}>Orders</h3>
+                            <p>Track, manage, & return</p>
+                        </div>
+                        <div>
+                            <h3>Payments</h3>
+                            <p>Add payment methods</p>
+                        </div>
+                        <div>
+                            <h3>Addresses</h3>
+                            <p>Add new address</p>
+                        </div>
+                        <div>
+                            <h3>Subscriptions</h3>
+                            <p>Manage repeat deliveries</p>
+                        </div>
+                        <div>
+                            <h3>Settings</h3>
+                            <p>Password, name, etc.</p>
+                        </div>
+                    </div>
+                    <div className="profile-table-main desktop-column">
+                        <div className="profile-table-header">
+                            <div>
+                                <p>Account / Orders</p>
+                            </div>
+                            <div>
+                                <h3>Orders</h3>
+                            </div>
+                            <div>
+                                <ul class="profile-underline">
+                                    <div 
+                                        onClick={e => setTableShow1('completed')} className={tableShow1 === "completed" && "active"}
+                                    >
+                                        <li><p>Completed</p></li>
+                                    </div>
+                                    <div 
+                                        onClick={e => setTableShow1('in progress')} className={tableShow1 === "in progress" && "active"}
+                                    >
+                                        <li><p>In Progress</p></li>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                        <div className="profile-table-body">
+                            <div className="filter-container profile">
+                                <span style={{fontSize:'15px', fontWeight:'bold', color:'#808080', letterSpacing:'2px', margin:'10px'}}>Filter</span>
+                                <i class="fas fa-sliders-h"></i>
+                            </div>
+                            <div style={{background:'#fff', border:'1px solid #e8e8e8'}}>
+                                <BrandOverview title={`Recently purchased from`} stores={store.stores} />
+                            </div>
+
+                            <div style={{marginTop:'1rem', width:'100%', padding:'10px', display:'flex', justifyContent:'space-around'}}>
+                                <div style={{width:'100%', height:'100%', display:'flex', justifyContent:'center'}}> 
+                                    <h3 style={{color: '#333',fontWeight: '300',fontSize: '14px'}}>Date</h3>
+                                </div>
+                                <div style={{width:'100%', height:'100%', display:'flex', justifyContent:'center'}}> 
+                                    <h3 style={{color: '#333',fontWeight: '300',fontSize: '14px'}}>Products</h3>
+                                </div>
+                                <div style={{width:'100%', height:'100%', display:'flex', justifyContent:'center'}}> 
+                                    <h3 style={{color: '#333',fontWeight: '300',fontSize: '14px'}}>Order Total</h3>
+                                </div>
+                                <div style={{width:'100%', height:'100%', display:'flex', justifyContent:'center'}}> 
+                                </div>
+                            </div>
+                            {tableContent}
+                        </div>
+                    </div>
                 </div>
             </div>
             {!loading && !isAuthenticated ? <AuthModal /> : null }
@@ -195,11 +287,14 @@ const Profile = ({ product, auth: { user, isAuthenticated, loading }, history}) 
 Profile.propTypes = {
     auth: PropTypes.object.isRequired,
     product: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired,
+    getStoreSubscriptions: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
     auth: state.auth,
-    product: state.product
+    product: state.product,
+    store: state.store
 });
 
-export default connect(mapStateToProps)(withRouter(Profile));
+export default connect(mapStateToProps, {getStoreSubscriptions})(withRouter(Profile));
