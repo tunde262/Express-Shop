@@ -904,7 +904,8 @@ header {
   grid-template-areas: "sections main";
   width: 100%;
   background: #f7f7f7;
-  border: 1px solid #d6d6d6; }
+  border: 1px solid #d6d6d6;
+  margin-top: 5rem; }
   .profile-table .profile-table-nav {
     grid-area: sections;
     width: 100%;

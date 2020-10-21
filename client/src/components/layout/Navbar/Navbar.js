@@ -81,7 +81,7 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
     const authLinks = (
         <Fragment>
             <li className={navHighlight === "favorited" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('favorited')}>
-                <Link to="/profile/saved">
+                <a href="https://www.cardboardexpress.com/profile/saved">
                     <div
                         onMouseEnter={handleMouseHoverHeart}
                         onMouseLeave={handleMouseHoverHeart}
@@ -93,36 +93,34 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                         )}
                         
                     </div>  
-                </Link>
+                </a>
             </li>
             <li className={navHighlight === "categories" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('categories')}>
-                <a href="#">
-                    <div 
-                        onMouseEnter={handleMouseHoverCat}
-                        onMouseLeave={handleMouseHoverCat}
-                        style={{marginRight:'-14px'}}
-                    >
-                        {navHighlight === "categories" || isHoveringCat ? (
+                <div 
+                    onMouseEnter={handleMouseHoverCat}
+                    onMouseLeave={handleMouseHoverCat}
+                    style={{marginRight:'-14px'}}
+                >
+                    {navHighlight === "categories" || isHoveringCat ? (
+                        <div style={{display:'flex', alignItems:'center'}}>
                             <div style={{display:'flex', alignItems:'center'}}>
-                                <div style={{display:'flex', alignItems:'center'}}>
-                                    <i style={{color:'#ff4b2b', fontSize:'1rem'}} class="fas fa-ellipsis-v"></i>
-                                    <i style={{color:'#ff4b2b', fontSize:'1rem'}} class="fas fa-ellipsis-v"></i>
-                                    <i style={{color:'#ff4b2b', fontSize:'1rem'}} class="fas fa-ellipsis-v"></i>
-                                </div>
-                                <p style={{margin:'10px', color:'#ff4b2b', fontSize:'12px'}}>Categories</p>
+                                <i style={{color:'#ff4b2b', fontSize:'1rem'}} class="fas fa-ellipsis-v"></i>
+                                <i style={{color:'#ff4b2b', fontSize:'1rem'}} class="fas fa-ellipsis-v"></i>
+                                <i style={{color:'#ff4b2b', fontSize:'1rem'}} class="fas fa-ellipsis-v"></i>
                             </div>
-                        ) : (
+                            <p style={{margin:'10px', color:'#ff4b2b', fontSize:'12px'}}>Categories</p>
+                        </div>
+                    ) : (
+                        <div style={{display:'flex', alignItems:'center'}}>
                             <div style={{display:'flex', alignItems:'center'}}>
-                                <div style={{display:'flex', alignItems:'center'}}>
-                                    <i style={{fontSize:'1rem'}}  class="fas fa-ellipsis-v"></i>
-                                    <i style={{fontSize:'1rem'}}  class="fas fa-ellipsis-v"></i>
-                                    <i style={{fontSize:'1rem'}}  class="fas fa-ellipsis-v"></i>
-                                </div>
-                                <p style={{margin:'10px', fontSize:'12px'}}>Categories</p>
+                                <i style={{fontSize:'1rem'}}  class="fas fa-ellipsis-v"></i>
+                                <i style={{fontSize:'1rem'}}  class="fas fa-ellipsis-v"></i>
+                                <i style={{fontSize:'1rem'}}  class="fas fa-ellipsis-v"></i>
                             </div>
-                        )}
-                    </div>
-                </a>
+                            <p style={{margin:'10px', fontSize:'12px'}}>Categories</p>
+                        </div>
+                    )}
+                </div>
             </li>
             <li className="nav-offset" onClick={e => setNavHighlight('profile')}>
                 <div  
@@ -133,11 +131,11 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                 >
                     {navHighlight === "profile" || isHovering ? (
                         <Fragment>
-                            <Link to="/profile">
+                            <a href="https://www.cardboardexpress.com/profile">
                                 <div className="profile-circle">
                                     <p style={{fontWeight:'bold', color:'#333'}}>T</p>
                                 </div>
-                            </Link>
+                            </a>
                             <div 
                                 className="profile-toggle"
                                 onClick={() => setDropdown(!dropdown)}
@@ -151,15 +149,17 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                         ) 
                         : (
                             <Fragment>
-                                <div style={{display:'flex', justifyContent:'center', paddingTop:'20px', alignItems:'center', width:'40px', height:'40px', borderRadius:'50%', background:'#ececec', border:'2px solid #ff4b2b'}}>
-                                    <p style={{fontWeight:'bold', color:'#333'}}>T</p>
-                                </div>
+                                <a href="https://www.cardboardexpress.com/profile">
+                                    <div style={{display:'flex', justifyContent:'center', paddingTop:'20px', alignItems:'center', width:'40px', height:'40px', borderRadius:'50%', background:'#ececec'}}>
+                                        <p style={{fontWeight:'bold', color:'#333'}}>T</p>
+                                    </div>
+                                </a>
                                 <div 
                                     className="profile-toggle"
                                     onClick={() => setDropdown(!dropdown)}
                                 >
                                     <i 
-                                        style={{fontSize:'14px'}} 
+                                        style={{fontSize:'14px', color:'#808080'}} 
                                         class="fas fa-chevron-down"
                                     ></i>
                                 </div>
@@ -383,38 +383,38 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
     const authMobileLinks = (
         <div className="nav-mobile-links">
             <li className="nav-offset" onClick={e => setNavHighlight('home')}>
-                <a href="localhost:3000/home">
+                <a href="https://www.cardboardexpress.com/home">
                     {navHighlight === "home" ? (
-                        <i style={{marginLeft:'-8px', color:'#ff4b2b', fontSize:'22px'}} class="fas fa-home"></i>
+                        <i style={{color:'#ff4b2b', fontSize:'22px'}} class="fas fa-home"></i>
                     ) : (
-                        <i style={{marginLeft:'-8px', fontSize:'22px'}} class="fas fa-home"></i>
+                        <i style={{fontSize:'22px'}} class="fas fa-home"></i>
                     )}
                 </a>
             </li>
             <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
-                <Link to="/explore">
-                    <i style={{marginLeft:'-8px', fontSize:'22px'}} class="far fa-compass"></i>
-                </Link>
+                <a href="https://www.cardboardexpress.com/explore">
+                    <i style={{fontSize:'22px'}} class="far fa-compass"></i>
+                </a>
             </li>
             <li className="nav-offset" onClick={e => setNavHighlight('profile')}>
                 <div  
-                    style={{marginLeft:'-8px', display:'flex', alignItems:'center', justifyContent:'center'}}
+                    style={{display:'flex', alignItems:'center', justifyContent:'center'}}
                     className={navHighlight === "profile" && "active"}
                     onMouseEnter={handleMouseHover}
                     onMouseLeave={handleMouseHover}
                 >
                     {navHighlight === "profile" || isHovering ? (
                         <Fragment>
-                            <Link to="/profile">
+                            <a href="https://www.cardboardexpress.com/profile">
                                 <div className="profile-circle">
                                     <p style={{fontWeight:'bold', color:'#333'}}>T</p>
                                 </div>
-                            </Link>
+                            </a>
                         </Fragment>
                         ) 
                         : (
                             <Fragment>
-                                <div style={{display:'flex', justifyContent:'center', paddingTop:'20px', alignItems:'center', width:'40px', height:'40px', borderRadius:'50%', background:'#ececec', border:'2px solid #ff4b2b'}}>
+                                <div className="profile-circle">
                                     <p style={{fontWeight:'bold', color:'#333'}}>T</p>
                                 </div>
                             </Fragment>
@@ -423,12 +423,12 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
             </li>
             <li className={navHighlight === "favorited" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('favorited')}>
                 <a href="localhost:3000/profile/saved">
-                    <i style={{marginLeft:'-14px', fontSize:'22px'}} class="far fa-heart"></i>
+                    <i style={{marginLeft:'-6px', fontSize:'22px'}} class="far fa-heart"></i>
                 </a>
             </li>
             <li onClick={toggleCart}>
                 <a href="#">
-                    <i style={{marginLeft:'-14px', fontSize:'22px'}} class="fas fa-shopping-cart"></i>
+                    <i style={{marginLeft:'-6px', fontSize:'22px'}} class="fas fa-shopping-cart"></i>
                 </a>
             </li>
             {/* <Link className="cta" to="/register">
