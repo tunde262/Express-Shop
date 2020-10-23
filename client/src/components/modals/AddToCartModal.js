@@ -29,6 +29,12 @@ const AddToCartModal = ({closeModal, product}) => {
 
     let modal;
 
+    const bg = {
+        overlay: {
+          background: "rgba(255,255,255,0.5)"
+        }
+    };
+
     if(!modalOpen) {
         modal = null;
     }
@@ -36,7 +42,7 @@ const AddToCartModal = ({closeModal, product}) => {
         const { title, img_gallery, price } = modalProduct;
 
         modal = (
-            <Modal open={modalOpen} onClose={handleModalClose} center>
+            <Modal open={modalOpen} onClose={handleModalClose} center styles={bg}>
                 <div className="checkout-modal">
                     <div className="checkout-modal-main">
                         <div className="checkout-confirmed"><p>Quick Checkout</p></div>

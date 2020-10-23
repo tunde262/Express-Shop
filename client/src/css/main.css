@@ -881,6 +881,9 @@ header {
   background: #ececec;
   border: 2px solid #ff4b2b;
   cursor: pointer; }
+  .profile-circle.big {
+    width: 150px;
+    height: 150px; }
   .profile-circle:hover {
     background: #e2e2e2; }
 
@@ -923,7 +926,10 @@ header {
       flex-direction: column;
       align-items: flex-start;
       justify-content: center;
-      padding: 20px 16px 0 16px; }
+      padding: 20px 16px 0 16px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis; }
       .profile-table .profile-table-nav > div:first-child {
         align-items: center;
         padding: 0 16px; }
@@ -934,6 +940,12 @@ header {
         color: #333333; }
       .profile-table .profile-table-nav > div p {
         color: #808080; }
+    .profile-table .profile-table-nav .profile-table-nav-items:hover {
+      background: #f7f7f7;
+      cursor: pointer; }
+    .profile-table .profile-table-nav .profile-table-nav-items.active {
+      background: #f7f7f7;
+      cursor: pointer; }
   .profile-table .profile-table-main {
     width: 100%;
     height: 100%;
@@ -2106,6 +2118,11 @@ header {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical; }
 
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical; }
+
 .store-details {
   width: 100%;
   margin: 1rem;
@@ -2368,6 +2385,24 @@ header {
       width: 100%;
       justify-content: space-between;
       align-items: center; }
+
+.profile-settings-container {
+  margin: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+  .profile-settings-container .profile-settings-box {
+    width: 100%;
+    padding: 2rem; }
+    .profile-settings-container .profile-settings-box h2 {
+      color: #333;
+      font-family: 'Open Sans', sans-serif; }
+    .profile-settings-container .profile-settings-box .profile-settings-box-element {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      margin: 1rem 0;
+      width: 100%; }
 
 .stats {
   margin: 2rem 5rem 1rem 5rem; }

@@ -207,7 +207,7 @@ router.delete('/:id', auth, async (req, res) => {
 // @desc Add to profile address book
 // @access Private
 router.put('/address_book', [ auth, [
-    check('street', 'Street is required').not().isEmpty(),
+    check('address_1', 'Address 1 is required').not().isEmpty(),
     check('city', 'City is required').not().isEmpty(),
     check('state', 'State is required').not().isEmpty(),
     check('zipcode', 'Zipcode is required').not().isEmpty(),
@@ -218,12 +218,34 @@ router.put('/address_book', [ auth, [
     }
 
     const {
-        name, street, city, state, zipcode
+        address_name,
+        first_name,
+        last_name,
+        address_1,
+        address_2,
+        city,
+        state,
+        country,
+        zipcode,
+        phone,
+        delivery_instructions,
+        active
     } = req.body;
 
-    const newAddress = {
-        name, street, city, state, zipcode
-    };
+    // Build profile object
+    const newAddress = {};
+    if(address_name) newAddress.address_name = address_name;
+    if(first_name) newAddress.first_name = first_name;
+    if(last_name) newAddress.last_name = last_name;
+    if(address_1) newAddress.address_1 = address_1;
+    if(address_2) newAddress.address_2 = address_2;
+    if(city) newAddress.city = city;
+    if(state) newAddress.state = state;
+    if(country) newAddress.country = country;
+    if(zipcode) newAddress.zipcode = zipcode;
+    if(phone) newAddress.phone = phone;
+    if(delivery_instructions) newAddress.delivery_instructions = delivery_instructions;
+    if(active) newAddress.active = active;
 
     try {
         const profile = await Profile.findOne({ user: req.user.id });

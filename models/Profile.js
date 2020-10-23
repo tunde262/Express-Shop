@@ -23,23 +23,46 @@ const ProfileSchema = new Schema({
     },
     address_book: [
         {
-            name: {
+            address_name: {
                 type: String,
+                required: true
             },
-            street: {
+            first_name: {
                 type: String,
+                required: true
+            },
+            last_name: {
+                type: String,
+                required: true
+            },
+            address_1: {
+                type: String,
+                required: true
+            },
+            address_2: {
+                type: String
             },
             city: {
                 type: String,
+                required: true
             },
             state: {
                 type: String,
+                required: true
+            },
+            country: {
+                type: String,
+                required: true
             },
             zipcode: {
-                type: Number,
+                type: String,
+                required: true
             },
-            apartment_number: {
-                type: Number
+            phone: {
+                type: String
+            },
+            delivery_instructions: {
+                type: String
             },
             active: {
                 type: Boolean,

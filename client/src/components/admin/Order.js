@@ -39,7 +39,7 @@ class Order extends Component {
             <div style={
                 {marginTop:'1rem', 
                 width:'100%', 
-                border:'1px solid #e8e8e8', 
+                borderBottom:'1px solid #e8e8e8', 
                 background:'#fff', 
                 height:'100px',
                 display:'flex', 

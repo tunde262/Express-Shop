@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 
 import mixpanel from 'mixpanel-browser';
 
-import Spinner from '../common/Spinner';
-import OrderList from '../admin/OrderList';
-import { BackButton } from '../common/BackButton';
+import Spinner from '../../common/Spinner';
+import OrderList from '../../admin/OrderList';
+import { BackButton } from '../../common/BackButton';
+import BrandOverview from '../../Overview/brandOverview/BrandOverview';
 
-const Orders = ({deleteAccount, auth: { user }, profile: {profile, loading }}) => {
+const Main_Pay = ({deleteAccount, store, auth: { user }, profile: {profile, loading }}) => {
 
     const [sentMixpanel, setSentMixpanel] = useState(false);
 
@@ -39,31 +40,21 @@ const Orders = ({deleteAccount, auth: { user }, profile: {profile, loading }}) =
         //     {orderList}
         // </div>
         <Fragment>
-            {loading && profile === null ? <Spinner /> : (
-                <Fragment>
-                    {profile !== null ? (
-                        <div id="profile-content-wrapper">
-                            <div class="store-main">
-                                {orderList}
-                            </div>
-                        </div>
-                    ) : (
-                        <h3>Sorry, we can't seem to find an account for you :(</h3>
-                    )}
-                </Fragment>
-            )}
+            <h2>Payments here</h2>
         </Fragment>
     )
 }
 
-Orders.propTypes = {
+Main_Pay.propTypes = {
     auth: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
     auth: state.auth,
-    profile: state.profile
+    profile: state.profile,
+    store: state.store
 });
 
-export default connect(mapStateToProps)(Orders);
+export default connect(mapStateToProps)(Main_Pay);

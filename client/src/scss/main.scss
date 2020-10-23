@@ -987,6 +987,11 @@ header {
     border: 2px solid #ff4b2b; 
     cursor: pointer;
 
+    &.big {
+        width: 150px; 
+        height: 150px; 
+    }
+
     &:hover {
         background: #e2e2e2; 
     }
@@ -1047,6 +1052,9 @@ header {
             align-items: flex-start;
             justify-content: center;
             padding: 20px 16px 0 16px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
 
             h3 {
                 color: #333; 
@@ -1057,6 +1065,18 @@ header {
 
             p {
                 color: #808080;
+            }
+        }
+
+        .profile-table-nav-items{
+            &:hover {
+                background: rgb(247, 247, 247);
+                cursor: pointer;
+            }
+
+            &.active {
+                background: rgb(247, 247, 247);
+                cursor: pointer;
             }
         }
     }
@@ -2662,6 +2682,12 @@ header {
     -webkit-box-orient: vertical;  
 }
 
+.line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;  
+}
+
 .store-details {
     width: 100%; 
     margin: 1rem;
@@ -3009,6 +3035,31 @@ header {
             width:100%; 
             justify-content:space-between; 
             align-items:center;
+        }
+    }
+}
+
+.profile-settings-container {
+    margin:10px; 
+    width:100%;
+    display:flex; 
+    flex-direction: column;
+    align-items:center;
+
+    .profile-settings-box {
+        width: 100%; 
+        padding:2rem;
+
+        h2 {
+            color:#333; 
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .profile-settings-box-element {
+            display:grid; 
+            grid-template-columns: 1fr 2fr 1fr;
+            margin:1rem 0; 
+            width:100%; 
         }
     }
 }
