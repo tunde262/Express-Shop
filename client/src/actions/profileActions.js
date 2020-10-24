@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { setAlert } from './alertActions';
 
-import { GET_PROFILE, GET_PROFILES, PROFILE_ERROR, UPDATE_PROFILE, CLEAR_PROFILE, ACCOUNT_DELETED } from './types';
+import { GET_PROFILE, GET_PROFILES, SET_SUBS, PROFILE_ERROR, UPDATE_PROFILE, CLEAR_PROFILE, ACCOUNT_DELETED } from './types';
 
 // Get Current users Profile 
 export const getCurrentProfile = () => async dispatch => {
@@ -90,6 +90,24 @@ export const createProfile = (formData, history, edit = false) => async dispatch
         });
     }
 }
+
+// Get & set profile users subscriptions
+export const getProfileSubscriptions = id => async dispatch => {
+
+    try {
+        const res = await axios.get(`/api/stores/subscriptions/${id}`);
+
+        dispatch({
+            type: SET_SUBS,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: SET_SUBS,
+            payload: []
+        })
+    }
+};
 
 // Add Address
 export const addAddress = formData => async dispatch => {

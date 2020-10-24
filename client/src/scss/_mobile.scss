@@ -293,13 +293,26 @@
         margin: 10px 0; 
     }
 
+    .store-header {
+        margin: 10px 0; 
+    }
+
     .product-list-container {
         margin: 10px 0; 
     }
 
     .store-details {
-        margin: 10px 0 1rem 0;
-        grid-template-columns: 1fr 1fr;
+        margin: 10px 0 0 0;
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            'titles'
+            'description'
+            'socials';
+        ;
+    }
+
+    .social-container {
+        display: none; 
     }
 
     .store-title {
@@ -319,6 +332,10 @@
 
     .store-actions {
         width: 98%;
+    }
+
+    .nav-underline.store {
+        margin: 0; 
     }
 
     .grid-rows {

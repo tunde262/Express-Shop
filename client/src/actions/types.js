@@ -76,6 +76,7 @@ export const GET_ORDERS = 'GET_ORDERS';
 // Profile
 export const GET_PROFILE = 'GET_PROFILE';
 export const GET_PROFILES = 'GET_PROFILES';
+export const SET_SUBS = 'SET_SUBS';
 export const PROFILE_ERROR = 'PROFILE_ERROR';
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 export const CLEAR_PROFILE = 'CLEAR_PROFILE';

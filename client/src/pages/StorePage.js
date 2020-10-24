@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getCart } from '../actions/productActions';
 import { favorite, getStoreById } from '../actions/storeActions';
+import { getProfileSubscriptions } from '../actions/profileActions';
 
 import mixpanel from 'mixpanel-browser';
 
@@ -14,20 +15,38 @@ import DefaultBanner from '../utils/imgs/placeholderimg.jpg';
 import Banner from '../components/common/Banner';
 
 
-const StorePage = ({getStoreById, favorite, store, product: { products, sortedProducts, loading }, auth: { user }, history, match}) => {
+const StorePage = ({getStoreById, getProfileSubscriptions, favorite, profile, store, product: { products, sortedProducts, loading }, auth: { user }, history, match}) => {
     const [toggleSocial, setToggleSocial] = useState(false);
     const [sentMixpanel, setSentMixpanel] = useState(false);
+    const [userLoaded, setUserLoaded] = useState(false);
+    const [subscribedToo, setSubscribedToo] = useState(false);
+    const [checkSub, setCheckSub] = useState(false);
 
     // Nav underline Table
     const [tableShow1, setTableShow1] = useState('shop');
+
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
     
     useEffect( async () => {
         getStoreById(match.params.id);
+        window.addEventListener('resize', () => handleWindowSizeChange());
+
+        return () => window.removeEventListener('resize', () => handleWindowSizeChange());
     }, []);
+
+    if(!userLoaded && user) {
+        getProfileSubscriptions(user._id);
+        setUserLoaded(true);
+    }  
 
     const goBack = () => {
         history.goBack();
     }
+
+    const handleWindowSizeChange = () => {
+        setWindowWidth(window.innerWidth);
+    };
 
     const handleMixpanel = () => {
         mixpanel.track("Store Page View", {
@@ -46,6 +65,7 @@ const StorePage = ({getStoreById, favorite, store, product: { products, sortedPr
 
     const handleSubscribe= (detailStore) => {
         favorite(detailStore._id);
+        setSubscribedToo(!subscribedToo);
 
         // Check if product already liked by same user
         if(detailStore.favorites.filter(favorite => favorite.user.toString() === user._id).length > 0) {
@@ -73,6 +93,22 @@ const StorePage = ({getStoreById, favorite, store, product: { products, sortedPr
         }
     }
 
+
+
+    const isMobile = windowWidth <= 769;
+
+    let buttonContent;
+
+    if(userLoaded && profile.subscriptions.length > 0 && !checkSub) {
+        profile.subscriptions.map(subscription => {
+            if (subscription._id === match.params.id.toString()) {
+                setSubscribedToo(true);
+            }
+        })
+        
+        setCheckSub(true);
+    }  
+
     return (
         <div style={{marginTop:'75px', background:'rgb(247, 247, 247)'}}>
             {store.loading && store.store === null ? <Spinner /> : (
@@ -80,7 +116,7 @@ const StorePage = ({getStoreById, favorite, store, product: { products, sortedPr
                     {store.store !== null ? (
                         <Fragment>  
                             {store !== null && <Banner imgLarge={DefaultBanner} imgSmall={DefaultBanner} />} 
-                            <div class="store-header container-fluid">
+                            <div>
                                 {/* <div id="breadcrumb">
                                     <nav className="breadcrumb">
                                         <ol>
@@ -96,7 +132,7 @@ const StorePage = ({getStoreById, favorite, store, product: { products, sortedPr
                                         </ol>
                                     </nav>
                                 </div> */}
-                                <div style={{background:'#fff', margin:'10px 0', border:'1px solid rgb(214, 214, 214)'}}>
+                                <div className="store-header">
                                     <div style={{display: 'flex', boxSizing:'border-box'}}>
                                         {store.store.img_name && <img className="store-img" src={`/api/stores/image/${store.store.img_name}`} alt="img" />}
                                         {/* <div style={{display:'flex'}}>
@@ -120,42 +156,82 @@ const StorePage = ({getStoreById, favorite, store, product: { products, sortedPr
                                             <div id="store-titles">
                                                 <div style={{display:'flex', alignItems:'center'}}>
                                                     <h2 className="store-title">{store.store.name}</h2>
-                                                    {store.store.social && (
+                                                    {store.store.social && !isMobile ? (
                                                         <div className="social-container desktop" style={{marginLeft:'1rem'}}>
                                                             {store.store.social.instagram && <a href={`${store.store.social.instagram}`} className="social" target="_blank"><i class="fab fa-instagram"></i></a>}
                                                             {store.store.social.facebook && <a href={`${store.store.social.facebook}`} className="social" target="_blank"><i class="fab fa-facebook-f"></i></a>}
                                                             {store.store.social.twitter && <a href={`${store.store.social.twitter}`} className="social" target="_blank"><i class="fab fa-twitter"></i></a>}
                                                         </div>
-                                                    )}
+                                                    ) : null}
                                                 </div>
                                                 
                                                 <p style={{color:'#808080', fontWeight:'600'}}>Wholesaler</p>
                                             </div>
                                             <p id="store-description" className="desktop" style={{color:'#808080'}}>{store.store.description}</p>
                                             
-                                            <div style={{display:'flex', alignItems:'center', justifyContent:'center'}} id="store-socials">
-                                                <button 
-                                                    style={{marginRight:'20px', display:'flex', alignItems:'center', justifyContent:'center'}}
-                                                    onClick={() => handleSubscribe(store.store)}
-                                                >
-                                                    Subscribe
-                                                    <i style={{marginLeft:'10px', fontSize:'12px'}} class="fas fa-plus"></i>
-                                                </button>
-                                                <svg style={{fill:'currentColor', strokeWidth:0, verticalAlign:'middle', color:'#333'}} height="20" width="20" viewBox="0 0 24 24" aria-label="Send" role="img"><path d="M21 14c1.1 0 2 .9 2 2v6c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2v-6c0-1.1.9-2 2-2s2 .9 2 2v4h14v-4c0-1.1.9-2 2-2zM8.82 8.84c-.78.78-2.05.79-2.83 0-.78-.78-.79-2.04-.01-2.82L11.99 0l6.02 6.01c.78.78.79 2.05.01 2.83-.78.78-2.05.79-2.83 0l-1.2-1.19v6.18a2 2 0 1 1-4 0V7.66L8.82 8.84z"></path></svg>
+                                            <div className="store-socials desktop" id="store-socials">
+                                                {subscribedToo ? (
+                                                    <button 
+                                                        className="active"
+                                                        onClick={() => handleSubscribe(store.store)}
+                                                    >
+                                                        Subscribed
+                                                        <i style={{marginLeft:'10px', fontSize:'12px'}} class="fas fa-check"></i>
+                                                    </button>
+                                                ) : (
+                                                    <button
+                                                        onClick={() => handleSubscribe(store.store)}
+                                                    >
+                                                        Subscribe
+                                                        <i style={{marginLeft:'10px', fontSize:'12px'}} class="fas fa-plus"></i>
+                                                    </button>
+                                                )}
+                                                <div style={{border:'1px solid #0098d3', background:'#0098d3', color:'#fff', display:'flex', justifyContent:'center', alignItems:'center', height:'40px', width:'35px', borderRadius:'5px'}}>
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </div>
+                                                {/* <svg style={{fill:'currentColor', strokeWidth:0, verticalAlign:'middle', color:'#333'}} height="20" width="20" viewBox="0 0 24 24" aria-label="Send" role="img"><path d="M21 14c1.1 0 2 .9 2 2v6c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2v-6c0-1.1.9-2 2-2s2 .9 2 2v4h14v-4c0-1.1.9-2 2-2zM8.82 8.84c-.78.78-2.05.79-2.83 0-.78-.78-.79-2.04-.01-2.82L11.99 0l6.02 6.01c.78.78.79 2.05.01 2.83-.78.78-2.05.79-2.83 0l-1.2-1.19v6.18a2 2 0 1 1-4 0V7.66L8.82 8.84z"></path></svg> */}
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="mobile" style={{marginBottom:'2rem'}}>
-                                        <p style={{color:'#808080'}}>{store.store.description}</p>
-                                    </div>
+                                    {isMobile && (
+                                        <Fragment>
+                                            <div id="store-description-mobile">
+                                                <p style={{color:'#808080'}}>{store.store.description}</p>
+                                            </div>
+                                            <div className="store-socials" id="store-socials-mobile">
+                                                {subscribedToo ? (
+                                                    <button 
+                                                        className="active"
+                                                        onClick={() => handleSubscribe(store.store)}
+                                                    >
+                                                        Subscribed
+                                                        <i style={{marginLeft:'10px', fontSize:'12px'}} class="fas fa-check"></i>
+                                                    </button>
+                                                ) : (
+                                                    <button
+                                                        onClick={() => handleSubscribe(store.store)}
+                                                    >
+                                                        Subscribe
+                                                        <i style={{marginLeft:'10px', fontSize:'12px'}} class="fas fa-plus"></i>
+                                                    </button>
+                                                )}
+                                                <div style={{border:'1px solid #0098d3', fontSize:'1.3rem', color:'#0098d3', display:'flex', justifyContent:'center', alignItems:'center', height:'40px', width:'55px', borderRadius:'5px', marginLeft:'10px'}}>
+                                                    <i class="fab fa-instagram"></i>
+                                                </div>
+                                                <div style={{border:'1px solid #0098d3', background:'#0098d3', color:'#fff', display:'flex', justifyContent:'center', alignItems:'center', height:'40px', width:'35px', borderRadius:'5px'}}>
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </div>
+                                            </div>
+                                        </Fragment>
+                                    )}
                                 </div>
-                                <ul class="nav-underline store" style={{background:'#fff', margin:'0', border:'1px solid rgb(214, 214, 214)'}}>
+                                <ul class="nav-underline store">
                                     <div onClick={e => setTableShow1('shop')} className={tableShow1 === "shop" && "active"}><li><i class="fas fa-shopping-bag"></i><p>Shop</p></li></div>
                                     {/* <div onClick={e => setTableShow1('review')} className={tableShow1 === "review" && "active"}><li><i class="fas fa-clipboard-list"></i><p>Reviews</p></li></div>
                                     <div onClick={e => setTableShow1('info')} className={tableShow1 === "info" && "active"}><li><i class="fas fa-info-circle"></i><p>Info</p></li></div> */}
                                 </ul>
                             </div>
-                            <div style={{background:'#fff', margin:'10px 15px', border:'1px solid rgb(214, 214, 214)'}}>
+                            <div className="product-list-container">
                                 <StoreMain admin='false' />
                             </div>
                             {/* <Footer /> */}
@@ -173,17 +249,20 @@ const StorePage = ({getStoreById, favorite, store, product: { products, sortedPr
 
 StorePage.propTypes = {
     getStoreById: PropTypes.func.isRequired,
+    getProfileSubscriptions: PropTypes.func.isRequired,
     getCart: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired,
     favorite: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
+    profile: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
     product: state.product,
     store: state.store,
-    auth: state.auth
+    auth: state.auth,
+    profile: state.profile
 });
 
-export default connect(mapStateToProps, { getStoreById, getCart, favorite })(StorePage);
+export default connect(mapStateToProps, { getStoreById, getProfileSubscriptions, getCart, favorite })(StorePage);

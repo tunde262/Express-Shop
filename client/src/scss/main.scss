@@ -2505,6 +2505,12 @@ header {
     grid-template-columns: repeat(3, 1fr);
     text-align: center; 
 
+    &.store {
+        background: #fff; 
+        margin: 0 10px; 
+        border: 1px solid rgb(214, 214, 214);
+    }
+
     &.store div li p{
         font-size: 1rem;
     }
@@ -2887,6 +2893,12 @@ header {
     -webkit-box-orient: vertical;  
 }
 
+.store-header {
+    background: #fff; 
+    margin: 10px; 
+    border: 1px solid rgb(214, 214, 214);
+}
+
 .store-details {
     width: 100%; 
     margin: 1rem;
@@ -2907,6 +2919,63 @@ header {
 
     #store-socials {
         grid-area: socials;
+    }
+}
+
+#store-socials-mobile {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 4fr 1fr 1fr;
+    margin: 1rem 0;
+    grid-gap: 10px;
+
+    button {
+        width: 100%;
+        background: #fff;
+        border: 1px solid #0098d3;
+        color: #0098d3;
+
+        &.active {
+            background: #0098d3;
+            color: #fff;
+        }
+    }
+}
+
+#store-description-mobile {
+    padding: 0 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    max-height: 50px;
+    overflow: hidden;
+}
+
+.store-socials {
+    display:flex; 
+    align-items: center; 
+    justify-content: center;
+    
+    button {
+        margin-right: 10px; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center;
+        background: #fff;
+        border: 1px solid #0098d3;
+        color: #0098d3;
+        width: 80%;
+        outline: none;
+
+        &.active, &.active:hover {
+            background: #0098d3;
+            color: #fff;
+            border-color: #0098d3;
+        }
+
+        &:hover {
+            background: #e8e8e8;
+        }
     }
 }
 
