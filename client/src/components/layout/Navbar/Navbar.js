@@ -390,32 +390,32 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                 </a>
             </li>
             <li className="nav-offset" onClick={e => setNavHighlight('profile')}>
-                <div  
-                    style={{display:'flex', alignItems:'center', justifyContent:'center'}}
-                    className={navHighlight === "profile" && "active"}
-                    onMouseEnter={handleMouseHover}
-                    onMouseLeave={handleMouseHover}
-                >
-                    {navHighlight === "profile" || isHovering ? (
-                        <Fragment>
-                            <a href="https://www.cardboardexpress.com/profile">
-                                <div className="profile-circle">
-                                    <p style={{fontWeight:'bold', color:'#333'}}>T</p>
-                                </div>
-                            </a>
-                        </Fragment>
-                        ) 
-                        : (
+                <a href="https://www.cardboardexpress.com/profile">
+                    <div  
+                        style={{display:'flex', alignItems:'center', justifyContent:'center'}}
+                        className={navHighlight === "profile" && "active"}
+                        onMouseEnter={handleMouseHover}
+                        onMouseLeave={handleMouseHover}
+                    >
+                        {navHighlight === "profile" || isHovering ? (
                             <Fragment>
-                                <div className="profile-circle">
-                                    <p style={{fontWeight:'bold', color:'#333'}}>T</p>
-                                </div>
+                                    <div className="profile-circle">
+                                        <p style={{fontWeight:'bold', color:'#333'}}>T</p>
+                                    </div>
                             </Fragment>
-                        )}
-                </div>
+                            ) 
+                            : (
+                                <Fragment>
+                                    <div className="profile-circle">
+                                        <p style={{fontWeight:'bold', color:'#333'}}>T</p>
+                                    </div>
+                                </Fragment>
+                            )}
+                    </div>
+                </a>
             </li>
             <li className={navHighlight === "favorited" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('favorited')}>
-                <a href="localhost:3000/profile/saved">
+                <a href="https://www.cardboardexpress.com/profile/saved">
                     <i style={{marginLeft:'-6px', fontSize:'22px'}} class="far fa-heart"></i>
                 </a>
             </li>
@@ -479,12 +479,12 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                             Home
                         </a>
                     </li>
-                    {/* <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
+                    <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
                         <Link to="/explore">
                             <i class="far fa-compass"></i>{' '}
                             Explore
                         </Link>
-                    </li> */}
+                    </li>
                     {/* <Link className="cta" to="/register">
                         {/* <button type="button" className="nav-btn nav-icon" onClick={drawerClickHandler}>
                             Sell
