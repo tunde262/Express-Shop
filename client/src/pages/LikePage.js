@@ -55,7 +55,7 @@ const LikePage = ({getLikedProducts, getStoreSubscriptions, setNav1, profile, st
                     </div>
                 </div>
                 
-                <div style={{margin:'10px', background:'#fff', border: '1px solid rgb(214, 214, 214)'}}>
+                <div className="product-list-container">
                     <div style={{padding:'10px 30px'}}>
                         <h5 style={{fontWeight:'300'}}>
                             Favorites
