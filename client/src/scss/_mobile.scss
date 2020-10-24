@@ -3,16 +3,20 @@
     .projects {
         grid-template-columns: repeat(4, 1fr);
     }
+
+    .profile-settings-box-form {
+        grid-template-columns: 1fr 2fr 1fr;
+    }
 }
 
 // Desktop & Laptops
 @include mediaLg {
-    .projects {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
     .cards {
         column-count: 4;
+    }
+
+    .profile-settings-box-form {
+        grid-template-columns: 1fr 2fr;
     }
 }
 
@@ -452,9 +456,13 @@
             "sections"
             "main";
 
-        .profile-table-main {
+        & > div:nth-child(2) {
             display: none;
         }
+    }
+
+    .profile-settings-box-form {
+        grid-template-columns: 1fr 2fr;
     }
 
     .profile {

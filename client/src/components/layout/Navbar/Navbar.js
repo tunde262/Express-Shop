@@ -95,7 +95,7 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                     </div>  
                 </a>
             </li>
-            <li className={navHighlight === "categories" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('categories')}>
+            {/* <li className={navHighlight === "categories" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('categories')}>
                 <div 
                     onMouseEnter={handleMouseHoverCat}
                     onMouseLeave={handleMouseHoverCat}
@@ -121,7 +121,7 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                         </div>
                     )}
                 </div>
-            </li>
+            </li> */}
             <li className="nav-offset" onClick={e => setNavHighlight('profile')}>
                 <div  
                     style={{display:'flex', alignItems:'center', justifyContent:'center'}}
@@ -177,7 +177,7 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                             onEnter={calcHeight}
                         >
                             <div className="menu">
-                                {/* <Link to="/profile" className="menu-item">
+                                <a href="#" className="menu-item" onClick={() => setActiveMenu('profile')}>
                                     <div style={{display:'flex', justifyContent:'center', paddingTop:'20px', alignItems:'center', width:'40px', height:'40px', borderRadius:'50%', background:'#ececec', border:'2px solid #ff4b2b'}}>
                                         <p style={{fontWeight:'bold', color:'#333'}}>T</p>
                                     </div>
@@ -185,8 +185,8 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                                         <p style={{margin:0}}>{user.name}</p>
                                         <p style={{margin:0}}>4.5 / 5 stars</p>
                                     </div>
-                                </Link>
-                                <hr style={{margin:'10px 0'}} /> */}
+                                </a>
+                                <hr style={{margin:'10px 0'}} />
                                 <Link to="/profile/saved" className="menu-item">
                                     <i className="fas fa-heart"></i>{' '}
                                     Saved
@@ -207,7 +207,7 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                             </div>
                         </CSSTransition>
 
-                        {/* <CSSTransition 
+                        <CSSTransition 
                             in={activeMenu === 'profile'} 
                             unmountOnExit 
                             timeout={500}
@@ -218,28 +218,21 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                                 <a href="#" className="menu-item" onClick={() => setActiveMenu('main')}>
                                     <i class="fas fa-arrow-left"></i>
                                 </a>
-                                <Link to="/profile" className="menu-item">
-                                    <div style={{background:'#333', height:'50px', width:'50px', borderRadius:'50px'}}></div>
-                                    <div style={{marginLeft:'1rem'}}>
-                                        <p style={{margin:0}}>Tunde Adepitan</p>
-                                        <p style={{margin:0}}>4.5 / 5 stars</p>
-                                    </div>
+                                <Link to="/profile/orders" className="menu-item">
+                                    My Orders
+                                </Link>
+                                <Link to="/profile/addresses" className="menu-item">
+                                    Saved Locations
                                 </Link>
                                 <Link to="/profile/payments" className="menu-item">
                                     payment
-                                </Link>
-                                <Link to="/profile/addresses" className="menu-item">
-                                    address
-                                </Link>
-                                <Link to="/profile/orders" className="menu-item">
-                                    My Orders
                                 </Link>
                                 <Link to="/profile/settings" className="menu-item">
                                     <i className="fas fa-cog"></i>{' '}
                                     Settings
                                 </Link>
                             </div>
-                        </CSSTransition> */}
+                        </CSSTransition>
                     </div>
                 )}
             </li>

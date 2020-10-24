@@ -48,7 +48,7 @@ const Main_Orders = ({deleteAccount, store, auth: { user }, profile: {profile, l
                 <BrandOverview title={`Recently purchased from`} stores={store.stores} />
             </div>
 
-            <div style={{background:'#fff', margin:'20px 0', border:'1px solid #e8e8e8'}}>
+            <div className="profile-orders-header">
                 <div style={{marginTop:'1rem', width:'100%', padding:'10px', display:'flex', justifyContent:'space-around'}}>
                     <div style={{width:'100%', height:'100%', display:'flex', justifyContent:'center'}}> 
                         <h3 style={{color: '#333',fontWeight: '300',fontSize: '14px'}}>Date</h3>

@@ -6,6 +6,20 @@ const ProfileSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'user'
     },
+    gender: {
+        type: String
+    },
+    birthday: {
+        month: {
+            type: String
+        },
+        day: {
+            type: Number
+        },
+        year: {
+            type: Number
+        },
+    },
     stores: [
         {
             store: {

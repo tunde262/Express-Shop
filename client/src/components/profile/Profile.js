@@ -52,11 +52,21 @@ const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { us
 
     const [active, setActive] = useState(false);
 
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
     useEffect(() => {
+        window.addEventListener('resize', () => handleWindowSizeChange());
         if(user) {
             getStoreSubscriptions(user._id);
         }
+
+        return () => window.removeEventListener('resize', () => handleWindowSizeChange());
     }, [user]);
+
+
+    const handleWindowSizeChange = () => {
+        setWindowWidth(window.innerWidth);
+    };
 
 
     const handleMixpanel = () => {
@@ -164,6 +174,89 @@ const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { us
         }
     };
 
+    const isMobile = windowWidth <= 769;
+
+    let navContent;
+
+    if(isMobile) {
+        navContent = (
+            <div className="mobile-profile-table-nav">
+                <Link to="/profile">
+                    <div>
+                        <h3 style={{fontWeight:'600'}}>Hey, {user && user.name}</h3>
+                    </div>
+                </Link>
+
+                <Link to="/profile/orders">
+                    <div onClick={e => setTableShow2('orders')} className={tableShow2 === "orders" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
+                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                            <h3 style={{fontWeight:'600'}}>Orders</h3>
+                            <p>Track, manage, & return</p>
+                        </div>
+                    </div>
+                </Link>
+                {/* <div onClick={e => setTableShow2('payments')} className={tableShow2 === "payments" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
+                    <h3>Payments</h3>
+                    <p>Add payment methods</p>
+                </div> */}
+                <Link to="/profile/addresses">
+                    <div onClick={e => setTableShow2('addresses')} className={tableShow2 === "addresses" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
+                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                            <h3>Addresses</h3>
+                            <p>Add new address</p>
+                        </div>
+                    </div>
+                </Link>
+                
+                <Link to="/profile/Subscriptions">
+                    <div onClick={e => setTableShow2('subscriptions')} className={tableShow2 === "subscriptions" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
+                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                            <h3>Subscriptions</h3>
+                            <p>Store subcriptions & repeat purchases</p>
+                        </div>
+                    </div>
+                </Link>
+                
+                <Link to="/profile/settings">
+                    <div onClick={e => setTableShow2('settings')} className={tableShow2 === "settings" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
+                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                            <h3>Settings</h3>
+                            <p>Password, name, etc.</p>
+                        </div>
+                    </div>
+                </Link>
+            </div>
+        )
+    } else {
+        navContent = (
+            <div className="profile-table-nav">
+                <div>
+                    <h3 style={{fontWeight:'600'}}>Hey, {user && user.name}</h3>
+                </div>
+                <div onClick={e => setTableShow2('orders')} className={tableShow2 === "orders" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
+                    <h3 style={{fontWeight:'600'}}>Orders</h3>
+                    <p>Track, manage, & return</p>
+                </div>
+                {/* <div onClick={e => setTableShow2('payments')} className={tableShow2 === "payments" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
+                    <h3>Payments</h3>
+                    <p>Add payment methods</p>
+                </div> */}
+                <div onClick={e => setTableShow2('addresses')} className={tableShow2 === "addresses" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
+                    <h3>Addresses</h3>
+                    <p>Add new address</p>
+                </div>
+                <div onClick={e => setTableShow2('subscriptions')} className={tableShow2 === "subscriptions" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
+                    <h3>Subscriptions</h3>
+                    <p>Store subcriptions & repeat purchases</p>
+                </div>
+                <div onClick={e => setTableShow2('settings')} className={tableShow2 === "settings" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
+                    <h3>Settings</h3>
+                    <p>Password, name, etc.</p>
+                </div>
+            </div>
+        )
+    }
+
     return (
         <Fragment>
             {/* <div onScroll={handleScroll} style={{height:"100vh", overflowY:'scroll'}}>
@@ -182,31 +275,7 @@ const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { us
             <div style={{textAlign:'center', marginTop:'1rem'}} class="container-fluid">
                 {/* <h3 style={{color: '#333', fontWeight:'300'}}>Hey, {user && user.name}</h3> */}
                 <div className="profile-table">
-                    <div className="profile-table-nav">
-                        <div>
-                            <h3 style={{fontWeight:'600'}}>Hey, {user && user.name}</h3>
-                        </div>
-                        <div onClick={e => setTableShow2('orders')} className={tableShow2 === "orders" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                            <h3 style={{fontWeight:'600'}}>Orders</h3>
-                            <p>Track, manage, & return</p>
-                        </div>
-                        {/* <div onClick={e => setTableShow2('payments')} className={tableShow2 === "payments" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                            <h3>Payments</h3>
-                            <p>Add payment methods</p>
-                        </div> */}
-                        <div onClick={e => setTableShow2('addresses')} className={tableShow2 === "addresses" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                            <h3>Addresses</h3>
-                            <p>Add new address</p>
-                        </div>
-                        <div onClick={e => setTableShow2('subscriptions')} className={tableShow2 === "subscriptions" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                            <h3>Subscriptions</h3>
-                            <p>Store subcriptions & repeat purchases</p>
-                        </div>
-                        <div onClick={e => setTableShow2('settings')} className={tableShow2 === "settings" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                            <h3>Settings</h3>
-                            <p>Password, name, etc.</p>
-                        </div>
-                    </div>
+                    {navContent}
                     <div className="profile-table-main desktop-column">
                         <div className="profile-table-header">
                             {tableHeader}
@@ -219,7 +288,7 @@ const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { us
             </div>
             {!loading && !isAuthenticated ? <AuthModal /> : null }
             <Modal open={displayAddressModal} onClose={handleAddressModal} center styles={bg}>
-            <div className="checkout-modal">
+                <div className="checkout-modal">
                     <div className="checkout-modal-main">
                         <div style={{display:'flex'}}>
                             <div style={{margin:'0 10px', color:'#ff4b2b'}}>
@@ -423,7 +492,7 @@ const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { us
                         <button style={{background:'#ededed', border:'1px solid #ededed', color:'#808080'}}>Cancel</button>
                         <button onClick={onSubmit}>Add New</button>
                     </div>
-                    <p>address_name: {address_name}</p>
+                    {/* <p>address_name: {address_name}</p>
                     <p>address_1: {address_1}</p>
                     <p>address_2: {address_2}</p>
                     <p>first_name: {first_name}</p>
@@ -432,7 +501,7 @@ const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { us
                     <p>state: {state}</p>
                     <p>zipcode: {zipcode}</p>
                     <p>phone: {phone}</p>
-                    <p>country: {country}</p>
+                    <p>country: {country}</p> */}
                     {/* <h5>item added to the cart</h5>
                     <img src={`/api/products/image/${img_gallery[0].img_name}`} className="img-fluid" alt="product" />
                     <h5>{title}</h5>

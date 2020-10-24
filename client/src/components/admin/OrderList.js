@@ -60,7 +60,7 @@ class OrderList extends Component {
         
 
         return (
-            <div style={{textAlign: 'center'}} className="container">
+            <div style={{textAlign: 'center'}}>
                 {orderList}
             </div>
         )
