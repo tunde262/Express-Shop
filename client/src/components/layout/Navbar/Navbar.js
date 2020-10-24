@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -28,10 +28,23 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
     // dropdown height
     const [menuHeight, setMenuHeight] = useState(null);
 
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
     const [isHovering, setIsHovering] = useState(false);
     const [isHovering2, setIsHovering2] = useState(false);
     const [isHoveringHeart, setIsHoveringHeart] = useState(false);
     const [isHoveringCat, setIsHoveringCat] = useState(false);
+    
+
+    useEffect(() => {
+        window.addEventListener('resize', () => handleWindowSizeChange());
+
+        return () => window.removeEventListener('resize', () => handleWindowSizeChange());
+    }, []);
+
+    const handleWindowSizeChange = () => {
+        setWindowWidth(window.innerWidth);
+    };
     
     const calcHeight = (el) => {
         const height = el.offsetHeight;
@@ -76,6 +89,8 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
         drawerClickHandler();
         toggleAuthDrawer();
     }
+
+    const isMobile = windowWidth <= 769;
     
 
     const authLinks = (
@@ -140,10 +155,12 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                                 className="profile-toggle"
                                 onClick={() => setDropdown(!dropdown)}
                             >
-                                <i 
-                                    style={{fontSize:'14px'}} 
-                                    class="fas fa-chevron-down"
-                                ></i>
+                                {!isMobile && (
+                                    <i 
+                                        style={{fontSize:'14px'}} 
+                                        class="fas fa-chevron-down"
+                                    ></i>
+                                )}
                             </div>
                         </Fragment>
                         ) 
@@ -158,10 +175,12 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                                     className="profile-toggle"
                                     onClick={() => setDropdown(!dropdown)}
                                 >
-                                    <i 
-                                        style={{fontSize:'14px', color:'#808080'}} 
-                                        class="fas fa-chevron-down"
-                                    ></i>
+                                    {!isMobile && (
+                                        <i 
+                                            style={{fontSize:'14px', color:'#808080'}} 
+                                            class="fas fa-chevron-down"
+                                        ></i>
+                                    )}
                                 </div>
                             </Fragment>
                         )}
