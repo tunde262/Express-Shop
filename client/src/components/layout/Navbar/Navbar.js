@@ -404,7 +404,7 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                 </a>
             </li>
             <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
-                <a href="#">
+                <a href="https://www.cardboardexpress.com/explore">
                     <i style={{fontSize:'22px'}} class="far fa-compass"></i>
                 </a>
             </li>
@@ -498,12 +498,12 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                             Home
                         </a>
                     </li>
-                    {/* <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
-                        <Link to="/explore">
+                    <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
+                        <a to="https://www.cardboardexpress.com/explore">
                             <i class="far fa-compass"></i>{' '}
                             Explore
-                        </Link>
-                    </li> */}
+                        </a>
+                    </li>
                     {/* <Link className="cta" to="/register">
                         {/* <button type="button" className="nav-btn nav-icon" onClick={drawerClickHandler}>
                             Sell

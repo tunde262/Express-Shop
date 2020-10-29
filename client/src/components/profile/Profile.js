@@ -21,6 +21,8 @@ import Settings from './Settings';
 import AuthModal from '../modals/AuthModal';
 import BrandOverview from '../Overview/brandOverview/BrandOverview';
 import Modal from 'react-responsive-modal';
+import DetailOrderHeader from './order_components/detail_order/Header_Detail_Order';
+import DetailOrderMain from './order_components/detail_order/Main_Detail_Order';
 
 import { getStoreSubscriptions } from '../../actions/storeActions';
 
@@ -51,6 +53,8 @@ const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { us
     });
 
     const [active, setActive] = useState(false);
+
+    const [addressEdit, setAddressEdit] = useState(false);
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -85,7 +89,9 @@ const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { us
         }
     }
 
-    const handleAddressModal = () => {
+    const handleAddressModal = (bool) => {
+        if(!addressEdit && bool) setAddressEdit(true);
+        if(addressEdit && !bool) setAddressEdit(false);
         toggleAddressModal(!displayAddressModal);
     }
 
@@ -143,6 +149,8 @@ const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { us
         tableHeader = <PaymentsHeader />;
     } else if(tableShow2 === 'orders') {
         tableHeader = <OrdersHeader /> 
+    } else if(tableShow2 === 'order detail') {
+        tableHeader = <DetailOrderHeader /> 
     } else if(tableShow2 === 'subscriptions') {
         tableHeader = <SubscriptionsHeader /> 
     } else if(tableShow2 === 'settings') {
@@ -156,7 +164,9 @@ const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { us
     } else if(tableShow2 === 'payments') {
         tableContent = <PaymentsMain />; 
     } else if(tableShow2 === 'orders') {
-        tableContent = <OrdersMain />; 
+        tableContent = <OrdersMain setTableShow2={setTableShow2} />; 
+    } else if(tableShow2 === 'order detail') {
+        tableContent = <DetailOrderMain />; 
     } else if(tableShow2 === 'subscriptions') {
         tableContent = <SubscriptionsMain />; 
     } else if(tableShow2 === 'settings') {
@@ -175,10 +185,11 @@ const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { us
     };
 
     const isMobile = windowWidth <= 769;
+    const isTablet = windowWidth <= 1000;
 
     let navContent;
 
-    if(isMobile) {
+    if(isTablet) {
         navContent = (
             <div className="mobile-profile-table-nav">
                 <Link to="/profile">
@@ -490,7 +501,7 @@ const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { us
                     
                     <div className="checkout-actions" style={{display:'grid', gridTemplateColumns:'1fr 1fr', gridGap:'1rem'}}>
                         <button style={{background:'#ededed', border:'1px solid #ededed', color:'#808080'}}>Cancel</button>
-                        <button onClick={onSubmit}>Add New</button>
+                        {!addressEdit ? <button onClick={onSubmit}>Add New</button> : <button onClick={onSubmit}>Update</button>}
                     </div>
                     {/* <p>address_name: {address_name}</p>
                     <p>address_1: {address_1}</p>

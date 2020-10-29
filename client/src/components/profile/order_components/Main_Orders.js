@@ -9,7 +9,7 @@ import OrderList from '../../admin/OrderList';
 import { BackButton } from '../../common/BackButton';
 import BrandOverview from '../../Overview/brandOverview/BrandOverview';
 
-const Main_Orders = ({deleteAccount, store, auth: { user }, profile: {profile, loading }}) => {
+const Main_Orders = ({deleteAccount, setTableShow2, store, auth: { user }, profile: {profile, loading }}) => {
 
     const [sentMixpanel, setSentMixpanel] = useState(false);
 
@@ -40,7 +40,7 @@ const Main_Orders = ({deleteAccount, store, auth: { user }, profile: {profile, l
         //     {orderList}
         // </div>
         <Fragment>
-            <div className="filter-container profile">
+            <div onClick={() => setTableShow2('order detail')} className="filter-container profile">
                 <span style={{fontSize:'15px', fontWeight:'bold', color:'#808080', letterSpacing:'2px', margin:'10px'}}>Filter</span>
                 <i class="fas fa-sliders-h"></i>
             </div>

@@ -15,13 +15,15 @@ const Map = ({ storageLocation }) => {
 
     const initMap = () => {
         const markers = []; 
-        console.log('MARKERS LENGTH');
-        console.log(storageLocation.locations.length);
+        if(storageLocation) {
+            console.log('MARKERS LENGTH');
+            console.log(storageLocation.locations.length);
 
-        console.log('LOCARIONS ARRAY');
-        console.log(storageLocation.locations);
+            console.log('LOCARIONS ARRAY');
+            console.log(storageLocation.locations);
+        }
 
-        if(storageLocation.locations.length > 0) {
+        if(storageLocation && storageLocation.locations.length > 0) {
             storageLocation.locations.map((location, index) => {
             
                 const latitude = location.location.coordinates[0];
@@ -42,7 +44,7 @@ const Map = ({ storageLocation }) => {
 
         // Map options
         let options;
-        if(storageLocation.locations.length > 0) { 
+        if(storageLocation && storageLocation.locations.length > 0) { 
             options = {
                 zoom: 10,
                 center: {

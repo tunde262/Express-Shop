@@ -36,8 +36,14 @@
     }
 
     .secondary-block { 
-        padding: 2rem 3rem; 
-        grid-template-columns: repeat(2, 1fr);
+        padding: 2rem 0; 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .trending-block {
+        grid-template-columns: repeat(3, 1fr);
     }
 
     .promotion-block {
@@ -57,6 +63,18 @@
         .store-settings-box {
             width: 75vw; 
             padding:1rem;
+        }
+    }
+
+    /* Profiles Page */
+    .profile-table {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "sections"
+            "main";
+
+        & > div:nth-child(2) {
+            display: none;
         }
     }
 }
@@ -365,6 +383,10 @@
         }
     }
 
+    .trending-block {
+        grid-template-columns: 1fr;
+    }
+
     .detail-map {
         .detail-sub-images {
             margin: 1rem 0;
@@ -466,18 +488,6 @@
         font-size: 1rem;
     }
 
-    /* Profiles Page */
-    .profile-table {
-        grid-template-columns: 1fr;
-        grid-template-areas: 
-            "sections"
-            "main";
-
-        & > div:nth-child(2) {
-            display: none;
-        }
-    }
-
     .profile-settings-box-form {
         grid-template-columns: 1fr 2fr;
     }
@@ -545,10 +555,5 @@
 
     main#home h1 {
         margin-top: 10vh;
-    }
-
-    .secondary-block { 
-        padding: 2rem 1rem; 
-        grid-template-columns: repeat(1, 1fr);
     }
 }

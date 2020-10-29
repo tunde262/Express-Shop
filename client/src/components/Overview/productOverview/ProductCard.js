@@ -296,7 +296,7 @@ const ProductWrapper = styled.div`
         position: absolute;
         width: 100%;
         bottom: 0;
-        background: #fff;
+        background: rgb(247, 247, 247);
         padding: 10px;
         box-sizing: border-box;
         transition: .5s;
@@ -458,7 +458,6 @@ const ProductWrapper = styled.div`
     
     @media (max-width: 500px){
         .product {
-            border: none
             border-radius:0;
             width: 45vw;
             height: calc(45vw + 200px);
