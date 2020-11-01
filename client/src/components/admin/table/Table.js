@@ -2,7 +2,8 @@ import React, { useState, Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getProducts, getProductsByStoreId, getStoreOrders } from '../../../actions/productActions';
+import { getProducts, getProductsByStoreId } from '../../../actions/productActions';
+import { getStoreOrders } from '../../../actions/orderActions';
 import { getVariantsByStoreId } from '../../../actions/variantActions';
 import { getCollectionsByStoreId } from '../../../actions/collectionActions';
 import { getCustomersByStoreId } from '../../../actions/customerActions';
@@ -30,6 +31,8 @@ const Table = ({
         store, 
         loading
     },
+    inventoryNav, 
+    setTable,
     page,
     getProductsByStoreId,
     getVariantsByStoreId,
@@ -46,9 +49,10 @@ const Table = ({
         getCollectionsByStoreId(store._id);
         getCustomersByStoreId(store._id);
         
-        if (page === 'storage') {
-            setTableShow('products');
-        } else if (page === 'orders') {
+        // if (page === 'storage') {
+        //     setTableShow(inventoryNav);
+        // } else 
+        if (page === 'orders') {
             setTableShow('orders');
         }
     }, []);
@@ -89,14 +93,14 @@ const Table = ({
 
     let tableContent;
 
-    if(tableShow === 'orders') {
+    if(inventoryNav === 'orders') {
         if(!sentMixpanel && store !== null && !product.loading && product.products !== null) {
             handleMixpanelOrders();
             setSentMixpanel(true);
         }
 
-        tableContent = <Order order={order} />;
-    } else if (tableShow === 'products') {
+        tableContent = <Order />;
+    } else if (inventoryNav === 'products') {
         if(!sentMixpanel && store !== null && !product.loading && product.products !== null) {
             handleMixpanel();
             setSentMixpanel(true);
@@ -107,24 +111,24 @@ const Table = ({
                 <Item page="dashboard" product={product} />
             </Fragment>
         ) 
-    } else if (tableShow === 'collections') {
+    } else if (inventoryNav === 'collections') {
         console.log(collection);
         tableContent = <Collection collection={collection} /> 
-    } else if (tableShow === 'locations') {
+    } else if (inventoryNav === 'locations') {
         tableContent = <Location /> 
-    } else if (tableShow === 'inventory') {
+    } else if (inventoryNav === 'inventory') {
         tableContent = (
             <Fragment>
                 <Inventory page="dashboard" variant={variant} /> 
             </Fragment>
         );
-    } else if (tableShow === 'customers') {
+    } else if (inventoryNav === 'customers') {
         tableContent = (
             <Fragment>
-                <section>
+                {/* <section>
                     <p style={{alignSelf: 'flex-end'}}>33 Customers</p>
                     <Link to="/admin/add-customer"><button type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Add Customer</button></Link>
-                </section>
+                </section> */}
                 <Customer customer={customer} /> 
             </Fragment>
         );
@@ -142,7 +146,7 @@ const Table = ({
             <div id="page-content-wrapper">
                 <div class="content-box container-fluid">
                     <div class="table-responsive table-filter">
-                        <Navbar products={product.products} handleOrders={handleOrders} page={page} background='#ff4b2b' />
+                        {/* <Navbar products={product.products} handleOrders={handleOrders} page={page} background='#ff4b2b' /> */}
                         {tableContent}
                     </div>
                 </div>
@@ -169,7 +173,7 @@ Table.propTypes = {
 const mapStateToProps = state => ({
     product: state.product,
     variant: state.variant,
-    order: state.product.orders,
+    order: state.order,
     collection: state.collection,
     collection: state.customer,
     store: state.store

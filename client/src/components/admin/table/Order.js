@@ -8,11 +8,11 @@ const Order = ({ order, store: { store, loading } }) => {
 
     let orderList; 
     
-    if(order === null || order.loading) {
+    if(order.orders === null || order.orders.loading) {
         orderList = <Spinner />; 
     } else {
-        if(order.length > 0) {
-            orderList = order.map(order => (
+        if(order.orders.length > 0) {
+            orderList = order.orders.map(order => (
                 <tr key={order._id}>
                     <td>{order._id}</td>
                     <td className="hide-sm"><Moment format='MM/DD/YYYY'>{order.date}</Moment></td>
@@ -55,7 +55,8 @@ Order.propTypes = {
 
 const mapStateToProps = state => ({
     profile: state.profile,
-    store: state.store
+    store: state.store,
+    order: state.order
 })
 
 export default connect(mapStateToProps)(Order);

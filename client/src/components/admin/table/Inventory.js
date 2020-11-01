@@ -50,12 +50,12 @@ const Inventory = ({ page, setModal, variant: {loading, sortedVariants}, deleteV
 
     return (
         <Fragment>
-            {page === 'dashboard' ? (
+            {/* {page === 'dashboard' ? (
                 <section>
                     <p style={{alignSelf: 'flex-end'}}>{count} Variants</p>
                     <Link to="/admin/add-variant"><button type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Add Variant</button></Link>
                 </section>
-            ) : null}
+            ) : null} */}
             {page === 'location' ? (
                 <section>
                     <p style={{alignSelf: "flex-end"}}>{count} Varients</p>

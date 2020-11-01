@@ -40,12 +40,12 @@ const Item = ({ setModal, store, page, product: {loading, sortedProducts}, delet
 
     return (
         <Fragment>
-            {page === 'dashboard' ? (
+            {/* {page === 'dashboard' ? (
                 <section>
                     <p style={{alignSelf: 'flex-end'}}>{count} Items</p>
                     <Link to="/admin/add-product"><button type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Add Product</button></Link>
                 </section>
-            ) : null}
+            ) : null} */}
             {page === 'collection' ? (
                 <section>
                     <p style={{alignSelf: "flex-end"}}>{count} Variants</p>

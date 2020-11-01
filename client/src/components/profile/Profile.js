@@ -29,7 +29,7 @@ import { getStoreSubscriptions } from '../../actions/storeActions';
 import sampleImg from '../../utils/imgs/20484728.jpeg';
 import { addAddress } from '../../actions/profileActions';
 
-const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { user, isAuthenticated, loading }, history}) => {
+const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { user, isAuthenticated, loading }, location}) => {
     const [skip, setSkip] = useState(0);
     const [tableShow1, setTableShow1] = useState('completed');
     const [tableShow2, setTableShow2] = useState('orders');
@@ -62,6 +62,25 @@ const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { us
         window.addEventListener('resize', () => handleWindowSizeChange());
         if(user) {
             getStoreSubscriptions(user._id);
+        }
+
+        console.log(location);
+        console.log(new URLSearchParams(location.search).get('show'));
+        
+
+        if (location.search) {
+            let query = new URLSearchParams(location.search).get('show')
+            if(query === 'settings') {
+                setTableShow2('settings');
+            } else if (query === 'orders') {
+                setTableShow2('orders');
+            }
+            else if (query === 'addresses') {
+                setTableShow2('addresses');
+            }
+            else if (query === 'subscriptions') {
+                setTableShow2('subscriptions');
+            }
         }
 
         return () => window.removeEventListener('resize', () => handleWindowSizeChange());
@@ -187,87 +206,6 @@ const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { us
     const isMobile = windowWidth <= 769;
     const isTablet = windowWidth <= 1000;
 
-    let navContent;
-
-    if(isTablet) {
-        navContent = (
-            <div className="mobile-profile-table-nav">
-                <Link to="/profile">
-                    <div>
-                        <h3 style={{fontWeight:'600'}}>Hey, {user && user.name}</h3>
-                    </div>
-                </Link>
-
-                <Link to="/profile/orders">
-                    <div onClick={e => setTableShow2('orders')} className={tableShow2 === "orders" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                            <h3 style={{fontWeight:'600'}}>Orders</h3>
-                            <p>Track, manage, & return</p>
-                        </div>
-                    </div>
-                </Link>
-                {/* <div onClick={e => setTableShow2('payments')} className={tableShow2 === "payments" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                    <h3>Payments</h3>
-                    <p>Add payment methods</p>
-                </div> */}
-                <Link to="/profile/addresses">
-                    <div onClick={e => setTableShow2('addresses')} className={tableShow2 === "addresses" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                            <h3>Addresses</h3>
-                            <p>Add new address</p>
-                        </div>
-                    </div>
-                </Link>
-                
-                <Link to="/profile/Subscriptions">
-                    <div onClick={e => setTableShow2('subscriptions')} className={tableShow2 === "subscriptions" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                            <h3>Subscriptions</h3>
-                            <p>Store subcriptions & repeat purchases</p>
-                        </div>
-                    </div>
-                </Link>
-                
-                <Link to="/profile/settings">
-                    <div onClick={e => setTableShow2('settings')} className={tableShow2 === "settings" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                            <h3>Settings</h3>
-                            <p>Password, name, etc.</p>
-                        </div>
-                    </div>
-                </Link>
-            </div>
-        )
-    } else {
-        navContent = (
-            <div className="profile-table-nav">
-                <div>
-                    <h3 style={{fontWeight:'600'}}>Hey, {user && user.name}</h3>
-                </div>
-                <div onClick={e => setTableShow2('orders')} className={tableShow2 === "orders" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                    <h3 style={{fontWeight:'600'}}>Orders</h3>
-                    <p>Track, manage, & return</p>
-                </div>
-                {/* <div onClick={e => setTableShow2('payments')} className={tableShow2 === "payments" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                    <h3>Payments</h3>
-                    <p>Add payment methods</p>
-                </div> */}
-                <div onClick={e => setTableShow2('addresses')} className={tableShow2 === "addresses" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                    <h3>Addresses</h3>
-                    <p>Add new address</p>
-                </div>
-                <div onClick={e => setTableShow2('subscriptions')} className={tableShow2 === "subscriptions" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                    <h3>Subscriptions</h3>
-                    <p>Store subcriptions & repeat purchases</p>
-                </div>
-                <div onClick={e => setTableShow2('settings')} className={tableShow2 === "settings" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                    <h3>Settings</h3>
-                    <p>Password, name, etc.</p>
-                </div>
-            </div>
-        )
-    }
-
     return (
         <Fragment>
             {/* <div onScroll={handleScroll} style={{height:"100vh", overflowY:'scroll'}}>
@@ -286,7 +224,52 @@ const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { us
             <div style={{textAlign:'center', marginTop:'1rem'}} class="container-fluid">
                 {/* <h3 style={{color: '#333', fontWeight:'300'}}>Hey, {user && user.name}</h3> */}
                 <div className="profile-table">
-                    {navContent}
+                    <div className={isTablet ? "mobile-profile-table-nav" : "profile-table-nav"}>
+                        <Link to="/profile">
+                            <div>
+                                <h3 style={{fontWeight:'600'}}>Hey, {user && user.name}</h3>
+                            </div>
+                        </Link>
+
+                        <Link to={isTablet ? "/profile/orders" : {pathname:"/profile",search: "?show=orders"}}>
+                            <div onClick={e => setTableShow2('orders')} className={tableShow2 === "orders" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
+                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                                    <h3 style={{fontWeight:'600'}}>Orders</h3>
+                                    <p>Track, manage, & return</p>
+                                </div>
+                            </div>
+                        </Link>
+                        {/* <div onClick={e => setTableShow2('payments')} className={tableShow2 === "payments" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
+                            <h3>Payments</h3>
+                            <p>Add payment methods</p>
+                        </div> */}
+                        <Link to={isTablet ? "/profile/addresses" : {pathname:"/profile",search: "?show=addresses"}}>
+                            <div onClick={e => setTableShow2('addresses')} className={tableShow2 === "addresses" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
+                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                                    <h3>Addresses</h3>
+                                    <p>Add new address</p>
+                                </div>
+                            </div>
+                        </Link>
+                        
+                        <Link to={isTablet ? "/profile/subscriptions" : {pathname:"/profile",search: "?show=subscriptions"}}>
+                            <div onClick={e => setTableShow2('subscriptions')} className={tableShow2 === "subscriptions" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
+                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                                    <h3>Subscriptions</h3>
+                                    <p>Store subcriptions & repeat purchases</p>
+                                </div>
+                            </div>
+                        </Link>
+                        
+                        <Link to={isTablet ? "/profile/settings" : {pathname:"/profile",search: "?show=settings"}}>
+                            <div onClick={e => setTableShow2('settings')} className={tableShow2 === "settings" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
+                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                                    <h3>Settings</h3>
+                                    <p>Password, name, etc.</p>
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
                     <div className="profile-table-main desktop-column">
                         <div className="profile-table-header">
                             {tableHeader}

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Table from '../../admin/table/Table';
 
-const OrdersMain = ({ store: { store, loading } }) => {
+const OrdersMain = ({ ordersNav, setTable, store: { store, loading } }) => {
     const accountLink = 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=http://localhost:3000/dashboard/&client_id=ca_FFrwAOlKVRTGBrORx2OTVFLXJeM3gHHe&state=SECRET';
     useEffect(() => {
         var url_string = (window.location.href);
@@ -77,7 +77,7 @@ const OrdersMain = ({ store: { store, loading } }) => {
                     </div>
                 </div>
             </section>
-            <Table page="orders" />
+            <Table page="orders" inventoryNav="orders"  setTable={setTable} />
         </Fragment>
     )
 }

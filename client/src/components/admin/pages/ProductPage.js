@@ -618,11 +618,72 @@ const ProductPage = ({
 
     return (
         <Fragment>
-            <div id="product-content-wrapper">
-                {pageHeader}
-    
-                {pageContent}
-            </div>
+            <div className="admin-table">
+                    <div className={"admin-table-nav"}>
+                        <a href="#">
+                            <div>
+                                <h3 style={{fontWeight:'600'}}>Hey, Tunde</h3>
+                            </div>
+                        </a>
+
+                        <a href="#">
+                            <div className="profile-table-nav-items">
+                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                                    <h3 style={{fontWeight:'600'}}>Store</h3>
+                                    <p>Track, manage, & return</p>
+                                </div>
+                            </div>
+                        </a>
+                        {/* <div onClick={e => setTableShow1('payments')} className={tableShow1 === "payments" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
+                            <h3>Payments</h3>
+                            <p>Add payment methods</p>
+                        </div> */}
+                        <a href="#">
+                            <div className="profile-table-nav-items">
+                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                                    <h3>Inventory</h3>
+                                    <p>Add new address</p>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <a href="#">
+                            <div className="profile-table-nav-items">
+                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                                    <h3>Orders</h3>
+                                    <p>Store subcriptions & repeat purchases</p>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <a href="#">
+                            <div className="profile-table-nav-items">
+                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                                    <h3>People</h3>
+                                    <p>Password, name, etc.</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#">
+                            <div className="profile-table-nav-items">
+                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                                    <h3>Store Settings</h3>
+                                    <p>Password, name, etc.</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div className="admin-table-main desktop-column">
+                        <div className="admin-table-header">
+                            {pageHeader}
+                        </div>
+                        <div className="admin-table-body">
+                            <div id="product-content-wrapper">
+                                {pageContent}
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             <Modal open={displayImageModal} onClose={toggleImageModal} center>
                 <DragAndDrop handleDrop={handleDrop}>

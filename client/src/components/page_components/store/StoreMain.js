@@ -48,7 +48,7 @@ const StoreMain = ({ store: { store, loading }, product, getProductsByStoreId, a
 
     return (
         <Fragment>
-            {admin === "true" && store !== null ? (
+            {/* {admin === "true" && store !== null ? (
                 <div className="store-actions-container">
                     <div className="store-actions">
                         <i style={{fontSize:'1.3rem'}} onClick={e => setTable('settings')} className="fas fa-cog"></i>
@@ -56,10 +56,10 @@ const StoreMain = ({ store: { store, loading }, product, getProductsByStoreId, a
                         <i class="fas fa-share-alt"></i>
                     </div>
                 </div>
-            ) : null}
-            {store.store !== null ? (
+            ) : null} */}
+            {store !== null ? (
                 <div className="store-main"> 
-                    {admin === "true" && store !== null && <Banner admin={admin} imgLarge={DefaultBanner} imgSmall={DefaultBanner} />}
+                    {/* {admin === "true" && store !== null && <Banner admin={admin} imgLarge={DefaultBanner} imgSmall={DefaultBanner} />} */}
                     {/* <Header /> */}
                     <Container title="Bottoms" category="bottoms" background="MediumSlateBlue"  />
                 </div>

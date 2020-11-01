@@ -20,7 +20,7 @@ class Order extends Component {
         
         orderItems = arr.map(item => {
             const { qty, price } = item;
-            const { name, img_gallery, company } = item.item;
+            const { name, img_gallery, company, _id } = item.item;
             return (
                 <img key={item.item._id} src={`/api/products/image/${img_gallery[0].img_name}`} style={{height:'100%', width:'70px', margin:'0 15px', zIndex:'0'}} alt="product" />
                 // <li key={item.item._id} style={{display: 'flex'}} className="list-group-item">
@@ -36,34 +36,27 @@ class Order extends Component {
         });
         
         return (
-            <div style={
-                {marginTop:'1rem', 
-                width:'100%', 
-                borderBottom:'1px solid #e8e8e8', 
-                background:'#fff', 
-                height:'100px',
-                display:'flex', 
-                alignItems:'center'
-                }
-            }>
-                <div style={{display:'grid', width: '100%', gridTemplateColumns:'1fr 2fr 1fr 1fr'}}>
-                    <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
-                        <div>
-                            <h3 style={{color: '#333',fontWeight: '300',fontSize: '14px'}}>{moment(date).format("MMMM Do")}</h3>
-                            <h3 style={{color: '#808080',fontWeight: '300',fontSize: '12px'}}>{moment(date).format("h:mm a")}</h3>
+            <Link to={`/profile/order/${_id}`} style={{textDecoration:'none'}}>
+                <div className="customer-order-item">
+                    <div style={{display:'grid', width: '100%', gridTemplateColumns:'1fr 2fr 1fr 1fr'}}>
+                        <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+                            <div>
+                                <h3 style={{color: '#333',fontWeight: '300',fontSize: '14px'}}>{moment(date).format("MMMM Do")}</h3>
+                                <h3 style={{color: '#808080',fontWeight: '300',fontSize: '12px'}}>{moment(date).format("h:mm a")}</h3>
+                            </div>
+                        </div>
+                        <div style={{display:'flex', justifyContent:'flex-start', height:'70px', width:'100%', overflow:'hidden'}}>
+                            {orderItems}
+                        </div>
+                        <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+                            <h3 style={{color: '#333',fontWeight: '300',fontSize: '14px'}}>${totalPrice}</h3>
+                        </div>
+                        <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+                            <button>View Details</button>
                         </div>
                     </div>
-                    <div style={{display:'flex', justifyContent:'flex-start', height:'70px', width:'100%', overflow:'hidden'}}>
-                        {orderItems}
-                    </div>
-                    <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                        <h3 style={{color: '#333',fontWeight: '300',fontSize: '14px'}}>${totalPrice}</h3>
-                    </div>
-                    <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                        <button>View Details</button>
-                    </div>
                 </div>
-            </div>
+            </Link>
 
 
             // <div style={{margin: '15px'}} class="card card-default">

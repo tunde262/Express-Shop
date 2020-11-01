@@ -3,7 +3,7 @@ import { setAlert } from './alertActions';
 
 import mixpanel from 'mixpanel-browser';
 
-import { SET_PRODUCTS, CLEAR_PRODUCTS, SET_IN_CART, SET_SORTED_PRODUCTS, SET_MODAL_PRODUCTS, ADD_TO_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, ADD_PRODUCT_REVIEW, REMOVE_PRODUCT_REVIEW, PRODUCT_ERROR, HANDLE_TAGS, REMOVE_TAGS, PRODUCTS_LOADING, ADD_TOTALS, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, HANDLE_MAP, CLOSE_MODAL, CLEAR_CART, GET_CART, GET_ORDERS, INC_IMG_GALLERY, DEC_IMG_GALLERY } from './types';
+import { SET_PRODUCTS, CLEAR_PRODUCTS, SET_IN_CART, SET_SORTED_PRODUCTS, SET_MODAL_PRODUCTS, ADD_TO_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, ADD_PRODUCT_REVIEW, REMOVE_PRODUCT_REVIEW, PRODUCT_ERROR, HANDLE_TAGS, REMOVE_TAGS, PRODUCTS_LOADING, ADD_TOTALS, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, HANDLE_MAP, CLOSE_MODAL, CLEAR_CART, GET_CART, INC_IMG_GALLERY, DEC_IMG_GALLERY } from './types';
 import store from '../store';
 
 // Get Products
@@ -451,60 +451,6 @@ export const incImg = (imgId, prodId) => async dispatch => {
         });
     }
 }
-
-// Get Orders
-export const getOrders = () => dispatch => {
-    dispatch(setProductsLoading());
-    axios.get('/api/orders')
-        .then(res =>
-            dispatch({
-                type: GET_ORDERS,
-                payload: res.data
-            })
-        )
-        .catch(err => 
-            dispatch({
-                type: GET_ORDERS,
-                payload: []
-            })
-        );
-};
-
-// Get Store Orders
-export const getStoreOrders = (id) => async dispatch => {
-    dispatch(setProductsLoading());
-    try {
-        const res = await axios.get(`/api/orders/store/${id}`);
-
-        dispatch({
-            type: GET_ORDERS,
-            payload: res.data
-        });
-    } catch (err) {
-        dispatch({
-            type: GET_ORDERS,
-            payload: []
-        })
-    }
-};
-
-// Get Customer Orders
-export const getCustomerOrders = (id) => dispatch => {
-    dispatch(setProductsLoading());
-    axios.get(`/api/orders/${id}`)
-        .then(res =>
-            dispatch({
-                type: GET_ORDERS,
-                payload: res.data
-            })
-        )
-        .catch(err => 
-            dispatch({
-                type: GET_ORDERS,
-                payload: []
-            })
-        );
-};
 
 // // Get single Detail Product
 // export const handleDetail = (id) => dispatch => {

@@ -16,6 +16,7 @@ import Checkout from '../Cart/checkout/Checkout';
 // Profile Pages
 import Profile from '../profile/Profile';
 import ProfileOrders from '../profile/order_components/Mobile_Orders';
+import CustomerOrderPage from '../profile/order_components/detail_order/DetailOrder';
 import ProfileSettings from '../profile/settings_components/Mobile_Settings';
 import ProfileAddresses from '../profile/address_components/Mobile_Address';
 import ProfilePayments from '../profile/pay_components/Mobile_Pay';
@@ -75,6 +76,7 @@ const Routes = props => {
             {/* Profile  */}
             <PrivateRoute exact path="/profile" component={Profile} />
             <PrivateRoute exact path="/profile/orders" component={ProfileOrders} />
+            <PrivateRoute exact path="/profile/order/:orderId" component={CustomerOrderPage} />
             <PrivateRoute exact path="/profile/settings" component={ProfileSettings} />
             <PrivateRoute exact path="/profile/subscriptions" component={ProfileSubscriptions} />
             <PrivateRoute exact path="/profile/payments" component={ProfilePayments} />

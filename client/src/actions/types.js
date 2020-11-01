@@ -71,7 +71,11 @@ export const ADD_TO_VARIANTS = 'ADD_TO_VARIANTS';
  
 
 // Orders
+export const GET_ORDER = 'GET_ORDER';
 export const GET_ORDERS = 'GET_ORDERS';
+export const CLEAR_ORDER = 'CLEAR_ORDER';
+export const CLEAR_ORDERS = 'CLEAR_ORDERS';
+export const ORDERS_LOADING = 'ORDERS_LOADING';
 
 // Profile
 export const GET_PROFILE = 'GET_PROFILE';

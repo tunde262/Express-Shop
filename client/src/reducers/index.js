@@ -9,6 +9,7 @@ import profile from './profileReducer';
 import store from './storeReducer';
 import location from './locationReducer';
 import variant from './variantReducer';
+import order from './orderReducer';
 
 export default combineReducers({
     alert,
@@ -20,5 +21,6 @@ export default combineReducers({
     profile,
     store,
     location,
-    variant
+    variant,
+    order
 });

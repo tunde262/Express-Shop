@@ -225,22 +225,22 @@ button {
   padding: 0.5rem;
   width: 4rem; }
 
-.form .social-input i.fa-twitter {
+i.fa-twitter {
   color: #38a1f3; }
 
-.form .social-input i.fa-facebook {
+i.fa-facebook {
   color: #3b5998; }
 
-.form .social-input i.fa-instagram {
+i.fa-instagram {
   color: #3f729b; }
 
-.form .social-input i.fa-youtube {
+i.fa-youtube {
   color: #c4302b; }
 
-.form .social-input i.fa-linkedin {
+i.fa-linkedin {
   color: #0077b5; }
 
-.form .social-input i.fa-github {
+i.fa-github {
   color: #444; }
 
 button {
@@ -1089,31 +1089,35 @@ header {
   min-height: 100vh;
   display: flex;
   flex-direction: column; }
-  .profile-table-nav > div {
+  .profile-table-nav > a {
     border-bottom: 1px solid #d6d6d6;
     border-right: 1px solid #d6d6d6;
+    border-left: 1px solid #d6d6d6;
     background: #fff;
     height: 75px;
     max-height: 75px;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 20px 16px 0 16px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; }
-    .profile-table-nav > div:first-child {
+    text-decoration: none; }
+    .profile-table-nav > a:first-child {
       align-items: center;
       padding: 0 16px; }
-    .profile-table-nav > div h3 {
-      color: #333;
-      font-weight: 300;
-      font-size: 16px;
-      color: #333333; }
-    .profile-table-nav > div p {
-      color: #808080; }
+    .profile-table-nav > a div {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 20px 16px 0 16px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis; }
+      .profile-table-nav > a div h3 {
+        color: #333;
+        font-weight: 300;
+        font-size: 16px;
+        color: #333333; }
+      .profile-table-nav > a div p {
+        color: #808080; }
 
 .profile-table-nav-items:hover {
   background: #f7f7f7;
@@ -1141,6 +1145,89 @@ header {
     align-items: flex-start;
     padding: 20px 20px 0 20px; }
   .profile-table-main .profile-table-body {
+    padding: 0 20px; }
+
+.customer-order-item {
+  padding-top: 1rem;
+  width: 100%;
+  border-bottom: 1px solid #e8e8e8;
+  background: #fff;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box; }
+  .customer-order-item:hover {
+    background: #f7f7f7;
+    cursor: pointer; }
+
+.admin-table {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-areas: "sections main";
+  width: 100%;
+  background: #f7f7f7;
+  border: 1px solid #d6d6d6;
+  margin-top: 5rem;
+  overflow: hidden; }
+
+.admin-table-nav {
+  grid-area: sections;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-right: 1px solid #d6d6d6; }
+  .admin-table-nav > a {
+    border-bottom: 1px solid #d6d6d6;
+    border-left: 1px solid #d6d6d6;
+    background: #fff;
+    height: 75px;
+    max-height: 75px;
+    width: 100%;
+    text-decoration: none; }
+    .admin-table-nav > a:first-child {
+      align-items: center;
+      padding: 0 16px; }
+    .admin-table-nav > a div {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 20px 16px 0 16px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis; }
+      .admin-table-nav > a div h3 {
+        color: #333;
+        font-weight: 300;
+        font-size: 16px;
+        color: #333333; }
+      .admin-table-nav > a div p {
+        color: #808080; }
+
+.admin-table-nav-items:hover {
+  background: #f7f7f7;
+  cursor: pointer; }
+
+.admin-table-nav-items.active {
+  background: #f7f7f7;
+  cursor: pointer; }
+
+.admin-table-main {
+  width: 100%;
+  height: 100%;
+  grid-area: main; }
+  .admin-table-main .admin-table-header {
+    min-height: 125px;
+    background: #f7f7f7;
+    border-bottom: 1px solid #d6d6d6;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px 20px 0 20px; }
+  .admin-table-main .admin-table-body {
     padding: 0 20px; }
 
 .text-secondary {
@@ -2003,36 +2090,51 @@ header {
 
 .admin-underline {
   width: 100%;
-  margin: 1rem 0;
+  margin: 0;
   padding-left: 0;
   list-style: none;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   text-align: center;
   color: #808080; }
-  .admin-underline > li {
+  .admin-underline > div {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    border-bottom: 2px solid gainsboro; }
-    .admin-underline > li i {
-      color: #808080; }
-    .admin-underline > li p {
-      margin: 0;
-      color: #808080; }
+    justify-content: center;
+    height: 56px; }
+    .admin-underline > div li {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 56px;
+      height: 56px;
+      padding: 0 1rem; }
+      .admin-underline > div li i {
+        margin: 0 10px 5px 0;
+        color: #808080; }
+      .admin-underline > div li p {
+        margin: 0;
+        font-weight: 600;
+        color: #808080; }
   .admin-underline > li > a {
     position: relative;
     display: block;
     padding: 10px 15px 5px 15px;
     text-decoration: none; }
-  .admin-underline > li:hover, .admin-underline > li:focus, .admin-underline > li.active {
-    text-decoration: none;
-    border-bottom: 2px solid #ff4b2b;
-    color: #333; }
-    .admin-underline > li:hover i, .admin-underline > li:hover p, .admin-underline > li:focus i, .admin-underline > li:focus p, .admin-underline > li.active i, .admin-underline > li.active p {
-      color: #ff4b2b;
-      font-weight: 700; }
+  .admin-underline > div:hover, .admin-underline > div:focus {
+    padding-top: 13px;
+    cursor: pointer; }
+    .admin-underline > div:hover li, .admin-underline > div:focus li {
+      background: #f7f7f7;
+      height: 30px;
+      border-radius: 30px; }
+    .admin-underline > div:hover p, .admin-underline > div:hover i, .admin-underline > div:focus p, .admin-underline > div:focus i {
+      color: #333; }
+  .admin-underline > div.active {
+    border-bottom: 3px solid #ff4b2b; }
+    .admin-underline > div.active li {
+      background-color: transparent; }
+      .admin-underline > div.active li p, .admin-underline > div.active li i {
+        color: #333; }
   .admin-underline.secondary {
     float: right;
     display: block; }
@@ -2371,6 +2473,23 @@ header {
     .store-socials button:hover {
       background: #e8e8e8; }
 
+.ghost-btn {
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid #0098d3;
+  color: #0098d3;
+  width: 100%;
+  outline: none; }
+  .ghost-btn.active, .ghost-btn.active:hover {
+    background: #0098d3;
+    color: #fff;
+    border-color: #0098d3; }
+  .ghost-btn:hover {
+    background: #e8e8e8; }
+
 .store-img {
   height: 180px;
   width: 180px;
@@ -2692,6 +2811,19 @@ header {
   .order-container #order-actions {
     grid-area: actions; }
 
+#product-content-wrapper {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 1rem;
+  grid-template-areas: "main secondary" "table table"; }
+  #product-content-wrapper #product-admin-main {
+    grid-area: main;
+    height: fit-content; }
+  #product-content-wrapper .product-admin-secondary {
+    grid-area: secondary; }
+  #product-content-wrapper .content-box {
+    grid-area: table; }
+
 .vertical-step-bar {
   display: flex;
   flex-direction: column;
@@ -2726,16 +2858,24 @@ header {
     background-color: #c9c9c9; }
 
 .stats {
-  margin: 2rem 5rem 1rem 5rem; }
+  margin: 2rem 5rem 1rem 5rem;
+  background: #fff;
+  margin: 10px;
+  border: 1px solid #d6d6d6; }
 
 .stats-box {
   display: flex;
   justify-content: space-around;
-  align-items: center; }
+  align-items: center;
+  padding-top: 1.5rem; }
   .stats-box > div {
     display: flex;
     flex-direction: column;
-    align-items: center; }
+    align-items: center;
+    height: auto; }
+    .stats-box > div p {
+      margin: 0;
+      color: #808080; }
 
 .banner-icon-container {
   background: #ffbf00;

@@ -2,6 +2,8 @@ import React, { Fragment, useState, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
+import { findDOMNode } from 'react-dom';
+import $ from 'jquery';
 
 import mixpanel from 'mixpanel-browser';
 
@@ -87,7 +89,7 @@ const DetailProduct = ({ setModal, detailProduct, variant, deleteVariant, setTab
     if(detailProduct && detailProduct.img_gallery && detailProduct.img_gallery.length > 0 ) {
         imageContent = img_gallery.map(image => (
             <div className="product-admin-image-container">
-                <img onClick={handleImgClick} src={`/api/products/image/${image.img_name}`} alt="img" />
+                <img className="product-admin-image-container-img" onClick={handleImgClick} src={`/api/products/image/${image.img_name}`} alt="img" />
                 <div className="product-admin-image-container-actions">
                     <div onClick={() => imgBack(image._id)} className="admin-image-icon-container">
                         <i class="fas fa-chevron-left"></i>
@@ -111,7 +113,7 @@ const DetailProduct = ({ setModal, detailProduct, variant, deleteVariant, setTab
     }
     return (
         <Fragment>
-            <div className="product-actions container-fluid">
+            {/* <div className="product-actions container-fluid">
                 <div style={{display:'flex', justifyContent:'space-between', height:'50px', alignItems:'center'}}>
                     <p style={{margin:'0'}}>Qty <span style={{fontWeight:'bold'}}>{detailProduct && detailProduct.inventory_qty}</span> in stock for <span style={{fontWeight:'bold'}}>{variant.variants.length}</span> variants</p>
                     <div style={{display:'flex', height:'100%', alignItems:'center'}}>
@@ -123,7 +125,7 @@ const DetailProduct = ({ setModal, detailProduct, variant, deleteVariant, setTab
                     {' '}
                 </div>
                 <hr style={{margin:'0'}} />
-            </div>
+            </div> */}
             <div class="product-admin-main">
                 <div className="product-admin-main-container">
                     {imageContent}

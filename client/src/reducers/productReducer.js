@@ -27,8 +27,7 @@ const initialState = {
     cartSubtotal: 0,
     cartTax: 0,
     cartTotal: 0,
-    cartQty: 0,
-    orders: null,
+    cartQty: 0
 }
 
 export default function(state = initialState, action) {
@@ -344,12 +343,6 @@ export default function(state = initialState, action) {
                 cartTotal: total
             }
         }
-        case GET_ORDERS:
-            return {
-                ...state,
-                orders: action.payload,
-                loading: false
-            };
         default:
             return state;
     }

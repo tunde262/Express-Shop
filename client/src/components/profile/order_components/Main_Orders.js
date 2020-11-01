@@ -31,7 +31,7 @@ const Main_Orders = ({deleteAccount, setTableShow2, store, auth: { user }, profi
             setSentMixpanel(true);
         }
 
-        orderList = <OrderList user={user._id} profile />
+        orderList = <OrderList profile />
     }
 
     return (
