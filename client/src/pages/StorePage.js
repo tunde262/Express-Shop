@@ -110,7 +110,7 @@ const StorePage = ({getStoreById, getProfileSubscriptions, favorite, profile, st
     }  
 
     return (
-        <div style={{marginTop:'75px', background:'rgb(247, 247, 247)'}}>
+        <div style={{marginTop:'65px', background:'rgb(247, 247, 247)'}}>
             {store.loading && store.store === null ? <Spinner /> : (
                 <Fragment>
                     {store.store !== null ? (

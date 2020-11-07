@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-const CollectionHeader = ({collection: { collection }, history}) => {
+const OrderHeader = ({order, history}) => {
     return (
         <div class="product-header container-fluid">
             {/* <div id="breadcrumb">
@@ -17,7 +17,7 @@ const CollectionHeader = ({collection: { collection }, history}) => {
                 <i onClick={() => history.goBack()} style={{fontSize:'20px'}} class="fas fa-arrow-left"></i>
                 <div style={{display: 'flex', height:'auto', marginBottom:'10px', alignItems:'center'}}>
                     <h3 style={{color: "black"}}>
-                        {collection && collection.name}
+                        Order Details
                     </h3>
                 </div>
             </div>
@@ -25,12 +25,12 @@ const CollectionHeader = ({collection: { collection }, history}) => {
     )
 }
 
-CollectionHeader.propTypes = {
-    collection: PropTypes.object.isRequired,
+OrderHeader.propTypes = {
+    order: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-    collection: state.collection,
+    order: state.order,
 })
 
-export default connect(mapStateToProps, null)(withRouter(CollectionHeader));
+export default connect(mapStateToProps, null)(withRouter(OrderHeader));

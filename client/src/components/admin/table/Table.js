@@ -2,7 +2,7 @@ import React, { useState, Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getProducts, getProductsByStoreId } from '../../../actions/productActions';
+import { getProductsByStoreId } from '../../../actions/productActions';
 import { getStoreOrders } from '../../../actions/orderActions';
 import { getVariantsByStoreId } from '../../../actions/variantActions';
 import { getCollectionsByStoreId } from '../../../actions/collectionActions';
@@ -43,7 +43,7 @@ const Table = ({
     const [sentMixpanel, setSentMixpanel] = useState(false);
 
     useEffect(() => {
-        getProductsByStoreId(store._id)
+        getProductsByStoreId(store._id);
         getVariantsByStoreId(store._id);
         getStoreOrders(store._id);
         getCollectionsByStoreId(store._id);
@@ -143,8 +143,8 @@ const Table = ({
     return (
         <Fragment>
             {/* main content */}
-            <div id="page-content-wrapper">
-                <div class="content-box container-fluid">
+            <div id="page-content-wrapper" style={{width:'100%'}}>
+                <div class="content-box">
                     <div class="table-responsive table-filter">
                         {/* <Navbar products={product.products} handleOrders={handleOrders} page={page} background='#ff4b2b' /> */}
                         {tableContent}
@@ -162,7 +162,6 @@ Table.propTypes = {
     customer: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired,
     order: PropTypes.object.isRequired,
-    getProducts: PropTypes.func.isRequired,
     getProductsByStoreId: PropTypes.func.isRequired,
     getVariantsByStoreId: PropTypes.func.isRequired,
     getStoreOrders: PropTypes.func.isRequired,
@@ -179,5 +178,5 @@ const mapStateToProps = state => ({
     store: state.store
 })
 
-export default connect(mapStateToProps, { getProducts, getProductsByStoreId, getVariantsByStoreId, getStoreOrders, getCollectionsByStoreId, getCustomersByStoreId })(Table);
+export default connect(mapStateToProps, { getProductsByStoreId, getVariantsByStoreId, getStoreOrders, getCollectionsByStoreId, getCustomersByStoreId })(Table);
 

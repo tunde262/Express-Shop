@@ -47,17 +47,11 @@ const App = () => {
     initializeReactGA();
   }, []);
   
-  const [sideDrawer, setSideDrawer] = useState({
-    sideDrawerOpen: false 
-  });
+  const [sideDrawerOpen, setSideDrawer] = useState(false);
 
-  const [cartDrawer, setCartDrawer] = useState({
-    cartDrawerOpen: false 
-  });
+  const [cartDrawerOpen, setCartDrawer] = useState(false);
 
-  const [authDrawer, setAuthDrawer] = useState({
-    authDrawerOpen: false 
-  });
+  const [authDrawerOpen, setAuthDrawer] = useState(false);
 
   const [drawer, showDrawer] = useState(false);
 
@@ -70,42 +64,36 @@ const App = () => {
 
   const drawerToggleClickHandler = () => {
     clicked();
-    setSideDrawer((prevState) => {
-      return {sideDrawerOpen: !prevState.sideDrawerOpen};
-    });
+    setSideDrawer(!sideDrawerOpen);
     showDrawer(true);
   };
 
   const toggleCartDrawer = () => {
     clicked();
-    setCartDrawer((prevState) => {
-      return {cartDrawerOpen: !prevState.cartDrawerOpen};
-    });
+    setCartDrawer(!cartDrawerOpen);
     showDrawer(true);
   };
 
   const toggleAuthDrawer = () => {
     clicked();
-    setAuthDrawer((prevState) => {
-      return {authDrawerOpen: !prevState.authDrawerOpen};
-    });
+    setAuthDrawer(!authDrawerOpen);
     showDrawer(true);
   };
 
 
   const backdropClickHandler = () => {
-    setSideDrawer({sideDrawerOpen: false });
+    setSideDrawer(false );
 
-    setCartDrawer({cartDrawerOpen: false });
+    setCartDrawer(false);
 
-    setAuthDrawer({authDrawerOpen: false });
+    setAuthDrawer(false);
 
     showDrawer(false);
   }
 
   let backdrop;
 
-  if (sideDrawer.sideDrawerOpen || cartDrawer.cartDrawerOpen || authDrawer.authDrawerOpen) {
+  if (sideDrawerOpen || cartDrawerOpen || authDrawerOpen) {
     backdrop = <Backdrop click={backdropClickHandler} />;
   }
   
@@ -115,9 +103,9 @@ const App = () => {
         <Router>
           <div style={{height: '100%'}}>
             <Navbar backdrop={drawer} backdropClickHandler={backdropClickHandler} drawerClickHandler={drawerToggleClickHandler} toggleAuthDrawer={toggleAuthDrawer} toggleCartDrawer={toggleCartDrawer} />
-            {/* <SideDrawer show={sideDrawer.sideDrawerOpen} toggleAuthDrawer={toggleAuthDrawer} toggleCartDrawer={toggleCartDrawer} drawerClickHandler={drawerToggleClickHandler} /> */}
-            <CartDrawer cartStores={cartStores} setStoresList={setStoresList} show={cartDrawer.cartDrawerOpen} toggleCartDrawer={toggleCartDrawer} drawerClickHandler={drawerToggleClickHandler} />
-            <AuthDrawer show={authDrawer.authDrawerOpen} toggleAuthDrawer={toggleAuthDrawer} drawerClickHandler={drawerToggleClickHandler} />
+            <SideDrawer show={sideDrawerOpen} toggleAuthDrawer={toggleAuthDrawer} toggleCartDrawer={toggleCartDrawer} drawerClickHandler={drawerToggleClickHandler} />
+            <CartDrawer cartStores={cartStores} setStoresList={setStoresList} show={cartDrawerOpen} toggleCartDrawer={toggleCartDrawer} drawerClickHandler={drawerToggleClickHandler} />
+            <AuthDrawer show={authDrawerOpen} toggleAuthDrawer={toggleAuthDrawer} drawerClickHandler={drawerToggleClickHandler} />
             {backdrop}
             <main id="home">
               <Switch>

@@ -4,6 +4,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../common/Spinner';
+import { setAdminNav } from '../../actions/navActions';
 import { getCurrentStore, deleteStore } from '../../actions/storeActions';
 
 import mixpanel from 'mixpanel-browser';
@@ -13,11 +14,12 @@ import JoinCreate from './JoinCreate';
 import logo from '../common/logo.jpg';
 import { Logo } from '../Logo';
 
-const Admin = ({ getCurrentStore, store: { stores, loading } }) => {
+const Admin = ({ getCurrentStore, setAdminNav, store: { stores, loading } }) => {
 
     const [sentMixpanel, setSentMixpanel] = useState(false);
 
     useEffect(() => {
+        setAdminNav(true);
         getCurrentStore();
     }, []);
 
@@ -102,10 +104,11 @@ const Admin = ({ getCurrentStore, store: { stores, loading } }) => {
 Admin.propTypes = {
     getCurrentStore: PropTypes.func.isRequired,
     store: PropTypes.object.isRequired,
+    setAdminNav: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
     store: state.store
 })
 
-export default connect(mapStateToProps, { getCurrentStore, deleteStore })(Admin);
+export default connect(mapStateToProps, { setAdminNav, getCurrentStore, deleteStore })(Admin);

@@ -20,6 +20,8 @@ export const SET_NAV3 = 'SET_NAV3';
 export const REMOVE_NAV1 = 'REMOVE_NAV1';
 export const REMOVE_NAV2 = 'REMOVE_NAV2';
 export const REMOVE_NAV3 = 'REMOVE_NAV3';
+export const SET_PAGE = 'SET_PAGE';
+export const SET_ADMIN = 'SET_ADMIN';
 
 // Products & Cart
 export const SET_PRODUCTS = 'SET_PRODUCTS';

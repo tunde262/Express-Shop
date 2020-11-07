@@ -17,7 +17,7 @@ const Header_Settings = ({store, inventoryNav, setTable, auth: { user }, profile
             </div>
             <div style={{width:'100%', display:'flex', justifyContent:'space-between'}}>
                 <h3>Orders</h3>
-                <button style={{width:'300px'}}>
+                <button style={{width:'300px', background:'#0098d3', borderColor:'#0098d3'}}>
                     Add Order
                 </button>
             </div>

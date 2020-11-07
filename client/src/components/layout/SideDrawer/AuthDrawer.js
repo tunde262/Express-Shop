@@ -6,18 +6,41 @@ import PropTypes from 'prop-types';
 import { logout } from '../../../actions/authActions';
 import { getCurrentProfile, deleteAccount } from '../../../actions/profileActions';
 
+import ProductSideDrawer from '../../admin/pages/page_components/product/SideDrawerProduct';
+
 import './CartDrawer.css';
 import paper_towels from '../../../utils/imgs/paper_towels.jpeg';
 
-const AuthDrawer = ({ drawerClickHandler, toggleAuthDrawer, getCurrentProfile, deleteAccount, profile: { profile }, auth: { isAuthenticated, loading }, logout, show}) => {
-    useEffect(() => {
-        getCurrentProfile();
-    }, [getCurrentProfile]);
+const AuthDrawer = ({ drawerClickHandler, toggleAuthDrawer, getCurrentProfile, deleteAccount, nav, store, profile: { profile }, auth: { isAuthenticated, user, loading }, logout, show, match}) => {
 
+    const [slideForm1, setSlideForm1] = useState(false);
 
-    const toggleSideDrawer = () => {
+    const [detailPage, setDetailPage] = useState(false);
+    const [checkDetail, setCheckDetail] = useState(false);
+
+    if (!checkDetail && !nav.loading) {
+        if(nav.page === 'admin detail product' || nav.page === 'admin detail location' || nav.page === 'admin detail collection' || nav.page === 'admin detail order'){
+            setDetailPage(true);
+            setCheckDetail(true);
+        }
+    }
+
+    const toggleAuth = () => {
         toggleAuthDrawer();
-        drawerClickHandler();
+    }
+
+    const handleSlideAuth = () => {
+        setDetailPage(false);
+        handleSlide();
+    }
+
+    const handleSlideList = () => {
+        setDetailPage(true);
+        handleSlide();
+    }
+
+    const handleSlide = () => {
+        setSlideForm1(!slideForm1);
     }
 
     let drawerClasses = 'cart-drawer';
@@ -27,40 +50,102 @@ const AuthDrawer = ({ drawerClickHandler, toggleAuthDrawer, getCurrentProfile, d
 
     return (
         <nav className={drawerClasses}>
-            <div style={{padding:'0 0 0 1rem', width:'100%',}}>
-                <i onClick={toggleSideDrawer} style={{color:'#cecece', margin:'1rem', fontSize:'1rem'}} className="fas fa-arrow-left"></i>
-                <div className="menu">
-                    <div style={{display:'flex', alignItems:'center'}}>
-                        <div style={{background:'#333', height:'50px', width:'50px', borderRadius:'50px'}}></div>
-                        <Link to="/profile" className="menu-item">My Profile</Link>
-                        <i className="fas fa-chevron-right"></i>
-                    </div>
-                    <hr style={{margin:'10px 0'}} />
-                    <a href="#" className="menu-item">
-                        <i className="fas fa-heart"></i>{' '}
-                        Saved
+            <div className="detail-settings-transition">
+                {/** Transition 1 */}
+                <div className={!slideForm1 ? "admin-nav-drawer active" : "admin-nav-drawer"} id="transition-1">
+                    {detailPage && (
+                        <div style={{display:'flex', justifyContent:'flex-end'}} className="slide-item" onClick={handleSlideList}>
+                            <div>
+                                <p style={{margin:'0', color:'#ff4b2b'}}>View products<span style={{margin:'0 10px'}}><i class="fas fa-arrow-right"></i></span></p>
+                            </div>
+                        </div>
+                    )}
+                    <a onClick={handleSlideAuth} href="#"style={{paddingLeft:'1rem', display:'grid', gridTemplateColumns:'1fr 3fr 1fr'}}>
+                        <div style={{display:'flex', padding:'0', justifyContent:'center', alignItems:'center'}}>
+                            <div style={{display:'flex', justifyContent:'center', alignItems:'center', width:'40px', height:'40px', borderRadius:'50%', background:'#ececec', border:'2px solid #ff4b2b'}}>
+                                <p style={{fontWeight:'bold', color:'#333'}}>T</p>
+                            </div>
+                        </div>
+                        <div style={{padding:'5px 10px 0 10px', display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'left'}}>
+                            <h3 style={{margin:0}}>{user && user.name}</h3>
+                            <p style={{margin:0}}>4.5 / 5 stars</p>
+                        </div>
+                        <div style={{display:'flex', padding:'0', color:'#808080', justifyContent:'center', alignItems:'center'}}>
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
                     </a>
-                    <hr style={{margin:'10px 0'}} />
-                    <a href="#" className="menu-item">
-                        My Orders
-                    </a>
-                    {/* <hr style={{margin:'10px 0'}} />
-                    <Link to="/admin" className="menu-item">
-                        My Stores
-                    </Link> */}
-                    <hr style={{margin:'10px 0'}} />
-                    <a href="#" className="menu-item">
-                        <i className="fas fa-cog"></i>{' '}
-                        Settings
-                        <i className="fas fa-chevron-right"></i>
-                    </a>
-                    <hr style={{margin:'10px 0'}} />
-                    <a href="#" className="menu-item" onClick={logout}>
-                        <i className="fas fa-sign-out-alt" />{' '}
-                        Logout
-                    </a>
+                    <Link onClick={toggleAuth} to={{pathname:`/admin/${store.store && store.store._id}`,search: "?show=store"}}>
+                        <div className="profile-table-nav-items active">
+                            <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                                <h3>Store</h3>
+                                <p>Track, manage, & return</p>
+                            </div>
+                        </div>
+                    </Link>
+                    <Link onClick={toggleAuth} to={{pathname:`/admin/${store.store && store.store._id}`,search: "?show=inventory"}}>
+                        <div className="profile-table-nav-items">
+                            <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                                <h3>Inventory</h3>
+                                <p>Track, manage, & return</p>
+                            </div>
+                        </div>
+                    </Link>
+                    <Link onClick={toggleAuth} to={{pathname:`/admin/${store.store && store.store._id}`,search: "?show=orders"}}>
+                        <div className="profile-table-nav-items">
+                            <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                                <h3>Orders</h3>
+                                <p>Track, manage, & return</p>
+                            </div>
+                        </div>
+                    </Link>
+                    <Link onClick={toggleAuth} to={{pathname:`/admin/${store.store && store.store && store.store._id}`,search: "?show=people"}}>
+                        <div className="profile-table-nav-items">
+                            <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                                <h3>People</h3>
+                                <p>Track, manage, & return</p>
+                            </div>
+                        </div>
+                    </Link>
+                    <Link onClick={toggleAuth} to={{pathname:`/admin/${store.store && store.store._id}`,search: "?show=settings"}}>
+                        <div className="profile-table-nav-items">
+                            <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                                <h3>Settings</h3>
+                                <p>Track, manage, & return</p>
+                            </div>
+                        </div>
+                    </Link>
+                </div>
+                {/** Transition 2 */}
+                <div className={slideForm1 ? "admin-nav-drawer active" : "admin-nav-drawer"} id="transition-2">
+                    {!detailPage ? (
+                        <Fragment>
+                            <div className="slide-item" onClick={() => setSlideForm1(!slideForm1)}>
+                                <div>
+                                    <p style={{margin:'0', color:'#808080'}}><span style={{margin:'0 10px'}}><i class="fas fa-arrow-left"></i></span>Back to menu</p>
+                                </div>
+                            </div>
+                            <Link onClick={toggleAuth} to="/profile/saved">
+                                <div className="profile-table-nav-items active">
+                                    <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                                        <h3>Exit Dashboard</h3>
+                                    </div>
+                                </div>
+                            </Link>
+                            <a href="#">
+                                <div className="profile-table-nav-items">
+                                    <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                                        <h3>Logout</h3>
+                                    </div>
+                                </div>
+                            </a>
+                        </Fragment>
+                    ) : (
+                        (store.store && detailPage ? <ProductSideDrawer setSlideForm1={setSlideForm1} storeId={store.store._id} /> : null)
+                        
+                    )}
                 </div>
             </div>
+            {/* <i onClick={toggleSideDrawer} style={{color:'#cecece', margin:'1rem', fontSize:'1rem'}} className="fas fa-arrow-left"></i> */}
         </nav>
     )
 }
@@ -71,11 +156,15 @@ AuthDrawer.propTypes = {
     auth: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired,
     deleteAccount: PropTypes.func.isRequired,
+    store: PropTypes.object.isRequired,
+    nav: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
     auth: state.auth,
-    profile: state.profile
+    profile: state.profile,
+    store: state.store,
+    nav: state.nav
 });
 
 export default connect(mapStateToProps, { getCurrentProfile, deleteAccount, logout })(AuthDrawer);

@@ -1,15 +1,32 @@
-import { SET_NAV1, REMOVE_NAV1, SET_NAV2, REMOVE_NAV2, SET_NAV3, REMOVE_NAV3 } from '../actions/types';
+import { SET_PAGE, SET_NAV1, REMOVE_NAV1, SET_NAV2, REMOVE_NAV2, SET_NAV3, REMOVE_NAV3, SET_ADMIN } from '../actions/types';
 
 const initialState = {
     nav1: '',
     nav2: '',
-    nav3: ''
+    nav3: '',
+    page: '',
+    admin: false,
+    loading: true
 }
 
 export default function(state = initialState, action) {
     const { type, payload } = action;
 
     switch(type) {
+        case SET_PAGE: {
+            return {
+                ...state,
+                page: payload,
+                loading: false
+            };
+        }
+        case SET_ADMIN: {
+            return {
+                ...state,
+                admin: payload,
+                loading: false
+            };
+        }
         case SET_NAV1: {
             return {
                 ...state,

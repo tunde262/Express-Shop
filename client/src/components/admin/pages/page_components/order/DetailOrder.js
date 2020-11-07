@@ -1,19 +1,19 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState, useEffect } from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-
-import Map from '../../../../common/map/Map';
-import TextEditor from '../../../../common/TextEditor';
-import Spinner from '../../../../common/Spinner';
+import { connect } from 'react-redux';
 
 import mixpanel from 'mixpanel-browser';
 
+import { addToProducts } from '../../../../../actions/productActions';
+import { setPage } from '../../../../../actions/navActions';
+
+import Map from '../../../../common/map/Map';
 import Variant from '../../../table/Variant';
 import TableDetails from '../../../../TableDetails/TableDetails';
-
-import { incImg, decImg } from '../../../../../actions/productActions';
-import { setPage } from '../../../../../actions/navActions';
+import Item from '../../../table/Item';
+import Spinner from '../../../../common/Spinner';
 
 // Imgs
 import BoxEmoji from '../../../../../utils/imgs/box.png'; 
@@ -21,133 +21,221 @@ import ClosedLockEmoji from '../../../../../utils/imgs/closedlock.jpg';
 import OpenLockEmoji from '../../../../../utils/imgs/openlock.png'; 
 import CarEmoji from '../../../../../utils/imgs/car.jpg'; 
 
-const DetailProduct = ({ setModal, setPage, detailProduct, variant, deleteVariant, setTable, setStoreLocationModal, setImageModal, match, incImg, decImg }) => {
+const DetailOrder = ({ setModal, setPage, order, store, setTable, storageLocation }) => {
 
     const [sentMixpanel, setSentMixpanel] = useState(false);
-    const [detailNav, setDetailNav] = useState('item');
+    const [orderNav, setOrderNav] = useState('items');
+
+    const [stores, setStoreList] = useState([]);
+    const [gotOrderStores, setGotOrderStores] = useState(false);
+    // TODO : map markers
+    
+    // let imageContent;
+    
+    // if(detailProduct && detailProduct.img_gallery && detailProduct.img_gallery.length > 0 ) {
+    //     imageContent = detailProduct.img_gallery.map(image => (
+    //         <div style={{margin:'10px'}}>
+    //             <img style={{width: '100%'}} src={`/api/products/image/${image.img_name}`} alt="img" />
+    //         </div>
+    //     ))
+    // } else {
+    //     imageContent = <h4>No Photos</h4>;
+    // }
 
     useEffect(() => {
-        setPage('admin detail product')
-    }, [])
 
-    let imageContent;
-    let img_gallery = detailProduct.img_gallery.sort((a, b) => a.img_order - b.img_order);
+        var list = document.getElementById('progress'),
+            next = document.getElementById('next'),
+            clear = document.getElementById('clear'),
+            children = list.children,
+            completed = 1;
+        // simulate activating a node
+        next.addEventListener('click', function() {
+            
+            // count the number of completed nodes.
+            completed = (completed === 0) ? 1 : completed + 2;
+            if (completed > children.length) return;
+            
+            // for each node that is completed, reflect the status
+            // and show a green color!
+            for (var i = 0; i < completed; i++) {
+                children[i].children[0].classList.remove('grey');
+                children[i].children[0].classList.add('green');
+                
+                // if this child is a node and not divider, 
+                // make it shine a little more
+                if (i % 2 === 0) {
+                    children[i].children[0].classList.add('activated', );            
+                }
+            }
+            
+        }, false);
 
-    const imgBack = (imgId) => {
-        console.log('DEC IMG');
-        decImg(imgId, detailProduct._id);
+        // clear the activated state of the markers
+        clear.addEventListener('click', function() {
+            for (var i = 0; i < children.length; i++) {
+                children[i].children[0].classList.remove('green');
+                children[i].children[0].classList.remove('activated');
+                children[i].children[0].classList.add('grey');
+            }
+            completed = 0;
+        }, false);
 
-        mixpanelImgOrderUpdate();
-    }
+        return () => {
+            next.removeEventListener('click', function() {
+            
+                // count the number of completed nodes.
+                completed = (completed === 0) ? 1 : completed + 2;
+                if (completed > children.length) return;
+                
+                // for each node that is completed, reflect the status
+                // and show a green color!
+                for (var i = 0; i < completed; i++) {
+                    children[i].children[0].classList.remove('grey');
+                    children[i].children[0].classList.add('green');
+                    
+                    // if this child is a node and not divider, 
+                    // make it shine a little more
+                    if (i % 2 === 0) {
+                        children[i].children[0].classList.add('activated', );            
+                    }
+                }
+                
+            });
+            clear.removeEventListener('click', function() {
+                for (var i = 0; i < children.length; i++) {
+                    children[i].children[0].classList.remove('green');
+                    children[i].children[0].classList.remove('activated');
+                    children[i].children[0].classList.add('grey');
+                }
+                completed = 0;
+            });
+        }
 
-    const imgForward = (imgId) => {
-        console.log('INC IMG');
-        incImg(imgId, detailProduct._id);
+    }, []);
 
-        mixpanelImgOrderUpdate();
-    }
-
-    const mixpanelImgOrderUpdate = () => {
-        mixpanel.track("Img Order Update", {
-        //   "Entry Point": "Home Landing",
-          "Item Name": detailProduct.name,
-          "Item Category": detailProduct.category,
-          "Item Cost": detailProduct.price,
-          "Store Name": detailProduct.store.name,
-          "Total Imgs": detailProduct.img_gallery.length,
-          "Total Likes": detailProduct.likes.length,
-          "Total Comments": detailProduct.comments.length,
+    // const handleMixpanel = () => {
+    //     mixpanel.track("Admin Order Page View", {
+    //     //   "Entry Point": "Home Landing",
+    //       "Collection Name": collection.name,
+    //     //   "Location Zipcode": collection.address_components.postalcode,
+    //       "Store Name": collection.store.name,
+    //       "Item Count": collection.items.length,
           
-        });
-    } 
+    //     });
+    // }
 
-    const handleMixpanel = () => {
-        mixpanel.track("Admin Product Page View", {
-        //   "Entry Point": "Home Landing",
-          "Item Name": detailProduct.name,
-          "Item Category": detailProduct.category,
-          "Item Cost": detailProduct.price,
-          "Store Name": detailProduct.store.name,
-          "Total Imgs": detailProduct.img_gallery.length,
-          "Total Likes": detailProduct.likes.length,
-          "Total Comments": detailProduct.comments.length,
-          
-        });
+    // if(!sentMixpanel && collection) {
+    //     handleMixpanel();
+    //     setSentMixpanel(true);
+    // }
+
+    const getOrderStores = async () => {
+        const storeData = [];
+        try {
+            order.orderStores.map(async store => {
+                const res = await axios.get(`/api/stores/${store.store}`);
+                console.log(res.data);
+                setStoreList(stores => [...stores, {
+                    id: store.store,
+                    name: res.data.name,
+                    img: res.data.img_name
+                }])
+            });
+        } catch (err) {
+            console.log(err);
+        }
     }
 
-    const handleImgClick = () => {
-        mixpanel.track("Item Img Click", {
-            //   "Entry Point": "Home Landing",
-              "Item Name": detailProduct.name,
-              "Item Category": detailProduct.category,
-              "Item Cost": detailProduct.price,
-              "Store Name": detailProduct.store.name,
-              "Total Imgs": detailProduct.img_gallery.length,
-              "Total Likes": detailProduct.likes.length,
-              "Total Comments": detailProduct.comments.length,
-              
-        });
-    }
-
-    if(!sentMixpanel && detailProduct) {
-        handleMixpanel();
-        setSentMixpanel(true);
+    if(order.order && !order.loading && !gotOrderStores) {
+        getOrderStores();
+        setGotOrderStores(true);
     }
     
-    if(detailProduct && detailProduct.img_gallery && detailProduct.img_gallery.length > 0 ) {
-        imageContent = img_gallery.map(image => (
-            <div className="product-admin-image-container">
-                <img className="product-admin-image-container-img" onClick={handleImgClick} src={`/api/products/image/${image.img_name}`} alt="img" />
-                <div className="product-admin-image-container-actions">
-                    <div onClick={() => imgBack(image._id)} className="admin-image-icon-container">
-                        <i class="fas fa-chevron-left"></i>
+
+    console.log('STORES DATA');
+    console.log(stores);
+
+    let orderList;
+
+    if(order.order) console.log(Object.keys(order.order.cart.items).length);
+
+    if(stores.length > 0 && order.order !== null && Object.keys(order.order.cart.items).length > 0) {
+        orderList = stores.map(store => {
+            let storeTotal = 0;
+            Object.values(order.order.cart.items).map(item => {
+                if(item.item.store === store.id) {
+                    storeTotal = storeTotal + item.price
+                }
+            });
+
+            return (
+                <div style={{background:'#fff', margin:'10px 0', border:'1px solid rgb(214, 214, 214)'}}>
+                    <div style={{background:'rgb(247, 247, 247)', padding:'1rem', width:'100%', justifyContent:'space-between', display:'flex', alignItems:'center', borderBottom:'1px solid rgb(214, 214, 214)'}}>
+                        <div style={{display: 'flex', margin:'0 1rem', alignItems: 'center'}}>
+                            {store.img && <img style={{height: '40px', width: '40px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${store.img}`} alt="img" />}
+                            <p style={{margin:'1rem 0'}}>{store.name}</p>
+                        </div>
+                        <div style={{margin:'0 1rem'}}>
+                            <p style={{margin:'0'}}>${storeTotal}</p>
+                        </div>
                     </div>
-                    <div onClick={() => imgForward(image._id)} className="admin-image-icon-container">
-                        <i class="fas fa-chevron-right"></i>
-                    </div>
+                    {Object.values(order.order.cart.items).map(order => (
+                        <Fragment>
+                            {order.item.store === store.id && (
+                                <div style={{display:'grid', width: '100%', gridGap:'4rem', gridTemplateColumns:'1fr 1fr'}}>
+                                    <div style={{marginLeft:'2rem', borderBottom:'1px solid #e8e8e8', display:'flex', justifyContent:'flex-start', alignItems:'center', height:'100px', width:'100%'}}>
+                                        <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+                                            <div style={{fontSize: '1rem', color:'#cecece',margin: '10px', padding:'2px', width:'80px',height: '80px',display:'flex', justifyContent: 'center',alignItems: 'center'}}>
+                                                <img src={`/api/products/image/${order.item.img_gallery[0].img_name}`} style={{height:'100%'}} alt="product" />
+                                            </div>
+                                            <div style={{display:'flex', width:'100%', flexDirection:'column', alignItems:'flex-start'}}>
+                                                <div style={{height:'18px', marginLeft:'0', overflow:'hidden', color:'#808080'}}>
+                                                    <p className="line-clamp-1" style={{margin:'0', color:'blue'}}>{order.item.name}</p>
+                                                </div>
+                                                <p style={{margin:'0 15px', color:'#808080'}}><span style={{color:'#ff4b2b'}}>M 12</span> / <span style={{color:'green'}}>Grey</span></p>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div style={{display:'flex', color:'#808080', alignItems:'center', padding:'0 1rem'}}>
+                                        <p style={{margin:'0 1rem'}}>${order.item.price}</p>
+                                        <p style={{margin:'0 1rem'}}>x</p>
+                                        <p style={{margin:'0 1rem'}}>{order.qty}</p>
+                                        <p style={{margin:'0 1rem'}}>${order.price}</p>
+                                    </div>
+                                </div>
+                            )}
+                        </Fragment>
+                    ))}
                 </div>
-                <div onClick={handleImgClick} className="admin-image-overlay">
-                    <div onClick={() => imgBack(image._id)} className="admin-overlay-icon-container">
-                        <i class="fas fa-chevron-left"></i>
-                    </div>
-                    <div onClick={() => imgForward(image._id)} className="admin-overlay-icon-container">
-                        <i class="fas fa-chevron-right"></i>
-                    </div>
-                </div>
-            </div>
-        ))
-    } else {
-        imageContent = <h4>No Photos</h4>;
+            )
+        })
     }
 
     let mainContent;
 
-    if(detailProduct) {
-        if(detailNav === 'item') {
+    if(order.order) {
+        if(orderNav === 'items') {
             mainContent = (
                 <Fragment>
-                    <div className="product-admin-main-container">
-                        {imageContent}
-                        <div className="addImage" onClick={setImageModal}>
-                            <i class="fas fa-plus"></i>
-                        </div>
-                    </div>
-                    <div id="order-map" style={{marginTop:'10px', overflow:'hidden'}}>
-                        <TextEditor />
-                    </div>
                     <div class="content-box">
-                        <div class="table-responsive table-filter">
-                            <Variant setModal={setModal} page="product" prodId={match.params.productId} deleteVariant={deleteVariant} />
-                        </div>
+                        <h3>Hello</h3>
+                        {/* <div class="table-responsive table-filter">
+                            <Item setModal={setModal} page="collection" product={{sortedProducts: [...product.products], loading: false}} />
+                        </div> */}
                     </div>
                 </Fragment>
             )
-        } else if (detailNav === 'inventory') {
+        } else if (orderNav === 'inventory') {
             mainContent = (
                 <Fragment>
                     <div id="order-map" style={{marginTop:'10px', overflow:'hidden'}}>
                         <div style={{margin:'0', width:'100%',border:'2px dashed #cecece',borderRadius: '10px'}}>
                             <div style={{height:'250px', maxHeight:'250px', width:'100%'}}>
+                                {/* {!storageLocation.loading && storageLocation.locations.length > 0 && !product.switchMaps ? (
+                                    <Map storageLocation={storageLocation} />
+                                ) : null} */}
                                 <Map 
                                     defaultZoom="8"
                                     centerLat="33.0300238"
@@ -162,19 +250,8 @@ const DetailProduct = ({ setModal, setPage, detailProduct, variant, deleteVarian
                         {/* <div class="table-responsive table-filter">
                             <Variant setModal={setModal} page="product" prodId={match.params.productId} deleteVariant={deleteVariant} />
                         </div> */}
-                        <div style={{background:'#fff', margin:'10px 0', border:'1px solid rgb(214, 214, 214)'}}>
-                            <div style={{background:'rgb(247, 247, 247)', padding:'1rem', width:'100%', justifyContent:'space-between', display:'flex', alignItems:'center', borderBottom:'1px solid rgb(214, 214, 214)'}}>
-                                <div style={{display: 'flex', margin:'0 1rem', alignItems: 'center'}}>
-                                    <i style={{color:'#3CB371', margin:'0 10px', fontSize:'1.1rem'}} class="fas fa-map-marker-alt"></i>
-                                    <p style={{margin:'1rem 0'}}>Tunde's House</p>
-                                </div>
-                                <div style={{margin:'0 1rem'}}>
-                                    <button style={{background: "#42b499", color:"#fff"}} className="btn">Edit Stock</button>
-                                </div>
-                            </div>
-                            <div class="table-responsive table-filter">
-                                <Variant setModal={setModal} page="product" prodId={match.params.productId} deleteVariant={deleteVariant} />
-                            </div>
+                        <div style={{display:'flex', flexDirection:'column', justifyContent:'flex-start'}}>
+                            {orderList}
                         </div>
                     </div>
                 </Fragment>
@@ -186,76 +263,74 @@ const DetailProduct = ({ setModal, setPage, detailProduct, variant, deleteVarian
 
     let secondaryContent;
 
-    if(detailProduct) {
-        if(detailNav === 'item') {
+    if(order.order) {
+        if(orderNav === 'items') {
             secondaryContent = (
                 <Fragment>
-                    <div class="product-privacy-box">
-                        <div class="product-privacy-box-title">
-                            <p style={{color:'#808080', margin:'0'}}>Visibility</p>
-                            <hr style={{height:'1px', background:'rgb(214,214,214)', margin:'10px 0 10px 0'}}/>
-                            <div style={{display:'flex', justifyContent:'space-between', height:'50px', alignItems:'center'}}>
-                                <p style={{color:'#3CB371', margin:'0'}}>Public</p>
-                                <input 
-                                    class="toggle-button" 
-                                    type="checkbox" 
-                                    name="privacy"
-                                    checked={true}
-                                />
-                            </div>
+                    <div style={{background:'#fff', height:'min-content', padding:'2rem 0 0 0', margin:'10px 0', border:'1px solid rgb(214, 214, 214)'}}>
+                        <div className="vertical-step-bar">
+                            <ul id="progress">
+                                <li>
+                                    <div class="node green"></div>
+                                    <p>Order Placed</p>
+                                    <p style={{marginTop:'20px', color:'#808080'}}><small>05/10/2001 5:35pm</small></p>
+                                </li>
+                                <li>
+                                    <div class="divider grey"></div>
+                                </li>
+                                <li>
+                                    <div class="node grey"></div>
+                                    <p>Collecting Items</p>
+                                    <p style={{marginTop:'20px', color:'#808080'}}><small>05/10/2001 5:35pm</small></p>
+                                </li>
+                                <li>
+                                    <div class="divider grey"></div></li>
+                                <li>
+                                    <div class="node grey"></div>
+                                    <p>Awaiting Delivery</p>
+                                    <p style={{marginTop:'20px', color:'#808080'}}><small>05/10/2001 5:35pm</small></p>
+                                </li>
+                                <li>
+                                    <div class="divider grey"></div>
+                                </li>
+                                <li>
+                                    <div class="node grey"></div>
+                                    <p>En Route Started</p>
+                                    <p style={{marginTop:'20px', color:'#808080'}}><small>05/10/2001 5:35pm</small></p>
+                                </li>
+                                <li>
+                                    <div class="divider grey"></div>
+                                </li>
+                                <li>
+                                    <div class="node grey"></div>
+                                    <p>Left At Door</p>
+                                    <p style={{marginTop:'20px', color:'#808080'}}><small>05/10/2001 5:35pm</small></p>
+                                </li>
+                            </ul>
+                        </div>
+        
+                        <div style={{margin:'1rem 0 10px'}}>
+                            <input type="button" value="Next" id="next"/>
+                            <input type="button" value="Clear" id="clear"/>
                         </div>
                     </div>
-                    <div class="product-privacy-box">
-                        <div class="product-privacy-box-title">
-                            <p style={{color:'#808080', margin:'0'}}>Listing Category</p>
-                            <hr style={{height:'1px', background:'rgb(214,214,214)', margin:'10px 0 10px 0'}}/>
-                            <select name="category">
-                                <option>* Choose a category</option>
-                                <option value="clothing & fashion">Clothing & Fashion</option>
-                                <option value="bathroom">Bathroom</option>
-                                <option value="household essentials">Household Essential</option>
-                                <option value="laundry">Laundry</option>
-                                <option value="men">Men</option>
-                                <option value="personal care">Personal Care</option>
-                                <option value="pets">Pets</option>
-                                <option value="school & office">School & Office</option>
-                                <option value="shoes">Shoes</option>
-                                <option value="women">Women</option>
-                            </select>
+                    <div id="order-totals" style={{background:'#fff', margin:'10px 0', padding:'10px', height:'300px', border:'1px solid rgb(214, 214, 214)'}}>
+                        <p>Order Summary</p>
+                        <div style={{display:'flex', color:'#808080', justifyContent:'space-between'}}>
+                            <p>Item(s) Subtotal:</p>
+                            <p>${order.order && order.order.cart.totalPrice}</p>
                         </div>
-                        
-                    </div>
-                    <div class="product-privacy-box">
-                        <div class="product-privacy-box-title">
-                            <p style={{color:'#808080', margin:'0'}}>Collections</p>
-                            <hr style={{height:'1px', background:'rgb(214,214,214)', margin:'10px 0 10px 0'}}/>
-                            <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
-                                    <p style={{margin:'0'}}>Shorts <span style={{color:'#ff4b2b'}}>(43)</span></p>
-                                    <small style={{color:'#ccc', margin:'0'}}>Auto</small>
-                                </div>
-                                <div>
-                                    <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-times"></i>
-                                </div>
-                            </div>
-                            <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
-                                    <p style={{margin:'0'}}>Halloween <span style={{color:'#ff4b2b'}}>(43)</span></p>
-                                    <small style={{color:'#ccc', margin:'0'}}>Auto</small>
-                                </div>
-                                <div>
-                                    <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-times"></i>
-                                </div>
-                            </div>
-                            <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
-                                    <p style={{margin:'0'}}>Tops <span style={{color:'#ff4b2b'}}>(43)</span></p>
-                                    <small style={{color:'#ccc', margin:'0'}}>Auto</small>
-                                </div>
-                                <div>
-                                    <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-times"></i>
-                                </div>
-                            </div>
+                        <div style={{display:'flex', color:'#808080', justifyContent:'space-between'}}>
+                            <p>Shipping & Handling:</p>
+                            <p>$0.00</p>
+                        </div>
+                        <div style={{display:'flex', color:'#808080', justifyContent:'space-between'}}>
+                            <p>Estimated Tax:</p>
+                            <p>$3.98</p>
+                        </div>
+                        <div style={{display:'flex', color:'#ff4b2b', justifyContent:'space-between'}}>
+                            <p>Completed Total:</p>
+                            <p>${order.order && order.order.cart.totalPrice}</p>
                         </div>
                     </div>
                     <div class="product-privacy-box">
@@ -332,7 +407,7 @@ const DetailProduct = ({ setModal, setPage, detailProduct, variant, deleteVarian
                     </div>
                 </Fragment>
             )
-        } else if (detailNav === 'inventory') {
+        } else if (orderNav === 'inventory') {
             secondaryContent = (
                 <Fragment>
                     <div style={{background:'#fff', height:'min-content', padding:'2rem 0 0 0', margin:'10px 0', border:'1px solid rgb(214, 214, 214)'}}>
@@ -384,7 +459,7 @@ const DetailProduct = ({ setModal, setPage, detailProduct, variant, deleteVarian
                     </div>
                     <div class="product-privacy-box">
                         <div class="product-privacy-box-title">
-                            <p style={{color:'#808080', margin:'0'}}>Collections</p>
+                            <p style={{color:'#808080', margin:'0'}}>Locations</p>
                             <hr style={{height:'1px', background:'rgb(214,214,214)', margin:'10px 0 10px 0'}}/>
                             <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
                                 <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
@@ -462,15 +537,16 @@ const DetailProduct = ({ setModal, setPage, detailProduct, variant, deleteVarian
         secondaryContent = null;
     }
 
+
     return (
         <Fragment>
             {/* <div className="product-actions container-fluid">
                 <div style={{display:'flex', justifyContent:'space-between', height:'50px', alignItems:'center'}}>
-                    <p style={{margin:'0'}}>Qty <span style={{fontWeight:'bold'}}>{detailProduct && detailProduct.inventory_qty}</span> in stock for <span style={{fontWeight:'bold'}}>{variant.variants.length}</span> variants</p>
+                    <p>Qty 20 in stock for 3 varients</p>
                     <div style={{display:'flex', height:'100%', alignItems:'center'}}>
-                        <Link to={detailProduct && `/details/${detailProduct._id}`}><i style={{fontSize:'1.3rem'}} class="fas fa-eye"></i></Link>
+                        <Link to={collection && `/collections/${collection._id}`}><i style={{fontSize:'1.3rem'}} class="fas fa-eye"></i></Link>
                         <i style={{margin:'0 1rem', fontSize:'1.4rem'}} class="fas fa-share-alt"></i>
-                        <button onClick={e => setTable('edit')} style={{ margin:'0 1rem 0 0', background:'#f4f4f4', color:'#7A7A7A', borderColor:'#f4f4f4' }}>Edit</button>
+                        <button onClick={e => setTable('edit collection')} style={{ margin:'0 1rem 0 0', background:'#f4f4f4', color:'#7A7A7A', borderColor:'#f4f4f4' }}>Edit</button>
                         <button onClick={e => setTable('storage request')} style={{ margin:'0 1rem 0 0' }}>Request Storage</button>
                     </div>
                     {' '}
@@ -480,33 +556,33 @@ const DetailProduct = ({ setModal, setPage, detailProduct, variant, deleteVarian
             <section id="stats" className="stats">
                 <div className="stats-box">
                     <div>
-                        <h2 style={{color:'#ff4b2b', fontWeight:'300'}}>2,000</h2>
+                        <h2 style={{color:'#333', fontWeight:'300'}}>2,000</h2>
                         <p>Active</p>
                     </div>
                     <div>  
-                        <h2 style={{color:'#ff4b2b', fontWeight:'300'}}>2000</h2>
+                        <h2 style={{color:'#333', fontWeight:'300'}}>2000</h2>
                         <p>Sold</p>
                     </div>
                     <div>   
-                        <h2 style={{color:'#ff4b2b', fontWeight:'300'}}>2,056</h2>
+                        <h2 style={{color:'#333', fontWeight:'300'}}>2,056</h2>
                         <p>Shipping</p>
                     </div>
                     <div>   
-                        <h2 style={{color:'#ff4b2b', fontWeight:'300'}}>2000</h2>
+                        <h2 style={{color:'#333', fontWeight:'300'}}>2000</h2>
                         <p>Low Stock</p>
                     </div>
                 </div>
                 <div>
                     <ul class="profile-underline">
                         <div 
-                            onClick={e => setDetailNav('item')} className={detailNav === "item" && "active"}
+                            onClick={e => setOrderNav('items')} className={orderNav === "items" && "active"}
                         >
-                            <li><p>Item</p></li>
+                            <li><p>Items<span style={{color:'#ff4b2b', marginLeft:'5px'}}>(36)</span></p></li>
                         </div>
                         <div 
-                            onClick={e => setDetailNav('inventory')} className={detailNav === "inventory" && "active"}
+                            onClick={e => setOrderNav('inventory')} className={orderNav === "inventory" && "active"}
                         >
-                            <li><p>Inventory</p></li>
+                            <li><p>Inventory<span style={{color:'#ff4b2b', marginLeft:'5px'}}>(108)</span></p></li>
                         </div>
                     </ul>
                 </div>
@@ -521,14 +597,18 @@ const DetailProduct = ({ setModal, setPage, detailProduct, variant, deleteVarian
     )
 }
 
-DetailProduct.propTypes = {
-    incImg: PropTypes.func.isRequired,
-    decImg: PropTypes.func.isRequired,
+DetailOrder.propTypes = {
+    order: PropTypes.object.isRequired,
+    product: PropTypes.object.isRequired,
+    storageLocation: PropTypes.object.isRequired,
     setPage: PropTypes.func.isRequired,
-};
+}
 
-export default connect(null, { 
-    incImg,
-    decImg,
-    setPage
-})(withRouter(DetailProduct));
+const mapStateToProps = state => ({
+    order: state.order,
+    product: state.product,
+    storageLocation: state.location
+})
+
+export default connect(mapStateToProps, { setPage })(withRouter(DetailOrder));
+

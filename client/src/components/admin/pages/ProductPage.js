@@ -4,11 +4,13 @@ import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { setAdminNav } from '../../../actions/navActions';
 import { setSortedProducts, getProductsByStoreId, handleDetail, editProduct, deleteProduct, setModalProducts, addProductImg } from '../../../actions/productActions';
 import { getProductVariants, addVariant, deleteVariant, setModalVariants } from '../../../actions/variantActions';
 import { getStoreById } from '../../../actions/storeActions';
 import { getCollectionById, addCollectionItem } from '../../../actions/collectionActions';
 import { getLocationById, getProductLocations, getCollectionLocations, setLocations, addLocationVariant } from '../../../actions/locationActions';
+import { getOrderById } from '../../../actions/orderActions';
 
 import Spinner from '../../common/Spinner';
 import Modal from 'react-responsive-modal';
@@ -22,12 +24,17 @@ import EditProduct from '../forms/EditProduct';
 import StorageRequest from '../forms/StorageRequest';
 import DetailProduct from './page_components/product/DetailProduct';
 import HeaderProduct from './page_components/product/HeaderProduct';
+import ProductSideDrawer from './page_components/product/SideDrawerProduct';
 import DetailCollection from './page_components/collection/DetailCollection';
 import HeaderCollection from './page_components/collection/HeaderCollection';
 import DetailLocation from './page_components/location/DetailLocation';
 import HeaderLocation from './page_components/location/HeaderLocation';
+import DetailOrder from './page_components/order/DetailOrder';
+import HeaderOrder from './page_components/order/HeaderOrder';
 
 import DragAndDrop from '../../admin/forms/utils/DragAndDrop';
+
+import sampleImg from '../../../utils/imgs/20484728.jpeg';
 
 
 const initialState = {
@@ -53,8 +60,10 @@ const ProductPage = ({
     deleteProduct,
     deleteVariant, 
     getStoreById,
+    getOrderById,
     match, 
     history,
+    setAdminNav,
     setSortedProducts,
     setModalProducts,
     setModalVariants,
@@ -65,6 +74,7 @@ const ProductPage = ({
     variant,
     store,
     collection,
+    order,
     getCollectionById,
     storageLocation,
     getLocationById,
@@ -114,11 +124,12 @@ const ProductPage = ({
     // Storage item list
     const [itemList, setItemListData] = useState([]);
 
-    
+    const [slideForm1, setSlideForm1] = useState(true);
 
     
         
     useEffect(() => {
+        setAdminNav(true);
         if(match.params.productId) {
             if (!detailProduct) handleDetail(match.params.productId);
             getProductLocations(match.params.productId);
@@ -137,6 +148,13 @@ const ProductPage = ({
             setTableShow1('location detail');
             setHeaderShow('location');
         }
+        if(match.params.orderId) {
+            if (!order.order) getOrderById(match.params.orderId);
+            // getOrderLocations(match.params.orderId);
+            setTableShow1('order detail');
+            setHeaderShow('order');
+        }
+        
         if(store.store === null) {
             getStoreById(match.params.storeId);
         };
@@ -432,6 +450,8 @@ const ProductPage = ({
         pageHeader = <HeaderCollection /> 
     } else if(headerShow === 'location') {
         pageHeader = <HeaderLocation /> 
+    } else if(headerShow === 'order') {
+        pageHeader = <HeaderOrder /> 
     }
 
     let pageContent;
@@ -470,6 +490,17 @@ const ProductPage = ({
                     setTable={setTable} 
                 />
             );
+        } else {
+            pageContent = <Spinner />
+        }
+    } else if(tableShow1 === 'order detail') {
+        if(order.order && !order.loading) {
+            pageContent = (
+                <DetailOrder
+                    setModal={handleStorageModal} 
+                    setTable={setTable} 
+                />
+            ); 
         } else {
             pageContent = <Spinner />
         }
@@ -618,66 +649,77 @@ const ProductPage = ({
 
     return (
         <Fragment>
-            <div className="admin-table">
-                    <div className={"admin-table-nav"}>
-                        <a href="#">
-                            <div>
-                                <h3 style={{fontWeight:'600'}}>Hey, Tunde</h3>
-                            </div>
-                        </a>
+            <div className="detail-table">
+                    <div className={"detail-table-nav"}>
+                        <div className="detail-settings-transition">
+                            {/** Transition 1 */}
+                            <div className={!slideForm1 ? "detail-nav-container active" : "detail-nav-container"} id="transition-1">
+                                <a href="#">
+                                    <div onClick={() => setSlideForm1(!slideForm1)}>
+                                        <div style={{display:'flex', flexDirection:'row', width:'100%', justifyContent:'flex-end'}}>
+                                            <p style={{margin:'0', color:'#ff4b2b'}}>Back to products<span style={{margin:'0 10px'}}><i class="fas fa-arrow-right"></i></span></p>
+                                        </div>
+                                    </div>
+                                </a>
 
-                        <a href="#">
-                            <div className="profile-table-nav-items">
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                                    <h3 style={{fontWeight:'600'}}>Store</h3>
-                                    <p>Track, manage, & return</p>
-                                </div>
+                                <Link to={{pathname:`/admin/${match.params.storeId}`,search: "?show=store"}}>
+                                    <div className="profile-table-nav-items">
+                                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                                            <h3 style={{fontWeight:'600'}}>Store</h3>
+                                            <p>Track, manage, & return</p>
+                                        </div>
+                                    </div>
+                                </Link> 
+                                {/* <div onClick={e => setTableShow1('payments')} className={tableShow1 === "payments" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
+                                    <h3>Payments</h3>
+                                    <p>Add payment methods</p>
+                                </div> */}
+                                <Link to={{pathname:`/admin/${match.params.storeId}`,search: "?show=inventory"}}>
+                                    <div className="profile-table-nav-items">
+                                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                                            <h3>Inventory</h3>
+                                            <p>Add new address</p>
+                                        </div>
+                                    </div>
+                                </Link>
+                                
+                                <Link to={{pathname:`/admin/${match.params.storeId}`,search: "?show=orders"}}>
+                                    <div className="profile-table-nav-items">
+                                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                                            <h3>Orders</h3>
+                                            <p>Store subcriptions & repeat purchases</p>
+                                        </div>
+                                    </div>
+                                </Link>
+                                
+                                <Link to={{pathname:`/admin/${match.params.storeId}`,search: "?show=people"}}>
+                                    <div className="profile-table-nav-items">
+                                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                                            <h3>People</h3>
+                                            <p>Password, name, etc.</p>
+                                        </div>
+                                    </div>
+                                </Link>
+                                <Link to={{pathname:`/admin/${match.params.storeId}`,search: "?show=settings"}}>
+                                    <div className="profile-table-nav-items">
+                                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                                            <h3>Store Settings</h3>
+                                            <p>Password, name, etc.</p>
+                                        </div>
+                                    </div>
+                                </Link>
                             </div>
-                        </a>
-                        {/* <div onClick={e => setTableShow1('payments')} className={tableShow1 === "payments" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                            <h3>Payments</h3>
-                            <p>Add payment methods</p>
-                        </div> */}
-                        <a href="#">
-                            <div className="profile-table-nav-items">
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                                    <h3>Inventory</h3>
-                                    <p>Add new address</p>
-                                </div>
+                            {/** Transition 2 */}
+                            <div className={slideForm1 ? "detail-nav-container active" : "detail-nav-container"} id="transition-2">
+                                <ProductSideDrawer setSlideForm1={setSlideForm1} storeId={match.params.storeId} />
                             </div>
-                        </a>
-                        
-                        <a href="#">
-                            <div className="profile-table-nav-items">
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                                    <h3>Orders</h3>
-                                    <p>Store subcriptions & repeat purchases</p>
-                                </div>
-                            </div>
-                        </a>
-                        
-                        <a href="#">
-                            <div className="profile-table-nav-items">
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                                    <h3>People</h3>
-                                    <p>Password, name, etc.</p>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="#">
-                            <div className="profile-table-nav-items">
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                                    <h3>Store Settings</h3>
-                                    <p>Password, name, etc.</p>
-                                </div>
-                            </div>
-                        </a>
+                        </div>
                     </div>
-                    <div className="admin-table-main desktop-column">
-                        <div className="admin-table-header">
+                    <div className="detail-table-main desktop-column">
+                        <div className="detail-table-header">
                             {pageHeader}
                         </div>
-                        <div className="admin-table-body">
+                        <div className="detail-table-body">
                             <div id="product-content-wrapper">
                                 {pageContent}
                             </div>
@@ -955,10 +997,13 @@ ProductPage.propTypes = {
     product: PropTypes.object.isRequired,
     variant: PropTypes.object.isRequired,
     collection: PropTypes.object.isRequired,
+    order: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired,
     deleteProduct: PropTypes.func.isRequired,
     deleteVariant: PropTypes.func.isRequired,
+    setAdminNav: PropTypes.func.isRequired,
     getStoreById: PropTypes.func.isRequired,
+    getOrderById: PropTypes.func.isRequired,
     setSortedProducts: PropTypes.func.isRequired,
     getProductsByStoreId: PropTypes.func.isRequired,
     addCollectionItem: PropTypes.func.isRequired,
@@ -979,14 +1024,17 @@ const mapStateToProps = state => ({
     variant: state.variant,
     store: state.store,
     collection: state.collection,
-    storageLocation: state.location
+    storageLocation: state.location,
+    order: state.order
 })
 
 export default connect(mapStateToProps, { 
     addVariant, 
     editProduct, 
     handleDetail, 
+    setAdminNav,
     getStoreById, 
+    getOrderById,
     deleteProduct, 
     deleteVariant, 
     addCollectionItem, 

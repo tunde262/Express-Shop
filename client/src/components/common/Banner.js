@@ -206,7 +206,7 @@ const BannerContainer = styled.div`
     img {
         width: 100%;
         height: 300px;
-        border-radius: 1rem;
+        border-radius: 5px;
     }
 
     @media (max-width: 768px){

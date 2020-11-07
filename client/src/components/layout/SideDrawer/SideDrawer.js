@@ -9,10 +9,10 @@ import { getCurrentProfile, deleteAccount } from '../../../actions/profileAction
 import './SideDrawer.css';
 import paper_towels from '../../../utils/imgs/paper_towels.jpeg';
 
-const SideDrawer = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, getCurrentProfile, deleteAccount, profile: { profile }, auth: { isAuthenticated, loading }, logout, show}) => {
-    useEffect(() => {
-        getCurrentProfile();
-    }, [getCurrentProfile]);
+const SideDrawer = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, store, getCurrentProfile, deleteAccount, profile: { profile }, auth: { isAuthenticated, loading }, logout, show}) => {
+    // useEffect(() => {
+    //     getCurrentProfile();
+    // }, [getCurrentProfile]);
 
     // const [cart, toggleCart] = useState(false);
 
@@ -42,13 +42,8 @@ const SideDrawer = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, ge
         drawerClasses = 'side-drawer open';
     }
 
-    let authClasses = 'sidedrawer-items guest';
-    if (isAuthenticated) {
-        authClasses = 'sidedrawer-items auth';
-    }
-
     const authLinks = (
-        <ul className={authClasses}>
+        <ul className={drawerClasses}>
             <li onClick={drawerClickHandler}>
                 <Link to="/home">
                     <i class="fas fa-home"></i>
@@ -91,8 +86,38 @@ const SideDrawer = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, ge
 
     return (
         <nav className={drawerClasses}>
-            <div style={{display:'flex'}}>
-                { !loading && (<Fragment>{authLinks}</Fragment>) }
+            <div className="admin-nav-drawer">
+                <Link onClick={toggleAuth} to={{pathname:`/admin/${store.store && store.store && store.store._id}`,search: "?show=people"}}>
+                    <div className="profile-table-nav-items">
+                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                            <h3>Create Order</h3>
+                        </div>
+                    </div>
+                </Link>
+                <Link onClick={toggleAuth} to={{pathname:`/admin/${store.store && store.store._id}`,search: "?show=store"}}>
+                    <div className="profile-table-nav-items active">
+                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                            <h3>New Item</h3>
+                        </div>
+                    </div>
+                </Link>
+                <Link onClick={toggleAuth} to={{pathname:`/admin/${store.store && store.store._id}`,search: "?show=inventory"}}>
+                    <div className="profile-table-nav-items">
+                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                            <h3>Create Collection</h3>
+                        </div>
+                    </div>
+                </Link>
+                <Link onClick={toggleAuth} to={{pathname:`/admin/${store.store && store.store._id}`,search: "?show=orders"}}>
+                    <div className="profile-table-nav-items">
+                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                            <h3>Create Location</h3>
+                        </div>
+                    </div>
+                </Link>
+            </div>
+            {/* <div style={{display:'flex'}}>
+                { !loading && (<Fragment>{authLinks}</Fragment>) } */}
                 {/* <div style={{margin:'0 0 0 1rem', width:'100%',}}>
                     <button style={{marginBottom:'1rem'}}>Checkout</button>
                     <div style={{display:'grid', gridTemplateColumns:'repeat(4,1fr)', gridGap:'10px', height:'100px', width:'100%', padding:'10px', alignItems:'center', borderBottom:'1px solid #cecece'}}>
@@ -144,7 +169,7 @@ const SideDrawer = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, ge
                         <i style={{color:'#ff4b2b'}} className="fas fa-times"></i>
                     </div>
                 </div> */}
-            </div>
+            {/* </div> */}
         </nav>
     )
 }
@@ -155,11 +180,13 @@ SideDrawer.propTypes = {
     auth: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired,
     deleteAccount: PropTypes.func.isRequired,
+    store: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
     auth: state.auth,
-    profile: state.profile
+    profile: state.profile,
+    store: state.store
 });
 
 export default connect(mapStateToProps, { getCurrentProfile, deleteAccount, logout })(SideDrawer);

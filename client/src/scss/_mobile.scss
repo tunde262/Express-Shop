@@ -77,6 +77,38 @@
             display: none;
         }
     }
+
+    .admin-table {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "main"
+            "sections";
+
+        & > div:first-child {
+            display: none;
+        }
+    }
+
+    .admin-table-main {
+        .admin-table-header {
+            padding: 10px 0 0 0;
+        }
+    
+        .admin-table-body {
+            padding: 10px;
+        }
+    }
+
+    .detail-table {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "main"
+            "sections";
+
+        & > div:first-child {
+            display: none;
+        }
+    }
 }
 
 

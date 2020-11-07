@@ -5,9 +5,7 @@ import { Link } from 'react-router-dom';
 
 // import { deleteStore } from '../../../../../actions/storeActions';
 
-const Header_Settings = ({store, auth: { user }, profile: {profile, loading }}) => {
-
-    const [tableShow1, setTableShow1] = useState('edit');  
+const Header_Product = ({store, auth: { user }, profile: {profile, loading }}) => { 
 
     return (
         // <div>
@@ -15,34 +13,23 @@ const Header_Settings = ({store, auth: { user }, profile: {profile, loading }}) 
         //     {orderList}
         // </div>
         <Fragment>
-            <Link style={{textDecoration:'none'}} to={store.store && {pathname:`/admin/${store.store._id}`,search: "?show=store"}}>
+            <Link style={{textDecoration:'none'}} to={store.store && {pathname:`/admin/${store.store._id}`,search: "?show=inventory"}}>
                 <div style={{display:'flex', color:'#ff4b2b', width:'100%', padding:'10px 0', fontSize:'0.8rem', justifyContent:'flex-start', alignItems:'center'}}>
                     <i class="fas fa-long-arrow-alt-left"></i>
                     <p style={{margin:'0 10px'}}>  Back to store</p>
                 </div>
             </Link>
-            <div>
-                <h3>Edit Store Profile</h3>
-            </div>
-            <div>
-                <ul class="profile-underline">
-                    <div 
-                        onClick={e => setTableShow1('edit')} className={tableShow1 === "edit" && "active"}
-                    >
-                        <li><p>Store Profile</p></li>
-                    </div>
-                    <div 
-                        onClick={e => setTableShow1('settings')} className={tableShow1 === "settings" && "active"}
-                    >
-                        <li><p>Store Profile</p></li>
-                    </div>
-                </ul>
+            <div style={{width:'100%', display:'flex', justifyContent:'space-between'}}>
+                <h3>Add Item</h3>
+                <button style={{width:'300px'}}>
+                    Save
+                </button>
             </div>
         </Fragment>
     )
 }
 
-Header_Settings.propTypes = {
+Header_Product.propTypes = {
     auth: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired,
@@ -54,4 +41,4 @@ const mapStateToProps = state => ({
     store: state.store
 });
 
-export default connect(mapStateToProps)(Header_Settings);
+export default connect(mapStateToProps)(Header_Product);

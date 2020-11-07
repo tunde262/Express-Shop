@@ -61,19 +61,19 @@ const OrdersMain = ({ ordersNav, setTable, store: { store, loading } }) => {
                 <div className="stats-box">
                     <div>
                         <h4 style={{color:'#808080'}}>Sold Today</h4>
-                        <h2 style={{color:'#333', fontWeight:'300'}}> 2</h2>
+                        <h2 style={{color:'#ff4b2b', fontWeight:'300'}}> 2</h2>
                     </div>
                     <div>  
                         <h4 style={{color:'#808080'}}>Sold Last 7 Days</h4>
-                        <h2 style={{color:'#333', fontWeight:'300'}}> 2</h2>
+                        <h2 style={{color:'#ff4b2b', fontWeight:'300'}}> 2</h2>
                     </div>
                     <div>   
                         <h4 style={{color:'#808080'}}>Sales Today</h4>
-                        <h2 style={{color:'#333', fontWeight:'300'}}>$0.00</h2>
+                        <h2 style={{color:'#ff4b2b', fontWeight:'300'}}>$0.00</h2>
                     </div>
                     <div>   
                         <h4 style={{color:'#808080'}}>Sales Last 7 Days</h4>
-                        <h2 style={{color:'#333', fontWeight:'300'}}>$0.00</h2>
+                        <h2 style={{color:'#ff4b2b', fontWeight:'300'}}>$0.00</h2>
                     </div>
                 </div>
             </section>

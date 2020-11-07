@@ -109,19 +109,19 @@ const InventoryMain = ({ inventoryNav, setTable, store: { store, loading } }) =>
                 <section className="stats">
                     <div className="stats-box">
                         <div>
-                            <h2 style={{color:'#333', fontWeight:'300'}}>2,000</h2>
+                            <h2 style={{color:'#ff4b2b', fontWeight:'300'}}>2,000</h2>
                             <p>Active</p>
                         </div>
                         <div>  
-                            <h2 style={{color:'#333', fontWeight:'300'}}>2000</h2>
+                            <h2 style={{color:'#ff4b2b', fontWeight:'300'}}>2000</h2>
                             <p>Sold</p>
                         </div>
                         <div>   
-                            <h2 style={{color:'#333', fontWeight:'300'}}>2,056</h2>
+                            <h2 style={{color:'#ff4b2b', fontWeight:'300'}}>2,056</h2>
                             <p>Shipping</p>
                         </div>
                         <div>   
-                            <h2 style={{color:'#333', fontWeight:'300'}}>2000</h2>
+                            <h2 style={{color:'#ff4b2b', fontWeight:'300'}}>2000</h2>
                             <p>Low Stock</p>
                         </div>
                     </div>
