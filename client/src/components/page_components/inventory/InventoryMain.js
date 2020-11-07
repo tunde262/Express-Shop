@@ -141,6 +141,10 @@ const InventoryMain = ({ inventoryNav, setTable, store: { store, loading } }) =>
                     </div>
                 </section>
             ) : null}
+            <div className="filter-container">
+                <span style={{fontSize:'15px', fontWeight:'bold', color:'#808080', letterSpacing:'2px', margin:'10px'}}>Filter</span>
+                <i class="fas fa-sliders-h"></i>
+            </div>
             <div className="product-list-container">
                 <Table page="storage" inventoryNav={inventoryNav}  setTable={setTable} />
             </div>

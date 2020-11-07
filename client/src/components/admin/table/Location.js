@@ -9,67 +9,96 @@ import 'react-responsive-modal/styles.css';
 
 
 const Location = ({ location: {loading, locations}, store, getLocationsByStoreId, deleteLocation }) => {
+    const [locationList, setLocationList] = useState([]);
+    const [gotLocations, setGotLocations] = useState(false);
+
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
     useEffect(() => {
         getLocationsByStoreId(store.store._id);
+
+        window.addEventListener('resize', () => handleWindowSizeChange());
+
+        return () => window.removeEventListener('resize', () => handleWindowSizeChange());
       }, [])
 
     const [modalShow, setModal] = useState(false);
      
-      const openModal = () => {
+    const openModal = () => {
         setModal(true);
-      };
+    };
 
-      const closeModal = () => {
+    const closeModal = () => {
         setModal(false);
-      };
-     
+    };
 
-    let locationList;
-    if(locations === null || loading) {
-        locationList = <Spinner />; 
-    } else {
-        if(locations.length > 0) {
-            locationList = locations.map(location => (
-                <tr key={location._id}>
-                    <td>
-                        <input type="checkbox" value=""/>
-                    </td>
-                    <td><Link to={"/admin/location/" + store.store._id + "/" + location._id}>{location.name}</Link></td>
-                    <td>{location.qty}</td>
-                    <td>
-                        {location.tags.map( (tag, index) => (  
-                            <p key={index}>{tag}{' '}</p>
-                            )
-                        )}
-                    </td>
-                    <td><a class="btn btn-default" href="edit.html">Edit</a> <i onClick={() => deleteLocation(location._id)} className="fas fa-trash"></i></td>
-                </tr>
 
-            ));
-        } else {
-            locationList = <h3>No Locations</h3>
+    const handleWindowSizeChange = () => {
+        setWindowWidth(window.innerWidth);
+    };
+
+    const isMobile = windowWidth <= 769;
+    const isTablet = windowWidth <= 1000;
+
+    const renderLocationList = async () => {
+        try {
+            if(locations.length > 0) {
+                locations.map(async location => {
+                    setLocationList(locationList => [...locationList, (
+                        <div className="secondary-table-row-mobile" key={location._id}>
+                                <Fragment>
+                                    <Link to={"/admin/location/" + store.store._id + "/" + location._id}>
+                                        <div>
+                                            <div><i style={{color:'#3CB371', margin:'0 10px', fontSize:'1.1rem'}} class="fas fa-map-marker-alt"></i></div>
+                                            <div>
+                                                {location.name && (
+                                                    <div className="line-clamp-1" style={{maxHeight:'40px', overflow:'hidden', color:'#0098d3'}}>
+                                                        {location.name}
+                                                    </div>
+                                                )}
+                                                <div className="line-clamp-1" style={{maxHeight:'40px', overflow:'hidden', color:'#808080'}}>{location.formatted_address}</div>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                    <Link to={"/admin/location/" + store.store._id + "/" + location._id}>
+                                        <div><p style={{margin:'0'}}>5</p></div>
+                                    </Link>
+                                    <Link to={"/admin/location/" + store.store._id + "/" + location._id}>
+                                        <div><p style={{margin:'0'}}>5</p></div>
+                                    </Link>
+                                </Fragment>
+                        </div>
+
+                    )])          
+                });
+            } else {
+                setLocationList(locationList => [...locationList, (
+                    <button>Add Location</button>
+                )])
+            }
+        } catch (err) {
+            console.log(err);
         }
+    }
+
+    if(!gotLocations && !loading && locations.length > 0) {
+        renderLocationList();
+        setGotLocations(true);
     }
 
     return (
         <Fragment>
-            <section>
+            {/* <section>
                 <p style={{alignSelf: 'flex-end'}}>40 locations</p>
                 <Link to="/admin/add-location" style={{background: '#42b499', color:'#fff'}} className="btn">Add Location</Link>
-            </section>
-            <table className="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>
-                            <input type="checkbox" value=""/>
-                        </th>
-                        <th>Name</th>
-                        <th>Qty</th>
-                        <th>Tag(s)</th>
-                        <th />
-                    </tr>
-                </thead>
-                <tbody>{locationList}</tbody>
+            </section> */}
+            <table className="table">
+                <div className="secondary-thead-mobile">
+                    <div style={{padding:'0 1rem'}}><p>Nickname</p></div>
+                    <div><p>Qty</p></div>
+                    <div><p>Sold</p></div>
+                </div>
+                <div className="tbody">{!locationList.length > 0 ? <Spinner /> : locationList}</div>
             </table>
 
             {/* <Modal open={modalShow} onClose={() => setModal(false)}>

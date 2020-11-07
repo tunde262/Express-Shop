@@ -95,8 +95,12 @@
         }
     
         .admin-table-body {
-            padding: 10px;
+            padding: 10px 0;
         }
+    }
+
+    .stats {
+        max-width: 100vw;
     }
 
     .detail-table {
@@ -338,6 +342,10 @@
         align-items: center;
         text-align: center;
     }
+
+    .filter-container {
+        width: 100vw; 
+    }
     
     .header-nav-container {
         margin: 10px 0; 
@@ -349,6 +357,7 @@
 
     .product-list-container {
         margin: 10px 0; 
+        max-width: 100vw;
     }
 
     .store-details {
