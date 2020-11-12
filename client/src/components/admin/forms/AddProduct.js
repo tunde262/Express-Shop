@@ -72,9 +72,9 @@ const AddProduct = ({
   }, [loading, handleDetail, detailProduct]);
 
   // Redirect if store is null
-  if(store.store === null ) {
-    history.push('/admin');
-  }
+  // if(store.store === null ) {
+  //   history.push('/admin');
+  // }
 
 
   // for Update Vars func

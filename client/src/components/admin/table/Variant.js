@@ -155,11 +155,19 @@ const Variant = ({ setModal, getProductLocations, handleMap, product: {switchMap
 
     return (
         <Fragment>
-            {page === 'product' ? (
+            {/* {page === 'product' ? (
                 <section>
                     <p style={{alignSelf: "flex-end"}}>{count} Varients</p>
                     <button onClick={setModal} type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Add Variant</button>
                 </section>
+            ) : null} */}
+            {page !== 'dashboard' ? (
+                <div onClick={setModal} style={{display:'flex', justifyContent:'flex-end', alignItems:'center', height:'50px'}}>
+                    <button style={{width:'100%', background:'#42b499', margin:'0', borderRadius:'0', borderColor:'#0098d3', height:'100%', outline:'none', display:'flex', alignItems:'center', justifyContent:'center'}}>
+                        <i style={{margin:'0 10px', fontSize:'1rem'}} class="fas fa-plus-circle"></i>
+                        Add Variant
+                    </button>
+                </div>
             ) : null}
             <table className="table">
                 <thead>

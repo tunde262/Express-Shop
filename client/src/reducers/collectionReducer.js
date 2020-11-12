@@ -4,7 +4,8 @@ import {
     DELETE_COLLECTION,
     ADD_COLLECTION,
     UPDATE_COLLECTION_ITEMS,
-    GET_COLLECTION
+    GET_COLLECTION,
+    EDIT_COLLECTION
   } from '../actions/types';
   
   const initialState = {
@@ -35,6 +36,12 @@ import {
           ...state,
           collections: [payload, ...state.collections],
           loading: false
+        };
+      case EDIT_COLLECTION:
+        return {
+            ...state,
+            collection: payload,
+            loading: false
         };
       case DELETE_COLLECTION:
         return {

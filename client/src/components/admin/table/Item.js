@@ -9,7 +9,7 @@ import Spinner from '../../common/Spinner';
 import 'react-responsive-modal/styles.css';
 
 
-const Item = ({ setModal, store, page, product: {loading, sortedProducts}, deleteProduct }) => {  
+const Item = ({ store, setModal, page, product: {loading, sortedProducts}, deleteProduct }) => {  
 
     const [productList, setProductList] = useState([]);
     const [gotProducts, setGotProducts] = useState(false);
@@ -39,8 +39,8 @@ const Item = ({ setModal, store, page, product: {loading, sortedProducts}, delet
                         <div className={isTablet ? "table-row-mobile" : "table-row"} key={product._id}>
                             {isTablet ? (
                                 <Fragment>
-                                    <Link className="table-row-img" to={"/admin/product/" + store.store._id + "/" + product._id}><div>{product.img_gallery[0] && <img style={{width: '100%'}} src={`/api/products/image/${product.img_gallery[0].img_name}`} alt="img" />}</div></Link>
-                                    <Link to={"/admin/product/" + store.store._id + "/" + product._id}>
+                                    <Link className="table-row-img" to={{pathname:`/admin/product/${store.store._id}/${product._id}`,search: "?show=detail"}}><div>{product.img_gallery[0] && <img style={{width: '100%'}} src={`/api/products/image/${product.img_gallery[0].img_name}`} alt="img" />}</div></Link>
+                                    <Link to={{pathname:`/admin/product/${store.store._id}/${product._id}`,search: "?show=detail"}}>
                                         <div className="line-clamp-1" style={{maxHeight:'40px', overflow:'hidden', color:'#0098d3'}}>{product.name}</div>
                                         <div><p style={{margin:'0'}}><span style={{color:'#ff4b2b', fontSize:'14px'}}>{product.inventory_qty}</span> Stock / <span style={{color:'#ff4b2b', fontSize:'14px'}}>{res.data.length}</span> Variants</p></div>
                                         <div><p style={{margin:'0'}}>${product.price}</p></div>
@@ -51,15 +51,15 @@ const Item = ({ setModal, store, page, product: {loading, sortedProducts}, delet
                                     <div>
                                         <input type="checkbox" value=""/>
                                     </div>
-                                    <Link className="table-row-img" to={"/admin/product/" + store.store._id + "/" + product._id}><div>{product.img_gallery[0] && <img style={{width: '100%'}} src={`/api/products/image/${product.img_gallery[0].img_name}`} alt="img" />}</div></Link>
-                                    <Link to={"/admin/product/" + store.store._id + "/" + product._id}>
+                                    <Link className="table-row-img" to={{pathname:`/admin/product/${store.store._id}/${product._id}`,search: "?show=detail"}}><div>{product.img_gallery[0] && <img style={{width: '100%'}} src={`/api/products/image/${product.img_gallery[0].img_name}`} alt="img" />}</div></Link>
+                                    <Link to={{pathname:`/admin/product/${store.store._id}/${product._id}`,search: "?show=detail"}}>
                                         <div className="line-clamp-1" style={{maxHeight:'40px', overflow:'hidden', color:'#0098d3'}}>{product.name}</div>
                                         <div><span style={{color:'#ff4b2b', fontSize:'14px'}}>{product.inventory_qty}</span> Stock / <span style={{color:'#ff4b2b', fontSize:'14px'}}>{res.data.length}</span> Variants</div>
                                         <div>${product.price}</div>
                                     </Link>
-                                    <Link to={"/admin/product/" + store.store._id + "/" + product._id}><div className="line-clamp" style={{maxHeight:'40px', overflow:'hidden'}}>5</div></Link>
-                                    <Link to={"/admin/product/" + store.store._id + "/" + product._id}><div>6</div></Link>
-                                    <Link to={"/admin/product/" + store.store._id + "/" + product._id}><div style={{width:'50px'}}><i onClick={() => deleteProduct(product._id)} className="fas fa-trash"></i></div></Link>
+                                    <Link to={{pathname:`/admin/product/${store.store._id}/${product._id}`,search: "?show=detail"}}><div className="line-clamp" style={{maxHeight:'40px', overflow:'hidden'}}>5</div></Link>
+                                    <Link to={{pathname:`/admin/product/${store.store._id}/${product._id}`,search: "?show=detail"}}><div>6</div></Link>
+                                    <Link to={{pathname:`/admin/product/${store.store._id}/${product._id}`,search: "?show=detail"}}><div style={{width:'50px'}}><i onClick={() => deleteProduct(product._id)} className="fas fa-trash"></i></div></Link>
                                 </Fragment>
                             ) }
                         </div>
@@ -119,11 +119,13 @@ const Item = ({ setModal, store, page, product: {loading, sortedProducts}, delet
                     <Link to="/admin/add-product"><button type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Add Product</button></Link>
                 </section>
             ) : null} */}
-            {page === 'collection' ? (
-                <section>
-                    <p style={{alignSelf: "flex-end"}}>{count} Variants</p>
-                    <button onClick={setModal} type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Add Manually</button>
-                </section>
+            {page !== 'dashboard' ? (
+                <div style={{display:'flex', justifyContent:'flex-end', alignItems:'center', height:'50px'}}>
+                    <button onClick={setModal} style={{width:'100%', background:'#0098d3', margin:'0', borderRadius:'0', borderColor:'#0098d3', height:'100%', outline:'none', display:'flex', alignItems:'center', justifyContent:'center'}}>
+                        <i style={{margin:'0 10px', fontSize:'1rem'}} class="fas fa-plus-circle"></i>
+                        Add Item
+                    </button>
+                </div>
             ) : null}
             
             <table className="table">
@@ -153,12 +155,10 @@ const Item = ({ setModal, store, page, product: {loading, sortedProducts}, delet
 
 Item.propTypes = {
     deleteProduct: PropTypes.func.isRequired,
-    profile: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
-    profile: state.profile,
     store: state.store
 })
 

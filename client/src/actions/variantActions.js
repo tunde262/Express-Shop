@@ -14,7 +14,8 @@ import {
     SET_MODAL_VARIANTS,
     HANDLE_VAR_TAGS,
     REMOVE_VAR_TAGS,
-    ADD_TO_VARIANTS
+    ADD_TO_VARIANTS,
+    HANDLE_DETAIL
 } from './types';
 
 // Get variants
@@ -180,11 +181,18 @@ export const addVariant = (formData, id, storeId) => async dispatch => {
   
     try {
       const res = await axios.post(`/api/variants/product/add/${id}/${storeId}`, formData, config);
+
+      const updatedProd = await axios.post(`/api/products/variant/${id}/${res.data._id}`, formData, config);
   
       dispatch({
         type: ADD_VARIANT,
         payload: res.data
       });
+
+      dispatch({
+        type: HANDLE_DETAIL,
+        payload: updatedProd.data
+    })
   
       dispatch(setAlert('Variant Created', 'success'));
     } catch (err) {

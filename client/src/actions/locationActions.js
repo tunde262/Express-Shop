@@ -255,25 +255,25 @@ export const addLocation = (formData, storeId, history) => async dispatch => {
           };
       const res = await axios.post(`/api/darkstores/add/${storeId}`, formData, config);
 
-      const storeVariants = await axios.get('/api/variants/store');
+      // const storeVariants = await axios.get('/api/variants/store');
 
-      const locationTags = [...res.data.tags];
+      // const locationTags = [...res.data.tags];
       
-      for(var i = 0; i < locationTags.length; i++) {
-        storeVariants.data.map(async variant => {
-          try {
-            if(variant.tags.includes(locationTags[i])) {
-              let data = new FormData();
-              data.append('id', variant._id);
+      // for(var i = 0; i < locationTags.length; i++) {
+      //   storeVariants.data.map(async variant => {
+      //     try {
+      //       if(variant.tags.includes(locationTags[i])) {
+      //         let data = new FormData();
+      //         data.append('id', variant._id);
   
-              await axios.put(`/api/darkstores/variant/${res.data._id}`, data, config);
-              console.log('Added ' + variant._id + ' TO LOCATION: ' + res.data.name);
-            }
-          } catch (err) {
-            console.log(err);
-          }
-        })
-      }
+      //         await axios.put(`/api/darkstores/variant/${res.data._id}`, data, config);
+      //         console.log('Added ' + variant._id + ' TO LOCATION: ' + res.data.name);
+      //       }
+      //     } catch (err) {
+      //       console.log(err);
+      //     }
+      //   })
+      // }
   
       dispatch({
         type: ADD_LOCATION,
@@ -289,7 +289,7 @@ export const addLocation = (formData, storeId, history) => async dispatch => {
         payload: { msg: err.response.statusText, status: err.response.status }
       });
     }
-  };
+};
 
 
 // Delete project

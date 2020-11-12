@@ -6,14 +6,15 @@ import { connect } from 'react-redux';
 
 import mixpanel from 'mixpanel-browser';
 
-import { addToProducts } from '../../../../../actions/productActions';
 import { setPage } from '../../../../../actions/navActions';
+import { getProductsInCollection } from '../../../../../actions/productActions';
 
 import Map from '../../../../common/map/Map';
 import Variant from '../../../table/Variant';
 import TableDetails from '../../../../TableDetails/TableDetails';
 import Item from '../../../table/Item';
 import Spinner from '../../../../common/Spinner';
+import InputTag from '../../../../common/InputTag/InputTag';
 
 // Imgs
 import BoxEmoji from '../../../../../utils/imgs/box.png'; 
@@ -21,7 +22,21 @@ import ClosedLockEmoji from '../../../../../utils/imgs/closedlock.jpg';
 import OpenLockEmoji from '../../../../../utils/imgs/openlock.png'; 
 import CarEmoji from '../../../../../utils/imgs/car.jpg'; 
 
-const DetailCollection = ({ setModal, setPage, addToProducts, collection: { collection, loading }, product, setTable, storageLocation }) => {
+const DetailCollection = ({ 
+    setPage,
+    getProductsInCollection, 
+    collection: { collection, loading }, 
+    product, 
+    storageLocation,
+    setModal,
+    onAddItemTag,
+    onDeleteItemTag,
+    itemTags,
+    formData,
+    setFormData,
+    switchChange,
+    onChange
+}) => {
 
     const [sentMixpanel, setSentMixpanel] = useState(false);
     const [collectionNav, setCollectionNav] = useState('items');
@@ -41,15 +56,12 @@ const DetailCollection = ({ setModal, setPage, addToProducts, collection: { coll
 
     useEffect(() => {
         setPage('admin detail collection');
-        if(collection) {
-            for(var i = 0; i < collection.items.length; i++) {
-                console.log('ITEM ID');
-                console.log(collection.items[i]);
-                addToProducts(collection.items[i].item)
-            }
-        }
 
-    }, [loading]);
+    }, []);
+
+    const {
+        visible,
+    } = formData;
 
     const handleMixpanel = () => {
         mixpanel.track("Admin Collection Page View", {
@@ -75,7 +87,7 @@ const DetailCollection = ({ setModal, setPage, addToProducts, collection: { coll
                 <Fragment>
                     <div class="content-box">
                         <div class="table-responsive table-filter">
-                            <Item setModal={setModal} page="collection" product={{sortedProducts: [...product.products], loading: false}} />
+                            <Item page="collection" product={product} setModal={setModal} />
                         </div>
                     </div>
                 </Fragment>
@@ -107,7 +119,7 @@ const DetailCollection = ({ setModal, setPage, addToProducts, collection: { coll
                                 </div>
                             </div>
                             <div class="table-responsive table-filter">
-                                <Item setModal={setModal} page="collection" product={{sortedProducts: [...product.products], loading: false}} />
+                                <Item page="collection" product={product} />
                             </div>
                         </div>
                     </div>
@@ -128,13 +140,14 @@ const DetailCollection = ({ setModal, setPage, addToProducts, collection: { coll
                         <div class="product-privacy-box-title">
                             <p style={{color:'#808080', margin:'0'}}>Visibility</p>
                             <hr style={{height:'1px', background:'rgb(214,214,214)', margin:'10px 0 10px 0'}}/>
-                            <div style={{display:'flex', justifyContent:'space-between', height:'50px', alignItems:'center'}}>
+                            <div style={{display:'flex', justifyContent:'space-between', height:'50px', width:'100%', alignItems:'center'}}>
                                 <p style={{color:'#3CB371', margin:'0'}}>Public</p>
                                 <input 
                                     class="toggle-button" 
                                     type="checkbox" 
-                                    name="privacy"
-                                    checked={true}
+                                    name="visible"
+                                    checked={visible}
+                                    onChange={switchChange}
                                 />
                             </div>
                         </div>
@@ -143,35 +156,16 @@ const DetailCollection = ({ setModal, setPage, addToProducts, collection: { coll
                         <div class="product-privacy-box-title">
                             <p style={{color:'#808080', margin:'0'}}>Tags</p>
                             <hr style={{height:'1px', background:'rgb(214,214,214)', margin:'10px 0 10px 0'}}/>
-                            <input
-                                type="email"
-                                name="email"
-                                className="input_line"
-                                placeholder="Enter Email"
-                                style={{margin:'10px 0', width:'100%', height:'50px'}}
+                            <InputTag  
+                                onAddTag ={onAddItemTag}
+                                onDeleteTag = {onDeleteItemTag}
+                                defaultTags={itemTags}
+                                placeholder="enter tags separated by comma"
                             />
-                            <div style={{display:'flex', flexWrap:'wrap', width:'100%'}}>
-                                <div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'30px', width:'fit-content',  borderRadius:'30px', padding:'1px 1rem 0 1rem'}}>
-                                    <p style={{margin:'auto', color:'green'}}>hat</p>
-                                    <i style={{color:'green', marginLeft:'10px',fontSize:'12px'}} class="fas fa-times"></i>
-                                </div>
-                                <div style={{background:'#ffc0cb', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'30px', width:'fit-content',  borderRadius:'30px', padding:'1px 1rem 0 1rem'}}>
-                                    <p style={{margin:'auto', color:'#db0026'}}>dad cap</p>
-                                    <i style={{color:'#db0026', marginLeft:'10px',fontSize:'12px'}} class="fas fa-times"></i>
-                                </div>
-                                <div style={{background:'#a0edf3', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'30px', width:'fit-content',  borderRadius:'30px', padding:'1px 1rem 0 1rem'}}>
-                                    <p style={{margin:'auto', color:'#105e82'}}>dragon ball z</p>
-                                    <i style={{color:'#105e82', marginLeft:'10px',fontSize:'12px'}} class="fas fa-times"></i>
-                                </div>
-                                <div style={{background:'#f0ef89', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'30px', width:'fit-content',  borderRadius:'30px', padding:'1px 1rem 0 1rem'}}>
-                                    <p style={{margin:'auto', color:'#828211'}}>50%off</p>
-                                    <i style={{color:'#828211', marginLeft:'10px',fontSize:'12px'}} class="fas fa-times"></i>
-                                </div>
-                            </div>
                         </div>
                         
                     </div>
-                    <div class="product-privacy-box">
+                    {/* <div class="product-privacy-box">
                         <div class="product-privacy-box-title">
                             <p style={{color:'#808080', margin:'0'}}>Notes</p>
                             <hr style={{height:'1px', background:'rgb(214,214,214)', margin:'10px 0 10px 0'}}/>
@@ -210,7 +204,7 @@ const DetailCollection = ({ setModal, setPage, addToProducts, collection: { coll
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </Fragment>
             )
         } else if (collectionNav === 'inventory') {
@@ -405,7 +399,6 @@ const DetailCollection = ({ setModal, setPage, addToProducts, collection: { coll
 
 DetailCollection.propTypes = {
     collection: PropTypes.object.isRequired,
-    addToProducts: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
     storageLocation: PropTypes.object.isRequired,
     setPage: PropTypes.func.isRequired,
@@ -417,5 +410,5 @@ const mapStateToProps = state => ({
     storageLocation: state.location
 })
 
-export default connect(mapStateToProps, { addToProducts, setPage })(withRouter(DetailCollection));
+export default connect(mapStateToProps, { setPage })(withRouter(DetailCollection));
 

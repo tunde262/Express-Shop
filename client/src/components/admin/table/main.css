@@ -931,6 +931,26 @@ header {
     width: 100%;
   }
 
+.table-responsive .table .variant-thead {
+  min-height: 50px;
+  text-align: left;
+  background: #f0f0f0; 
+  display: grid;
+  border-bottom: 1px solid rgb(214, 214, 214);
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr auto;
+  grid-gap: 10px;
+  width: 100%;
+}
+
+  .table-responsive .table .variant-thead > div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .table-responsive .table .variant-thead > div:nth-child(6) {
+    min-width: 30px;
+  } 
+
 /* Product Page*/
 /* #product-content-wrapper {
   width: 100%;

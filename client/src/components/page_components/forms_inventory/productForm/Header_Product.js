@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 // import { deleteStore } from '../../../../../actions/storeActions';
 
-const Header_Product = ({store, auth: { user }, profile: {profile, loading }}) => { 
+const Header_Product = ({onAddProduct, store, auth: { user }, profile: {profile, loading }}) => { 
 
     return (
         // <div>
@@ -21,7 +21,7 @@ const Header_Product = ({store, auth: { user }, profile: {profile, loading }}) =
             </Link>
             <div style={{width:'100%', display:'flex', justifyContent:'space-between'}}>
                 <h3>Add Item</h3>
-                <button style={{width:'300px'}}>
+                <button onClick={(e) => onAddProduct(e)} style={{width:'300px'}}>
                     Save
                 </button>
             </div>

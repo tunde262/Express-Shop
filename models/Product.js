@@ -38,12 +38,15 @@ const ProductSchema = new Schema({
     },
     price: {
         type: Number,
+        default: 0
     },
     sale_price: {
-        type: String
+        type: Number,
+        default: 0
     },
     inventory_qty: {
-        type: Number
+        type: Number,
+        default: 0
     },
     category: {
         type: String
@@ -63,7 +66,7 @@ const ProductSchema = new Schema({
         type: String
     },
     description: {
-        type: String
+        type: Schema.Types.Mixed
     },
     website_link: {
         type: String
@@ -123,8 +126,56 @@ const ProductSchema = new Schema({
     ],
     variants: [
         {
-            type: Schema.Types.ObjectId,
-            ref: 'variant'
+            var_id: {
+                type: Schema.Types.ObjectId,
+                ref: 'variant'
+            },
+            inventory_qty: {
+                type: Number,
+                default: 0
+            },
+            price: {
+                type: Number,
+                default: 0
+            },
+            sale_price: {
+                type: Number,
+                default: 0
+            },
+            sku: {
+                type: String
+            },
+            color: {
+                type: String
+            },
+            size: {
+                type: String
+            },
+            weight: {
+                type: String
+            },
+            type: {
+                type: String
+            },
+            bundle: {
+                type: String
+            },
+            scent: {
+                type: String
+            },
+            fit: {
+                type: String
+            },
+            flavor: {
+                type: String
+            },
+            material: {
+                type: String
+            },
+            date: {
+                type: Date,
+                default: Date.now
+            }
         }
     ]
 });

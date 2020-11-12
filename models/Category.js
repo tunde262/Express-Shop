@@ -14,8 +14,11 @@ const CategorySchema = new Schema({
         type: [String],
         required: true
     },
+    visible: {
+        type: Boolean
+    },
     img: {
-        type: mongoose.Schema.Types.ObjectId, // There is no need to create references here
+        type: Schema.Types.ObjectId, // There is no need to create references here
         ref: 'uploads'
     },
     img_name: {

@@ -1,9 +1,10 @@
-import { SET_PRODUCTS, CLEAR_PRODUCTS, SET_SORTED_PRODUCTS, SET_MODAL_PRODUCTS, ADD_TO_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, PRODUCTS_LOADING, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, HANDLE_MAP, CLOSE_MODAL, CLEAR_CART,ADD_TOTALS, GET_CART, GET_ORDERS, HANDLE_TAGS, REMOVE_TAGS, INC_IMG_GALLERY, DEC_IMG_GALLERY } from '../actions/types';
+import { SET_PRODUCTS, GET_PRODUCTS, SET_SELECTED_ITEMS, CLEAR_PRODUCTS, SET_SORTED_PRODUCTS, SET_MODAL_PRODUCTS, ADD_TO_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, PRODUCTS_LOADING, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, HANDLE_MAP, CLOSE_MODAL, CLEAR_CART,ADD_TOTALS, GET_CART, GET_ORDERS, HANDLE_TAGS, REMOVE_TAGS, INC_IMG_GALLERY, DEC_IMG_GALLERY } from '../actions/types';
 
 const initialState = {
     products: [],
     sortedProducts: [],
     modalProducts: [],
+    selectedItems: [],
     exploreTops: [],
     exploreBottoms: [],
     exploreHats: [],
@@ -69,6 +70,18 @@ export default function(state = initialState, action) {
                 loading: false
             };
         }
+        case GET_PRODUCTS: {
+            const products = action.payload;
+            let tempProd = products; 
+            
+
+            return {
+                ...state,
+                products: tempProd,
+                sortedProducts: tempProd,
+                loading: false
+            };
+        }
         case SET_SORTED_PRODUCTS: {
             const products = action.payload;
             console.log(products);
@@ -97,6 +110,28 @@ export default function(state = initialState, action) {
                 // featuredProducts,
                 // price: maxPrice,
                 // maxPrice
+            };
+        }
+        case SET_SELECTED_ITEMS: {
+            const newItem = action.payload;
+            let tempItems = [...state.selectedItems];
+            const selectedArr = [];
+            if(tempItems.filter(item => item === newItem).length > 0) {
+                // Get remove index
+                const removeIndex = tempItems.indexOf(newItem);
+    
+                const newList = tempItems.splice(removeIndex, 1);
+                
+                selectedArr.push(...newList);
+            } else {
+                selectedArr.push(...tempItems, newItem);
+            }
+            console.log('ITEM');
+            console.log(newItem);
+            console.log(selectedArr);
+            return {
+                ...state,
+                selectedItems: selectedArr
             };
         }
         case ADD_TO_PRODUCTS: {

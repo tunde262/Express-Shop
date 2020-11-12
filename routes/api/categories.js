@@ -135,12 +135,14 @@ router.post('/add/:storeId', upload.single('file'), [ auth, [
 
         const {
             name,
-            tags
+            tags,
+            visibility
         } = req.body;
 
         // Get fields
         const categoryFields = {};
         if(name) categoryFields.name = name;
+        if(visibility) categoryFields.visibility = visibility;
         if(req.file) categoryFields.img = req.file.id;
         if(req.file) categoryFields.img_name = req.file.filename;
         if(tags) {
@@ -165,7 +167,7 @@ router.post('/add/:storeId', upload.single('file'), [ auth, [
 // @route POST api/categories/:id
 // @desc Edit Category
 // @access Private
-router.post('/:id', upload.single('file'), [ auth, [
+router.post('/edit/:id/:storeId', upload.single('file'), [ auth, [
     check('name', 'Name is required').not().isEmpty()
     ]], async(req, res) => {
         const errors = validationResult(req);
@@ -175,12 +177,14 @@ router.post('/:id', upload.single('file'), [ auth, [
 
         const {
             name,
-            tags
+            tags,
+            visibility
         } = req.body;
 
         // Get fields
         const categoryFields = {};
         if(name) categoryFields.name = name;
+        if(visibility) categoryFields.visibility = visibility;
         if(req.file) categoryFields.img = req.file.id;
         if(req.file) categoryFields.img_name = req.file.filename;
         if(tags) {
@@ -188,9 +192,9 @@ router.post('/:id', upload.single('file'), [ auth, [
         }
 
         try {
-            const profile = await Profile.findOne({ user: req.user.id });
-            const store = await Store.findOne({ profile: profile.id });
-            categoryFields.store = store.id;
+            // const profile = await Profile.findOne({ user: req.user.id });
+            // const store = await Store.findOne({ profile: profile.id });
+            categoryFields.store = req.params.storeId;
 
             let category = await Category.findById(req.params.id );
 

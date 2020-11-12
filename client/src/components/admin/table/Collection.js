@@ -1,11 +1,15 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import Moment from 'react-moment';
+import 'react-responsive-modal/styles.css';
+
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import { getStoreCollections, deleteCollection } from '../../../actions/collectionActions';
+
 import Spinner from '../../common/Spinner';
-import 'react-responsive-modal/styles.css';
+import Moment from 'react-moment';
 
 
 const Collection = ({ collection: {loading, collections}, store, getStoreCollections, deleteCollection }) => {
@@ -43,18 +47,19 @@ const Collection = ({ collection: {loading, collections}, store, getStoreCollect
         try {
             if(collections.length > 0) {
                 collections.map(async collection => {
+                    const res = await axios.get(`/api/products/collection/${collection._id}`);
                     setCollectionList(collectionList => [...collectionList, (
                         <div className={isTablet ? "secondary-table-row-mobile" : "secondary-table-row"} key={collection._id}>
                             {isTablet ? (
                                 <Fragment>
-                                    <Link to={"/admin/collection/" + store.store._id + "/" + collection._id}>
+                                    <Link to={{pathname:`/admin/collection/${store.store._id}/${collection._id}`,search: "?show=detail"}}>
                                         <div className="line-clamp-1" style={{maxHeight:'40px', overflow:'hidden', color:'#0098d3'}}>{collection.name}</div>
                                     </Link>
-                                    <Link to={"/admin/collection/" + store.store._id + "/" + collection._id}>
-                                        <div><p style={{margin:'0'}}>5</p></div>
+                                    <Link to={{pathname:`/admin/collection/${store.store._id}/${collection._id}`,search: "?show=detail"}}>
+                                        <div><p style={{margin:'0'}}>{res.data.length}</p></div>
                                     </Link>
-                                    <Link to={"/admin/collection/" + store.store._id + "/" + collection._id}>
-                                        <div><p style={{margin:'0'}}>5</p></div>
+                                    <Link to={{pathname:`/admin/collection/${store.store._id}/${collection._id}`,search: "?show=detail"}}>
+                                        <div><p style={{margin:'0'}}>0</p></div>
                                     </Link>
                                 </Fragment>
                             ) : (
@@ -62,12 +67,12 @@ const Collection = ({ collection: {loading, collections}, store, getStoreCollect
                                     <div>
                                         <input type="checkbox" value=""/>
                                     </div>
-                                    <Link to={"/admin/collection/" + store.store._id + "/" + collection._id}>
+                                    <Link to={{pathname:`/admin/collection/${store.store._id}/${collection._id}`,search: "?show=detail"}}>
                                         <div className="line-clamp-1" style={{maxHeight:'40px', overflow:'hidden', color:'#0098d3'}}>{collection.name}</div>
                                     </Link>
-                                    <Link to={"/admin/collection/" + store.store._id + "/" + collection._id}><div className="line-clamp" style={{maxHeight:'40px', overflow:'hidden'}}>5</div></Link>
-                                    <Link to={"/admin/collection/" + store.store._id + "/" + collection._id}><div className="line-clamp" style={{maxHeight:'40px', overflow:'hidden'}}>5</div></Link>
-                                    <Link to={"/admin/collection/" + store.store._id + "/" + collection._id}>
+                                    <Link to={{pathname:`/admin/collection/${store.store._id}/${collection._id}`,search: "?show=detail"}}><div className="line-clamp" style={{maxHeight:'40px', overflow:'hidden'}}>{res.data.length}</div></Link>
+                                    <Link to={{pathname:`/admin/collection/${store.store._id}/${collection._id}`,search: "?show=detail"}}><div className="line-clamp" style={{maxHeight:'40px', overflow:'hidden'}}>0</div></Link>
+                                    <Link to={{pathname:`/admin/collection/${store.store._id}/${collection._id}`,search: "?show=detail"}}>
                                         <div style={{display:'flex', flexWrap:'wrap', width:'100%'}}>
                                             {collection.tags.map( (tag, index) => (  
                                                 <div key={index} style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'30px', width:'fit-content',  borderRadius:'30px', padding:'1px 1rem 0 1rem'}}>
@@ -77,7 +82,7 @@ const Collection = ({ collection: {loading, collections}, store, getStoreCollect
                                             ))}
                                         </div>
                                     </Link>
-                                    <Link to={"/admin/collection/" + store.store._id + "/" + collection._id}><div style={{width:'50px'}}><i className="fas fa-trash"></i></div></Link>
+                                    <Link to={{pathname:`/admin/collection/${store.store._id}/${collection._id}`,search: "?show=detail"}}><div style={{width:'50px'}}><i className="fas fa-trash"></i></div></Link>
                                 </Fragment>
                             )}
                         </div>

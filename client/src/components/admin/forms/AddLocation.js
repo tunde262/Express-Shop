@@ -275,7 +275,7 @@ const AddLocation = ({ addLocation, store, history }) => {
                         <PlacesAutocomplete value={address} onChange={setAddress} onSelect={handleSelect}>
                             {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                                 <div>
-                                    <input {...getInputProps({placeholder: "Address"})} />
+                                    <input {...getInputProps({placeholder: "Address"})} autocomplete="no" />
 
                                     <div>
                                         {loading ? (

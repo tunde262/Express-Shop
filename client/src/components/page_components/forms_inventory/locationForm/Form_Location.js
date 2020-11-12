@@ -394,6 +394,7 @@ const Form_Location = ({
                             className="input_line"
                             className="input_line"
                             placeholder="Enter address . . ."
+                            autocomplete="no"
                             style={{margin:'0', width:'100%', outline:'none', padding:'0 10px', height:'50px', background:'#fff', fontSize:'14px', borderBottom:'2px dashed #cecece', borderRadius:'5px'}}
                         />
                     </div>
@@ -443,7 +444,7 @@ const Form_Location = ({
                             </div>
                         </div>
                     </div>
-                    <div class="product-privacy-box">
+                    {/* <div class="product-privacy-box">
                         <div class="product-privacy-box-title">
                             <p style={{color:'#808080', margin:'0'}}>Notes</p>
                             <hr style={{height:'1px', background:'rgb(214,214,214)', margin:'10px 0 10px 0'}}/>
@@ -482,7 +483,7 @@ const Form_Location = ({
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <Modal open={displayModal} onClose={setModal} center>

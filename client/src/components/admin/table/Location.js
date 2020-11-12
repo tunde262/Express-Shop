@@ -47,7 +47,7 @@ const Location = ({ location: {loading, locations}, store, getLocationsByStoreId
                     setLocationList(locationList => [...locationList, (
                         <div className="secondary-table-row-mobile" key={location._id}>
                                 <Fragment>
-                                    <Link to={"/admin/location/" + store.store._id + "/" + location._id}>
+                                    <Link to={{pathname:`/admin/location/${store.store._id}/${location._id}`,search: "?show=detail"}}>
                                         <div>
                                             <div><i style={{color:'#3CB371', margin:'0 10px', fontSize:'1.1rem'}} class="fas fa-map-marker-alt"></i></div>
                                             <div>
@@ -60,10 +60,10 @@ const Location = ({ location: {loading, locations}, store, getLocationsByStoreId
                                             </div>
                                         </div>
                                     </Link>
-                                    <Link to={"/admin/location/" + store.store._id + "/" + location._id}>
+                                    <Link to={{pathname:`/admin/location/${store.store._id}/${location._id}`,search: "?show=detail"}}>
                                         <div><p style={{margin:'0'}}>5</p></div>
                                     </Link>
-                                    <Link to={"/admin/location/" + store.store._id + "/" + location._id}>
+                                    <Link to={{pathname:`/admin/location/${store.store._id}/${location._id}`,search: "?show=detail"}}>
                                         <div><p style={{margin:'0'}}>5</p></div>
                                     </Link>
                                 </Fragment>

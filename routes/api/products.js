@@ -15,6 +15,7 @@ const path = require('path');
 // Load Models
 const Product = require('../../models/Product');
 const Variant = require('../../models/Variant');
+const Category = require('../../models/Category');
 const Cart = require('../../models/Cart');
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
@@ -140,6 +141,32 @@ router.get('/filter/full/:filter', async (req, res) => {
         const products = await Product.find({ tags: req.params.filter }).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']).populate('store', ['name', 'img_name']);
 
         res.json(products);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
+// @route GET api/products/collection/:collectionId
+// @desc Get Products in collection
+// @access Public
+router.get('/collection/:collectionId', async (req, res) => {
+    try {
+        const productList = [];
+        const category = await Category.findById(req.params.collectionId);
+
+        for (var i = 0; i < category.items.length; i++) {
+            console.log('HELLO');
+            console.log(category.items[i].item)
+            const product = await Product.findById(category.items[i].item).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']).populate('store', ['name', 'img_name']);
+            console.log('PRODUCT');
+            console.log(product);
+            productList.push(product);
+            console.log('PRODUCT LIST');
+            console.log(productList);
+        }
+
+        res.json(productList);
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error'); 
@@ -463,6 +490,58 @@ router.post('/image/:id', upload.single('file'), async (req, res) => {
 
         product.img_gallery.push(newImg);
         await product.save()
+
+        res.json(product);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
+// @route POST api/products/image/:id
+// @desc Add variant to product
+// @access Private
+router.post('/variant/:prodId/:varId', auth, async (req, res) => {
+
+    const {
+        in_stock,
+        inventory_qty,
+        sale_price,
+        price,
+        condition,
+        color,
+        size,
+        weight,
+        bundle,
+        type,
+        scent,
+        fit,
+        flavor,
+        material,
+    } = req.body;
+
+    const newVariant = {};
+
+    newVariant.var_id = req.params.varId;
+    if(inventory_qty) newVariant.inventory_qty = inventory_qty;
+    if(price) newVariant.price = price;
+    if(sale_price) newVariant.sale_price = sale_price;
+    if(sku) newVariant.sku = sku;
+    if(color) newVariant.color = color;
+    if(size) newVariant.size = size;
+    if(weight) newVariant.weight = weight;
+    if(type) newVariant.type = type;
+    if(bundle) newVariant.bundle = bundle;
+    if(scent) newVariant.scent = scent;
+    if(fit) newVariant.fit = fit;
+    if(flavor) newVariant.flavor = flavor;
+    if(material) newVariant.material = material;
+
+    try {
+        const product = await Product.findById(req.params.prodId);
+
+        product.variants.push(newVariant);
+        await product.save();
 
         res.json(product);
     } catch (err) {

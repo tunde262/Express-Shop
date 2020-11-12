@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 
 import TagList from './TagList'; 
 
@@ -22,35 +22,39 @@ const InputTag = ({defaultTags, onAddTag, onDeleteTag, placeholder}) => {
     }
     
     return (
-        <div style={cStyle}>
-           
-            <input 
-                style={iStyle}
-                onKeyUp= {(e) => onKeyUp(e) }
-                type="text" placeholder= {placeholder} 
-            />   
-
+        <Fragment>
+            <div style={cStyle}>
+                <input 
+                    style={iStyle}
+                    onKeyUp= {(e) => onKeyUp(e) }
+                    type="text" placeholder= {placeholder} 
+                />   
+            </div>
             <TagList 
                 tags = {defaultTags} 
                 onDeleteTag = {onDelete}
             /> 
-       </div>
+        </Fragment>
     )
 }
 
 const cStyle = {
     position: "relative",
     display: "inline-block",
-    width: "300px",
-    border: "1px solid lightblue",
-    overflow: "auto"
+    border: "2px dashed rgb(214, 214, 214)",
+    overflow: "auto",
+    width: "100%",
+    height: "50px",
+    padding: "0 10px"
 }
 const iStyle = {
     display: "inline-block",
     fontSize: "0.9em", 
-    margin: "5px",
-    width: "90%",
-    border: "0"
+    width: "100%",
+    height: "100%",
+    border: "0",
+    outline: "none",
+    background: "#fff",
 }
 
 export default InputTag;

@@ -57,10 +57,16 @@ const Inventory = ({ page, setModal, variant: {loading, sortedVariants}, deleteV
                 </section>
             ) : null} */}
             {page === 'location' ? (
-                <section>
-                    <p style={{alignSelf: "flex-end"}}>{count} Varients</p>
-                    <button onClick={setModal} type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Add Manually</button>
-                </section>
+                <div onClick={setModal} style={{display:'flex', justifyContent:'flex-end', alignItems:'center', height:'50px'}}>
+                    <button style={{width:'100%', background:'#42b499', margin:'0', borderRadius:'0', borderColor:'#0098d3', height:'100%', outline:'none', display:'flex', alignItems:'center', justifyContent:'center'}}>
+                        <i style={{margin:'0 10px', fontSize:'1rem'}} class="fas fa-plus-circle"></i>
+                        Add Item
+                    </button>
+                </div>
+                // <section>
+                //     <p style={{alignSelf: "flex-end"}}>{count} Varients</p>
+                //     <button onClick={setModal} type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Add Manually</button>
+                // </section>
             ) : null}
             <table className="table">
                 <thead>

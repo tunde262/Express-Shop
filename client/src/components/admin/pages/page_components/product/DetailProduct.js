@@ -6,29 +6,138 @@ import { Link, withRouter } from 'react-router-dom';
 import Map from '../../../../common/map/Map';
 import TextEditor from '../../../../common/TextEditor';
 import Spinner from '../../../../common/Spinner';
+import InputTag from '../../../../common/InputTag/InputTag';
 
 import mixpanel from 'mixpanel-browser';
 
 import Variant from '../../../table/Variant';
 import TableDetails from '../../../../TableDetails/TableDetails';
 
-import { incImg, decImg } from '../../../../../actions/productActions';
+import { incImg, decImg, editProduct } from '../../../../../actions/productActions';
 import { setPage } from '../../../../../actions/navActions';
 
-// Imgs
-import BoxEmoji from '../../../../../utils/imgs/box.png'; 
-import ClosedLockEmoji from '../../../../../utils/imgs/closedlock.jpg'; 
-import OpenLockEmoji from '../../../../../utils/imgs/openlock.png'; 
-import CarEmoji from '../../../../../utils/imgs/car.jpg'; 
 
-const DetailProduct = ({ setModal, setPage, detailProduct, variant, deleteVariant, setTable, setStoreLocationModal, setImageModal, match, incImg, decImg }) => {
+// const initialEditorState = {
+//     "entityMap":{},
+//     "blocks":[
+//         {
+//             "key":"btdob",
+//             "text":"Initialized from content state.",
+//             "type":"unstyled",
+//             "depth":0,
+//             "inlineStyleRanges":[],
+//             "entityRanges":[],
+//             "data":{}
+//         }
+//     ]
+// }
+
+const DetailProduct = ({ 
+    product: { detailProduct, loading },
+    store,
+    handleDetail,
+    addVariant,
+    history,
+    match,
+    incImg,
+    decImg,
+    setModal,
+    setImageModal,
+    onChangeVar,
+    onChangeVarName,
+    varName,
+    setVarName,
+    displayOption1,
+    displayOption2,
+    displayOption3,
+    displayOption4,
+    toggleOption1, 
+    toggleOption2,
+    toggleOption3,
+    toggleOption4,
+    handleToggleOption,
+    removeDisplayOption1,
+    removeDisplayOption2,
+    removeDisplayOption3,
+    removeDisplayOption4,
+    onAddItemTag,
+    onDeleteItemTag,
+    itemTags,
+    onAddTag,
+    onDeleteTag,
+    onAddTag2,
+    onDeleteTag2,
+    onAddTag3,
+    onDeleteTag3,
+    onAddTag4,
+    onDeleteTag4,
+    setVarTags,
+    setVarTags2,
+    setVarTags3,
+    setVarTags4,
+    varTags,
+    varTags2,
+    varTags3,
+    varTags4,
+    removeVar,
+    updateList,
+    varInfo,
+    setVarInfo,
+    onChangePrice,
+    onChangeSalePrice,
+    onChangeQty,
+    onChangeSku,
+    display,
+    formData,
+    setFormData,
+    categoryData,
+    setCategoryData,
+    conditionData,
+    setConditionData,
+    editorState,
+    setEditorState,
+    optionToggle,
+    setOptionToggle,
+    optionToggle2,
+    setOptionToggle2,
+    optionToggle3,
+    setOptionToggle3,
+    optionToggle4,
+    setOptionToggle4,
+    categoryToggle,
+    setCategoryToggle,
+    conditionToggle,
+    setConditionToggle,
+    handleVarNameChange,
+    handleCategoryChange,
+    handleConditionChange,
+    switchChange,
+    onChange,
+    setPage, 
+    onAddProduct, 
+    deleteVariant
+}) => {
 
     const [sentMixpanel, setSentMixpanel] = useState(false);
     const [detailNav, setDetailNav] = useState('item');
 
+
     useEffect(() => {
         setPage('admin detail product')
+        console.log('CHECK STATE');
+        console.log(editorState);
     }, [])
+
+    const {
+        name,
+        sku,
+        website_link,
+        sale_price,
+        price,
+        visible,
+        in_stock,
+        inventory_qty,
+    } = formData;
 
     let imageContent;
     let img_gallery = detailProduct.img_gallery.sort((a, b) => a.img_order - b.img_order);
@@ -127,13 +236,13 @@ const DetailProduct = ({ setModal, setPage, detailProduct, variant, deleteVarian
             mainContent = (
                 <Fragment>
                     <div className="product-admin-main-container">
-                        {imageContent}
                         <div className="addImage" onClick={setImageModal}>
                             <i class="fas fa-plus"></i>
                         </div>
+                        {imageContent}
                     </div>
                     <div id="order-map" style={{marginTop:'10px', overflow:'hidden'}}>
-                        <TextEditor />
+                        <TextEditor descriptionObj={editorState} setDescriptionObj={setEditorState} />
                     </div>
                     <div class="content-box">
                         <div class="table-responsive table-filter">
@@ -194,67 +303,95 @@ const DetailProduct = ({ setModal, setPage, detailProduct, variant, deleteVarian
                         <div class="product-privacy-box-title">
                             <p style={{color:'#808080', margin:'0'}}>Visibility</p>
                             <hr style={{height:'1px', background:'rgb(214,214,214)', margin:'10px 0 10px 0'}}/>
-                            <div style={{display:'flex', justifyContent:'space-between', height:'50px', alignItems:'center'}}>
+                            <div style={{display:'flex', justifyContent:'space-between', height:'50px', width:'100%', alignItems:'center'}}>
                                 <p style={{color:'#3CB371', margin:'0'}}>Public</p>
                                 <input 
                                     class="toggle-button" 
                                     type="checkbox" 
-                                    name="privacy"
-                                    checked={true}
+                                    name="visible"
+                                    checked={visible}
+                                    onChange={switchChange}
                                 />
                             </div>
                         </div>
                     </div>
                     <div class="product-privacy-box">
                         <div class="product-privacy-box-title">
-                            <p style={{color:'#808080', margin:'0'}}>Listing Category</p>
+                            <p style={{color:'#808080', margin:'0', textAlign:'flex-start'}}>Choose a category</p>
                             <hr style={{height:'1px', background:'rgb(214,214,214)', margin:'10px 0 10px 0'}}/>
-                            <select name="category">
-                                <option>* Choose a category</option>
-                                <option value="clothing & fashion">Clothing & Fashion</option>
-                                <option value="bathroom">Bathroom</option>
-                                <option value="household essentials">Household Essential</option>
-                                <option value="laundry">Laundry</option>
-                                <option value="men">Men</option>
-                                <option value="personal care">Personal Care</option>
-                                <option value="pets">Pets</option>
-                                <option value="school & office">School & Office</option>
-                                <option value="shoes">Shoes</option>
-                                <option value="women">Women</option>
-                            </select>
+                            <div style={{width:'100%', display:'flex', justifyContent:'center'}}>
+                                <div id="dropdown-el" style={{width:'100%'}} class={categoryToggle ? "secondary-dropdown-el expanded" : "secondary-dropdown-el"}>
+                                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%'}} onClick={() => setCategoryToggle(!categoryToggle)}>
+                                        {categoryData === '' ? (
+                                            <p>Choose a category</p>
+                                        ) : (
+                                            <p>{categoryData}</p>
+                                        )}
+                                        <i class="fas fa-caret-down"></i>
+                                    </div>
+                                    {categoryToggle ? (
+                                        <Fragment>
+                                            <div onClick={() => handleCategoryChange('clothing & fashion')}><p>Clothing & fashion</p></div>
+                                            <div onClick={() => handleCategoryChange('bathroom')}><p>Bathroom</p></div>
+                                            <div onClick={() => handleCategoryChange('household essentials')}><p>Household Essentials</p></div>
+                                            <div onClick={() => handleCategoryChange('laundry')}><p>Laundry</p></div>
+                                            <div onClick={() => handleCategoryChange('men')}><p>Men</p></div>
+                                            <div onClick={() => handleCategoryChange('women')}><p>Women</p></div>
+                                            <div onClick={() => handleCategoryChange('personal care')}><p>Personal care</p></div>
+                                            <div onClick={() => handleCategoryChange('pets')}><p>Pets</p></div>
+                                            <div onClick={() => handleCategoryChange('school & office')}><p>School & Office</p></div>
+                                            <div onClick={() => handleCategoryChange('shoes')}><p>Shoes</p></div>
+                                        </Fragment>
+                                    ) : null}
+                                </div>
+                                {/* <select name="category">
+                                    <option>* Choose a category</option>
+                                    <option value="clothing and fashion">Clothing & Fashion</option>
+                                    <option value="bathroom">Bathroom</option>
+                                    <option value="household essentials">Household Essential</option>
+                                    <option value="laundry">Laundry</option>
+                                    <option value="men">Men</option>
+                                    <option value="personal care">Personal Care</option>
+                                    <option value="pets">Pets</option>
+                                    <option value="school & office">School & Office</option>
+                                    <option value="shoes">Shoes</option>
+                                    <option value="women">Women</option>
+                                </select> */}
+                            </div>
                         </div>
-                        
                     </div>
                     <div class="product-privacy-box">
                         <div class="product-privacy-box-title">
-                            <p style={{color:'#808080', margin:'0'}}>Collections</p>
+                            <p style={{color:'#808080', margin:'0', textAlign:'flex-start'}}>Choose a condition</p>
                             <hr style={{height:'1px', background:'rgb(214,214,214)', margin:'10px 0 10px 0'}}/>
-                            <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
-                                    <p style={{margin:'0'}}>Shorts <span style={{color:'#ff4b2b'}}>(43)</span></p>
-                                    <small style={{color:'#ccc', margin:'0'}}>Auto</small>
+                            <div style={{width:'100%', display:'flex', justifyContent:'center'}}>
+                                <div id="dropdown-el" style={{width:'100%'}} class={conditionToggle ? "secondary-dropdown-el expanded" : "secondary-dropdown-el"}>
+                                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%'}} onClick={() => setConditionToggle(!conditionToggle)}>
+                                        {conditionData === '' ? (
+                                            <p>Select Condition</p>
+                                        ) : (
+                                            <p>{conditionData}</p>
+                                        )}
+                                        <i class="fas fa-caret-down"></i>
+                                    </div>
+                                    {conditionToggle ? (
+                                        <Fragment>
+                                            <div onClick={() => handleConditionChange('new')}><p>New (with tags)</p></div>
+                                            <div onClick={() => handleConditionChange('refurbished')}><p>Refurbished</p></div>
+                                            <div onClick={() => handleConditionChange('used (liked new)')}><p>Used (like new)</p></div>
+                                            <div onClick={() => handleConditionChange('type (good)')}><p>Used (good)</p></div>
+                                            <div onClick={() => handleConditionChange('bundle (fair)')}><p>Used (fair)</p></div>
+                                        </Fragment>
+                                    ) : null}
                                 </div>
-                                <div>
-                                    <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-times"></i>
-                                </div>
-                            </div>
-                            <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
-                                    <p style={{margin:'0'}}>Halloween <span style={{color:'#ff4b2b'}}>(43)</span></p>
-                                    <small style={{color:'#ccc', margin:'0'}}>Auto</small>
-                                </div>
-                                <div>
-                                    <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-times"></i>
-                                </div>
-                            </div>
-                            <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
-                                    <p style={{margin:'0'}}>Tops <span style={{color:'#ff4b2b'}}>(43)</span></p>
-                                    <small style={{color:'#ccc', margin:'0'}}>Auto</small>
-                                </div>
-                                <div>
-                                    <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-times"></i>
-                                </div>
+                                {/* <select name="category">
+                                    <option>* Item Condition</option>
+                                    <option value="clothing & fashion">New (with tags)</option>
+                                    <option value="bathroom">Refurbished</option>
+                                    <option value="household essentials">Used (like new)</option>
+                                    <option value="laundry">Used (good)</option>
+                                    <option value="men">Used (fair)</option>
+                                </select> */}
                             </div>
                         </div>
                     </div>
@@ -262,35 +399,16 @@ const DetailProduct = ({ setModal, setPage, detailProduct, variant, deleteVarian
                         <div class="product-privacy-box-title">
                             <p style={{color:'#808080', margin:'0'}}>Tags</p>
                             <hr style={{height:'1px', background:'rgb(214,214,214)', margin:'10px 0 10px 0'}}/>
-                            <input
-                                type="email"
-                                name="email"
-                                className="input_line"
-                                placeholder="Enter Email"
-                                style={{margin:'10px 0', width:'100%', height:'50px'}}
+                            <InputTag  
+                                onAddTag ={onAddItemTag}
+                                onDeleteTag = {onDeleteItemTag}
+                                defaultTags={itemTags}
+                                placeholder="enter tags separated by comma"
                             />
-                            <div style={{display:'flex', flexWrap:'wrap', width:'100%'}}>
-                                <div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'30px', width:'fit-content',  borderRadius:'30px', padding:'1px 1rem 0 1rem'}}>
-                                    <p style={{margin:'auto', color:'green'}}>hat</p>
-                                    <i style={{color:'green', marginLeft:'10px',fontSize:'12px'}} class="fas fa-times"></i>
-                                </div>
-                                <div style={{background:'#ffc0cb', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'30px', width:'fit-content',  borderRadius:'30px', padding:'1px 1rem 0 1rem'}}>
-                                    <p style={{margin:'auto', color:'#db0026'}}>dad cap</p>
-                                    <i style={{color:'#db0026', marginLeft:'10px',fontSize:'12px'}} class="fas fa-times"></i>
-                                </div>
-                                <div style={{background:'#a0edf3', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'30px', width:'fit-content',  borderRadius:'30px', padding:'1px 1rem 0 1rem'}}>
-                                    <p style={{margin:'auto', color:'#105e82'}}>dragon ball z</p>
-                                    <i style={{color:'#105e82', marginLeft:'10px',fontSize:'12px'}} class="fas fa-times"></i>
-                                </div>
-                                <div style={{background:'#f0ef89', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'30px', width:'fit-content',  borderRadius:'30px', padding:'1px 1rem 0 1rem'}}>
-                                    <p style={{margin:'auto', color:'#828211'}}>50%off</p>
-                                    <i style={{color:'#828211', marginLeft:'10px',fontSize:'12px'}} class="fas fa-times"></i>
-                                </div>
-                            </div>
                         </div>
                         
                     </div>
-                    <div class="product-privacy-box">
+                    {/* <div class="product-privacy-box">
                         <div class="product-privacy-box-title">
                             <p style={{color:'#808080', margin:'0'}}>Notes</p>
                             <hr style={{height:'1px', background:'rgb(214,214,214)', margin:'10px 0 10px 0'}}/>
@@ -329,7 +447,7 @@ const DetailProduct = ({ setModal, setPage, detailProduct, variant, deleteVarian
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </Fragment>
             )
         } else if (detailNav === 'inventory') {
@@ -525,10 +643,19 @@ DetailProduct.propTypes = {
     incImg: PropTypes.func.isRequired,
     decImg: PropTypes.func.isRequired,
     setPage: PropTypes.func.isRequired,
+    product: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired,
+    editProduct: PropTypes.func.isRequired,
 };
 
-export default connect(null, { 
+const mapStateToProps = state => ({
+    product: state.product,
+    store: state.store,
+})
+
+export default connect(mapStateToProps, { 
     incImg,
     decImg,
-    setPage
+    setPage,
+    editProduct
 })(withRouter(DetailProduct));

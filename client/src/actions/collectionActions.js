@@ -6,7 +6,8 @@ import {
   DELETE_COLLECTION,
   UPDATE_COLLECTION_ITEMS,
   ADD_COLLECTION,
-  GET_COLLECTION
+  GET_COLLECTION,
+  EDIT_COLLECTION
 } from './types';
 
 // Get projects
@@ -54,10 +55,11 @@ export const getCollectionsByStoreId = (id) => async dispatch => {
             payload: res.data
         });
     } catch (err) {
-        dispatch({
-            type: COLLECTION_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
-        });
+        // dispatch({
+        //     type: COLLECTION_ERROR,
+        //     payload: { msg: err.response.statusText, status: err.response.status }
+        // });
+        console.log(err);
     }
 };
 
@@ -88,7 +90,7 @@ export const addCollection = (formData, storeId, history) => async dispatch => {
       };
       const res = await axios.post(`/api/categories/add/${storeId}`, formData, config);
 
-      const storeProducts = await axios.get('/api/products/store');
+      const storeProducts = await axios.get(`/api/products/store/${storeId}`);
 
       const categoryTags = [...res.data.tags];
       
@@ -113,7 +115,7 @@ export const addCollection = (formData, storeId, history) => async dispatch => {
         payload: res.data
       });
 
-      history.push(`/admin/collection/${res.data._id}`);
+      history.push(`/admin/collection/${storeId}/${res.data._id}?show=detail`);
   
       dispatch(setAlert('Collection Created', 'success'));
     } catch (err) {
@@ -122,8 +124,82 @@ export const addCollection = (formData, storeId, history) => async dispatch => {
         payload: { msg: err.response.statusText, status: err.response.status }
       });
     }
-  };
+};
 
+// Add Collection
+export const addCollectionByName = (formData, storeId, history) => async dispatch => {
+  try {
+    const config = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+    };
+    const res = await axios.post(`/api/categories/add/${storeId}`, formData, config);
+
+    dispatch({
+      type: ADD_COLLECTION,
+      payload: res.data
+    });
+
+    history.push(`/admin/collection/${storeId}/${res.data._id}?show=add_collection`);
+
+    dispatch(setAlert('Collection Created', 'success'));
+  } catch (err) {
+    // dispatch({
+    //   type: COLLECTION_ERROR,
+    //   payload: { msg: err.response.statusText, status: err.response.status }
+    // });
+    console.log(err);
+  }
+};
+
+// Add Collection
+export const editCollection = (formData, collectionId, storeId, history) => async dispatch => {
+  try {
+    const config = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+    };
+    const res = await axios.post(`/api/categories/edit/${collectionId}/${storeId}`, formData, config);
+
+    const storeProducts = await axios.get(`/api/products/store/${storeId}`);
+
+    // const storeProducts = await axios.get('/api/products/store');
+
+    const categoryTags = [...res.data.tags];
+    
+    for(var i = 0; i < categoryTags.length; i++) {
+      storeProducts.data.map(async product => {
+        try {
+          if(product.tags.includes(categoryTags[i])) {
+            let data = new FormData();
+            data.append('id', product._id);
+
+            await axios.put(`/api/categories/product/${res.data._id}`, data, config);
+            console.log('Added ' + product._id + ' TO COLLECTION: ' + res.data.name);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      })
+    }
+
+    dispatch({
+      type: EDIT_COLLECTION,
+      payload: res.data
+    });
+
+    history.push(`/admin/collection/${storeId}/${res.data._id}?show=detail`);
+    
+    dispatch(setAlert('Collection Created', 'success'));
+  } catch (err) {
+    dispatch({
+      type: COLLECTION_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
 
 // Delete collection
 export const deleteCollection = id => async dispatch => {

@@ -13,13 +13,24 @@ const CollectionHeader = ({collection: { collection }, history}) => {
                     </ol>
                 </nav>
             </div> */}
-            <div style={{display: 'flex', height:'auto', marginBottom:'10px', alignItems:'center'}}>
-                <i onClick={() => history.goBack()} style={{fontSize:'20px'}} class="fas fa-arrow-left"></i>
-                <div style={{display: 'flex', height:'auto', marginBottom:'10px', alignItems:'center'}}>
-                    <h3 style={{color: "black"}}>
-                        {collection && collection.name}
-                    </h3>
+            <div style={{width:'100%', display:'flex', justifyContent:'space-between'}}>
+                <div>
+                    <div onClick={() => history.goBack()} style={{display:'flex', color:'#ff4b2b', width:'100%', padding:'10px 0', fontSize:'0.8rem', justifyContent:'flex-start', alignItems:'center'}}>
+                        <i class="fas fa-long-arrow-alt-left"></i>
+                        <p style={{margin:'0 10px'}}>  Back</p>
+                    </div>
+                    <div style={{display: 'flex', height:'auto', marginBottom:'10px', alignItems:'center'}}>
+                        <h3 style={{color: "black"}}>
+                            {collection && collection.name}
+                        </h3>
+                    </div>
                 </div>
+                {/* <div>
+                    <button onClick={setModal} style={{width:'300px', background:'#0098d3', borderColor:'#0098d3', outline:'none', display:'flex', alignItems:'center', justifyContent:'center'}}>
+                        <i style={{margin:'0 10px'}} class="fas fa-plus"></i>
+                        Add Manually
+                    </button>
+                </div> */}
             </div>
         </div>
     )

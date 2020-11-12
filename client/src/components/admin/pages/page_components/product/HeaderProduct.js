@@ -6,11 +6,16 @@ import { withRouter } from 'react-router-dom';
 const ProductHeader = ({product: { detailProduct }, history}) => {
     return (
         <div class="product-header container-fluid">
-            <div style={{display: 'flex', height:'auto', marginBottom:'10px', alignItems:'center'}}>
-                <i onClick={() => history.goBack()} style={{fontSize:'20px', marginRight:'1rem'}} class="fas fa-arrow-left"></i>
-                <h3 style={{color: "black"}}>
-                    {detailProduct && detailProduct.name}
-                </h3>
+            <div style={{display: 'flex', height:'auto', flexDirection:'column', alignItems:'flex-start', marginBottom:'10px'}}>
+                <div onClick={() => history.goBack()} style={{display:'flex', color:'#ff4b2b', width:'100%', padding:'10px 0', fontSize:'0.8rem', justifyContent:'flex-start', alignItems:'center'}}>
+                    <i class="fas fa-long-arrow-alt-left"></i>
+                    <p style={{margin:'0 10px'}}>  Back</p>
+                </div>
+                <div style={{display: 'flex', height:'auto', marginBottom:'10px', alignItems:'center'}}>
+                    <h3 style={{color: "black"}}>
+                        {detailProduct && detailProduct.name}
+                    </h3>
+                </div>
             </div>
         </div>
     )

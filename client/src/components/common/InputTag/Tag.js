@@ -3,12 +3,12 @@ import React, { Fragment } from 'react'
 const Tag = ({onDeleteTag, value}) => {
     var tag = (
         <div class="tag-item">
-          <span 
-            onClick = {(e) => onDeleteTag(e, value)}
-            style={tagStyle}>
-            &#x2716; {" "}
-           </span>
-           {value}
+           <p style={{margin:'auto', color:'green'}}>{value}</p>
+           <i 
+                onClick = {(e) => onDeleteTag(e, value)} 
+                style={{color:'green', marginLeft:'10px',fontSize:'12px', cursor: 'pointer'}} 
+                class="fas fa-times"
+            ></i>
         </div>
     );
 
@@ -20,11 +20,8 @@ const Tag = ({onDeleteTag, value}) => {
 }
 
 const tagStyle  = {
-    display: "inline-block",
-    backgroundColor: "yellow",
     fontSize: "0.9em",
     margin: "5px",
-    border: "1px solid lightblue",
     padding: "2px",
     cursor: "pointer"
 }
