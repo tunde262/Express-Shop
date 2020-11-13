@@ -39,6 +39,9 @@ const Form_Location = ({
     history,
     match
     }) => {
+    
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
     // Product Info
     const [formData, setFormData] = useState(initialState);
     const [files, setFiles] = useState([]);
@@ -61,6 +64,8 @@ const Form_Location = ({
     const [varTags4, setVarTags4] = useState([]);
   
     useEffect(() => {
+      window.addEventListener('resize', () => handleWindowSizeChange());
+
       if(match.params.id) {
           if (!detailProduct) handleDetail(match.params.id);
       }
@@ -73,7 +78,17 @@ const Form_Location = ({
           productData.tags = productData.tags.join(', ');
         setFormData(productData);
       }
+
+      return () => window.removeEventListener('resize', () => handleWindowSizeChange());
     }, [loading, handleDetail, detailProduct]);
+
+
+    const handleWindowSizeChange = () => {
+        setWindowWidth(window.innerWidth);
+    };
+
+    const isMobile = windowWidth <= 769;
+    const isTablet = windowWidth <= 1000;
   
   
   
@@ -382,108 +397,137 @@ const Form_Location = ({
     } else {
         display = <h3>variants</h3>;
     }
+
+
+    {/** Content Block Variables */}
+
+    let secondaryLocationInfo = (
+      <Fragment>
+        <div class="product-privacy-box" style={isMobile ? {margin:'10px 0'}: {background:'#fff'}}>
+            <div class="product-privacy-box-title">
+                <p style={{color:'#808080', margin:'0'}}>Visibility</p>
+                <hr style={{height:'1px', background:'rgb(214,214,214)', margin:'10px 0 10px 0'}}/>
+                <div style={{display:'flex', justifyContent:'space-between', height:'50px', width:'100%', alignItems:'center'}}>
+                    <p style={{color:'#3CB371', margin:'0'}}>Public</p>
+                    <input 
+                        class="toggle-button" 
+                        type="checkbox" 
+                        name="privacy"
+                        checked={true}
+                    />
+                </div>
+            </div>
+        </div>
+        {/* <div class="product-privacy-box" style={isMobile ? {margin:'10px 0'}: {background:'#fff'}}>
+            <div class="product-privacy-box-title">
+                <p style={{color:'#808080', margin:'0'}}>Notes</p>
+                <hr style={{height:'1px', background:'rgb(214,214,214)', margin:'10px 0 10px 0'}}/>
+                <input
+                    type="email"
+                    name="email"
+                    className="input_line"
+                    placeholder="Enter Email"
+                    style={{margin:'10px 0', width:'100%', height:'50px'}}
+                />
+                <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
+                    <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
+                        <small style={{color:'#ccc', margin:'0'}}>5:49pm Oct. 29, 2020</small>
+                        <p style={{margin:'0', color:'#333'}}>Must go behind the counter to find this item</p>
+                    </div>
+                    <div>
+                        <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-pen"></i>
+                    </div>
+                </div>
+                <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
+                    <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
+                        <small style={{color:'#ccc', margin:'0'}}>5:49pm Oct. 29, 2020</small>
+                        <p style={{margin:'0', color:'#333'}}>Wholesale order coming oct. 24</p>
+                    </div>
+                    <div>
+                        <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-pen"></i>
+                    </div>
+                </div>
+                <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
+                    <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
+                        <small style={{color:'#ccc', margin:'0'}}>5:49pm Oct. 29, 2020</small>
+                        <p style={{margin:'0', color:'#333'}}>Must go behind the counter to find this item</p>
+                    </div>
+                    <div>
+                        <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-pen"></i>
+                    </div>
+                </div>
+            </div>
+        </div> */}
+      </Fragment>
+    );
+    let mainLocationInfo = (
+      <Fragment>
+        <div class="content-box" style={{padding:'1rem 10px', display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+            <input
+                type="text"
+                name="phone"
+                className="input_line"
+                className="input_line"
+                placeholder="Enter address . . ."
+                autocomplete="no"
+                style={{margin:'0', width:'100%', outline:'none', padding:'0 10px', height:'50px', background:'#fff', fontSize:'14px', borderBottom:'2px dashed #cecece', borderRadius:'5px'}}
+            />
+        </div>
+        <div class="content-box" style={{padding:'1rem 10px', display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+            <input
+                type="text"
+                name="phone"
+                className="input_line"
+                className="input_line"
+                placeholder="Give this location a nickname . . ."
+                style={{margin:'0', outline:'none', width:'100%', padding:'0 10px', height:'50px', background:'#fff', fontSize:'14px', border:'2px dashed #cecece', borderRadius:'5px'}}
+            />
+        </div> 
+        <div id="order-map" style={{margin:'10px 0', width:'100%', padding:'10px 15px 10px 10px', background:'#fff', border:'2px dashed #cecece', overflow:'hidden'}}>
+            <div style={{margin:'0', width:'100%',border:'2px dashed #cecece',borderRadius: '10px'}}>
+                <div style={{height:'250px', maxHeight:'250px', width:'100%'}}>
+                    <Map 
+                        defaultZoom="8"
+                        centerLat="33.0300238"
+                        centerLng="-96.83283879999999"
+                        markerLat="33.0300238"
+                        markerLng="-96.83283879999999"
+                    />
+                </div>
+            </div>
+        </div>
+        <div className="product-admin-main-container">
+            {/* {imageContent} */}
+            <div className="addImage" >
+                <i class="fas fa-plus"></i>
+            </div>
+        </div>
+
+        {isMobile ? (
+            secondaryLocationInfo
+        ) : null}
+      </Fragment>
+    );
+
+    {/** END Content Block Variables */}
+
+
+    {/** Rendering */}
+
+    const mainContent = mainLocationInfo;
+
+    const secondaryContent = secondaryLocationInfo;
+
+    {/** END Rendering */}
     
     return (
         <Fragment>
             <div className="item-form-wrapper">
                 <div class="product-admin-main">
-                    <div class="content-box" style={{padding:'1rem 10px', display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                        <input
-                            type="text"
-                            name="phone"
-                            className="input_line"
-                            className="input_line"
-                            placeholder="Enter address . . ."
-                            autocomplete="no"
-                            style={{margin:'0', width:'100%', outline:'none', padding:'0 10px', height:'50px', background:'#fff', fontSize:'14px', borderBottom:'2px dashed #cecece', borderRadius:'5px'}}
-                        />
-                    </div>
-                    <div id="order-map" style={{margin:'10px 0', width:'100%', padding:'10px 15px 10px 10px', background:'#fff', border:'2px dashed #cecece', overflow:'hidden'}}>
-                        <div style={{margin:'0', width:'100%',border:'2px dashed #cecece',borderRadius: '10px'}}>
-                            <div style={{height:'250px', maxHeight:'250px', width:'100%'}}>
-                                <Map 
-                                    defaultZoom="8"
-                                    centerLat="33.0300238"
-                                    centerLng="-96.83283879999999"
-                                    markerLat="33.0300238"
-                                    markerLng="-96.83283879999999"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="product-admin-main-container">
-                        {/* {imageContent} */}
-                        <div className="addImage" >
-                            <i class="fas fa-plus"></i>
-                        </div>
-                    </div>
-                    <div class="content-box" style={{padding:'1rem 10px', display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                        <input
-                            type="text"
-                            name="phone"
-                            className="input_line"
-                            className="input_line"
-                            placeholder="Give this location a nickname . . ."
-                            style={{margin:'0', outline:'none', width:'100%', padding:'0 10px', height:'50px', background:'#fff', fontSize:'14px', border:'2px dashed #cecece', borderRadius:'5px'}}
-                        />
-                    </div> 
+                    {mainContent}
                 </div>
                 <div class="product-admin-secondary">
-                    <div class="product-privacy-box">
-                        <div class="product-privacy-box-title">
-                            <p style={{color:'#808080', margin:'0'}}>Visibility</p>
-                            <hr style={{height:'1px', background:'rgb(214,214,214)', margin:'10px 0 10px 0'}}/>
-                            <div style={{display:'flex', justifyContent:'space-between', height:'50px', width:'100%', alignItems:'center'}}>
-                                <p style={{color:'#3CB371', margin:'0'}}>Public</p>
-                                <input 
-                                    class="toggle-button" 
-                                    type="checkbox" 
-                                    name="privacy"
-                                    checked={true}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    {/* <div class="product-privacy-box">
-                        <div class="product-privacy-box-title">
-                            <p style={{color:'#808080', margin:'0'}}>Notes</p>
-                            <hr style={{height:'1px', background:'rgb(214,214,214)', margin:'10px 0 10px 0'}}/>
-                            <input
-                                type="email"
-                                name="email"
-                                className="input_line"
-                                placeholder="Enter Email"
-                                style={{margin:'10px 0', width:'100%', height:'50px'}}
-                            />
-                            <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
-                                    <small style={{color:'#ccc', margin:'0'}}>5:49pm Oct. 29, 2020</small>
-                                    <p style={{margin:'0', color:'#333'}}>Must go behind the counter to find this item</p>
-                                </div>
-                                <div>
-                                    <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-pen"></i>
-                                </div>
-                            </div>
-                            <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
-                                    <small style={{color:'#ccc', margin:'0'}}>5:49pm Oct. 29, 2020</small>
-                                    <p style={{margin:'0', color:'#333'}}>Wholesale order coming oct. 24</p>
-                                </div>
-                                <div>
-                                    <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-pen"></i>
-                                </div>
-                            </div>
-                            <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
-                                    <small style={{color:'#ccc', margin:'0'}}>5:49pm Oct. 29, 2020</small>
-                                    <p style={{margin:'0', color:'#333'}}>Must go behind the counter to find this item</p>
-                                </div>
-                                <div>
-                                    <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-pen"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div> */}
+                    {secondaryContent}
                 </div>
             </div>
             <Modal open={displayModal} onClose={setModal} center>

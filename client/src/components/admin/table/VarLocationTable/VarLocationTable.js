@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Spinner from '../../../common/Spinner';
 import 'react-responsive-modal/styles.css';
-import ShortItem from './ShortItem';
+import VarLocationItem from './VarLocationItem';
 
 
-const ShortTable = ({ product: {loading, modalProducts}, handleClick, setModalForm1, modalForm1, setVarModal, itemList, slide }) => {  
+const VarLocationTable = ({ product: {loading, modalProducts}, setModalForm1, modalForm1, slide }) => {  
     // const [listForColor, setListForColor] = useState([]);
     // const [colorSwitch, setColorSwitch] = useState(false);
 
@@ -33,7 +33,7 @@ const ShortTable = ({ product: {loading, modalProducts}, handleClick, setModalFo
     } else {
         if(modalProducts.length > 0) {
             
-            productList = modalProducts.map(detailItem => <ShortItem detailItem={detailItem} handleClick={handleClick} setModalForm1={setModalForm1} modalForm1={modalForm1} setVarModal={setVarModal} itemList={itemList} slide={slide} />);
+            productList = modalProducts.map(detailItem => <VarLocationItem detailItem={detailItem} setModalForm1={setModalForm1} modalForm1={modalForm1} slide={slide} />);
         } else {
             productList = <h3>No Items</h3>
         }
@@ -52,7 +52,7 @@ const ShortTable = ({ product: {loading, modalProducts}, handleClick, setModalFo
                         <th>Stock</th>
                     </tr>
                 </thead> */}
-                <div className="tbody">{productList}</div>
+                <tbody>{productList}</tbody>
             </table>
 
             {/* <Modal open={modalShow} onClose={() => setModal(false)}>
@@ -62,7 +62,7 @@ const ShortTable = ({ product: {loading, modalProducts}, handleClick, setModalFo
     )
 }
 
-ShortTable.propTypes = {
+VarLocationTable.propTypes = {
     product: PropTypes.object.isRequired,
 }
 
@@ -70,4 +70,4 @@ const mapStateToProps = state => ({
     product: state.product
 })
 
-export default connect(mapStateToProps, null)(ShortTable);
+export default connect(mapStateToProps, null)(VarLocationTable);

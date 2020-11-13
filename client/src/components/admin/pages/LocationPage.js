@@ -12,7 +12,7 @@ import Map from '../../common/map/Map';
 import Banner from '../../common/Banner';
 
 import Inventory from '../table/Inventory';
-import ShortVariant from '../table/ShortVariant';
+import ShortVariant from '../table/ShortVarTable/ShortVariant';
 import InputTag from '../../common/InputTag/InputTag';
 
 
@@ -253,7 +253,7 @@ const LocationPage = ({
                     <button onClick={onSubmit}>Add</button>
                 </div>
                 
-               <ShortVariant variant={variant} handleClick={handleItemClick} variantList={variantList} />
+               {/* <ShortVariant variant={variant} handleClick={handleItemClick} variantList={variantList} /> */}
             </Modal>
         </Fragment>
     )

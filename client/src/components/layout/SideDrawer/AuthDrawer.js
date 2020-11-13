@@ -7,6 +7,8 @@ import { logout } from '../../../actions/authActions';
 import { getCurrentProfile, deleteAccount } from '../../../actions/profileActions';
 
 import ProductSideDrawer from '../../admin/pages/page_components/product/SideDrawerProduct';
+import CollectionSideDrawer from '../../admin/pages/page_components/collection/SideDrawerCollection';
+import LocationSideDrawer from '../../admin/pages/page_components/location/SideDrawerLocation';
 
 import './CartDrawer.css';
 import paper_towels from '../../../utils/imgs/paper_towels.jpeg';
@@ -22,6 +24,7 @@ const AuthDrawer = ({ drawerClickHandler, toggleAuthDrawer, getCurrentProfile, d
         if(nav.page === 'admin detail product' || nav.page === 'admin detail location' || nav.page === 'admin detail collection' || nav.page === 'admin detail order'){
             setDetailPage(true);
             setCheckDetail(true);
+            setSlideForm1(true);
         }
     }
 
@@ -41,6 +44,19 @@ const AuthDrawer = ({ drawerClickHandler, toggleAuthDrawer, getCurrentProfile, d
 
     const handleSlide = () => {
         setSlideForm1(!slideForm1);
+    }
+
+    let detailDrawer;
+    if(store.store && detailPage) {
+        if(nav.page === 'admin detail product') {
+            detailDrawer = <ProductSideDrawer setSlideForm1={setSlideForm1} storeId={store.store._id} />;
+        } else if (nav.page === 'admin detail collection') {
+            detailDrawer = <CollectionSideDrawer setSlideForm1={setSlideForm1} storeId={store.store._id} />;
+        } else if (nav.page === 'admin detail location') {
+            detailDrawer = <LocationSideDrawer setSlideForm1={setSlideForm1} storeId={store.store._id} />;
+        } else {
+            detailDrawer = null;
+        }
     }
 
     let drawerClasses = 'cart-drawer';
@@ -140,7 +156,7 @@ const AuthDrawer = ({ drawerClickHandler, toggleAuthDrawer, getCurrentProfile, d
                             </a>
                         </Fragment>
                     ) : (
-                        (store.store && detailPage ? <ProductSideDrawer setSlideForm1={setSlideForm1} storeId={store.store._id} /> : null)
+                        (store.store && detailPage ? detailDrawer : null)
                         
                     )}
                 </div>

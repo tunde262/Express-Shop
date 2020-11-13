@@ -84,12 +84,12 @@ export const getProductsByLocationId = id => async dispatch => {
         const res = await axios.get(`/api/products/location/${id}`);
 
         dispatch({
-            type: SET_PRODUCTS,
+            type: GET_PRODUCTS,
             payload: res.data
         });
     } catch (err) {
         dispatch({
-            type: SET_PRODUCTS,
+            type: GET_PRODUCTS,
             payload: []
         })
     }

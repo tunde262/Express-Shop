@@ -18,9 +18,9 @@ const Item = ({ store, setModal, page, product: {loading, sortedProducts}, delet
 
     useEffect(() => {
         window.addEventListener('resize', () => handleWindowSizeChange());
-
+        renderProductList();
         return () => window.removeEventListener('resize', () => handleWindowSizeChange());
-    }, []);
+    }, [sortedProducts]);
 
 
     const handleWindowSizeChange = () => {
@@ -31,42 +31,45 @@ const Item = ({ store, setModal, page, product: {loading, sortedProducts}, delet
     const isTablet = windowWidth <= 1000;
 
     const renderProductList = async () => {
+        setProductList([]);
         try {
             if(sortedProducts.length > 0) {
                 sortedProducts.map(async product => {
-                    const res = await axios.get(`/api/variants/product/${product._id}`);
-                    setProductList(productList => [...productList, (
-                        <div className={isTablet ? "table-row-mobile" : "table-row"} key={product._id}>
-                            {isTablet ? (
-                                <Fragment>
-                                    <Link className="table-row-img" to={{pathname:`/admin/product/${store.store._id}/${product._id}`,search: "?show=detail"}}><div>{product.img_gallery[0] && <img style={{width: '100%'}} src={`/api/products/image/${product.img_gallery[0].img_name}`} alt="img" />}</div></Link>
-                                    <Link to={{pathname:`/admin/product/${store.store._id}/${product._id}`,search: "?show=detail"}}>
-                                        <div className="line-clamp-1" style={{maxHeight:'40px', overflow:'hidden', color:'#0098d3'}}>{product.name}</div>
-                                        <div><p style={{margin:'0'}}><span style={{color:'#ff4b2b', fontSize:'14px'}}>{product.inventory_qty}</span> Stock / <span style={{color:'#ff4b2b', fontSize:'14px'}}>{res.data.length}</span> Variants</p></div>
-                                        <div><p style={{margin:'0'}}>${product.price}</p></div>
-                                    </Link>
-                                </Fragment>
-                            ) : (
-                                <Fragment>
-                                    <div>
-                                        <input type="checkbox" value=""/>
-                                    </div>
-                                    <Link className="table-row-img" to={{pathname:`/admin/product/${store.store._id}/${product._id}`,search: "?show=detail"}}><div>{product.img_gallery[0] && <img style={{width: '100%'}} src={`/api/products/image/${product.img_gallery[0].img_name}`} alt="img" />}</div></Link>
-                                    <Link to={{pathname:`/admin/product/${store.store._id}/${product._id}`,search: "?show=detail"}}>
-                                        <div className="line-clamp-1" style={{maxHeight:'40px', overflow:'hidden', color:'#0098d3'}}>{product.name}</div>
-                                        <div><span style={{color:'#ff4b2b', fontSize:'14px'}}>{product.inventory_qty}</span> Stock / <span style={{color:'#ff4b2b', fontSize:'14px'}}>{res.data.length}</span> Variants</div>
-                                        <div>${product.price}</div>
-                                    </Link>
-                                    <Link to={{pathname:`/admin/product/${store.store._id}/${product._id}`,search: "?show=detail"}}><div className="line-clamp" style={{maxHeight:'40px', overflow:'hidden'}}>5</div></Link>
-                                    <Link to={{pathname:`/admin/product/${store.store._id}/${product._id}`,search: "?show=detail"}}><div>6</div></Link>
-                                    <Link to={{pathname:`/admin/product/${store.store._id}/${product._id}`,search: "?show=detail"}}><div style={{width:'50px'}}><i onClick={() => deleteProduct(product._id)} className="fas fa-trash"></i></div></Link>
-                                </Fragment>
-                            ) }
-                        </div>
-                    )])
+                    if (product) {
+                        const res = await axios.get(`/api/variants/product/${product._id}`);
+                        setProductList(productList => [...productList, (
+                            <div className={isTablet ? "table-row-mobile" : "table-row"} key={product._id}>
+                                {isTablet ? (
+                                    <Fragment>
+                                        <Link className="table-row-img" to={{pathname:`/admin/product/${store.store._id}/${product._id}`,search: "?show=detail"}}><div>{product.img_gallery[0] && <img style={{width: '100%'}} src={`/api/products/image/${product.img_gallery[0].img_name}`} alt="img" />}</div></Link>
+                                        <Link to={{pathname:`/admin/product/${store.store._id}/${product._id}`,search: "?show=detail"}}>
+                                            <div className="line-clamp-1" style={{maxHeight:'40px', overflow:'hidden', color:'#0098d3'}}>{product.name}</div>
+                                            <div><p style={{margin:'0'}}><span style={{color:'#ff4b2b', fontSize:'14px'}}>{product.inventory_qty}</span> Stock / <span style={{color:'#ff4b2b', fontSize:'14px'}}>{res.data.length}</span> Variants</p></div>
+                                            <div><p style={{margin:'0'}}>${product.price}</p></div>
+                                        </Link>
+                                    </Fragment>
+                                ) : (
+                                    <Fragment>
+                                        <div>
+                                            <input type="checkbox" value=""/>
+                                        </div>
+                                        <Link className="table-row-img" to={{pathname:`/admin/product/${store.store._id}/${product._id}`,search: "?show=detail"}}><div>{product.img_gallery[0] && <img style={{width: '100%'}} src={`/api/products/image/${product.img_gallery[0].img_name}`} alt="img" />}</div></Link>
+                                        <Link to={{pathname:`/admin/product/${store.store._id}/${product._id}`,search: "?show=detail"}}>
+                                            <div className="line-clamp-1" style={{maxHeight:'40px', overflow:'hidden', color:'#0098d3'}}>{product.name}</div>
+                                            <div><span style={{color:'#ff4b2b', fontSize:'14px'}}>{product.inventory_qty}</span> Stock / <span style={{color:'#ff4b2b', fontSize:'14px'}}>{res.data.length}</span> Variants</div>
+                                            <div>${product.price}</div>
+                                        </Link>
+                                        <Link to={{pathname:`/admin/product/${store.store._id}/${product._id}`,search: "?show=detail"}}><div className="line-clamp" style={{maxHeight:'40px', overflow:'hidden'}}>5</div></Link>
+                                        <Link to={{pathname:`/admin/product/${store.store._id}/${product._id}`,search: "?show=detail"}}><div>6</div></Link>
+                                        <Link to={{pathname:`/admin/product/${store.store._id}/${product._id}`,search: "?show=detail"}}><div style={{width:'50px'}}><i onClick={() => deleteProduct(product._id)} className="fas fa-trash"></i></div></Link>
+                                    </Fragment>
+                                ) }
+                            </div>
+                        )])
+                    }
                 });
             } else {
-                setProductList(productList => [...productList, (
+                setProductList([(
                     <button>Add Item</button>
                 )])
             }
@@ -75,10 +78,10 @@ const Item = ({ store, setModal, page, product: {loading, sortedProducts}, delet
         }
     }
 
-    if(!gotProducts && !loading && sortedProducts.length > 0) {
-        renderProductList();
-        setGotProducts(true);
-    }
+    // if(!gotProducts && !loading && sortedProducts.length > 0) {
+    //     renderProductList();
+    //     setGotProducts(true);
+    // }
 
     // console.log('PRODCUT LIST DATA');
     // console.log(productList);

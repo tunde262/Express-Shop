@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import mixpanel from 'mixpanel-browser';
 
 import { addToProducts } from '../../../../../actions/productActions';
-import { setPage } from '../../../../../actions/navActions';
 
 import Map from '../../../../common/map/Map';
 import Variant from '../../../table/Variant';
@@ -21,7 +20,7 @@ import ClosedLockEmoji from '../../../../../utils/imgs/closedlock.jpg';
 import OpenLockEmoji from '../../../../../utils/imgs/openlock.png'; 
 import CarEmoji from '../../../../../utils/imgs/car.jpg'; 
 
-const DetailOrder = ({ setModal, setPage, order, store, setTable, storageLocation }) => {
+const DetailOrder = ({ setModal, order, store, setTable, storageLocation }) => {
 
     const [sentMixpanel, setSentMixpanel] = useState(false);
     const [orderNav, setOrderNav] = useState('items');
@@ -601,7 +600,6 @@ DetailOrder.propTypes = {
     order: PropTypes.object.isRequired,
     product: PropTypes.object.isRequired,
     storageLocation: PropTypes.object.isRequired,
-    setPage: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -610,5 +608,5 @@ const mapStateToProps = state => ({
     storageLocation: state.location
 })
 
-export default connect(mapStateToProps, { setPage })(withRouter(DetailOrder));
+export default connect(mapStateToProps, null)(withRouter(DetailOrder));
 

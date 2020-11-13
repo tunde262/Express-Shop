@@ -214,11 +214,7 @@ const Dashboard = ({ setAdminNav, getStoreById, store: { store, loading }, match
                 <div className="admin-table">
                     <div className={"admin-table-nav"}>
                         <Link to={`/admin/${match.params.id}`}>
-                            <div>
-                                <div style={{display:'flex', width:'100%', padding:'1rem 0 0 1.5rem', fontSize:'0.8rem', justifyContent:'flex-start', alignItems:'center'}}>
-                                    <p style={{margin:'0 10px', color:'#ff4b2b'}}><span><i class="fas fa-long-arrow-alt-left"></i></span>  Go Back</p>
-                                </div>
-                            </div>
+                            
                         </Link>
 
                         <Link to={{pathname:`/admin/${match.params.id}`,search: "?show=store"}}>

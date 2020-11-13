@@ -20,6 +20,7 @@ const Cart = require('../../models/Cart');
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
 const Store = require('../../models/Store');
+const Darkstore = require('../../models/Darkstore');
 
 //Db Config
 const config = require('config');
@@ -177,6 +178,27 @@ router.get('/collection/:collectionId', async (req, res) => {
 // @desc Get Products by location ID
 // @access Public
 router.get('/location/:id', async (req, res) => {
+    try {
+        const variantList = [];
+        const darkstore = await Darkstore.findById(req.params.id);
+
+        for (var i = 0; i < darkstore.variants.length; i++) {
+            console.log('HELLO');
+            console.log(darkstore.variants[i].variant)
+            const variant = await Variant.findById(darkstore.variants[i].variant).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']).populate('store', ['name', 'img_name']);
+            console.log('PRODUCT');
+            console.log(variant);
+            variantList.push(variant);
+            console.log('PRODUCT LIST');
+            console.log(variantList);
+        }
+
+        res.json(variantList);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+    
     try {
         const products = await Product.find({ locationId: req.params.id }).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']).populate('store', ['name', 'img_name']);
 

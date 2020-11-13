@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import mixpanel from 'mixpanel-browser';
 
-import { setAdminNav } from '../../../actions/navActions';
+import { setAdminNav, setPage } from '../../../actions/navActions';
 import { setSortedProducts, getProductsByStoreId, getProductsInCollection, handleDetail, addProduct, editProduct, deleteProduct, setModalProducts, addProductImg } from '../../../actions/productActions';
 import { getProductVariants, addVariant, deleteVariant, setModalVariants } from '../../../actions/variantActions';
 import { getStoreById } from '../../../actions/storeActions';
@@ -19,7 +19,8 @@ import Modal from 'react-responsive-modal';
 import InputTag from '../../common/InputTag/InputTag';
 import Item from '../table/Item';
 import ShortTable from '../table/ShortTable/ShortTable';
-import ShortVariant from '../table/ShortVariant';
+import VarLocationTable from '../table/VarLocationTable/VarLocationTable';
+import ShortVarTable from '../table/ShortVarTable/ShortVarTable';
 import ShortLocation from '../table/ShortLocation';
 
 import EditProduct from '../forms/EditProduct';
@@ -35,12 +36,14 @@ import MainProductForm from '../../page_components/forms_inventory/productForm/F
 
 import DetailCollection from './page_components/collection/DetailCollection';
 import HeaderCollection from './page_components/collection/HeaderCollection';
+import CollectionSideDrawer from './page_components/collection/SideDrawerCollection';
 
 import MainCollectionForm from '../../page_components/forms_inventory/collectionForm/Form_Collection';
 import HeaderCollectionForm from '../../page_components/forms_inventory/collectionForm/Header_Collection';
 
 import DetailLocation from './page_components/location/DetailLocation';
 import HeaderLocation from './page_components/location/HeaderLocation';
+import LocationSideDrawer from './page_components/location/SideDrawerLocation';
 
 import DetailOrder from './page_components/order/DetailOrder';
 import HeaderOrder from './page_components/order/HeaderOrder';
@@ -62,6 +65,7 @@ const initialState = {
 };
 
 const ProductPage = ({ 
+    setPage,
     addVariant,
     handleDetail, 
     addProduct,
@@ -79,11 +83,13 @@ const ProductPage = ({
     setModalVariants,
     getProductsInCollection,
     getProductsByStoreId,
+    getProductVariants,
     addCollectionItem,
     addLocationVariant,
     product,
     variant,
     store,
+    nav,
     collection,
     order,
     getCollectionById,
@@ -117,6 +123,7 @@ const ProductPage = ({
     const [tableShow1, setTableShow1] = useState('');
     const [headerShow, setHeaderShow] = useState('');
     const [displayStorageModal, toggleStorageModal] = useState(false);
+    const [displayAddToLocationModal, toggleAddToLocationModal] = useState(false);
     const [displayVariantModal, toggleVariantModal] = useState(false);
     const [displayLocationModal, toggleLocationModal] = useState(false);
     const [displayStoreLocationModal, toggleStoreLocationModal] = useState(false);
@@ -154,6 +161,7 @@ const ProductPage = ({
     const [itemList, setItemListData] = useState([]);
 
     const [slideForm1, setSlideForm1] = useState(true);
+    const [modalForm1, setModalForm1] = useState(false);
 
     
         
@@ -171,11 +179,13 @@ const ProductPage = ({
                 let query = new URLSearchParams(location.search).get('show')
                 if (query === 'detail') {
                     setTableShow1('product detail');
-                    setHeaderShow('product')
+                    setHeaderShow('product');
+                    setPage('admin detail product');
                 } else if (query === 'add_item') {
                     setTableShow1('add item');
                     setHeaderShow('add item');
                     setSlideForm1(false);
+                    setPage('admin add item');
                 } 
             }
         }
@@ -189,10 +199,12 @@ const ProductPage = ({
                 if (query === 'detail') {
                     setTableShow1('collection detail');
                     setHeaderShow('collection');
+                    setPage('admin detail collection');
                 } else if (query === 'add_collection') {
                     setTableShow1('add collection');
                     setHeaderShow('add collection');
                     setSlideForm1(false);
+                    setPage('admin add collection');
                 } 
             }
         }
@@ -205,10 +217,12 @@ const ProductPage = ({
                 if (query === 'detail') {
                     setTableShow1('location detail');
                     setHeaderShow('location');
+                    setPage('admin detail location');
                 } else if (query === 'add_location') {
                     setTableShow1('add location');
                     setHeaderShow('add location');
                     setSlideForm1(false);
+                    setPage('admin add location');
                 } 
             }
         }
@@ -217,6 +231,7 @@ const ProductPage = ({
             // getOrderLocations(match.params.orderId);
             setTableShow1('order detail');
             setHeaderShow('order');
+            setPage('admin detail order');
         }
         
         if(store.store === null) {
@@ -538,6 +553,14 @@ const ProductPage = ({
         console.log(newItem);
         console.log(itemList);
     }
+    
+    const setVarModal = async (prodId) => {
+        setModalForm1(true);
+        const res = await axios.get(`/api/variants/product/${prodId}`);
+        console.log('MODAL PRODUCTS');
+        console.log(res.data)
+        setModalVariants(res.data);
+    }
 
     const handleToggleOption = () => {
         if(displayOption4 && !displayOption1) {
@@ -680,15 +703,23 @@ const ProductPage = ({
     const handleStorageModal = async (bool) => {
         const res = await axios.get(`/api/products/store/${store.store._id}`);
         console.log('MODAL PRODUCTS');
-        console.log(res.data)
+        // console.log(res.data)
         setModalProducts(res.data);
         toggleStorageModal(bool);
+    }
+
+    const handleAddToLocationModal = async (bool) => {
+        const res = await axios.get(`/api/products/store/${store.store._id}`);
+        console.log('MODAL PRODUCTS');
+        // console.log(res.data)
+        setModalProducts(res.data);
+        toggleAddToLocationModal(bool);
     }
 
     const handleVariantModal = async (bool) => {
         const res = await axios.get(`/api/variants/store/${store.store._id}`);
         console.log('MODAL VARIANTS');
-        console.log(res.data)
+        // console.log(res.data)
         setModalVariants(res.data);
         toggleVariantModal(bool);
     }
@@ -1221,7 +1252,7 @@ const ProductPage = ({
                 <DetailLocation 
                     setModal={handleVariantModal} 
                     setTable={setTable} 
-                    setVarModal={handleStorageModal} 
+                    setVarModal={handleAddToLocationModal} 
                     onAddItemTag={onAddItemTag}
                     onDeleteItemTag={onDeleteItemTag}
                     itemTags={itemTags}
@@ -1310,7 +1341,7 @@ const ProductPage = ({
                                 <a href="#">
                                     <div onClick={() => setSlideForm1(!slideForm1)}>
                                         <div style={{display:'flex', flexDirection:'row', width:'100%', justifyContent:'flex-end'}}>
-                                            <p style={{margin:'0', color:'#ff4b2b'}}>View inventory<span style={{margin:'0 10px'}}><i class="fas fa-arrow-right"></i></span></p>
+                                            <p style={{margin:'0', color:'#808080'}}>View inventory<span style={{margin:'0 10px'}}><i class="fas fa-arrow-right"></i></span></p>
                                         </div>
                                     </div>
                                 </a>
@@ -1364,7 +1395,15 @@ const ProductPage = ({
                             </div>
                             {/** Transition 2 */}
                             <div className={slideForm1 ? "detail-nav-container active" : "detail-nav-container"} id="transition-2">
-                                <ProductSideDrawer setSlideForm1={setSlideForm1} storeId={match.params.storeId} />
+                                {nav.page === 'admin detail product' && (
+                                    <ProductSideDrawer setSlideForm1={setSlideForm1} storeId={match.params.storeId} /> 
+                                )}
+                                {nav.page === 'admin detail collection' && (
+                                    <CollectionSideDrawer setSlideForm1={setSlideForm1} storeId={match.params.storeId} /> 
+                                )}
+                                {nav.page === 'admin detail location' && (
+                                    <LocationSideDrawer setSlideForm1={setSlideForm1} storeId={match.params.storeId} /> 
+                                )}
                             </div>
                         </div>
                     </div>
@@ -1487,6 +1526,50 @@ const ProductPage = ({
                 </div>
             </Modal>
 
+            <Modal open={displayAddToLocationModal} onClose={toggleAddToLocationModal} center styles={bg2}>
+                <div className="itemUploadContainer">
+                    <div style={{width:'100%', minHeight:'40px', display:'flex', justifyContent:'center', alignItems:'center', height:'40px'}}>
+                        <p style={{margin:'0', color:'#0098d3'}}>Add To Location</p>
+                    </div>
+                    <div className="modal-table-list-transition">
+                        {/** Transition 1 */}
+                        <div  
+                            className={!modalForm1 ? "modal-table-top-container active" : "modal-table-top-container"} id="transition-1"
+                        >
+                            <InputTag
+                                onAddTag ={onAddTag}
+                                onDeleteTag = {onDeleteTag}
+                                defaultTags={varTags}  
+                                placeholder="Search products (seperate by comma)"
+                            />
+                        </div>
+                        <div  
+                            className={modalForm1 ? "modal-table-top-container active" : "modal-table-top-container"} id="transition-2"
+                        >
+                            <div onClick={() => setModalForm1(false)} style={{display:'flex', color:'#ff4b2b', width:'100%', padding:'0 10px', fontSize:'0.8rem', justifyContent:'flex-start', alignItems:'center'}}>
+                                <i class="fas fa-long-arrow-alt-left"></i>
+                                <p style={{margin:'0 10px'}}>  Back</p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <div className="modal-table-list-transition">
+                        {/** Transition 1 */}
+                        <div className={!modalForm1 ? "modal-table-list-container active" : "modal-table-list-container"} id="transition-1">
+                            <ShortTable handleClick={handleItemClick} setVarModal={setVarModal} itemList={itemList} setModalForm1={setModalForm1} modalForm1={modalForm1} slide />
+                        </div>
+                        <div className={modalForm1 ? "modal-table-list-container active" : "modal-table-list-container"} id="transition-2">
+                            <ShortVarTable handleClick={handleItemClick} itemList={itemList} />
+                            {/* <VarLocationTable setModalForm1={setModalForm1} modalForm1={modalForm1} slide /> */}
+                        </div>
+                    </div>
+                </div>
+                <div style={{width:'100%', height:'75px', display:'flex', justifyContent:'center', alignItems:'center', borderTop:'1px solid rgb(214, 214, 214)'}}>
+                    <button onClick={onSubmitStorage} style={{width:'100%', background:'#0098d3', borderColor:'#0098d3'}}>Add Items (0)</button>
+                </div>
+            </Modal>
+
             <Modal open={displayVariantModal} onClose={toggleVariantModal} center styles={bg}>
                 <div style={{display:'flex'}}>
                     <InputTag
@@ -1498,7 +1581,7 @@ const ProductPage = ({
                     <button onClick={onAddVariant}>Add</button>
                 </div>
                 
-               <ShortVariant variant={variant} handleClick={handleItemClick} itemList={itemList} />
+               <ShortVarTable handleClick={handleItemClick} itemList={itemList} />
             </Modal>
 
             <Modal open={displayModal} onClose={setModal} center styles={bg}>
@@ -1661,6 +1744,7 @@ const ProductPage = ({
 }
 
 ProductPage.propTypes = {
+    setPage: PropTypes.func.isRequired,
     addVariant: PropTypes.func.isRequired,
     handleDetail: PropTypes.func.isRequired,
     addProduct: PropTypes.func.isRequired,
@@ -1670,6 +1754,7 @@ ProductPage.propTypes = {
     collection: PropTypes.object.isRequired,
     order: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired,
+    nav: PropTypes.object.isRequired,
     deleteProduct: PropTypes.func.isRequired,
     deleteVariant: PropTypes.func.isRequired,
     setAdminNav: PropTypes.func.isRequired,
@@ -1684,6 +1769,7 @@ ProductPage.propTypes = {
     getLocationById: PropTypes.func.isRequired,
     getProductLocations: PropTypes.func.isRequired,
     getCollectionLocations: PropTypes.func.isRequired,
+    getProductVariants: PropTypes.func.isRequired,
     setLocations: PropTypes.func.isRequired,
     setModalProducts: PropTypes.func.isRequired,
     setModalVariants: PropTypes.func.isRequired,
@@ -1697,7 +1783,8 @@ const mapStateToProps = state => ({
     store: state.store,
     collection: state.collection,
     storageLocation: state.location,
-    order: state.order
+    order: state.order,
+    nav: state.nav
 })
 
 export default connect(mapStateToProps, { 
@@ -1721,6 +1808,8 @@ export default connect(mapStateToProps, {
     getLocationById,
     getProductLocations, 
     getCollectionLocations,
+    getProductVariants,
     setLocations,
-    addProductImg
+    addProductImg,
+    setPage
 })(withRouter(ProductPage));

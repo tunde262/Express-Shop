@@ -58,10 +58,11 @@ export const getStoreById = Id => async dispatch => {
             payload: res.data
         });
     } catch (err) {
-        dispatch({
-            type: STORE_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
-        });
+        // dispatch({
+        //     type: STORE_ERROR,
+        //     payload: { msg: err.response.statusText, status: err.response.status }
+        // });
+        console.log(err);
     }
 }
 

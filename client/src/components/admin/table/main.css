@@ -937,7 +937,7 @@ header {
   background: #f0f0f0; 
   display: grid;
   border-bottom: 1px solid rgb(214, 214, 214);
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr auto;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr auto;
   grid-gap: 10px;
   width: 100%;
 }
@@ -1303,6 +1303,14 @@ header {
       margin-top: 0; }
 .product-description-box {
   background: #fff; }
+
+.inventory-activity-box {
+  background: #fff; 
+  height: min-content; 
+  padding: 2rem 0 0 0; 
+  margin: 10px 0; 
+  border: 1px solid rgb(214, 214, 214);
+}
   
 
 @media screen and (max-width: 768px) {
