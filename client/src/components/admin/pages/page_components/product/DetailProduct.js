@@ -10,7 +10,7 @@ import InputTag from '../../../../common/InputTag/InputTag';
 
 import mixpanel from 'mixpanel-browser';
 
-import Variant from '../../../table/Variant';
+import VariantTable from '../../../table/VariantTable/VariantTable';
 import TableDetails from '../../../../TableDetails/TableDetails';
 
 import { incImg, decImg, editProduct } from '../../../../../actions/productActions';
@@ -552,7 +552,19 @@ const DetailProduct = ({
                         </div>
                     </div>
                     <div class="table-responsive table-filter">
-                        <Variant setModal={setModal} page="product" prodId={match.params.productId} deleteVariant={deleteVariant} />
+                        <VariantTable 
+                            setModal={setModal} 
+                            page="product" 
+                            prodId={match.params.productId} 
+                            deleteVariant={deleteVariant}
+                            onAddTag={onAddTag}
+                            onDeleteTag={onDeleteTag}
+                            varTags={varTags}
+                            onChangePrice={onChangePrice}
+                            onChangeSalePrice={onChangeSalePrice}
+                            onChangeSku={onChangeSku}
+                            onChangeQty={onChangeQty} 
+                        />
                     </div>
                 </div>
             </div>
@@ -577,7 +589,19 @@ const DetailProduct = ({
 
             <div class="content-box">
                 <div class="table-responsive table-filter">
-                    <Variant setModal={setModal} page="product" prodId={match.params.productId} deleteVariant={deleteVariant} />
+                    <VariantTable
+                        setModal={setModal} 
+                        page="product" 
+                        prodId={match.params.productId} 
+                        deleteVariant={deleteVariant} 
+                        onAddTag={onAddTag}
+                        onDeleteTag={onDeleteTag}
+                        varTags={varTags}
+                        onChangePrice={onChangePrice}
+                        onChangeSalePrice={onChangeSalePrice}
+                        onChangeSku={onChangeSku}
+                        onChangeQty={onChangeQty}
+                    />
                 </div>
             </div>
         </Fragment>

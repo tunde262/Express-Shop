@@ -146,7 +146,7 @@ const InventoryMain = ({ inventoryNav, setTable, store: { store, loading } }) =>
                 <i class="fas fa-sliders-h"></i>
             </div>
             <div className="product-list-container">
-                <Table page="storage" inventoryNav={inventoryNav}  setTable={setTable} />
+                <Table page="dashboard" inventoryNav={inventoryNav}  setTable={setTable} />
             </div>
         </Fragment>
     )

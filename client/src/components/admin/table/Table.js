@@ -108,18 +108,18 @@ const Table = ({
         
         tableContent = (
             <Fragment>
-                <Item page="dashboard" product={product} />
+                <Item page={page} product={product} />
             </Fragment>
         ) 
     } else if (inventoryNav === 'collections') {
         console.log(collection);
         tableContent = <Collection collection={collection} /> 
     } else if (inventoryNav === 'locations') {
-        tableContent = <Location /> 
+        tableContent = <Location page={page} /> 
     } else if (inventoryNav === 'inventory') {
         tableContent = (
             <Fragment>
-                <Inventory page="dashboard" variant={variant} /> 
+                <Inventory page={page} variant={variant} /> 
             </Fragment>
         );
     } else if (inventoryNav === 'customers') {

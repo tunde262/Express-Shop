@@ -8,19 +8,28 @@ import Spinner from '../../common/Spinner';
 import 'react-responsive-modal/styles.css';
 
 
-const Location = ({ location: {loading, locations}, store, getLocationsByStoreId, deleteLocation }) => {
+const Location = ({ 
+    location: {
+        loading, 
+        locations
+    }, 
+    store, 
+    page, 
+    getLocationsByStoreId, 
+    deleteLocation 
+}) => {
     const [locationList, setLocationList] = useState([]);
     const [gotLocations, setGotLocations] = useState(false);
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     useEffect(() => {
-        getLocationsByStoreId(store.store._id);
-
         window.addEventListener('resize', () => handleWindowSizeChange());
 
+        renderLocationList();
+
         return () => window.removeEventListener('resize', () => handleWindowSizeChange());
-      }, [])
+      }, [locations])
 
     const [modalShow, setModal] = useState(false);
      
@@ -41,6 +50,7 @@ const Location = ({ location: {loading, locations}, store, getLocationsByStoreId
     const isTablet = windowWidth <= 1000;
 
     const renderLocationList = async () => {
+        setLocationList([]);
         try {
             if(locations.length > 0) {
                 locations.map(async location => {
@@ -72,7 +82,7 @@ const Location = ({ location: {loading, locations}, store, getLocationsByStoreId
                     )])          
                 });
             } else {
-                setLocationList(locationList => [...locationList, (
+                setLocationList([(
                     <button>Add Location</button>
                 )])
             }
@@ -81,8 +91,8 @@ const Location = ({ location: {loading, locations}, store, getLocationsByStoreId
         }
     }
 
-    if(!gotLocations && !loading && locations.length > 0) {
-        renderLocationList();
+    if(!gotLocations && page === "dashboard") {
+        getLocationsByStoreId(store.store._id);
         setGotLocations(true);
     }
 

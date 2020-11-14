@@ -392,6 +392,11 @@ const ProductPage = ({
         toggleModal(!displayModal);
     }
 
+    const updateVarTodo = () => {
+        updateList();
+        setModalForm1(!modalForm1);
+    }
+
     const onAddProduct = async (e) => {
         e.preventDefault();
   
@@ -461,6 +466,11 @@ const ProductPage = ({
         // });
     
     };
+
+    const handleVarCreate = (e) => {
+        onSubmit(e);
+        setModal(false);
+    }
 
     const onSubmitImage = async (fileList) => {
     
@@ -933,46 +943,153 @@ const ProductPage = ({
                 if(variant.var2) {
                     if(variant.var3) {
                         if(variant.var4) {
-                            variantList = `${variant.var1} / ${variant.var2} / ${variant.var3} / ${variant.var4}`;
+                            variantList = (
+                                <Fragment>
+                                    <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
+                                        <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var1}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                        <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var2}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                        <p style={{margin:'0', fontSize:'14px', color:'green'}}>{variant.var3}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                        <p style={{margin:'0', fontSize:'14px', color:'#FF69B4'}}>{variant.var4}</p>
+                                    </div>
+                                </Fragment>
+                            )
                         } else {
-                            variantList = `${variant.var1} / ${variant.var2} / ${variant.var3}`;
+                            variantList = (
+                                <Fragment>
+                                    <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
+                                        <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var1}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                        <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var2}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                        <p style={{margin:'0', fontSize:'14px', color:'green'}}>{variant.var3}</p>
+                                    </div>
+                                </Fragment>
+                            );
                         }
                     } else if (variant.var4) {
-                        variantList = `${variant.var1} / ${variant.var2} / ${variant.var4}`;
+                        variantList = (
+                            <Fragment>
+                                <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
+                                    <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var1} </p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                    <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var2}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                    <p style={{margin:'0', fontSize:'14px', color:'green'}}>{variant.var4}</p>
+                                </div>
+                            </Fragment>
+                        );
                     } else {
-                        variantList = `${variant.var1} / ${variant.var2}`;
+                        variantList = (
+                            <Fragment>
+                                <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
+                                    <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var1}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                    <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var2}</p>
+                                </div>
+                            </Fragment>
+                        );
                     }
                 } else if (variant.var3) {
                     if(variant.var4) {
-                        variantList = `${variant.var1} / ${variant.var3} / ${variant.var4}`;
+                        variantList = (
+                            <Fragment>
+                                <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
+                                    <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var1}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                    <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var3}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                    <p style={{margin:'0', fontSize:'14px', color:'#green'}}>{variant.var4}</p>
+                                </div>
+                            </Fragment>
+                        );
                     } else {
-                        variantList = `${variant.var1} / ${variant.var3}`;
+                        variantList = (
+                            <Fragment>
+                                <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
+                                    <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var1}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                    <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var3}</p>
+                                </div>
+                            </Fragment>
+                        );
                     }
                 } else if (variant.var4) {
-                    variantList = `${variant.var1} / ${variant.var4}`;
+                    variantList = (
+                        <Fragment>
+                            <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
+                                <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var1}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var4}</p>
+                            </div>
+                        </Fragment>
+                    );
                 } else {
-                    variantList = `${variant.var1}`;
+                    variantList = (
+                        <Fragment>
+                            <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
+                                <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var1}</p>
+                            </div>
+                        </Fragment>
+                    );
                 }
             } else if (variant.var2) {
                 if(variant.var3) {
                     if(variant.var4) {
-                        variantList = `${variant.var2} / ${variant.var3} / ${variant.var4}`;
+                        variantList = (
+                            <Fragment>
+                                <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
+                                    <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var2}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                    <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var3}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                    <p style={{margin:'0', fontSize:'14px', color:'green'}}>{variant.var4}</p>
+                                </div>
+                            </Fragment>
+                        );
                     } else {
-                        variantList = `${variant.var2} / ${variant.var3}`;
+                        variantList = (
+                            <Fragment>
+                                <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
+                                    <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var2}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                    <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var3}</p>
+                                </div>
+                            </Fragment>
+                        );
                     }
                 } else if (variant.var4) {
-                    variantList = `${variant.var2} / ${variant.var4}`;
+                    variantList = (
+                        <Fragment>
+                            <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
+                                <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var2}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var4}</p>
+                            </div>
+                        </Fragment>
+                    );
                 } else {
-                    variantList = `${variant.var2}`;
+                    variantList = (
+                        <Fragment>
+                            <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
+                                <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var2}</p>
+                            </div>
+                        </Fragment>
+                    );
                 }
             } else if (variant.var3) {
                 if(variant.var4) {
-                    variantList = `${variant.var3} / ${variant.var4}`;
+                    variantList = (
+                        <Fragment>
+                            <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
+                                <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var3}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var4}</p>
+                            </div>      
+                        </Fragment>
+                    );
                 } else {
-                    variantList = `${variant.var3}`;
+                    variantList = (
+                        <Fragment>
+                            <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
+                                <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var3}</p>
+                            </div>
+                        </Fragment>
+                    );
                 }
             } else if (variant.var4) {
-                variantList = `${variant.var4}`;
+                variantList = (
+                    <Fragment>
+                        <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
+                            <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var4}</p>;
+                        </div>
+                    </Fragment>
+                );
             }
         
             return (
@@ -1584,37 +1701,51 @@ const ProductPage = ({
                <ShortVarTable handleClick={handleItemClick} itemList={itemList} />
             </Modal>
 
-            <Modal open={displayModal} onClose={setModal} center styles={bg}>
-                <h2>Add Variant</h2>
-                <p>
-                    Add options to create variants
-                </p>
-                <form onSubmit={onSubmit} id="authenticator">
-                    <table class="table table-head">
-                        <thead>
-                            <tr>
-                                <th>Option</th>
-                                <th>Values</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {displayOption1 === true ? (
-                                <tr>
-                                    <td>
-                                        <select name="var1" value={varName.var1} onChange={onChangeVar} class="form-select" >
-                                            <option>Pick an option</option>
-                                            <option value="color">color</option>
-                                            <option value="size">size</option>
-                                            <option value="weight">weight</option>
-                                            <option value="type">type</option>
-                                            <option value="bundle">bundle</option>
-                                            <option value="scent">scent</option>
-                                            <option value="fit">fit</option>
-                                            <option value="flavor">flavor</option>
-                                            <option value="material">material</option>
-                                        </select>
-                                    </td>
-                                    <td>
+            <Modal open={displayModal} onClose={setModal} center styles={bg2}>
+                <div className="itemUploadContainer">
+                    <div style={{width:'100%', minHeight:'40px', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center', height:'40px'}}>
+                        <p style={{margin:'0', color:'#0098d3'}}>Add Variant</p>
+                    </div>
+                    <div className="modal-table-list-transition">
+                        {/** Transition 1 */}
+                        <div
+                            style={{maxHeight:'470px'}}  
+                            className={!modalForm1 ? "modal-table-list-container active" : "modal-table-list-container"} id="transition-1"
+                        >
+                            <div style={{display:'grid', width:'100%', gridTemplateColumns:'1fr 2fr'}}>
+                                <div><p>Option</p></div>
+                                <div><p>Values</p></div>
+                            </div>
+                            {displayOption1 ? (
+                                <div style={displayOption2 || displayOption3 || displayOption4 ? {display:'grid', gridTemplateColumns:'1fr 3fr auto'} : {display:'grid', gridTemplateColumns:'1fr 3fr'}}>
+                                    <div>
+                                        <div style={{display:'flex', alignItems:'center', justifyContent:'flex-start'}}>
+                                            <div class={optionToggle ? "secondary-dropdown-el expanded" : "secondary-dropdown-el"}>
+                                                <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%'}} onClick={() => setOptionToggle(!optionToggle)}>
+                                                    {varName.var1 === '' ? (
+                                                        <p>Pick an option</p>
+                                                    ) : (
+                                                        <p>{varName.var1}</p>
+                                                    )}
+                                                    <i class="fas fa-caret-down"></i>
+                                                </div>
+                                                {optionToggle ? (
+                                                    <Fragment>
+                                                        <div onClick={() => handleVarNameChange("var1", 'color')}><p>Color</p></div>
+                                                        <div onClick={() => handleVarNameChange("var1", 'size')}><p>Size</p></div>
+                                                        <div onClick={() => handleVarNameChange("var1", 'weight')}><p>Weight</p></div>
+                                                        <div onClick={() => handleVarNameChange("var1", 'type')}><p>Type</p></div>
+                                                        <div onClick={() => handleVarNameChange("var1", 'bundle')}><p>Bundle</p></div>
+                                                        <div onClick={() => handleVarNameChange("var1", 'scent')}><p>Scent</p></div>
+                                                        <div onClick={() => handleVarNameChange("var1", 'fit')}><p>Fit</p></div>
+                                                        <div onClick={() => handleVarNameChange("var1", 'flavor')}><p>Flavor</p></div>
+                                                        <div onClick={() => handleVarNameChange("var1", 'material')}><p>Material</p></div>
+                                                    </Fragment>
+                                                ) : null}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
                                         <Fragment>
                                             <InputTag  
                                                 onAddTag ={onAddTag}
@@ -1622,122 +1753,228 @@ const ProductPage = ({
                                                 defaultTags={varTags}
                                                 placeholder="enter tags separated by comma"
                                             />
-                                            <button onClick={() => toggleOption2(!displayOption2)} id="add-otp" style={{width:'100%'}} class="btn">+</button>
                                         </Fragment>
-                                    </td>
-                             </tr>
+                                    </div>
+                                    {displayOption2 || displayOption3 || displayOption4 ? (
+                                        <div style={{minWidth:'30px', display:'flex', justifyContent:'center', alignItems:'flex-start'}}>
+                                            <i 
+                                                onClick={removeDisplayOption1} 
+                                                style={{color:'#ff4b2b', marginTop:'1rem'}} 
+                                                class="fas fa-minus"
+                                            ></i>
+                                        </div>
+                                    ) : null}
+                                </div>
                             ): null}
-                            {displayOption2 === true ? (
-                                <tr>
-                                    <td>
-                                        <select name="var2" value={varName.var2} onChange={onChangeVar} class="form-select" >
-                                            <option>Pick an option</option>
-                                            <option value="color">color</option>
-                                            <option value="size">size</option>
-                                            <option value="weight">weight</option>
-                                            <option value="type">type</option>
-                                            <option value="bundle">bundle</option>
-                                            <option value="scent">scent</option>
-                                            <option value="fit">fit</option>
-                                            <option value="flavor">flavor</option>
-                                            <option value="material">material</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <Fragment>
-                                            <InputTag  
-                                                onAddTag ={onAddTag2}
-                                                onDeleteTag = {onDeleteTag2}
-                                                defaultTags={varTags2}
-                                                placeholder="enter tags separated by comma"
-                                            />
-                                            <button onClick={() => toggleOption3(!displayOption3)} id="add-otp" style={{width:'100%'}} class="btn">+</button>
-                                        </Fragment>
-                                        
-                                    </td>
-                                </tr>
-                                ): null}
-                                {displayOption3 === true ? (
-                                <tr>
-                                    <td>
-                                        <select name="var3" value={varName.var3} onChange={onChangeVar} class="form-select" >
-                                            <option>Pick an option</option>
-                                            <option value="color">color</option>
-                                            <option value="size">size</option>
-                                            <option value="weight">weight</option>
-                                            <option value="type">type</option>
-                                            <option value="bundle">bundle</option>
-                                            <option value="scent">scent</option>
-                                            <option value="fit">fit</option>
-                                            <option value="flavor">flavor</option>
-                                            <option value="material">material</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <Fragment>
-                                            <InputTag  
-                                                onAddTag ={onAddTag3}
-                                                onDeleteTag = {onDeleteTag3}
-                                                defaultTags={varTags3}
-                                                placeholder="enter tags separated by comma"
-                                            />
-                                            <button onClick={() => toggleOption4(!displayOption4)} id="add-otp" style={{width:'100%'}} class="btn">+</button>
-                                        </Fragment>
-                                    </td>
-                                </tr>
-                                ) : null}
-                                {displayOption4 === true ? (
-                                <tr>
-                                    <td>
-                                        <select name="var4" value={varName.var4} onChange={onChangeVar} class="form-select" >
-                                            <option>Pick an option</option>
-                                            <option value="color">color</option>
-                                            <option value="size">size</option>
-                                            <option value="weight">weight</option>
-                                            <option value="type">type</option>
-                                            <option value="bundle">bundle</option>
-                                            <option value="scent">scent</option>
-                                            <option value="fit">fit</option>
-                                            <option value="flavor">flavor</option>
-                                            <option value="material">material</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <InputTag  
-                                            onAddTag ={onAddTag4}
-                                            onDeleteTag = {onDeleteTag4}
-                                            defaultTags={varTags4}
-                                            placeholder="enter tags separated by comma"
-                                        />
-                                    </td>
-                                </tr>
+                            {displayOption2 ? (
+                                <Fragment>
+                                    <hr style={{background:'rgb(214,214,214)', margin:'10px 0 1rem 0', height:'1px'}} />
+                                    <div style={displayOption1 || displayOption3 || displayOption4 ? {display:'grid', gridTemplateColumns:'1fr 3fr auto'} : {display:'grid', gridTemplateColumns:'1fr 3fr'}}>
+                                        <div style={{paddingTop:'10px'}}>
+                                            <div style={{display:'flex', alignItems:'center', justifyContent:'flex-start'}}>
+                                                <div class={optionToggle2 ? "secondary-dropdown-el expanded" : "secondary-dropdown-el"}>
+                                                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%'}} onClick={() => setOptionToggle2(!optionToggle2)}>
+                                                        {varName.var2 === '' ? (
+                                                            <p>Pick an option</p>
+                                                        ) : (
+                                                            <p>{varName.var2}</p>
+                                                        )}
+                                                        <i class="fas fa-caret-down"></i>
+                                                    </div>
+                                                    {optionToggle2 ? (
+                                                        <Fragment>
+                                                            <div onClick={() => handleVarNameChange("var2", 'color')}><p>Color</p></div>
+                                                            <div onClick={() => handleVarNameChange("var2", 'size')}><p>Size</p></div>
+                                                            <div onClick={() => handleVarNameChange("var2", 'weight')}><p>Weight</p></div>
+                                                            <div onClick={() => handleVarNameChange("var2", 'type')}><p>Type</p></div>
+                                                            <div onClick={() => handleVarNameChange("var2", 'bundle')}><p>Bundle</p></div>
+                                                            <div onClick={() => handleVarNameChange("var2", 'scent')}><p>Scent</p></div>
+                                                            <div onClick={() => handleVarNameChange("var2", 'fit')}><p>Fit</p></div>
+                                                            <div onClick={() => handleVarNameChange("var2", 'flavor')}><p>Flavor</p></div>
+                                                            <div onClick={() => handleVarNameChange("var2", 'material')}><p>Material</p></div>
+                                                        </Fragment>
+                                                ) : null}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <Fragment>
+                                                <InputTag  
+                                                    onAddTag ={onAddTag2}
+                                                    onDeleteTag = {onDeleteTag2}
+                                                    defaultTags={varTags2}
+                                                    placeholder="enter tags separated by comma"
+                                                />
+                                            </Fragment>
+                                        </div>
+                                        {displayOption1 || displayOption3 || displayOption4 ? (
+                                            <div style={{minWidth:'30px', display:'flex', justifyContent:'center', alignItems:'flex-start'}}>
+                                                <i 
+                                                    onClick={removeDisplayOption2} 
+                                                    style={{color:'#ff4b2b', marginTop:'1rem'}} 
+                                                    class="fas fa-minus"
+                                                ></i>
+                                            </div>
+                                        ) : null}
+                                    </div>
+                                </Fragment>
+                            ): null}
+                            {displayOption3 ? (
+                                <Fragment>
+                                    <hr style={{background:'rgb(214,214,214)', margin:'10px 0 1rem 0', height:'1px'}} />
+                                    <div style={displayOption1 || displayOption2 || displayOption4 ? {display:'grid', gridTemplateColumns:'1fr 3fr auto'} : {display:'grid', gridTemplateColumns:'1fr 3fr'}}>
+                                        <div style={{paddingTop:'10px'}}>
+                                            <div style={{display:'flex', alignItems:'center', justifyContent:'flex-start'}}>
+                                                <div class={optionToggle3 ? "secondary-dropdown-el expanded" : "secondary-dropdown-el"}>
+                                                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%'}} onClick={() => setOptionToggle3(!optionToggle3)}>
+                                                        {varName.var3 === '' ? (
+                                                            <p>Pick an option</p>
+                                                        ) : (
+                                                            <p>{varName.var3}</p>
+                                                        )}
+                                                        <i class="fas fa-caret-down"></i>
+                                                    </div>
+                                                    {optionToggle3 ? (
+                                                        <Fragment>
+                                                            <div onClick={() => handleVarNameChange("var3", 'color')}><p>Color</p></div>
+                                                            <div onClick={() => handleVarNameChange("var3", 'size')}><p>Size</p></div>
+                                                            <div onClick={() => handleVarNameChange("var3", 'weight')}><p>Weight</p></div>
+                                                            <div onClick={() => handleVarNameChange("var3", 'type')}><p>Type</p></div>
+                                                            <div onClick={() => handleVarNameChange("var3", 'bundle')}><p>Bundle</p></div>
+                                                            <div onClick={() => handleVarNameChange("var3", 'scent')}><p>Scent</p></div>
+                                                            <div onClick={() => handleVarNameChange("var3", 'fit')}><p>Fit</p></div>
+                                                            <div onClick={() => handleVarNameChange("var3", 'flavor')}><p>Flavor</p></div>
+                                                            <div onClick={() => handleVarNameChange("var3", 'material')}><p>Material</p></div>
+                                                        </Fragment>
+                                                    ) : null}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <Fragment>
+                                                <InputTag  
+                                                    onAddTag ={onAddTag3}
+                                                    onDeleteTag = {onDeleteTag3}
+                                                    defaultTags={varTags3}
+                                                    placeholder="enter tags separated by comma"
+                                                />
+                                            </Fragment>
+                                        </div>
+                                        {displayOption1 || displayOption2 || displayOption4 ? (
+                                            <div style={{minWidth:'30px', display:'flex', justifyContent:'center', alignItems:'flex-start'}}>
+                                                <i 
+                                                    onClick={removeDisplayOption3} 
+                                                    style={{color:'#ff4b2b', marginTop:'1rem'}} 
+                                                    class="fas fa-minus"
+                                                ></i>
+                                            </div>
+                                        ) : null}
+                                    </div>
+                                </Fragment>
                             ) : null}
-                        </tbody>
-                    </table>
+                            {displayOption4 ? (
+                                <Fragment>
+                                    <hr style={{background:'rgb(214,214,214)', margin:'10px 0 1rem 0', height:'1px'}} />
+                                    <div style={displayOption1 || displayOption2 || displayOption3 ? {display:'grid', gridTemplateColumns:'1fr 3fr auto'} : {display:'grid', gridTemplateColumns:'1fr 3fr'}}>
+                                        <div style={{paddingTop:'10px'}}>
+                                            <div style={{display:'flex', alignItems:'center', justifyContent:'flex-start'}}>
+                                                <div class={optionToggle4 ? "secondary-dropdown-el expanded" : "secondary-dropdown-el"}>
+                                                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%'}} onClick={() => setOptionToggle4(!optionToggle4)}>
+                                                        {varName.var4 === '' ? (
+                                                            <p>Pick an option</p>
+                                                        ) : (
+                                                            <p>{varName.var4}</p>
+                                                        )}
+                                                        <i class="fas fa-caret-down"></i>
+                                                    </div>
+                                                    {optionToggle4 ? (
+                                                        <Fragment>
+                                                            <div onClick={() => handleVarNameChange("var4", 'color')}><p>Color</p></div>
+                                                            <div onClick={() => handleVarNameChange("var4", 'size')}><p>Size</p></div>
+                                                            <div onClick={() => handleVarNameChange("var4", 'weight')}><p>Weight</p></div>
+                                                            <div onClick={() => handleVarNameChange("var4", 'type')}><p>Type</p></div>
+                                                            <div onClick={() => handleVarNameChange("var4", 'bundle')}><p>Bundle</p></div>
+                                                            <div onClick={() => handleVarNameChange("var4", 'scent')}><p>Scent</p></div>
+                                                            <div onClick={() => handleVarNameChange("var4", 'fit')}><p>Fit</p></div>
+                                                            <div onClick={() => handleVarNameChange("var4", 'flavor')}><p>Flavor</p></div>
+                                                            <div onClick={() => handleVarNameChange("var4", 'material')}><p>Material</p></div>
+                                                        </Fragment>
+                                                    ) : null}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <Fragment>
+                                                <InputTag  
+                                                    onAddTag ={onAddTag4}
+                                                    onDeleteTag = {onDeleteTag4}
+                                                    defaultTags={varTags4}
+                                                    placeholder="enter tags separated by comma"
+                                                />
+                                            </Fragment>
+                                        </div>
+                                        {displayOption1 || displayOption2 || displayOption3 ? (
+                                            <div style={{minWidth:'30px', display:'flex', justifyContent:'center', alignItems:'flex-start'}}>
+                                                <i 
+                                                    onClick={removeDisplayOption4} 
+                                                    style={{color:'#ff4b2b', marginTop:'1rem'}} 
+                                                    class="fas fa-minus"
+                                                ></i>
+                                            </div>
+                                        ) : null}
+                                    </div>
+                                </Fragment>
+                            ) : null}
+                            {/* <button style={{background:'#e7e7e7', borderColor:'#e7e7e7', letterSpacing:'1px', color:'#808080'}} onClick={handleToggleOption}><i class="fas fa-plus"></i> Option</button> */}
 
-                    <div onClick={updateList} class="btn btn-primary my-3">Apply</div>
+                            <div onClick={handleToggleOption} style={{width:'100%', background:'#e7e7e7', letterSpacing:'1px', color:'#808080'}} class="btn btn-primary my-3"><i class="fas fa-plus"></i> Option</div>
+                        </div>
 
-                    {varInfo.length > 0 && (
-                        <Fragment>
-                            <table className="table">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Price</th>
-                                        <th>Sale Price</th>
-                                        <th>Qty</th>
-                                        <th>Sku</th>
-                                        <th />
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {display}
-                                </tbody>
-                            </table>
-                            <button type="submit" id="upload" class="btn btn-primary">Upload</button>
-                        </Fragment>
-                    )}
-                </form>
+                        <div style={{maxHeight:'470px'}} className={modalForm1 ? "modal-table-list-container active" : "modal-table-list-container"} id="transition-2">
+                            <div onClick={() => setModalForm1(false)} style={{display:'flex', color:'#ff4b2b', width:'100%', padding:'0 10px', fontSize:'0.8rem', justifyContent:'flex-start', alignItems:'center'}}>
+                                <i class="fas fa-long-arrow-alt-left"></i>
+                                <p style={{margin:'0 10px'}}>  Back</p>
+                            </div>
+                            {varInfo.length > 0 && (
+                                <div class="table-responsive table-filter">
+                                    <table className="table">
+                                        <div className="variant-thead">
+                                                <div></div>
+                                                <div>Price</div>
+                                                <div>Sale Price</div>
+                                                <div>Qty</div>
+                                                <div>Sku</div>
+                                                <div></div>
+                                        </div>
+                                        <div className="tbody">
+                                            {display}
+                                        </div>
+                                    </table>
+                                </div>
+                            )}
+                        </div>
+
+                    </div>
+                </div>
+                <div style={{width:'100%', height:'75px', display:'flex', justifyContent:'center', alignItems:'center', borderTop:'1px solid rgb(214, 214, 214)'}}>
+                    <div className="modal-table-list-transition">
+                        {/** Transition 1 */}
+                        <div  
+                            style={{width:'100%', display:'flex', justifyContent:'center'}}
+                            className={!modalForm1 ? " active" : ""} id="transition-1"
+                        >
+                            <button onClick={updateVarTodo} style={{width:'100%', background:'#0098d3', borderColor:'#0098d3'}}>Apply Options</button>
+                            {/* <button onClick={onSubmit} style={{width:'100%', background:'#0098d3', borderColor:'#0098d3'}}>Add Items (0)</button> */}
+                        </div>
+                        {/** Transition 2 */}
+                        <div  
+                            style={{width:'100%', display:'flex', justifyContent:'center'}}
+                            className={modalForm1 ? " active" : ""} id="transition-2"
+                        >
+                            <button onClick={(e) => handleVarCreate(e)} style={{width:'100%', background:'#0098d3', borderColor:'#0098d3'}}>Add Variants</button>
+                        </div>
+                    </div>
+                </div>
             </Modal>
         </Fragment>
     )

@@ -7,6 +7,7 @@ import {
     ADD_LOCATION,
     GET_LOCATION,
     GET_PRODUCT_LOCATIONS,
+    GET_VARIANT_LOCATIONS,
     CLEAR_LOCATIONS
   } from '../actions/types';
   
@@ -35,6 +36,14 @@ import {
           locations: tempLocations,
           loading: false
         };
+      case GET_VARIANT_LOCATIONS:
+          const newLocations = [...payload];
+  
+          return {
+            ...state,
+            locations: newLocations,
+            loading: false
+          };
       case GET_LOCATION:
         return {
           ...state,

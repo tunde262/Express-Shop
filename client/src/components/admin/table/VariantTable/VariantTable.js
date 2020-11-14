@@ -4,37 +4,62 @@ import axios from 'axios';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import Modal from 'react-responsive-modal';
-import { getProductVariants, deleteVariant } from '../../../actions/variantActions';
-import { getProductLocations } from '../../../actions/locationActions';
-import { handleMap } from '../../../actions/productActions';
-import Spinner from '../../common/Spinner';
+
+import { getProductVariants, deleteVariant } from '../../../../actions/variantActions';
+import { getProductLocations, getVariantLocations } from '../../../../actions/locationActions';
+import { handleMap } from '../../../../actions/productActions';
+
+import InputTag from '../../../common/InputTag/InputTag';
+import Spinner from '../../../common/Spinner';
 import 'react-responsive-modal/styles.css';
 
-import Map from '../../common/map/Map';
-
-// Imgs
-import BoxEmoji from '../../../utils/imgs/box.png'; 
-import ClosedLockEmoji from '../../../utils/imgs/closedlock.jpg'; 
-import OpenLockEmoji from '../../../utils/imgs/openlock.png'; 
-import CarEmoji from '../../../utils/imgs/car.jpg'; 
-import EyeballsEmoji from '../../../utils/imgs/eyeballs.png'; 
-import PencilEmoji from '../../../utils/imgs/pencil.png'; 
+import Map from '../../../common/map/Map';
+import Location from '../Location';
+import Variant from './Variant';
 
 
-const Variant = ({ setModal, getProductLocations, handleMap, product: {switchMaps, detailProduct}, location, page, prodId, variant: {loading, sortedVariants}, getProductVariants, deleteVariant }) => {
+const VariantTable = ({ 
+    setModal, 
+    getProductLocations, 
+    getVariantLocations, 
+    handleMap, 
+    product: {
+        switchMaps, 
+        detailProduct
+    }, 
+    location, 
+    page, 
+    prodId, 
+    variant: {
+        loading, 
+        sortedVariants
+    }, 
+    getProductVariants, 
+    deleteVariant ,
+    onAddTag,
+    onDeleteTag,
+    varTags,
+    onChangePrice,
+    onChangeSalePrice,
+    onChangeSku,
+    onChangeQty
+}) => {
     const [variantList, setVariantList] = useState([]);
     const [gotVariants, setGotVariants] = useState(false);
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
+    const [modalForm1, setModalForm1] = useState(false);
+
     useEffect(() => {
         window.addEventListener('resize', () => handleWindowSizeChange());
 
         renderVariantList();
-        if(switchMaps) {
-            getProductLocations(detailProduct._id);
-        }
+        // if(switchMaps) {
+        //     getProductLocations(detailProduct._id);
+        // }
         
         return () => window.removeEventListener('resize', () => handleWindowSizeChange());
     }, [switchMaps, sortedVariants]);
@@ -46,9 +71,10 @@ const Variant = ({ setModal, getProductLocations, handleMap, product: {switchMap
         setWindowWidth(window.innerWidth);
     };
     
-      const handleToggle = () => {
+      const handleToggle = (varId) => {
         toggleMapModal(!displayMapModal)
         handleMap();
+        getVariantLocations(varId);
       }
 
       const handleClose = () => {
@@ -114,43 +140,16 @@ const Variant = ({ setModal, getProductLocations, handleMap, product: {switchMap
                     if (variant) {
                         const res = await axios.get(`/api/products/${variant.product}`);
                         setVariantList(variantList => [...variantList, (
-                            <div className={isTablet ? "variant-table-row-mobile" : "variant-table-row"} key={variant._id}>
-                                {isTablet ? (
-                                    <Fragment>
-                                        <div>{res.data.img_gallery[0] && <img style={{width: '50px'}} src={`/api/products/image/${res.data.img_gallery[0].img_name}`} alt="img" />}</div>
-                                        <div>
-                                            {variant.color && (<span>{variant.color} </span>)}
-                                            {variant.size && (<span>{variant.size} </span>)}
-                                            {variant.weight && (<span>{variant.weight} </span>)}
-                                            {variant.bundle && (<span>{variant.bundle} </span>)}
-                                            {variant.type && (<span>{variant.type} </span>)}
-                                            {variant.scent && (<span>{variant.scent} </span>)}
-                                            {variant.fit && (<span>{variant.fit} </span>)}
-                                            {variant.flavor && (<span>{variant.flavor} </span>)}
-                                            {variant.material && (<span>{variant.material} </span>)}
-                                        </div>
-                                    </Fragment>
-                                ) : (
-                                    <Fragment>
-                                        <div>{res.data.img_gallery[0] && <img style={{width: '50px'}} src={`/api/products/image/${res.data.img_gallery[0].img_name}`} alt="img" />}</div>
-                                        <div>
-                                            {variant.color && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.color} </p></div>)}
-                                            {variant.size && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.size} </p></div>)}
-                                            {variant.weight && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.weight} </p></div>)}
-                                            {variant.bundle && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.bundle} </p></div>)}
-                                            {variant.type && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.type} </p></div>)}
-                                            {variant.scent && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.scent} </p></div>)}
-                                            {variant.fit && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.fit} </p></div>)}
-                                            {variant.flavor && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.flavor} </p></div>)}
-                                            {variant.material && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.material} </p></div>)}
-                                        </div>
-                                        <div>$5</div>
-                                        <div>5</div>
-                                        <div>6</div>
-                                        <div style={{width:'50px', color:'#ff4b2b'}}><i onClick={() => deleteVariant(variant._id)} className="fas fa-pen"></i></div>
-                                    </Fragment>
-                                ) }
-                            </div>
+                            <Variant 
+                                variant={variant} 
+                                handleToggle={handleToggle} 
+                                variantItem={res.data} 
+                                deleteVariant={deleteVariant} 
+                                onChangePrice={onChangePrice}
+                                onChangeSalePrice={onChangeSalePrice}
+                                onChangeSku={onChangeSku}
+                                onChangeQty={onChangeQty} 
+                            />
                         )])
                     }
                 });
@@ -165,50 +164,6 @@ const Variant = ({ setModal, getProductLocations, handleMap, product: {switchMap
             console.log(err);
         }
     }
-     
-
-    // let variantList;
-    // if(variants === null || loading) {
-    //     variantList = <Spinner />; 
-    // } else {
-    //     if(variants.length > 0) {
-    //         variantList = variants.map(variant => {
-                // let variantList;
-                // if(variant.color) variantList = `${variant.color}`;
-                // if(variant.size) variantList = `${variant.color} / ${variant.size}`;
-                // if(variant.weight) variantList = `${variant.color} / ${variant.size} / ${variant.weight}`;
-                // if(variant.type) variantList = `${variant.color} / ${variant.size} / ${variant.weight} / ${variant.type}`;
-                // if(variant.bundle) variantList = `${variant.color} / ${variant.size} / ${variant.weight} / ${variant.type} / ${variant.bundle}`;
-                // if(variant.scent) variantList = `${variant.color} / ${variant.size} / ${variant.weight} / ${variant.type} / ${variant.bundle} / ${variant.scent}`;
-                // if(variant.fit) variantList = `${variant.color} / ${variant.size} / ${variant.weight} / ${variant.type} / ${variant.bundle} / ${variant.scent} / ${variant.fit}`;
-                // if(variant.flavor) variantList = `${variant.color} / ${variant.size} / ${variant.weight} / ${variant.type} / ${variant.bundle} / ${variant.scent} / ${variant.fit} / ${variant.flavor}`;
-                // if(variant.material) variantList = `${variant.color} / ${variant.size} / ${variant.weight} / ${variant.type} / ${variant.bundle} / ${variant.scent} / ${variant.fit} / ${variant.flavor} / ${variant.material}`;
-
-    //             return (
-    //                 <tr key={variant._id} onClick={handleToggle}>
-    //                     <td><img style={{width: '50px'}} src={`/api/variants/image/${variant.img_name}`} alt="img" /></td>
-    //                     <td>
-    //                         {variant.color && (<span>{variant.color} </span>)}
-    //                         {variant.size && (<span>{variant.size} </span>)}
-    //                         {variant.weight && (<span>{variant.weight} </span>)}
-    //                         {variant.bundle && (<span>{variant.bundle} </span>)}
-    //                         {variant.type && (<span>{variant.type} </span>)}
-    //                         {variant.scent && (<span>{variant.scent} </span>)}
-    //                         {variant.fit && (<span>{variant.fit} </span>)}
-    //                         {variant.flavor && (<span>{variant.flavor} </span>)}
-    //                         {variant.material && (<span>{variant.material} </span>)}
-    //                     </td>
-    //                     <td>{variant.inventory_qty}</td>
-    //                     <td>{variant.price}</td>
-    //                     <td>{variant.sale_price}</td>
-    //                     <td><i onClick={() => deleteVariant(variant._id)} className="fas fa-trash"></i></td>
-    //                 </tr>
-    //             )
-    //         });
-    //     } else {
-    //         variantList = <h3>No Items</h3>
-    //     }
-    // }
 
     if(!gotVariants) {
         getProductVariants(prodId);
@@ -232,6 +187,21 @@ const Variant = ({ setModal, getProductLocations, handleMap, product: {switchMap
           overflow: "hidden"
         }
     }
+
+    const bg2 = {
+        modal: {
+            boxShadow: "none",
+            borderRadius: "15px",
+            border: "1px solid rgb(214, 214, 214)",
+            padding: "0"
+        },
+        closeButton: {
+            display: "none"
+        },
+        overlay: {
+          background: "rgba(255,255,255,0.5)"
+        }
+    };
 
     return (
         <Fragment>
@@ -265,7 +235,7 @@ const Variant = ({ setModal, getProductLocations, handleMap, product: {switchMap
             {/* <Modal open={modalShow} onClose={() => setModal(false)}>
                 <ItemForm />
             </Modal> */}
-            <Modal styles={modalStyles} open={displayMapModal} onClose={handleClose} center>
+            {/* <Modal styles={modalStyles} open={displayMapModal} onClose={handleClose} center>
                 <div className="modal-content-wrapper">
                     <div className="modal-header container-fluid">
                         <div style={{display: 'flex', height:'auto', marginBottom:'10px', alignItems:'center'}}>
@@ -306,7 +276,7 @@ const Variant = ({ setModal, getProductLocations, handleMap, product: {switchMap
                                         markerLat={location.locations[0].location.coordinates[0]}
                                         markerLng={location.locations[0].location.coordinates[1]}
                                     />
-                                ) : null}
+                                ) : null} 
                             </div>
                         </div>
                         <div class="modal-content-secondary">
@@ -323,18 +293,66 @@ const Variant = ({ setModal, getProductLocations, handleMap, product: {switchMap
                         </div>
                     </div>
                     <div className="modal-actions" style={{display:'flex', width:'100%', justifyContent:'flex-end', alignItems:'center'}}>
-                        {/* Action Buttons */}
+                        
                     </div>
+                </div> 
+            </Modal> */}
+
+            <Modal open={displayMapModal} onClose={handleClose} center styles={bg2}>
+                <div className="itemUploadContainer">
+                    <div style={{width:'100%', minHeight:'40px', display:'flex', justifyContent:'center', alignItems:'center', height:'40px'}}>
+                        <p style={{margin:'0', color:'#0098d3'}}>Variant Details</p>
+                    </div>
+                    <div className="modal-table-list-transition">
+                        {/** Transition 1 */}
+                        <div  
+                            className={!modalForm1 ? "modal-table-top-container active" : "modal-table-top-container"} id="transition-1"
+                        >
+                            <InputTag
+                                onAddTag ={onAddTag}
+                                onDeleteTag = {onDeleteTag}
+                                defaultTags={varTags}  
+                                placeholder="Search products (seperate by comma)"
+                            />
+                        </div>
+                        <div  
+                            className={modalForm1 ? "modal-table-top-container active" : "modal-table-top-container"} id="transition-2"
+                        >
+                            <div onClick={() => setModalForm1(false)} style={{display:'flex', color:'#ff4b2b', width:'100%', padding:'0 10px', fontSize:'0.8rem', justifyContent:'flex-start', alignItems:'center'}}>
+                                <i class="fas fa-long-arrow-alt-left"></i>
+                                <p style={{margin:'0 10px'}}>  Back</p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <div className="modal-table-list-transition">
+                        {/** Transition 1 */}
+                        <div className={!modalForm1 ? "modal-table-list-container active" : "modal-table-list-container"} id="transition-1">
+                            <div class="table-responsive table-filter">
+                                <Location page="variant" inventoryNav="locations" />
+                            </div>
+                            {/* <ShortTable handleClick={handleItemClick} setVarModal={setVarModal} itemList={itemList} setModalForm1={setModalForm1} modalForm1={modalForm1} slide /> */}
+                        </div>
+                        <div className={modalForm1 ? "modal-table-list-container active" : "modal-table-list-container"} id="transition-2">
+                            {/* <ShortVarTable handleClick={handleItemClick} itemList={itemList} /> */}
+                            {/* <VarLocationTable setModalForm1={setModalForm1} modalForm1={modalForm1} slide /> */}
+                        </div>
+                    </div>
+                </div>
+                <div style={{width:'100%', height:'75px', display:'flex', justifyContent:'center', alignItems:'center', borderTop:'1px solid rgb(214, 214, 214)'}}>
+                    <button style={{width:'100%', background:'#0098d3', borderColor:'#0098d3'}}>Add Items (0)</button>
                 </div>
             </Modal>
         </Fragment>
     )
 }
 
-Variant.propTypes = {
+VariantTable.propTypes = {
     variant: PropTypes.object.isRequired,
     deleteVariant: PropTypes.func.isRequired,
     getProductVariants: PropTypes.func.isRequired,
+    getVariantLocations: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired,
     product: PropTypes.object.isRequired,
     getProductLocations: PropTypes.func.isRequired,
@@ -348,4 +366,4 @@ const mapStateToProps = state => ({
     location: state.location
 });
 
-export default connect(mapStateToProps, { getProductVariants, getProductLocations, handleMap, deleteVariant })(Variant);
+export default connect(mapStateToProps, { getProductVariants, getProductLocations, getVariantLocations, handleMap, deleteVariant })(VariantTable);

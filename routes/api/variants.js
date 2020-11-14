@@ -126,7 +126,7 @@ router.get('/:id', async (req, res) => {
     try {
         console.log('PARAMS ID')
         console.log(req.params.id)
-        const variant = Variant.findById(req.params.id);
+        const variant = await Variant.findById(req.params.id);
         console.log(variant)
 
         if(!variant) {

@@ -9,7 +9,7 @@ import mixpanel from 'mixpanel-browser';
 import { addToProducts } from '../../../../../actions/productActions';
 
 import Map from '../../../../common/map/Map';
-import Variant from '../../../table/Variant';
+import Variant from '../../../table/VariantTable/Variant';
 import TableDetails from '../../../../TableDetails/TableDetails';
 import Item from '../../../table/Item';
 import Spinner from '../../../../common/Spinner';
