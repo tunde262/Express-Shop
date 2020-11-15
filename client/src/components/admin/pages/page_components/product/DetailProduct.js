@@ -82,10 +82,6 @@ const DetailProduct = ({
     updateList,
     varInfo,
     setVarInfo,
-    onChangePrice,
-    onChangeSalePrice,
-    onChangeQty,
-    onChangeSku,
     display,
     formData,
     setFormData,
@@ -560,10 +556,7 @@ const DetailProduct = ({
                             onAddTag={onAddTag}
                             onDeleteTag={onDeleteTag}
                             varTags={varTags}
-                            onChangePrice={onChangePrice}
-                            onChangeSalePrice={onChangeSalePrice}
-                            onChangeSku={onChangeSku}
-                            onChangeQty={onChangeQty} 
+                            onChange={onChange}
                         />
                     </div>
                 </div>
@@ -597,10 +590,7 @@ const DetailProduct = ({
                         onAddTag={onAddTag}
                         onDeleteTag={onDeleteTag}
                         varTags={varTags}
-                        onChangePrice={onChangePrice}
-                        onChangeSalePrice={onChangeSalePrice}
-                        onChangeSku={onChangeSku}
-                        onChangeQty={onChangeQty}
+                        onChange={onChange}
                     />
                 </div>
             </div>

@@ -10,10 +10,10 @@ import { getCustomersByStoreId } from '../../../actions/customerActions';
 
 import mixpanel from 'mixpanel-browser';
 
-import Item from './Item';
+import ItemTable from './ItemTable/ItemTable';
 import Order from './Order';
 import Collection from './Collection';
-import Location from './Location';
+import LocationTable from './LocationTable/LocationTable';
 import Inventory from './Inventory.js';
 import Customer from './Customer';
 import Navbar from '../../Overview/categoryOverview/CategoryOverview';
@@ -108,14 +108,14 @@ const Table = ({
         
         tableContent = (
             <Fragment>
-                <Item page={page} product={product} />
+                <ItemTable page={page} product={product} />
             </Fragment>
         ) 
     } else if (inventoryNav === 'collections') {
         console.log(collection);
         tableContent = <Collection collection={collection} /> 
     } else if (inventoryNav === 'locations') {
-        tableContent = <Location page={page} /> 
+        tableContent = <LocationTable page={page} /> 
     } else if (inventoryNav === 'inventory') {
         tableContent = (
             <Fragment>

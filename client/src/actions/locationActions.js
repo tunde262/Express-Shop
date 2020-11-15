@@ -70,17 +70,35 @@ export const getProductLocations = (id) => async dispatch => {
     const productData = await axios.get(`/api/products/${id}`);
     const variantListData = await axios.get(`/api/variants/product/${productData.data._id}`);
 
+    console.log('GOT VARIANTS');
+    console.log(variantListData.data.data);
+
     const variants = variantListData.data;
-    variants.map(async variant => {
-      for(var i = 0; i < variant.locations.length; i++) {
-        console.log('Location ID');
-        console.log(variant.locations[i].location);
-        darkstore = await axios.get(`/api/darkstores/${variant.locations[i].location}`);
-        console.log('NEW DARKSTORE');
-        console.log(darkstore.data);
-        if(locationArray.length > 0) {
-          if(locationArray.filter(location => location._id.toString() === darkstore.data._id).length > 0) {
-            return;
+    if(variants.length > 0) {
+      variants.map(async variant => {
+        for(var i = 0; i < variant.locations.length; i++) {
+          console.log('Location ID');
+          console.log(variant.locations[i].location);
+          darkstore = await axios.get(`/api/darkstores/${variant.locations[i].location}`);
+          console.log('NEW DARKSTORE');
+          console.log(darkstore.data);
+          if(locationArray.length > 0) {
+            if(locationArray.filter(location => location._id.toString() === darkstore.data._id).length > 0) {
+              return;
+            } else {
+              locationArray.push({
+                _id: darkstore.data._id,
+                location: darkstore.data.location,
+                address_components: darkstore.data.address_components,
+                name: darkstore.data.name,
+                placeId: darkstore.data.placeId,
+                formatted_address: darkstore.data.formatted_address,
+                phone: darkstore.data.phone,
+                qty: variant.locations[i].qty,
+                price: variant.locations[i].price,
+                sale_price: variant.locations[i].sale_price
+              });
+            }
           } else {
             locationArray.push({
               _id: darkstore.data._id,
@@ -95,37 +113,29 @@ export const getProductLocations = (id) => async dispatch => {
               sale_price: variant.locations[i].sale_price
             });
           }
-        } else {
-          locationArray.push({
-            _id: darkstore.data._id,
-            location: darkstore.data.location,
-            address_components: darkstore.data.address_components,
-            name: darkstore.data.name,
-            placeId: darkstore.data.placeId,
-            formatted_address: darkstore.data.formatted_address,
-            phone: darkstore.data.phone,
-            qty: variant.locations[i].qty,
-            price: variant.locations[i].price,
-            sale_price: variant.locations[i].sale_price
-          });
+          
+          console.log('LOCATIONS ARRAY');
+          console.log(locationArray);
         }
+        console.log('EXIT FOR LOOP')
+        console.log(locationArray)
+  
+        dispatch({
+          type: GET_LOCATIONS,
+          payload: locationArray
+        });
         
-        console.log('LOCATIONS ARRAY');
-        console.log(locationArray);
-      }
-      console.log('EXIT FOR LOOP')
-      console.log(locationArray)
-
+      })
+    } else {
       dispatch({
-        type: GET_PRODUCT_LOCATIONS,
-        payload: locationArray
-      });
-      
-    })
+        type: GET_LOCATIONS,
+        payload: []
+      })
+    }
   } catch (err) {
     dispatch({
       type: GET_LOCATIONS,
-      payload: {}
+      payload: []
     })
   }
 };
@@ -183,7 +193,7 @@ export const getVariantLocations = (id) => async dispatch => {
     console.log(locationArray)
 
     dispatch({
-      type: GET_VARIANT_LOCATIONS,
+      type: GET_LOCATIONS,
       payload: locationArray
     });
   } catch (err) {

@@ -11,10 +11,7 @@ const Variant = ({
     handleToggle,
     variantItem,
     variant,
-    onChangePrice,
-    onChangeSalePrice,
-    onChangeSku,
-    onChangeQty
+    onChange,
 }) => {
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -70,7 +67,6 @@ const Variant = ({
             {/** Transition 1 */}
             <div  
                 className={rowClassName1} 
-                key={variant._id}
                 id="transition-1"
             >
                 {isTablet ? (
@@ -221,7 +217,7 @@ const Variant = ({
                     placeholder="price"
                     name="price"
                     value={variant.price}
-                    onChange={e => onChangePrice(e)}
+                    onChange={e => onChange(e)}
                     style={{margin:'0', width:'100%', outline:'none', padding:'0 10px', height:'50px', background:'#fff', fontSize:'14px', border:'2px dashed #cecece', borderRadius:'5px'}}
                     />
                 </div>
@@ -231,7 +227,7 @@ const Variant = ({
                     placeholder="sale price"
                     name="sale_price"
                     value={variant.sale_price}
-                    onChange={e => onChangeSalePrice(e)}
+                    onChange={e => onChange(e)}
                     style={{margin:'0', width:'100%', outline:'none', padding:'0 10px', height:'50px', background:'#fff', fontSize:'14px', border:'2px dashed #cecece', borderRadius:'5px'}}
                     />
                 </div>
@@ -241,7 +237,7 @@ const Variant = ({
                     placeholder="qty"
                     name="inventory_qty"
                     value={variant.inventory_qty}
-                    onChange={e => onChangeQty(e)}
+                    onChange={e => onChange(e)}
                     style={{margin:'0', width:'100%', outline:'none', padding:'0 10px', height:'50px', background:'#fff', fontSize:'14px', border:'2px dashed #cecece', borderRadius:'5px'}}
                     />
                 </div>
@@ -251,7 +247,7 @@ const Variant = ({
                     placeholder="sku"
                     name="sku"
                     value={variant.sku}
-                    onChange={e => onChangeSku(e)}
+                    onChange={e => onChange(e)}
                     style={{margin:'0', width:'100%', outline:'none', padding:'0 10px', height:'50px', background:'#fff', fontSize:'14px', border:'2px dashed #cecece', borderRadius:'5px'}}
                     />
                 </div>

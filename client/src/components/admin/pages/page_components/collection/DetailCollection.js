@@ -11,7 +11,7 @@ import { getProductsInCollection } from '../../../../../actions/productActions';
 import Map from '../../../../common/map/Map';
 import Variant from '../../../table/VariantTable/Variant';
 import TableDetails from '../../../../TableDetails/TableDetails';
-import Item from '../../../table/Item';
+import ItemTable from '../../../table/ItemTable/ItemTable';
 import Spinner from '../../../../common/Spinner';
 import InputTag from '../../../../common/InputTag/InputTag';
 
@@ -296,7 +296,7 @@ const DetailCollection = ({
 
             <div class="content-box">
                 <div class="table-responsive table-filter">
-                    <Item page="collection" product={product} setModal={setModal} />
+                    <ItemTable page="detail" product={product} setModal={setModal} />
                 </div>
             </div>
         </Fragment>
@@ -333,7 +333,7 @@ const DetailCollection = ({
                         </div>
                     </div>
                     <div class="table-responsive table-filter">
-                        <Item page="collection" product={product} />
+                        <ItemTable page="collection" product={product} />
                     </div>
                 </div>
             </div>

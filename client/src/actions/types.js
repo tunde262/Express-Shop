@@ -72,6 +72,7 @@ export const SET_MODAL_VARIANTS = 'SET_MODAL_VARIANTS';
 export const HANDLE_VAR_TAGS = 'HANDLE_VAR_TAGS';
 export const REMOVE_VAR_TAGS = 'REMOVE_VAR_TAGS';
 export const ADD_TO_VARIANTS = 'ADD_TO_VARIANTS';
+export const VARIANTS_LOADING = 'VARIANTS_LOADING';
  
 
 // Orders

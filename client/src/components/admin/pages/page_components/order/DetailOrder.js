@@ -11,7 +11,7 @@ import { addToProducts } from '../../../../../actions/productActions';
 import Map from '../../../../common/map/Map';
 import Variant from '../../../table/VariantTable/Variant';
 import TableDetails from '../../../../TableDetails/TableDetails';
-import Item from '../../../table/Item';
+import ItemTable from '../../../table/ItemTable/ItemTable';
 import Spinner from '../../../../common/Spinner';
 
 // Imgs
@@ -221,7 +221,7 @@ const DetailOrder = ({ setModal, order, store, setTable, storageLocation }) => {
                     <div class="content-box">
                         <h3>Hello</h3>
                         {/* <div class="table-responsive table-filter">
-                            <Item setModal={setModal} page="collection" product={{sortedProducts: [...product.products], loading: false}} />
+                            <ItemTable setModal={setModal} page="collection" product={{sortedProducts: [...product.products], loading: false}} />
                         </div> */}
                     </div>
                 </Fragment>

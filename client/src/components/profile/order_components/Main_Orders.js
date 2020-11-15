@@ -9,7 +9,7 @@ import OrderList from '../../admin/OrderList';
 import { BackButton } from '../../common/BackButton';
 import BrandOverview from '../../Overview/brandOverview/BrandOverview';
 
-const Main_Orders = ({deleteAccount, setTableShow2, store, auth: { user }, profile: {profile, loading }}) => {
+const Main_Orders = ({deleteAccount, setTableShow2, store, auth: { user, loading }}) => {
 
     const [sentMixpanel, setSentMixpanel] = useState(false);
 
@@ -63,9 +63,9 @@ const Main_Orders = ({deleteAccount, setTableShow2, store, auth: { user }, profi
                     </div>
                 </div>
 
-                {loading && profile === null ? <Spinner /> : (
+                {loading ? <Spinner /> : (
                     <Fragment>
-                        {profile !== null ? (
+                        {user !== null ? (
                             <div id="profile-content-wrapper">
                                 <div class="store-main">
                                     {orderList}

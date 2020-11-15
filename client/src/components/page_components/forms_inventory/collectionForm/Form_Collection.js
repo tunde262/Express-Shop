@@ -11,7 +11,7 @@ import { getProductsInCollection } from '../../../../actions/productActions';
 import TextEditor from '../../../common/TextEditor';
 import DragAndDrop from '../../../admin/forms/utils/DragAndDrop';
 import InputTag from '../../../common/InputTag/InputTag';
-import Item from '../../../admin/table/Item';
+import ItemTable from '../../../admin/table/ItemTable/ItemTable';
 
 
 const Form_Collection = ({
@@ -153,7 +153,7 @@ const Form_Collection = ({
 
             <div class="content-box">
                 <div class="table-responsive table-filter">
-                    <Item page="collection-form"  product={product} />
+                    <ItemTable page="collection-form"  product={product} />
                 </div>
             </div>
             {/* <div className="product-admin-main-container">

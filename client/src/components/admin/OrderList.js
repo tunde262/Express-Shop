@@ -17,7 +17,7 @@ const OrderList = ({order, admin, getCustomerOrders, getOrders, profile, auth: {
         if(profile) {
             getCustomerOrders(user._id);
         }
-    },[])
+    },[user])
 
     const { orders, loading } = order;
         

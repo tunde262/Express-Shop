@@ -15,7 +15,8 @@ import {
     HANDLE_VAR_TAGS,
     REMOVE_VAR_TAGS,
     ADD_TO_VARIANTS,
-    HANDLE_DETAIL
+    HANDLE_DETAIL,
+    VARIANTS_LOADING
 } from './types';
 
 // Get variants
@@ -106,6 +107,7 @@ export const getVariantsByCategory = id => async dispatch => {
   
 // Get variants by id
 export const getVariantById = id => async dispatch => {
+    dispatch(setVariantsLoading());
     try {
         const res = await axios.get(`/api/variants/${id}`);
   
@@ -328,3 +330,10 @@ export const deleteComment = (variantId, commentId) => async dispatch => {
       });
     }
 };
+
+// Variants loading
+export const setVariantsLoading = () => {
+  return {
+      type: VARIANTS_LOADING
+  }
+}

@@ -17,7 +17,7 @@ import { getOrderById } from '../../../actions/orderActions';
 import Spinner from '../../common/Spinner';
 import Modal from 'react-responsive-modal';
 import InputTag from '../../common/InputTag/InputTag';
-import Item from '../table/Item';
+import ItemTable from '../table/ItemTable/ItemTable';
 import ShortTable from '../table/ShortTable/ShortTable';
 import VarLocationTable from '../table/VarLocationTable/VarLocationTable';
 import ShortVarTable from '../table/ShortVarTable/ShortVarTable';
@@ -1195,10 +1195,6 @@ const ProductPage = ({
                     updateList={updateList}
                     varInfo={varInfo}
                     setVarInfo={setVarInfo}
-                    onChangePrice={onChangePrice}
-                    onChangeSalePrice={onChangeSalePrice}
-                    onChangeSku={onChangeSku}
-                    onChangeQty={onChangeQty}
                     display={display}
                     displayOption1={displayOption1}
                     displayOption2={displayOption2}
@@ -1674,10 +1670,21 @@ const ProductPage = ({
                     <div className="modal-table-list-transition">
                         {/** Transition 1 */}
                         <div className={!modalForm1 ? "modal-table-list-container active" : "modal-table-list-container"} id="transition-1">
-                            <ShortTable handleClick={handleItemClick} setVarModal={setVarModal} itemList={itemList} setModalForm1={setModalForm1} modalForm1={modalForm1} slide />
+                            <ShortTable 
+                                handleClick={handleItemClick} 
+                                setVarModal={setVarModal} 
+                                itemList={itemList} 
+                                setModalForm1={setModalForm1} 
+                                modalForm1={modalForm1} 
+                                slide 
+                            />
                         </div>
                         <div className={modalForm1 ? "modal-table-list-container active" : "modal-table-list-container"} id="transition-2">
-                            <ShortVarTable handleClick={handleItemClick} itemList={itemList} />
+                            <ShortVarTable 
+                                handleClick={handleItemClick} 
+                                itemList={itemList} 
+                                onChange={onChange}
+                            />
                             {/* <VarLocationTable setModalForm1={setModalForm1} modalForm1={modalForm1} slide /> */}
                         </div>
                     </div>

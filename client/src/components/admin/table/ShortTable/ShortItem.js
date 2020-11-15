@@ -24,7 +24,8 @@ const ShortItem = ({ detailItem, product: { selectedItems }, handleClick, setMod
         <div 
             key={detailItem._id}  
             className="inventory-table-row-mobile"
-            style={selected ? {background: 'rgb(247,247,247)'} : {background: 'rgb(0,0,0,0)'}} onClick={slide ? () => setVarModal(detailItem._id) : itemClick}
+            style={selected ? {background: 'rgb(247,247,247)'} : {background: 'rgb(0,0,0,0)'}} 
+            onClick={slide ? () => setVarModal(detailItem._id) : itemClick}
         >
             {/* <td>
                 <input checked={selected} class="edit_info" type="checkbox" style={{width:'15px'}}/>

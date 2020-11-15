@@ -8,7 +8,13 @@ import 'react-responsive-modal/styles.css';
 import ShortVariant from './ShortVariant';
 
 
-const ShortVarTable = ({ variant: {loading, modalVariants}, handleVarClick, itemList, slide }) => {  
+const ShortVarTable = ({ 
+    variant: {loading, modalVariants}, 
+    handleVarClick, 
+    itemList, 
+    slide,
+    onChange,
+}) => {  
 
     let variantList;
     if(modalVariants === null || loading) {
@@ -16,7 +22,14 @@ const ShortVarTable = ({ variant: {loading, modalVariants}, handleVarClick, item
     } else {
         if(modalVariants.length > 0) {
             
-            variantList = modalVariants.map(detailVariant => <ShortVariant detailVariant={detailVariant} handleVarClick={handleVarClick} itemList={itemList} slide={slide} />);
+            variantList = modalVariants.map(detailVariant => (
+                <ShortVariant 
+                    detailVariant={detailVariant} 
+                    handleVarClick={handleVarClick} 
+                    itemList={itemList} 
+                    slide={slide} 
+                    onChange={onChange}
+                />));
         } else {
             variantList = <h3>No Items</h3>
         }

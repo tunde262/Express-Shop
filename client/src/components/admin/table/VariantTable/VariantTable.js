@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 import Modal from 'react-responsive-modal';
 
-import { getProductVariants, deleteVariant } from '../../../../actions/variantActions';
+import { getProductVariants, getVariantById, deleteVariant } from '../../../../actions/variantActions';
 import { getProductLocations, getVariantLocations } from '../../../../actions/locationActions';
 import { handleMap } from '../../../../actions/productActions';
 
@@ -16,7 +16,7 @@ import Spinner from '../../../common/Spinner';
 import 'react-responsive-modal/styles.css';
 
 import Map from '../../../common/map/Map';
-import Location from '../Location';
+import LocationTable from '../LocationTable/LocationTable';
 import Variant from './Variant';
 
 
@@ -37,14 +37,12 @@ const VariantTable = ({
         sortedVariants
     }, 
     getProductVariants, 
+    getVariantById,
     deleteVariant ,
     onAddTag,
     onDeleteTag,
     varTags,
-    onChangePrice,
-    onChangeSalePrice,
-    onChangeSku,
-    onChangeQty
+    onChange,
 }) => {
     const [variantList, setVariantList] = useState([]);
     const [gotVariants, setGotVariants] = useState(false);
@@ -74,7 +72,8 @@ const VariantTable = ({
       const handleToggle = (varId) => {
         toggleMapModal(!displayMapModal)
         handleMap();
-        getVariantLocations(varId);
+        getVariantById(varId);
+        // getVariantLocations(varId);
       }
 
       const handleClose = () => {
@@ -145,10 +144,7 @@ const VariantTable = ({
                                 handleToggle={handleToggle} 
                                 variantItem={res.data} 
                                 deleteVariant={deleteVariant} 
-                                onChangePrice={onChangePrice}
-                                onChangeSalePrice={onChangeSalePrice}
-                                onChangeSku={onChangeSku}
-                                onChangeQty={onChangeQty} 
+                                onChange={onChange}
                             />
                         )])
                     }
@@ -330,7 +326,11 @@ const VariantTable = ({
                         {/** Transition 1 */}
                         <div className={!modalForm1 ? "modal-table-list-container active" : "modal-table-list-container"} id="transition-1">
                             <div class="table-responsive table-filter">
-                                <Location page="variant" inventoryNav="locations" />
+                                <LocationTable 
+                                    page="variant" 
+                                    inventoryNav="locations" 
+                                    onChange={onChange}
+                                />
                             </div>
                             {/* <ShortTable handleClick={handleItemClick} setVarModal={setVarModal} itemList={itemList} setModalForm1={setModalForm1} modalForm1={modalForm1} slide /> */}
                         </div>
@@ -352,6 +352,7 @@ VariantTable.propTypes = {
     variant: PropTypes.object.isRequired,
     deleteVariant: PropTypes.func.isRequired,
     getProductVariants: PropTypes.func.isRequired,
+    getVariantById: PropTypes.func.isRequired,
     getVariantLocations: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired,
     product: PropTypes.object.isRequired,
@@ -366,4 +367,4 @@ const mapStateToProps = state => ({
     location: state.location
 });
 
-export default connect(mapStateToProps, { getProductVariants, getProductLocations, getVariantLocations, handleMap, deleteVariant })(VariantTable);
+export default connect(mapStateToProps, { getProductVariants, getVariantById, getProductLocations, getVariantLocations, handleMap, deleteVariant })(VariantTable);

@@ -595,6 +595,13 @@ export const handleDetail = (id) => dispatch => {
         );
 }
 
+export const setDetailProduct = (detailProduct) => {
+    return {
+        type: HANDLE_DETAIL,
+        payload: detailProduct
+    }
+}
+
 // filter the products show
 export const categoryProducts = (category) => dispatch => {
     dispatch(setProductsLoading());
