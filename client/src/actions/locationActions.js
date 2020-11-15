@@ -390,6 +390,8 @@ export const addLocation = (formData, storeId, history) => async dispatch => {
               'Content-Type': 'application/json'
             }
           };
+          console.log('FRONTEND FORM DATA');
+          console.log(formData);
       const res = await axios.post(`/api/darkstores/add/${storeId}`, formData, config);
 
       // const storeVariants = await axios.get('/api/variants/store');

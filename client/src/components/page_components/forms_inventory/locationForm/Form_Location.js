@@ -467,7 +467,6 @@ const Form_Location = ({
                 type="text"
                 name="phone"
                 className="input_line"
-                className="input_line"
                 placeholder="Enter address . . ."
                 autocomplete="no"
                 style={{margin:'0', width:'100%', outline:'none', padding:'0 10px', height:'50px', background:'#fff', fontSize:'14px', borderBottom:'2px dashed #cecece', borderRadius:'5px'}}
@@ -522,13 +521,11 @@ const Form_Location = ({
     
     return (
         <Fragment>
-            <div className="item-form-wrapper">
-                <div class="product-admin-main">
-                    {mainContent}
-                </div>
-                <div class="product-admin-secondary">
-                    {secondaryContent}
-                </div>
+            <div class="product-admin-main">
+                {mainContent}
+            </div>
+            <div class="product-admin-secondary">
+                {secondaryContent}
             </div>
             <Modal open={displayModal} onClose={setModal} center>
                 <DragAndDrop handleDrop={handleDrop}>

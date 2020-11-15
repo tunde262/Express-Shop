@@ -19,9 +19,6 @@ import StoreHeader from '../../page_components/store/StoreHeader';
 import HeaderProductForm from '../../page_components/forms_inventory/productForm/Header_Product';
 import MainProductForm from '../../page_components/forms_inventory/productForm/Form_Product';
 
-import MainCollectionForm from '../../page_components/forms_inventory/collectionForm/Form_Collection';
-import HeaderCollectionForm from '../../page_components/forms_inventory/collectionForm/Header_Collection';
-
 import HeaderLocationForm from '../../page_components/forms_inventory/locationForm/Header_Location';
 import MainLocationForm from '../../page_components/forms_inventory/locationForm/Form_Location';
 

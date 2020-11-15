@@ -180,6 +180,9 @@ router.post('/add/:storeId', upload.single('file'), [ auth, [
             placeId,
             phone,
         } = req.body;
+        
+        console.log('BACKEND DATA')
+        console.log(req.body)
 
         // Get fields. Build darkstore object
         const darkstoreFields = {};

@@ -32,6 +32,7 @@ const VariantTable = ({
     location, 
     page, 
     prodId, 
+    locId,
     variant: {
         loading, 
         sortedVariants
@@ -137,16 +138,38 @@ const VariantTable = ({
             if(sortedVariants.length > 0) {
                 sortedVariants.map(async variant => {
                     if (variant) {
-                        const res = await axios.get(`/api/products/${variant.product}`);
-                        setVariantList(variantList => [...variantList, (
-                            <Variant 
-                                variant={variant} 
-                                handleToggle={handleToggle} 
-                                variantItem={res.data} 
-                                deleteVariant={deleteVariant} 
-                                onChange={onChange}
-                            />
-                        )])
+                        if(page === 'inventory') {
+                            for(var i = 0; i < variant.locations.length; i++) {
+                                console.log('Location ID');
+                                console.log(variant.locations[i].location);
+            
+                                if(variant.locations[i].location.toString() === locId) {
+                                    const res = await axios.get(`/api/products/${variant.product}`);
+                                    setVariantList(variantList => [...variantList, (
+                                        <Variant 
+                                            variant={variant} 
+                                            handleToggle={handleToggle} 
+                                            variantItem={res.data} 
+                                            deleteVariant={deleteVariant} 
+                                            onChange={onChange}
+                                        />
+                                    )])
+                                }
+                                
+                                break;
+                            }
+                        } else {
+                            const res = await axios.get(`/api/products/${variant.product}`);
+                            setVariantList(variantList => [...variantList, (
+                                <Variant 
+                                    variant={variant} 
+                                    handleToggle={handleToggle} 
+                                    variantItem={res.data} 
+                                    deleteVariant={deleteVariant} 
+                                    onChange={onChange}
+                                />
+                            )])
+                        }
                     }
                 });
             } else {

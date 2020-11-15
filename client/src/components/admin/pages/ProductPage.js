@@ -45,6 +45,9 @@ import DetailLocation from './page_components/location/DetailLocation';
 import HeaderLocation from './page_components/location/HeaderLocation';
 import LocationSideDrawer from './page_components/location/SideDrawerLocation';
 
+import HeaderLocationForm from '../../page_components/forms_inventory/locationForm/Header_Location';
+import MainLocationForm from '../../page_components/forms_inventory/locationForm/Form_Location';
+
 import DetailOrder from './page_components/order/DetailOrder';
 import HeaderOrder from './page_components/order/HeaderOrder';
 
@@ -1155,6 +1158,8 @@ const ProductPage = ({
         pageHeader = <HeaderCollectionForm /> 
     } else if(headerShow === 'location') {
         pageHeader = <HeaderLocation /> 
+    } else if(headerShow === 'add location') {
+        pageHeader = <HeaderLocationForm /> 
     } else if(headerShow === 'order') {
         pageHeader = <HeaderOrder /> 
     }
@@ -1363,6 +1368,27 @@ const ProductPage = ({
         if(storageLocation.detailLocation && !storageLocation.loading) {
             pageContent = (
                 <DetailLocation 
+                    setModal={handleVariantModal} 
+                    setTable={setTable} 
+                    setVarModal={handleAddToLocationModal} 
+                    onAddItemTag={onAddItemTag}
+                    onDeleteItemTag={onDeleteItemTag}
+                    itemTags={itemTags}
+                    onAddTag={onAddTag}
+                    onDeleteTag={onDeleteTag}
+                    formData={formData}
+                    setFormData={setFormData}
+                    switchChange={switchChange}
+                    onChange={onChange}
+                />
+            );
+        } else {
+            pageContent = <Spinner />
+        }
+    } else if(tableShow1 === 'add location') {
+        if(storageLocation.detailLocation) {
+            pageContent = (
+                <MainLocationForm
                     setModal={handleVariantModal} 
                     setTable={setTable} 
                     setVarModal={handleAddToLocationModal} 

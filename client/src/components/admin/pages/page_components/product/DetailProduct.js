@@ -32,8 +32,12 @@ import { incImg, decImg, editProduct } from '../../../../../actions/productActio
 // }
 
 const DetailProduct = ({ 
-    product: { detailProduct, loading },
+    product: { detailProduct },
     store,
+    stateLocation: {
+        locations,
+        loading
+    },
     handleDetail,
     addVariant,
     history,
@@ -204,6 +208,48 @@ const DetailProduct = ({
     if(!sentMixpanel && detailProduct) {
         handleMixpanel();
         setSentMixpanel(true);
+    }
+
+    let inventoryContent;
+
+    if(detailNav === 'inventory' && !loading) {
+        if(locations.length > 0) {
+            inventoryContent = locations.map(detailLocation => (
+                <div style={{margin:'10px 0'}}>
+                    {/* <div class="table-responsive table-filter">
+                        <Variant setModal={setModal} page="product" prodId={match.params.productId} deleteVariant={deleteVariant} />
+                    </div> */}
+                    <div style={{background:'#fff', margin:'10px 0', border:'1px solid rgb(214, 214, 214)'}}>
+                        <div style={{background:'#fff', padding:'1rem', width:'100%', justifyContent:'space-between', display:'flex', alignItems:'center', borderBottom:'1px solid rgb(214, 214, 214)'}}>
+                            <div style={{display: 'flex', margin:'0 1rem', alignItems: 'center'}}>
+                                <i style={{color:'#3CB371', margin:'0 10px', fontSize:'1.1rem'}} class="fas fa-map-marker-alt"></i>
+                                <p style={{margin:'1rem 0'}}>{detailLocation.name}</p>
+                            </div>
+                            <div style={{margin:'0 1rem'}}>
+                                <button disabled className="btn">Save</button>
+                            </div>
+                        </div>
+                        <div class="table-responsive table-filter">
+                            <VariantTable 
+                                setModal={setModal} 
+                                page="inventory" 
+                                prodId={match.params.productId} 
+                                deleteVariant={deleteVariant}
+                                onAddTag={onAddTag}
+                                onDeleteTag={onDeleteTag}
+                                varTags={varTags}
+                                onChange={onChange}
+                                locId={detailLocation._id}
+                            />
+                        </div>
+                    </div>
+                </div>
+            ))
+        } else {
+            inventoryContent = <p>No Locations</p>
+        }
+    } else {
+        inventoryContent = <Spinner />
     }
 
     
@@ -533,34 +579,7 @@ const DetailProduct = ({
                 secondaryInventoryInfo
             ) : null}
 
-            <div style={{margin:'10px 0'}}>
-                {/* <div class="table-responsive table-filter">
-                    <Variant setModal={setModal} page="product" prodId={match.params.productId} deleteVariant={deleteVariant} />
-                </div> */}
-                <div style={{background:'#fff', margin:'10px 0', border:'1px solid rgb(214, 214, 214)'}}>
-                    <div style={{background:'#fff', padding:'1rem', width:'100%', justifyContent:'space-between', display:'flex', alignItems:'center', borderBottom:'1px solid rgb(214, 214, 214)'}}>
-                        <div style={{display: 'flex', margin:'0 1rem', alignItems: 'center'}}>
-                            <i style={{color:'#3CB371', margin:'0 10px', fontSize:'1.1rem'}} class="fas fa-map-marker-alt"></i>
-                            <p style={{margin:'1rem 0'}}>Tunde's House</p>
-                        </div>
-                        <div style={{margin:'0 1rem'}}>
-                            <button disabled className="btn">Save</button>
-                        </div>
-                    </div>
-                    <div class="table-responsive table-filter">
-                        <VariantTable 
-                            setModal={setModal} 
-                            page="product" 
-                            prodId={match.params.productId} 
-                            deleteVariant={deleteVariant}
-                            onAddTag={onAddTag}
-                            onDeleteTag={onDeleteTag}
-                            varTags={varTags}
-                            onChange={onChange}
-                        />
-                    </div>
-                </div>
-            </div>
+            {inventoryContent}
         </Fragment>
     );
 
@@ -687,11 +706,13 @@ DetailProduct.propTypes = {
     product: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired,
     editProduct: PropTypes.func.isRequired,
+    stateLocation: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
     product: state.product,
     store: state.store,
+    stateLocation: state.location
 })
 
 export default connect(mapStateToProps, { 
