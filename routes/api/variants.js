@@ -334,11 +334,12 @@ router.post('/location/:id', auth, async (req, res) => {
     } 
 
 
-    const darkstore = await Darkstore.findById(req.body.darkstore)
-    const variant = await Variant.findById(req.params.id);
-
     try {
+        const darkstore = await Darkstore.findById(req.body.darkstore)
+        const variant = await Variant.findById(req.params.id);
+
         const newLocation = {
+            sale_price: req.body.sale_price,
             price: req.body.price,
             qty: req.body.qty,
             darkstore: darkstore.id
@@ -384,6 +385,70 @@ router.delete('/location/:id/:location_id', auth, async (req, res) => {
         await variant.save();
 
         res.json(variant.locations);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
+// @route PUT api/variants/location/:id/:location_id
+// @desc Edit a variant's location object
+// @access Private
+router.post('/location/:id/:location_id', auth, async (req, res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    } 
+
+    try {
+        let variant = await Variant.findById(req.params.id);
+
+        if(!variant) {
+            return res.status(404).json({ msg: 'Variant not found' });
+        }
+
+        const updatedVarLocation = {
+            sale_price: req.body.sale_price,
+            price: req.body.price,
+            qty: req.body.qty,
+            location: req.params.location_id
+        };
+
+        let toSet;
+
+        for(var i = 0; i < variant.locations.length; i++) {
+            if(variant.locations[i].location.toString() === req.params.location_id.toString()){
+                toSet = 'locations.'+i;
+                console.log('VAR LOC TO UPDATE');
+                console.log(i);
+                console.log('LOCID');
+                console.log(variant.locations[i].location);
+            }
+        }
+
+        console.log('TO SET')
+        console.log(toSet);
+        // TODO
+
+        // // Check store is correct store
+        // if(location.user.toString() !== req.user.id) {
+        //     return res.status(401).json({ msg: 'User not authorized'})
+        // }
+
+        // Update
+        let newVariant = await Variant.findOneAndUpdate(
+            { 
+                _id: req.params.id, 
+            }, 
+            { 
+                $set: {
+                    [`${toSet}`]: updatedVarLocation
+                }
+            },
+            { new: false }
+        );
+
+        res.json(updatedVarLocation); // returning the newVariant directly returns the past unupdated version
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error'); 

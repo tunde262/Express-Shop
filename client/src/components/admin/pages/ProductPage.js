@@ -281,7 +281,7 @@ const ProductPage = ({
             setFormData(locationData);
             }
         }
-    }, [loading]);
+    }, [loading, collection.loading, storageLocation.loading]);
 
     // Redirect if store is null
     // if(store.store === null ) {
@@ -372,6 +372,10 @@ const ProductPage = ({
     const onAddItemTag = (tag) => {
         setItemTags([...itemTags, tag]);
         // filterItems(tag);
+    }
+
+    const loadItemTags = (tags) => {
+        setItemTags(tags);
     }
 
     const onDeleteItemTag = (tag) => {
@@ -675,7 +679,7 @@ const ProductPage = ({
     const handleCategoryChange = (value) => {
         setCategoryData(value);
 
-        setCategoryToggle(!categoryToggle);
+        setCategoryToggle(false);
     }
 
     const handleConditionChange = (value) => {
@@ -1180,6 +1184,7 @@ const ProductPage = ({
                     onAddItemTag={onAddItemTag}
                     onDeleteItemTag={onDeleteItemTag}
                     itemTags={itemTags}
+                    loadItemTags={loadItemTags}
                     onAddTag={onAddTag}
                     onDeleteTag={onDeleteTag}
                     onAddTag2={onAddTag2}
@@ -1257,6 +1262,7 @@ const ProductPage = ({
                     onAddItemTag={onAddItemTag}
                     onDeleteItemTag={onDeleteItemTag}
                     itemTags={itemTags}
+                    loadItemTags={loadItemTags}
                     onAddTag={onAddTag}
                     onDeleteTag={onDeleteTag}
                     onAddTag2={onAddTag2}
@@ -1334,6 +1340,8 @@ const ProductPage = ({
                     onAddItemTag={onAddItemTag}
                     onDeleteItemTag={onDeleteItemTag}
                     itemTags={itemTags}
+                    loadItemTags={loadItemTags}
+                    varTags={varTags}
                     onAddTag={onAddTag}
                     onDeleteTag={onDeleteTag}
                     formData={formData}
@@ -1353,6 +1361,7 @@ const ProductPage = ({
                     onAddItemTag={onAddItemTag}
                     onDeleteItemTag={onDeleteItemTag}
                     itemTags={itemTags}
+                    loadItemTags={loadItemTags}
                     onAddTag={onAddTag}
                     onDeleteTag={onDeleteTag}
                     formData={formData}
@@ -1374,8 +1383,10 @@ const ProductPage = ({
                     onAddItemTag={onAddItemTag}
                     onDeleteItemTag={onDeleteItemTag}
                     itemTags={itemTags}
+                    loadItemTags={loadItemTags}
                     onAddTag={onAddTag}
                     onDeleteTag={onDeleteTag}
+                    varTags={varTags}
                     formData={formData}
                     setFormData={setFormData}
                     switchChange={switchChange}
@@ -1395,6 +1406,7 @@ const ProductPage = ({
                     onAddItemTag={onAddItemTag}
                     onDeleteItemTag={onDeleteItemTag}
                     itemTags={itemTags}
+                    loadItemTags={loadItemTags}
                     onAddTag={onAddTag}
                     onDeleteTag={onDeleteTag}
                     formData={formData}

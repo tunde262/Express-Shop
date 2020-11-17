@@ -13,6 +13,9 @@ const DarkstoreSchema = new Schema({
     tags: {
         type: [String]
     },
+    visible: {
+        type: Boolean
+    },
     location_tags: {
         type: [String],
     },

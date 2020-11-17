@@ -6,18 +6,28 @@ import { connect } from 'react-redux';
 
 import mixpanel from 'mixpanel-browser';
 
-import { addToVariants } from '../../../../../actions/variantActions';
+import { addToVariants, deleteVariant } from '../../../../../actions/variantActions';
 
 import Map from '../../../../common/map/Map';
 import Variant from '../../../table/VariantTable/Variant';
 import TableDetails from '../../../../TableDetails/TableDetails';
 import Inventory from '../../../table/Inventory';
+import ItemsBlock from '../common/ItemsBlock';
+import StatsBlock from '../common/StatsBlock';
+import VariantBlock from '../common/VariantBlock';
 
 import Spinner from '../../../../common/Spinner';
 import InputTag from '../../../../common/InputTag/InputTag';
+import InventoryBlock from '../common/InventoryBlock';
+import MapBlock from '../common/MapBlock';
+import InventoryActivityBlock from '../common/InventoryActivityBlock';
+import VisibilityBlock from '../common/VisibilityBlock';
+import CollectionsBlock from '../common/CollectionsBlock';
+import TagsBlock from '../common/TagsBlock';
 
 const DetailLocation = ({ 
     setModal, 
+    product,
     addToVariants, 
     storageLocation, 
     storageLocation: { 
@@ -29,17 +39,23 @@ const DetailLocation = ({
     setVarModal,
     onAddItemTag,
     onDeleteItemTag,
+    onAddTag,
+    onDeleteTag,
+    varTags,
     itemTags,
+    loadItemTags,
     formData,
     setFormData,
     switchChange,
-    onChange
+    onChange,
+    match,
+    deleteVariant
 }) => {
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     const [sentMixpanel, setSentMixpanel] = useState(false);
-    const [locationNav, setLocationNav] = useState('items');
+    const [pageNav, setPageNav] = useState('detail');
     
     // TODO : map markers
     
@@ -76,9 +92,6 @@ const DetailLocation = ({
     const isMobile = windowWidth <= 769;
     const isTablet = windowWidth <= 1000;
 
-    const {
-        visible,
-    } = formData;
 
     const handleMixpanel = () => {
         mixpanel.track("Admin Location Page View", {
@@ -101,194 +114,59 @@ const DetailLocation = ({
 
     const secondaryLocationInfo = (
         <Fragment>
-            <div class="product-privacy-box" style={isMobile ? {margin:'10px 0'}: {background:'#fff'}}>
-                <div class="product-privacy-box-title">
-                    <p style={{color:'#808080', margin:'0'}}>Visibility</p>
-                    <hr style={{height:'1px', background:'rgb(214,214,214)', margin:'10px 0 10px 0'}}/>
-                    <div style={{display:'flex', justifyContent:'space-between', height:'50px', width:'100%', alignItems:'center'}}>
-                        <p style={{color:'#3CB371', margin:'0'}}>Public</p>
-                        <input 
-                            class="toggle-button" 
-                            type="checkbox" 
-                            name="visible"
-                            checked={visible}
-                            onChange={switchChange}
-                        />
-                    </div>
-                </div>
-            </div>
-            <div class="product-privacy-box" style={isMobile ? {margin:'10px 0'}: {background:'#fff'}}>
-                <div class="product-privacy-box-title">
-                    <p style={{color:'#808080', margin:'0'}}>Collections</p>
-                    <hr style={{height:'1px', background:'rgb(214,214,214)', margin:'10px 0 10px 0'}}/>
-                    <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
-                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
-                            <p style={{margin:'0'}}>Shorts <span style={{color:'#ff4b2b'}}>(43)</span></p>
-                            <small style={{color:'#ccc', margin:'0'}}>Auto</small>
-                        </div>
-                        <div>
-                            <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-times"></i>
-                        </div>
-                    </div>
-                    <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
-                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
-                            <p style={{margin:'0'}}>Halloween <span style={{color:'#ff4b2b'}}>(43)</span></p>
-                            <small style={{color:'#ccc', margin:'0'}}>Auto</small>
-                        </div>
-                        <div>
-                            <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-times"></i>
-                        </div>
-                    </div>
-                    <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
-                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
-                            <p style={{margin:'0'}}>Tops <span style={{color:'#ff4b2b'}}>(43)</span></p>
-                            <small style={{color:'#ccc', margin:'0'}}>Auto</small>
-                        </div>
-                        <div>
-                            <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-times"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="product-privacy-box" style={isMobile ? {margin:'10px 0'}: {background:'#fff'}}>
-                <div class="product-privacy-box-title">
-                    <p style={{color:'#808080', margin:'0'}}>Tags</p>
-                    <hr style={{height:'1px', background:'rgb(214,214,214)', margin:'10px 0 10px 0'}}/>
-                    <InputTag  
-                        onAddTag ={onAddItemTag}
-                        onDeleteTag = {onDeleteItemTag}
-                        defaultTags={itemTags}
-                        placeholder="enter tags separated by comma"
-                    />
-                </div>
-                
-            </div>
-            <div className="inventory-activity-box" style={isMobile ? {margin:'10px 0'}: {background:'#fff'}}>
-                <div className="vertical-step-bar">
-                    <ul id="progress">
-                        <li>
-                            <div class="node green"></div>
-                            <p>Order Placed</p>
-                            <p style={{marginTop:'20px', color:'#808080'}}><small>05/10/2001 5:35pm</small></p>
-                        </li>
-                        <li>
-                            <div class="divider grey"></div>
-                        </li>
-                        <li>
-                            <div class="node grey"></div>
-                            <p>Collecting Items</p>
-                            <p style={{marginTop:'20px', color:'#808080'}}><small>05/10/2001 5:35pm</small></p>
-                        </li>
-                        <li>
-                            <div class="divider grey"></div></li>
-                        <li>
-                            <div class="node grey"></div>
-                            <p>Awaiting Delivery</p>
-                            <p style={{marginTop:'20px', color:'#808080'}}><small>05/10/2001 5:35pm</small></p>
-                        </li>
-                        <li>
-                            <div class="divider grey"></div>
-                        </li>
-                        <li>
-                            <div class="node grey"></div>
-                            <p>En Route Started</p>
-                            <p style={{marginTop:'20px', color:'#808080'}}><small>05/10/2001 5:35pm</small></p>
-                        </li>
-                        <li>
-                            <div class="divider grey"></div>
-                        </li>
-                        <li>
-                            <div class="node grey"></div>
-                            <p>Left At Door</p>
-                            <p style={{marginTop:'20px', color:'#808080'}}><small>05/10/2001 5:35pm</small></p>
-                        </li>
-                    </ul>
-                </div>
-
-                <div style={{margin:'1rem 0 10px'}}>
-                    <input type="button" value="Next" id="next"/>
-                    <input type="button" value="Clear" id="clear"/>
-                </div>
-            </div>
-            {/* <div class="product-privacy-box">
-                <div class="product-privacy-box-title">
-                    <p style={{color:'#808080', margin:'0'}}>Notes</p>
-                    <hr style={{height:'1px', background:'rgb(214,214,214)', margin:'10px 0 10px 0'}}/>
-                    <input
-                        type="email"
-                        name="email"
-                        className="input_line"
-                        placeholder="Enter Email"
-                        style={{margin:'10px 0', width:'100%', height:'50px'}}
-                    />
-                    <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
-                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
-                            <small style={{color:'#ccc', margin:'0'}}>5:49pm Oct. 29, 2020</small>
-                            <p style={{margin:'0', color:'#333'}}>Must go behind the counter to find this item</p>
-                        </div>
-                        <div>
-                            <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-pen"></i>
-                        </div>
-                    </div>
-                    <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
-                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
-                            <small style={{color:'#ccc', margin:'0'}}>5:49pm Oct. 29, 2020</small>
-                            <p style={{margin:'0', color:'#333'}}>Wholesale order coming oct. 24</p>
-                        </div>
-                        <div>
-                            <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-pen"></i>
-                        </div>
-                    </div>
-                    <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
-                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
-                            <small style={{color:'#ccc', margin:'0'}}>5:49pm Oct. 29, 2020</small>
-                            <p style={{margin:'0', color:'#333'}}>Must go behind the counter to find this item</p>
-                        </div>
-                        <div>
-                            <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-pen"></i>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
+            <VisibilityBlock
+                isMobile={isMobile}
+                formData={formData}
+                setFormData={setFormData}
+                switchChange={switchChange}
+            />
+            <CollectionsBlock
+                isMobile={isMobile} 
+            />
+            <TagsBlock
+                isMobile={isMobile} 
+                onAddItemTag={onAddItemTag}  
+                onDeleteItemTag={onDeleteItemTag}  
+                itemTags={itemTags} 
+                loadItemTags={loadItemTags}
+            />
+            <InventoryActivityBlock 
+                isMobile={isMobile}
+            />
         </Fragment>
     );
 
     const mainLocationInfo = (
         <Fragment>
-            <div id="order-map" style={{marginTop:'10px', overflow:'hidden'}}>
-                <div style={{margin:'0', width:'100%',border:'2px dashed #cecece',borderRadius: '10px'}}>
-                    <div style={{height:'250px', maxHeight:'250px', width:'100%'}}>
-                        {!storageLocation.loading && storageLocation.locations.length > 0 ? (
-                            <Map storageLocation={storageLocation} />
-                        ) : null}
-                    </div>
-                </div>
-            </div>
+            <MapBlock />
             
             {isMobile ? (
                 secondaryLocationInfo
             ) : null}
 
-            <div class="content-box">
-                <div class="table-responsive table-filter">
-                    <Inventory setModal={setVarModal} page="location" variant={{sortedVariants: [...variant.variants], loading: false}} />
-                </div>
-            </div>
+            <ItemsBlock
+                product={product} 
+                setModal={setModal}
+                page="location"
+            />
         </Fragment>
     );
 
     const mainInventoryInfo = (
         <Fragment>
-            <div style={{margin:'10px 0'}}>
-                {/* <div class="table-responsive table-filter">
+            <InventoryBlock 
+                setModal={setModal}
+            />
+            {/* <div style={{margin:'10px 0'}}>
+                <div class="table-responsive table-filter">
                     <Variant setModal={setModal} page="product" prodId={match.params.productId} deleteVariant={deleteVariant} />
-                </div> */}
+                </div>
                 <div class="content-box">
                     <div class="table-responsive table-filter">
                         <Inventory setModal={setVarModal} page="location" variant={{sortedVariants: [...variant.variants], loading: false}} />
                     </div>
                 </div>
-            </div>
+            </div> */}
         </Fragment>
     );
 
@@ -297,9 +175,9 @@ const DetailLocation = ({
     let mainContent;
 
     if(detailLocation) {
-        if(locationNav === 'items') {
+        if(pageNav === 'detail') {
             mainContent = mainLocationInfo;
-        } else if (locationNav === 'inventory') {
+        } else if (pageNav === 'inventory') {
             mainContent = mainInventoryInfo;
         }
     } else {
@@ -309,9 +187,9 @@ const DetailLocation = ({
     let secondaryContent;
 
     if(detailLocation) {
-        if(locationNav === 'items') {
+        if(pageNav === 'detail') {
             secondaryContent = secondaryLocationInfo;
-        } else if (locationNav === 'inventory') {
+        } else if (pageNav === 'inventory') {
             secondaryContent = null;
         }
     } else {
@@ -334,90 +212,33 @@ const DetailLocation = ({
                 </div>
                 <hr style={{margin:'0'}} />
             </div> */}
-            {locationNav === 'inventory' ? (
+        
+            {pageNav === 'inventory' ? (
                 <section id="stats">
-                    <div className="stats">
-                        <div className="stats-box">
-                            <div>
-                                <h2 style={{color:'#333', fontWeight:'300'}}>2,000</h2>
-                                <p>Active</p>
-                            </div>
-                            <div>  
-                                <h2 style={{color:'#333', fontWeight:'300'}}>2000</h2>
-                                <p>Sold</p>
-                            </div>
-                            <div>   
-                                <h2 style={{color:'#333', fontWeight:'300'}}>2,056</h2>
-                                <p>Shipping</p>
-                            </div>
-                            <div>   
-                                <h2 style={{color:'#333', fontWeight:'300'}}>2000</h2>
-                                <p>Low Stock</p>
-                            </div>
-                        </div>
-                        <div>
-                            <ul class="profile-underline">
-                                <div 
-                                    onClick={e => setLocationNav('items')} className={locationNav === "items" && "active"}
-                                >
-                                    <li><p>Items<span style={{color:'#ff4b2b', marginLeft:'5px'}}>(36)</span></p></li>
-                                </div>
-                                <div 
-                                    onClick={e => setLocationNav('inventory')} className={locationNav === "inventory" && "active"}
-                                >
-                                    <li><p>Inventory<span style={{color:'#ff4b2b', marginLeft:'5px'}}>(108)</span></p></li>
-                                </div>
-                            </ul>
-                        </div>
-                    </div>
+                    <StatsBlock 
+                        setPageNav={setPageNav}
+                        pageNav={pageNav}
+                    />
+
+                    {mainContent}
                     
-                    <div style={{margin:'10px 0', width:'100%'}}>
-                        {/* <div class="table-responsive table-filter">
+                    {/* <div style={{margin:'10px 0', width:'100%'}}>
+                        <div class="table-responsive table-filter">
                             <Variant setModal={setModal} page="product" prodId={match.params.productId} deleteVariant={deleteVariant} />
-                        </div> */}
+                        </div>
                         <div class="content-box">
                             <div class="table-responsive table-filter">
                                 <Inventory setModal={setModal} page="location" variant={{sortedVariants: [...variant.variants], loading: false}} />
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </section>
             ) : (
                 <Fragment>
-                    <section id="stats" className="stats">
-                        <div className="stats-box">
-                            <div>
-                                <h2 style={{color:'#333', fontWeight:'300'}}>2,000</h2>
-                                <p>Active</p>
-                            </div>
-                            <div>  
-                                <h2 style={{color:'#333', fontWeight:'300'}}>2000</h2>
-                                <p>Sold</p>
-                            </div>
-                            <div>   
-                                <h2 style={{color:'#333', fontWeight:'300'}}>2,056</h2>
-                                <p>Shipping</p>
-                            </div>
-                            <div>   
-                                <h2 style={{color:'#333', fontWeight:'300'}}>2000</h2>
-                                <p>Low Stock</p>
-                            </div>
-                        </div>
-                        <div>
-                            <ul class="profile-underline">
-                                <div 
-                                    onClick={e => setLocationNav('items')} className={locationNav === "items" && "active"}
-                                >
-                                    <li><p>Items<span style={{color:'#ff4b2b', marginLeft:'5px'}}>(36)</span></p></li>
-                                </div>
-                                <div 
-                                    onClick={e => setLocationNav('inventory')} className={locationNav === "inventory" && "active"}
-                                >
-                                    <li><p>Inventory<span style={{color:'#ff4b2b', marginLeft:'5px'}}>(108)</span></p></li>
-                                </div>
-                            </ul>
-                        </div>
-                    </section>
+                    <StatsBlock 
+                        setPageNav={setPageNav}
+                        pageNav={pageNav}
+                    />
                     <div class="product-admin-main">
                         {mainContent}
                     </div>
@@ -434,12 +255,15 @@ DetailLocation.propTypes = {
     storageLocation: PropTypes.object.isRequired,
     addToVariants: PropTypes.func.isRequired,
     variant: PropTypes.object.isRequired,
+    product: PropTypes.object.isRequired,
+    deleteVariant: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
     storageLocation: state.location,
-    variant: state.variant
+    variant: state.variant,
+    product: state.product
 })
 
-export default connect(mapStateToProps, { addToVariants })(withRouter(DetailLocation));
+export default connect(mapStateToProps, { addToVariants, deleteVariant })(withRouter(DetailLocation));
 

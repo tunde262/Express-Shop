@@ -196,11 +196,13 @@ const Inventory = ({ page, setModal, store, variant: {loading, sortedVariants}, 
 Inventory.propTypes = {
     deleteVariant: PropTypes.func.isRequired,
     store: PropTypes.object.isRequired,
+    variant: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
     profile: state.profile,
-    store: state.store
+    store: state.store,
+    variant: state.variant
 })
 
 export default connect(mapStateToProps, { deleteVariant })(Inventory);

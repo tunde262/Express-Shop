@@ -184,7 +184,7 @@ const VariantTable = ({
         }
     }
 
-    if(!gotVariants) {
+    if(!gotVariants && prodId) {
         getProductVariants(prodId);
         setGotVariants(true);
     }
