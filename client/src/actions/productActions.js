@@ -361,7 +361,7 @@ export const addProductByName = (prodData, storeId, history) => async dispatch =
             payload: res.data
         });
 
-        history.push(`/admin/product/${storeId}/${res.data._id}?show=add_collection`);
+        history.push(`/admin/product/${storeId}/${res.data._id}?show=add_item`);
         dispatch(setAlert('New Product Created', 'success'));
     } catch (err) {
         // dispatch({
