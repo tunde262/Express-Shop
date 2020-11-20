@@ -241,7 +241,6 @@ router.post('/edit/:id/:storeId', auth, async(req, res) => {
         const {
             name,
             tags,
-            location_tags,
             street_name,
             street_number,
             city,
@@ -269,9 +268,6 @@ router.post('/edit/:id/:storeId', auth, async(req, res) => {
 
         if(tags) {
             darkstoreFields.tags = tags.split(',').map(tag => tag.trim());
-        }
-        if(location_tags) {
-            darkstoreFields.location_tags = location_tags.split(',').map(locationTag => locationTag.trim());
         }
 
         console.log('COORDS');
