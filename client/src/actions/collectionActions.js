@@ -192,7 +192,7 @@ export const editCollection = (formData, collectionId, storeId, history) => asyn
 
     history.push(`/admin/collection/${storeId}/${res.data._id}?show=detail`);
     
-    dispatch(setAlert('Collection Created', 'success'));
+    dispatch(setAlert('Collection Updated', 'success'));
   } catch (err) {
     dispatch({
       type: COLLECTION_ERROR,

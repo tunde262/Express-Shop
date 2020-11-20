@@ -8,27 +8,97 @@ import Spinner from '../../../common/Spinner';
 import 'react-responsive-modal/styles.css';
 
 
+const initialState = {
+    sku: '',
+    sale_price: '',
+    price: '',
+    qty: ''
+};
+
 const ShortVariant = ({ 
     detailVariant, 
     handleClick, 
     variantList,
-    onChange,
-    slide
+    slide,
+    modalForm,
+    editVarLocation,
+    addVarLocation,
+    addProductToLocation,
+    storageLocation,
+    product,
+    page
 }) => {  
+    const [formData, setFormData] = useState(initialState); 
+    
     const [selected, setSelected] = useState(false);
 
     const [varImg, setVarImg] = useState(null);
 
     const [rowSlide, setRowSlide] = useState(false);
+    const [rowData, setRowData] = useState(initialState); 
 
     useEffect(() => {
-        renderVarImg();
-    }, []);
+        if (detailVariant && storageLocation.detailLocation !== null) {
+            const variantData = { ...initialState };
+            for(var i = 0; i < detailVariant.locations.length; i++) {
+                console.log('Location ID');
+                console.log(detailVariant.locations[i].location);
+    
+                if(detailVariant.locations[i].location.toString() === storageLocation.detailLocation._id.toString()) {
+                    for (const key in detailVariant.locations[i]) {
+                        if (key in variantData) variantData[key] = detailVariant.locations[i][key];
+                    }
+
+                    break;
+                }
+            }
+            setFormData(variantData);
+            setRowData(variantData);
+        }
+
+        if(!modalForm) {
+            setRowSlide(false);
+            setSelected(false);
+        } else {
+            renderVarImg();
+        }
+    }, [modalForm, storageLocation.detailLocation]);
 
     const itemClick = () => {
         // handleClick(detailItem._id);
         setSelected(!selected)
     }
+
+
+    const {
+        sku,
+        sale_price,
+        price,
+        qty,
+    } = formData;
+     
+
+    const onChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+      //   console.log(files);
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+
+
+        if(page === 'add location') {
+            addVarLocation(formData, detailVariant._id, storageLocation.detailLocation._id);
+            addProductToLocation(storageLocation.detailLocation._id, product.detailProduct._id);
+        } else {
+            editVarLocation(formData, detailVariant._id, storageLocation.detailLocation._id);
+            console.log('FORM DATA')
+            console.log(formData);
+            setRowData(formData)
+            setRowSlide(false);
+        }
+        
+    };
 
 
     const renderVarImg = async () => {
@@ -170,7 +240,7 @@ const ShortVariant = ({
                         type="text"
                         placeholder="price"
                         name="price"
-                        value={detailVariant.price}
+                        value={price}
                         onChange={e => onChange(e)}
                         style={{margin:'0', width:'100%', outline:'none', padding:'0 10px', height:'50px', background:'#fff', fontSize:'14px', border:'2px dashed #cecece', borderRadius:'5px'}}
                         />
@@ -180,7 +250,7 @@ const ShortVariant = ({
                         type="text"
                         placeholder="sale price"
                         name="sale_price"
-                        value={detailVariant.sale_price}
+                        value={sale_price}
                         onChange={e => onChange(e)}
                         style={{margin:'0', width:'100%', outline:'none', padding:'0 10px', height:'50px', background:'#fff', fontSize:'14px', border:'2px dashed #cecece', borderRadius:'5px'}}
                         />
@@ -189,8 +259,8 @@ const ShortVariant = ({
                         <input
                         type="text"
                         placeholder="qty"
-                        name="inventory_qty"
-                        value={detailVariant.inventory_qty}
+                        name="qty"
+                        value={qty}
                         onChange={e => onChange(e)}
                         style={{margin:'0', width:'100%', outline:'none', padding:'0 10px', height:'50px', background:'#fff', fontSize:'14px', border:'2px dashed #cecece', borderRadius:'5px'}}
                         />
@@ -207,7 +277,7 @@ const ShortVariant = ({
                     </div>
                     <div style={{width:'50px', display:'flex', flexDirection:'column'}}>
                         <div style={{width:'100%', height:'50%', color:'green', display:'flex', justifyContent:'center', alignItems:'center'}}>
-                            <i className="fas fa-check"></i>
+                            <i onClick={(e) => onSubmit(e)} className="fas fa-check"></i>
                         </div>
                         <div style={{width:'100%', height:'50%', color:'#ff4b2b', display:'flex', justifyContent:'center', alignItems:'center'}}>
                             <i onClick={() => setRowSlide(!rowSlide)} className="fas fa-times"></i>

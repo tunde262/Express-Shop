@@ -3,8 +3,9 @@ import {
     GET_LOCATIONS,
     LOCATION_ERROR,
     DELETE_LOCATION,
-    UPDATE_LOCATION_VARIANTS,
+    UPDATE_LOCATION_PRODUCTS,
     ADD_LOCATION,
+    EDIT_LOCATION,
     GET_LOCATION,
     GET_PRODUCT_LOCATIONS,
     GET_VARIANT_LOCATIONS,
@@ -60,7 +61,14 @@ import {
         return {
           ...state,
           locations: [payload, ...state.locations],
+          detailLocation: payload,
           loading: false
+        };
+      case EDIT_LOCATION:
+        return {
+            ...state,
+            detailLocation: payload,
+            loading: false
         };
       case DELETE_LOCATION:
         return {
@@ -74,12 +82,11 @@ import {
           error: payload,
           loading: false
         };
-      case UPDATE_LOCATION_VARIANTS:
+      case UPDATE_LOCATION_PRODUCTS:
+        const products = payload.products;
         return {
           ...state,
-          locations: state.locations.map(location =>
-            location._id === payload.id ? { ...location, payload } : location
-          ),
+          detailLocation: { ...state.detailLocation, products },
           loading: false
         };
       case CLEAR_LOCATIONS:

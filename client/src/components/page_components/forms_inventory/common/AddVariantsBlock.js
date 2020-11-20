@@ -40,7 +40,7 @@ const AddVariantsBlock = ({
     display
 }) => {
     return (
-        <div class="content-box" style={{padding:'10px'}}>
+        <div className="content-box" style={{padding:'10px'}}>
             <div style={{display:'flex', width:'100%', justifyContent:'space-between'}}>
                 <div>
                     <p style={{color:'#808080', margin:'0 0 5px 5px'}}>Variants</p>
@@ -49,11 +49,11 @@ const AddVariantsBlock = ({
                     </p>
                 </div>
                 
-                <button style={{background:'#e7e7e7', borderColor:'#e7e7e7', letterSpacing:'1px', color:'#808080'}} onClick={handleToggleOption}><i class="fas fa-plus"></i> Option</button>
+                <button style={{background:'#e7e7e7', borderColor:'#e7e7e7', letterSpacing:'1px', color:'#808080'}} onClick={handleToggleOption}><i className="fas fa-plus"></i> Option</button>
             </div>
             
             <div>
-                <table class="table table-head">
+                <table className="table table-head">
                     <div style={{display:'grid', gridTemplateColumns:'1fr 3fr'}}>
                         <div><p>Option</p></div>
                         <div><p>Values</p></div>
@@ -62,14 +62,14 @@ const AddVariantsBlock = ({
                         <div style={displayOption2 || displayOption3 || displayOption4 ? {display:'grid', gridTemplateColumns:'1fr 3fr auto'} : {display:'grid', gridTemplateColumns:'1fr 3fr'}}>
                             <div>
                                 <div style={{display:'flex', alignItems:'center', justifyContent:'flex-start'}}>
-                                    <div class={optionToggle ? "secondary-dropdown-el expanded" : "secondary-dropdown-el"}>
+                                    <div className={optionToggle ? "secondary-dropdown-el expanded" : "secondary-dropdown-el"}>
                                         <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%'}} onClick={() => setOptionToggle(!optionToggle)}>
                                             {varName.var1 === '' ? (
                                                 <p>Pick an option</p>
                                             ) : (
                                                 <p>{varName.var1}</p>
                                             )}
-                                            <i class="fas fa-caret-down"></i>
+                                            <i className="fas fa-caret-down"></i>
                                         </div>
                                         {optionToggle ? (
                                             <Fragment>
@@ -102,7 +102,7 @@ const AddVariantsBlock = ({
                                     <i 
                                         onClick={removeDisplayOption1} 
                                         style={{color:'#ff4b2b', marginTop:'1rem'}} 
-                                        class="fas fa-minus"
+                                        className="fas fa-minus"
                                     ></i>
                                 </div>
                             ) : null}
@@ -114,14 +114,14 @@ const AddVariantsBlock = ({
                             <div style={displayOption1 || displayOption3 || displayOption4 ? {display:'grid', gridTemplateColumns:'1fr 3fr auto'} : {display:'grid', gridTemplateColumns:'1fr 3fr'}}>
                                 <div style={{paddingTop:'10px'}}>
                                     <div style={{display:'flex', alignItems:'center', justifyContent:'flex-start'}}>
-                                        <div class={optionToggle2 ? "secondary-dropdown-el expanded" : "secondary-dropdown-el"}>
+                                        <div className={optionToggle2 ? "secondary-dropdown-el expanded" : "secondary-dropdown-el"}>
                                             <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%'}} onClick={() => setOptionToggle2(!optionToggle2)}>
                                                 {varName.var2 === '' ? (
                                                     <p>Pick an option</p>
                                                 ) : (
                                                     <p>{varName.var2}</p>
                                                 )}
-                                                <i class="fas fa-caret-down"></i>
+                                                <i className="fas fa-caret-down"></i>
                                             </div>
                                             {optionToggle2 ? (
                                                 <Fragment>
@@ -154,7 +154,7 @@ const AddVariantsBlock = ({
                                         <i 
                                             onClick={removeDisplayOption2} 
                                             style={{color:'#ff4b2b', marginTop:'1rem'}} 
-                                            class="fas fa-minus"
+                                            className="fas fa-minus"
                                         ></i>
                                     </div>
                                 ) : null}
@@ -167,14 +167,14 @@ const AddVariantsBlock = ({
                             <div style={displayOption1 || displayOption2 || displayOption4 ? {display:'grid', gridTemplateColumns:'1fr 3fr auto'} : {display:'grid', gridTemplateColumns:'1fr 3fr'}}>
                                 <div style={{paddingTop:'10px'}}>
                                     <div style={{display:'flex', alignItems:'center', justifyContent:'flex-start'}}>
-                                        <div class={optionToggle3 ? "secondary-dropdown-el expanded" : "secondary-dropdown-el"}>
+                                        <div className={optionToggle3 ? "secondary-dropdown-el expanded" : "secondary-dropdown-el"}>
                                             <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%'}} onClick={() => setOptionToggle3(!optionToggle3)}>
                                                 {varName.var3 === '' ? (
                                                     <p>Pick an option</p>
                                                 ) : (
                                                     <p>{varName.var3}</p>
                                                 )}
-                                                <i class="fas fa-caret-down"></i>
+                                                <i className="fas fa-caret-down"></i>
                                             </div>
                                             {optionToggle3 ? (
                                                 <Fragment>
@@ -207,7 +207,7 @@ const AddVariantsBlock = ({
                                         <i 
                                             onClick={removeDisplayOption3} 
                                             style={{color:'#ff4b2b', marginTop:'1rem'}} 
-                                            class="fas fa-minus"
+                                            className="fas fa-minus"
                                         ></i>
                                     </div>
                                 ) : null}
@@ -220,14 +220,14 @@ const AddVariantsBlock = ({
                             <div style={displayOption1 || displayOption2 || displayOption3 ? {display:'grid', gridTemplateColumns:'1fr 3fr auto'} : {display:'grid', gridTemplateColumns:'1fr 3fr'}}>
                                 <div style={{paddingTop:'10px'}}>
                                     <div style={{display:'flex', alignItems:'center', justifyContent:'flex-start'}}>
-                                        <div class={optionToggle4 ? "secondary-dropdown-el expanded" : "secondary-dropdown-el"}>
+                                        <div className={optionToggle4 ? "secondary-dropdown-el expanded" : "secondary-dropdown-el"}>
                                             <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%'}} onClick={() => setOptionToggle4(!optionToggle4)}>
                                                 {varName.var4 === '' ? (
                                                     <p>Pick an option</p>
                                                 ) : (
                                                     <p>{varName.var4}</p>
                                                 )}
-                                                <i class="fas fa-caret-down"></i>
+                                                <i className="fas fa-caret-down"></i>
                                             </div>
                                             {optionToggle4 ? (
                                                 <Fragment>
@@ -260,7 +260,7 @@ const AddVariantsBlock = ({
                                         <i 
                                             onClick={removeDisplayOption4} 
                                             style={{color:'#ff4b2b', marginTop:'1rem'}} 
-                                            class="fas fa-minus"
+                                            className="fas fa-minus"
                                         ></i>
                                     </div>
                                 ) : null}
@@ -270,10 +270,10 @@ const AddVariantsBlock = ({
                 </table>
 
                 
-                <div onClick={updateList} style={{width:'100%', background:'#0098d3'}} class="btn btn-primary my-3">Add Variants</div>
+                <div onClick={updateList} style={{width:'100%', background:'#0098d3'}} className="btn btn-primary my-3">Add Variants</div>
 
                 {varInfo.length > 0 && (
-                    <div class="table-responsive table-filter">
+                    <div className="table-responsive table-filter">
                         <table className="table">
                             <div className="variant-thead">
                                     <div></div>

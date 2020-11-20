@@ -15,7 +15,7 @@ import LocationTable from '../LocationTable/LocationTable';
 import ShortVarTable from '../ShortVarTable/ShortVarTable';
 import Item from './Item';
 import InputTag from '../../../common/InputTag/InputTag';
-import { getProductLocations } from '../../../../actions/locationActions';
+import { getLocationById, getProductLocations } from '../../../../actions/locationActions';
 import { setModalVariants } from '../../../../actions/variantActions'
 
 
@@ -32,6 +32,7 @@ const ItemTable = ({
     page, 
     product: {loading, sortedProducts}, 
     getProductLocations,
+    getLocationById,
     deleteProduct,
     onAddTag,
     onDeleteTag,
@@ -75,13 +76,14 @@ const ItemTable = ({
     }
 
     const handleToggle = () => {
-        toggleMapModal(!displayMapModal)
+        toggleMapModal(true)
         // handleMap();
         // getVariantLocations(varId);
     }
 
     const handleClose = () => {
-        toggleMapModal(!displayMapModal);
+        toggleMapModal(false);
+        setModalForm1(false);
         // handleMap();
     }
 
@@ -93,6 +95,8 @@ const ItemTable = ({
 
         const variantArray = [];
 
+        getLocationById(locId);
+        
         if(res.data.length > 0) {
             res.data.map(async variant => {
                 for(var i = 0; i < variant.locations.length; i++) {
@@ -201,13 +205,13 @@ const ItemTable = ({
             {page !== 'dashboard' ? (
                 <div style={{display:'flex', justifyContent:'flex-end', alignItems:'center', height:'50px'}}>
                     <button onClick={setModal} style={{width:'100%', background:'#0098d3', margin:'0', borderRadius:'0', borderColor:'#0098d3', height:'100%', outline:'none', display:'flex', alignItems:'center', justifyContent:'center'}}>
-                        <i style={{margin:'0 10px', fontSize:'1rem'}} class="fas fa-plus-circle"></i>
+                        <i style={{margin:'0 10px', fontSize:'1rem'}} className="fas fa-plus-circle"></i>
                         Add Item
                     </button>
                 </div>
             ) : null}
             
-            <table className="table">
+            <div className="table">
                 <div className="thead">
                     {!isTablet && (
                         <Fragment>
@@ -223,7 +227,7 @@ const ItemTable = ({
                     )}
                 </div>
                 <div className="tbody">{!productList.length > 0 ? <Spinner /> : productList}</div>
-            </table>
+            </div>
 
             <Modal open={displayMapModal} onClose={handleClose} center styles={bg2}>
                 <div className="itemUploadContainer">
@@ -246,7 +250,7 @@ const ItemTable = ({
                             className={modalForm1 ? "modal-table-top-container active" : "modal-table-top-container"} id="transition-2"
                         >
                             <div onClick={() => setModalForm1(false)} style={{display:'flex', color:'#ff4b2b', width:'100%', padding:'0 10px', fontSize:'0.8rem', justifyContent:'flex-start', alignItems:'center'}}>
-                                <i class="fas fa-long-arrow-alt-left"></i>
+                                <i className="fas fa-long-arrow-alt-left"></i>
                                 <p style={{margin:'0 10px'}}>  Back</p>
                             </div>
                         </div>
@@ -256,7 +260,7 @@ const ItemTable = ({
                     <div className="modal-table-list-transition">
                         {/** Transition 1 */}
                         <div className={!modalForm1 ? "modal-table-list-container active" : "modal-table-list-container"} id="transition-1">
-                            <div class="table-responsive table-filter">
+                            <div className="table-responsive table-filter">
                                 <LocationTable 
                                     page="collection" 
                                     setVarModal={setVarModal}
@@ -267,6 +271,7 @@ const ItemTable = ({
                         </div>
                         <div className={modalForm1 ? "modal-table-list-container active" : "modal-table-list-container"} id="transition-2">
                             <ShortVarTable 
+                                modalForm={modalForm1}
                                 onChange={onChange}
                             />
                             {/* <ShortVarTable handleClick={handleItemClick} itemList={itemList} /> */}
@@ -291,10 +296,11 @@ ItemTable.propTypes = {
     store: PropTypes.object.isRequired,
     getProductLocations: PropTypes.func.isRequired,
     setModalVariants: PropTypes.func.isRequired,
+    getLocationById: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
     store: state.store
 })
 
-export default connect(mapStateToProps, { deleteProduct, getProductLocations, setModalVariants })(ItemTable);
+export default connect(mapStateToProps, { deleteProduct, getProductLocations, getLocationById, setModalVariants })(ItemTable);

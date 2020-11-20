@@ -7,8 +7,7 @@ const DarkstoreSchema = new Schema({
         ref: 'store'
     },
     name: {
-        type: String,
-        required: true
+        type: String
     },
     tags: {
         type: [String]
@@ -83,11 +82,11 @@ const DarkstoreSchema = new Schema({
             }
         }
     ],
-    variants: [
+    products: [
         {
-            variant: {
+            product: {
                 type: Schema.Types.ObjectId,
-                ref: 'variant'
+                ref: 'product'
             }
         }
     ],          

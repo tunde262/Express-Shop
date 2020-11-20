@@ -4,11 +4,13 @@ import { withRouter, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+
 import { setAdminNav } from '../../../actions/navActions';
 import { getStoreById, deleteStore } from '../../../actions/storeActions';
 import { addProductByName } from '../../../actions/productActions';
 import { addCollectionByName } from '../../../actions/collectionActions';
-import { addLocation } from '../../../actions/locationActions';
+import { addLocation, editLocation } from '../../../actions/locationActions';
 
 import InventoryMain from '../../page_components/inventory/InventoryMain';
 import InventoryHeader from '../../page_components/inventory/Header_Inventory';
@@ -35,12 +37,24 @@ import OrdersHeader from '../../page_components/orders/Header_Orders';
 import PeopleMain from '../../page_components/people/PeopleMain';
 import PeopleHeader from '../../page_components/people/Header_People';
 
+import AddressBlock from '../../page_components/forms_inventory/common/AddressBlock';
 import Modal from 'react-responsive-modal';
 import ButtonSpinner from '../../common/ButtonSpinner';
 import Banner from '../../common/Banner';
 import DefaultBanner from '../../../utils/imgs/placeholderimg.jpg';
 
-const Dashboard = ({ setAdminNav, getStoreById, store: { store, loading }, match, location, addProductByName, addCollectionByName, addLocation, history }) => {
+const Dashboard = ({ 
+    setAdminNav, 
+    getStoreById, 
+    store: { store, loading }, 
+    storageLocation,
+    match, 
+    location, 
+    addProductByName, 
+    addCollectionByName, 
+    addLocation, 
+    history 
+}) => {
     // Calc isMobile by window width
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -98,7 +112,28 @@ const Dashboard = ({ setAdminNav, getStoreById, store: { store, loading }, match
     const [settingsNav, setSettingsNav] = useState('basic settings');
 
     const [formData, setFormData] = useState({
-        name: ''
+        name: '',
+        city: '',
+        state: '',
+        country: '',
+        area: '',
+        stateProvince: '',
+        street_number: '',
+        formatted_address: '',
+        street_name: '',
+        postalCode: '',
+        placeId: '',
+        location_tags: '',
+        tags: '',
+        latLng: '',
+        phone: ''
+    });
+
+    // Location Info  
+    const [address, setAddress] = useState("");
+    const [coordinates, setCoordinates] = useState({
+        lat: null, 
+        lng: null
     });
 
     const todo = (e) => {
@@ -116,9 +151,211 @@ const Dashboard = ({ setAdminNav, getStoreById, store: { store, loading }, match
         setAddItemLoading(true);
     }
 
-    const { name } = formData;
+    const { 
+        name,
+        street_name,
+        street_number,
+        city,
+        state,
+        postalCode,
+        country,
+        area,
+        placeId,
+        stateProvince,
+        formatted_address,
+        tags,
+        location_tags,
+        phone,
+        latLng 
+    } = formData;
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value});
+
+    const handleLocationSelect = async (value) => {
+        const result = await geocodeByAddress(value);
+        const latLng = await getLatLng(result[0])
+        console.log('VALUE:');
+        console.log(value);
+        console.log('RESULTS:')
+        console.log(result);
+        console.log('LATLNG');
+        console.log(latLng);
+  
+        let locationTags = [];
+  
+        if(result[0].types && result[0].types.length > 0) {
+            result[0].types.map(type => locationTags.push(type));
+        };
+        const address = result[0].formatted_address;
+        const placeId = result[0].place_id;
+        const addressArray =  result[0].address_components;
+        const city = getCity(addressArray);
+        const country = getCountry(addressArray );
+        const area = getArea(addressArray);
+        const state = getState(addressArray);
+        const postalCode = getPostalCode(addressArray);
+        const street = getStreet(addressArray);
+        const number = getNumber(addressArray);
+  
+  
+        console.log('city: ' + city);
+        console.log('state: ' + state);
+        console.log('country: ' + country);
+        console.log('area: ' + area);
+        console.log('state: ' + state);
+        console.log('number: ' + number);
+        console.log('street: ' + street);
+        console.log('postalCode: ' + postalCode);
+        console.log("formatted address: " + address);
+        console.log("placeId: " + placeId);
+        console.log("phone: " + phone);
+        console.log("location tags: ")
+        console.log(tags);
+  
+        let newTags;
+        if (Array.isArray(tags)) {
+            newTags = tags.join(', ');
+        }
+  
+        setAddress(value);
+        setFormData({
+            name: (name) ? name : '',
+            city: (city) ? city : '',
+            state: (state) ? state : '',
+            country: (country) ? country : '',
+            area: (area) ? area : '',
+            stateProvince: (state) ? state : '',
+            street_number: (number) ? number : '',
+            formatted_address: (address) ? address : '',
+            street_name: (street) ? street : '',
+            postalCode: (postalCode) ? postalCode : '',
+            placeId: (placeId) ? placeId : '',
+            phone: (phone) ? phone : '',
+            location_tags: (newTags) ? newTags : '',
+            tags: (tags) ? tags : '',
+            latLng: `${latLng.lat}, ${latLng.lng}`
+        })
+        setCoordinates(latLng);
+    };
+  
+    const getCity = ( addressArray ) => {
+        let city = '';
+        for( let i = 0; i < addressArray.length; i++ ) {
+            if ( addressArray[ i ].types[0] && 'locality' === addressArray[ i ].types[0] ) {
+                city = addressArray[ i ].long_name;
+                return city;
+            }
+        }
+    };
+
+    const getArea = ( addressArray ) => {
+        let area = '';
+        for( let i = 0; i < addressArray.length; i++ ) {
+            if ( addressArray[ i ].types[0]  ) {
+                for ( let j = 0; j < addressArray[ i ].types.length; j++ ) {
+                    if ( 'administrative_area_level_2' === addressArray[ i ].types[j] ) {
+                        area = addressArray[ i ].long_name;
+                        return area;
+                    }
+                }
+            }
+        }
+    };
+    
+    const getCountry = ( addressArray ) => {
+        let area = '';
+        for( let i = 0; i < addressArray.length; i++ ) {
+            if ( addressArray[ i ].types[0]  ) {
+                for ( let j = 0; j < addressArray[ i ].types.length; j++ ) {
+                    if ( 'country' === addressArray[ i ].types[j] ) {
+                        area = addressArray[ i ].long_name;
+                        return area;
+                    }
+                }
+            }
+        }
+    };
+
+    const getPostalCode = ( addressArray ) => {
+        let area = '';
+        for( let i = 0; i < addressArray.length; i++ ) {
+            if ( addressArray[ i ].types[0]  ) {
+                for ( let j = 0; j < addressArray[ i ].types.length; j++ ) {
+                    if ( 'postal_code' === addressArray[ i ].types[j] ) {
+                        area = addressArray[ i ].long_name;
+                        return area;
+                    }
+                }
+            }
+        }
+    };
+
+    const getState = ( addressArray ) => {
+        let state = '';
+        for( let i = 0; i < addressArray.length; i++ ) {
+            for( let i = 0; i < addressArray.length; i++ ) {
+                if ( addressArray[ i ].types[0] && 'administrative_area_level_1' === addressArray[ i ].types[0] ) {
+                    state = addressArray[ i ].long_name;
+                    return state;
+                }
+            }
+        }
+    };
+    
+    const getNumber = ( addressArray ) => {
+        let state = '';
+        for( let i = 0; i < addressArray.length; i++ ) {
+            for( let i = 0; i < addressArray.length; i++ ) {
+                if ( addressArray[ i ].types[0] && 'street_number' === addressArray[ i ].types[0] ) {
+                    state = addressArray[ i ].long_name;
+                    return state;
+                }
+            }
+        }
+    };
+    
+    const getStreet = ( addressArray ) => {
+        let state = '';
+        for( let i = 0; i < addressArray.length; i++ ) {
+            for( let i = 0; i < addressArray.length; i++ ) {
+                if ( addressArray[ i ].types[0] && 'route' === addressArray[ i ].types[0] ) {
+                    state = addressArray[ i ].long_name;
+                    return state;
+                }
+            }
+        }
+    };
+
+    const onSubmitLocation = (e) => {
+        e.preventDefault();
+
+        const newLocation = {
+            name: name,
+            street_name: street_name,
+            street_number: street_number,
+            city: city,
+            state: state,
+            postalCode: postalCode,
+            country: country,
+            area: area,
+            placeId: placeId,
+            stateProvince: stateProvince,
+            formatted_address: formatted_address,
+            tags: tags,
+            location_tags: location_tags,
+            phone: phone,
+            coordinates: latLng
+        }
+
+        console.log('FORMATTED DATA')
+        console.log(newLocation)
+    
+        if(!storageLocation.detailLocation) {
+            addLocation(newLocation, store._id, history);
+        } else {
+            editLocation(newLocation, storageLocation.detailLocation._id, store._id, history);
+        }
+    };
 
     const onSubmit = async e => {
         e.preventDefault();
@@ -138,16 +375,6 @@ const Dashboard = ({ setAdminNav, getStoreById, store: { store, loading }, match
         if(name !== '')data.append('name', name);
   
         addCollectionByName(data, store._id, history);
-    }
-
-    const onSubmitLocation = async e => {
-        e.preventDefault();
-
-        let data = new FormData();
-
-        if(name !== '')data.append('name', name);
-  
-        addLocation(data, store._id, history);
     }
 
     const handleWindowSizeChange = () => {
@@ -436,14 +663,10 @@ const Dashboard = ({ setAdminNav, getStoreById, store: { store, loading }, match
                             </h3>
                         </div>
                         <div className="checkout-deliv" style={{padding:'0 1rem', display:'flex', justifyContent:'center'}}>
-                            <input
-                                type="text"
-                                name="name"
-                                className="input_line"
-                                placeholder="Enter address . . ."
-                                value={name}
-                                onChange={e => onChange(e)}
-                                style={{margin:'0', width:'80%', outline:'none', padding:'0 10px', height:'50px', background:'#fff', fontSize:'14px', borderBottom:'2px dashed #cecece', borderRadius:'5px'}}
+                            <AddressBlock
+                                address={address}
+                                setAddress={setAddress}
+                                handleLocationSelect={handleLocationSelect}
                             />
                         </div>
                     </div>
@@ -467,10 +690,12 @@ Dashboard.propTypes = {
     addProductByName: PropTypes.func.isRequired,
     addCollectionByName: PropTypes.func.isRequired,
     addLocation: PropTypes.func.isRequired,
+    storageLocation: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-    store: state.store
+    store: state.store,
+    storageLocation: state.location
 })
 
 export default connect(mapStateToProps, { setAdminNav, getStoreById, deleteStore, addProductByName, addCollectionByName, addLocation })(withRouter(Dashboard));

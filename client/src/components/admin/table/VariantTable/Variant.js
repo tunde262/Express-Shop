@@ -5,21 +5,43 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 
+const initialState = {
+    sku: '',
+    sale_price: '',
+    price: '',
+    inventory_qty: ''
+};
 
 const Variant = ({ 
     deleteVariant,
+    editVariant,
     handleToggle,
     variantItem,
     variant,
-    onChange,
+    store
 }) => {
+    const [formData, setFormData] = useState(initialState); 
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [rowSlide, setRowSlide] = useState(false);
 
+    const [rowData, setRowData] = useState(initialState); 
+
     useEffect(() => {
         window.addEventListener('resize', () => handleWindowSizeChange());
         
+            if (variant) {
+                const variantData = { ...initialState };
+                for (const key in variant) {
+                    if (key in variantData) variantData[key] = variant[key];
+                }
+
+                // if (Array.isArray(variantData.tags))
+                //     variantData.tags = variantData.tags.join(', ');
+                setFormData(variantData);
+                setRowData(variantData);
+            }
+
         return () => window.removeEventListener('resize', () => handleWindowSizeChange());
     }, []);
 
@@ -30,12 +52,34 @@ const Variant = ({
 
     const isMobile = windowWidth <= 769;
     const isTablet = windowWidth <= 1000;
+
+    const {
+        sku,
+        sale_price,
+        price,
+        inventory_qty,
+    } = formData;
      
 
     // if(!gotVariants) {
     //     getProductVariants(prodId);
     //     setGotVariants(true);
     // }
+
+    const onChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+      //   console.log(files);
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+
+        editVariant(formData, variant._id, store.store._id); 
+        console.log('FORM DATA')
+        console.log(formData);
+        setRowData(formData)
+        setRowSlide(false);
+    };
 
 
     let rowClassName1;
@@ -110,19 +154,19 @@ const Variant = ({
                             onClick={() => handleToggle(variant._id)}
                             style={{cursor:'pointer'}}
                         >
-                            $5
+                            {rowData.inventory_qty}
                         </div>
                         <div 
                             onClick={() => handleToggle(variant._id)}
                             style={{cursor:'pointer'}}
                         >
-                            5
+                            ${rowData.price}
                         </div>
                         <div 
                             onClick={() => handleToggle(variant._id)}
                             style={{cursor:'pointer'}}
                         >
-                            6
+                            ${rowData.sale_price}
                         </div>
                         <div 
                             style={{width:'50px', color:'#ff4b2b', cursor:'pointer'}}
@@ -216,7 +260,7 @@ const Variant = ({
                     type="text"
                     placeholder="price"
                     name="price"
-                    value={variant.price}
+                    value={price}
                     onChange={e => onChange(e)}
                     style={{margin:'0', width:'100%', outline:'none', padding:'0 10px', height:'50px', background:'#fff', fontSize:'14px', border:'2px dashed #cecece', borderRadius:'5px'}}
                     />
@@ -226,7 +270,7 @@ const Variant = ({
                     type="text"
                     placeholder="sale price"
                     name="sale_price"
-                    value={variant.sale_price}
+                    value={sale_price}
                     onChange={e => onChange(e)}
                     style={{margin:'0', width:'100%', outline:'none', padding:'0 10px', height:'50px', background:'#fff', fontSize:'14px', border:'2px dashed #cecece', borderRadius:'5px'}}
                     />
@@ -236,7 +280,7 @@ const Variant = ({
                     type="text"
                     placeholder="qty"
                     name="inventory_qty"
-                    value={variant.inventory_qty}
+                    value={inventory_qty}
                     onChange={e => onChange(e)}
                     style={{margin:'0', width:'100%', outline:'none', padding:'0 10px', height:'50px', background:'#fff', fontSize:'14px', border:'2px dashed #cecece', borderRadius:'5px'}}
                     />
@@ -246,14 +290,14 @@ const Variant = ({
                     type="text"
                     placeholder="sku"
                     name="sku"
-                    value={variant.sku}
+                    value={sku}
                     onChange={e => onChange(e)}
                     style={{margin:'0', width:'100%', outline:'none', padding:'0 10px', height:'50px', background:'#fff', fontSize:'14px', border:'2px dashed #cecece', borderRadius:'5px'}}
                     />
                 </div>
                 <div style={{width:'50px', display:'flex', flexDirection:'column'}}>
                     <div style={{width:'100%', height:'50%', color:'green', display:'flex', justifyContent:'center', alignItems:'center'}}>
-                        <i className="fas fa-check"></i>
+                        <i onClick={(e) => onSubmit(e)} className="fas fa-check"></i>
                     </div>
                     <div style={{width:'100%', height:'50%', color:'#ff4b2b', display:'flex', justifyContent:'center', alignItems:'center'}}>
                         <i onClick={() => setRowSlide(!rowSlide)} className="fas fa-times"></i>

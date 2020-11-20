@@ -2,7 +2,7 @@ import React, { useEffect, useState, Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getLocationById, deleteLocation, addVariant } from '../../../actions/locationActions';
+import { getLocationById, deleteLocation, } from '../../../actions/locationActions';
 import { setSortedVariants, getStoreVariants } from '../../../actions/variantActions';
 
 import Navbar from '../../Overview/categoryOverview/CategoryOverview';
@@ -29,7 +29,6 @@ const LocationPage = ({
     getStoreVariants,
     variant,
     match,
-    addVariant, 
     darkstore: { 
         location, 
         loading 
@@ -67,7 +66,6 @@ const LocationPage = ({
             let data = new FormData();
             data.append('id', variant);
 
-            addVariant(data, location._id);
             console.log(variant);
         });
         
@@ -266,7 +264,6 @@ LocationPage.propTypes = {
     variant: PropTypes.object.isRequired,
     setSortedVariants: PropTypes.func.isRequired,
     getStoreVariants: PropTypes.func.isRequired,
-    addVariant: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -274,4 +271,4 @@ const mapStateToProps = state => ({
     variant: state.variant
 })
 
-export default connect(mapStateToProps, { getLocationById, deleteLocation, addVariant, setSortedVariants, getStoreVariants })(withRouter(LocationPage));
+export default connect(mapStateToProps, { getLocationById, deleteLocation, setSortedVariants, getStoreVariants })(withRouter(LocationPage));

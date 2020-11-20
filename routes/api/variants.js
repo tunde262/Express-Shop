@@ -235,12 +235,10 @@ router.post('/product/add/:id/:storeId', upload.single('file'), [ auth, [
     }
 );
 
-// @route POST api/variants
+// @route POST api/variants/edit/:id/:storeId
 // @desc Edit A Variant
 // @access Public
-router.post('/add/:id/:storeId', upload.single('file'), [ auth, [
-    check('name', 'Name is required').not().isEmpty()
-]], async (req, res) => {
+router.post('/edit/:id/:storeId', auth, async (req, res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
         return res.status(400).json({errors: errors.array() });
@@ -262,15 +260,18 @@ router.post('/add/:id/:storeId', upload.single('file'), [ auth, [
         size,
         weight,
         bundle,
+        type,
         scent,
         fit,
         flavor,
         material,
     } = req.body;
 
+    console.log('BODY')
+    console.log(req.body.sale_price);
+
     // Get fields
     const variantFields = {};
-    variantFields.product = req.params.id;
     if(name) variantFields.name = name;
     if(category) variantFields.category = category;
     if(visible) variantFields.visible = visible;
@@ -284,13 +285,12 @@ router.post('/add/:id/:storeId', upload.single('file'), [ auth, [
     if(color) variantFields.color = color;
     if(size) variantFields.size = size;
     if(weight) variantFields.weight = weight;
+    if(type) variantFields.type = type;
     if(bundle) variantFields.bundle = bundle;
     if(scent) variantFields.scent = scent;
     if(fit) variantFields.fit = fit;
     if(flavor) variantFields.flavor = flavor;
     if(material) variantFields.material = material;
-    if(req.file) variantFields.img = req.file.id;
-    if(req.file) variantFields.img_name = req.file.filename;
     
     // Tags - Split into array
     if(tags) {
@@ -298,16 +298,18 @@ router.post('/add/:id/:storeId', upload.single('file'), [ auth, [
     }
     
     try {
-        const storeId = req.params.storeId;
-        const store = await Store.findById(storeId);
+        console.log('ADDED PRODUCT')
+        console.log(sku)
 
-        variantFields.store = store.id;
+        variantFields.store = req.params.storeId;
         
         let variant = await Variant.findById(req.params.id);
 
         if(!variant) {
             return res.status(404).json({ msg: 'Variant not found' });
         }
+
+        console.log(variantFields);
 
         // Update
         variant = await Variant.findOneAndUpdate(
@@ -324,10 +326,10 @@ router.post('/add/:id/:storeId', upload.single('file'), [ auth, [
 }
 );
 
-// @route POST api/variants/location/:id
+// @route POST api/variants/add_location/:id/:locationId
 // @desc Add darkstore location to variant
 // @access Private
-router.post('/location/:id', auth, async (req, res) => {
+router.post('/add_location/:id/:locationId', auth, async (req, res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -335,20 +337,19 @@ router.post('/location/:id', auth, async (req, res) => {
 
 
     try {
-        const darkstore = await Darkstore.findById(req.body.darkstore)
         const variant = await Variant.findById(req.params.id);
 
         const newLocation = {
             sale_price: req.body.sale_price,
             price: req.body.price,
             qty: req.body.qty,
-            darkstore: darkstore.id
+            location: req.params.locationId
         };
 
         variant.locations.unshift(newLocation);
         await variant.save()
 
-        res.json(variant.locations);
+        res.json(newLocation);
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error'); 
@@ -394,7 +395,7 @@ router.delete('/location/:id/:location_id', auth, async (req, res) => {
 // @route PUT api/variants/location/:id/:location_id
 // @desc Edit a variant's location object
 // @access Private
-router.post('/location/:id/:location_id', auth, async (req, res) => {
+router.put('/location/:id/:location_id', auth, async (req, res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });

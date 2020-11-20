@@ -7,6 +7,9 @@ import {
     UPDATE_VARIANT_LIKES,
     DELETE_VARIANT,
     ADD_VARIANT,
+    EDIT_VARIANT,
+    UPDATE_VARIANT_LOCATIONS,
+    ADD_VARIANT_LOCATIONS,
     GET_VARIANT,
     ADD_VARIANT_COMMENT,
     REMOVE_VARIANT_COMMENT,
@@ -206,7 +209,7 @@ export const addVariant = (formData, id, storeId) => async dispatch => {
 };
 
 // Edit variant
-export const editVariant = (formData, id) => async dispatch => {
+export const editVariant = (formData, id, storeId) => async dispatch => {
     const config = {
       headers: {
         'Content-Type': 'application/json'
@@ -214,7 +217,8 @@ export const editVariant = (formData, id) => async dispatch => {
     };
   
     try {
-      const res = await axios.post(`/api/variants/${id}`, formData, config);
+
+      const res = await axios.post(`/api/variants/edit/${id}/${storeId}`, formData, config);
   
       dispatch({
         type: GET_VARIANT,
@@ -282,6 +286,56 @@ export const deleteVariant = id => async dispatch => {
       });
     }
 };
+
+export const addVarLocation = (formData, varId, locId)  => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  try {
+    const res = await axios.post(`/api/variants/add_location/${varId}/${locId}`, formData, config);
+
+    dispatch({
+      type: ADD_VARIANT_LOCATIONS,
+      payload: { id: varId, location: res.data}
+    });
+
+    // dispatch(setAlert('Location Created', 'success'));
+  } catch (err) {
+    dispatch({
+      type: VARIANT_ERROR,
+      payload: { msg: "something went wrong", status: 500 }
+    });
+    console.log(err);
+  }
+}
+
+export const editVarLocation = (formData, varId, locId)  => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  try {
+    const res = await axios.put(`/api/variants/location/${varId}/${locId}`, formData, config);
+
+    dispatch({
+      type: UPDATE_VARIANT_LOCATIONS,
+      payload: { id: varId, location: res.data}
+    });
+
+    // dispatch(setAlert('Location Created', 'success'));
+  } catch (err) {
+    dispatch({
+      type: VARIANT_ERROR,
+      payload: { msg: "something went wrong", status: 500 }
+    });
+    console.log(err);
+  }
+}
   
 // Add comment
 export const addComment = (variantId, formData) => async dispatch => {

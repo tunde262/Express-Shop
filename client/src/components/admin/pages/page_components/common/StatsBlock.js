@@ -26,7 +26,7 @@ const StatsBlock = ({
                 </div>
             </div>
             <div>
-                <ul class="profile-underline">
+                <ul className="profile-underline">
                     <div 
                         onClick={e => setPageNav('detail')} className={pageNav === "detail" && "active"}
                     >

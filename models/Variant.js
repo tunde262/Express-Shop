@@ -34,7 +34,7 @@ const VariantSchema = new Schema({
         type: Number,
     },
     sale_price: {
-        type: String
+        type: Number
     },
     visible: {
         type: Boolean,

@@ -75,10 +75,10 @@ const DetailLocation = ({
         window.addEventListener('resize', () => handleWindowSizeChange());
 
         if(detailLocation) {
-            for(var i = 0; i < detailLocation.variants.length; i++) {
+            for(var i = 0; i < detailLocation.products.length; i++) {
                 console.log('ITEM ID');
-                console.log(detailLocation.variants[i]);
-                addToVariants(detailLocation.variants[i])
+                console.log(detailLocation.products[i]);
+                // addToVariants(detailLocation.products[i])
             }
         }
 
@@ -146,7 +146,8 @@ const DetailLocation = ({
 
             <ItemsBlock
                 product={product} 
-                setModal={setModal}
+                // setModal={setModal}
+                setModal={setVarModal}
                 page="location"
             />
         </Fragment>

@@ -5,7 +5,12 @@ import { Link } from 'react-router-dom';
 
 // import { deleteStore } from '../../../../../actions/storeActions';
 
-const Header_Location = ({store, auth: { user }, profile: {profile, loading }}) => { 
+const Header_Location = ({
+    store, 
+    auth: { user }, 
+    profile: {profile, loading },
+    onSubmitLocation
+}) => { 
 
     return (
         // <div>
@@ -15,13 +20,13 @@ const Header_Location = ({store, auth: { user }, profile: {profile, loading }}) 
         <Fragment>
             <Link style={{textDecoration:'none'}} to={store.store && {pathname:`/admin/${store.store._id}`,search: "?show=inventory"}}>
                 <div style={{display:'flex', color:'#ff4b2b', width:'100%', padding:'10px 0', fontSize:'0.8rem', justifyContent:'flex-start', alignItems:'center'}}>
-                    <i class="fas fa-long-arrow-alt-left"></i>
+                    <i className="fas fa-long-arrow-alt-left"></i>
                     <p style={{margin:'0 10px'}}>  Back to store</p>
                 </div>
             </Link>
             <div style={{width:'100%', display:'flex', justifyContent:'space-between'}}>
                 <h3>New Location</h3>
-                <button style={{width:'300px'}}>
+                <button onClick={(e) => onSubmitLocation(e)} style={{width:'300px'}}>
                     Save
                 </button>
             </div>

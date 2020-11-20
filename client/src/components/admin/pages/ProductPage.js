@@ -5,13 +5,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import mixpanel from 'mixpanel-browser';
+import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
 import { setAdminNav, setPage } from '../../../actions/navActions';
-import { setSortedProducts, getProductsByStoreId, getProductsInCollection, handleDetail, addProduct, editProduct, deleteProduct, setModalProducts, addProductImg } from '../../../actions/productActions';
+import { setSortedProducts, getProductsByStoreId, getProductsInCollection, handleDetail, addProduct, editProduct, deleteProduct, setModalProducts, addProductImg, setDetailProduct } from '../../../actions/productActions';
 import { getProductVariants, addVariant, deleteVariant, setModalVariants } from '../../../actions/variantActions';
 import { getStoreById } from '../../../actions/storeActions';
 import { getCollectionById, addCollectionItem, addCollection, editCollection } from '../../../actions/collectionActions';
-import { getLocationById, getProductLocations, getCollectionLocations, setLocations, addLocationVariant } from '../../../actions/locationActions';
+import { addLocation, editLocation, getLocationById, getProductLocations, getCollectionLocations, setLocations, addProductToLocation } from '../../../actions/locationActions';
 import { getOrderById } from '../../../actions/orderActions';
 
 import Spinner from '../../common/Spinner';
@@ -64,13 +65,29 @@ const initialState = {
     price: '',
     visible: true,
     in_stock: true,
-    inventory_qty: ''
+    inventory_qty: '',
+    // Location Info
+    city: '',
+    state: '',
+    country: '',
+    area: '',
+    stateProvince: '',
+    street_number: '',
+    formatted_address: '',
+    street_name: '',
+    postalCode: '',
+    placeId: '',
+    location_tags: '',
+    tags: '',
+    latLng: '',
+    phone: ''
 };
 
 const ProductPage = ({ 
     setPage,
     addVariant,
     handleDetail, 
+    setDetailProduct,
     addProduct,
     editProduct,
     deleteProduct,
@@ -88,7 +105,7 @@ const ProductPage = ({
     getProductsByStoreId,
     getProductVariants,
     addCollectionItem,
-    addLocationVariant,
+    addProductToLocation,
     product,
     variant,
     store,
@@ -101,6 +118,8 @@ const ProductPage = ({
     getProductLocations, 
     getCollectionLocations,
     setLocations,
+    addLocation,
+    editLocation,
     addProductImg
 }) => {
 
@@ -166,7 +185,13 @@ const ProductPage = ({
     const [slideForm1, setSlideForm1] = useState(true);
     const [modalForm1, setModalForm1] = useState(false);
 
-    
+
+    // Location Info  
+    const [address, setAddress] = useState("");
+    const [coordinates, setCoordinates] = useState({
+        lat: null, 
+        lng: null
+    });
         
     useEffect(() => {
         setAdminNav(true);
@@ -279,6 +304,7 @@ const ProductPage = ({
             if (Array.isArray(locationData.tags))
                 locationData.tags = locationData.tags.join(', ');
             setFormData(locationData);
+            setAddress(storageLocation.detailLocation.formatted_address)
             }
         }
     }, [loading, collection.loading, storageLocation.loading]);
@@ -299,6 +325,21 @@ const ProductPage = ({
         visible,
         in_stock,
         inventory_qty,
+        // Location Info
+        city,
+        state,
+        country,
+        area,
+        stateProvince,
+        street_number,
+        formatted_address,
+        street_name,
+        postalCode,
+        placeId,
+        location_tags,
+        tags,
+        latLng,
+        phone
     } = formData;
 
     const fileUploadButton = () => {
@@ -479,6 +520,218 @@ const ProductPage = ({
         setModal(false);
     }
 
+    const handleLocationSelect = async (value) => {
+        const result = await geocodeByAddress(value);
+        const latLng = await getLatLng(result[0])
+        console.log('VALUE:');
+        console.log(value);
+        console.log('RESULTS:')
+        console.log(result);
+        console.log('LATLNG');
+        console.log(latLng);
+  
+        let locationTags = [];
+  
+        if(result[0].types && result[0].types.length > 0) {
+            result[0].types.map(type => locationTags.push(type));
+        };
+        const address = result[0].formatted_address;
+        const placeId = result[0].place_id;
+        const addressArray =  result[0].address_components;
+        const city = getCity(addressArray);
+        const country = getCountry(addressArray );
+        const area = getArea(addressArray);
+        const state = getState(addressArray);
+        const postalCode = getPostalCode(addressArray);
+        const street = getStreet(addressArray);
+        const number = getNumber(addressArray);
+  
+  
+        console.log('city: ' + city);
+        console.log('state: ' + state);
+        console.log('country: ' + country);
+        console.log('area: ' + area);
+        console.log('state: ' + state);
+        console.log('number: ' + number);
+        console.log('street: ' + street);
+        console.log('postalCode: ' + postalCode);
+        console.log("formatted address: " + address);
+        console.log("placeId: " + placeId);
+        console.log("phone: " + phone);
+        console.log("location tags: ")
+        console.log(tags);
+  
+        let newTags;
+        if (Array.isArray(tags)) {
+            newTags = tags.join(', ');
+        }
+  
+        setAddress(value);
+        setFormData({
+            name: (name) ? name : '',
+            city: (city) ? city : '',
+            state: (state) ? state : '',
+            country: (country) ? country : '',
+            area: (area) ? area : '',
+            stateProvince: (state) ? state : '',
+            street_number: (number) ? number : '',
+            formatted_address: (address) ? address : '',
+            street_name: (street) ? street : '',
+            postalCode: (postalCode) ? postalCode : '',
+            placeId: (placeId) ? placeId : '',
+            phone: (phone) ? phone : '',
+            location_tags: (newTags) ? newTags : '',
+            tags: (tags) ? tags : '',
+            latLng: `${latLng.lat}, ${latLng.lng}`
+        })
+        setCoordinates(latLng);
+    };
+  
+    const getCity = ( addressArray ) => {
+        let city = '';
+        for( let i = 0; i < addressArray.length; i++ ) {
+            if ( addressArray[ i ].types[0] && 'locality' === addressArray[ i ].types[0] ) {
+                city = addressArray[ i ].long_name;
+                return city;
+            }
+        }
+    };
+
+    const getArea = ( addressArray ) => {
+        let area = '';
+        for( let i = 0; i < addressArray.length; i++ ) {
+            if ( addressArray[ i ].types[0]  ) {
+                for ( let j = 0; j < addressArray[ i ].types.length; j++ ) {
+                    if ( 'administrative_area_level_2' === addressArray[ i ].types[j] ) {
+                        area = addressArray[ i ].long_name;
+                        return area;
+                    }
+                }
+            }
+        }
+    };
+    
+    const getCountry = ( addressArray ) => {
+        let area = '';
+        for( let i = 0; i < addressArray.length; i++ ) {
+            if ( addressArray[ i ].types[0]  ) {
+                for ( let j = 0; j < addressArray[ i ].types.length; j++ ) {
+                    if ( 'country' === addressArray[ i ].types[j] ) {
+                        area = addressArray[ i ].long_name;
+                        return area;
+                    }
+                }
+            }
+        }
+    };
+
+    const getPostalCode = ( addressArray ) => {
+        let area = '';
+        for( let i = 0; i < addressArray.length; i++ ) {
+            if ( addressArray[ i ].types[0]  ) {
+                for ( let j = 0; j < addressArray[ i ].types.length; j++ ) {
+                    if ( 'postal_code' === addressArray[ i ].types[j] ) {
+                        area = addressArray[ i ].long_name;
+                        return area;
+                    }
+                }
+            }
+        }
+    };
+
+    const getState = ( addressArray ) => {
+        let state = '';
+        for( let i = 0; i < addressArray.length; i++ ) {
+            for( let i = 0; i < addressArray.length; i++ ) {
+                if ( addressArray[ i ].types[0] && 'administrative_area_level_1' === addressArray[ i ].types[0] ) {
+                    state = addressArray[ i ].long_name;
+                    return state;
+                }
+            }
+        }
+    };
+    
+    const getNumber = ( addressArray ) => {
+        let state = '';
+        for( let i = 0; i < addressArray.length; i++ ) {
+            for( let i = 0; i < addressArray.length; i++ ) {
+                if ( addressArray[ i ].types[0] && 'street_number' === addressArray[ i ].types[0] ) {
+                    state = addressArray[ i ].long_name;
+                    return state;
+                }
+            }
+        }
+    };
+    
+    const getStreet = ( addressArray ) => {
+        let state = '';
+        for( let i = 0; i < addressArray.length; i++ ) {
+            for( let i = 0; i < addressArray.length; i++ ) {
+                if ( addressArray[ i ].types[0] && 'route' === addressArray[ i ].types[0] ) {
+                    state = addressArray[ i ].long_name;
+                    return state;
+                }
+            }
+        }
+    };
+
+    const onSubmitLocation = (e) => {
+        e.preventDefault();
+    
+        let data = new FormData();
+
+        if(name !== '')data.append('name', name);
+        if(street_name !== '')data.append('street_name', street_name);
+        if(street_number !== '')data.append('street_number', street_number);
+        if(city !== '')data.append('city', city);
+        if(state !== '')data.append('state', state);
+        if(postalCode !== '')data.append('postalCode', postalCode);
+        if(country !== '')data.append('country', country);
+        if(area !== '')data.append('area', area);
+        if(placeId !== '')data.append('placeId', placeId);
+        if(stateProvince !== '')data.append('stateProvince', stateProvince);
+        if(formatted_address !== '')data.append('formatted_address', formatted_address);
+        if(tags !== '')data.append('tags', tags);
+        if(location_tags !== '')data.append('location_tags', location_tags);
+        if(phone !== '')data.append('phone', phone);
+        if(latLng !== '')data.append('coordinates', latLng);
+
+        const newLocation = {
+            name: name,
+            street_name: street_name,
+            street_number: street_number,
+            city: city,
+            state: state,
+            postalCode: postalCode,
+            country: country,
+            area: area,
+            placeId: placeId,
+            stateProvince: stateProvince,
+            formatted_address: formatted_address,
+            tags: tags,
+            location_tags: location_tags,
+            phone: phone,
+            coordinates: latLng
+        }
+
+        console.log('FORMATTED DATA')
+        console.log(newLocation)
+    
+        if(!storageLocation.detailLocation) {
+            addLocation(newLocation, store.store._id, history);
+        } else {
+            editLocation(newLocation, storageLocation.detailLocation._id, store.store._id, history);
+        }
+
+        mixpanel.track("Add Location Page Completed", {
+            "Location Name": name,
+            "Location City": city,
+            "location Zipcode": postalCode,
+            "Store Name": store.store.name,
+            "Creation Date": new Date().toISOString(), 
+        });
+    };
+
     const onSubmitImage = async (fileList) => {
     
         console.log('IMG FILES');
@@ -531,7 +784,7 @@ const ProductPage = ({
     const onAddVariant = (e) => {
         e.preventDefault();
 
-        addLocationVariant(itemList, storageLocation.detailLocation._id);
+        // addProductToLocation(itemList, storageLocation.detailLocation._id);
         console.log(itemList);
     };
 
@@ -574,8 +827,10 @@ const ProductPage = ({
     const setVarModal = async (prodId) => {
         setModalForm1(true);
         const res = await axios.get(`/api/variants/product/${prodId}`);
+        const prodObj = await axios.get(`/api/products/${prodId}`);
         console.log('MODAL PRODUCTS');
-        console.log(res.data)
+        console.log(res.data);
+        setDetailProduct(prodObj.data);
         setModalVariants(res.data);
     }
 
@@ -953,9 +1208,9 @@ const ProductPage = ({
                             variantList = (
                                 <Fragment>
                                     <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
-                                        <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var1}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
-                                        <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var2}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
-                                        <p style={{margin:'0', fontSize:'14px', color:'green'}}>{variant.var3}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                        <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var1}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} className="fas fa-circle"></i> 
+                                        <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var2}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} className="fas fa-circle"></i> 
+                                        <p style={{margin:'0', fontSize:'14px', color:'green'}}>{variant.var3}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} className="fas fa-circle"></i> 
                                         <p style={{margin:'0', fontSize:'14px', color:'#FF69B4'}}>{variant.var4}</p>
                                     </div>
                                 </Fragment>
@@ -964,8 +1219,8 @@ const ProductPage = ({
                             variantList = (
                                 <Fragment>
                                     <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
-                                        <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var1}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
-                                        <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var2}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                        <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var1}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} className="fas fa-circle"></i> 
+                                        <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var2}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} className="fas fa-circle"></i> 
                                         <p style={{margin:'0', fontSize:'14px', color:'green'}}>{variant.var3}</p>
                                     </div>
                                 </Fragment>
@@ -975,8 +1230,8 @@ const ProductPage = ({
                         variantList = (
                             <Fragment>
                                 <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
-                                    <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var1} </p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
-                                    <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var2}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                    <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var1} </p> <i style={{ margin:'0 5px', fontSize:'3px'}} className="fas fa-circle"></i> 
+                                    <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var2}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} className="fas fa-circle"></i> 
                                     <p style={{margin:'0', fontSize:'14px', color:'green'}}>{variant.var4}</p>
                                 </div>
                             </Fragment>
@@ -985,7 +1240,7 @@ const ProductPage = ({
                         variantList = (
                             <Fragment>
                                 <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
-                                    <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var1}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                    <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var1}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} className="fas fa-circle"></i> 
                                     <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var2}</p>
                                 </div>
                             </Fragment>
@@ -996,8 +1251,8 @@ const ProductPage = ({
                         variantList = (
                             <Fragment>
                                 <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
-                                    <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var1}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
-                                    <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var3}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                    <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var1}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} className="fas fa-circle"></i> 
+                                    <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var3}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} className="fas fa-circle"></i> 
                                     <p style={{margin:'0', fontSize:'14px', color:'#green'}}>{variant.var4}</p>
                                 </div>
                             </Fragment>
@@ -1006,7 +1261,7 @@ const ProductPage = ({
                         variantList = (
                             <Fragment>
                                 <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
-                                    <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var1}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                    <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var1}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} className="fas fa-circle"></i> 
                                     <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var3}</p>
                                 </div>
                             </Fragment>
@@ -1016,7 +1271,7 @@ const ProductPage = ({
                     variantList = (
                         <Fragment>
                             <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
-                                <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var1}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var1}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} className="fas fa-circle"></i> 
                                 <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var4}</p>
                             </div>
                         </Fragment>
@@ -1036,8 +1291,8 @@ const ProductPage = ({
                         variantList = (
                             <Fragment>
                                 <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
-                                    <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var2}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
-                                    <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var3}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                    <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var2}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} className="fas fa-circle"></i> 
+                                    <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var3}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} className="fas fa-circle"></i> 
                                     <p style={{margin:'0', fontSize:'14px', color:'green'}}>{variant.var4}</p>
                                 </div>
                             </Fragment>
@@ -1046,7 +1301,7 @@ const ProductPage = ({
                         variantList = (
                             <Fragment>
                                 <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
-                                    <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var2}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                    <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var2}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} className="fas fa-circle"></i> 
                                     <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var3}</p>
                                 </div>
                             </Fragment>
@@ -1056,7 +1311,7 @@ const ProductPage = ({
                     variantList = (
                         <Fragment>
                             <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
-                                <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var2}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var2}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} className="fas fa-circle"></i> 
                                 <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var4}</p>
                             </div>
                         </Fragment>
@@ -1075,7 +1330,7 @@ const ProductPage = ({
                     variantList = (
                         <Fragment>
                             <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
-                                <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var3}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i> 
+                                <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>{variant.var3}</p> <i style={{ margin:'0 5px', fontSize:'3px'}} className="fas fa-circle"></i> 
                                 <p style={{margin:'0', fontSize:'14px', color:'#ff8000'}}>{variant.var4}</p>
                             </div>      
                         </Fragment>
@@ -1163,7 +1418,7 @@ const ProductPage = ({
     } else if(headerShow === 'location') {
         pageHeader = <HeaderLocation /> 
     } else if(headerShow === 'add location') {
-        pageHeader = <HeaderLocationForm /> 
+        pageHeader = <HeaderLocationForm onSubmitLocation={onSubmitLocation} /> 
     } else if(headerShow === 'order') {
         pageHeader = <HeaderOrder /> 
     }
@@ -1378,19 +1633,15 @@ const ProductPage = ({
             pageContent = (
                 <DetailLocation 
                     setModal={handleVariantModal} 
-                    setTable={setTable} 
                     setVarModal={handleAddToLocationModal} 
-                    onAddItemTag={onAddItemTag}
-                    onDeleteItemTag={onDeleteItemTag}
-                    itemTags={itemTags}
-                    loadItemTags={loadItemTags}
-                    onAddTag={onAddTag}
-                    onDeleteTag={onDeleteTag}
-                    varTags={varTags}
                     formData={formData}
                     setFormData={setFormData}
                     switchChange={switchChange}
                     onChange={onChange}
+                    onAddItemTag={onAddItemTag}
+                    onDeleteItemTag={onDeleteItemTag}
+                    itemTags={itemTags}
+                    loadItemTags={loadItemTags}
                 />
             );
         } else {
@@ -1401,18 +1652,28 @@ const ProductPage = ({
             pageContent = (
                 <MainLocationForm
                     setModal={handleVariantModal} 
-                    setTable={setTable} 
                     setVarModal={handleAddToLocationModal} 
-                    onAddItemTag={onAddItemTag}
-                    onDeleteItemTag={onDeleteItemTag}
-                    itemTags={itemTags}
-                    loadItemTags={loadItemTags}
-                    onAddTag={onAddTag}
-                    onDeleteTag={onDeleteTag}
                     formData={formData}
                     setFormData={setFormData}
                     switchChange={switchChange}
                     onChange={onChange}
+                    onAddItemTag={onAddItemTag}
+                    onDeleteItemTag={onDeleteItemTag}
+                    itemTags={itemTags}
+                    loadItemTags={loadItemTags}
+                    setModal={setVarModal} 
+                    address={address}
+                    setAddress={setAddress}
+                    coordinates={coordinates}
+                    setCoordinates={setCoordinates}
+                    handleLocationSelect={handleLocationSelect}
+                    getCity={getCity}
+                    getArea={getArea}
+                    getCountry={getCountry}
+                    getPostalCode={getPostalCode}
+                    getState={getState}
+                    getNumber={getNumber}
+                    getStreet={getStreet}
                 />
             );
         } else {
@@ -1485,14 +1746,14 @@ const ProductPage = ({
     return (
         <Fragment>
             <div className="detail-table">
-                    <div className={"detail-table-nav"}>
+                    <div className="detail-table-nav">
                         <div className="detail-settings-transition">
                             {/** Transition 1 */}
                             <div className={!slideForm1 ? "detail-nav-container active" : "detail-nav-container"} id="transition-1">
                                 <a href="#">
                                     <div onClick={() => setSlideForm1(!slideForm1)}>
                                         <div style={{display:'flex', flexDirection:'row', width:'100%', justifyContent:'flex-end'}}>
-                                            <p style={{margin:'0', color:'#808080'}}>View inventory<span style={{margin:'0 10px'}}><i class="fas fa-arrow-right"></i></span></p>
+                                            <p style={{margin:'0', color:'#808080'}}>View inventory<span style={{margin:'0 10px'}}><i className="fas fa-arrow-right"></i></span></p>
                                         </div>
                                     </div>
                                 </a>
@@ -1582,7 +1843,7 @@ const ProductPage = ({
                     <DragAndDrop handleDrop={handleDrop}>
                     <div style={{display:'flex', flexDirection:'column', textAlign:'center', justifyContent:'center', alignItems:'center'}}>
                         <div style={{height:'50px', margin:'1rem 0'}}>
-                            <i style={{fontSize:'2em', color:'#808080'}} class="fas fa-arrow-circle-up"></i>
+                            <i style={{fontSize:'2em', color:'#808080'}} className="fas fa-arrow-circle-up"></i>
                         </div>
                         <div style={{width:'80%'}}>
                             {/* {files.length > 0 ? (
@@ -1630,14 +1891,14 @@ const ProductPage = ({
                                 <input type="checkbox" name="name1" />
                             </th>
                             <th>Details</th>
-                            <th><i class="fas fa-map-marker-alt"></i></th>
+                            <th><i className="fas fa-map-marker-alt"></i></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <div style={{display:'flex', flexDirection:'column', width:'100%', padding:'1rem', border:'2px solid #f4f4f4'}}>
                                 <h5>6100 Glenhollow dr.</h5>
-                                <p style={{color:'#808080'}}><i class="fas fa-map-marker-alt"></i>Plano, Tx</p>
+                                <p style={{color:'#808080'}}><i className="fas fa-map-marker-alt"></i>Plano, Tx</p>
                                 <p>On the corner of communications in pkwy and main next to the kroger store but on the back of the corner of the back fencing.</p>
                                 <p style={{margin:'1rem'}}>
                                     <input 
@@ -1698,7 +1959,7 @@ const ProductPage = ({
                             className={modalForm1 ? "modal-table-top-container active" : "modal-table-top-container"} id="transition-2"
                         >
                             <div onClick={() => setModalForm1(false)} style={{display:'flex', color:'#ff4b2b', width:'100%', padding:'0 10px', fontSize:'0.8rem', justifyContent:'flex-start', alignItems:'center'}}>
-                                <i class="fas fa-long-arrow-alt-left"></i>
+                                <i className="fas fa-long-arrow-alt-left"></i>
                                 <p style={{margin:'0 10px'}}>  Back</p>
                             </div>
                         </div>
@@ -1722,6 +1983,7 @@ const ProductPage = ({
                                 handleClick={handleItemClick} 
                                 itemList={itemList} 
                                 onChange={onChange}
+                                page="add location"
                             />
                             {/* <VarLocationTable setModalForm1={setModalForm1} modalForm1={modalForm1} slide /> */}
                         </div>
@@ -1765,14 +2027,14 @@ const ProductPage = ({
                                 <div style={displayOption2 || displayOption3 || displayOption4 ? {display:'grid', gridTemplateColumns:'1fr 3fr auto'} : {display:'grid', gridTemplateColumns:'1fr 3fr'}}>
                                     <div>
                                         <div style={{display:'flex', alignItems:'center', justifyContent:'flex-start'}}>
-                                            <div class={optionToggle ? "secondary-dropdown-el expanded" : "secondary-dropdown-el"}>
+                                            <div className={optionToggle ? "secondary-dropdown-el expanded" : "secondary-dropdown-el"}>
                                                 <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%'}} onClick={() => setOptionToggle(!optionToggle)}>
                                                     {varName.var1 === '' ? (
                                                         <p>Pick an option</p>
                                                     ) : (
                                                         <p>{varName.var1}</p>
                                                     )}
-                                                    <i class="fas fa-caret-down"></i>
+                                                    <i className="fas fa-caret-down"></i>
                                                 </div>
                                                 {optionToggle ? (
                                                     <Fragment>
@@ -1805,7 +2067,7 @@ const ProductPage = ({
                                             <i 
                                                 onClick={removeDisplayOption1} 
                                                 style={{color:'#ff4b2b', marginTop:'1rem'}} 
-                                                class="fas fa-minus"
+                                                className="fas fa-minus"
                                             ></i>
                                         </div>
                                     ) : null}
@@ -1817,14 +2079,14 @@ const ProductPage = ({
                                     <div style={displayOption1 || displayOption3 || displayOption4 ? {display:'grid', gridTemplateColumns:'1fr 3fr auto'} : {display:'grid', gridTemplateColumns:'1fr 3fr'}}>
                                         <div style={{paddingTop:'10px'}}>
                                             <div style={{display:'flex', alignItems:'center', justifyContent:'flex-start'}}>
-                                                <div class={optionToggle2 ? "secondary-dropdown-el expanded" : "secondary-dropdown-el"}>
+                                                <div className={optionToggle2 ? "secondary-dropdown-el expanded" : "secondary-dropdown-el"}>
                                                     <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%'}} onClick={() => setOptionToggle2(!optionToggle2)}>
                                                         {varName.var2 === '' ? (
                                                             <p>Pick an option</p>
                                                         ) : (
                                                             <p>{varName.var2}</p>
                                                         )}
-                                                        <i class="fas fa-caret-down"></i>
+                                                        <i className="fas fa-caret-down"></i>
                                                     </div>
                                                     {optionToggle2 ? (
                                                         <Fragment>
@@ -1857,7 +2119,7 @@ const ProductPage = ({
                                                 <i 
                                                     onClick={removeDisplayOption2} 
                                                     style={{color:'#ff4b2b', marginTop:'1rem'}} 
-                                                    class="fas fa-minus"
+                                                    className="fas fa-minus"
                                                 ></i>
                                             </div>
                                         ) : null}
@@ -1870,14 +2132,14 @@ const ProductPage = ({
                                     <div style={displayOption1 || displayOption2 || displayOption4 ? {display:'grid', gridTemplateColumns:'1fr 3fr auto'} : {display:'grid', gridTemplateColumns:'1fr 3fr'}}>
                                         <div style={{paddingTop:'10px'}}>
                                             <div style={{display:'flex', alignItems:'center', justifyContent:'flex-start'}}>
-                                                <div class={optionToggle3 ? "secondary-dropdown-el expanded" : "secondary-dropdown-el"}>
+                                                <div className={optionToggle3 ? "secondary-dropdown-el expanded" : "secondary-dropdown-el"}>
                                                     <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%'}} onClick={() => setOptionToggle3(!optionToggle3)}>
                                                         {varName.var3 === '' ? (
                                                             <p>Pick an option</p>
                                                         ) : (
                                                             <p>{varName.var3}</p>
                                                         )}
-                                                        <i class="fas fa-caret-down"></i>
+                                                        <i className="fas fa-caret-down"></i>
                                                     </div>
                                                     {optionToggle3 ? (
                                                         <Fragment>
@@ -1910,7 +2172,7 @@ const ProductPage = ({
                                                 <i 
                                                     onClick={removeDisplayOption3} 
                                                     style={{color:'#ff4b2b', marginTop:'1rem'}} 
-                                                    class="fas fa-minus"
+                                                    className="fas fa-minus"
                                                 ></i>
                                             </div>
                                         ) : null}
@@ -1923,14 +2185,14 @@ const ProductPage = ({
                                     <div style={displayOption1 || displayOption2 || displayOption3 ? {display:'grid', gridTemplateColumns:'1fr 3fr auto'} : {display:'grid', gridTemplateColumns:'1fr 3fr'}}>
                                         <div style={{paddingTop:'10px'}}>
                                             <div style={{display:'flex', alignItems:'center', justifyContent:'flex-start'}}>
-                                                <div class={optionToggle4 ? "secondary-dropdown-el expanded" : "secondary-dropdown-el"}>
+                                                <div className={optionToggle4 ? "secondary-dropdown-el expanded" : "secondary-dropdown-el"}>
                                                     <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%'}} onClick={() => setOptionToggle4(!optionToggle4)}>
                                                         {varName.var4 === '' ? (
                                                             <p>Pick an option</p>
                                                         ) : (
                                                             <p>{varName.var4}</p>
                                                         )}
-                                                        <i class="fas fa-caret-down"></i>
+                                                        <i className="fas fa-caret-down"></i>
                                                     </div>
                                                     {optionToggle4 ? (
                                                         <Fragment>
@@ -1963,25 +2225,25 @@ const ProductPage = ({
                                                 <i 
                                                     onClick={removeDisplayOption4} 
                                                     style={{color:'#ff4b2b', marginTop:'1rem'}} 
-                                                    class="fas fa-minus"
+                                                    className="fas fa-minus"
                                                 ></i>
                                             </div>
                                         ) : null}
                                     </div>
                                 </Fragment>
                             ) : null}
-                            {/* <button style={{background:'#e7e7e7', borderColor:'#e7e7e7', letterSpacing:'1px', color:'#808080'}} onClick={handleToggleOption}><i class="fas fa-plus"></i> Option</button> */}
+                            {/* <button style={{background:'#e7e7e7', borderColor:'#e7e7e7', letterSpacing:'1px', color:'#808080'}} onClick={handleToggleOption}><i className="fas fa-plus"></i> Option</button> */}
 
-                            <div onClick={handleToggleOption} style={{width:'100%', background:'#e7e7e7', letterSpacing:'1px', color:'#808080'}} class="btn btn-primary my-3"><i class="fas fa-plus"></i> Option</div>
+                            <div onClick={handleToggleOption} style={{width:'100%', background:'#e7e7e7', letterSpacing:'1px', color:'#808080'}} className="btn btn-primary my-3"><i className="fas fa-plus"></i> Option</div>
                         </div>
 
                         <div style={{maxHeight:'470px'}} className={modalForm1 ? "modal-table-list-container active" : "modal-table-list-container"} id="transition-2">
                             <div onClick={() => setModalForm1(false)} style={{display:'flex', color:'#ff4b2b', width:'100%', padding:'0 10px', fontSize:'0.8rem', justifyContent:'flex-start', alignItems:'center'}}>
-                                <i class="fas fa-long-arrow-alt-left"></i>
+                                <i className="fas fa-long-arrow-alt-left"></i>
                                 <p style={{margin:'0 10px'}}>  Back</p>
                             </div>
                             {varInfo.length > 0 && (
-                                <div class="table-responsive table-filter">
+                                <div className="table-responsive table-filter">
                                     <table className="table">
                                         <div className="variant-thead">
                                                 <div></div>
@@ -2029,6 +2291,7 @@ ProductPage.propTypes = {
     setPage: PropTypes.func.isRequired,
     addVariant: PropTypes.func.isRequired,
     handleDetail: PropTypes.func.isRequired,
+    setDetailProduct: PropTypes.func.isRequired,
     addProduct: PropTypes.func.isRequired,
     editProduct: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
@@ -2045,7 +2308,7 @@ ProductPage.propTypes = {
     setSortedProducts: PropTypes.func.isRequired,
     getProductsByStoreId: PropTypes.func.isRequired,
     addCollectionItem: PropTypes.func.isRequired,
-    addLocationVariant: PropTypes.func.isRequired,
+    addProductToLocation: PropTypes.func.isRequired,
     getCollectionById: PropTypes.func.isRequired,
     storageLocation: PropTypes.object.isRequired,
     getLocationById: PropTypes.func.isRequired,
@@ -2053,6 +2316,8 @@ ProductPage.propTypes = {
     getCollectionLocations: PropTypes.func.isRequired,
     getProductVariants: PropTypes.func.isRequired,
     setLocations: PropTypes.func.isRequired,
+    editLocation: PropTypes.func.isRequired,
+    addLocation: PropTypes.func.isRequired,
     setModalProducts: PropTypes.func.isRequired,
     setModalVariants: PropTypes.func.isRequired,
     getProductsInCollection: PropTypes.func.isRequired,
@@ -2074,13 +2339,14 @@ export default connect(mapStateToProps, {
     addProduct,
     editProduct, 
     handleDetail, 
+    setDetailProduct,
     setAdminNav,
     getStoreById, 
     getOrderById,
     deleteProduct, 
     deleteVariant, 
     addCollectionItem, 
-    addLocationVariant,
+    addProductToLocation,
     setSortedProducts, 
     setModalProducts,
     setModalVariants,
@@ -2092,6 +2358,8 @@ export default connect(mapStateToProps, {
     getCollectionLocations,
     getProductVariants,
     setLocations,
+    editLocation,
+    addLocation,
     addProductImg,
     setPage
 })(withRouter(ProductPage));

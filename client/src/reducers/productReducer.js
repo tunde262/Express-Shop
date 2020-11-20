@@ -146,6 +146,7 @@ export default function(state = initialState, action) {
             return {
             ...state,
             products: [action.payload, ...state.products],
+            detailProduct: action.payload,
             loading: false
             };
         case EDIT_PRODUCT:

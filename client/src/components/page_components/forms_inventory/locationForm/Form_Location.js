@@ -1,12 +1,12 @@
 import React, { useEffect, useState, Fragment } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import mixpanel from 'mixpanel-browser';
 
 import Modal from 'react-responsive-modal';
-import { addProduct, editProduct, addProductImg, handleDetail } from '../../../../actions/productActions';
+import { addLocation } from '../../../../actions/locationActions';
 
 import TextEditor from '../../../common/TextEditor';
 import DragAndDrop from '../../../admin/forms/utils/DragAndDrop';
@@ -14,27 +14,34 @@ import InputTag from '../../../common/InputTag/InputTag';
 import Map from '../../../common/map/Map';
 import TitleBlock from '../common/TitleBlock';
 import MapBlock from '../../../admin/pages/page_components/common/MapBlock';
-import InventoryBlock from '../../../admin/pages/page_components/common/InventoryBlock';
+import ItemsBlock from '../../../admin/pages/page_components/common/ItemsBlock';
 import VisibilityBlock from '../../../admin/pages/page_components/common/VisibilityBlock';
+import AddressBlock from '../common/AddressBlock';
 
 
 const Form_Location = ({
+  store,
   product,
-  getProductsInCollection,
-  setModal,
-  onAddItemTag,
-  onDeleteItemTag,
-  itemTags,
-  loadItemTags,
+  storageLocation: { 
+    detailLocation, 
+    loading 
+  }, 
+  setVarModal,
   formData,
   setFormData,
   switchChange,
   onChange,
+  setModal,
+  address,
+  setAddress,
+  handleLocationSelect,
   history,
   match
 }) => {
-    
+  
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  const [sentMixpanel, setSentMixpanel] = useState(false);
 
   useEffect(() => {
       window.addEventListener('resize', () => handleWindowSizeChange());
@@ -48,8 +55,19 @@ const Form_Location = ({
 
   const isMobile = windowWidth <= 769;
   const isTablet = windowWidth <= 1000;
-  
 
+  const handleMixpanel = () => {
+      mixpanel.track("Add Location Page View", {
+      //   "Entry Point": "Home Landing",
+        "Store Name": store.store.name,
+      });
+  }
+
+  if(!sentMixpanel && store.store) {
+      handleMixpanel();
+      setSentMixpanel(true);
+  }
+    
 
     {/** Content Block Variables */}
 
@@ -65,16 +83,19 @@ const Form_Location = ({
     );
     let mainLocationInfo = (
       <Fragment>
-        <div class="content-box" style={{padding:'1rem 10px', display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-            <input
+        <AddressBlock 
+          address={address}
+          setAddress={setAddress}
+          handleLocationSelect={handleLocationSelect}
+        />
+            {/* <input
                 type="text"
                 name="phone"
                 className="input_line"
                 placeholder="Enter address . . ."
                 autocomplete="no"
                 style={{margin:'0', width:'100%', outline:'none', padding:'0 10px', height:'50px', background:'#fff', fontSize:'14px', borderBottom:'2px dashed #cecece', borderRadius:'5px'}}
-            />
-        </div>
+            /> */}
         <TitleBlock 
           onChange={onChange}
           formData={formData}
@@ -82,10 +103,17 @@ const Form_Location = ({
         />
         
         <MapBlock />
-        
-        <InventoryBlock 
-          setModal={setModal}
+
+        <ItemsBlock
+            product={product} 
+            // setModal={setModal}
+            setModal={setVarModal}
+            page="location"
         />
+        
+        {/* <InventoryBlock 
+          setModal={setModal}
+        /> */}
 
         {isMobile ? (
             secondaryLocationInfo
@@ -117,18 +145,18 @@ const Form_Location = ({
 }
 
 Form_Location.propTypes = {
-    addProduct: PropTypes.func.isRequired,
-    editProduct: PropTypes.func.isRequired,
-    handleDetail: PropTypes.func.isRequired,
-    product: PropTypes.object.isRequired,
-    store: PropTypes.object.isRequired
+    addLocation: PropTypes.func.isRequired,
+    storageLocation: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired,
+    product: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  product: state.product,
-  store: state.store
+  storageLocation: state.location,
+  store: state.store,
+  product: state.product
 });
 
-export default connect(mapStateToProps, { addProduct, editProduct, handleDetail })(
+export default connect(mapStateToProps, { addLocation })(
     withRouter(Form_Location)
 );

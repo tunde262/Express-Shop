@@ -6,8 +6,16 @@ import { connect } from 'react-redux';
 import Spinner from '../../../common/Spinner';
 
 
+const initialState = {
+    sku: '',
+    sale_price: '',
+    price: '',
+    qty: ''
+};
+
 const Location = ({ 
     deleteLocation,
+    editVarLocation,
     handleToggle,
     locationVariant,
     slide,
@@ -15,17 +23,30 @@ const Location = ({
     detailLocation,
     detailVariant,
     store,
-    onChange,
     page,
     setVarModal,
     product
 }) => {
+    const [formData, setFormData] = useState(initialState); 
+
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [rowSlide, setRowSlide] = useState(false);
+
+    const [rowData, setRowData] = useState(initialState); 
 
     useEffect(() => {
         window.addEventListener('resize', () => handleWindowSizeChange());
 
+        if (varLocation) {
+            const locationData = { ...initialState };
+            for (const key in varLocation) {
+                if (key in locationData) locationData[key] = varLocation[key];
+            }
+
+            setFormData(locationData);
+            setRowData(locationData);
+        }
+        
         return () => window.removeEventListener('resize', () => handleWindowSizeChange());
       }, [])
 
@@ -35,6 +56,30 @@ const Location = ({
 
     const isMobile = windowWidth <= 769;
     const isTablet = windowWidth <= 1000;
+
+    const {
+        sku,
+        sale_price,
+        price,
+        qty,
+    } = formData;
+     
+
+    const onChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+      //   console.log(files);
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+
+
+        editVarLocation(formData, detailVariant._id, varLocation.location);
+        console.log('FORM DATA')
+        console.log(formData);
+        setRowData(formData)
+        setRowSlide(false);
+    };
 
     let rowClassName1;
 
@@ -84,10 +129,10 @@ const Location = ({
                     </div>
                 </Link>
                 <Link onClick={rowClick} to={page === "dashboard" ? {pathname:`/admin/location/${store.store._id}/${detailLocation._id}`,search: "?show=detail"} : null}>
-                    <div><p style={{margin:'0'}}>5</p></div>
+                    <div><p style={{margin:'0'}}>{rowData.qty}</p></div>
                 </Link>
                 <Link onClick={rowClick} to={page === "dashboard" ? {pathname:`/admin/location/${store.store._id}/${detailLocation._id}`,search: "?show=detail"} : null}>
-                    <div><p style={{margin:'0'}}>5</p></div>
+                    <div><p style={{margin:'0'}}>${rowData.price}</p></div>
                 </Link>
             </div>
 
@@ -176,7 +221,7 @@ const Location = ({
                             type="text"
                             placeholder="price"
                             name="price"
-                            value={varLocation.price}
+                            value={price}
                             onChange={e => onChange(e)}
                             style={{margin:'0', width:'100%', outline:'none', padding:'0 10px', height:'50px', background:'#fff', fontSize:'14px', border:'2px dashed #cecece', borderRadius:'5px'}}
                             />
@@ -186,7 +231,7 @@ const Location = ({
                             type="text"
                             placeholder="sale price"
                             name="sale_price"
-                            value={varLocation.sale_price}
+                            value={sale_price}
                             onChange={e => onChange(e)}
                             style={{margin:'0', width:'100%', outline:'none', padding:'0 10px', height:'50px', background:'#fff', fontSize:'14px', border:'2px dashed #cecece', borderRadius:'5px'}}
                             />
@@ -195,8 +240,8 @@ const Location = ({
                             <input
                             type="text"
                             placeholder="qty"
-                            name="inventory_qty"
-                            value={varLocation.inventory_qty}
+                            name="qty"
+                            value={qty}
                             onChange={e => onChange(e)}
                             style={{margin:'0', width:'100%', outline:'none', padding:'0 10px', height:'50px', background:'#fff', fontSize:'14px', border:'2px dashed #cecece', borderRadius:'5px'}}
                             />
@@ -213,7 +258,7 @@ const Location = ({
                         </div>
                         <div style={{width:'50px', display:'flex', flexDirection:'column'}}>
                             <div style={{width:'100%', height:'50%', color:'green', display:'flex', justifyContent:'center', alignItems:'center'}}>
-                                <i className="fas fa-check"></i>
+                                <i onClick={(e) => onSubmit(e)} className="fas fa-check"></i>
                             </div>
                             <div style={{width:'100%', height:'50%', color:'#ff4b2b', display:'flex', justifyContent:'center', alignItems:'center'}}>
                                 <i onClick={() => setRowSlide(!rowSlide)} className="fas fa-times"></i>

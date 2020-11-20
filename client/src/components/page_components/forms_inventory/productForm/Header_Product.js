@@ -5,7 +5,12 @@ import { Link } from 'react-router-dom';
 
 // import { deleteStore } from '../../../../../actions/storeActions';
 
-const Header_Product = ({onAddProduct, store, auth: { user }, profile: {profile, loading }}) => { 
+const Header_Product = ({
+    onAddProduct, 
+    store, 
+    auth: { user }, 
+    profile: {profile, loading }
+}) => { 
 
     return (
         // <div>

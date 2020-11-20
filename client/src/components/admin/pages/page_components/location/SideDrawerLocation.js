@@ -24,11 +24,11 @@ const SideDrawerLocation = ({setSlideForm1, getLocationsByStoreId, storeId, loca
                     const res = await axios.get(`/api/products/location/${location._id}`);
                     console.log(res.data);
                     setLocationList(locationList => [...locationList, (
-                        <Link style={{textDecoration:'none'}} to={{pathname:`/admin/location/${storeId}/${location._id}`,search: "?show=detail"}}>
+                        <Link key={location._id} style={{textDecoration:'none'}} to={{pathname:`/admin/location/${storeId}/${location._id}`,search: "?show=detail"}}>
                             <div key={location._id} style={{display:'flex', justifyContent:'space-between', height:'100px', width:'100%', padding:'10px', borderBottom:'1px solid #cecece'}}>
                                 <div style={{display:'flex'}}>
                                     <div style={{height:'100%', display:'flex', alignItems:'center', justifyContent:'center'}}>
-                                        <i style={{color:'#3CB371', margin:'0 10px', fontSize:'1.3rem'}} class="fas fa-map-marker-alt"></i>
+                                        <i style={{color:'#3CB371', margin:'0 10px', fontSize:'1.3rem'}} className="fas fa-map-marker-alt"></i>
                                     </div>
                                     <div style={{display:'flex', height:'100%', overflow:'hidden', width:'200px', flexDirection:'column', justifyContent:'center', alignItems:'flex-start'}}>
                                         <div className="line-clamp-1" style={{height:'20px', overflow:'hidden', width:'100%'}}>
@@ -41,7 +41,7 @@ const SideDrawerLocation = ({setSlideForm1, getLocationsByStoreId, storeId, loca
                                     </div>
                                 </div>
                                 <div style={{display:'flex', height:'100%', color:'#808080', paddingRight:'10px', justifyContent:'center', alignItems:'center'}}>
-                                    <i class="fas fa-chevron-right"></i>
+                                    <i className="fas fa-chevron-right"></i>
                                 </div>
                             </div>
                         </Link>
@@ -69,7 +69,7 @@ const SideDrawerLocation = ({setSlideForm1, getLocationsByStoreId, storeId, loca
     return (
         <Fragment>
             <div onClick={() => setSlideForm1(false)} style={{display:'flex', color:'#808080', width:'100%', padding:'1rem 0 0 1.5rem', fontSize:'0.8rem', justifyContent:'flex-start', alignItems:'center'}}>
-                <i class="fas fa-long-arrow-alt-left"></i>
+                <i className="fas fa-long-arrow-alt-left"></i>
                 <p style={{margin:'0 10px'}}>  Back to menu</p>
             </div>
             <div style={{overflowY:'scroll', borderTop:'1px solid #f2f2f2', marginTop:'10px', height:'80vh'}}>

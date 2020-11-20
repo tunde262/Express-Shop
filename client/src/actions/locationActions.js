@@ -5,8 +5,9 @@ import {
   GET_LOCATIONS,
   LOCATION_ERROR,
   DELETE_LOCATION,
-  UPDATE_LOCATION_VARIANTS,
+  UPDATE_LOCATION_PRODUCTS,
   ADD_LOCATION,
+  EDIT_LOCATION,
   GET_LOCATION,
   GET_PRODUCT_LOCATIONS,
   GET_VARIANT_LOCATIONS,
@@ -377,8 +378,9 @@ export const getLocationById = id => async dispatch => {
   } catch (err) {
       dispatch({
           type: LOCATION_ERROR,
-          payload: { msg: err.response.statusText, status: err.response.status }
+          payload: { msg: "something went wrong", status: 500 }
       });
+      console.log(err);
   }
 }
 
@@ -419,7 +421,7 @@ export const addLocation = (formData, storeId, history) => async dispatch => {
         payload: res.data
       });
 
-      history.push(`/admin/location/${res.data._id}`);
+      history.push(`/admin/location/${storeId}/${res.data._id}?show=add_location`);
   
       dispatch(setAlert('New Location Added', 'success'));
     } catch (err) {
@@ -428,6 +430,54 @@ export const addLocation = (formData, storeId, history) => async dispatch => {
         payload: { msg: err.response.statusText, status: err.response.status }
       });
     }
+};
+
+// Edit Location
+export const editLocation = (formData, locationId, storeId, history) => async dispatch => {
+  try {
+      const config = {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        };
+        console.log('FRONTEND FORM DATA');
+        console.log(formData);
+    const res = await axios.post(`/api/darkstores/edit/${locationId}/${storeId}`, formData, config);
+
+    // const storeVariants = await axios.get('/api/variants/store');
+
+    // const locationTags = [...res.data.tags];
+    
+    // for(var i = 0; i < locationTags.length; i++) {
+    //   storeVariants.data.map(async variant => {
+    //     try {
+    //       if(variant.tags.includes(locationTags[i])) {
+    //         let data = new FormData();
+    //         data.append('id', variant._id);
+
+    //         await axios.put(`/api/darkstores/variant/${res.data._id}`, data, config);
+    //         console.log('Added ' + variant._id + ' TO LOCATION: ' + res.data.name);
+    //       }
+    //     } catch (err) {
+    //       console.log(err);
+    //     }
+    //   })
+    // }
+
+    dispatch({
+      type: EDIT_LOCATION,
+      payload: res.data
+    });
+
+    history.push(`/admin/location/${storeId}/${res.data._id}?show=detail`);
+
+    dispatch(setAlert('Location Updated', 'success'));
+  } catch (err) {
+    dispatch({
+      type: LOCATION_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
 };
 
 
@@ -450,8 +500,8 @@ export const deleteLocation = id => async dispatch => {
   }
 };
 
-// add single Item Variant to location
-export const addVariant = (formData, id) => async dispatch => {
+// add single Product Id to location
+export const addProductToLocation = (locId, prodId) => async dispatch => {
   const config = {
     headers: {
       'Content-Type': 'application/json'
@@ -459,11 +509,11 @@ export const addVariant = (formData, id) => async dispatch => {
   };
 
   try {
-    const res = await axios.put(`/api/darkstores/product/${id}`, formData, config);
+    const res = await axios.put(`/api/darkstores/product/${locId}/${prodId}`, config);
 
     dispatch({
-      type: UPDATE_LOCATION_VARIANTS,
-      payload: { id, variants: res.data}
+      type: UPDATE_LOCATION_PRODUCTS,
+      payload: { locId, products: res.data}
     });
 
     // dispatch(setAlert('Location Created', 'success'));
@@ -475,26 +525,26 @@ export const addVariant = (formData, id) => async dispatch => {
   }
 };
 
-// add single variant to location
-export const addLocationVariant = (variantList, id) => async dispatch => {
+// add single product to location
+export const addProductsByList = (productList, id) => async dispatch => {
   const config = {
     headers: {
       'Content-Type': 'application/json'
     }
   };
 
-  console.log('VARIANT LIST ACTION');
-  console.log(variantList);
+  console.log('PRODUCT LIST ACTION');
+  console.log(productList);
 
-  variantList.map(async variantId => {
+  productList.map(async productId => {
     try {
-      const variant = await axios.get(`/api/variants/${variantId}`)
+      const product = await axios.get(`/api/products/${productId}`)
 
-      const location = await axios.put(`/api/darkstores/variant/${id}/${variant.data._id}`, config);
+      const location = await axios.put(`/api/darkstores/product/${id}/${product.data._id}`, config);
   
       dispatch({
-        type: UPDATE_LOCATION_VARIANTS,
-        payload: { id, variants: location.data}
+        type: UPDATE_LOCATION_PRODUCTS,
+        payload: { id, products: location.data}
       });
   
       // dispatch(setAlert('Location Created', 'success'));

@@ -46,12 +46,12 @@ const SideDrawer = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, st
         <ul className={drawerClasses}>
             <li onClick={drawerClickHandler}>
                 <Link to="/home">
-                    <i class="fas fa-home"></i>
+                    <i className="fas fa-home"></i>
                 </Link>
             </li>
             {/* <li onClick={drawerClickHandler}>
                 <Link to="/explore">
-                    <i class="far fa-compass"></i>
+                    <i className="far fa-compass"></i>
                 </Link>
             </li> */}
             <li onClick={toggleAuth}>
@@ -61,7 +61,7 @@ const SideDrawer = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, st
             </li>
             <li onClick={toggleCart}>
                 <a href="#">
-                    <i class="fas fa-shopping-cart"></i>
+                    <i className="fas fa-shopping-cart"></i>
                 </a>
             </li>
             {/* <li>
@@ -122,9 +122,9 @@ const SideDrawer = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, st
                     <button style={{marginBottom:'1rem'}}>Checkout</button>
                     <div style={{display:'grid', gridTemplateColumns:'repeat(4,1fr)', gridGap:'10px', height:'100px', width:'100%', padding:'10px', alignItems:'center', borderBottom:'1px solid #cecece'}}>
                         <div style={{display:'flex', height:'100%', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
-                            <i style={{color:'#ff4b2b'}} class="fas fa-chevron-up"></i>
+                            <i style={{color:'#ff4b2b'}} className="fas fa-chevron-up"></i>
                             <p>2</p>
-                            <i style={{color:'#cecece'}} class="fas fa-chevron-down"></i>
+                            <i style={{color:'#cecece'}} className="fas fa-chevron-down"></i>
                         </div>
                         <img style={{height: '100%'}} src={paper_towels} alt="img" />
                         <div style={{display:'flex', height:'100%', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
@@ -134,9 +134,9 @@ const SideDrawer = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, st
                     </div>
                     <div style={{display:'grid', gridTemplateColumns:'repeat(4,1fr)', gridGap:'10px', height:'100px', width:'100%', padding:'10px', alignItems:'center', borderBottom:'1px solid #cecece'}}>
                         <div style={{display:'flex', height:'100%', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
-                            <i style={{color:'#ff4b2b'}} class="fas fa-chevron-up"></i>
+                            <i style={{color:'#ff4b2b'}} className="fas fa-chevron-up"></i>
                             <p>2</p>
-                            <i style={{color:'#cecece'}} class="fas fa-chevron-down"></i>
+                            <i style={{color:'#cecece'}} className="fas fa-chevron-down"></i>
                         </div>
                         <img style={{height: '100%'}} src={paper_towels} alt="img" />
                         <div style={{display:'flex', height:'100%', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
@@ -146,9 +146,9 @@ const SideDrawer = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, st
                     </div>
                     <div style={{display:'grid', gridTemplateColumns:'repeat(4,1fr)', gridGap:'10px', height:'100px', width:'100%', padding:'10px', alignItems:'center', borderBottom:'1px solid #cecece'}}>
                         <div style={{display:'flex', height:'100%', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
-                            <i style={{color:'#ff4b2b'}} class="fas fa-chevron-up"></i>
+                            <i style={{color:'#ff4b2b'}} className="fas fa-chevron-up"></i>
                             <p>2</p>
-                            <i style={{color:'#cecece'}} class="fas fa-chevron-down"></i>
+                            <i style={{color:'#cecece'}} className="fas fa-chevron-down"></i>
                         </div>
                         <img style={{height: '100%'}} src={paper_towels} alt="img" />
                         <div style={{display:'flex', height:'100%', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
@@ -158,9 +158,9 @@ const SideDrawer = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, st
                     </div>
                     <div style={{display:'grid', gridTemplateColumns:'repeat(4,1fr)', gridGap:'10px', height:'100px', width:'100%', padding:'10px', alignItems:'center', borderBottom:'1px solid #cecece'}}>
                         <div style={{display:'flex', height:'100%', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
-                            <i style={{color:'#ff4b2b'}} class="fas fa-chevron-up"></i>
+                            <i style={{color:'#ff4b2b'}} className="fas fa-chevron-up"></i>
                             <p>2</p>
-                            <i style={{color:'#cecece'}} class="fas fa-chevron-down"></i>
+                            <i style={{color:'#cecece'}} className="fas fa-chevron-down"></i>
                         </div>
                         <img style={{height: '100%'}} src={paper_towels} alt="img" />
                         <div style={{display:'flex', height:'100%', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>

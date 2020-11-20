@@ -19,6 +19,7 @@ const Profile = require('../../models/Profile');
 
 //Db Config
 const config = require('config');
+const { stat } = require('fs');
 const db = config.get('mongoURI');
 
 // Create Mongo Connection
@@ -157,8 +158,8 @@ router.get('/:id', async (req, res) => {
 // @desc Create A Darkstore
 // @access Public
 router.post('/add/:storeId', upload.single('file'), [ auth, [
-        check('name', 'Name is required').not().isEmpty()
-    ]], async(req, res) => {
+    check('formatted_address', 'Address is required').not().isEmpty()
+]], async(req, res) => {
         const errors = validationResult(req);
         if(!errors.isEmpty()) {
             return res.status(400).json({errors: errors.array() });
@@ -192,8 +193,6 @@ router.post('/add/:storeId', upload.single('file'), [ auth, [
         if(coordinates) darkstoreFields.coordinates = coordinates;
         if(formatted_address) darkstoreFields.formatted_address = formatted_address;
         if(phone) darkstoreFields.phone = phone;
-        if(req.file) categoryFields.img = req.file.id;
-        if(req.file) categoryFields.img_name = req.file.filename;
 
         if(tags) {
             darkstoreFields.tags = tags.split(',').map(tag => tag.trim());
@@ -237,45 +236,67 @@ router.post('/add/:storeId', upload.single('file'), [ auth, [
 // @route POST api/darkstores/:id
 // @desc Edit A Darkstore
 // @access Public
-router.post('/:id', upload.single('file'), [ auth, [
-    check('name', 'Name is required').not().isEmpty()
-    ]], async(req, res) => {
-        const errors = validationResult(req);
-        if(!errors.isEmpty()) {
-            return res.status(400).json({errors: errors.array() });
-        }
+router.post('/edit/:id/:storeId', auth, async(req, res) => {
 
         const {
             name,
             tags,
-            street,
+            location_tags,
+            street_name,
+            street_number,
             city,
+            country,
             state, 
-            zipcode,
-            phone
+            postalcode,
+            formatted_address,
+            area,
+            coordinates,
+            placeId,
+            phone,
         } = req.body;
+        
+        console.log('BACKEND DATA')
+        console.log(req.body)
 
         // Get fields. Build darkstore object
         const darkstoreFields = {};
         if(name) darkstoreFields.name = name;
+        if(placeId) darkstoreFields.placeId = placeId;
+        if(area) darkstoreFields.area = area;
+        if(coordinates) darkstoreFields.coordinates = coordinates;
+        if(formatted_address) darkstoreFields.formatted_address = formatted_address;
         if(phone) darkstoreFields.phone = phone;
-        if(req.file) categoryFields.img = req.file.id;
-        if(req.file) categoryFields.img_name = req.file.filename;
+
         if(tags) {
             darkstoreFields.tags = tags.split(',').map(tag => tag.trim());
         }
+        if(location_tags) {
+            darkstoreFields.location_tags = location_tags.split(',').map(locationTag => locationTag.trim());
+        }
 
-        // Build social array
-        darkstoreFields.address = {};
-        if(street) darkstoreFields.address.street = street;
-        if(city) darkstoreFields.address.city = city;
-        if(state) darkstoreFields.address.state = state;
-        if(zipcode) darkstoreFields.address.zipcode = zipcode;
+        console.log('COORDS');
+        console.log(coordinates)
+        console.log(name)
+        // Build location obj
+        if(coordinates) {
+            darkstoreFields.location = {};
+            darkstoreFields.location.coordinates = coordinates.split(',').map(coordinate => coordinate.trim());
+        }
+
+        // Build address component obj
+        if(postalcode || street_name || street_number || city || state || country || area) {
+            darkstoreFields.address_components = {};
+            if(postalcode) darkstoreFields.address_components.postalcode = postalcode;
+            if(street_name) darkstoreFields.address_components.street_name = street_name;
+            if(street_number) darkstoreFields.address_components.street_number = street_number;
+            if(city) darkstoreFields.address_components.city = city;
+            if(state) darkstoreFields.address_components.state = state;
+            if(country) darkstoreFields.address_components.country = country;
+            if(area) darkstoreFields.address_components.area = area;
+        }
 
         try {
-            const profile = await Profile.findOne({ user: req.user.id });
-            const store = await Store.findOne({ profile: profile.id });
-            darkstoreFields.store = store.id;
+            darkstoreFields.store = req.params.storeId;
 
             let darkstore = await Darkstore.findById(req.params.id );
 
@@ -328,36 +349,36 @@ router.delete('/:id', auth, async (req, res) => {
 // @route PUT api/darkstores/variant/:locationId/:varId
 // @desc Add & Remove New Item to Darkstore's variants
 // @access Private
-router.put('/variant/:locationId/:varId', auth, async (req, res) => {
+router.put('/product/:locationId/:prodId', auth, async (req, res) => {
     console.log('CONSOLE LOCATION')
-    console.log(req.params.varId);
+    console.log(req.params.prodId);
     try {
         const darkstore = await Darkstore.findById(req.params.locationId);
 
         console.log('CONSOLE 1');
         // Check if variant already in darkstore location
-        if(darkstore.variants.length > 0) {
+        if(darkstore.products.length > 0) {
             console.log('CONSOLE 2');
-            if(darkstore.variants.filter(variantId => variantId.toString() === req.params.varId).length > 0) {
+            if(darkstore.products.filter(productId => productId.toString() === req.params.prodId).length > 0) {
                 console.log('CONSOLE 3');
                 // Get remove index
-                const removeIndex = darkstore.variants.map(variantId => variantId.toString()).indexOf(req.params.varId);
+                const removeIndex = darkstore.products.map(productId => productId.toString()).indexOf(req.params.prodId);
                 console.log('CONSOLE 4');
     
-                darkstore.variants.splice(removeIndex, 1);
+                darkstore.products.splice(removeIndex, 1);
             } else {
                 console.log('CONSOLE 5');
-                darkstore.variants.unshift({variant: req.params.varId});
+                darkstore.products.unshift({product: req.params.prodId});
             }
         } else {
             console.log('CONSOLE 6');
-            darkstore.variants.unshift({variant: req.params.varId});
+            darkstore.products.unshift({product: req.params.prodId});
         }
         console.log('CONSOLE 7');
 
         await darkstore.save();
 
-        res.json(darkstore.variants);
+        res.json(darkstore.products);
     } catch (err) {
         console.error(err.message);
         

@@ -14,7 +14,7 @@ const NumbersBlock = ({
     } = formData;
     
     return (
-        <div class="content-box" style={{padding:'10px'}}>
+        <div className="content-box" style={{padding:'10px'}}>
             <div style={{width:'100%', margin:'10px 0', display:'grid', gridTemplateColumns:'1fr 1fr', gridGap:'1rem'}}>
                 <div style={{width:'100%', display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
                     <p style={{color:'#808080', margin:'0 0 5px 5px'}}>Price:</p>

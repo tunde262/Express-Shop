@@ -72,7 +72,7 @@ const AuthDrawer = ({ drawerClickHandler, toggleAuthDrawer, getCurrentProfile, d
                     {detailPage && (
                         <div style={{display:'flex', justifyContent:'flex-end'}} className="slide-item" onClick={handleSlideList}>
                             <div>
-                                <p style={{margin:'0', color:'#ff4b2b'}}>View products<span style={{margin:'0 10px'}}><i class="fas fa-arrow-right"></i></span></p>
+                                <p style={{margin:'0', color:'#ff4b2b'}}>View products<span style={{margin:'0 10px'}}><i className="fas fa-arrow-right"></i></span></p>
                             </div>
                         </div>
                     )}
@@ -87,7 +87,7 @@ const AuthDrawer = ({ drawerClickHandler, toggleAuthDrawer, getCurrentProfile, d
                             <p style={{margin:0}}>4.5 / 5 stars</p>
                         </div>
                         <div style={{display:'flex', padding:'0', color:'#808080', justifyContent:'center', alignItems:'center'}}>
-                            <i class="fas fa-chevron-right"></i>
+                            <i className="fas fa-chevron-right"></i>
                         </div>
                     </a>
                     <Link onClick={toggleAuth} to={{pathname:`/admin/${store.store && store.store._id}`,search: "?show=store"}}>
@@ -137,7 +137,7 @@ const AuthDrawer = ({ drawerClickHandler, toggleAuthDrawer, getCurrentProfile, d
                         <Fragment>
                             <div className="slide-item" onClick={() => setSlideForm1(!slideForm1)}>
                                 <div>
-                                    <p style={{margin:'0', color:'#808080'}}><span style={{margin:'0 10px'}}><i class="fas fa-arrow-left"></i></span>Back to menu</p>
+                                    <p style={{margin:'0', color:'#808080'}}><span style={{margin:'0 10px'}}><i className="fas fa-arrow-left"></i></span>Back to menu</p>
                                 </div>
                             </div>
                             <Link onClick={toggleAuth} to="/profile/saved">

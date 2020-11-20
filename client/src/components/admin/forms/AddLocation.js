@@ -42,7 +42,11 @@ const AddLocation = ({ addLocation, store, history }) => {
     const handleSelect = async (value) => {
         const result = await geocodeByAddress(value);
         const latLng = await getLatLng(result[0])
+        console.log('VALUE:');
+        console.log(value);
+        console.log('RESULTS:')
         console.log(result);
+        console.log('LATLNG');
         console.log(latLng);
 
         let locationTags = [];
@@ -94,7 +98,7 @@ const AddLocation = ({ addLocation, store, history }) => {
             postalCode: (postalCode) ? postalCode : '',
             placeId: (placeId) ? placeId : '',
             location_tags: (newTags) ? newTags : '',
-            tags: '',
+            tags: (tags) ? tags : '',
             latLng: `${latLng.lat}, ${latLng.lng}`
         })
         setCoordinates(latLng);
@@ -283,6 +287,9 @@ const AddLocation = ({ addLocation, store, history }) => {
                                         ) : null} 
 
                                         {suggestions.map((suggestion) => {
+                                            const className = suggestion.active 
+                                                ?  "" 
+                                                : "";
                                             const style = {
                                                 backgroundColor: suggestion.active ? "#41b6e6" : "#fff"
                                             }

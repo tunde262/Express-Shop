@@ -41,7 +41,7 @@ const ShortTable = ({ product: {loading, modalProducts}, handleClick, setModalFo
 
     return (
         <Fragment>
-            <table className="table">
+            <div className="table">
                 {/* <thead>
                     <tr>
                         <th>
@@ -53,7 +53,7 @@ const ShortTable = ({ product: {loading, modalProducts}, handleClick, setModalFo
                     </tr>
                 </thead> */}
                 <div className="tbody">{productList}</div>
-            </table>
+            </div>
 
             {/* <Modal open={modalShow} onClose={() => setModal(false)}>
                 <ItemForm />

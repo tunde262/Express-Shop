@@ -12,12 +12,11 @@ const TitleBlock = ({
     } = formData;
 
     return (
-        <div class="content-box" style={{padding:'1rem 10px', display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+        <div className="content-box" style={{padding:'1rem 10px', display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
             <p style={{color:'#808080', margin:'0 0 5px 5px'}}>Title:</p>
             <input
                 type="text"
                 name="name"
-                className="input_line"
                 className="input_line"
                 placeholder={!isLocation ? "Enter name . . ." : "Give this location a nickname . . ."}
                 value={name}

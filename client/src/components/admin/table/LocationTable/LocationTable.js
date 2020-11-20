@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { getLocationsByStoreId, deleteLocation } from '../../../../actions/locationActions';
+import { editVarLocation } from '../../../../actions/variantActions';
+
 import Spinner from '../../../common/Spinner';
 import 'react-responsive-modal/styles.css';
 
@@ -27,6 +29,7 @@ const LocationTable = ({
     deleteLocation,
     onChange,
     setVarModal,
+    editVarLocation
 }) => {
     const [locationList, setLocationList] = useState([]);
     const [gotLocations, setGotLocations] = useState(false);
@@ -73,6 +76,7 @@ const LocationTable = ({
                                     varLocation={location} 
                                     detailVariant={detailVariant}
                                     detailLocation={res.data} 
+                                    editVarLocation={editVarLocation}
                                     deleteLocation={deleteLocation} 
                                     onChange={onChange}
                                     page={page}
@@ -122,14 +126,14 @@ const LocationTable = ({
                 <p style={{alignSelf: 'flex-end'}}>40 locations</p>
                 <Link to="/admin/add-location" style={{background: '#42b499', color:'#fff'}} className="btn">Add Location</Link>
             </section> */}
-            <table className="table">
+            <div className="table">
                 <div className="secondary-thead-mobile">
                     <div style={{padding:'0 1rem'}}><p>Nickname</p></div>
                     <div><p>Qty</p></div>
                     <div><p>Sold</p></div>
                 </div>
                 <div className="tbody">{!locationList.length > 0 ? <Spinner /> : locationList}</div>
-            </table>
+            </div>
         </Fragment>
     )
 }
@@ -140,6 +144,7 @@ LocationTable.propTypes = {
     getLocationsByStoreId: PropTypes.func.isRequired,
     store: PropTypes.object.isRequired,
     variant: PropTypes.object.isRequired,
+    editVarLocation: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -149,4 +154,4 @@ const mapStateToProps = state => ({
     product: state.product
 });
 
-export default connect(mapStateToProps, { getLocationsByStoreId, deleteLocation })(LocationTable);
+export default connect(mapStateToProps, { getLocationsByStoreId, deleteLocation, editVarLocation })(LocationTable);

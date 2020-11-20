@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 
 const HeaderLocation = ({storageLocation: { detailLocation }, history}) => {
     return (
-        <div class="product-header container-fluid">
+        <div className="product-header container-fluid">
             {/* <div id="breadcrumb">
                 <nav className="breadcrumb">
                     <ol>
@@ -15,7 +15,7 @@ const HeaderLocation = ({storageLocation: { detailLocation }, history}) => {
             </div> */}
             <div style={{display: 'flex', flexDirection:'column', height:'auto', marginBottom:'10px', alignItems:'flex-start'}}>
                 <div onClick={() => history.goBack()} style={{display:'flex', color:'#ff4b2b', width:'100%', padding:'10px 0', fontSize:'0.8rem', justifyContent:'flex-start', alignItems:'center'}}>
-                    <i class="fas fa-long-arrow-alt-left"></i>
+                    <i className="fas fa-long-arrow-alt-left"></i>
                     <p style={{margin:'0 10px'}}>  Back</p>
                 </div>
                 <div style={{display: 'flex', height:'auto', marginBottom:'10px', alignItems:'center'}}>

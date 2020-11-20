@@ -9,7 +9,7 @@ const Map = ({ storageLocation }) => {
     }, []);
 
     const renderMap = () => {
-        loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyCFCHndjQWFP1QHybzn8_OjTtNqMKITiYY&callback=initMap");
+        loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyAhxRYq5kVL5I2EEuShO9HPSsRrjCA68_4&callback=initMap");
         window.initMap = initMap;
     }
 
@@ -50,7 +50,8 @@ const Map = ({ storageLocation }) => {
                 center: {
                     lat: storageLocation.locations[0].location.coordinates[0], 
                     lng: storageLocation.locations[0].location.coordinates[1]
-                }
+                },
+                disableDefaultUI: true
             }
         } else {
             options = {
@@ -58,7 +59,8 @@ const Map = ({ storageLocation }) => {
                 center: {
                     lat: 32.776664, 
                     lng: -96.796988
-                }
+                },
+                disableDefaultUI: true
             }
         }
         

@@ -35,6 +35,7 @@ import {
         return {
           ...state,
           collections: [payload, ...state.collections],
+          collection: payload,
           loading: false
         };
       case EDIT_COLLECTION:

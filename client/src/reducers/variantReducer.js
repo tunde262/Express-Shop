@@ -4,6 +4,9 @@ import {
     UPDATE_VARIANT_LIKES,
     DELETE_VARIANT,
     ADD_VARIANT,
+    EDIT_VARIANT,
+    UPDATE_VARIANT_LOCATIONS,
+    ADD_VARIANT_LOCATIONS,
     GET_VARIANT,
     ADD_VARIANT_COMMENT,
     REMOVE_VARIANT_COMMENT,
@@ -17,8 +20,8 @@ import {
   
 const initialState = {
     variants: [],
-    sortedVariants: null,
-    modalVariants: null,
+    sortedVariants: [],
+    modalVariants: [],
     detailVariant: null,
     loading: true,
     tags: [],
@@ -59,6 +62,99 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 variants: [payload, ...state.variants],
+                loading: false
+            };
+        case EDIT_VARIANT:
+            return {
+                ...state,
+                variants: state.variants.map(variant => 
+                    variant._id.toString() === payload._id.toString() ? { ...variant, payload } : variant
+                ),
+                sortedVariants: state.sortedVariants.map(variant => 
+                    variant._id.toString() === payload._id.toString() ? { ...variant, payload } : variant
+                ),
+                loading: false
+            };
+        case ADD_VARIANT_LOCATIONS:
+            const tempVars2 = [...state.variants];
+            const tempModalVars2 = [...state.modalVariants];
+
+            let newLocations2 = [];
+            let newModalLocations2 = [];
+
+            tempVars2.map((tempVariant, index) => {
+                if(tempVariant._id.toString() === payload.id.toString()) {
+                    newLocations2.push(...tempVariant.locations);
+                }
+            })
+
+
+            newLocations2.unshift(payload.location);
+
+            tempModalVars2.map((tempModalVariant, index) => {
+                if(tempModalVariant._id.toString() === payload.id.toString()) {
+                    newModalLocations2.push(...tempModalVariant.locations)
+                }
+            })
+
+
+            newModalLocations2.unshift(payload.location);
+
+            return {
+                ...state,
+                variants: state.variants.map(variant =>
+                    variant._id === payload.id ? { ...variant, locations: newLocations2 } : variant
+                ),
+                modalVariants: state.modalVariants.map(variant =>
+                    variant._id === payload.id ? { ...variant, locations: newModalLocations2 } : variant
+                ),
+                // detailVariant: {...state.detailVariant, locations: newLocations},
+                loading: false
+            };
+        case UPDATE_VARIANT_LOCATIONS:
+            const tempVars = [...state.variants];
+            const tempModalVars = [...state.modalVariants];
+
+            let newLocations = [];
+            let newModalLocations = [];
+
+            tempVars.map((tempVariant, index) => {
+                if(tempVariant._id.toString() === payload.id.toString()) {
+                    tempVariant.locations.map((location, locIndex) => {
+                        if(location.location.toString() === payload.location.location.toString()) {
+                            tempVariant.locations.splice(locIndex, 1);
+                            newLocations.push(...tempVariant.locations)
+                        }
+                    })
+                }
+            })
+
+
+            newLocations.unshift(payload.location);
+
+            tempModalVars.map((tempModalVariant, index) => {
+                if(tempModalVariant._id.toString() === payload.id.toString()) {
+                    tempModalVariant.locations.map((location, locIndex) => {
+                        if(location.location.toString() === payload.location.location.toString()) {
+                            tempModalVariant.locations.splice(locIndex, 1);
+                            newModalLocations.push(...tempModalVariant.locations)
+                        }
+                    })
+                }
+            })
+
+
+            newModalLocations.unshift(payload.location);
+
+            return {
+                ...state,
+                variants: state.variants.map(variant =>
+                    variant._id === payload.id ? { ...variant, locations: newLocations } : variant
+                ),
+                modalVariants: state.modalVariants.map(variant =>
+                    variant._id === payload.id ? { ...variant, locations: newModalLocations } : variant
+                ),
+                // detailVariant: {...state.detailVariant, locations: newLocations},
                 loading: false
             };
         case DELETE_VARIANT:

@@ -41,7 +41,7 @@ const VarLocationTable = ({ product: {loading, modalProducts}, setModalForm1, mo
 
     return (
         <Fragment>
-            <table className="table">
+            <div className="table">
                 {/* <thead>
                     <tr>
                         <th>
@@ -53,7 +53,7 @@ const VarLocationTable = ({ product: {loading, modalProducts}, setModalForm1, mo
                     </tr>
                 </thead> */}
                 <tbody>{productList}</tbody>
-            </table>
+            </div>
 
             {/* <Modal open={modalShow} onClose={() => setModal(false)}>
                 <ItemForm />
