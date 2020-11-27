@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
 import { decrement, removeItem, addToCart } from '../../actions/productActions';
+
+import placeholderImg from '../../utils/imgs/placeholder_img.jpg';
 
 import ReactGA from 'react-ga';
 
@@ -14,56 +17,66 @@ class CartItem extends Component {
         this.props.decrement(id);
     }
 
-    onRemoveItem(id, title) {
+    onRemoveItem(id, name) {
         this.props.removeItem(id);
         ReactGA.event({
             category: 'Cart',
             action: 'Removed From Cart',
-            label: title
+            label: name
         });
     }
 
     render() {
         const item = this.props.item;
-        const { _id, title, img_gallery, price } = item.item;
+        const { _id, name, img_gallery, price } = item.item;
         const count = item.qty;
         const tempTotal = item.price;
         const total = parseFloat(tempTotal.toFixed(2));
 
         return (
-            <div className="row my-2 text-capitalize text-center" style={{borderBottom: '1px solid #f4f4f4'}}>
-                <div className="col-10 mx-auto col-lg-2">
-                    <img src={`/api/products/image/${img_gallery[0].img_name}`} style={{width:'5rem', height:"5rem"}} className="img-fluid" alt="product" />
+            <div style={{padding: '1rem',display: 'grid',gridTemplateColumns: '128px 2fr 1fr',gridGap: '5px',borderBottom: '1px solid rgb(214, 214, 214)',width: '100%',minheight: '150px'}}>
+                <div style={{height:'128px', width:'128px', borderRadius:'5px', overflow:'hidden', background:'yellow', display:'flex', flexDirection:'center', alignItems:'center'}}>
+                    <img style={{width: '100%'}} src={img_gallery ? `/api/products/image/${img_gallery[0].img_name}` : placeholderImg} alt="img" />
                 </div>
-                <div className="col-10 mx-auto col-lg-2">
-                    <span className="d-lg-none">product : </span>
-                    {title}
-                </div>
-                <div className="col-10 mx-auto col-lg-2">
-                    <span className="d-lg-none">price : </span>
-                    {price}
-                </div>
-                <div className="col-10 mx-auto col-lg-2 my-2 my-lg-0">
-                    <div className="d-flex justify-content-center">
-                        <div>
-                            <span className="btn btn-black mx-1" onClick={this.handleDecrement.bind(this, _id)}>
-                                -
-                            </span>
-                            <span className="btn btn-black mx-1">{count}</span>
-                            <span className="btn btn-black mx-1" onClick={this.handleIncrement.bind(this, _id)}>
-                                +
-                            </span>
+                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
+                    <div className="line-clamp" style={{maxHeight:'40px', overflow:'hidden', color:'#0098d3'}}>
+                        <p style={{textAlign:'left', margin:'0'}}>{name}</p>
+                    </div>
+                    <div className="tag-list">
+                        <div className="tag-item green">
+                            <p>
+                                small
+                            </p>
                         </div>
                     </div>
-                </div>
-                {/* */}
-                <div className="col-10 mx-auto col-lg-2">
-                    <div className="cart-icon" onClick={this.onRemoveItem.bind(this, _id, title)}>
-                        <i className="fas fa-trash"></i>
+                    <div class="qty-input">
+                        <button 
+                            class="qty-count qty-count--minus" 
+                            type="button" 
+                            disabled={count <= 1 ? true : false}
+                            onClick={this.handleDecrement.bind(this, _id)}
+                        >
+                            -
+                        </button>
+                        <input class="product-qty" type="number" name="product-qty" value={count} />
+                        <button 
+                            class="qty-count qty-count--add" 
+                            type="button"
+                            onClick={this.handleIncrement.bind(this, _id)}
+                        >
+                            +
+                        </button>
                     </div>
+                    <div 
+                        style={{color:'#3c4043'}}
+                        onClick={this.onRemoveItem.bind(this, _id, name)}
+                    >
+                        <p style={{color:'#ff4b2b', margin:'10px 0 0 5px', fontSize:'12px'}}>Remove</p>
+                    </div>
+                    {/* <VariantTagList variant={orderItem.item} /> */}
                 </div>
-                <div className="col-10 mx-auto col-lg-2">
-                    <strong>item total : $ {total}</strong>
+                <div style={{display:'flex', color:'#3c4043', justifyContent:'flex-end', alignItems:'flex-start'}}>
+                    <p style={{margin:'0 1rem', fontSize:'16px'}}>${total}</p>
                 </div>
             </div>
         )

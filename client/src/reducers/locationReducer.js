@@ -7,6 +7,7 @@ import {
     ADD_LOCATION,
     EDIT_LOCATION,
     GET_LOCATION,
+    SET_PRODUCT_LOCATIONS,
     GET_PRODUCT_LOCATIONS,
     GET_VARIANT_LOCATIONS,
     CLEAR_LOCATIONS
@@ -27,6 +28,14 @@ import {
         return {
           ...state,
           locations: payload,
+          loading: false
+        };
+      case SET_PRODUCT_LOCATIONS:
+        const newTempLocations = [...state.locations, ...payload];
+
+        return {
+          ...state,
+          locations: newTempLocations,
           loading: false
         };
       case GET_PRODUCT_LOCATIONS:

@@ -7,6 +7,7 @@ import Map from '../../../common/map/Map';
 import TableDetails from '../../../TableDetails/TableDetails';
 
 import shoeSample from '../../../../utils/imgs/20484728.jpeg';
+import placeholderImg from '../../../../utils/imgs/placeholder_img.jpg';
 
 const Main_Detail_Order = ({deleteAccount, order, store, auth: { user }, profile: {profile, loading }}) => {
     const [stores, setStoreList] = useState([]);
@@ -160,7 +161,7 @@ const Main_Detail_Order = ({deleteAccount, order, store, auth: { user }, profile
                                     <div style={{marginLeft:'2rem', borderBottom:'1px solid #e8e8e8', display:'flex', justifyContent:'flex-start', alignItems:'center', height:'100px', width:'100%'}}>
                                         <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
                                             <div style={{fontSize: '1rem', color:'#cecece',margin: '10px', padding:'2px', width:'80px',height: '80px',display:'flex', justifyContent: 'center',alignItems: 'center'}}>
-                                                <img src={`/api/products/image/${order.item.img_gallery[0].img_name}`} style={{height:'100%'}} alt="product" />
+                                                <img src={order.item.img_gallery ? `/api/products/image/${order.item.img_gallery[0].img_name}` : placeholderImg} style={{height:'100%'}} alt="product" />
                                             </div>
                                             <div style={{display:'flex', width:'100%', flexDirection:'column', alignItems:'flex-start'}}>
                                                 <div style={{height:'18px', marginLeft:'0', overflow:'hidden', color:'#808080'}}>

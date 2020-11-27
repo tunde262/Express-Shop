@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import mixpanel from 'mixpanel-browser';
 
-import { addToProducts } from '../../../../../actions/productActions';
+import { setLocations } from '../../../../../actions/locationActions';
 
 import Map from '../../../../common/map/Map';
 import Variant from '../../../table/VariantTable/Variant';
@@ -14,19 +14,36 @@ import TableDetails from '../../../../TableDetails/TableDetails';
 import ItemTable from '../../../table/ItemTable/ItemTable';
 import Spinner from '../../../../common/Spinner';
 
-// Imgs
-import BoxEmoji from '../../../../../utils/imgs/box.png'; 
-import ClosedLockEmoji from '../../../../../utils/imgs/closedlock.jpg'; 
-import OpenLockEmoji from '../../../../../utils/imgs/openlock.png'; 
-import CarEmoji from '../../../../../utils/imgs/car.jpg'; 
+import OrderTable from '../../../table/OrderTable/OrderTable';
+import OrderItem from '../../../table/OrderTable/OrderItem';
 
-const DetailOrder = ({ setModal, order, store, setTable, storageLocation }) => {
+import OrderSummaryBlock from '../common/OrderSummaryBlock';
+import InventoryActivityBlock from '../common/InventoryActivityBlock';
+import TagsBlock from '../common/TagsBlock';
+import LocationsBlock from '../common/LocationsBlock';
+import MapBlock from '../common/MapBlock';
+import StatsBlock from '../common/StatsBlock';
+
+import placeholderImg from '../../../../../utils/imgs/placeholder_img.jpg';
+
+
+const DetailOrder = ({ 
+    setModal, 
+    order, 
+    store, 
+    setTable, 
+    storageLocation,
+    setLocations
+}) => {
 
     const [sentMixpanel, setSentMixpanel] = useState(false);
-    const [orderNav, setOrderNav] = useState('items');
+    const [pageNav, setPageNav] = useState('detail');
 
     const [stores, setStoreList] = useState([]);
     const [gotOrderStores, setGotOrderStores] = useState(false);
+    const [orderList, setOrderList] = useState([]);
+
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     // TODO : map markers
     
     // let imageContent;
@@ -42,76 +59,21 @@ const DetailOrder = ({ setModal, order, store, setTable, storageLocation }) => {
     // }
 
     useEffect(() => {
+        window.addEventListener('resize', () => handleWindowSizeChange());
 
-        var list = document.getElementById('progress'),
-            next = document.getElementById('next'),
-            clear = document.getElementById('clear'),
-            children = list.children,
-            completed = 1;
-        // simulate activating a node
-        next.addEventListener('click', function() {
-            
-            // count the number of completed nodes.
-            completed = (completed === 0) ? 1 : completed + 2;
-            if (completed > children.length) return;
-            
-            // for each node that is completed, reflect the status
-            // and show a green color!
-            for (var i = 0; i < completed; i++) {
-                children[i].children[0].classList.remove('grey');
-                children[i].children[0].classList.add('green');
-                
-                // if this child is a node and not divider, 
-                // make it shine a little more
-                if (i % 2 === 0) {
-                    children[i].children[0].classList.add('activated', );            
-                }
-            }
-            
-        }, false);
-
-        // clear the activated state of the markers
-        clear.addEventListener('click', function() {
-            for (var i = 0; i < children.length; i++) {
-                children[i].children[0].classList.remove('green');
-                children[i].children[0].classList.remove('activated');
-                children[i].children[0].classList.add('grey');
-            }
-            completed = 0;
-        }, false);
-
+        renderOrderList();
         return () => {
-            next.removeEventListener('click', function() {
-            
-                // count the number of completed nodes.
-                completed = (completed === 0) ? 1 : completed + 2;
-                if (completed > children.length) return;
-                
-                // for each node that is completed, reflect the status
-                // and show a green color!
-                for (var i = 0; i < completed; i++) {
-                    children[i].children[0].classList.remove('grey');
-                    children[i].children[0].classList.add('green');
-                    
-                    // if this child is a node and not divider, 
-                    // make it shine a little more
-                    if (i % 2 === 0) {
-                        children[i].children[0].classList.add('activated', );            
-                    }
-                }
-                
-            });
-            clear.removeEventListener('click', function() {
-                for (var i = 0; i < children.length; i++) {
-                    children[i].children[0].classList.remove('green');
-                    children[i].children[0].classList.remove('activated');
-                    children[i].children[0].classList.add('grey');
-                }
-                completed = 0;
-            });
+            window.removeEventListener('resize', () => handleWindowSizeChange());
         }
 
-    }, []);
+    }, [storageLocation.locations]);
+
+    const handleWindowSizeChange = () => {
+        setWindowWidth(window.innerWidth);
+    };
+
+    const isMobile = windowWidth <= 769;
+    const isTablet = windowWidth <= 1000;
 
     // const handleMixpanel = () => {
     //     mixpanel.track("Admin Order Page View", {
@@ -146,7 +108,141 @@ const DetailOrder = ({ setModal, order, store, setTable, storageLocation }) => {
         }
     }
 
+    const getOrderLocations = async () => {
+        const locationArray = [];
+        let darkstore;
+
+        console.log('GET ORDER LOCATIONS')
+
+        try {
+            if(Object.keys(order.order.cart.items).length > 0) {
+                for(var j = 0; j < Object.keys(order.order.cart.items).length; j++) {
+                    console.log('CART ORDER ITEM')
+                    console.log(Object.values(order.order.cart.items)[j])
+                  for(var i = 0; i < Object.values(order.order.cart.items)[j].item.locations.length; i++) {
+                      console.log('IN FOR LOOP')
+                    darkstore = await axios.get(`/api/darkstores/${Object.values(order.order.cart.items)[j].item.locations[i].location}`);
+                    console.log('DARKSTORE');
+                    console.log(darkstore)
+                    if(locationArray.length > 0) {
+                      if(locationArray.filter(location => location._id.toString() === darkstore.data._id).length > 0) {
+                        return;
+                      } else {
+                        locationArray.push({
+                          _id: darkstore.data._id,
+                          location: darkstore.data.location,
+                          address_components: darkstore.data.address_components,
+                          name: darkstore.data.name,
+                          placeId: darkstore.data.placeId,
+                          formatted_address: darkstore.data.formatted_address,
+                          phone: darkstore.data.phone,
+                          qty: Object.values(order.order.cart.items)[j].item.locations[i].qty,
+                          price: Object.values(order.order.cart.items)[j].item.locations[i].price,
+                          sale_price: Object.values(order.order.cart.items)[j].item.locations[i].sale_price
+                        });
+                      }
+                    } else {
+                      locationArray.push({
+                        _id: darkstore.data._id,
+                        location: darkstore.data.location,
+                        address_components: darkstore.data.address_components,
+                        name: darkstore.data.name,
+                        placeId: darkstore.data.placeId,
+                        formatted_address: darkstore.data.formatted_address,
+                        phone: darkstore.data.phone,
+                        qty: Object.values(order.order.cart.items)[j].item.locations[i].qty,
+                        price: Object.values(order.order.cart.items)[j].item.locations[i].price,
+                        sale_price: Object.values(order.order.cart.items)[j].item.locations[i].sale_price
+                      });
+
+                      console.log('POST ARRAY PUSH')
+                      console.log(locationArray)
+                    }
+                    
+                    console.log('LOCATIONS ARRAY');
+                    console.log(locationArray);
+                  }
+                  console.log('EXIT FOR LOOP')
+                  console.log(locationArray)
+                  //dispatch locationArray HERE
+                  
+                }
+                console.log('FINAL LOCATION ARRAY')
+                console.log(locationArray)
+                setLocations(locationArray)
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const renderOrderList = async () => {
+        setOrderList([]);
+        try {
+            if(storageLocation.locations.length > 0 && order.order !== null && Object.keys(order.order.cart.items).length > 0) {
+                storageLocation.locations.map(location => {
+                    let locationTotal = 0;
+                    Object.values(order.order.cart.items).map(item => {
+        
+                        for(var i = 0; i < item.item.locations.length; i++) {
+                            console.log('Location ID');
+                            console.log(item.item.locations[i].location);
+        
+                            if(item.item.locations[i].location.toString() === location._id) {
+                                locationTotal = locationTotal + item.price
+                            }
+                            
+                            break;
+                        }
+                    });
+
+                    let locItems = Object.values(order.order.cart.items).map(item => {
+                        for(var i = 0; i < item.item.locations.length; i++) {
+                            console.log('Location ID');
+                            console.log(item.item.locations[i].location);
+        
+                            if(item.item.locations[i].location.toString() === location._id) {
+                                return (
+                                    <OrderItem 
+                                        isTablet={isTablet} 
+                                        orderItem={item} 
+                                    />
+                                )
+                            }
+                    
+                            
+                            break;
+                        }
+                    });
+        
+                    setOrderList(orderList => [...orderList, (
+                        <div style={{background:'#fff', margin:'10px 0', border:'1px solid rgb(214, 214, 214)'}}>
+                            <div style={{background:'rgb(247, 247, 247)', padding:'1rem', width:'100%', justifyContent:'space-between', display:'flex', alignItems:'center', borderBottom:'1px solid rgb(214, 214, 214)'}}>
+                                <div style={{display: 'flex', margin:'0 1rem', alignItems: 'center'}}>
+                                    {/* {store.img && <img style={{height: '40px', width: '40px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${store.img}`} alt="img" />} */}
+                                    <p style={{margin:'1rem 0'}}>{location.name}</p>
+                                </div>
+                                <div style={{margin:'0 1rem'}}>
+                                    <p style={{margin:'0'}}>${locationTotal}</p>
+                                </div>
+                            </div>
+                            {locItems}
+                        </div>
+                    )])
+                })
+            } else {
+                setOrderList([(
+                    <button>Create Order</button>
+                )])
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+
     if(order.order && !order.loading && !gotOrderStores) {
+        getOrderLocations();
         getOrderStores();
         setGotOrderStores(true);
     }
@@ -155,96 +251,86 @@ const DetailOrder = ({ setModal, order, store, setTable, storageLocation }) => {
     console.log('STORES DATA');
     console.log(stores);
 
-    let orderList;
 
-    if(order.order) console.log(Object.keys(order.order.cart.items).length);
+    // if(storageLocation.locations.length > 0 && order.order !== null && Object.keys(order.order.cart.items).length > 0) {
+    //     orderList = storageLocation.locations.map(location => {
+    //         let locationTotal = 0;
+    //         Object.values(order.order.cart.items).map(item => {
 
-    if(stores.length > 0 && order.order !== null && Object.keys(order.order.cart.items).length > 0) {
-        orderList = stores.map(store => {
-            let storeTotal = 0;
-            Object.values(order.order.cart.items).map(item => {
-                if(item.item.store === store.id) {
-                    storeTotal = storeTotal + item.price
-                }
-            });
+    //             for(var i = 0; i < item.item.locations.length; i++) {
+    //                 console.log('Location ID');
+    //                 console.log(item.item.locations[i].location);
 
-            return (
-                <div style={{background:'#fff', margin:'10px 0', border:'1px solid rgb(214, 214, 214)'}}>
-                    <div style={{background:'rgb(247, 247, 247)', padding:'1rem', width:'100%', justifyContent:'space-between', display:'flex', alignItems:'center', borderBottom:'1px solid rgb(214, 214, 214)'}}>
-                        <div style={{display: 'flex', margin:'0 1rem', alignItems: 'center'}}>
-                            {store.img && <img style={{height: '40px', width: '40px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${store.img}`} alt="img" />}
-                            <p style={{margin:'1rem 0'}}>{store.name}</p>
-                        </div>
-                        <div style={{margin:'0 1rem'}}>
-                            <p style={{margin:'0'}}>${storeTotal}</p>
-                        </div>
-                    </div>
-                    {Object.values(order.order.cart.items).map(order => (
-                        <Fragment>
-                            {order.item.store === store.id && (
-                                <div style={{display:'grid', width: '100%', gridGap:'4rem', gridTemplateColumns:'1fr 1fr'}}>
-                                    <div style={{marginLeft:'2rem', borderBottom:'1px solid #e8e8e8', display:'flex', justifyContent:'flex-start', alignItems:'center', height:'100px', width:'100%'}}>
-                                        <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
-                                            <div style={{fontSize: '1rem', color:'#cecece',margin: '10px', padding:'2px', width:'80px',height: '80px',display:'flex', justifyContent: 'center',alignItems: 'center'}}>
-                                                <img src={`/api/products/image/${order.item.img_gallery[0].img_name}`} style={{height:'100%'}} alt="product" />
-                                            </div>
-                                            <div style={{display:'flex', width:'100%', flexDirection:'column', alignItems:'flex-start'}}>
-                                                <div style={{height:'18px', marginLeft:'0', overflow:'hidden', color:'#808080'}}>
-                                                    <p className="line-clamp-1" style={{margin:'0', color:'blue'}}>{order.item.name}</p>
-                                                </div>
-                                                <p style={{margin:'0 15px', color:'#808080'}}><span style={{color:'#ff4b2b'}}>M 12</span> / <span style={{color:'green'}}>Grey</span></p>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                    <div style={{display:'flex', color:'#808080', alignItems:'center', padding:'0 1rem'}}>
-                                        <p style={{margin:'0 1rem'}}>${order.item.price}</p>
-                                        <p style={{margin:'0 1rem'}}>x</p>
-                                        <p style={{margin:'0 1rem'}}>{order.qty}</p>
-                                        <p style={{margin:'0 1rem'}}>${order.price}</p>
-                                    </div>
-                                </div>
-                            )}
-                        </Fragment>
-                    ))}
-                </div>
-            )
-        })
-    }
+    //                 if(item.item.locations[i].location.toString() === location._id) {
+    //                     locationTotal = locationTotal + item.price
+    //                 }
+                    
+    //                 break;
+    //             }
+    //         });
+
+    //         return (
+    //             <div style={{background:'#fff', margin:'10px 0', border:'1px solid rgb(214, 214, 214)'}}>
+    //                 <div style={{background:'rgb(247, 247, 247)', padding:'1rem', width:'100%', justifyContent:'space-between', display:'flex', alignItems:'center', borderBottom:'1px solid rgb(214, 214, 214)'}}>
+    //                     <div style={{display: 'flex', margin:'0 1rem', alignItems: 'center'}}>
+    //                         {/* {store.img && <img style={{height: '40px', width: '40px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${store.img}`} alt="img" />} */}
+    //                         <p style={{margin:'1rem 0'}}>{location.name}</p>
+    //                     </div>
+    //                     <div style={{margin:'0 1rem'}}>
+    //                         <p style={{margin:'0'}}>${locationTotal}</p>
+    //                     </div>
+    //                 </div>
+    //                 {Object.values(order.order.cart.items).map(item => {
+    //                     for(var i = 0; i < item.item.locations.length; i++) {
+    //                         console.log('Location ID');
+    //                         console.log(item.item.locations[i].location);
+        
+    //                         if(item.item.locations[i].location.toString() === location._id) {
+    //                             return (
+    //                                 <Fragment>
+    //                                         <div style={{display:'grid', width: '100%', gridGap:'4rem', gridTemplateColumns:'1fr 1fr'}}>
+    //                                             <div style={{marginLeft:'2rem', borderBottom:'1px solid #e8e8e8', display:'flex', justifyContent:'flex-start', alignItems:'center', height:'100px', width:'100%'}}>
+    //                                                 <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+    //                                                     <div style={{fontSize: '1rem', color:'#cecece',margin: '10px', padding:'2px', width:'80px',height: '80px',display:'flex', justifyContent: 'center',alignItems: 'center'}}>
+    //                                                         <img src={item.item.img_gallery ? `/api/products/image/${item.item.img_gallery[0].img_name}` : placeholderImg} style={{height:'100%'}} alt="product" />
+    //                                                     </div>
+    //                                                     <div style={{display:'flex', width:'100%', flexDirection:'column', alignItems:'flex-start'}}>
+    //                                                         <div style={{height:'18px', marginLeft:'0', overflow:'hidden', color:'#808080'}}>
+    //                                                             <p className="line-clamp-1" style={{margin:'0', color:'blue'}}>{item.item.name}</p>
+    //                                                         </div>
+    //                                                         <p style={{margin:'0 15px', color:'#808080'}}><span style={{color:'#ff4b2b'}}>M 12</span> / <span style={{color:'green'}}>Grey</span></p>
+    //                                                     </div>
+    //                                                 </div>
+                                                    
+    //                                             </div>
+    //                                             <div style={{display:'flex', color:'#808080', alignItems:'center', padding:'0 1rem'}}>
+    //                                                 <p style={{margin:'0 1rem'}}>${item.item.price}</p>
+    //                                                 <p style={{margin:'0 1rem'}}>x</p>
+    //                                                 <p style={{margin:'0 1rem'}}>{item.qty}</p>
+    //                                                 <p style={{margin:'0 1rem'}}>${item.price}</p>
+    //                                             </div>
+    //                                         </div>
+    //                                 </Fragment>
+    //                             )
+    //                         }
+                            
+    //                         break;
+    //                     }
+    //                 })}
+    //             </div>
+    //         )
+    //     })
+    // }
 
     let mainContent;
 
     if(order.order) {
-        if(orderNav === 'items') {
+        if(pageNav === 'detail') {
+            mainContent = <OrderTable />
+        } else if (pageNav === 'inventory') {
             mainContent = (
                 <Fragment>
-                    <div class="content-box">
-                        <h3>Hello</h3>
-                        {/* <div class="table-responsive table-filter">
-                            <ItemTable setModal={setModal} page="collection" product={{sortedProducts: [...product.products], loading: false}} />
-                        </div> */}
-                    </div>
-                </Fragment>
-            )
-        } else if (orderNav === 'inventory') {
-            mainContent = (
-                <Fragment>
-                    <div id="order-map" style={{marginTop:'10px', overflow:'hidden'}}>
-                        <div style={{margin:'0', width:'100%',border:'2px dashed #cecece',borderRadius: '10px'}}>
-                            <div style={{height:'250px', maxHeight:'250px', width:'100%'}}>
-                                {/* {!storageLocation.loading && storageLocation.locations.length > 0 && !product.switchMaps ? (
-                                    <Map storageLocation={storageLocation} />
-                                ) : null} */}
-                                <Map 
-                                    defaultZoom="8"
-                                    centerLat="33.0300238"
-                                    centerLng="-96.83283879999999"
-                                    markerLat="33.0300238"
-                                    markerLng="-96.83283879999999"
-                                />
-                            </div>
-                        </div>
-                    </div>
+                    {storageLocation.locations.length > 0 && <MapBlock />}
                     <div style={{margin:'10px 0'}}>
                         {/* <div class="table-responsive table-filter">
                             <Variant setModal={setModal} page="product" prodId={match.params.productId} deleteVariant={deleteVariant} />
@@ -253,6 +339,12 @@ const DetailOrder = ({ setModal, order, store, setTable, storageLocation }) => {
                             {orderList}
                         </div>
                     </div>
+                    {/* <div class="content-box">
+                        <h3>Hello</h3>
+                        <div class="table-responsive table-filter">
+                            <ItemTable setModal={setModal} page="collection" product={{sortedProducts: [...product.products], loading: false}} />
+                        </div>
+                    </div> */}
                 </Fragment>
             );
         }
@@ -263,277 +355,37 @@ const DetailOrder = ({ setModal, order, store, setTable, storageLocation }) => {
     let secondaryContent;
 
     if(order.order) {
-        if(orderNav === 'items') {
+        if(pageNav === 'detail') {
             secondaryContent = (
                 <Fragment>
-                    <div style={{background:'#fff', height:'min-content', padding:'2rem 0 0 0', margin:'10px 0', border:'1px solid rgb(214, 214, 214)'}}>
-                        <div className="vertical-step-bar">
-                            <ul id="progress">
-                                <li>
-                                    <div class="node green"></div>
-                                    <p>Order Placed</p>
-                                    <p style={{marginTop:'20px', color:'#808080'}}><small>05/10/2001 5:35pm</small></p>
-                                </li>
-                                <li>
-                                    <div class="divider grey"></div>
-                                </li>
-                                <li>
-                                    <div class="node grey"></div>
-                                    <p>Collecting Items</p>
-                                    <p style={{marginTop:'20px', color:'#808080'}}><small>05/10/2001 5:35pm</small></p>
-                                </li>
-                                <li>
-                                    <div class="divider grey"></div></li>
-                                <li>
-                                    <div class="node grey"></div>
-                                    <p>Awaiting Delivery</p>
-                                    <p style={{marginTop:'20px', color:'#808080'}}><small>05/10/2001 5:35pm</small></p>
-                                </li>
-                                <li>
-                                    <div class="divider grey"></div>
-                                </li>
-                                <li>
-                                    <div class="node grey"></div>
-                                    <p>En Route Started</p>
-                                    <p style={{marginTop:'20px', color:'#808080'}}><small>05/10/2001 5:35pm</small></p>
-                                </li>
-                                <li>
-                                    <div class="divider grey"></div>
-                                </li>
-                                <li>
-                                    <div class="node grey"></div>
-                                    <p>Left At Door</p>
-                                    <p style={{marginTop:'20px', color:'#808080'}}><small>05/10/2001 5:35pm</small></p>
-                                </li>
-                            </ul>
-                        </div>
-        
-                        <div style={{margin:'1rem 0 10px'}}>
-                            <input type="button" value="Next" id="next"/>
-                            <input type="button" value="Clear" id="clear"/>
-                        </div>
-                    </div>
-                    <div id="order-totals" style={{background:'#fff', margin:'10px 0', padding:'10px', height:'300px', border:'1px solid rgb(214, 214, 214)'}}>
-                        <p>Order Summary</p>
-                        <div style={{display:'flex', color:'#808080', justifyContent:'space-between'}}>
-                            <p>Item(s) Subtotal:</p>
-                            <p>${order.order && order.order.cart.totalPrice}</p>
-                        </div>
-                        <div style={{display:'flex', color:'#808080', justifyContent:'space-between'}}>
-                            <p>Shipping & Handling:</p>
-                            <p>$0.00</p>
-                        </div>
-                        <div style={{display:'flex', color:'#808080', justifyContent:'space-between'}}>
-                            <p>Estimated Tax:</p>
-                            <p>$3.98</p>
-                        </div>
-                        <div style={{display:'flex', color:'#ff4b2b', justifyContent:'space-between'}}>
-                            <p>Completed Total:</p>
-                            <p>${order.order && order.order.cart.totalPrice}</p>
-                        </div>
-                    </div>
-                    <div class="product-privacy-box">
-                        <div class="product-privacy-box-title">
-                            <p style={{color:'#808080', margin:'0'}}>Tags</p>
-                            <hr style={{height:'1px', background:'rgb(214,214,214)', margin:'10px 0 10px 0'}}/>
-                            <input
-                                type="email"
-                                name="email"
-                                className="input_line"
-                                placeholder="Enter Email"
-                                style={{margin:'10px 0', width:'100%', height:'50px'}}
-                            />
-                            <div style={{display:'flex', flexWrap:'wrap', width:'100%'}}>
-                                <div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'30px', width:'fit-content',  borderRadius:'30px', padding:'1px 1rem 0 1rem'}}>
-                                    <p style={{margin:'auto', color:'green'}}>hat</p>
-                                    <i style={{color:'green', marginLeft:'10px',fontSize:'12px'}} class="fas fa-times"></i>
-                                </div>
-                                <div style={{background:'#ffc0cb', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'30px', width:'fit-content',  borderRadius:'30px', padding:'1px 1rem 0 1rem'}}>
-                                    <p style={{margin:'auto', color:'#db0026'}}>dad cap</p>
-                                    <i style={{color:'#db0026', marginLeft:'10px',fontSize:'12px'}} class="fas fa-times"></i>
-                                </div>
-                                <div style={{background:'#a0edf3', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'30px', width:'fit-content',  borderRadius:'30px', padding:'1px 1rem 0 1rem'}}>
-                                    <p style={{margin:'auto', color:'#105e82'}}>dragon ball z</p>
-                                    <i style={{color:'#105e82', marginLeft:'10px',fontSize:'12px'}} class="fas fa-times"></i>
-                                </div>
-                                <div style={{background:'#f0ef89', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'30px', width:'fit-content',  borderRadius:'30px', padding:'1px 1rem 0 1rem'}}>
-                                    <p style={{margin:'auto', color:'#828211'}}>50%off</p>
-                                    <i style={{color:'#828211', marginLeft:'10px',fontSize:'12px'}} class="fas fa-times"></i>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <div class="product-privacy-box">
-                        <div class="product-privacy-box-title">
-                            <p style={{color:'#808080', margin:'0'}}>Notes</p>
-                            <hr style={{height:'1px', background:'rgb(214,214,214)', margin:'10px 0 10px 0'}}/>
-                            <input
-                                type="email"
-                                name="email"
-                                className="input_line"
-                                placeholder="Enter Email"
-                                style={{margin:'10px 0', width:'100%', height:'50px'}}
-                            />
-                            <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
-                                    <small style={{color:'#ccc', margin:'0'}}>5:49pm Oct. 29, 2020</small>
-                                    <p style={{margin:'0', color:'#333'}}>Must go behind the counter to find this item</p>
-                                </div>
-                                <div>
-                                    <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-pen"></i>
-                                </div>
-                            </div>
-                            <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
-                                    <small style={{color:'#ccc', margin:'0'}}>5:49pm Oct. 29, 2020</small>
-                                    <p style={{margin:'0', color:'#333'}}>Wholesale order coming oct. 24</p>
-                                </div>
-                                <div>
-                                    <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-pen"></i>
-                                </div>
-                            </div>
-                            <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
-                                    <small style={{color:'#ccc', margin:'0'}}>5:49pm Oct. 29, 2020</small>
-                                    <p style={{margin:'0', color:'#333'}}>Must go behind the counter to find this item</p>
-                                </div>
-                                <div>
-                                    <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-pen"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <OrderSummaryBlock 
+                        order={order}
+                    />
+
+                    <InventoryActivityBlock
+                        isMobile={isMobile}
+                    />
+
+                    {/* <TagsBlock 
+                        isMobile={isMobile} 
+                        onAddItemTag={onAddItemTag}  
+                        onDeleteItemTag={onDeleteItemTag}  
+                        itemTags={itemTags} 
+                        loadItemTags={loadItemTags}
+                    /> */}
                 </Fragment>
             )
-        } else if (orderNav === 'inventory') {
+        } else if (pageNav === 'inventory') {
             secondaryContent = (
                 <Fragment>
-                    <div style={{background:'#fff', height:'min-content', padding:'2rem 0 0 0', margin:'10px 0', border:'1px solid rgb(214, 214, 214)'}}>
-                        <div className="vertical-step-bar">
-                            <ul id="progress">
-                                <li>
-                                    <div class="node green"></div>
-                                    <p>Order Placed</p>
-                                    <p style={{marginTop:'20px', color:'#808080'}}><small>05/10/2001 5:35pm</small></p>
-                                </li>
-                                <li>
-                                    <div class="divider grey"></div>
-                                </li>
-                                <li>
-                                    <div class="node grey"></div>
-                                    <p>Collecting Items</p>
-                                    <p style={{marginTop:'20px', color:'#808080'}}><small>05/10/2001 5:35pm</small></p>
-                                </li>
-                                <li>
-                                    <div class="divider grey"></div></li>
-                                <li>
-                                    <div class="node grey"></div>
-                                    <p>Awaiting Delivery</p>
-                                    <p style={{marginTop:'20px', color:'#808080'}}><small>05/10/2001 5:35pm</small></p>
-                                </li>
-                                <li>
-                                    <div class="divider grey"></div>
-                                </li>
-                                <li>
-                                    <div class="node grey"></div>
-                                    <p>En Route Started</p>
-                                    <p style={{marginTop:'20px', color:'#808080'}}><small>05/10/2001 5:35pm</small></p>
-                                </li>
-                                <li>
-                                    <div class="divider grey"></div>
-                                </li>
-                                <li>
-                                    <div class="node grey"></div>
-                                    <p>Left At Door</p>
-                                    <p style={{marginTop:'20px', color:'#808080'}}><small>05/10/2001 5:35pm</small></p>
-                                </li>
-                            </ul>
-                        </div>
-        
-                        <div style={{margin:'1rem 0 10px'}}>
-                            <input type="button" value="Next" id="next"/>
-                            <input type="button" value="Clear" id="clear"/>
-                        </div>
-                    </div>
-                    <div class="product-privacy-box">
-                        <div class="product-privacy-box-title">
-                            <p style={{color:'#808080', margin:'0'}}>Locations</p>
-                            <hr style={{height:'1px', background:'rgb(214,214,214)', margin:'10px 0 10px 0'}}/>
-                            <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
-                                    <p style={{margin:'0'}}>Shorts <span style={{color:'#ff4b2b'}}>(43)</span></p>
-                                    <small style={{color:'#ccc', margin:'0'}}>Auto</small>
-                                </div>
-                                <div>
-                                    <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-times"></i>
-                                </div>
-                            </div>
-                            <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
-                                    <p style={{margin:'0'}}>Halloween <span style={{color:'#ff4b2b'}}>(43)</span></p>
-                                    <small style={{color:'#ccc', margin:'0'}}>Auto</small>
-                                </div>
-                                <div>
-                                    <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-times"></i>
-                                </div>
-                            </div>
-                            <div style={{display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
-                                    <p style={{margin:'0'}}>Tops <span style={{color:'#ff4b2b'}}>(43)</span></p>
-                                    <small style={{color:'#ccc', margin:'0'}}>Auto</small>
-                                </div>
-                                <div>
-                                    <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-times"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-privacy-box">
-                        <div class="product-privacy-box-title">
-                            <p style={{color:'#808080', margin:'0'}}>Notes</p>
-                            <hr style={{height:'1px', background:'rgb(214,214,214)', margin:'10px 0 10px 0'}}/>
-                            <input
-                                type="email"
-                                name="email"
-                                className="input_line"
-                                placeholder="Enter Email"
-                                style={{margin:'10px 0', width:'100%', height:'50px'}}
-                            />
-                            <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
-                                    <small style={{color:'#ccc', margin:'0'}}>5:49pm Oct. 29, 2020</small>
-                                    <p style={{margin:'0', color:'#333'}}>Must go behind the counter to find this item</p>
-                                </div>
-                                <div>
-                                    <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-pen"></i>
-                                </div>
-                            </div>
-                            <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
-                                    <small style={{color:'#ccc', margin:'0'}}>5:49pm Oct. 29, 2020</small>
-                                    <p style={{margin:'0', color:'#333'}}>Wholesale order coming oct. 24</p>
-                                </div>
-                                <div>
-                                    <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-pen"></i>
-                                </div>
-                            </div>
-                            <div style={{borderBottom:'1px solid #f2f2f2', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px'}}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
-                                    <small style={{color:'#ccc', margin:'0'}}>5:49pm Oct. 29, 2020</small>
-                                    <p style={{margin:'0', color:'#333'}}>Must go behind the counter to find this item</p>
-                                </div>
-                                <div>
-                                    <i style={{color:'#ff4b2b', fontSize:'13px'}} class="fas fa-pen"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <LocationsBlock />
+
+                    <InventoryActivityBlock
+                        isMobile={isMobile}
+                    />
                 </Fragment>
             );
         }
-    } else {
-        secondaryContent = null;
     }
 
 
@@ -552,40 +404,10 @@ const DetailOrder = ({ setModal, order, store, setTable, storageLocation }) => {
                 </div>
                 <hr style={{margin:'0'}} />
             </div> */}
-            <section id="stats" className="stats">
-                <div className="stats-box">
-                    <div>
-                        <h2 style={{color:'#333', fontWeight:'300'}}>2,000</h2>
-                        <p>Active</p>
-                    </div>
-                    <div>  
-                        <h2 style={{color:'#333', fontWeight:'300'}}>2000</h2>
-                        <p>Sold</p>
-                    </div>
-                    <div>   
-                        <h2 style={{color:'#333', fontWeight:'300'}}>2,056</h2>
-                        <p>Shipping</p>
-                    </div>
-                    <div>   
-                        <h2 style={{color:'#333', fontWeight:'300'}}>2000</h2>
-                        <p>Low Stock</p>
-                    </div>
-                </div>
-                <div>
-                    <ul class="profile-underline">
-                        <div 
-                            onClick={e => setOrderNav('items')} className={orderNav === "items" && "active"}
-                        >
-                            <li><p>Items<span style={{color:'#ff4b2b', marginLeft:'5px'}}>(36)</span></p></li>
-                        </div>
-                        <div 
-                            onClick={e => setOrderNav('inventory')} className={orderNav === "inventory" && "active"}
-                        >
-                            <li><p>Inventory<span style={{color:'#ff4b2b', marginLeft:'5px'}}>(108)</span></p></li>
-                        </div>
-                    </ul>
-                </div>
-            </section>
+            <StatsBlock 
+                setPageNav={setPageNav}
+                pageNav={pageNav}
+            />
             <div class="product-admin-main">
                 {mainContent}
             </div>
@@ -600,6 +422,7 @@ DetailOrder.propTypes = {
     order: PropTypes.object.isRequired,
     product: PropTypes.object.isRequired,
     storageLocation: PropTypes.object.isRequired,
+    setLocations: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -608,5 +431,5 @@ const mapStateToProps = state => ({
     storageLocation: state.location
 })
 
-export default connect(mapStateToProps, null)(withRouter(DetailOrder));
+export default connect(mapStateToProps, { setLocations })(DetailOrder);
 

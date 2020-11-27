@@ -149,7 +149,8 @@ const VariantTable = ({
                                     const res = await axios.get(`/api/products/${variant.product}`);
                                     setVariantList(variantList => [...variantList, (
                                         <Variant 
-                                            variant={variant} 
+                                            detailVariant={variant} 
+                                            prodId={prodId}
                                             handleToggle={handleToggle} 
                                             variantItem={res.data} 
                                             deleteVariant={deleteVariant}
@@ -166,7 +167,8 @@ const VariantTable = ({
                             const res = await axios.get(`/api/products/${variant.product}`);
                             setVariantList(variantList => [...variantList, (
                                 <Variant 
-                                    variant={variant} 
+                                    detailVariant={variant} 
+                                    prodId={prodId}
                                     handleToggle={handleToggle} 
                                     variantItem={res.data} 
                                     deleteVariant={deleteVariant}

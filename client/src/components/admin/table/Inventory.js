@@ -4,9 +4,13 @@ import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import { getStoreVariants, deleteVariant } from '../../../actions/variantActions';
+
 import Spinner from '../../common/Spinner';
 import 'react-responsive-modal/styles.css';
+
+import VariantTagList from './common/VariantTagList';
 
 
 const Inventory = ({ page, setModal, store, variant: {loading, sortedVariants}, deleteVariant }) => {
@@ -58,17 +62,7 @@ const Inventory = ({ page, setModal, store, variant: {loading, sortedVariants}, 
                                             >
                                                 {variant.name}
                                             </Link>
-                                            <div className="tag-list">
-                                                {variant.color && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.color} </p></div>)}
-                                                {variant.size && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.size} </p></div>)}
-                                                {variant.weight && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.weight} </p></div>)}
-                                                {variant.bundle && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.bundle} </p></div>)}
-                                                {variant.type && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.type} </p></div>)}
-                                                {variant.scent && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.scent} </p></div>)}
-                                                {variant.fit && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.fit} </p></div>)}
-                                                {variant.flavor && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.flavor} </p></div>)}
-                                                {variant.material && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.material} </p></div>)}
-                                            </div>
+                                            <VariantTagList variant={variant} />
                                             <div style={{marginTop:'2px'}}>${variant.price}</div>
                                         </div>
                                     </Fragment>
@@ -85,17 +79,7 @@ const Inventory = ({ page, setModal, store, variant: {loading, sortedVariants}, 
                                             >
                                                 {variant.name}
                                             </Link>
-                                            <div className="tag-list">
-                                                {variant.color && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1px 1rem 0 1rem'}}><p style={{margin: '0', color: 'green'}}>{variant.color} </p></div>)}
-                                                {variant.size && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1px 1rem 0 1rem'}}><p style={{margin: '0', color: 'green'}}>{variant.size} </p></div>)}
-                                                {variant.weight && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1px 1rem 0 1rem'}}><p style={{margin: '0', color: 'green'}}>{variant.weight} </p></div>)}
-                                                {variant.bundle && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1px 1rem 0 1rem'}}><p style={{margin: '0', color: 'green'}}>{variant.bundle} </p></div>)}
-                                                {variant.type && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1px 1rem 0 1rem'}}><p style={{margin: '0', color: 'green'}}>{variant.type} </p></div>)}
-                                                {variant.scent && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1px 1rem 0 1rem'}}><p style={{margin: '0', color: 'green'}}>{variant.scent} </p></div>)}
-                                                {variant.fit && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1px 1rem 0 1rem'}}><p style={{margin: '0', color: 'green'}}>{variant.fit} </p></div>)}
-                                                {variant.flavor && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1px 1rem 0 1rem'}}><p style={{margin: '0', color: 'green'}}>{variant.flavor} </p></div>)}
-                                                {variant.material && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1px 1rem 0 1rem'}}><p style={{margin: '0', color: 'green'}}>{variant.material} </p></div>)}
-                                            </div>
+                                            <VariantTagList variant={variant} />
                                             <div style={{marginTop:'5px'}}>${variant.price}</div>
                                         </div>
                                         <div>{variant.inventory_qty}</div>
@@ -168,7 +152,7 @@ const Inventory = ({ page, setModal, store, variant: {loading, sortedVariants}, 
                 //     <button onClick={setModal} type="button" style={{background: "#42b499", color:"#fff"}} className="btn">Add Manually</button>
                 // </section>
             ) : null}
-            <table className="table">
+            <div className="table">
                 <div className="thead">
                     {!isTablet && (
                         <Fragment>
@@ -184,7 +168,7 @@ const Inventory = ({ page, setModal, store, variant: {loading, sortedVariants}, 
                     )}
                 </div>
                 <div className="tbody">{!variantList.length > 0 ? <Spinner /> : variantList}</div>
-            </table>
+            </div>
 
             {/* <Modal open={modalShow} onClose={() => setModal(false)}>
                 <ItemForm />

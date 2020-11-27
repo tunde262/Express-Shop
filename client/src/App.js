@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import mixpanel from 'mixpanel-browser';
 
 // CSS - controlled by /scss
@@ -12,6 +12,7 @@ import store from './store';
 import { loadUser } from './actions/authActions';
 import setAuthToken from './utils/setAuthToken';
 import { getProducts, getCart } from './actions/productActions';
+import { getCurrentProfile } from './actions/profileActions';
 
 // Google Analytics
 import ReactGA from 'react-ga';
@@ -25,8 +26,15 @@ import CartDrawer from './components/layout/SideDrawer/CartDrawer';
 import AuthDrawer from './components/layout/SideDrawer/AuthDrawer';
 import Backdrop from './components/layout/Backdrop/Backdrop';
 
+import StoreForm from './components/admin/forms/store_form/StoreForm';
+
 import Routes from './components/routing/Routes';
 import AddToCartModal from './components/modals/AddToCartModal';
+
+import StoreNavElements from './components/TableDetails/StoreNav/Main_Store_Nav';
+import CategoryNavElements from './components/TableDetails/CategoryNav/Main_Cat_Nav';
+import ProfileNavElements from './components/TableDetails/ProfileNav/Main_Profile_Nav';
+import AdminNavElements from './components/TableDetails/AdminNav/Main_Admin_Nav';
 
 
 if(localStorage.token) {
@@ -43,11 +51,16 @@ const App = () => {
 
   useEffect(() => {
     store.dispatch(loadUser());
+    store.dispatch(getCurrentProfile());
     store.dispatch(getCart());
     initializeReactGA();
   }, []);
   
   const [sideDrawerOpen, setSideDrawer] = useState(false);
+
+  const [slideForm1, setSlideForm1] = useState(false);
+
+  const [navValue, setNavValue] = useState('profile');
 
   const [cartDrawerOpen, setCartDrawer] = useState(false);
 
@@ -110,7 +123,28 @@ const App = () => {
             <main id="home">
               <Switch>
                 <Route exact path="/" component={HomeLanding} />
-                <Route component={Routes} />
+                <Route exact path="/create-store" component={StoreForm} />
+                <div className="store-table">
+                    <div style={{height:'100%'}} className="store-table-nav">
+                      <div className="store-settings-transition">
+                        {/** Transition 1 */}
+                        <div className={!slideForm1 ? "store-side-nav-container active" : "store-side-nav-container"} id="transition-1">
+                          {navValue === 'admin' ? 
+                            <AdminNavElements setNavValue={setNavValue} navValue={navValue} setSlideForm1={setSlideForm1} slideForm1={slideForm1} /> 
+                            : <StoreNavElements setNavValue={setNavValue} navValue={navValue} setSlideForm1={setSlideForm1} slideForm1={slideForm1} />
+                          }
+                        </div>
+                        <div className={slideForm1 ? "store-side-nav-container active" : "store-side-nav-container"} id="transition-2">
+                          {navValue === 'category' && <CategoryNavElements setSlideForm1={setSlideForm1} slideForm1={slideForm1} />}
+                          {navValue === 'profile' && <ProfileNavElements setSlideForm1={setSlideForm1} slideForm1={slideForm1} />}
+                        </div>
+                      </div>
+                        
+                    </div>
+                    <div className="store-table-main home">
+                      <Route component={Routes} />
+                    </div>
+                </div>
               </Switch>
             </main>
           </div>

@@ -118,6 +118,7 @@ export const addAddress = formData => async dispatch => {
             }
         }
 
+        console.log('IN ADD ADDRESS')
         const res = await axios.put('/api/profile/address_book', formData, config);
 
         dispatch({

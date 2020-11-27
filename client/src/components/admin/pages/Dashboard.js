@@ -431,164 +431,104 @@ const Dashboard = ({
 
     return (
         <Fragment>
-            {/* Website Overview */}
-            <div style={{marginTop: '55px'}}></div>
-            <div style={{textAlign:'center', marginTop:'1rem'}}>
-                {/* <h3 style={{color: '#333', fontWeight:'300'}}>Hey, {user && user.name}</h3> */}
-                <div className="admin-table">
-                    <div className={"admin-table-nav"}>
-                        <Link to={`/admin/${match.params.id}`}>
-                            
-                        </Link>
+           {tableShow1 === 'store' && (
+                <Fragment>
+                    <div className="store-table-header">
+                        <StoreHeader setTable={setTableShow1} />
+                    </div>
+                    <div className="store-table-body">
+                        <div className="product-list-container">
+                            {store && storeContent}
+                        </div>
+                    </div>
+                </Fragment>
+            )}
+            {tableShow1 === 'edit' && (
+                <Fragment>
+                    <div className="store-table-header" style={{background:'#fff'}}>
+                        <EditHeader setTable={setTableShow1} />
+                    </div>
+                    <div className="store-table-body" style={{padding:'0 10px'}}>
+                        {store && <EditMain />}
+                    </div>
+                </Fragment>
+            )}
+            {tableShow1 === 'inventory' && (
+                <Fragment>
+                    <div className="store-table-header" style={{background:'#fff'}}>
+                        <InventoryHeader 
+                            inventoryNav={inventoryNav}  
+                            setTable={setInventoryNav} 
+                            setItemModal={toggleItemModal} 
+                            setCollectionModal={toggleCollectionModal} 
+                            setLocationModal={toggleLocationModal} />
+                    </div>
+                    <div className="store-table-body" style={{padding:'0 10px'}}>
+                        {store && <InventoryMain inventoryNav={inventoryNav}  setTable={setInventoryNav} />}
+                    </div>
+                </Fragment>
+            )}
+            {tableShow1 === 'add_item' && (
+                <Fragment>
+                    <div className="store-table-header" style={{background:'#fff'}}>
+                        <HeaderProductForm />
+                    </div>
+                    <div className="store-table-body" style={{padding:'0 10px'}}>
+                        <MainProductForm />
+                    </div>
+                </Fragment>
+            )}
+            {tableShow1 === 'add_location' && (
+                <Fragment>
+                    <div className="store-table-header" style={{background:'#fff'}}>
+                        <HeaderLocationForm />
+                    </div>
+                    <div className="store-table-body" style={{padding:'0 10px'}}>
+                        <MainLocationForm />
+                    </div>
+                </Fragment>
+            )}
+            {/* {tableShow1 === 'add_collection' && (
+                <Fragment>
+                    <div className="store-table-header" style={{background:'#fff'}}>
+                        <HeaderCollectionForm />
+                    </div>
+                    <div className="store-table-body" style={{padding:'0 10px'}}>
+                        <MainCollectionForm />
+                    </div>
+                </Fragment>
+            )} */}
+            {tableShow1 === 'orders' && (
+                <Fragment>
+                    <div className="store-table-header" style={{background:'#fff'}}>
+                        <OrdersHeader ordersNav={ordersNav}  setTable={setOrdersNav} />
+                    </div>
+                    <div className="store-table-body" style={{padding:'0 10px'}}>
+                        {store && <OrdersMain ordersNav={ordersNav}  setTable={setOrdersNav} />}
+                    </div>
+                </Fragment>
+            )}
+            {tableShow1 === 'people' && (
+                <Fragment>
+                    <div className="store-table-header" style={{background:'#fff'}}>
+                        <PeopleHeader />
+                    </div>
+                    <div className="store-table-body" style={{padding:'0 10px'}}>
+                        {store && <PeopleMain />}
+                    </div>
+                </Fragment>
+            )}
+            {tableShow1 === 'settings' && (
+                <Fragment>
+                    <div className="store-table-header" style={{background:'#fff'}}>
+                        <SettingsHeader settingsNav={settingsNav}  setTable={setSettingsNav} />
+                    </div>
+                    <div className="store-table-body" style={{padding:'0 10px'}}>
+                        {store && <SettingsMain settingsNav={settingsNav}  setTable={setSettingsNav} />}
+                    </div>
+                </Fragment>
+            )}
 
-                        <Link to={{pathname:`/admin/${match.params.id}`,search: "?show=store"}}>
-                            <div onClick={e => setTableShow1('store')} className={tableShow1 === "store" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                                    <h3 style={{fontWeight:'600'}}>Store</h3>
-                                    <p>Track, manage, & return</p>
-                                </div>
-                            </div>
-                        </Link>
-                        {/* <div onClick={e => setTableShow1('payments')} className={tableShow1 === "payments" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                            <h3>Payments</h3>
-                            <p>Add payment methods</p>
-                        </div> */}
-                        <Link to={{pathname:`/admin/${match.params.id}`,search: "?show=inventory"}}>
-                            <div onClick={e => setTableShow1('inventory')} className={tableShow1 === "inventory" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                                    <h3>Inventory</h3>
-                                    <p>Add new address</p>
-                                </div>
-                            </div>
-                        </Link>
-                        
-                        <Link to={{pathname:`/admin/${match.params.id}`,search: "?show=orders"}}>
-                            <div onClick={e => setTableShow1('orders')} className={tableShow1 === "orders" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                                    <h3>Orders</h3>
-                                    <p>Store subcriptions & repeat purchases</p>
-                                </div>
-                            </div>
-                        </Link>
-                        
-                        <Link to={{pathname:`/admin/${match.params.id}`,search: "?show=people"}}>
-                            <div onClick={e => setTableShow1('people')} className={tableShow1 === "people" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                                    <h3>People</h3>
-                                    <p>Password, name, etc.</p>
-                                </div>
-                            </div>
-                        </Link>
-                        <Link to={{pathname:`/admin/${match.params.id}`,search: "?show=settings"}}>
-                            <div onClick={e => setTableShow1('settings')} className={tableShow1 === "settings" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                                    <h3>Store Settings</h3>
-                                    <p>Password, name, etc.</p>
-                                </div>
-                            </div>
-                        </Link>
-                    </div>
-                    <div className="admin-table-main desktop-column">
-                        {tableShow1 === 'store' && (
-                            <Fragment>
-                                <div className="admin-table-header">
-                                    <StoreHeader setTable={setTableShow1} />
-                                </div>
-                                <div className="admin-table-body">
-                                    <div className="product-list-container">
-                                        {store && storeContent}
-                                    </div>
-                                </div>
-                            </Fragment>
-                        )}
-                        {tableShow1 === 'edit' && (
-                            <Fragment>
-                                <div className="admin-table-header" style={{background:'#fff'}}>
-                                    <EditHeader setTable={setTableShow1} />
-                                </div>
-                                <div className="admin-table-body">
-                                    {store && <EditMain />}
-                                </div>
-                            </Fragment>
-                        )}
-                        {tableShow1 === 'inventory' && (
-                            <Fragment>
-                                <div className="admin-table-header" style={{background:'#fff'}}>
-                                    <InventoryHeader 
-                                        inventoryNav={inventoryNav}  
-                                        setTable={setInventoryNav} 
-                                        setItemModal={toggleItemModal} 
-                                        setCollectionModal={toggleCollectionModal} 
-                                        setLocationModal={toggleLocationModal} />
-                                </div>
-                                <div className="admin-table-body">
-                                    {store && <InventoryMain inventoryNav={inventoryNav}  setTable={setInventoryNav} />}
-                                </div>
-                            </Fragment>
-                        )}
-                        {tableShow1 === 'add_item' && (
-                            <Fragment>
-                                <div className="admin-table-header" style={{background:'#fff'}}>
-                                    <HeaderProductForm />
-                                </div>
-                                <div className="admin-table-body">
-                                    <MainProductForm />
-                                </div>
-                            </Fragment>
-                        )}
-                        {tableShow1 === 'add_location' && (
-                            <Fragment>
-                                <div className="admin-table-header" style={{background:'#fff'}}>
-                                    <HeaderLocationForm />
-                                </div>
-                                <div className="admin-table-body">
-                                    <MainLocationForm />
-                                </div>
-                            </Fragment>
-                        )}
-                        {/* {tableShow1 === 'add_collection' && (
-                            <Fragment>
-                                <div className="admin-table-header" style={{background:'#fff'}}>
-                                    <HeaderCollectionForm />
-                                </div>
-                                <div className="admin-table-body">
-                                    <MainCollectionForm />
-                                </div>
-                            </Fragment>
-                        )} */}
-                        {tableShow1 === 'orders' && (
-                            <Fragment>
-                                <div className="admin-table-header" style={{background:'#fff'}}>
-                                    <OrdersHeader ordersNav={ordersNav}  setTable={setOrdersNav} />
-                                </div>
-                                <div className="admin-table-body">
-                                    {store && <OrdersMain ordersNav={ordersNav}  setTable={setOrdersNav} />}
-                                </div>
-                            </Fragment>
-                        )}
-                        {tableShow1 === 'people' && (
-                            <Fragment>
-                                <div className="admin-table-header" style={{background:'#fff'}}>
-                                    <PeopleHeader />
-                                </div>
-                                <div className="admin-table-body">
-                                    {store && <PeopleMain />}
-                                </div>
-                            </Fragment>
-                        )}
-                        {tableShow1 === 'settings' && (
-                            <Fragment>
-                                <div className="admin-table-header" style={{background:'#fff'}}>
-                                    <SettingsHeader settingsNav={settingsNav}  setTable={setSettingsNav} />
-                                </div>
-                                <div className="admin-table-body">
-                                    {store && <SettingsMain settingsNav={settingsNav}  setTable={setSettingsNav} />}
-                                </div>
-                            </Fragment>
-                        )}
-                    </div>
-                </div>
-            </div>
             <Modal open={displayItemModal} onClose={toggleItemModal} center styles={bg}>
                 <div className="checkout-modal">
                     <div className="checkout-modal-main">

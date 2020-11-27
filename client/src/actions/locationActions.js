@@ -9,24 +9,18 @@ import {
   ADD_LOCATION,
   EDIT_LOCATION,
   GET_LOCATION,
+  SET_PRODUCT_LOCATIONS,
   GET_PRODUCT_LOCATIONS,
   GET_VARIANT_LOCATIONS,
   CLEAR_LOCATIONS
 } from './types';
 
 // Set Locations to detailLocation
-export const setLocations = (id) => async dispatch => {
-  try {
-    const res = await axios.get(`/api/darkstores/${id}`);
-
-    dispatch({
-      type: SET_LOCATIONS,
-      payload: res.data
-    });
-
-  } catch (err) {
-    
-  }
+export const setLocations = (locationList) => dispatch => {
+  dispatch({
+    type: GET_LOCATIONS,
+    payload: locationList
+  });
 }
 
 // Get projects
@@ -72,7 +66,7 @@ export const getProductLocations = (id) => async dispatch => {
     const variantListData = await axios.get(`/api/variants/product/${productData.data._id}`);
 
     console.log('GOT VARIANTS');
-    console.log(variantListData.data.data);
+    console.log(variantListData.data);
 
     const variants = variantListData.data;
     if(variants.length > 0) {
@@ -136,6 +130,84 @@ export const getProductLocations = (id) => async dispatch => {
   } catch (err) {
     dispatch({
       type: GET_LOCATIONS,
+      payload: []
+    })
+  }
+};
+
+// Get Locations by product id
+export const setProductLocations = (id) => async dispatch => {
+  const locationArray = [];
+  let darkstore;
+  try {
+    const productData = await axios.get(`/api/products/${id}`);
+    const variantListData = await axios.get(`/api/variants/product/${productData.data._id}`);
+
+    console.log('GOT VARIANTS');
+    console.log(variantListData.data);
+
+    const variants = variantListData.data;
+    if(variants.length > 0) {
+      variants.map(async variant => {
+        for(var i = 0; i < variant.locations.length; i++) {
+          console.log('Location ID');
+          console.log(variant.locations[i].location);
+          darkstore = await axios.get(`/api/darkstores/${variant.locations[i].location}`);
+          console.log('NEW DARKSTORE');
+          console.log(darkstore.data);
+          if(locationArray.length > 0) {
+            if(locationArray.filter(location => location._id.toString() === darkstore.data._id).length > 0) {
+              return;
+            } else {
+              locationArray.push({
+                _id: darkstore.data._id,
+                location: darkstore.data.location,
+                address_components: darkstore.data.address_components,
+                name: darkstore.data.name,
+                placeId: darkstore.data.placeId,
+                formatted_address: darkstore.data.formatted_address,
+                phone: darkstore.data.phone,
+                qty: variant.locations[i].qty,
+                price: variant.locations[i].price,
+                sale_price: variant.locations[i].sale_price
+              });
+            }
+          } else {
+            locationArray.push({
+              _id: darkstore.data._id,
+              location: darkstore.data.location,
+              address_components: darkstore.data.address_components,
+              name: darkstore.data.name,
+              placeId: darkstore.data.placeId,
+              formatted_address: darkstore.data.formatted_address,
+              phone: darkstore.data.phone,
+              qty: variant.locations[i].qty,
+              price: variant.locations[i].price,
+              sale_price: variant.locations[i].sale_price
+            });
+          }
+          
+          console.log('LOCATIONS ARRAY');
+          console.log(locationArray);
+        }
+        console.log('EXIT FOR LOOP')
+        console.log(locationArray)
+  
+        dispatch({
+          type: SET_LOCATIONS,
+          payload: locationArray
+        });
+        
+      })
+    } else {
+      dispatch({
+        type: SET_LOCATIONS,
+        payload: []
+      })
+    }
+  } catch (err) {
+    dispatch({
+      type: SET_LOCATIONS,
       payload: []
     })
   }

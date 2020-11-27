@@ -3,10 +3,13 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
 import { closeModal } from '../../actions/productActions';
 import Modal from 'react-responsive-modal';
+
 import paymentSignatures from '../../utils/imgs/visa_PNG2.png';
 import paypalLogo from '../../utils/imgs/PayPal_logo_logotype_emblem.png';
+import placeholderImg from '../../utils/imgs/placeholder_img.jpg';
 
 import { ButtonContainer } from '../Button';
 
@@ -67,7 +70,7 @@ const AddToCartModal = ({closeModal, product}) => {
                                                 const total = parseFloat(tempTotal.toFixed(2));
                                                 return (
                                                     <div style={{fontSize: '1rem', color:'#cecece',margin: '10px',width: '100px',height: '100px',border: '2px dashed #cecece',display:'flex', justifyContent: 'center',alignItems: 'center'}}>
-                                                        <img src={`/api/products/image/${img_gallery[0].img_name}`} style={{height:'100%', width:'100%'}} alt="product" />
+                                                        <img src={img_gallery ? `/api/products/image/${img_gallery[0].img_name}` : placeholderImg} style={{height:'100%', width:'100%'}} alt="product" />
                                                     </div>
                                                 );
                                             })}

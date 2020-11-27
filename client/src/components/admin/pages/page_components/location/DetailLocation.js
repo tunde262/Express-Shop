@@ -120,9 +120,10 @@ const DetailLocation = ({
                 setFormData={setFormData}
                 switchChange={switchChange}
             />
-            <CollectionsBlock
+            {/* <CollectionsBlock
+                product={product}
                 isMobile={isMobile} 
-            />
+            /> */}
             <TagsBlock
                 isMobile={isMobile} 
                 onAddItemTag={onAddItemTag}  
@@ -138,7 +139,7 @@ const DetailLocation = ({
 
     const mainLocationInfo = (
         <Fragment>
-            <MapBlock />
+            <MapBlock detail />
             
             {isMobile ? (
                 secondaryLocationInfo

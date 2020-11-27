@@ -1,8 +1,9 @@
-import { GET_STORE, GET_STORES, SET_CART_STORES, STORE_ERROR, UPDATE_STORE_FAVORITES, ADD_STORE_REVIEW, REMOVE_STORE_REVIEW, CLEAR_STORE, CLEAR_STORES } from "../actions/types";
+import { GET_STORE, GET_STORES, GET_SUBSCRIPTIONS, SET_CART_STORES, STORE_ERROR, UPDATE_STORE_FAVORITES, ADD_STORE_REVIEW, REMOVE_STORE_REVIEW, CLEAR_STORE, CLEAR_STORES } from "../actions/types";
 
 const initialState = {
     store: null,
     stores: [],
+    subscriptions: [],
     cart_stores: [],
     loading: true,
     error: {}
@@ -22,6 +23,12 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 stores: payload,
+                loading: false
+            }
+        case GET_SUBSCRIPTIONS:
+            return {
+                ...state,
+                subscriptions: payload,
                 loading: false
             }
         case SET_CART_STORES:

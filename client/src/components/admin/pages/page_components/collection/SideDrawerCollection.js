@@ -60,10 +60,10 @@ const SideDrawerCollection = ({setSlideForm1, getCollectionsByStoreId, storeId, 
 
     return (
         <Fragment>
-            <div onClick={() => setSlideForm1(false)} style={{display:'flex', color:'#808080', width:'100%', padding:'1rem 0 0 1.5rem', fontSize:'0.8rem', justifyContent:'flex-start', alignItems:'center'}}>
+            {/* <div onClick={() => setSlideForm1(false)} style={{display:'flex', color:'#808080', width:'100%', padding:'1rem 0 0 1.5rem', fontSize:'0.8rem', justifyContent:'flex-start', alignItems:'center'}}>
                 <i className="fas fa-long-arrow-alt-left"></i>
                 <p style={{margin:'0 10px'}}>  Back to menu</p>
-            </div>
+            </div> */}
             <div style={{overflowY:'scroll', borderTop:'1px solid #f2f2f2', marginTop:'10px', height:'80vh'}}>
                 {!collectionList.length > 0 ? <Spinner /> : collectionList}
             </div>

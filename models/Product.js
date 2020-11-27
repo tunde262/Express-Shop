@@ -53,7 +53,7 @@ const ProductSchema = new Schema({
     },
     collections: [
         {
-            category: {
+            collectionId: {
                 type: Schema.Types.ObjectId,
                 ref: 'category'
             }
@@ -126,55 +126,9 @@ const ProductSchema = new Schema({
     ],
     variants: [
         {
-            var_id: {
+            variantId: {
                 type: Schema.Types.ObjectId,
                 ref: 'variant'
-            },
-            inventory_qty: {
-                type: Number,
-                default: 0
-            },
-            price: {
-                type: Number,
-                default: 0
-            },
-            sale_price: {
-                type: Number,
-                default: 0
-            },
-            sku: {
-                type: String
-            },
-            color: {
-                type: String
-            },
-            size: {
-                type: String
-            },
-            weight: {
-                type: String
-            },
-            type: {
-                type: String
-            },
-            bundle: {
-                type: String
-            },
-            scent: {
-                type: String
-            },
-            fit: {
-                type: String
-            },
-            flavor: {
-                type: String
-            },
-            material: {
-                type: String
-            },
-            date: {
-                type: Date,
-                default: Date.now
             }
         }
     ]

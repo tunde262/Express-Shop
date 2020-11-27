@@ -102,7 +102,7 @@ const Form_Location = ({
           isLocation
         />
         
-        <MapBlock />
+        <MapBlock detail />
 
         <ItemsBlock
             product={product} 

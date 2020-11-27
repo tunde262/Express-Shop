@@ -17,7 +17,8 @@ const Variant = ({
     editVariant,
     handleToggle,
     variantItem,
-    variant,
+    detailVariant,
+    prodId,
     store
 }) => {
     const [formData, setFormData] = useState(initialState); 
@@ -30,10 +31,10 @@ const Variant = ({
     useEffect(() => {
         window.addEventListener('resize', () => handleWindowSizeChange());
         
-            if (variant) {
+            if (detailVariant) {
                 const variantData = { ...initialState };
-                for (const key in variant) {
-                    if (key in variantData) variantData[key] = variant[key];
+                for (const key in detailVariant) {
+                    if (key in variantData) variantData[key] = detailVariant[key];
                 }
 
                 // if (Array.isArray(variantData.tags))
@@ -74,7 +75,7 @@ const Variant = ({
     const onSubmit = (e) => {
         e.preventDefault();
 
-        editVariant(formData, variant._id, store.store._id); 
+        editVariant(formData, detailVariant._id, store.store._id); 
         console.log('FORM DATA')
         console.log(formData);
         setRowData(formData)
@@ -107,7 +108,7 @@ const Variant = ({
     }
 
     return (
-        <div key={variant._id} className="modal-table-list-transition">
+        <div key={detailVariant._id} className="modal-table-list-transition">
             {/** Transition 1 */}
             <div  
                 className={rowClassName1} 
@@ -117,61 +118,66 @@ const Variant = ({
                     <Fragment>
                         <div>{variantItem.img_gallery[0] && <img style={{width: '50px'}} src={`/api/products/image/${variantItem.img_gallery[0].img_name}`} alt="img" />}</div>
                         <div>
-                            {variant.color && (<span>{variant.color} </span>)}
-                            {variant.size && (<span>{variant.size} </span>)}
-                            {variant.weight && (<span>{variant.weight} </span>)}
-                            {variant.bundle && (<span>{variant.bundle} </span>)}
-                            {variant.type && (<span>{variant.type} </span>)}
-                            {variant.scent && (<span>{variant.scent} </span>)}
-                            {variant.fit && (<span>{variant.fit} </span>)}
-                            {variant.flavor && (<span>{variant.flavor} </span>)}
-                            {variant.material && (<span>{variant.material} </span>)}
+                            {detailVariant.color && (<span>{detailVariant.color} </span>)}
+                            {detailVariant.size && (<span>{detailVariant.size} </span>)}
+                            {detailVariant.weight && (<span>{detailVariant.weight} </span>)}
+                            {detailVariant.bundle && (<span>{detailVariant.bundle} </span>)}
+                            {detailVariant.type && (<span>{detailVariant.type} </span>)}
+                            {detailVariant.scent && (<span>{detailVariant.scent} </span>)}
+                            {detailVariant.fit && (<span>{detailVariant.fit} </span>)}
+                            {detailVariant.flavor && (<span>{detailVariant.flavor} </span>)}
+                            {detailVariant.material && (<span>{detailVariant.material} </span>)}
                         </div>
                     </Fragment>
                 ) : (
                     <Fragment>
                         <div 
-                            onClick={() => handleToggle(variant._id)}
+                            onClick={() => handleToggle(detailVariant._id)}
                             style={{cursor:'pointer'}}
                         >
                             {variantItem.img_gallery[0] && <img style={{width: '50px'}} src={`/api/products/image/${variantItem.img_gallery[0].img_name}`} alt="img" />}
                         </div>
                         <div 
-                            onClick={() => handleToggle(variant._id)}
+                            onClick={() => handleToggle(detailVariant._id)}
                             style={{cursor:'pointer'}}
                         >
-                            {variant.color && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.color} </p></div>)}
-                            {variant.size && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.size} </p></div>)}
-                            {variant.weight && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.weight} </p></div>)}
-                            {variant.bundle && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.bundle} </p></div>)}
-                            {variant.type && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.type} </p></div>)}
-                            {variant.scent && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.scent} </p></div>)}
-                            {variant.fit && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.fit} </p></div>)}
-                            {variant.flavor && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.flavor} </p></div>)}
-                            {variant.material && (<div style={{background:'#66ff66', display:'flex', justifyContent:'center', alignItems:'center', margin:'5px 5px 5px 0', justifyContent:'center', alignItems:'center', height:'20px', width:'fit-content',  borderRadius:'20px', padding:'1rem 1rem 0 1rem'}}><p style={{marign:'0', color:'green'}}>{variant.material} </p></div>)}
+                            {detailVariant.color && (<div className="tag-item green"><p>{detailVariant.color} </p></div>)}
+                            {detailVariant.size && (<div className="tag-item green"><p>{detailVariant.size} </p></div>)}
+                            {detailVariant.weight && (<div className="tag-item green"><p>{detailVariant.weight} </p></div>)}
+                            {detailVariant.bundle && (<div className="tag-item green"><p>{detailVariant.bundle} </p></div>)}
+                            {detailVariant.type && (<div className="tag-item green"><p>{detailVariant.type} </p></div>)}
+                            {detailVariant.scent && (<div className="tag-item green"><p>{detailVariant.scent} </p></div>)}
+                            {detailVariant.fit && (<div className="tag-item green"><p>{detailVariant.fit} </p></div>)}
+                            {detailVariant.flavor && (<div className="tag-item green"><p>{detailVariant.flavor} </p></div>)}
+                            {detailVariant.material && (<div className="tag-item green"><p>{detailVariant.material} </p></div>)}
                         </div>
                         <div 
-                            onClick={() => handleToggle(variant._id)}
+                            onClick={() => handleToggle(detailVariant._id)}
                             style={{cursor:'pointer'}}
                         >
                             {rowData.inventory_qty}
                         </div>
                         <div 
-                            onClick={() => handleToggle(variant._id)}
+                            onClick={() => handleToggle(detailVariant._id)}
                             style={{cursor:'pointer'}}
                         >
                             ${rowData.price}
                         </div>
                         <div 
-                            onClick={() => handleToggle(variant._id)}
+                            onClick={() => handleToggle(detailVariant._id)}
                             style={{cursor:'pointer'}}
                         >
                             ${rowData.sale_price}
                         </div>
                         <div 
-                            style={{width:'50px', color:'#ff4b2b', cursor:'pointer'}}
+                            style={{width:'50px', display:'grid', gridTemplateColumns:'1fr 1fr', color:'#ff4b2b', cursor:'pointer'}}
                         >
-                            <i onClick={() => setRowSlide(!rowSlide)} className="fas fa-pen"></i>
+                            <div style={{display:'flex', justifyContent:'center', color:'#808080', alignItems:'center'}}>
+                                <i onClick={() => setRowSlide(!rowSlide)} className="fas fa-pen"></i>
+                            </div>
+                            <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+                                <i onClick={() => deleteVariant(detailVariant._id, prodId)} className="fas fa-trash"></i>
+                            </div>
                         </div>
                     </Fragment>
                 ) }
@@ -183,74 +189,74 @@ const Variant = ({
                 id="transition-2"
             >
                 <div>
-                    {variant.color && (
+                    {detailVariant.color && (
                         <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
                             <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>
-                                {variant.color} 
+                                {detailVariant.color} 
                             </p>
                             <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i>
                         </div>
                     )}
-                    {variant.size && (
+                    {detailVariant.size && (
                         <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
                             <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>
-                                {variant.size} 
+                                {detailVariant.size} 
                             </p>
                             <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i>
                         </div>
                     )}
-                    {variant.weight && (
+                    {detailVariant.weight && (
                         <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
                             <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>
-                                {variant.weight} 
+                                {detailVariant.weight} 
                             </p>
                             <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i>
                         </div>
                     )}
-                    {variant.bundle && (
+                    {detailVariant.bundle && (
                         <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
                             <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>
-                                {variant.bundle} 
+                                {detailVariant.bundle} 
                             </p>
                             <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i>
                         </div>
                     )}
-                    {variant.type && (
+                    {detailVariant.type && (
                         <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
                             <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>
-                                {variant.type} 
+                                {detailVariant.type} 
                             </p>
                             <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i>
                         </div>
                     )}
-                    {variant.scent && (
+                    {detailVariant.scent && (
                         <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
                             <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>
-                                {variant.scent} 
+                                {detailVariant.scent} 
                             </p>
                             <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i>
                         </div>
                     )}
-                    {variant.fit && (
+                    {detailVariant.fit && (
                         <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
                             <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>
-                                {variant.fit} 
+                                {detailVariant.fit} 
                             </p>
                             <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i>
                         </div>
                     )}
-                    {variant.flavor && (
+                    {detailVariant.flavor && (
                         <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
                             <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>
-                                {variant.flavor} 
+                                {detailVariant.flavor} 
                             </p>
                             <i style={{ margin:'0 5px', fontSize:'3px'}} class="fas fa-circle"></i>
                         </div>
                     )}
-                    {variant.material && (
+                    {detailVariant.material && (
                         <div style={{display:'flex', alignItems:'center', color:'#808080', flexWrap:'wrap', maxWidth:'100%'}}>
                             <p style={{margin:'0', fontSize:'14px', color:'#0098d3'}}>
-                                {variant.material} 
+                                {detailVariant.material} 
                             </p>
                         </div>
                     )}

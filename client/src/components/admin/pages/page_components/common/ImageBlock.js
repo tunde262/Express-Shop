@@ -83,10 +83,10 @@ const ImageBlock = ({
 
     return (
         <div className="product-admin-main-container">
+            {imageContent}
             <div className="addImage" onClick={setImageModal}>
                 <i class="fas fa-plus"></i>
             </div>
-            {imageContent}
         </div>
     )
 }

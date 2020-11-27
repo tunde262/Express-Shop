@@ -145,7 +145,7 @@ const InventoryMain = ({ inventoryNav, setTable, store: { store, loading } }) =>
                 <span style={{fontSize:'15px', fontWeight:'bold', color:'#808080', letterSpacing:'2px', margin:'10px'}}>Filter</span>
                 <i class="fas fa-sliders-h"></i>
             </div>
-            <div className="product-list-container">
+            <div className="product-list-container admin">
                 <Table page="dashboard" inventoryNav={inventoryNav}  setTable={setTable} />
             </div>
         </Fragment>

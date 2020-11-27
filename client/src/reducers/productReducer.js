@@ -293,9 +293,13 @@ export default function(state = initialState, action) {
                 arr.push(action.payload.items[id]);
             }
 
-            arr.map(item => storeList.includes(item.item.store) ? null : storeList.push({
-                store: item.item.store
-            }));
+            arr.map(item => {
+                if(!storeList.filter(itemStore => itemStore.store.toString() === item.item.store.toString()).length > 0) {
+                    storeList.push({
+                        store: item.item.store
+                    })
+                }
+            });
 
             let subTotal = action.payload.totalPrice;
             // const tempTax = subTotal * 0.1;

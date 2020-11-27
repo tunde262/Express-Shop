@@ -16,6 +16,8 @@ import SubscriptionsMain from './sub_components/Main_Sub';
 import SubscriptionsHeader from './sub_components/Header_Sub';
 import SettingsMain from './settings_components/Main_Settings';
 import SettingsHeader from './settings_components/Header_Settings';
+import MyStoresMain from './my_stores_components/Main_Stores';
+import MyStoresHeader from './my_stores_components/Header_Stores';
 import Saved from './Saved';
 import Settings from './Settings';
 import AuthModal from '../modals/AuthModal';
@@ -28,8 +30,9 @@ import { getStoreSubscriptions } from '../../actions/storeActions';
 
 import sampleImg from '../../utils/imgs/20484728.jpeg';
 import { addAddress } from '../../actions/profileActions';
+import { setPage } from '../../actions/navActions';
 
-const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { user, isAuthenticated, loading }, location}) => {
+const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { user, isAuthenticated, loading }, location, nav: { page }, setPage}) => {
     const [skip, setSkip] = useState(0);
     const [tableShow1, setTableShow1] = useState('completed');
     const [tableShow2, setTableShow2] = useState('orders');
@@ -60,6 +63,7 @@ const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { us
 
     useEffect(() => {
         window.addEventListener('resize', () => handleWindowSizeChange());
+        setPage('profile');
         if(user) {
             getStoreSubscriptions(user._id);
         }
@@ -80,6 +84,9 @@ const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { us
             }
             else if (query === 'subscriptions') {
                 setTableShow2('subscriptions');
+            }
+            else if (query === 'stores') {
+                setTableShow2('my stores');
             }
         }
 
@@ -154,7 +161,7 @@ const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { us
             if(delivery_instructions !== '')data.append('delivery_instructions', delivery_instructions);
             data.append('active', active);
 
-            addAddress(data);
+            addAddress(formData);
 
             toggleAddressModal(false)
         }
@@ -174,6 +181,8 @@ const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { us
         tableHeader = <SubscriptionsHeader /> 
     } else if(tableShow2 === 'settings') {
         tableHeader = <SettingsHeader /> 
+    } else if(tableShow2 === 'my stores') {
+        tableHeader = <MyStoresHeader /> 
     }
 
     let tableContent;
@@ -190,6 +199,8 @@ const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { us
         tableContent = <SubscriptionsMain />; 
     } else if(tableShow2 === 'settings') {
         tableContent = <SettingsMain />; 
+    } else if(tableShow2 === 'my stores') {
+        tableContent = <MyStoresMain />; 
     }
 
     if(!sentMixpanel && user !== null) {
@@ -208,78 +219,13 @@ const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { us
 
     return (
         <Fragment>
-            {/* <div onScroll={handleScroll} style={{height:"100vh", overflowY:'scroll'}}>
-                <div style={{textAlign:'center', marginTop:'1rem'}} class="container-fluid">
-                    <h3 style={{color: '#333', fontWeight:'300'}}>Hey, {user && user.name}</h3>
-                    <ul class="profile-underline">
-                        <div onClick={e => setTableShow1('orders')} className={tableShow1 === "orders" && "active"}><li><i class="fas fa-history"></i></li></div>
-                        <div onClick={e => setTableShow1('payments')} className={tableShow1 === "payments" && "active"}><li><p>Payment</p></li></div>
-                        <div onClick={e => setTableShow1('addresses')} className={tableShow1 === "addresses" && "active"}><li><p>Address</p></li></div>
-                        <div onClick={e => setTableShow1('subcriptions')} className={tableShow1 === "subcriptions" && "active"}><li><p>Subcriptions</p></li></div>
-                        <div onClick={e => setTableShow1('settings')} className={tableShow1 === "settings" && "active"}><li><i class="fas fa-cog"></i></li></div>
-                    </ul>
-                    {tableContent}
-                </div>
-            </div> */}
-            <div style={{textAlign:'center', marginTop:'1rem'}} class="container-fluid">
-                {/* <h3 style={{color: '#333', fontWeight:'300'}}>Hey, {user && user.name}</h3> */}
-                <div className="profile-table">
-                    <div className={isTablet ? "mobile-profile-table-nav" : "profile-table-nav"}>
-                        <Link to="/profile">
-                            <div>
-                                <h3 style={{fontWeight:'600'}}>Hey, {user && user.name}</h3>
-                            </div>
-                        </Link>
-
-                        <Link to={isTablet ? "/profile/orders" : {pathname:"/profile",search: "?show=orders"}}>
-                            <div onClick={e => setTableShow2('orders')} className={tableShow2 === "orders" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                                    <h3 style={{fontWeight:'600'}}>Orders</h3>
-                                    <p>Track, manage, & return</p>
-                                </div>
-                            </div>
-                        </Link>
-                        {/* <div onClick={e => setTableShow2('payments')} className={tableShow2 === "payments" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                            <h3>Payments</h3>
-                            <p>Add payment methods</p>
-                        </div> */}
-                        <Link to={isTablet ? "/profile/addresses" : {pathname:"/profile",search: "?show=addresses"}}>
-                            <div onClick={e => setTableShow2('addresses')} className={tableShow2 === "addresses" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                                    <h3>Addresses</h3>
-                                    <p>Add new address</p>
-                                </div>
-                            </div>
-                        </Link>
-                        
-                        <Link to={isTablet ? "/profile/subscriptions" : {pathname:"/profile",search: "?show=subscriptions"}}>
-                            <div onClick={e => setTableShow2('subscriptions')} className={tableShow2 === "subscriptions" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                                    <h3>Subscriptions</h3>
-                                    <p>Store subcriptions & repeat purchases</p>
-                                </div>
-                            </div>
-                        </Link>
-                        
-                        <Link to={isTablet ? "/profile/settings" : {pathname:"/profile",search: "?show=settings"}}>
-                            <div onClick={e => setTableShow2('settings')} className={tableShow2 === "settings" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                                <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                                    <h3>Settings</h3>
-                                    <p>Password, name, etc.</p>
-                                </div>
-                            </div>
-                        </Link>
-                    </div>
-                    <div className="profile-table-main desktop-column">
-                        <div className="profile-table-header">
-                            {tableHeader}
-                        </div>
-                        <div className="profile-table-body">
-                            {tableContent}
-                        </div>
-                    </div>
-                </div>
+            <div className="store-table-header" style={{padding:'20px 20px 0 20px'}}>
+                {tableHeader}
             </div>
+            <div className="store-table-body" style={{padding:'0 10px'}}>
+                {tableContent}
+            </div>
+
             {!loading && !isAuthenticated ? <AuthModal /> : null }
             <Modal open={displayAddressModal} onClose={handleAddressModal} center styles={bg}>
                 <div className="checkout-modal">
@@ -516,6 +462,15 @@ const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { us
                 </div>
             </Modal>
         </Fragment>
+        // <Link to="/profile">
+        // <Link to={isTablet ? "/profile/orders" : {pathname:"/profile",search: "?show=orders"}}>
+        //     <div onClick={e => setTableShow2('orders')} className={tableShow2 === "orders" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
+        // <Link to={isTablet ? "/profile/addresses" : {pathname:"/profile",search: "?show=addresses"}}>
+        //     <div onClick={e => setTableShow2('addresses')} className={tableShow2 === "addresses" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
+        // <Link to={isTablet ? "/profile/subscriptions" : {pathname:"/profile",search: "?show=subscriptions"}}>
+        //     <div onClick={e => setTableShow2('subscriptions')} className={tableShow2 === "subscriptions" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
+        // <Link to={isTablet ? "/profile/settings" : {pathname:"/profile",search: "?show=settings"}}>
+        //     <div onClick={e => setTableShow2('settings')} className={tableShow2 === "settings" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
     )
 }
 
@@ -525,12 +480,15 @@ Profile.propTypes = {
     store: PropTypes.object.isRequired,
     getStoreSubscriptions: PropTypes.func.isRequired,
     addAddress: PropTypes.func.isRequired,
+    nav: PropTypes.object.isRequired,
+    setPage: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
     auth: state.auth,
     product: state.product,
-    store: state.store
+    store: state.store,
+    nav: state.nav
 });
 
-export default connect(mapStateToProps, {addAddress, getStoreSubscriptions})(withRouter(Profile));
+export default connect(mapStateToProps, { addAddress, getStoreSubscriptions, setPage })(withRouter(Profile));

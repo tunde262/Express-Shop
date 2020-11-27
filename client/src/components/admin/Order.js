@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import moment from 'moment'
 
+import placeholderImg from '../../utils/imgs/placeholder_img.jpg';
+
 class Order extends Component {
     render() {
         const order = this.props.order;
@@ -22,7 +24,7 @@ class Order extends Component {
             const { qty, price } = item;
             const { name, img_gallery, company, _id } = item.item;
             return (
-                <img key={item.item._id} src={`/api/products/image/${img_gallery[0].img_name}`} style={{height:'100%', width:'70px', margin:'0 15px', zIndex:'0'}} alt="product" />
+                <img key={item.item._id} src={img_gallery ? `/api/products/image/${img_gallery[0].img_name}` : placeholderImg} style={{height:'100%', width:'70px', margin:'0 15px', zIndex:'0'}} alt="product" />
                 // <li key={item.item._id} style={{display: 'flex'}} className="list-group-item">
                 //     <img src={`/api/products/image/${img_gallery[0].img_name}`} style={{width:'3rem', height:"3rem"}} className="img-fluid" alt="img" />
                 //     <p>{name} | {qty} Units</p>

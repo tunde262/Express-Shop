@@ -7,6 +7,7 @@ import { decrement, removeItem, addToCart } from '../../../actions/productAction
 import './CartDrawer.css';
 import cart_logo from '../../../utils/imgs/cart_logo.png';
 import cartbags from '../../../utils/imgs/cartbags.png';
+import placeholderImg from '../../../utils/imgs/placeholder_img.jpg';
 
 const CartDrawer = ({ 
     drawerClickHandler, 
@@ -83,7 +84,7 @@ const CartDrawer = ({
                                 return (
                                     <div style={{display:'flex', height:'100px', width:'100%', padding:'10px', borderBottom:'1px solid #cecece'}}>
                                         <div style={{height:'100%', width:'100px'}}>
-                                            <img src={`/api/products/image/${img_gallery[0].img_name}`} style={{height:'100%'}} alt="product" />
+                                            <img src={img_gallery ? `/api/products/image/${img_gallery[0].img_name}` : placeholderImg} style={{height:'100%'}} alt="product" />
                                         </div>
                                         <div style={{display:'flex', height:'100%', overflow:'hidden', width:'150px', marginLeft:'-10px', flexDirection:'column', alignItems:'flex-start'}}>
                                             <div className="line-clamp" style={{height:'40px', overflow:'hidden', width:'100%'}}>

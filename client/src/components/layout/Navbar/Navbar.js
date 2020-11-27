@@ -102,7 +102,7 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
         authLinks = (
             <Fragment>
                 <li className={navHighlight === "favorited" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('favorited')}>
-                    <a href="https://www.cardboardexpress.com/profile/saved">
+                    <Link to="/profile/saved">
                         <div
                             onMouseEnter={handleMouseHoverHeart}
                             onMouseLeave={handleMouseHoverHeart}
@@ -114,7 +114,7 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                             )}
                             
                         </div>  
-                    </a>
+                    </Link>
                 </li>
                 {/* <li className={navHighlight === "categories" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('categories')}>
                     <div 
@@ -152,11 +152,11 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                     >
                         {navHighlight === "profile" || isHovering ? (
                             <Fragment>
-                                <a href="https://www.cardboardexpress.com/profile">
+                                <Link to="/profile">
                                     <div className="profile-circle">
                                         <p style={{fontWeight:'bold', color:'#333'}}>T</p>
                                     </div>
-                                </a>
+                                </Link>
                                 <div 
                                     className="profile-toggle"
                                     onClick={() => setDropdown(!dropdown)}
@@ -172,11 +172,11 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                             ) 
                             : (
                                 <Fragment>
-                                    <a href="https://www.cardboardexpress.com/profile">
+                                    <Link to="/profile">
                                         <div style={{display:'flex', justifyContent:'center', paddingTop:'20px', alignItems:'center', width:'40px', height:'40px', borderRadius:'50%', background:'#ececec'}}>
                                             <p style={{fontWeight:'bold', color:'#333'}}>T</p>
                                         </div>
-                                    </a>
+                                    </Link>
                                     <div 
                                         className="profile-toggle"
                                         onClick={() => setDropdown(!dropdown)}
@@ -401,11 +401,11 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                     >
                         {navHighlight === "profile" || isHovering ? (
                             <Fragment>
-                                <a href="https://www.cardboardexpress.com/profile">
+                                <Link to="/profile">
                                     <div className="profile-circle">
                                         <p style={{fontWeight:'bold', color:'#333'}}>T</p>
                                     </div>
-                                </a>
+                                </Link>
                                 <div 
                                     className="profile-toggle"
                                     onClick={() => setDropdown(!dropdown)}
@@ -421,11 +421,11 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                             ) 
                             : (
                                 <Fragment>
-                                    <a href="https://www.cardboardexpress.com/profile">
+                                    <Link to="/profile">
                                         <div style={{display:'flex', justifyContent:'center', paddingTop:'20px', alignItems:'center', width:'40px', height:'40px', borderRadius:'50%', background:'#ececec'}}>
                                             <p style={{fontWeight:'bold', color:'#333'}}>T</p>
                                         </div>
-                                    </a>
+                                    </Link>
                                     <div 
                                         className="profile-toggle"
                                         onClick={() => setDropdown(!dropdown)}
@@ -500,7 +500,7 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                 <a href="https://business.cardboardexpress.com" target="_blank" style={{fontSize:'1rem'}} className="cta" to="/business">Business</a>
             </li>
             <li className="nav-offset">
-                <a href="https://www.cardboardexpress.com/login" style={{fontSize:'1rem'}} className="cta">Login</a>
+                <Link to="/login" style={{fontSize:'1rem'}} className="cta">Login</Link>
             </li>
             {/* <li className="nav-offset">
                 <Link style={{fontSize:'1rem'}} className="cta" to="/blog">Blog</Link>
@@ -522,21 +522,21 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
         authMobileLinks = (
             <div className="nav-mobile-links">
                 <li className="nav-offset" onClick={e => setNavHighlight('home')}>
-                    <a href="https://www.cardboardexpress.com/home">
+                    <Link to="/home">
                         {navHighlight === "home" ? (
                             <i style={{color:'#ff4b2b', fontSize:'22px'}} className="fas fa-home"></i>
                         ) : (
                             <i style={{fontSize:'22px'}} className="fas fa-home"></i>
                         )}
-                    </a>
+                    </Link>
                 </li>
                 <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
-                    <a href="https://www.cardboardexpress.com/explore">
+                    <Link to="/explore">
                         <i style={{fontSize:'22px'}} className="far fa-compass"></i>
-                    </a>
+                    </Link>
                 </li>
                 <li className="nav-offset" onClick={e => setNavHighlight('profile')}>
-                    <a href="https://www.cardboardexpress.com/profile">
+                    <Link to="/profile">
                         <div  
                             style={{display:'flex', alignItems:'center', justifyContent:'center'}}
                             className={navHighlight === "profile" && "active"}
@@ -558,12 +558,12 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                                     </Fragment>
                                 )}
                         </div>
-                    </a>
+                    </Link>
                 </li>
                 <li className={navHighlight === "favorited" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('favorited')}>
-                    <a href="https://www.cardboardexpress.com/profile/saved">
+                    <Link to="/profile/saved">
                         <i style={{marginLeft:'-6px', fontSize:'22px'}} className="far fa-heart"></i>
-                    </a>
+                    </Link>
                 </li>
                 <li onClick={toggleCart}>
                     <a href="#">
@@ -632,7 +632,7 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                         <i style={{fontSize:'1rem'}} className="fas fa-bars"></i>
                     </div>
                     <div className="branding">
-                        <a href="https://www.cardboardexpress.com"><img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" /></a>
+                        <Link to="/"><img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" /></Link>
 
                         {/* <div className="social-container">
                             <a href="https://instagram.com/cardboardexpress" target="_blank" className="social"><i className="fab fa-instagram"></i></a>
@@ -641,22 +641,22 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
                         </div> */}
                     </div>
 
-                    {!nav.admin && (
+                    {/* {!nav.admin && (
                         <Fragment>
                             <li className={navHighlight === "home" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('home')}>
-                                <a href="https://www.cardboardexpress.com/home" className={navHighlight === "home" && "active"}>
+                                <Link to="/home" className={navHighlight === "home" && "active"}>
                                     <i className="fas fa-home"></i>{' '}
                                     Home
-                                </a>
+                                </Link>
                             </li>
                             <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
-                                <a to="https://www.cardboardexpress.com/explore">
+                                <Link to="/explore">
                                     <i className="far fa-compass"></i>{' '}
                                     Explore
-                                </a>
+                                </Link>
                             </li>
                         </Fragment>
-                    )}
+                    )} */}
                     {/* <Link className="cta" to="/register">
                         {/* <button type="button" className="nav-btn nav-icon" onClick={drawerClickHandler}>
                             Sell

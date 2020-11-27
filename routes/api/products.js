@@ -148,6 +148,33 @@ router.get('/filter/full/:filter', async (req, res) => {
     }
 });
 
+// @route POST api/products/add_collect/:id/:locationId
+// @desc Add / Remove collection from / to product
+// @access Private
+router.post('/edit_collection/:prodId/:collectionId', auth, async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.prodId);
+
+        // Check if product already liked by same user
+        if(product.collections.filter(collection => collection.collectionId.toString() === req.params.collectionId).length > 0) {
+            // Get remove index
+            const removeIndex = product.collections.map(collection => collection.collectionId.toString()).indexOf(req.params.collectionId);
+
+            product.collections.splice(removeIndex, 1);
+        } else {
+            product.collections.unshift({ collectionId: req.params.collectionId });
+        }
+
+        await product.save();
+
+        res.json(product.collections);
+    } catch (err) {
+        console.error(err.message);
+        
+        res.status(500).send('Server Error'); 
+    }
+})
+
 // @route GET api/products/collection/:collectionId
 // @desc Get Products in collection
 // @access Public
@@ -520,13 +547,71 @@ router.post('/image/:id', upload.single('file'), async (req, res) => {
     }
 });
 
+
+// @route POST api/variants/add_variant/:prodId/:varId
+// @desc Add variant to product
+// @access Private
+router.post('/add_variant/:prodId/:varId', auth, async (req, res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    } 
+
+
+    try {
+        const product = await Product.findById(req.params.prodId);
+
+        product.variants.unshift({ variantId: req.params.varId });
+        await product.save()
+
+        res.json(product.variants);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
+// @route DELETE api/variants/location/:id/:location_id
+// @desc Remove variant from product
+// @access Private
+router.delete('/variant/:prodId/:varId', auth, async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.prodId);
+
+        // Pull out location
+        const variant = product.variants.find(variant => variant.variantId.toString() === req.params.varId.toString()); // Will return variant or 'false'
+
+        // Make sure location exists
+        if(!variant) {
+            return res.status(404).json({ msg: 'variant does not exist' });
+        }
+
+        // TODO
+
+        // // Check store is correct store
+        // if(location.user.toString() !== req.user.id) {
+        //     return res.status(401).json({ msg: 'User not authorized'})
+        // }
+
+        // Get remove index
+        const removeIndex = product.variants.map(variant => variant.variantId.toString()).indexOf(variant.variantId);
+
+        product.variants.splice(removeIndex, 1);
+
+        await product.save();
+
+        res.json(product.variants);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
 // @route POST api/products/image/:id
 // @desc Add variant to product
 // @access Private
 router.post('/variant/:prodId/:varId', auth, async (req, res) => {
 
     const {
-        in_stock,
         inventory_qty,
         sale_price,
         price,
@@ -759,13 +844,13 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
 
 // @desc Add to cart
 router.get('/add-to-cart/:id', (req, res, next) => {
-    const productId = req.params.id;
+    const variantId = req.params.id;
     const cart = new Cart(req.session.cart ? req.session.cart : {});
 
-    Product.findById(productId, (err, product) => {
+    Variant.findById(variantId, (err, variant) => {
         if(err) throw err;
 
-        cart.add(product, product.id);
+        cart.add(variant, variant.id);
         req.session.cart = cart;
         console.log(req.session.cart);
         res.json(req.session.cart);

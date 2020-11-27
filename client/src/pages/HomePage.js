@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getProducts, getCart } from '../actions/productActions';
-import { setNav1 } from '../actions/navActions';
+import { setNav1, setPage } from '../actions/navActions';
 
 import mixpanel from 'mixpanel-browser';
 
+import Map from '../components/common/map/Map';
 import Footer from '../components/layout/Footer/Footer';
 import Header from '../components/header/Header';
 import CategoryOverview from '../components/Overview/categoryOverview/CategoryOverview';
@@ -18,8 +19,15 @@ import AuthModal from '../components/modals/AuthModal';
 import Banner from '../components/common/Banner';
 import ImgLarge from '../utils/imgs/banner21.jpg';
 import ImgSmall from '../utils/imgs/banner13.jpg';
+import gainLogo from '../utils/imgs/gainlogo.jpg';
+import sampleShoe from '../utils/imgs/20484728.jpeg';
+import paperTowels from '../utils/imgs/paper_towels.jpeg';
 
-const HomePage = ({getProducts, product, auth: { user, isAuthenticated, loading}, setNav1}) => {
+import compassSvg from '../components/common/compass.svg'
+import loyaltySvg from '../components/common/loyalty.svg';
+import addBookmarksSvg from '../components/common/add-bookmarks.svg';
+
+const HomePage = ({getProducts, storageLocation, product, auth: { user, isAuthenticated, loading}, setNav1, setPage}) => {
     const [skip, setSkip] = useState(0);
 
     // Nav underline Table
@@ -30,6 +38,7 @@ const HomePage = ({getProducts, product, auth: { user, isAuthenticated, loading}
     useEffect(() => {
         getProducts(skip);
         setNav1('explore');
+        setPage('home')
     }, [skip]);
 
     const handleScroll = (e) => {
@@ -102,24 +111,58 @@ const HomePage = ({getProducts, product, auth: { user, isAuthenticated, loading}
                     <div onClick={e => setTableShow1('popular')} className={tableShow1 === "popular" && "active"}><li><p>Popular</p></li></div>
                     <div onClick={e => setTableShow1('nearby')} className={tableShow1 === "nearby" && "active"}><li><p>Nearby</p></li></div>
                 </ul>
-                {/* <Banner imgLarge={ImgLarge} imgSmall={ImgSmall} /> */}
-                <div className="header-nav-container">
-                    <div style={{padding:'10px'}}>
-                        <h3 style={{fontSize:'12px', letterSpacing:'1px',color:'#808080'}}>
-                            Pick A Category
-                        </h3>
+                {tableShow1 === "for you" && (
+                    <Fragment>
+                        {/* <Banner imgLarge={ImgLarge} imgSmall={ImgSmall} /> */}
+                        <div className="header-nav-container mobile">
+                            <div style={{padding:'10px'}}>
+                                <h3 style={{fontSize:'12px', letterSpacing:'1px',color:'#808080'}}>
+                                    Pick A Category
+                                </h3>
+                            </div>
+                            <div style={{marginTop:'-2rem'}}>
+                                <Header />
+                            </div>
+                        </div>
+                        <div className="product-list-container">
+                            <div className="filter-container">
+                                <span style={{fontSize:'15px', fontWeight:'bold', color:'#808080', letterSpacing:'2px', margin:'10px'}}>Filter</span>
+                                <i class="fas fa-sliders-h"></i>
+                            </div>
+                            <Container />
+                        </div>
+                    </Fragment>
+                )}
+
+                {tableShow1 === "nearby" && (
+                    <div style={{width:'100%', display:'grid', gridTemplateColumns:'1fr 1fr'}}>
+                        <div>
+                            {/* <Banner imgLarge={ImgLarge} imgSmall={ImgSmall} /> */}
+                            <div className="header-nav-container mobile">
+                                <div style={{padding:'10px'}}>
+                                    <h3 style={{fontSize:'12px', letterSpacing:'1px',color:'#808080'}}>
+                                        Pick A Category
+                                    </h3>
+                                </div>
+                                <div style={{marginTop:'-2rem'}}>
+                                    <Header />
+                                </div>
+                            </div>
+                            <div className="product-list-container">
+                                <div className="filter-container">
+                                    <span style={{fontSize:'15px', fontWeight:'bold', color:'#808080', letterSpacing:'2px', margin:'10px'}}>Filter</span>
+                                    <i class="fas fa-sliders-h"></i>
+                                </div>
+                                <Container />
+                            </div>
+                        </div>
+                        <div className="product-list-container" style={{height:'100vh', margin:'10px 10px 10px 0'}}>
+                            <div style={{height:'100%', width:'100%'}}>
+                                <Map storageLocation={storageLocation}/>
+                            </div>
+                        </div>
                     </div>
-                    <div style={{marginTop:'-2rem'}}>
-                        <Header />
-                    </div>
-                </div>
-                <div className="filter-container">
-                    <span style={{fontSize:'15px', fontWeight:'bold', color:'#808080', letterSpacing:'2px', margin:'10px'}}>Filter</span>
-                    <i class="fas fa-sliders-h"></i>
-                </div>
-                <div className="product-list-container">
-                    <Container />
-                </div>
+                )}
             </div>
             {/* <Footer /> */}
             {!loading && !isAuthenticated ? <AuthModal /> : null }
@@ -134,11 +177,16 @@ HomePage.propTypes = {
     product: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
     setNav1: PropTypes.func.isRequired,
+    setPage: PropTypes.func.isRequired,
+    nav: PropTypes.object.isRequired,
+    storageLocation: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
     product: state.product,
-    auth: state.auth
+    auth: state.auth,
+    nav: state.nav,
+    storageLocation: state.location
 });
 
-export default connect(mapStateToProps, { getProducts, getCart, setNav1 })(HomePage);
+export default connect(mapStateToProps, { getProducts, getCart, setNav1, setPage })(HomePage);

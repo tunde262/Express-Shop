@@ -177,7 +177,7 @@ export const addToVariants = (id) => async dispatch => {
 }
 
 // Add variant
-export const addVariant = (formData, id, storeId) => async dispatch => {
+export const addVariant = (formData, prodId, storeId) => async dispatch => {
     const config = {
       headers: {
         'Content-Type': 'application/json'
@@ -185,19 +185,20 @@ export const addVariant = (formData, id, storeId) => async dispatch => {
     };
   
     try {
-      const res = await axios.post(`/api/variants/product/add/${id}/${storeId}`, formData, config);
+      const res = await axios.post(`/api/variants/product/add/${prodId}/${storeId}`, formData, config);
 
-      const updatedProd = await axios.post(`/api/products/variant/${id}/${res.data._id}`, formData, config);
+      const newVarList = await axios.post(`/api/products/add_variant/${prodId}/${res.data._id}`, config);
+      // const updatedProd = await axios.post(`/api/products/variant/${prodId}/${res.data._id}`, formData, config);
   
       dispatch({
         type: ADD_VARIANT,
         payload: res.data
       });
 
-      dispatch({
-        type: HANDLE_DETAIL,
-        payload: updatedProd.data
-    })
+      // dispatch({
+      //   type: HANDLE_DETAIL,
+      //   payload: updatedProd.data
+      // })
   
       dispatch(setAlert('Variant Created', 'success'));
     } catch (err) {
@@ -269,13 +270,14 @@ export const removeLike = id => async dispatch => {
 };
   
 // Delete project
-export const deleteVariant = id => async dispatch => {
+export const deleteVariant = (varId, prodId) => async dispatch => {
     try {
-      await axios.delete(`/api/variants/${id}`);
+      await axios.delete(`/api/variants/${varId}`);
+      await axios.delete(`/api/products/variant/${prodId}/${varId}`);
   
       dispatch({
         type: DELETE_VARIANT,
-        payload: id
+        payload: varId
       });
   
       dispatch(setAlert('Variant Removed', 'success'));

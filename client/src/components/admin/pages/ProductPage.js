@@ -105,6 +105,8 @@ const ProductPage = ({
     getProductsByStoreId,
     getProductVariants,
     addCollectionItem,
+    addCollection, 
+    editCollection,
     addProductToLocation,
     product,
     variant,
@@ -498,6 +500,8 @@ const ProductPage = ({
         if(name !== '')data.append('name', name);
         if(visible !== '')data.append('visible', visible);
         if(tags !== '')data.append('tags', tags);
+
+        console.log('ON ADD COLLECTION')
     
         if(!collection.collection) {
           addCollection(data, store.store._id, history);
@@ -1408,13 +1412,13 @@ const ProductPage = ({
     let pageHeader;
 
     if(headerShow === 'product') {
-        pageHeader = <HeaderProduct />;
+        pageHeader = <HeaderProduct onAddProduct={onAddProduct} />;
     } else if(headerShow === 'add item') {
         pageHeader = <HeaderProductForm onAddProduct={onAddProduct} /> 
     } else if(headerShow === 'collection') {
-        pageHeader = <HeaderCollection /> 
+        pageHeader = <HeaderCollection onAddCollection={onAddCollection} /> 
     } else if(headerShow === 'add collection') {
-        pageHeader = <HeaderCollectionForm /> 
+        pageHeader = <HeaderCollectionForm onAddCollection={onAddCollection} /> 
     } else if(headerShow === 'location') {
         pageHeader = <HeaderLocation /> 
     } else if(headerShow === 'add location') {
@@ -1745,91 +1749,14 @@ const ProductPage = ({
 
     return (
         <Fragment>
-            <div className="detail-table">
-                    <div className="detail-table-nav">
-                        <div className="detail-settings-transition">
-                            {/** Transition 1 */}
-                            <div className={!slideForm1 ? "detail-nav-container active" : "detail-nav-container"} id="transition-1">
-                                <a href="#">
-                                    <div onClick={() => setSlideForm1(!slideForm1)}>
-                                        <div style={{display:'flex', flexDirection:'row', width:'100%', justifyContent:'flex-end'}}>
-                                            <p style={{margin:'0', color:'#808080'}}>View inventory<span style={{margin:'0 10px'}}><i className="fas fa-arrow-right"></i></span></p>
-                                        </div>
-                                    </div>
-                                </a>
-
-                                <Link to={{pathname:`/admin/${match.params.storeId}`,search: "?show=store"}}>
-                                    <div className="profile-table-nav-items">
-                                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                                            <h3 style={{fontWeight:'600'}}>Store</h3>
-                                            <p>Track, manage, & return</p>
-                                        </div>
-                                    </div>
-                                </Link> 
-                                {/* <div onClick={e => setTableShow1('payments')} className={tableShow1 === "payments" ? "profile-table-nav-items active" : "profile-table-nav-items"}>
-                                    <h3>Payments</h3>
-                                    <p>Add payment methods</p>
-                                </div> */}
-                                <Link to={{pathname:`/admin/${match.params.storeId}`,search: "?show=inventory"}}>
-                                    <div className="profile-table-nav-items">
-                                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                                            <h3>Inventory</h3>
-                                            <p>Add new address</p>
-                                        </div>
-                                    </div>
-                                </Link>
-                                
-                                <Link to={{pathname:`/admin/${match.params.storeId}`,search: "?show=orders"}}>
-                                    <div className="profile-table-nav-items">
-                                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                                            <h3>Orders</h3>
-                                            <p>Store subcriptions & repeat purchases</p>
-                                        </div>
-                                    </div>
-                                </Link>
-                                
-                                <Link to={{pathname:`/admin/${match.params.storeId}`,search: "?show=people"}}>
-                                    <div className="profile-table-nav-items">
-                                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                                            <h3>People</h3>
-                                            <p>Password, name, etc.</p>
-                                        </div>
-                                    </div>
-                                </Link>
-                                <Link to={{pathname:`/admin/${match.params.storeId}`,search: "?show=settings"}}>
-                                    <div className="profile-table-nav-items">
-                                        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                                            <h3>Store Settings</h3>
-                                            <p>Password, name, etc.</p>
-                                        </div>
-                                    </div>
-                                </Link>
-                            </div>
-                            {/** Transition 2 */}
-                            <div className={slideForm1 ? "detail-nav-container active" : "detail-nav-container"} id="transition-2">
-                                {nav.page === 'admin detail product' && (
-                                    <ProductSideDrawer setSlideForm1={setSlideForm1} storeId={match.params.storeId} /> 
-                                )}
-                                {nav.page === 'admin detail collection' && (
-                                    <CollectionSideDrawer setSlideForm1={setSlideForm1} storeId={match.params.storeId} /> 
-                                )}
-                                {nav.page === 'admin detail location' && (
-                                    <LocationSideDrawer setSlideForm1={setSlideForm1} storeId={match.params.storeId} /> 
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="detail-table-main desktop-column">
-                        <div className="detail-table-header">
-                            {pageHeader}
-                        </div>
-                        <div className="detail-table-body">
-                            <div id="product-content-wrapper">
-                                {pageContent}
-                            </div>
-                        </div>
-                    </div>
+            <div className="store-table-header" style={{padding:'20px 20px 0 20px'}}>
+                {pageHeader}
+            </div>
+            <div className="store-table-body" style={{padding:'10px'}}>
+                <div id="product-content-wrapper">
+                    {pageContent}
                 </div>
+            </div>
 
             <Modal open={displayImageModal} onClose={toggleImageModal} center styles={bg}>
                 <input
@@ -1966,7 +1893,7 @@ const ProductPage = ({
                         
                     </div>
                     
-                    <div className="modal-table-list-transition">
+                    <div className="modal-table-list-transition" style={{maxHeight:'400px', overflowY:'scroll'}}>
                         {/** Transition 1 */}
                         <div className={!modalForm1 ? "modal-table-list-container active" : "modal-table-list-container"} id="transition-1">
                             <ShortTable 
@@ -2346,6 +2273,8 @@ export default connect(mapStateToProps, {
     deleteProduct, 
     deleteVariant, 
     addCollectionItem, 
+    addCollection, 
+    editCollection,
     addProductToLocation,
     setSortedProducts, 
     setModalProducts,

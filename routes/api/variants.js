@@ -364,7 +364,7 @@ router.delete('/location/:id/:location_id', auth, async (req, res) => {
         const variant = await Variant.findById(req.params.id);
 
         // Pull out location
-        const location = variant.locations.find(location => location.id === req.params.location_id); // Will return location or 'false'
+        const location = variant.locations.find(location => location.location.toString() === req.params.location_id.toString()); // Will return location or 'false'
 
         // Make sure location exists
         if(!location) {
@@ -379,7 +379,7 @@ router.delete('/location/:id/:location_id', auth, async (req, res) => {
         // }
 
         // Get remove index
-        const removeIndex = variant.locations.map(location => location.id.toString()).indexOf(location.id);
+        const removeIndex = variant.locations.map(location => location.location.toString()).indexOf(location.location);
 
         variant.locations.splice(removeIndex, 1);
 

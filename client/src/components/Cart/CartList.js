@@ -40,35 +40,33 @@ const CartList = ({cart, setCartStores, product: { cartStores} }) => {
     if(stores.length > 0) {
         cartList = stores.map(store => {
             return (
-            <div style={{margin: '15px'}} className="card card-default">
-                <div className="card-header">
-                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                        <div style={{display: 'flex', alignItems: 'center'}}>
-                            {store.img && <img style={{height: '40px', width: '40px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${store.img}`} alt="img" />}
-                            <p style={{margin:'1rem 0'}}>{store.name}</p>
+                <Fragment>
+                    <div style={{minHeight:'50px', padding:'1rem 20px', width:'100%', borderBottom:'1px solid rgb(214,214,214)'}}>
+                        <div style={{display: 'flex', alignItems:'center', justifyContent: 'space-between'}}>
+                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                <img style={{height: '40px', width: '40px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${store.img}`} alt="img" />
+                                <div style={{display:'flex', lineHeight:'1rem', flexDirection:'column', alignItems:'flex-start'}}>
+                                    <p style={{margin:'0'}}>{store.name}</p>
+                                    <small style={{margin:'0', color:'#ff4b2b'}}><span style={{color:'#808080'}}>Total: </span> $15</small>
+                                </div>
+                            </div>
+                            <button style={{margin:'0'}}>Checkout with store</button>
                         </div>
-                        <p><strong>Total: </strong>$15</p>
-                        <button>Checkout with store</button>
                     </div>
-                </div>
-                <div class="card-body">
-                    <CartColumns />
-                    <ul className="list-group">
-                        {cart.map(item => (
-                            <Fragment>
-                                {item.item.store === store.id && <CartItem key={item.item.id} item={item} />}
-                            </Fragment>
-                        ))}
-                    </ul>
-                </div>
-            </div>
-        )});
+                    {cart.map(item => (
+                        <Fragment>
+                            {item.item.store === store.id && <CartItem key={item.item.id} item={item} />}
+                        </Fragment>
+                    ))}
+                </Fragment>
+            )
+        });
     } else {
         cartList = <Spinner />
     }
 
     return (
-        <div className="container-fluid">
+        <div class="card-body" style={{padding:'0'}}>
             {cartList}
         </div>
     )

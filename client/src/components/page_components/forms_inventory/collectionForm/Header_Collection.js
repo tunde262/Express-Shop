@@ -5,7 +5,17 @@ import { Link } from 'react-router-dom';
 
 // import { deleteStore } from '../../../../../actions/storeActions';
 
-const Header_Collection = ({store, auth: { user }, profile: {profile, loading }}) => { 
+const Header_Collection = ({
+    store, 
+    onAddCollection, 
+    auth: { user }, 
+    profile: {profile, loading }
+}) => { 
+    
+    const handleSave = (e) => {
+        console.log('COLLECTION SAVE');
+        onAddCollection(e);
+    }
 
     return (
         // <div>
@@ -21,7 +31,7 @@ const Header_Collection = ({store, auth: { user }, profile: {profile, loading }}
             </Link>
             <div style={{width:'100%', display:'flex', justifyContent:'space-between'}}>
                 <h3>New Collection</h3>
-                <button style={{width:'300px'}}>
+                <button onClick={(e) => handleSave(e)} style={{width:'300px'}}>
                     Save
                 </button>
             </div>
@@ -41,4 +51,4 @@ const mapStateToProps = state => ({
     store: state.store
 });
 
-export default connect(mapStateToProps)(Header_Collection);
+export default connect(mapStateToProps, null)(Header_Collection);

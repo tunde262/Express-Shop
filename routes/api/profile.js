@@ -232,6 +232,8 @@ router.put('/address_book', [ auth, [
         active
     } = req.body;
 
+    console.log('ENTERING PROFILE ADD ACTION');
+
     // Build profile object
     const newAddress = {};
     if(address_name) newAddress.address_name = address_name;
@@ -249,6 +251,7 @@ router.put('/address_book', [ auth, [
 
     try {
         const profile = await Profile.findOne({ user: req.user.id });
+        console.log('PROFILE FIND ONE');
         console.log(profile);
 
         profile.address_book.push(newAddress);

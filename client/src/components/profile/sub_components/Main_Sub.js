@@ -27,8 +27,8 @@ const Main_Sub = ({store, favorite}) => {
 
     let storeList;
 
-    if(store.stores && store.stores.length > 0) {
-        storeList = store.stores.map(store => {
+    if(store.subscriptions && store.subscriptions.length > 0) {
+        storeList = store.subscriptions.map(store => {
             const storeId = store._id;
             if(!checkedSubs) {
                 setSubList(subList => [...subList, storeId]);

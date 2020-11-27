@@ -306,7 +306,8 @@ export const addProduct = (prodData, imgData, varInfo, varName, storeId, history
                     if(res.data.condition !== undefined && res.data.condition !== null && res.data.condition !== '')data.append('condition', res.data.condition);
                     if(res.data.tags !== undefined && res.data.tags !== null && res.data.tags !== '')data.append('tags', res.data.tags);
         
-                    await axios.post(`/api/variants/product/add/${res.data._id}/${storeId}`, data, config);
+                    const newVar = await axios.post(`/api/variants/product/add/${res.data._id}/${storeId}`, data, config);
+                    await axios.post(`/api/products/add_variant/${res.data._id}/${newVar.data._id}`, config);
                     console.log('variants added');
                 });
             } else {
@@ -324,7 +325,8 @@ export const addProduct = (prodData, imgData, varInfo, varName, storeId, history
                 if(res.data.condition !== undefined && res.data.condition !== null && res.data.condition !== '')data.append('condition', res.data.condition);
                 if(res.data.tags !== undefined && res.data.tags !== null && res.data.tags !== '')data.append('tags', res.data.tags);
     
-                await axios.post(`/api/variants/product/add/${res.data._id}/${storeId}`, data, config);
+                const newVar = await axios.post(`/api/variants/product/add/${res.data._id}/${storeId}`, data, config);
+                await axios.post(`/api/products/add_variant/${res.data._id}/${newVar.data._id}`, config);
                 console.log('default variant added');
             }
         }
@@ -428,7 +430,8 @@ export const editProduct = (prodData, prodId, varInfo, varName, storeId, history
                     if(res.data.condition !== undefined && res.data.condition !== null && res.data.condition !== '')data.append('condition', res.data.condition);
                     if(res.data.tags !== undefined && res.data.tags !== null && res.data.tags !== '')data.append('tags', res.data.tags);
         
-                    await axios.post(`/api/variants/product/add/${res.data._id}/${storeId}`, data, config);
+                    const newVar = await axios.post(`/api/variants/product/add/${res.data._id}/${storeId}`, data, config);
+                    await axios.post(`/api/products/add_variant/${res.data._id}/${newVar.data._id}`, config);
                     console.log('variants added');
                 });
             } else {
@@ -446,7 +449,8 @@ export const editProduct = (prodData, prodId, varInfo, varName, storeId, history
                 if(res.data.condition !== undefined && res.data.condition !== null && res.data.condition !== '')data.append('condition', res.data.condition);
                 if(res.data.tags !== undefined && res.data.tags !== null && res.data.tags !== '')data.append('tags', res.data.tags);
     
-                await axios.post(`/api/variants/product/add/${res.data._id}/${storeId}`, data, config);
+                const newVar = await axios.post(`/api/variants/product/add/${res.data._id}/${storeId}`, data, config);
+                await axios.post(`/api/products/add_variant/${res.data._id}/${newVar.data._id}`, config);
                 console.log('default variant added');
             }
         }
@@ -456,6 +460,7 @@ export const editProduct = (prodData, prodId, varInfo, varName, storeId, history
             payload: res.data
         });
 
+        history.push(`/admin/product/${storeId}/${res.data._id}?show=detail`);
         dispatch(setAlert('Product Updated', 'success'));
     } catch (err) {
         dispatch({

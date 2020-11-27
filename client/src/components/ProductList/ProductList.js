@@ -39,10 +39,8 @@ const ProductList = ({products, product, auth: { user }, handleScroll}) => {
 
     return (
         <Fragment>
-            <div style={{padding: '0 30px'}}>
-                <div className="row">
-                    {productList}
-                </div>
+            <div style={{padding: '0 30px', display:'flex', flexWrap:'wrap'}}>
+                {productList}
             </div>
         </Fragment>
     )

@@ -41,7 +41,7 @@ const LikePage = ({getLikedProducts, getStoreSubscriptions, setNav1, profile, st
                     <h3 style={{color: '#333', fontWeight:'300'}}>Hey, {user && user.name}</h3>
                 </div>
                 <div style={{margin:'10px', background:'#fff', border: '1px solid rgb(214, 214, 214)'}}>
-                    <BrandOverview title={`Store Subscriptions`} stores={store.stores} />
+                    <BrandOverview title={`Store Subscriptions`} stores={store.subscriptions} />
                 </div>
                 
                 <div className="header-nav-container">

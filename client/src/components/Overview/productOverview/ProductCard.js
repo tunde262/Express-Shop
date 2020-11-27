@@ -102,9 +102,9 @@ const ProductCard = ({ auth: { user }, addLike, liked, modalOpen, product, handl
                         className="imgbox" 
                         onClick={() => onHandleDetailClick(_id)}
                     >
-                        <a href={"https://www.cardboardexpress.com/details/" + _id}>
+                        <Link to={`/details/${_id}`}>
                             {img_gallery[0] &&<img src={`/api/products/image/${sorted_img_gallery[0].img_name}`} alt="product" />}
-                        </a>
+                        </Link>
                         {/* <button 
                             className="cart-btn" 
                             disabled={inCart ? true : false} 
@@ -122,11 +122,11 @@ const ProductCard = ({ auth: { user }, addLike, liked, modalOpen, product, handl
                     </div>
                     <div className="specifice">
                         <div className="titles">
-                            <h2><a href={"https://www.cardboardexpress.com/details/" + _id}>{name}</a></h2>
+                            <h2><Link to={`/details/${_id}`}>{name}</Link></h2>
                         </div>
                         <div className="price">${price}</div>
                         <div className="sellers">
-                            <a href={"https://www.cardboardexpress.com/store/" + store._id}>{store.name}</a>
+                            <Link to={`/store/${store._id}`}>{store.name}</Link>
                         </div>
                         <div className="actions">
                             <div className="desktop-actions" style={{width:'100%', alignItems:'center', paddingRight:'10px'}}>

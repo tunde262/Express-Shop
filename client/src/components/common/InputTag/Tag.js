@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 
 const Tag = ({onDeleteTag, value}) => {
     var tag = (
-        <div class="tag-item">
+        <div class="tag-item green">
            <p style={{margin:'auto', color:'green'}}>{value}</p>
            <i 
                 onClick = {(e) => onDeleteTag(e, value)} 

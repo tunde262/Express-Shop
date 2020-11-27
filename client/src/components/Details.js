@@ -15,6 +15,7 @@ import {
 } from '../actions/productActions';
 import { getStoresByTag } from '../actions/storeActions';
 import { getProductVariants } from '../actions/variantActions';
+import { setAlert } from '../actions/alertActions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 
@@ -59,7 +60,8 @@ const Details = ({
     handleDetail,
     getStoresByTag,
     handleTags,
-    setNav1
+    setNav1,
+    setAlert
 }) => {
     // Mixpanel
     const [sentMixpanel, setSentMixpanel] = useState(false);
@@ -180,10 +182,53 @@ const Details = ({
     }
 
     const todo = (id, item) => {
-        onAddToCart(id);
-        handleModalOpen(id);
-        clicked(item);
-        setCartLoading(true);
+        let selectedVariant;
+        let tempVars = [...variant.sortedVariants];
+        
+        if(colorState.length > 0) {
+            tempVars = [...tempVars.filter(prodVar => prodVar.color === selectedColor)];
+        }
+
+        if (sizeState.length > 0) {
+            tempVars = [...tempVars.filter(prodVar => prodVar.size === selectedSize)];
+            console.log('ATTEMPTED FILTER')
+            console.log(tempVars)
+        }
+        if (weightState.length > 0) {
+            tempVars = [...tempVars.filter(prodVar => prodVar.weight === selectedWeight)];
+        }
+        if (typeState.length > 0) {
+            tempVars = [...tempVars.filter(prodVar => prodVar.type === selectedType)];
+        }
+        if (bundleState.length > 0) {
+            tempVars = [...tempVars.filter(prodVar => prodVar.bundle === selectedBundle)];
+        }
+        if (scentState.length > 0) {
+            tempVars = [...tempVars.filter(prodVar => prodVar.scent === selectedScent)];
+        }
+        if (fitState.length > 0) {
+            tempVars = [...tempVars.filter(prodVar => prodVar.fit === selectedFit)];
+        }
+        if (flavorState.length > 0) {
+            tempVars = [...tempVars.filter(prodVar => prodVar.flavor === selectedFlavor)];
+        }
+        if (materialState.length > 0) {
+            tempVars = [...tempVars.filter(prodVar => prodVar.material === selectedMaterial)];
+        }
+
+        selectedVariant = tempVars[0];
+
+        console.log('SELECTED VARIANT');
+        console.log(selectedVariant);
+
+        if(tempVars.length > 0){
+            onAddToCart(selectedVariant._id);
+            handleModalOpen(id);
+            clicked(item);
+            setCartLoading(true);
+        } else {
+            setAlert('Please select available options', 'danger')
+        }
     }
 
     const clicked = (item) => {
@@ -463,15 +508,52 @@ const Details = ({
         handleOptions();
     }
 
-    let colorOptions;
-    let sizeOptions;
-    let weightOptions;
-    let typeOptions;
-    let bundleOptions;
-    let scentOptions;
-    let fitOptions;
-    let flavorOptions;
-    let materialOptions;
+    const handleSelectedColor = (option) => {
+        setSelectedColor(option);
+        handleOptions();
+    }
+
+    const handleSelectedSize = (option) => {
+        setSelectedSize(option);
+        handleOptions();
+    }
+
+    const handleSelectedWeight = (option) => {
+        setSelectedWeight(option);
+        handleOptions();
+    }
+
+    const handleSelectedType = (option) => {
+        setSelectedType(option);
+        handleOptions();
+    }
+
+    const handleSelectedBundle = (option) => {
+        setSelectedBundle(option);
+        handleOptions();
+    }
+
+    const handleSelectedScent = (option) => {
+        setSelectedScent(option);
+        handleOptions();
+    }
+
+    const handleSelectedFit = (option) => {
+        setSelectedFit(option);
+        handleOptions();
+    }
+
+    const handleSelectedFlavor = (option) => {
+        setSelectedFlavor(option);
+        handleOptions();
+    }
+
+    const handleSelectedMaterial = (option) => {
+        setSelectedMaterial(option);
+        handleOptions();
+    }
+
+
     const handleOptions = () => {
         console.log('COLOR VALUUUE');
         console.log(colorArray);
@@ -482,7 +564,7 @@ const Details = ({
             console.log('COLOR PASSED');
             let choices;
             // choices = colorArray.map(option => <option key={option} value={`${option}`}>{option}</option>);
-            choices = colorArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedColor(option)}>{option}</div>);
+            choices = colorArray.map(option => <div className="variant_option" key={option} onClick={e => handleSelectedColor(option)}>{option}</div>);
             setColorValue((
                 <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
                     <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Color:</p>
@@ -502,7 +584,7 @@ const Details = ({
         if(sizeArray.length > 0) {
             console.log('SIZE PASSED');
             let choices;
-            choices = sizeArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedSize(option)}>{option}</div>);
+            choices = sizeArray.map(option => <div className="variant_option" key={option} onClick={e => handleSelectedSize(option)}>{option}</div>);
             setSizeValue((
                 <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
                     <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Size:</p>
@@ -522,7 +604,7 @@ const Details = ({
         if(weightArray.length > 0) {
             console.log('WEIGHT PASSED');
             let choices;
-            choices = weightArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedWeight(option)}>{option}</div>);
+            choices = weightArray.map(option => <div className="variant_option" key={option} onClick={e => handleSelectedWeight(option)}>{option}</div>);
             setWeightValue((
                 <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
                     <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Weight:</p>
@@ -542,7 +624,7 @@ const Details = ({
         if(typeArray.length > 0) {
             console.log('TYPE PASSED');
             let choices;
-            choices = typeArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedType(option)}>{option}</div>);
+            choices = typeArray.map(option => <div style={selectedType === option ? {border: '2px solid #ffbf00', color: '#333'} : null} className="variant_option" key={option} onClick={e => handleSelectedType(option)}>{option}</div>);
             setTypeValue((
                 <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
                     <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Type:</p>
@@ -562,7 +644,7 @@ const Details = ({
         if(bundleArray.length > 0) {
             console.log('BUNDLE PASSED');
             let choices;
-            choices = bundleArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedBundle(option)}>{option}</div>);
+            choices = bundleArray.map(option => <div className="variant_option" key={option} onClick={e => handleSelectedBundle(option)}>{option}</div>);
             setBundleValue((
                 <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
                     <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Bundle:</p>
@@ -582,7 +664,7 @@ const Details = ({
         if(scentArray.length > 0) {
             console.log('SCENT PASSED');
             let choices;
-            choices = scentArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedScent(option)}>{option}</div>);
+            choices = scentArray.map(option => <div className="variant_option" key={option} onClick={e => handleSelectedScent(option)}>{option}</div>);
             setScentValue((
                 <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
                     <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Scent:</p>
@@ -602,7 +684,7 @@ const Details = ({
         if(fitArray.length > 0) {
             console.log('FIT PASSED');
             let choices;
-            choices = fitArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedFit(option)}>{option}</div>);
+            choices = fitArray.map(option => <div className="variant_option" key={option} onClick={e => handleSelectedFit(option)}>{option}</div>);
             setFitValue((
                 <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
                     <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Fit:</p>
@@ -622,7 +704,7 @@ const Details = ({
         if(flavorArray.length > 0) {
             console.log('FLAVOR PASSED');
             let choices;
-            choices = flavorArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedFlavor(option)}>{option}</div>);
+            choices = flavorArray.map(option => <div className="variant_option" key={option} onClick={e => handleSelectedFlavor(option)}>{option}</div>);
             setFlavorValue((
                 <div style={{display:'flex', flexDirection:'column', width:'100%'}}>
                     <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Flavor:</p>
@@ -642,7 +724,7 @@ const Details = ({
         if(materialArray.length > 0) {
             console.log('MATERIAL PASSED');
             let choices;
-            choices = materialArray.map(option => <div className="variant_option" key={option} onClick={e => setSelectedMaterial(option)}>{option}</div>);
+            choices = materialArray.map(option => <div className={selectedMaterial === option ? "variant_option active": "variant_option"} key={option} onClick={e => handleSelectedMaterial(option)}>{option}</div>);
             setMaterialValue((
                 <div style={{display:'flex', flexDirection:'column', width:'100%'}}>
                     <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Material:</p>
@@ -657,7 +739,7 @@ const Details = ({
 
     // const { _id, company, img, info, price, title, inCart} = detailProduct;
     
-    if(variant.sortedVariants !== null && !loading && !varsLoaded) {
+    if(variant.sortedVariants.length > 0 && !loading && !varsLoaded) {
         getVarKeys(); 
         setVarsLoaded(true)
     } 
@@ -686,7 +768,7 @@ const Details = ({
 
         detailItem = (
             <Fragment>
-                <div style={{background:'#fff', border: '1px solid rgb(214, 214, 214)', margin:'0 10px'}}>
+                <div style={{background:'#fff', border: '1px solid rgb(214, 214, 214)', margin:'10px'}}>
                     <section className="container">
                         <div id="detail-content-wrapper">
                             {/* <div id="breadcrumb">
@@ -965,13 +1047,13 @@ const Details = ({
         }
 
         return (
-            <div style={{background:'rgb(247, 247, 247)'}}>
+            <div style={{maxWidth:'100vw', background:'rgb(247, 247, 247)'}}>
                 <ul class="home-underline store" style={{background:'#fff', margin:'0', border:'1px solid rgb(214, 214, 214)'}}>
                     <div onClick={e => setTableShow1('for you')} className={tableShow1 === "for you" && "active"}><li><p>For You</p></li></div>
                     <div onClick={e => setTableShow1('popular')} className={tableShow1 === "popular" && "active"}><li><p>Popular</p></li></div>
                     <div onClick={e => setTableShow1('nearby')} className={tableShow1 === "nearby" && "active"}><li><p>Nearby</p></li></div>
                 </ul>
-                <div className="header-nav-container">
+                <div className="header-nav-container mobile">
                     <div style={{padding:'10px'}}>
                         <h3 style={{fontSize:'12px', letterSpacing:'1px',color:'#808080'}}>
                             Pick A Category
@@ -1001,6 +1083,7 @@ Details.propTypes = {
     getStoresByTag: PropTypes.func.isRequired,
     handleTags: PropTypes.func.isRequired,
     setNav1: PropTypes.func.isRequired,
+    setAlert: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -1010,4 +1093,4 @@ const mapStateToProps = state => ({
     store: state.store,
 });
 
-export default connect(mapStateToProps, { getProductVariants, addToCart, addLike, getCart, openModal, addTotals, handleDetail, addReview, getStoresByTag, handleTags, setNav1 })(Details);
+export default connect(mapStateToProps, { getProductVariants, addToCart, addLike, getCart, openModal, addTotals, handleDetail, addReview, getStoresByTag, handleTags, setNav1, setAlert })(Details);

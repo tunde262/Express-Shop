@@ -176,7 +176,8 @@ export const editCollection = (formData, collectionId, storeId, history) => asyn
             let data = new FormData();
             data.append('id', product._id);
 
-            await axios.put(`/api/categories/product/${res.data._id}`, data, config);
+            await axios.post(`/api/products/edit_collection/${product._id}/${res.data._id}`);
+            await axios.put(`/api/categories/product/${res.data._id}/${product._id}`, config);
             console.log('Added ' + product._id + ' TO COLLECTION: ' + res.data.name);
           }
         } catch (err) {
@@ -233,11 +234,9 @@ export const addCollectionItem = (itemList, id) => async dispatch => {
 
   itemList.map(async item => {
     try {
-      const product = await axios.get(`/api/products/${item}`)
-      let data = new FormData();
-      data.append('id', product.data._id);
+      await axios.post(`/api/products/edit_collection/${item}/${id}`);
 
-      const collection = await axios.put(`/api/categories/product/${id}/${product.data._id}`, config);
+      const collection = await axios.put(`/api/categories/product/${id}/${item}`, config);
   
       dispatch({
         type: UPDATE_COLLECTION_ITEMS,

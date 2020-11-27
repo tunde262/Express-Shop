@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { setAlert } from './alertActions';
 
-import { GET_STORE, GET_STORES, SET_CART_STORES, STORE_ERROR, UPDATE_STORE_FAVORITES, ADD_STORE_REVIEW, REMOVE_STORE_REVIEW, CLEAR_STORE, CLEAR_STORES, STORE_DELETED } from './types';
+import { GET_STORE, GET_STORES, GET_SUBSCRIPTIONS, SET_CART_STORES, STORE_ERROR, UPDATE_STORE_FAVORITES, ADD_STORE_REVIEW, REMOVE_STORE_REVIEW, CLEAR_STORE, CLEAR_STORES, STORE_DELETED } from './types';
 
 // Get Current users Store 
 export const getCurrentStore = () => async dispatch => {
@@ -74,12 +74,12 @@ export const getStoreSubscriptions = id => async dispatch => {
         const res = await axios.get(`/api/stores/subscriptions/${id}`);
 
         dispatch({
-            type: GET_STORES,
+            type: GET_SUBSCRIPTIONS,
             payload: res.data
         });
     } catch (err) {
         dispatch({
-            type: GET_STORES,
+            type: GET_SUBSCRIPTIONS,
             payload: []
         })
     }

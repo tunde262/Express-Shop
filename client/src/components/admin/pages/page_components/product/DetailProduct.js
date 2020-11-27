@@ -20,6 +20,7 @@ import CategoryBlock from '../common/CategoryBlock';
 import VisibilityBlock from '../common/VisibilityBlock';
 import InventoryActivityBlock from '../common/InventoryActivityBlock';
 import CollectionsBlock from '../common/CollectionsBlock';
+import LocationsBlock from '../common/LocationsBlock';
 import MapBlock from '../common/MapBlock';
 import LocationVariantsBlock from '../common/LocationVariantsBlock';
 import ImageBlock from '../common/ImageBlock';
@@ -44,7 +45,7 @@ import StatsBlock from '../common/StatsBlock';
 // }
 
 const DetailProduct = ({ 
-    product: { detailProduct },
+    product,
     stateLocation: {
         locations,
         loading
@@ -98,18 +99,18 @@ const DetailProduct = ({
     const handleMixpanel = () => {
         mixpanel.track("Admin Product Page View", {
         //   "Entry Point": "Home Landing",
-          "Item Name": detailProduct.name,
-          "Item Category": detailProduct.category,
-          "Item Cost": detailProduct.price,
-          "Store Name": detailProduct.store.name,
-          "Total Imgs": detailProduct.img_gallery.length,
-          "Total Likes": detailProduct.likes.length,
-          "Total Comments": detailProduct.comments.length,
+          "Item Name": product.detailProduct.name,
+          "Item Category": product.detailProduct.category,
+          "Item Cost": product.detailProduct.price,
+          "Store Name": product.detailProduct.store.name,
+          "Total Imgs": product.detailProduct.img_gallery.length,
+          "Total Likes": product.detailProduct.likes.length,
+          "Total Comments": product.detailProduct.comments.length,
           
         });
     }
 
-    if(!sentMixpanel && detailProduct) {
+    if(!sentMixpanel && product.detailProduct) {
         handleMixpanel();
         setSentMixpanel(true);
     }
@@ -162,6 +163,11 @@ const DetailProduct = ({
                 conditionData={conditionData} 
                 handleConditionChange={handleConditionChange} 
             />
+            <CollectionsBlock
+                product={product}
+                isMobile={isMobile} 
+            />
+            <LocationsBlock />
             <TagsBlock
                 isMobile={isMobile} 
                 onAddItemTag={onAddItemTag}  
@@ -176,9 +182,6 @@ const DetailProduct = ({
         <Fragment>
             <InventoryActivityBlock 
                 isMobile={isMobile}
-            />
-            <CollectionsBlock
-                isMobile={isMobile} 
             />
         </Fragment>
     );
@@ -198,7 +201,7 @@ const DetailProduct = ({
     const mainItemInfo = (
         <Fragment>
             <ImageBlock 
-                detailProduct={detailProduct}
+                detailProduct={product.detailProduct}
                 setImageModal={setImageModal}
             />
             <DescriptionBlock 
@@ -225,7 +228,7 @@ const DetailProduct = ({
 
     let mainContent;
 
-    if(detailProduct) {
+    if(product.detailProduct) {
         if(pageNav === 'detail') {
             mainContent = mainItemInfo;
         } else if (pageNav === 'inventory') {
@@ -237,7 +240,7 @@ const DetailProduct = ({
 
     let secondaryContent;
 
-    if(detailProduct) {
+    if(product.detailProduct) {
         if(pageNav === 'detail') {
             secondaryContent = secondaryItemInfo;
         } else if (pageNav === 'inventory') {
@@ -251,9 +254,9 @@ const DetailProduct = ({
         <Fragment>
             {/* <div className="product-actions container-fluid">
                 <div style={{display:'flex', justifyContent:'space-between', height:'50px', alignItems:'center'}}>
-                    <p style={{margin:'0'}}>Qty <span style={{fontWeight:'bold'}}>{detailProduct && detailProduct.inventory_qty}</span> in stock for <span style={{fontWeight:'bold'}}>{variant.variants.length}</span> variants</p>
+                    <p style={{margin:'0'}}>Qty <span style={{fontWeight:'bold'}}>{product.detailProduct && product.detailProduct.inventory_qty}</span> in stock for <span style={{fontWeight:'bold'}}>{variant.variants.length}</span> variants</p>
                     <div style={{display:'flex', height:'100%', alignItems:'center'}}>
-                        <Link to={detailProduct && `/details/${detailProduct._id}`}><i style={{fontSize:'1.3rem'}} class="fas fa-eye"></i></Link>
+                        <Link to={product.detailProduct && `/details/${product.detailProduct._id}`}><i style={{fontSize:'1.3rem'}} class="fas fa-eye"></i></Link>
                         <i style={{margin:'0 1rem', fontSize:'1.4rem'}} class="fas fa-share-alt"></i>
                         <button onClick={e => setTable('edit')} style={{ margin:'0 1rem 0 0', background:'#f4f4f4', color:'#7A7A7A', borderColor:'#f4f4f4' }}>Edit</button>
                         <button onClick={e => setTable('storage request')} style={{ margin:'0 1rem 0 0' }}>Request Storage</button>
