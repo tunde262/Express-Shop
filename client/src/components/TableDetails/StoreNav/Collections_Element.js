@@ -5,7 +5,10 @@ import { Link } from 'react-router-dom';
 import sampleShoe from '../../../utils/imgs/20484728.jpeg';
 import paperTowels from '../../../utils/imgs/paper_towels.jpeg';
 
-const Collections_Element = props => {
+const Collections_Element = ({
+    setCollectionModal,
+    displayCollectionModal,
+}) => {
 
     const [active, setActive] = useState(false);
 
@@ -13,7 +16,7 @@ const Collections_Element = props => {
         <div style={{zIndex:'10', background:'#fff'}}>
             <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}} className="store-table-nav-items header">
                 <h3 style={{fontWeight:'600'}}>Collections</h3>
-                <small><i class="fas fa-plus"></i>Create</small>
+                <small onClick={() => setCollectionModal(!displayCollectionModal)}><i class="fas fa-plus"></i>Create</small>
             </div>
             <div className={active ? "table-nav-dropdown active" : "table-nav-dropdown short"}>
                 <Link to={{pathname:`/admin/`,search: "?show=store"}}>

@@ -4,6 +4,7 @@ const initialState = {
     profile: null,
     profiles: [],
     subscriptions: [],
+    collections: [],
     loading: true,
     error: {}
 }

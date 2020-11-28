@@ -437,7 +437,8 @@ const ProductWrapper = styled.div`
     }
     button {
         margin: 0;
-        width: 14vw;;
+        width: 14vw;
+        outline: none;
     }
 
     @media screen and (max-width: 1000px){

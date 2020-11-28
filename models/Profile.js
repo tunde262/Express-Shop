@@ -84,6 +84,14 @@ const ProfileSchema = new Schema({
             },
         }
     ],
+    categories: [
+        {
+            categories: {
+                type: Schema.Types.ObjectId,
+                ref: 'category'
+            }
+        }
+    ],
     notifications: [
         {
             store: {

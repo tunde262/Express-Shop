@@ -30,6 +30,7 @@ import StoreForm from './components/admin/forms/store_form/StoreForm';
 
 import Routes from './components/routing/Routes';
 import AddToCartModal from './components/modals/AddToCartModal';
+import CollectionModal from './components/modals/CollectionModal';
 
 import StoreNavElements from './components/TableDetails/StoreNav/Main_Store_Nav';
 import CategoryNavElements from './components/TableDetails/CategoryNav/Main_Cat_Nav';
@@ -67,6 +68,8 @@ const App = () => {
   const [authDrawerOpen, setAuthDrawer] = useState(false);
 
   const [drawer, showDrawer] = useState(false);
+
+  const [displayCollectionModal, setCollectionModal] = useState(false);
 
   const clicked = () => {
     ReactGA.event({
@@ -131,7 +134,7 @@ const App = () => {
                         <div className={!slideForm1 ? "store-side-nav-container active" : "store-side-nav-container"} id="transition-1">
                           {navValue === 'admin' ? 
                             <AdminNavElements setNavValue={setNavValue} navValue={navValue} setSlideForm1={setSlideForm1} slideForm1={slideForm1} /> 
-                            : <StoreNavElements setNavValue={setNavValue} navValue={navValue} setSlideForm1={setSlideForm1} slideForm1={slideForm1} />
+                            : <StoreNavElements setCollectionModal={setCollectionModal} displayCollectionModal={displayCollectionModal} setNavValue={setNavValue} navValue={navValue} setSlideForm1={setSlideForm1} slideForm1={slideForm1} />
                           }
                         </div>
                         <div className={slideForm1 ? "store-side-nav-container active" : "store-side-nav-container"} id="transition-2">
@@ -149,6 +152,7 @@ const App = () => {
             </main>
           </div>
           <AddToCartModal />
+          <CollectionModal displayCollectionModal={displayCollectionModal} setCollectionModal={setCollectionModal} />
         </Router>
       </StripeProvider>
     </Provider>

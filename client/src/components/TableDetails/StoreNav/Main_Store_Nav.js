@@ -10,6 +10,8 @@ import CollectionsElement from './Collections_Element';
 import { setPage } from '../../../actions/navActions';
 
 const Main_Store_Nav = ({
+    setCollectionModal,
+    displayCollectionModal,
     setSlideForm1, 
     slideForm1, 
     setPage, 
@@ -100,7 +102,7 @@ const Main_Store_Nav = ({
                 <i class="fas fa-chevron-right"></i>
             </div>
             
-            <CollectionsElement />
+            <CollectionsElement setCollectionModal={setCollectionModal} displayCollectionModal={displayCollectionModal} />
 
             <SubscriptionsElement />
 
