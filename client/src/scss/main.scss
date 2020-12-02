@@ -469,6 +469,17 @@ textarea {
     }
 }
 
+.link-decoration {
+    &:hover {
+        text-decoration: underline;
+
+        p, h1, h2, h3, h4 {
+            color: #0645AD;
+        }
+
+    }
+}
+
 .mobile {
     display: none;
 }
@@ -1888,6 +1899,39 @@ header {
     }
 }
 
+.addImage {
+    font-size: 2rem;
+    margin: 5px;
+    width: 95%; 
+    min-height: 150px;
+    border: 2px dashed #cecece; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.addImage:hover {
+    color: #fff;
+    background: #cecece;
+}
+
+.add-to-list {
+    font-size: 2rem;
+    margin: 10px 5px 0;
+    width: 14vw;
+    height: calc(14vw + 130px);
+    border: 2px dashed #cecece; 
+    border-radius: 5px;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.add-to-list:hover {
+    color: #fff;
+    background: #cecece;
+}
+
 .store-table {
     display: grid;
     grid-template-columns: 250px 1fr;
@@ -2045,6 +2089,8 @@ header {
     height: 30px;
     width: 30px;
     margin: 0 10px;
+    background: #808080;
+    border-radius: 5px;
 }
 
 .store-nav-collection-img {
@@ -2057,9 +2103,10 @@ header {
 
 .store-nav-img {
     border-radius: 50%;
-    height: 30px;
+    border: 1px solid #e8e8e8;
+    height: 35px;
     overflow: hidden;
-    width: 30px;
+    width: 35px;
     margin: 0 10px;
 }
 
@@ -3268,6 +3315,13 @@ header {
 
 .itemUploadContainer {
     height:500px; 
+    width: 500px; 
+    margin: 0 10px; 
+    overflow: hidden;
+}
+
+.collectionUploadContainer {
+    height:450px; 
     width: 500px; 
     margin: 0 10px; 
     overflow: hidden;
@@ -4656,19 +4710,20 @@ header {
         align-items: center; 
         justify-content: center;
         background: #fff;
-        border: 1px solid rgb(47, 183, 236);;
-        color: rgb(47, 183, 236);;
+        border: 1px solid rgb(47, 183, 236);
+        color: rgb(47, 183, 236);
         width: 100%;
         outline: none;
 
         &.active, &.active:hover {
-            background: rgb(47, 183, 236);;
+            background: rgb(47, 183, 236);
             color: #fff;
-            border-color: rgb(47, 183, 236);;
+            border-color: rgb(47, 183, 236);
         }
 
         &:hover {
             background: #e8e8e8;
+            color: rgb(47, 183, 236);
         }
     }
 }
@@ -4956,6 +5011,72 @@ header {
 
 } 
 
+.gender-form {
+    display: grid; 
+    margin-top: 2rem; 
+    grid-template-columns: 1fr 1fr;
+}
+
+.gender-form-box {
+    transition: background .3s;
+    height:150px; 
+    color:#0098d3; 
+    padding:10px; 
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    display:flex; 
+    justify-content:center; 
+    align-items:center; 
+    margin:auto; 
+    border-radius:5px; 
+    width:150px;
+
+    &:hover {
+        color: #0645AD;
+    }
+
+    &.active {
+        background: rgb(247,247,247);
+        box-shadow: 0 2px 12px rgba(0,0,0,.1);
+        -moz-box-shadow: 0 2px 12px rgba(0,0,0,.1);
+        -webkit-box-shadow: 0 2px 12px rgba(0,0,0,.1); 
+        color: #ff4b2b;
+    }
+}
+
+.tertiary-form-text {
+    margin: 20px 0 10px; 
+    color:#0098d3;
+    cursor:pointer;
+    font-size:1rem;
+    font-family: Arial, Helvetica,sans-serif;
+
+    &:hover {
+        color: #0645AD;
+    }
+}
+
+.step-form-btn {
+    width: 100%; 
+    outline: none; 
+    margin: 0; 
+    font-size: 13px; 
+    letter-spacing: 1px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+
+    &.disabled {
+        background: darken(#ffbf00, 5);
+        color: darken(#ffbf00, 15);
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
 .stores-box {
     padding:50px;
     text-align:center;
@@ -5006,6 +5127,28 @@ header {
     font-size:2rem;
 }
 
+.collection-form {
+    height: 500px; 
+    overflow-y: hidden;
+    padding: 0 20px 36px 20px; 
+    width: 400px;
+    border-radius: 5px;
+}
+
+.collection-form-item {
+    display: flex;  
+    height: 50px; 
+    width: 100%; 
+    padding:  30px 1rem; 
+    align-items: center;
+    margin-bottom: 5px;
+    
+    &:hover {
+        background: rgb(247, 247, 247);
+        cursor: pointer;
+    }
+}
+
 .store-form-container {
     text-align: center; 
     display: flex;
@@ -5016,7 +5159,7 @@ header {
 
 .store-form {
     height: 500px; 
-
+    transition: all 800ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
     padding: 36px 40px 36px; 
     border: 1px solid rgb(214,214,214); 
     width: 400px;

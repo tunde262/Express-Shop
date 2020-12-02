@@ -10,7 +10,7 @@ import mixpanel from 'mixpanel-browser';
 
 import ButtonSpinner from '../../common/ButtonSpinner';
 
-const ProductCard = ({ auth: { user }, addLike, liked, modalOpen, product, handleDetail, addToCart, openModal, closeModal, addTotals}) => {
+const ProductCard = ({ auth: { user }, preview, addLike, liked, modalOpen, product, handleDetail, addToCart, openModal, closeModal, addTotals}) => {
     // componentDidMount() {
     //     console.log(this.props.product);
     // }
@@ -130,107 +130,42 @@ const ProductCard = ({ auth: { user }, addLike, liked, modalOpen, product, handl
                     </div>
                 </div>
             </div>
-            <div className="actions">
-                <div className="desktop-actions" style={{width:'100%', alignItems:'center', paddingRight:'10px'}}>
-                    {/* <button 
-                        onClick={() =>todo(_id, name)}
-                        disabled={cartLoading ? true : false} 
-                    >
-                        {cartLoading ? <ButtonSpinner /> : "Add To Cart"}
-                    </button> */}
-                    {liked ? (
-                        <button 
-                            onClick={() => handleLike(product)} 
-                            style={{
-                                background:'#ff4b2b', 
-                                color:'#fff', 
-                                borderColor:'#ff4b2b',
-                                marginTop:0
-                            }}
+            {preview ? null : (
+                <div className="actions">
+                    <div className="desktop-actions" style={{width:'100%', alignItems:'center', paddingRight:'10px'}}>
+                        {/* <button 
+                            onClick={() =>todo(_id, name)}
+                            disabled={cartLoading ? true : false} 
                         >
-                            Favorited 
-                            <i 
+                            {cartLoading ? <ButtonSpinner /> : "Add To Cart"}
+                        </button> */}
+                        {liked ? (
+                            <button 
+                                onClick={() => handleLike(product)} 
                                 style={{
-                                    marginLeft:'10px', 
+                                    background:'#ff4b2b', 
                                     color:'#fff', 
-                                    outline:'none', 
-                                    fontSize:'13px',
+                                    borderColor:'#ff4b2b',
                                     marginTop:0
-                                }} 
-                                    className="fas fa-heart"
-                            ></i> 
-                        </button> ): (
-                        <button 
-                            onClick={() => handleLike(product)} 
-                            className="likeButton"
-                        >
-                            Favorite 
-                            <i 
-                                style={{
-                                    marginLeft:'10px', 
-                                    color:'#ff4b2b', 
-                                    fontSize:'13px'
-                                }} 
-                                className="fas fa-heart"
-                            ></i> 
-                        </button> 
-                    )}
-                    {likes.length > 2 && (
-                        <div style={{width:'100%', textAlign:'center'}}>
-                            <span style={{color:'#808080',}}> 
-                                <span>{likes.length} </span> 
-                                <i 
-                                    style={{
-                                        marginLeft:'5px', 
-                                        color:'#ff4b2b', 
-                                        fontSize:'13px'
-                                    }} 
-                                    className="fas fa-heart"
-                                ></i>
-                            </span>
-                        </div>
-                    )}
-                </div>
-                <div className="mobile" style={{width:'100%', marginLeft:'-5px'}}>
-                    {liked ? (
-                        <button 
-                            onClick={() => addLike(_id)} 
-                            style={{
-                                background:'#ff4b2b', 
-                                color:'#fff', 
-                                width:'100%',
-                                borderColor:'#ff4b2b',
-                                display:'flex',
-                                justifyContent:'center',
-                                margin:'auto'
-                            }}
-                            className="mobile"
-                        >
-                            <div style={{display:'flex', justifyContent:'center', width:'100%', alignItems:'center'}}>
-                                <span style={{marginTop:0}}>Favorited </span>
+                                }}
+                            >
+                                Favorited 
                                 <i 
                                     style={{
                                         marginLeft:'10px', 
                                         color:'#fff', 
                                         outline:'none', 
-                                        fontSize:'13px'
+                                        fontSize:'13px',
+                                        marginTop:0
                                     }} 
                                         className="fas fa-heart"
                                 ></i> 
-                            </div>
-                        </button> ): (
-                        <button 
-                            onClick={() => handleLike(product)} 
-                            className="likeButton mobile"
-                            style={{
-                                width:'100%',
-                                margin:'auto',
-                                display:'flex',
-                                justifyContent:'center',
-                            }}
-                        >
-                            <div style={{display:'flex', justifyContent:'center', width:'100%', alignItems:'center'}}>
-                                <span style={{marginTop:0}}>Favorite</span>
+                            </button> ): (
+                            <button 
+                                onClick={() => handleLike(product)} 
+                                className="likeButton"
+                            >
+                                Favorite 
                                 <i 
                                     style={{
                                         marginLeft:'10px', 
@@ -239,21 +174,88 @@ const ProductCard = ({ auth: { user }, addLike, liked, modalOpen, product, handl
                                     }} 
                                     className="fas fa-heart"
                                 ></i> 
+                            </button> 
+                        )}
+                        {likes.length > 2 && (
+                            <div style={{width:'100%', textAlign:'center'}}>
+                                <span style={{color:'#808080',}}> 
+                                    <span>{likes.length} </span> 
+                                    <i 
+                                        style={{
+                                            marginLeft:'5px', 
+                                            color:'#ff4b2b', 
+                                            fontSize:'13px'
+                                        }} 
+                                        className="fas fa-heart"
+                                    ></i>
+                                </span>
                             </div>
-                        </button> 
-                    )}
-                    {/* <button 
-                        className="mobile"
-                        onClick={() =>todo(_id, name)}
-                        disabled={cartLoading ? true : false} 
-                    >
-                        {cartLoading ? <ButtonSpinner /> : <span style={{margin:'auto'}}>Add To Cart</span>}
-                    </button> */}
-                    {/* <div className="mobile">
-                        {liked ? <i style={{color:'#ff4b2b'}} onClick={() => handleLike(product)} className="fas fa-heart"></i> : <i onClick={() => handleLike(product)} className="far fa-heart detail-heart"></i>}
-                    </div> */}
+                        )}
+                    </div>
+                    <div className="mobile" style={{width:'100%', marginLeft:'-5px'}}>
+                        {liked ? (
+                            <button 
+                                onClick={() => addLike(_id)} 
+                                style={{
+                                    background:'#ff4b2b', 
+                                    color:'#fff', 
+                                    width:'100%',
+                                    borderColor:'#ff4b2b',
+                                    display:'flex',
+                                    justifyContent:'center',
+                                    margin:'auto'
+                                }}
+                                className="mobile"
+                            >
+                                <div style={{display:'flex', justifyContent:'center', width:'100%', alignItems:'center'}}>
+                                    <span style={{marginTop:0}}>Favorited </span>
+                                    <i 
+                                        style={{
+                                            marginLeft:'10px', 
+                                            color:'#fff', 
+                                            outline:'none', 
+                                            fontSize:'13px'
+                                        }} 
+                                            className="fas fa-heart"
+                                    ></i> 
+                                </div>
+                            </button> ): (
+                            <button 
+                                onClick={() => handleLike(product)} 
+                                className="likeButton mobile"
+                                style={{
+                                    width:'100%',
+                                    margin:'auto',
+                                    display:'flex',
+                                    justifyContent:'center',
+                                }}
+                            >
+                                <div style={{display:'flex', justifyContent:'center', width:'100%', alignItems:'center'}}>
+                                    <span style={{marginTop:0}}>Favorite</span>
+                                    <i 
+                                        style={{
+                                            marginLeft:'10px', 
+                                            color:'#ff4b2b', 
+                                            fontSize:'13px'
+                                        }} 
+                                        className="fas fa-heart"
+                                    ></i> 
+                                </div>
+                            </button> 
+                        )}
+                        {/* <button 
+                            className="mobile"
+                            onClick={() =>todo(_id, name)}
+                            disabled={cartLoading ? true : false} 
+                        >
+                            {cartLoading ? <ButtonSpinner /> : <span style={{margin:'auto'}}>Add To Cart</span>}
+                        </button> */}
+                        {/* <div className="mobile">
+                            {liked ? <i style={{color:'#ff4b2b'}} onClick={() => handleLike(product)} className="fas fa-heart"></i> : <i onClick={() => handleLike(product)} className="far fa-heart detail-heart"></i>}
+                        </div> */}
+                    </div>
                 </div>
-            </div>
+            )}
         </ProductWrapper>
     );
 }

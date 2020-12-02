@@ -20,6 +20,13 @@ const ProfileSchema = new Schema({
             type: Number
         },
     },
+    recommendation_tags: {
+        type: [String]
+    },
+    registration_complete: {
+        type: Boolean,
+        default: false
+    },
     stores: [
         {
             store: {
@@ -39,38 +46,56 @@ const ProfileSchema = new Schema({
         {
             address_name: {
                 type: String,
-                required: true
             },
             first_name: {
                 type: String,
-                required: true
             },
             last_name: {
                 type: String,
-                required: true
+            },
+            location: {
+                type: {
+                    type: String,
+                    default: "Point"
+                },
+                coordinates: {
+                    type: [Number]
+                } 
+            },
+            formatted_address: {
+                type: String,
+            },
+            address_components: {
+                street_name: {
+                    type: String
+                },
+                street_number: {
+                    type: String
+                },
+                city: {
+                    type: String
+                },
+                state:{
+                    type: String
+                },
+                country: {
+                    type: String
+                },
+                postalcode: {
+                    type: String
+                },
+                area: {
+                    type: String,
+                }
+            },
+            placeId: {
+                type: String,
             },
             address_1: {
                 type: String,
-                required: true
             },
             address_2: {
                 type: String
-            },
-            city: {
-                type: String,
-                required: true
-            },
-            state: {
-                type: String,
-                required: true
-            },
-            country: {
-                type: String,
-                required: true
-            },
-            zipcode: {
-                type: String,
-                required: true
             },
             phone: {
                 type: String
@@ -86,7 +111,7 @@ const ProfileSchema = new Schema({
     ],
     categories: [
         {
-            categories: {
+            category: {
                 type: Schema.Types.ObjectId,
                 ref: 'category'
             }

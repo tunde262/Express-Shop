@@ -7,7 +7,7 @@ import Spinner from '../common/Spinner';
 import ProductCard from '../Overview/productOverview/ProductCard';
 import Title from '../Title';
 
-const ProductList = ({products, product, auth: { user }, handleScroll}) => {
+const ProductList = ({products, page, product, auth: { user }, handleScroll}) => {
  
     const { loading } = product;
     
@@ -33,13 +33,26 @@ const ProductList = ({products, product, auth: { user }, handleScroll}) => {
         }
         else {
             // productList = <Title name="No Products" title="Available" />
-            productList = <Spinner />;
+            productList = <p>Sorry no items...</p>;
+        }
+    }
+
+    let addBlock = null;
+
+    if (page) {
+        if(page === "collection") {
+            addBlock = (
+                <div className="add-to-list">
+                    <i class="fas fa-plus"></i>
+                </div>
+            )
         }
     }
 
     return (
         <Fragment>
             <div style={{padding: '0', display:'flex', justifyContent:'center', flexWrap:'wrap'}}>
+                {addBlock}
                 {productList}
             </div>
         </Fragment>

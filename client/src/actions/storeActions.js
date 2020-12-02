@@ -85,12 +85,73 @@ export const getStoreSubscriptions = id => async dispatch => {
     }
 };
 
-// Get Filtered tags
-export const getStoresByTag = (filter) => async dispatch =>  {
+// Get all stores
+export const getStoresByTagList = (tagList, skip) => async dispatch => {
+    dispatch({ type: CLEAR_STORES });
+    const storesArray = [];
+    let fetchedStores;
+    
+    try {
+
+        for(var i = 0; i < tagList.length; i++) {
+            console.log('TAG VALUE');
+            console.log(tagList[i]);
+            fetchedStores = await axios.get(`/api/stores/filter/${tagList[i]}?skip=${skip}`);
+            console.log('NEW STORES');
+            console.log(fetchedStores.data);
+            if(fetchedStores.data.length > 0) {
+                storesArray.unshift(...fetchedStores.data);
+            }
+            
+            console.log('LOCATIONS ARRAY');
+            console.log(storesArray);
+        }
+        console.log('EXIT FOR LOOP')
+        console.log(storesArray)
+
+        if(storesArray.length > 0) {
+            dispatch({
+                type: GET_STORES,
+                payload: storesArray
+            });
+        } else {
+            dispatch(getStores())
+        }
+    } catch (err) {
+        console.log(err);
+        dispatch({
+            type: GET_STORES,
+            payload: []
+            // payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+}
+
+// Get Filtered stores by tag
+export const getStoresByTag = (tag, skip) => async dispatch =>  {
     dispatch({ type: CLEAR_STORES });
 
     try {
-        const res = await axios.get(`/api/stores/filter/full/${filter}`)
+        const res = await axios.get(`/api/stores/filter/${tag}?skip=${skip}`)
+
+        dispatch({
+            type: GET_STORES,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: GET_STORES,
+            payload: []
+        })
+    }
+};
+
+// Get all filtered stores by tag without skip 
+export const getFullStoresByTag = (tag) => async dispatch =>  {
+    dispatch({ type: CLEAR_STORES });
+
+    try {
+        const res = await axios.get(`/api/stores/filter/full/${tag}`)
 
         dispatch({
             type: GET_STORES,

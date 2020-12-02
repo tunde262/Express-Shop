@@ -8,6 +8,8 @@ import ExtrasElement from './Extras_Element';
 import CollectionsElement from './Collections_Element';
 
 import { setPage } from '../../../actions/navActions';
+import { getCollectionsByIdList } from '../../../actions/collectionActions';
+import { getProfileSubscriptions } from '../../../actions/profileActions';
 
 const Main_Store_Nav = ({
     setCollectionModal,
@@ -15,10 +17,16 @@ const Main_Store_Nav = ({
     setSlideForm1, 
     slideForm1, 
     setPage, 
+    getCollectionsByIdList,
+    getProfileSubscriptions,
     nav: { 
         page,
         admin 
     },
+    auth: {
+        user
+    },
+    profile,
     setNavValue,
     navValue
 }) => {
@@ -26,7 +34,7 @@ const Main_Store_Nav = ({
     const [navHighlight, setNavHighlight] = useState(null);
     const [navHighlight2, setNavHighlight2] = useState(null);
 
-    useEffect(() => {
+    useEffect(() => { 
         if(page === 'home') {
             setNavHighlight('home');
         }
@@ -42,7 +50,15 @@ const Main_Store_Nav = ({
         if(admin === true) {
             setNavValue('admin')
         }
-    }, [page, admin])
+
+        if(profile.profile) {
+            getCollectionsByIdList(profile.profile.categories);
+        }
+
+        if(user) {
+            getProfileSubscriptions(user._id);
+        }  
+    }, [page, admin, profile.profile])
 
     const todo = (page) => {
         setNavHighlight(page);
@@ -99,12 +115,12 @@ const Main_Store_Nav = ({
                     <i style={{fontSize:'22px', marginRight:'1rem'}} className="fas fa-layer-group"></i>
                     <h3 style={{fontWeight:'600'}}>Categories</h3>
                 </div>
-                <i class="fas fa-chevron-right"></i>
+                <i style={{color:'#808080', fontSize:'12px'}} class="fas fa-chevron-right"></i>
             </div>
             
-            <CollectionsElement setCollectionModal={setCollectionModal} displayCollectionModal={displayCollectionModal} />
-
             <SubscriptionsElement />
+            
+            <CollectionsElement setCollectionModal={setCollectionModal} displayCollectionModal={displayCollectionModal} />
 
             <div style={{zIndex:'30', background:'#fff'}}>
                 <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}} className="store-table-nav-items header">
@@ -164,11 +180,17 @@ const Main_Store_Nav = ({
 
 Main_Store_Nav.propTypes = {
     setPage: PropTypes.func.isRequired,
+    getCollectionsByIdList: PropTypes.func.isRequired,
+    getProfileSubscriptions: PropTypes.func.isRequired,
     nav: PropTypes.object.isRequired,
+    profile: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
-    nav: state.nav
+    auth: state.auth,
+    nav: state.nav,
+    profile: state.profile
 });
 
-export default connect(mapStateToProps, { setPage })(Main_Store_Nav);
+export default connect(mapStateToProps, { setPage, getCollectionsByIdList, getProfileSubscriptions })(Main_Store_Nav);

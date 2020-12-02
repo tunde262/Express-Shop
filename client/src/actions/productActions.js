@@ -23,6 +23,23 @@ export const getProducts = (skip) => dispatch => {
         );
 };
 
+// Get Products
+export const getForYouProducts = (skip) => dispatch => {
+    axios.get(`/api/products/for-you?skip=${skip}`)
+        .then(res =>
+            dispatch({
+                type: SET_PRODUCTS,
+                payload: res.data
+            })
+        )
+        .catch(err => 
+            dispatch({
+                type: SET_PRODUCTS,
+                payload: []
+            })
+        );
+};
+
 // Get Products by user's store
 export const getStoreProducts = () => dispatch => {
     dispatch(setProductsLoading());
@@ -122,7 +139,7 @@ export const setSortedProducts = (products) =>  {
 };
 
 // Get Filtered tags
-export const handleTags = (filter, skip) => async dispatch =>  {
+export const getCategoryProducts = (filter, skip) => async dispatch =>  {
     mixpanel.init("1b36d59c8a4e85ea3bb964ac4c4d5889");
     try {
         if (filter === 'explore') {
@@ -213,6 +230,28 @@ export const removeTags = (filter) => {
 //       });
 //     }
 // };
+
+export const reorderItems = () => async dispatch => {
+    console.log('REORDER-ING')
+    try {
+      const res = await axios.get('/api/products');
+  
+      res.data.map(async product => {
+        try {
+            const updatedProd = await axios.post(`/api/products/reorder/${product._id}`);
+            console.log('PROD ORDER')
+            console.log(updatedProd.prod_order);
+        } catch (err) {
+            console.log(err)
+        }
+      })
+    } catch (err) {
+      dispatch({
+        type: PRODUCT_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status }
+      });
+    }
+};
 
 // export const addToProducts = (prodId) => async dispatch => {
 //     try {

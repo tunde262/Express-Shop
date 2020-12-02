@@ -67,9 +67,18 @@ const upload = multer({ storage });
 // @access Public
 router.get('/', async (req, res) => {
     try {
-        const stores = await Store.find();
+        const testLength = await Store.find().sort({ order_value : 1});
 
-        res.json(stores);
+        const skip =
+        req.query.skip && /^\d+$/.test(req.query.skip) ? Number(req.query.skip) : 0;
+
+        if(testLength.length > skip) {
+            const stores = await Store.find({}, null, { skip, limit: 8 }).sort({ order_value : 1});
+        
+            res.json(stores);
+        } else {
+            res.json(testLength);
+        }
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error'); 
@@ -146,6 +155,8 @@ router.get('/filter/:filter', async (req, res) => {
             const stores = await Store.find({tags: req.params.filter }, null, { skip, limit: 8 })
         
             res.json(stores);
+        } else {
+            res.json([])
         }
     } catch (err) {
         console.error(err.message);
@@ -158,7 +169,7 @@ router.get('/filter/:filter', async (req, res) => {
 // @access Public
 router.get('/filter/full/:filter', async (req, res) => {
     try {
-        const stores = await Store.find({ tags: req.params.filter });
+        const stores = await Store.find({ tags: req.params.filter }).sort({ order_value : 1});
 
         res.json(stores);
     } catch (err) {
@@ -376,7 +387,142 @@ router.get('/subscriptions/:id', auth, async (req, res) => {
     }
 });
 
+// Update all store's order_value in Bulk in backend
+router.post('/refresh', async (req, res) => {
+    console.log('REORDERING CONSOLE');
+    try {
+        const storesArray = await Store.find();
+        console.log('STORE COUNT:')
+        console.log(storesArray.length);
+
+        let rangeArray = [];
+
+        for(var i = 0; i < storesArray.length; i++) {
+            rangeArray.push(i); // create array of availble order_nums to choose from
+        }
+
+        console.log('RANGE ARRAY:')
+        console.log(rangeArray);
+
+        let tempRange = [...rangeArray];
+        
+        for(var x = 0; x < storesArray.length; x++) { // update each item in PRODUCT collection
+            const lastElement = tempRange.length - 1; // MAX value is 1 less than collection length
+
+            console.log('LAST ELEMENT:')
+            console.log(tempRange[lastElement]);
+            
+            let orderValue
+
+            if( tempRange.length > 1) {
+                let min = Math.ceil(tempRange[0]);
+                let max = Math.floor(tempRange[lastElement]);
+                orderValue = Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+                
+                for(var i = 0; i < 100; i++) { // if server gets stuck trying to avoid using unavailble index value
+                    if(tempRange[orderValue] === undefined) {
+                        let min = Math.ceil(tempRange[0]);
+                        let max = Math.floor(tempRange[lastElement]);
+                        orderValue = Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+                    }
+                }
+                
+                if(tempRange[orderValue] === undefined) {
+                    orderValue = 0;
+                }
+
+            } else {
+                orderValue = 0;
+            }
+
+            console.log('INDEX VALUE:')
+            console.log(orderValue);
+            
+            console.log('ORDER VALUE:')
+            console.log(tempRange[orderValue]);
+
+            const storeFields = {};
+            storeFields.order_value = tempRange[orderValue];
+            // Update
+            const updatedStore = await Store.findOneAndUpdate(
+                { _id: storesArray[x]._id }, 
+                { $set: storeFields }, 
+                { new: true }
+            );
+
+           // Get remove index
+           const removeIndex = tempRange.indexOf(updatedStore.order_value);
+            tempRange.splice(removeIndex, 1);
+
+            console.log('REMOVE INDEX:')
+            console.log(removeIndex);
+
+            console.log('NEW RANGE ARRAY:')
+            console.log(tempRange);
+        }
+        
+        res.send("DONE");
+    } catch (err) {
+        console.log(err);
+    }
+
+
+});
+
+
+// Update initialze view count in document(s)
+router.post('/init-views', async (req, res) => {
+    console.log('INITIALZING VIEWS');
+    try {
+        const storesArray = await Store.find();
+
+        for(var x = 0; x < storesArray.length; x++) { 
+
+            const storeFields = {};
+            storeFields.view_count = [];
+            // Update
+            await Store.findOneAndUpdate(
+                { _id: storesArray[x].id }, 
+                { $set: storeFields }, 
+                { new: true }
+            );
+        }
+
+        res.send('SUCCESS');
+    } catch (err) {
+        console.log(err);
+    }
+});
+
 // ---- Interactions -----
+
+// @route PUT api/stores/view/:id
+// @desc View a Store
+// @access Private
+router.put('/view/:id', auth, async (req, res) => {
+    try {
+        const store = await Store.findById(req.params.id);
+
+        if(store.view_count.length > 0) {
+            // Check if store already liked by same user
+            if(store.view_count.filter(view => view.user.toString() === req.user.id).length > 0) {
+                res.json(store.view_count);
+            } else {
+                store.view_count.unshift({ user: req.user.id });
+            }
+        } else {
+            store.view_count.unshift({ user: req.user.id });
+        }
+
+        await store.save();
+
+        res.json(store.view_count);
+    } catch (err) {
+        console.error(err.message);
+        
+        res.status(500).send('Server Error'); 
+    }
+})
 
 // @route PUT api/stores/favorite/:id
 // @desc Favorite a Store

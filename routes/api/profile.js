@@ -106,12 +106,24 @@ router.post('/', upload.single('file'), auth, async (req, res) => {
             return res.status(400).json({errors: errors.array() });
         }
 
+        const {
+            gender,
+            recommendation_tags,
+            registration_complete
+        } = req.body;
+
         // Build profile object
         const profileFields = {};
         profileFields.user = req.user.id;
         if(req.file) profileFields.img = req.file.id;
         if(req.file) profileFields.img_name = req.file.filename;
+        if(gender) profileFields.gender = gender;
+        if(registration_complete) profileFields.registration_complete = registration_complete;
 
+        // recommendation_tags - Split into array
+        if(recommendation_tags) {
+            profileFields.recommendation_tags = recommendation_tags.split(',').map(tag => tag.trim());
+        } 
 
         try {
             let profile = await Profile.findOne({ user: req.user.id });

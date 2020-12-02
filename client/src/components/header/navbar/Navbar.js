@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { handleTags, setSortedProducts, removeTags, clearProducts } from '../../../actions/productActions';
+import { getCategoryProducts, setSortedProducts, removeTags, clearProducts } from '../../../actions/productActions';
 import { setNav1, setNav2, setNav3, removeNav1, removeNav2, removeNav3 } from '../../../actions/navActions';
 
 import { HorizontalNav } from '../../common/HorizontalNav';
@@ -14,7 +14,7 @@ import mainShoesList from '../../../utils/categoryData/shoes/shoes_main';
 import mainHouseholdEssList from '../../../utils/categoryData/household_essentials/householdEss_main';
 import mainPersonalCareList from '../../../utils/categoryData/personal_care/personalCare_main';
 import mainPetsList from '../../../utils/categoryData/pets/pets_main';
-import mainSchoolOfficeList from '../../../utils/categoryData/school_office/schoolOffice._main';
+import mainSchoolOfficeList from '../../../utils/categoryData/school_office/schoolOffice_main';
 import mainWomenList from '../../../utils/categoryData/women/women_main';
 import mainMenList from '../../../utils/categoryData/men/men_main';
 import mainBathroomList from '../../../utils/categoryData/bathroom/bathroom_main';
@@ -63,7 +63,7 @@ import menHealthWellnessList from '../../../utils/categoryData/men/health_wellne
 const Navbar = ({
     product, 
     nav, 
-    handleTags, 
+    getCategoryProducts, 
     setSortedProducts, 
     removeTags,
     setNav1, 
@@ -89,11 +89,11 @@ const Navbar = ({
         //     await removeTags(filter);
         //     unFilterProducts();
         // } else {
-        //     await handleTags(filter);
+        //     await getCategoryProducts(filter);
         //     filterProducts();
         // }
 
-        handleTags(filter);
+        getCategoryProducts(filter);
     }
 
     const filterProducts = () => {
@@ -318,7 +318,7 @@ const Navbar = ({
 
     if(navList1 !== null) {
         navList = navList1.map((nav_item, index) => (
-            <a href={`https://www.cardboardexpress.com/collection?filter=${nav_item.tag_value}`}>
+            <a style={{outline:'none'}} href={`https://www.cardboardexpress.com/category?filter=${nav_item.tag_value}`}>
                 <NavItem 
                     key={index} 
                     background={nav.nav1 === nav_item.tag_value ? nav_item.background_color : "#fff"}
@@ -344,7 +344,7 @@ const Navbar = ({
 
     if(navList2 !== null) {
         secondNavList = navList2.map((nav_item, index) => (
-            <a href={`https://www.cardboardexpress.com/collection?filter=${nav_item.tag_value}`}>
+            <a style={{outline:'none'}} href={`https://www.cardboardexpress.com/category?filter=${nav_item.tag_value}`}>
                 <NavItem 
                     key={index} 
                     background={nav.nav2 === nav_item.tag_value ? nav_item.background_color : "#fff"}
@@ -369,7 +369,7 @@ const Navbar = ({
 
     if(navList3 !== null) {
         thirdNavList = navList3.map((nav_item, index) => (
-            <a href={`https://www.cardboardexpress.com/collection?filter=${nav_item.tag_value}`}>
+            <a style={{outline:'none'}} href={`https://www.cardboardexpress.com/category?filter=${nav_item.tag_value}`}>
                 <NavItem 
                     key={index} 
                     background={nav.nav3 === nav_item.tag_value ? nav_item.background_color : "#fff"}
@@ -415,7 +415,7 @@ const Navbar = ({
 }
 
 Navbar.propTypes = {
-    handleTags: PropTypes.func.isRequired,
+    getCategoryProducts: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
     setSortedProducts: PropTypes.func.isRequired,
     removeTags: PropTypes.func.isRequired,
@@ -433,4 +433,4 @@ const mapStateToProps = state => ({
     nav: state.nav
 });
 
-export default connect(mapStateToProps, { handleTags, setSortedProducts, removeTags, clearProducts, setNav1, setNav2, setNav3, removeNav1, removeNav2, removeNav3 })(Navbar);
+export default connect(mapStateToProps, { getCategoryProducts, setSortedProducts, removeTags, clearProducts, setNav1, setNav2, setNav3, removeNav1, removeNav2, removeNav3 })(Navbar);

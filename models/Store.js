@@ -89,6 +89,21 @@ const StoreSchema = new Schema({
             }
         }
     ],
+    order_value: {
+        type: Number
+    },
+    view_count: [
+        {
+            user: {
+                type: Schema.Types.ObjectId,
+                ref: 'user'
+            },
+            date: {
+                type: Date,
+                default: Date.now
+            }
+        }
+    ],
     favorites: [
         {
             user: {

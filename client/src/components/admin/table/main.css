@@ -1219,22 +1219,6 @@ header {
 
   /* ----------------------------- END --------------------------- */
 
-  .addImage {
-    font-size: 2rem;
-    margin: 5px;
-    width: 95%; 
-    min-height: 150px;
-    border: 2px dashed #cecece; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center;
-  }
-
-  .addImage:hover {
-    color: #fff;
-    background: #cecece;
-  }
-
   .editor {
     width: 100%;
   }

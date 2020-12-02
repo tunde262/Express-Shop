@@ -6,6 +6,14 @@ const CategorySchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'store'
     },
+    profiles: [
+        {
+            profile: {
+                type: Schema.Types.ObjectId,
+                ref: 'profile'
+            }
+        }
+    ],
     name: {
         type: String,
         required: true
@@ -17,6 +25,21 @@ const CategorySchema = new Schema({
     visible: {
         type: Boolean
     },
+    cat_order: {
+        type: Number
+    },
+    view_count: [
+        {
+            user: {
+                type: Schema.Types.ObjectId,
+                ref: 'user'
+            },
+            date: {
+                type: Date,
+                default: Date.now
+            }
+        }
+    ],
     img: {
         type: Schema.Types.ObjectId, // There is no need to create references here
         ref: 'uploads'

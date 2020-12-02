@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Table from '../../admin/table/Table';   
-import { getProductsByStoreId } from '../../../actions/productActions';            
+import { getProductsByStoreId } from '../../../actions/productActions'; 
+import { getStoresByTagList } from '../../../actions/storeActions';             
 import Header from '../../header/Header';
 import Container from '../../ProductList/Container';
 import Banner from '../../common/Banner';
@@ -12,11 +13,29 @@ import DefaultBanner from '../../../utils/imgs/placeholderimg.jpg';
 import carousell1 from '../../../utils/imgs/carousell1.jpg';
 import carousell2 from '../../../utils/imgs/carousell2.jpg';
 
+import ProductOverview from '../../Overview/productOverview/ProductOverview';
 import mixpanel from 'mixpanel-browser';
 
-const StoreMain = ({ store: { store, loading }, product, getProductsByStoreId, admin, setTable }) => {
+import RelatedStores from './related/RelatedStores';
+
+const StoreMain = ({ 
+    store: { 
+        store, 
+        loading 
+    }, 
+    getStoresByTagList, 
+    setTableShow1, 
+    tableShow1, 
+    product, 
+    getProductsByStoreId, 
+    admin, 
+    setTable 
+}) => {
 
     const [sentMixpanel, setSentMixpanel] = useState(false);
+
+    const [gotStores, setGotStores] = useState(false);
+    const [skip, setSkip] = useState(0);
 
     useEffect(() => {
         getProductsByStoreId(store._id)
@@ -45,6 +64,33 @@ const StoreMain = ({ store: { store, loading }, product, getProductsByStoreId, a
         setSentMixpanel(true);
     }
 
+    let storeContent = null;
+
+    if(store !== null) {
+        if(tableShow1 === 'shop') {
+            storeContent = (
+                <div className="store-main"> 
+                    {/* {admin === "true" && store !== null && <Banner admin={admin} imgLarge={DefaultBanner} imgSmall={DefaultBanner} />} */}
+                    {/* <Header /> */}
+                    <Container title="Bottoms" category="bottoms" background="MediumSlateBlue"  />
+                </div>
+            )
+        } else if (tableShow1 === 'info') {
+            storeContent = (<h3>store info</h3>);
+        } else if (tableShow1 === 'related') {
+            storeContent = (
+                <RelatedStores />
+            );
+        }
+    } else {
+        storeContent = (<h3>This store doesn't exist</h3>);
+    }
+
+    if(!gotStores && tableShow1 === 'related' && store !== null) {
+        getStoresByTagList(store.tags, skip);
+        setGotStores(true);
+    }
+
 
     return (
         <Fragment>
@@ -57,15 +103,7 @@ const StoreMain = ({ store: { store, loading }, product, getProductsByStoreId, a
                     </div>
                 </div>
             ) : null} */}
-            {store !== null ? (
-                <div className="store-main"> 
-                    {/* {admin === "true" && store !== null && <Banner admin={admin} imgLarge={DefaultBanner} imgSmall={DefaultBanner} />} */}
-                    {/* <Header /> */}
-                    <Container title="Bottoms" category="bottoms" background="MediumSlateBlue"  />
-                </div>
-            ) : (
-                <h3>This store doesn't exist</h3>
-            )}
+            {storeContent}
         </Fragment>
     )
 }
@@ -74,6 +112,7 @@ StoreMain.propTypes = {
     store: PropTypes.object.isRequired,
     product: PropTypes.object.isRequired,
     getProductsByStoreId: PropTypes.func.isRequired,
+    getStoresByTagList: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -81,4 +120,4 @@ const mapStateToProps = state => ({
     product: state.product
 })
 
-export default connect(mapStateToProps, { getProductsByStoreId })(StoreMain);
+export default connect(mapStateToProps, { getProductsByStoreId, getStoresByTagList })(StoreMain);

@@ -17,6 +17,12 @@ import { getCurrentProfile } from './actions/profileActions';
 // Google Analytics
 import ReactGA from 'react-ga';
 
+// Auth
+import Register from './components/auth/registration/Register';
+import Personalize from './components/auth/registration/personalize/Personalize';
+import Login from './components/auth/Login';
+import BusinessLanding from './pages/BusinessLanding';
+
 // Layout
 import HomePage from './pages/HomePage';
 import HomeLanding from './pages/HomeLanding';
@@ -29,8 +35,9 @@ import Backdrop from './components/layout/Backdrop/Backdrop';
 import StoreForm from './components/admin/forms/store_form/StoreForm';
 
 import Routes from './components/routing/Routes';
-import AddToCartModal from './components/modals/AddToCartModal';
-import CollectionModal from './components/modals/CollectionModal';
+import AddToCartModal from './components/modals/cart-modal/AddToCartModal';
+import CreateCollectionModal from './components/modals/collection-modal/createNew/CreateCollectionModal';
+import AddToCollectionModal from './components/modals/collection-modal/addTo/AddToCollectionModal';
 
 import StoreNavElements from './components/TableDetails/StoreNav/Main_Store_Nav';
 import CategoryNavElements from './components/TableDetails/CategoryNav/Main_Cat_Nav';
@@ -42,6 +49,12 @@ if(localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
+// Collection Data
+const initialState = {
+  name: '',
+  visible: true,
+};
+
 const App = () => {
   const initializeReactGA = () => {
     ReactGA.initialize('UA-144191515-1');
@@ -49,6 +62,7 @@ const App = () => {
   }
 
   const [cartStores, setStoresList] = useState([]);
+  
 
   useEffect(() => {
     store.dispatch(loadUser());
@@ -70,6 +84,43 @@ const App = () => {
   const [drawer, showDrawer] = useState(false);
 
   const [displayCollectionModal, setCollectionModal] = useState(false);
+
+  // START Collection Data & Handling
+  const [formData, setFormData] = useState(initialState);
+
+  const [collectionTags, setCollectionTags] = useState([]);
+
+  const switchChange = e => {
+      setFormData({ ...formData, [e.target.name]: e.target.checked });
+  }
+
+  const onChange = (e) => {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+  }
+
+  const onAddCollectionTag = (tag) => {
+      setCollectionTags([...collectionTags, tag]);
+      // filterItems(tag);
+  }
+
+  const loadCollectionTags = (tags) => {
+      setCollectionTags(tags);
+  }
+
+  const onDeleteCollectionTag = (tag) => {
+      // alert(`deleting ${tag}`);
+      let remainingTags = collectionTags.filter ((t) => {
+      return (t !== tag);
+      });
+      setCollectionTags([...remainingTags]);
+      // unFilterItems(tag);
+  }
+
+  const handleModalClose = () => {
+      setCollectionModal(false);
+  }
+
+  // END COLLECTION
 
   const clicked = () => {
     ReactGA.event({
@@ -125,7 +176,14 @@ const App = () => {
             {backdrop}
             <main id="home">
               <Switch>
+                {/* Landing Pages */}
                 <Route exact path="/" component={HomeLanding} />
+                <Route exact path="/business" component={BusinessLanding} />
+                {/* Auth Pages */}
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/register" component={Register} />
+                <Route exact path="/success" component={Personalize} />
+                {/*Admin Forms */}
                 <Route exact path="/create-store" component={StoreForm} />
                 <div className="store-table">
                     <div style={{height:'100%'}} className="store-table-nav">
@@ -152,7 +210,27 @@ const App = () => {
             </main>
           </div>
           <AddToCartModal />
-          <CollectionModal displayCollectionModal={displayCollectionModal} setCollectionModal={setCollectionModal} />
+          <CreateCollectionModal 
+            displayCollectionModal={displayCollectionModal} 
+            setCollectionModal={setCollectionModal} 
+            formData={formData}
+            switchChange={switchChange}
+            onChange={onChange}
+            onAddCollectionTag={onAddCollectionTag}
+            loadCollectionTags={loadCollectionTags}
+            onDeleteCollectionTag={onDeleteCollectionTag}
+            handleModalClose={handleModalClose}
+            collectionTags={collectionTags}
+          />
+          <AddToCollectionModal 
+            formData={formData}
+            switchChange={switchChange}
+            onChange={onChange}
+            onAddCollectionTag={onAddCollectionTag}
+            loadCollectionTags={loadCollectionTags}
+            onDeleteCollectionTag={onDeleteCollectionTag}
+            collectionTags={collectionTags}
+          />
         </Router>
       </StripeProvider>
     </Provider>

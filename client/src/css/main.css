@@ -491,6 +491,11 @@ textarea {
     width: 40px;
     text-decoration: none; }
 
+.link-decoration:hover {
+  text-decoration: underline; }
+  .link-decoration:hover p, .link-decoration:hover h1, .link-decoration:hover h2, .link-decoration:hover h3, .link-decoration:hover h4 {
+    color: #0645AD; }
+
 .mobile {
   display: none; }
 
@@ -1523,6 +1528,35 @@ header {
   .profile-toggle:hover i {
     color: #ff4b2b; }
 
+.addImage {
+  font-size: 2rem;
+  margin: 5px;
+  width: 95%;
+  min-height: 150px;
+  border: 2px dashed #cecece;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.addImage:hover {
+  color: #fff;
+  background: #cecece; }
+
+.add-to-list {
+  font-size: 2rem;
+  margin: 10px 5px 0;
+  width: 14vw;
+  height: calc(14vw + 130px);
+  border: 2px dashed #cecece;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.add-to-list:hover {
+  color: #fff;
+  background: #cecece; }
+
 .store-table {
   display: grid;
   grid-template-columns: 250px 1fr;
@@ -1629,7 +1663,9 @@ header {
   position: relative;
   height: 30px;
   width: 30px;
-  margin: 0 10px; }
+  margin: 0 10px;
+  background: #808080;
+  border-radius: 5px; }
 
 .store-nav-collection-img {
   border-radius: 5px;
@@ -1640,9 +1676,10 @@ header {
 
 .store-nav-img {
   border-radius: 50%;
-  height: 30px;
+  border: 1px solid #e8e8e8;
+  height: 35px;
   overflow: hidden;
-  width: 30px;
+  width: 35px;
   margin: 0 10px; }
 
 .store-table-main {
@@ -2546,6 +2583,12 @@ header {
 
 .itemUploadContainer {
   height: 500px;
+  width: 500px;
+  margin: 0 10px;
+  overflow: hidden; }
+
+.collectionUploadContainer {
+  height: 450px;
   width: 500px;
   margin: 0 10px;
   overflow: hidden; }
@@ -3549,7 +3592,8 @@ header {
       color: #fff;
       border-color: #2fb7ec; }
     .store-socials button:hover {
-      background: #e8e8e8; }
+      background: #e8e8e8;
+      color: #2fb7ec; }
 
 .ghost-btn {
   margin-right: 10px;
@@ -3767,6 +3811,58 @@ header {
   align-items: center;
   justify-content: flex-start; }
 
+.gender-form {
+  display: grid;
+  margin-top: 2rem;
+  grid-template-columns: 1fr 1fr; }
+
+.gender-form-box {
+  transition: background .3s;
+  height: 150px;
+  color: #0098d3;
+  padding: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  border-radius: 5px;
+  width: 150px; }
+  .gender-form-box:hover {
+    color: #0645AD; }
+  .gender-form-box.active {
+    background: #f7f7f7;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    color: #ff4b2b; }
+
+.tertiary-form-text {
+  margin: 20px 0 10px;
+  color: #0098d3;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: Arial, Helvetica,sans-serif; }
+  .tertiary-form-text:hover {
+    color: #0645AD; }
+
+.step-form-btn {
+  width: 100%;
+  outline: none;
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .step-form-btn.disabled {
+    background: #e6ac00;
+    color: #b38600; }
+    .step-form-btn.disabled:hover {
+      opacity: 1; }
+
 .stores-box {
   padding: 50px;
   text-align: center;
@@ -3805,6 +3901,24 @@ header {
   margin: 2rem 0 0 5rem;
   font-size: 2rem; }
 
+.collection-form {
+  height: 500px;
+  overflow-y: hidden;
+  padding: 0 20px 36px 20px;
+  width: 400px;
+  border-radius: 5px; }
+
+.collection-form-item {
+  display: flex;
+  height: 50px;
+  width: 100%;
+  padding: 30px 1rem;
+  align-items: center;
+  margin-bottom: 5px; }
+  .collection-form-item:hover {
+    background: #f7f7f7;
+    cursor: pointer; }
+
 .store-form-container {
   text-align: center;
   display: flex;
@@ -3814,6 +3928,7 @@ header {
 
 .store-form {
   height: 500px;
+  transition: all 800ms cubic-bezier(0.77, 0, 0.175, 1);
   padding: 36px 40px 36px;
   border: 1px solid #d6d6d6;
   width: 400px;

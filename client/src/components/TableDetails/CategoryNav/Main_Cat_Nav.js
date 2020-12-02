@@ -10,7 +10,7 @@ import shoeItems from '../../../utils/categoryData/shoes/shoes_main';
 import householdEssentialItems from '../../../utils/categoryData/household_essentials/householdEss_main';
 import personalCareItems from '../../../utils/categoryData/personal_care/personalCare_main';
 import petItems from '../../../utils/categoryData/pets/pets_main';
-import schoolOfficeItems from '../../../utils/categoryData/school_office/schoolOffice._main';
+import schoolOfficeItems from '../../../utils/categoryData/school_office/schoolOffice_main';
 import womenItems from '../../../utils/categoryData/women/women_main';
 import menItems from '../../../utils/categoryData/men/men_main';
 import bathroomItems from '../../../utils/categoryData/bathroom/bathroom_main';

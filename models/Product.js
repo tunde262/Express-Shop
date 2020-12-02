@@ -83,6 +83,21 @@ const ProductSchema = new Schema({
     featured: {
         type: Boolean
     },
+    prod_order: {
+        type: Number
+    },
+    prod_views: [
+        {
+            user: {
+                type: Schema.Types.ObjectId,
+                ref: 'user'
+            },
+            date: {
+                type: Date,
+                default: Date.now
+            }
+        }
+    ],
     activity: [
         {
             title: {

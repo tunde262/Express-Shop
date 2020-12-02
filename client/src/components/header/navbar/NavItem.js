@@ -19,7 +19,10 @@ export const NavItem = styled.button`
 
     &:active {
         outline: none;
-        
+    }
+
+    &:after {
+        outline: none;
     }
 
     &:hover {
@@ -27,6 +30,7 @@ export const NavItem = styled.button`
         color: white;
         border-color: transparent;
         background: ${props => props.hover};
+        outline: none;
         
     }
 

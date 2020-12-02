@@ -11,7 +11,7 @@ import {
     getCart, 
     addReview, 
     deleteReview, 
-    handleTags 
+    getCategoryProducts 
 } from '../actions/productActions';
 import { getStoresByTag } from '../actions/storeActions';
 import { getProductVariants } from '../actions/variantActions';
@@ -27,6 +27,7 @@ import Modal from 'react-responsive-modal';
 import { ButtonContainer } from './Button';
 import { BackButton } from './common/BackButton';
 import { setNav1 } from '../actions/navActions';
+import { openCollectionModal } from '../actions/collectionActions';
 import Spinner from './common/Spinner';
 import ButtonSpinner from './common/ButtonSpinner';
 import ProductOverview from './Overview/productOverview/ProductOverview';
@@ -59,8 +60,9 @@ const Details = ({
     deleteReview,
     handleDetail,
     getStoresByTag,
-    handleTags,
+    getCategoryProducts,
     setNav1,
+    openCollectionModal,
     setAlert
 }) => {
     // Mixpanel
@@ -179,6 +181,10 @@ const Details = ({
 
     const handleModalOpen = (id) => {
         openModal(id);
+    }
+
+    const handleCollectionModalOpen = () => {
+        openCollectionModal();
     }
 
     const todo = (id, item) => {
@@ -414,7 +420,7 @@ const Details = ({
     }
 
     if(!productsLoaded && detailProduct) {
-        handleTags(detailProduct.category, skip);
+        getCategoryProducts(detailProduct.category, skip);
         setProductsLoaded(true);
     }
 
@@ -913,7 +919,34 @@ const Details = ({
                                         >
                                             {cartLoading ? <ButtonSpinner /> : "Add To Cart"}
                                         </button>
-                                        {liked ? <button onClick={() => addLike(detailProduct._id)} style={{background:'#ff4b2b', color:'#fff', borderColor:'#ff4b2b'}}>Added To Favorites <i style={{marginLeft:'10px', color:'#fff', outline:'none', fontSize:'13px'}} className="fas fa-heart"></i> </button> : <button onClick={() => addLike(detailProduct._id)} className="likeButton">Favorite <i style={{marginLeft:'10px', color:'#ff4b2b', fontSize:'13px'}} className="fas fa-heart"></i> </button> }
+                                        <div className="store-socials desktop" id="store-socials">
+                                            {liked ? (
+                                                <button 
+                                                    onClick={() => addLike(detailProduct._id)} 
+                                                    style={{background:'#ff4b2b', color:'#fff', borderColor:'#ff4b2b'}}
+                                                >
+                                                    Favorited 
+                                                    <i 
+                                                        style={{marginLeft:'10px', color:'#fff', outline:'none', fontSize:'13px'}} 
+                                                        className="fas fa-heart"
+                                                    ></i> 
+                                                </button>
+                                            ) : (
+                                                <button 
+                                                    onClick={() => addLike(detailProduct._id)} 
+                                                    className="likeButton"
+                                                >
+                                                    Favorite 
+                                                    <i 
+                                                        style={{marginLeft:'10px', color:'#ff4b2b', fontSize:'13px'}} 
+                                                        className="fas fa-heart"
+                                                    ></i> 
+                                                </button>
+                                            )}
+                                            <button onClick={handleCollectionModalOpen} style={{height:'40px', width:'35px', margin:'0 10px 0 0', borderRadius:'5px'}}>
+                                                <i style={{fontSize:'14px'}}class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
                                         {detailProduct.likes.length > 2 && <div style={{width:'100%', textAlign:'center'}}><span style={{color:'#808080',}}> <span>{detailProduct.likes.length}</span> Others favorited</span></div>}
                                     {/* </div> */}
                                     {/* <TableDetails page="store" setModal={setModal} description={detailProduct.description} /> */}
@@ -964,7 +997,7 @@ const Details = ({
                     </section>
                 </div>
                 <div style={{margin:'10px', background:'#fff', border: '1px solid rgb(214, 214, 214)'}}>
-                    <ProductOverview title="You may also like..." products={products} link={`/collection?filter=${detailProduct.category}`} />
+                    <ProductOverview shop title="You may also like..." products={products} link={`/collection?filter=${detailProduct.category}`} />
                 </div>
 
                 {store.stores.length > 0 && detailProduct && (
@@ -1081,8 +1114,9 @@ Details.propTypes = {
     addReview: PropTypes.func.isRequired,
     getProductVariants: PropTypes.func.isRequired,
     getStoresByTag: PropTypes.func.isRequired,
-    handleTags: PropTypes.func.isRequired,
+    getCategoryProducts: PropTypes.func.isRequired,
     setNav1: PropTypes.func.isRequired,
+    openCollectionModal: PropTypes.func.isRequired,
     setAlert: PropTypes.func.isRequired,
 }
 
@@ -1093,4 +1127,20 @@ const mapStateToProps = state => ({
     store: state.store,
 });
 
-export default connect(mapStateToProps, { getProductVariants, addToCart, addLike, getCart, openModal, addTotals, handleDetail, addReview, getStoresByTag, handleTags, setNav1, setAlert })(Details);
+export default connect(
+    mapStateToProps, { 
+        getProductVariants, 
+        addToCart, 
+        addLike, 
+        getCart, 
+        openModal, 
+        addTotals, 
+        handleDetail, 
+        addReview, 
+        getStoresByTag, 
+        getCategoryProducts, 
+        setNav1, 
+        openCollectionModal, 
+        setAlert 
+    }
+)(Details);

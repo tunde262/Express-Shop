@@ -41,47 +41,36 @@ const Login = ({ auth: { isAuthenticated, user }, login, history }) => {
     }
 
     return (
-        <Fragment>
-            <BackButton onClick={history.goBack}><i className="fas fa-arrow-left"></i></BackButton>
-            <Container>
-                <div style={{marginTop:'7rem'}} className="form-container sign-up-container" id="sign-up-container">
-                    <form style={{display:'flex', flexDirection:'column', alignItems:'center', marginBottom: '-2rem'}} id="auth-form" onSubmit={onSubmit}>
-                        <img src={logo} style={{maxHeight: '60px', marginBottom: '2rem'}} alt="cardboard express logo" />
-                        <h3>Sign In</h3>
-                        <p>Welcome back to the fastest place to shop online!</p>
-                        <input
+        <main id="home" className="store-form-container">
+            <div className="store-form">
+                <h3>Sign In</h3>
+                <p style={{margin:'5px 0', color:'#808080', fontSize:'1rem', fontFamily:'Arial, Helvetica, sans-serif'}}>Welcome back to the fastest place to shop online!</p>
+                <div style={{height:'230px', overflow:'scroll'}}>
+                    <input
                         type="email"
                         name="email"
-                        className="input_line"
-                        placeholder="Enter Email"
                         value={email}
                         onChange={e => onChange(e)}
-                        style={{margin:'10px 0', width:'100%', height:'50px'}}
-                        />
-                        <input
-                            type="password"
-                            name="password"
-                            className="input_line"
-                            placeholder="Enter Password"
-                            value={password}
-                            onChange={e => onChange(e)}
-                            style={{margin:'10px 0', width:'100%', height:'50px'}}
-                        />
-                        {/* <input
-                            type="password"
-                            name="password2"
-                            className="input_line"
-                            placeholder="Confirm Password"
-                            value={password2}
-                            onChange={e => onChange(e)}
-                            style={{margin:'10px 0', width:'100%', height:'50px'}}
-                        /> */}
-                        <button style={{width: '100%'}} type="submit">Welcome Back!</button>
-                        <Link to="/register" style={{color:'#808080', marginTop:'1rem'}}>Don't have an account?</Link>
-                    </form>
+                        className="input_line"
+                        placeholder="Enter Email"
+                        style={{margin:'30px 0 20px 0', width:'100%', height:'50px'}}
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Enter Password"
+                        value={password}
+                        onChange={e => onChange(e)}
+                        className="input_line"
+                        style={{margin:'0', width:'100%', height:'50px'}}
+                    />
                 </div>
-            </Container>
-        </Fragment>
+                <button onClick={onSubmit} style={{width:'100%', outline:'none', margin:'10px 0', fontSize:'13px', letterSpacing:'1px', display:'flex', alignItems:'center', justifyContent:'center'}}>
+                    Continue 
+                </button>
+                <Link to="/register" style={{color:'#808080'}}>Don't have an account?</Link>
+            </div>
+        </main>
     )
 }
 

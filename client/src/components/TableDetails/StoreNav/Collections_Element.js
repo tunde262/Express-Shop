@@ -1,6 +1,9 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import Spinner from '../../common/Spinner';
 
 import sampleShoe from '../../../utils/imgs/20484728.jpeg';
 import paperTowels from '../../../utils/imgs/paper_towels.jpeg';
@@ -8,9 +11,55 @@ import paperTowels from '../../../utils/imgs/paper_towels.jpeg';
 const Collections_Element = ({
     setCollectionModal,
     displayCollectionModal,
+    collection
 }) => {
 
     const [active, setActive] = useState(false);
+
+    const [collectionList, setCollectionList] = useState([]);
+
+    useEffect(() => {
+        renderCollectionList();
+      }, [collection.profile_collections])
+
+
+    const renderCollectionList = () => {
+        setCollectionList([]);
+        try {
+            if(collection.profile_collections.length > 0) {
+                collection.profile_collections.map(collectionObj => {
+                    setCollectionList(collectionList => [...collectionList, (
+                        <Link to={`/collection/${collectionObj._id}`}>
+                            <div style={{display:'flex', alignItems:'center'}} className="store-table-nav-items secondary">
+                                <div className="store-nav-collection-img-container">
+                                    <div className="store-nav-collection-img">
+                                        {/* <img 
+                                            alt="" 
+                                            style={{width:'100%'}}
+                                            src={sampleShoe}
+                                        /> */}
+                                    </div>
+                                    {/* <span style={{position:'absolute', top:'0', marginRight:'-10px', marginTop:'-10px', right:'0', width:'20px', height:'20px', color:'#fff', borderRadius:'50%', background:'#ff4b2b', display:'flex', justifyContent:'center', alignItems:'center'}}>
+                                        1
+                                    </span> */}
+                                </div>
+                                <div style={{lineHeight:'20px'}}>
+                                    <p style={{margin:'0', fontSize:'15px', fontWeight:'600'}}>{collectionObj.name}</p>
+                                    <p style={{margin:'0', color: '#808080', fontSize:'14px', fontFamily:'Arial, Helvetica, sans-serif'}}>{collectionObj.items.length} items | 4 followers</p>
+                                </div>
+                            </div>
+                        </Link>
+                    )])       
+                });
+            } else {
+                setCollectionList([(
+                    <p style={{margin:'0'}}>No Collections</p>
+                )])
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     return (
         <div style={{zIndex:'10', background:'#fff'}}>
@@ -19,258 +68,7 @@ const Collections_Element = ({
                 <small onClick={() => setCollectionModal(!displayCollectionModal)}><i class="fas fa-plus"></i>Create</small>
             </div>
             <div className={active ? "table-nav-dropdown active" : "table-nav-dropdown short"}>
-                <Link to={{pathname:`/admin/`,search: "?show=store"}}>
-                    <div style={{display:'flex', alignItems:'center'}} className="store-table-nav-items secondary">
-                        <div className="store-nav-collection-img-container">
-                            <div className="store-nav-collection-img">
-                                <img 
-                                    alt="" 
-                                    style={{width:'100%'}}
-                                    src={sampleShoe}
-                                />
-                            </div>
-                            {/* <span style={{position:'absolute', top:'0', marginRight:'-10px', marginTop:'-10px', right:'0', width:'20px', height:'20px', color:'#fff', borderRadius:'50%', background:'#ff4b2b', display:'flex', justifyContent:'center', alignItems:'center'}}>
-                                1
-                            </span> */}
-                        </div>
-                        <h3 style={{fontWeight:'600'}}>
-                            Home
-                        </h3>
-                    </div>
-                </Link>
-                {/* <div onClick={e => setTableShow1('payments')} className={tableShow1 === "payments" ? "profile-table-nav-items active" : "store-table-nav-items"}>
-                    <h3>Payments</h3>
-                    <p>Add payment methods</p>
-                </div> */}
-                <Link to={{pathname:`/admin/`,search: "?show=inventory"}}>
-                    <div style={{display:'flex', alignItems:'center'}} className="store-table-nav-items secondary">
-                        <div className="store-nav-collection-img-container">
-                            <div className="store-nav-collection-img">
-                                <img 
-                                    alt="" 
-                                    style={{width:'100%'}}
-                                    src={paperTowels}
-                                />
-                            </div>
-                            {/* <span style={{position:'absolute', top:'0', marginRight:'-10px', marginTop:'-10px', right:'0', width:'20px', height:'20px', color:'#fff', borderRadius:'50%', background:'#ff4b2b', display:'flex', justifyContent:'center', alignItems:'center'}}>
-                                4
-                            </span> */}
-                        </div>
-                        <h3 style={{fontWeight:'600'}}>
-                            Home
-                        </h3>
-                    </div>
-                </Link>
-                
-                <Link to={{pathname:`/admin/`,search: "?show=orders"}}>
-                    <div style={{display:'flex', alignItems:'center'}} className="store-table-nav-items secondary">
-                        <div className="store-nav-collection-img-container">
-                            <div className="store-nav-collection-img">
-                                <img 
-                                    alt="" 
-                                    style={{width:'100%'}}
-                                    src={sampleShoe}
-                                />
-                            </div>
-                            {/* <span style={{position:'absolute', top:'0', marginRight:'-10px', marginTop:'-10px', right:'0', width:'20px', height:'20px', color:'#fff', borderRadius:'50%', background:'#ff4b2b', display:'flex', justifyContent:'center', alignItems:'center'}}>
-                                0
-                            </span> */}
-                        </div>
-                        <h3 style={{fontWeight:'600'}}>
-                            Home
-                        </h3>
-                    </div>
-                </Link>
-                <Link to={{pathname:`/admin/`,search: "?show=orders"}}>
-                    <div style={{display:'flex', alignItems:'center'}} className="store-table-nav-items secondary">
-                        <div className="store-nav-collection-img-container">
-                            <div className="store-nav-collection-img">
-                                <img 
-                                    alt="" 
-                                    style={{width:'100%'}}
-                                    src={sampleShoe}
-                                />
-                            </div>
-                            {/* <span style={{position:'absolute', top:'0', marginRight:'-10px', marginTop:'-10px', right:'0', width:'20px', height:'20px', color:'#fff', borderRadius:'50%', background:'#ff4b2b', display:'flex', justifyContent:'center', alignItems:'center'}}>
-                                0
-                            </span> */}
-                        </div>
-                        <h3 style={{fontWeight:'600'}}>
-                            Home
-                        </h3>
-                    </div>
-                </Link>
-                <Link to={{pathname:`/admin/`,search: "?show=orders"}}>
-                    <div style={{display:'flex', alignItems:'center'}} className="store-table-nav-items secondary">
-                        <div className="store-nav-collection-img-container">
-                            <div className="store-nav-collection-img">
-                                <img 
-                                    alt="" 
-                                    style={{width:'100%'}}
-                                    src={sampleShoe}
-                                />
-                            </div>
-                            {/* <span style={{position:'absolute', top:'0', marginRight:'-10px', marginTop:'-10px', right:'0', width:'20px', height:'20px', color:'#fff', borderRadius:'50%', background:'#ff4b2b', display:'flex', justifyContent:'center', alignItems:'center'}}>
-                                0
-                            </span> */}
-                        </div>
-                        <h3 style={{fontWeight:'600'}}>
-                            Home
-                        </h3>
-                    </div>
-                </Link>
-                <Link to={{pathname:`/admin/`,search: "?show=orders"}}>
-                    <div style={{display:'flex', alignItems:'center'}} className="store-table-nav-items secondary">
-                        <div className="store-nav-collection-img-container">
-                            <div className="store-nav-collection-img">
-                                <img 
-                                    alt="" 
-                                    style={{width:'100%'}}
-                                    src={sampleShoe}
-                                />
-                            </div>
-                            {/* <span style={{position:'absolute', top:'0', marginRight:'-10px', marginTop:'-10px', right:'0', width:'20px', height:'20px', color:'#fff', borderRadius:'50%', background:'#ff4b2b', display:'flex', justifyContent:'center', alignItems:'center'}}>
-                                0
-                            </span> */}
-                        </div>
-                        <h3 style={{fontWeight:'600'}}>
-                            Home
-                        </h3>
-                    </div>
-                </Link>
-                <Link to={{pathname:`/admin/`,search: "?show=orders"}}>
-                    <div style={{display:'flex', alignItems:'center'}} className="store-table-nav-items secondary">
-                        <div className="store-nav-collection-img-container">
-                            <div className="store-nav-collection-img">
-                                <img 
-                                    alt="" 
-                                    style={{width:'100%'}}
-                                    src={sampleShoe}
-                                />
-                            </div>
-                            {/* <span style={{position:'absolute', top:'0', marginRight:'-10px', marginTop:'-10px', right:'0', width:'20px', height:'20px', color:'#fff', borderRadius:'50%', background:'#ff4b2b', display:'flex', justifyContent:'center', alignItems:'center'}}>
-                                0
-                            </span> */}
-                        </div>
-                        <h3 style={{fontWeight:'600'}}>
-                            Home
-                        </h3>
-                    </div>
-                </Link>
-                <Link to={{pathname:`/admin/`,search: "?show=orders"}}>
-                    <div style={{display:'flex', alignItems:'center'}} className="store-table-nav-items secondary">
-                        <div className="store-nav-collection-img-container">
-                            <div className="store-nav-collection-img">
-                                <img 
-                                    alt="" 
-                                    style={{width:'100%'}}
-                                    src={sampleShoe}
-                                />
-                            </div>
-                            {/* <span style={{position:'absolute', top:'0', marginRight:'-10px', marginTop:'-10px', right:'0', width:'20px', height:'20px', color:'#fff', borderRadius:'50%', background:'#ff4b2b', display:'flex', justifyContent:'center', alignItems:'center'}}>
-                                0
-                            </span> */}
-                        </div>
-                        <h3 style={{fontWeight:'600'}}>
-                            Home
-                        </h3>
-                    </div>
-                </Link>
-                <Link to={{pathname:`/admin/`,search: "?show=orders"}}>
-                    <div style={{display:'flex', alignItems:'center'}} className="store-table-nav-items secondary">
-                        <div className="store-nav-collection-img-container">
-                            <div className="store-nav-collection-img">
-                                <img 
-                                    alt="" 
-                                    style={{width:'100%'}}
-                                    src={sampleShoe}
-                                />
-                            </div>
-                            {/* <span style={{position:'absolute', top:'0', marginRight:'-10px', marginTop:'-10px', right:'0', width:'20px', height:'20px', color:'#fff', borderRadius:'50%', background:'#ff4b2b', display:'flex', justifyContent:'center', alignItems:'center'}}>
-                                0
-                            </span> */}
-                        </div>
-                        <h3 style={{fontWeight:'600'}}>
-                            Home
-                        </h3>
-                    </div>
-                </Link>
-                <Link to={{pathname:`/admin/`,search: "?show=orders"}}>
-                    <div style={{display:'flex', alignItems:'center'}} className="store-table-nav-items secondary">
-                        <div className="store-nav-collection-img-container">
-                            <div className="store-nav-collection-img">
-                                <img 
-                                    alt="" 
-                                    style={{width:'100%'}}
-                                    src={sampleShoe}
-                                />
-                            </div>
-                            {/* <span style={{position:'absolute', top:'0', marginRight:'-10px', marginTop:'-10px', right:'0', width:'20px', height:'20px', color:'#fff', borderRadius:'50%', background:'#ff4b2b', display:'flex', justifyContent:'center', alignItems:'center'}}>
-                                0
-                            </span> */}
-                        </div>
-                        <h3 style={{fontWeight:'600'}}>
-                            Home
-                        </h3>
-                    </div>
-                </Link>
-                <Link to={{pathname:`/admin/`,search: "?show=orders"}}>
-                    <div style={{display:'flex', alignItems:'center'}} className="store-table-nav-items secondary">
-                        <div className="store-nav-collection-img-container">
-                            <div className="store-nav-collection-img">
-                                <img 
-                                    alt="" 
-                                    style={{width:'100%'}}
-                                    src={sampleShoe}
-                                />
-                            </div>
-                            {/* <span style={{position:'absolute', top:'0', marginRight:'-10px', marginTop:'-10px', right:'0', width:'20px', height:'20px', color:'#fff', borderRadius:'50%', background:'#ff4b2b', display:'flex', justifyContent:'center', alignItems:'center'}}>
-                                0
-                            </span> */}
-                        </div>
-                        <h3 style={{fontWeight:'600'}}>
-                            Home
-                        </h3>
-                    </div>
-                </Link>
-                <Link to={{pathname:`/admin/`,search: "?show=orders"}}>
-                    <div style={{display:'flex', alignItems:'center'}} className="store-table-nav-items secondary">
-                        <div className="store-nav-collection-img-container">
-                            <div className="store-nav-collection-img">
-                                <img 
-                                    alt="" 
-                                    style={{width:'100%'}}
-                                    src={sampleShoe}
-                                />
-                            </div>
-                            {/* <span style={{position:'absolute', top:'0', marginRight:'-10px', marginTop:'-10px', right:'0', width:'20px', height:'20px', color:'#fff', borderRadius:'50%', background:'#ff4b2b', display:'flex', justifyContent:'center', alignItems:'center'}}>
-                                0
-                            </span> */}
-                        </div>
-                        <h3 style={{fontWeight:'600'}}>
-                            Home
-                        </h3>
-                    </div>
-                </Link>
-                <Link to={{pathname:`/admin/`,search: "?show=orders"}}>
-                    <div style={{display:'flex', alignItems:'center'}} className="store-table-nav-items secondary">
-                        <div className="store-nav-collection-img-container">
-                            <div className="store-nav-collection-img">
-                                <img 
-                                    alt="" 
-                                    style={{width:'100%'}}
-                                    src={sampleShoe}
-                                />
-                            </div>
-                            {/* <span style={{position:'absolute', top:'0', marginRight:'-10px', marginTop:'-10px', right:'0', width:'20px', height:'20px', color:'#fff', borderRadius:'50%', background:'#ff4b2b', display:'flex', justifyContent:'center', alignItems:'center'}}>
-                                0
-                            </span> */}
-                        </div>
-                        <h3 style={{fontWeight:'600'}}>
-                            Home
-                        </h3>
-                    </div>
-                </Link>
+                {!collectionList.length > 0 ? <Spinner /> : collectionList}
             </div>
             <div onClick={() => setActive(!active)} style={{display:'flex', alignItems:'center', color:'#808080'}} className="store-table-nav-items action">
                 {active ? (
@@ -290,7 +88,11 @@ const Collections_Element = ({
 }
 
 Collections_Element.propTypes = {
-
+    collection: PropTypes.object.isRequired,
 }
 
-export default Collections_Element
+const mapStateToProps = state => ({
+    collection: state.collection
+});
+
+export default connect(mapStateToProps, null)(Collections_Element);

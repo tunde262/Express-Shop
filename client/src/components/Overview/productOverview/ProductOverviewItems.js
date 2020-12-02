@@ -13,7 +13,7 @@ import { HorizontalNav } from '../../common/HorizontalNav';
 
 class ProductOverviewItems extends Component {
     render() {
-        const { products } = this.props;
+        const { products, shop } = this.props;
         const { loading } = this.props.product;
         
         let productList;
@@ -23,11 +23,20 @@ class ProductOverviewItems extends Component {
         }
         else {
             if(products.length > 0) {
-                productList = products.map(product => (
-                    <div style={{margin:'0 1.5rem'}}>
-                        <ProductCard key={product._id} product={product} />
-                    </div>
-                ))
+                productList = products.map(product => {
+                    if(product) {
+                        return (
+                            <div style={{margin:'0'}}>
+                                {shop ? (
+                                <ProductCard key={product._id} product={product} />
+                                ) : (
+                                    <ProductCard preview key={product._id} product={product} />
+                                )}
+                                
+                            </div>
+                        )
+                    }
+                })
             }
             else {
                 productList = <Title name="No Products" title="Available" />

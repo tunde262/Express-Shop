@@ -2,7 +2,7 @@ import React, { useEffect, useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getProducts, getCart } from '../actions/productActions';
+import { getForYouProducts, getCart } from '../actions/productActions';
 import { setNav1, setPage } from '../actions/navActions';
 
 import mixpanel from 'mixpanel-browser';
@@ -27,7 +27,7 @@ import compassSvg from '../components/common/compass.svg'
 import loyaltySvg from '../components/common/loyalty.svg';
 import addBookmarksSvg from '../components/common/add-bookmarks.svg';
 
-const HomePage = ({getProducts, storageLocation, product, auth: { user, isAuthenticated, loading}, setNav1, setPage}) => {
+const HomePage = ({getForYouProducts, storageLocation, product, auth: { user, isAuthenticated, loading}, setNav1, setPage}) => {
     const [skip, setSkip] = useState(0);
 
     // Nav underline Table
@@ -36,7 +36,7 @@ const HomePage = ({getProducts, storageLocation, product, auth: { user, isAuthen
     const [sentMixpanel, setSentMixpanel] = useState(false);
     
     useEffect(() => {
-        getProducts(skip);
+        getForYouProducts(skip);
         setNav1('explore');
         setPage('home')
     }, [skip]);
@@ -135,7 +135,7 @@ const HomePage = ({getProducts, storageLocation, product, auth: { user, isAuthen
                 )}
 
                 {tableShow1 === "nearby" && (
-                    <div style={{width:'100%', display:'grid', gridTemplateColumns:'1fr 1fr'}}>
+                    <div style={{width:'100%', display:'grid', gridTemplateColumns:'3fr 2fr'}}>
                         <div>
                             {/* <Banner imgLarge={ImgLarge} imgSmall={ImgSmall} /> */}
                             <div className="header-nav-container mobile">
@@ -172,7 +172,7 @@ const HomePage = ({getProducts, storageLocation, product, auth: { user, isAuthen
 }
 
 HomePage.propTypes = {
-    getProducts: PropTypes.func.isRequired,
+    getForYouProducts: PropTypes.func.isRequired,
     getCart: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
@@ -189,4 +189,4 @@ const mapStateToProps = state => ({
     storageLocation: state.location
 });
 
-export default connect(mapStateToProps, { getProducts, getCart, setNav1, setPage })(HomePage);
+export default connect(mapStateToProps, { getForYouProducts, getCart, setNav1, setPage })(HomePage);

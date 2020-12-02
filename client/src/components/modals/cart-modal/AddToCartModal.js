@@ -4,14 +4,12 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { closeModal } from '../../actions/productActions';
+import { closeModal } from '../../../actions/productActions';
 import Modal from 'react-responsive-modal';
 
-import paymentSignatures from '../../utils/imgs/visa_PNG2.png';
-import paypalLogo from '../../utils/imgs/PayPal_logo_logotype_emblem.png';
-import placeholderImg from '../../utils/imgs/placeholder_img.jpg';
-
-import { ButtonContainer } from '../Button';
+import paymentSignatures from '../../../utils/imgs/visa_PNG2.png';
+import paypalLogo from '../../../utils/imgs/PayPal_logo_logotype_emblem.png';
+import placeholderImg from '../../../utils/imgs/placeholder_img.jpg';
 
 const AddToCartModal = ({closeModal, product}) => {
 

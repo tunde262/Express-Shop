@@ -9,7 +9,7 @@ import CategoryOverview from '../Overview/categoryOverview/CategoryOverview';
 import Spinner from '../common/Spinner';
 import Title from '../Title';
 
-const Container = ({ product, getProducts }) => {
+const Container = ({ product, getProducts, page }) => {
 
     const { products, sortedProducts, loading } = product;
 
@@ -21,20 +21,14 @@ const Container = ({ product, getProducts }) => {
         productList = <Spinner />;
     }
     else {
-        if(products.length > 0) {
-            productList = (
-                <Fragment>
-                    {/* <CategoryOverview products={products} category={this.props.category} background={this.props.background} /> */}
-                    {/* <div style={{marginBottom: '-3rem'}}><Title title={header} /></div> */}
-                    <ProductList products={sortedProducts} />
-                    <Spinner />
-                </Fragment>
-            );
-        }
-        else {
-            // productList = <Title name="No Products" title="Available" />
-            productList = <Spinner />;
-        }
+        productList = (
+            <Fragment>
+                {/* <CategoryOverview products={products} category={this.props.category} background={this.props.background} /> */}
+                {/* <div style={{marginBottom: '-3rem'}}><Title title={header} /></div> */}
+                <ProductList page={page} products={sortedProducts} />
+                {/* <Spinner /> */}
+            </Fragment>
+        );
     }
 
     return (

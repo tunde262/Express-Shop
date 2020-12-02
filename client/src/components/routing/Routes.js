@@ -1,11 +1,8 @@
 import React, { Fragment } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-// Auth & Alerts
-import Register from '../auth/Register';
-import Login from '../auth/Login';
+// Alerts
 import Alert from '../layout/alert';
-import BusinessLanding from '../../pages/BusinessLanding';
 
 // Pages
 import Details from '../Details';
@@ -41,9 +38,9 @@ import HomePage from '../../pages/HomePage';
 import ExplorePage from '../../pages/ExplorePage';
 import StoresPage from '../../pages/StoresPage';
 import StorePage from '../../pages/StorePage';
-import ShopCollectionPage from '../../pages/CollectionPage';
-import LocationShopPage from '../../pages/LocationPage';
 import CategoryPage from '../../pages/CategoryPage';
+import LocationShopPage from '../../pages/LocationPage';
+import ShopCollectionPage from '../../pages/CollectionPage';
 import Dashboard from '../admin/pages/Dashboard';
 
 import PrivateRoute from './PrivateRoute';
@@ -53,22 +50,18 @@ const Routes = props => {
     <Fragment>
         <Alert />
         <Switch>
-            {/* Landing Pages */}
-            <Route exact path="/business" component={BusinessLanding} />
-
             <Route exact path="/home" component={HomePage} />
-            <Route exact path="/collection" component={ShopCollectionPage} />
+            <Route exact path="/category" component={CategoryPage} />
             <Route exact path="/explore" component={ExplorePage} />
             {/* Category Pages */}
             <Route exact path="/categories" component={CategoryPage} />
             <Route exact path="/stores" component={StoresPage} />
             {/* Store Shop Page */}
             <Route exact path="/store/:id" component={StorePage} />
+            {/* Collection Page */}
+            <Route exact path="/collection/:id" component={ShopCollectionPage} />
             {/* Location Shop Page */}
             <Route exact path="/location/:id" component={LocationShopPage} />
-            {/* Auth Pages */}
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
             {/* Cart & Checkout */}
             <PrivateRoute exact path="/cart" component={Cart} />
             <PrivateRoute exact path="/checkout" component={Checkout} />

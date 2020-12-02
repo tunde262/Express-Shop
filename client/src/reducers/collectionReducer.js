@@ -1,17 +1,24 @@
 import {
     GET_COLLECTIONS,
+    SET_PROFILE_COLLECTIONS,
     COLLECTION_ERROR,
     DELETE_COLLECTION,
     ADD_COLLECTION,
+    ADD_PROFILE_COLLECTION,
     UPDATE_COLLECTION_ITEMS,
     GET_COLLECTION,
-    EDIT_COLLECTION
+    EDIT_COLLECTION,
+    OPEN_COLLECTION_MODAL,
+    CLOSE_COLLECTION_MODAL,
+    CLEAR_COLLECTIONS
   } from '../actions/types';
   
   const initialState = {
     collections: [],
+    profile_collections: [],
     collection: null,
     loading: true,
+    modalOpen: false,
     error: {}
   };
   
@@ -31,11 +38,25 @@ import {
           collection: payload,
           loading: false
         };
+      case SET_PROFILE_COLLECTIONS:
+        // const newProfileCollections = [...state.profile_collections, ...payload];
+
+        return {
+          ...state,
+          profile_collections: payload,
+          loading: false
+        };
       case ADD_COLLECTION:
         return {
           ...state,
           collections: [payload, ...state.collections],
           collection: payload,
+          loading: false
+        };
+      case ADD_PROFILE_COLLECTION:
+        return {
+          ...state,
+          profile_collections: [payload, ...state.profile_collections],
           loading: false
         };
       case EDIT_COLLECTION:
@@ -64,6 +85,22 @@ import {
           ),
           loading: false
         };
+      case OPEN_COLLECTION_MODAL: 
+        return {
+            ...state,
+            modalOpen: true
+        }
+      case CLOSE_COLLECTION_MODAL: 
+          return {
+              ...state,
+              modalOpen: false
+          }
+      case CLEAR_COLLECTIONS:
+        return {
+            ...state,
+            collections: [],
+            loading: false
+        }
       default:
         return state;
     }

@@ -1,20 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Overview from '../Overview';
 import ProductOverviewItems from './ProductOverviewItems';
 
-class ProductOverview extends Component { 
-    render() {
-        const { products } = this.props;
-
-        return (
-            <Overview shop title={this.props.title} link={this.props.link}>
-                <ProductOverviewItems products={products} />
-            </Overview>
-        )
-    }
+const ProductOverview = ({ products, title, link, shop }) => { 
+    return (
+        <Overview shop={shop} title={title} link={link}>
+            <ProductOverviewItems shop={shop} products={products} />
+        </Overview>
+    )
 }
 
 ProductOverview.propTypes = {
@@ -26,4 +22,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps)(ProductOverview);
+export default connect(mapStateToProps, null)(ProductOverview);

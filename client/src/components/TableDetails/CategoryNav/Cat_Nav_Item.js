@@ -10,16 +10,16 @@ const Cat_Nav_Item = ({slideForm2, setSlideForm2, item, setCatValue, catValue })
     }
 
     return (
-        <div onClick={todo} className="store-table-nav-items secondary" style={{width:'234px', margin:'5px 0', padding:'0'}}>
+        <div onClick={todo} className="store-table-nav-items secondary" style={{width:'234px', margin:'10px 0', padding:'0'}}>
             <div style={{width:'234px', display: 'grid', gridTemplateColumns:'1fr 3fr 1fr', paddingLeft: '16px'}}>
                 <img src={item.img} style={{borderRadius: '50%', height: '40px', overflow: 'hidden', width: '40px', margin: '2px 5px 2px 0'}} />
                 <div style={{width:'100%', overflow:'hidden', display:'flex', alignItems:'center'}}>
-                    <a href="#">
+                    <Link className="link-decoration" to={{pathname:`/category`,search: `?filter=${item.tag_value}`}}>
                         <h3 style={{fontWeight:'600', fontSize:'14px'}}>{item.text_value}</h3>
-                    </a>
+                    </Link>
                 </div>
                 <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
-                    <i class="fas fa-chevron-right"></i>
+                    <i style={{color:'#808080', fontSize:'12px'}} class="fas fa-chevron-right"></i>
                 </div>
             </div>
         </div>

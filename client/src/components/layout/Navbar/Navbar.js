@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../../actions/authActions';
 import { setAdminNav } from '../../../actions/navActions';
+import { reorderItems } from '../../../actions/productActions';
 import { FaAlignRight } from 'react-icons/fa';
 import logo from '../../common/logo.png';
 
@@ -14,7 +15,7 @@ import sampleImg from '../../../utils/imgs/20484728.jpeg';
 
 
 
-const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdrop, backdropClickHandler, nav, setAdminNav, auth: { isAuthenticated, loading, user }, logout }) => {
+const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdrop, backdropClickHandler, nav, setAdminNav, auth: { isAuthenticated, loading, user }, logout }) => {
     // Page
     const [navHighlight, setNavHighlight] = useState('home');
     // Toggle Sidebar
@@ -79,6 +80,7 @@ const Navbar = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdr
 
     const logoClicked = () => {
         mixpanel.track("Logo Click");
+        reorderItems();
     }
 
     const toggleCart = () => {
@@ -716,6 +718,7 @@ Navbar.propTypes = {
     auth: PropTypes.object.isRequired,
     nav: PropTypes.object.isRequired,
     setAdminNav: PropTypes.func.isRequired,
+    reorderItems: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -723,4 +726,4 @@ const mapStateToProps = state => ({
     nav: state.nav
 })
 
-export default connect(mapStateToProps, { setAdminNav, logout })(Navbar);
+export default connect(mapStateToProps, { setAdminNav, reorderItems, logout })(Navbar);

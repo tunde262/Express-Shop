@@ -74,9 +74,57 @@ router.get('/', async (req, res) => {
         const skip =
             req.query.skip && /^\d+$/.test(req.query.skip) ? Number(req.query.skip) : 0;
 
-        const products = await Product.find({}, null, { skip, limit: 8 }).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
+        const products = await Product.find({}, null, { skip, limit: 8 }).sort({ prod_order : 1}).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
+
+        // const products = await Product.find();
 
         res.json(products);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
+// @route GET api/products
+// @desc Get Products
+// @access Public
+router.get('/for-you', auth, async (req, res) => {
+    console.log('FETCHING FOR YOU');
+
+    const skip =
+        req.query.skip && /^\d+$/.test(req.query.skip) ? Number(req.query.skip) : 0;
+
+    try {
+        const prodArray = [];
+        let fetchedProducts;
+        
+        const profile = await Profile.findOne({ user: req.user.id });
+
+        const defaultProducts = await Product.find({}, null, { skip, limit: 8 }).sort({ prod_order : 1}).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
+
+        for(var i = 0; i < profile.recommendation_tags.length; i++) {
+            console.log('TAG VALUE');
+            console.log(profile.recommendation_tags[i]);
+
+            fetchedProducts = await Product.find({tags: profile.recommendation_tags[i] }, null, { skip, limit: 8 }).sort({ prod_order : 1}).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
+
+            console.log('NEW PRODUCTS');
+            console.log(fetchedProducts);
+            if(fetchedProducts.length > 0) {
+                prodArray.push(...fetchedProducts);
+            }
+            
+            console.log('PRODUCTS ARRAY');
+            console.log(prodArray);
+        }
+        console.log('EXIT FOR LOOP')
+        console.log(prodArray)
+
+        if(prodArray.length > 8) {
+            res.json(prodArray);
+        } else {
+            res.json(defaultProducts);
+        }
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error'); 
@@ -104,7 +152,7 @@ router.get('/store', auth, async (req, res) => {
 // @access Public
 router.get('/store/:id', async (req, res) => {
     try {
-        const products = await Product.find({ store: req.params.id }).sort({_id:-1}).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
+        const products = await Product.find({ store: req.params.id }).sort({ prod_order : 1}).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
 
         res.json(products);
     } catch (err) {
@@ -124,7 +172,7 @@ router.get('/filter/:filter', async (req, res) => {
         req.query.skip && /^\d+$/.test(req.query.skip) ? Number(req.query.skip) : 0;
 
         if(testLength.length > skip) {
-            const products = await Product.find({tags: req.params.filter }, null, { skip, limit: 8 }).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
+            const products = await Product.find({tags: req.params.filter }, null, { skip, limit: 8 }).sort({ prod_order : 1}).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
         
             res.json(products);
         }
@@ -139,7 +187,7 @@ router.get('/filter/:filter', async (req, res) => {
 // @access Public
 router.get('/filter/full/:filter', async (req, res) => {
     try {
-        const products = await Product.find({ tags: req.params.filter }).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']).populate('store', ['name', 'img_name']);
+        const products = await Product.find({ tags: req.params.filter }).sort({ prod_order : 1}).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']).populate('store', ['name', 'img_name']);
 
         res.json(products);
     } catch (err) {
@@ -186,7 +234,7 @@ router.get('/collection/:collectionId', async (req, res) => {
         for (var i = 0; i < category.items.length; i++) {
             console.log('HELLO');
             console.log(category.items[i].item)
-            const product = await Product.findById(category.items[i].item).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']).populate('store', ['name', 'img_name']);
+            const product = await Product.findById(category.items[i].item).sort({ prod_order : 1}).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']).populate('store', ['name', 'img_name']);
             console.log('PRODUCT');
             console.log(product);
             productList.push(product);
@@ -227,7 +275,7 @@ router.get('/location/:id', async (req, res) => {
     }
     
     try {
-        const products = await Product.find({ locationId: req.params.id }).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']).populate('store', ['name', 'img_name']);
+        const products = await Product.find({ locationId: req.params.id }).sort({ prod_order : 1}).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']).populate('store', ['name', 'img_name']);
 
         res.json(products);
     } catch (err) {
@@ -272,7 +320,7 @@ router.get('/:id', async (req, res) => {
 // @access Public
 router.get('/category/:category', async (req, res) => {
     try {
-        const products = await Product.find({ category: req.params.category }).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
+        const products = await Product.find({ category: req.params.category }).sort({ prod_order : 1}).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
 
         res.json(products);
     } catch (err) {
@@ -457,61 +505,6 @@ router.delete('/:id', auth, async (req, res) => {
     }
 });
 
-// ---- Interactions -----
-
-// @route PUT api/products/like/:id
-// @desc Like a Product
-// @access Private
-router.put('/like/:id', auth, async (req, res) => {
-    try {
-        const product = await Product.findById(req.params.id);
-
-        // Check if product already liked by same user
-        if(product.likes.filter(like => like.user.toString() === req.user.id).length > 0) {
-            // Get remove index
-            const removeIndex = product.likes.map(like => like.user.toString()).indexOf(req.user.id);
-
-            product.likes.splice(removeIndex, 1);
-        } else {
-            product.likes.unshift({ user: req.user.id });
-        }
-
-        await product.save();
-
-        res.json(product.likes);
-    } catch (err) {
-        console.error(err.message);
-        
-        res.status(500).send('Server Error'); 
-    }
-})
-
-// // @route PUT api/products/unlike/:id
-// // @desc Unlike a Product
-// // @access Private
-// router.put('/unlike/:id', auth, async (req, res) => {
-//     try {
-//         const product = await Product.findById(req.params.id);
-
-//         // Check if product has been liked by same user
-//         if(product.likes.filter(like => like.user.toString() === req.user.id).length === 0) {
-//             return res.status(400).json({ msg: 'Product has not yet been liked'});
-//         }
-
-//         // Get remove index
-//         const removeIndex = product.likes.map(like => like.user.toString()).indexOf(req.user.id);
-
-//         product.likes.splice(removeIndex, 1);
-
-//         await product.save();
-
-//         res.json(product.likes);
-//     } catch (err) {
-//         console.error(err.message);
-        
-//         res.status(500).send('Server Error'); 
-//     }
-// });
 
 // @route POST api/products/image/:id
 // @desc Add img to product
@@ -681,6 +674,140 @@ router.post('/variant/:prodId/:varId', auth, async (req, res) => {
 
 // });
 
+// router.post('/reorder/:prodId', async (req, res) => {
+//     try {
+//         const item = await Product.findById(req.params.prodId);
+//         console.log('INDEX NUM');
+//         console.log(imgIndex);
+//         const orderNum = imgIndex + 1;
+//         console.log('ORDER NUM');
+//         console.log(orderNum);
+
+//         // Update
+//         const product = await Product.updateMany(
+//             { "img_gallery._id": req.params.imgId }, 
+//             { $set: { "img_gallery.$.img_order": orderNum } }
+//         );
+
+//         res.json(product);
+//     } catch (err) {
+//         console.log(err);
+//     }
+
+
+// });
+
+
+// Update prod_order by id (in Bulk on frontend)
+router.post('/reorder/:prodId', async (req, res) => {
+    console.log('REORDERING CONSOLE');
+    try {
+        const prod_index = await Product.find({_id: {$lte: req.params.prodId}}).count(); //set order_num to its index or # of documents whos ID's less than it's ID value
+        console.log('INDEX NUM');
+        console.log(prod_index);
+        const orderNum = prod_index;
+        console.log('ORDER NUM');
+        console.log(orderNum);
+
+        const productFields = {};
+        productFields.prod_order = orderNum;
+
+        // Update
+        const product = await Product.updateMany(
+            { _id: req.params.prodId }, 
+            { $set: productFields }
+        );
+
+        res.json(product);
+    } catch (err) {
+        console.log(err);
+    }
+
+
+});
+
+// Update all item's prod_order in Bulk in backend
+router.post('/refresh', async (req, res) => {
+    console.log('REORDERING CONSOLE');
+    try {
+        const prodArray = await Product.find();
+        console.log('PRODUCT COUNT:')
+        console.log(prodArray.length);
+
+        let rangeArray = [];
+
+        for(var i = 0; i < prodArray.length; i++) {
+            rangeArray.push(i); // create array of availble order_nums to choose from
+        }
+
+        console.log('RANGE ARRAY:')
+        console.log(rangeArray);
+
+        let tempRange = [...rangeArray];
+        
+        for(var x = 0; x < prodArray.length; x++) { // update each item in PRODUCT collection
+            const lastElement = tempRange.length - 1; // MAX value is 1 less than collection length
+
+            console.log('LAST ELEMENT:')
+            console.log(tempRange[lastElement]);
+            
+            let orderValue
+
+            if( tempRange.length > 1) {
+                let min = Math.ceil(tempRange[0]);
+                let max = Math.floor(tempRange[lastElement]);
+                orderValue = Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+                
+                for(var i = 0; i < 100; i++) { // if server gets stuck trying to avoid using unavailble index value
+                    if(tempRange[orderValue] === undefined) {
+                        let min = Math.ceil(tempRange[0]);
+                        let max = Math.floor(tempRange[lastElement]);
+                        orderValue = Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+                    }
+                }
+                
+                if(tempRange[orderValue] === undefined) {
+                    orderValue = 0;
+                }
+
+            } else {
+                orderValue = 0;
+            }
+
+            console.log('INDEX VALUE:')
+            console.log(orderValue);
+            
+            console.log('ORDER VALUE:')
+            console.log(tempRange[orderValue]);
+
+            const productFields = {};
+            productFields.prod_order = tempRange[orderValue];
+            // Update
+            const updateProduct = await Product.findOneAndUpdate(
+                { _id: prodArray[x]._id }, 
+                { $set: productFields }, 
+                { new: true }
+            );
+
+           // Get remove index
+           const removeIndex = tempRange.indexOf(updateProduct.prod_order);
+            tempRange.splice(removeIndex, 1);
+
+            console.log('REMOVE INDEX:')
+            console.log(removeIndex);
+
+            console.log('NEW RANGE ARRAY:')
+            console.log(tempRange);
+        }
+        
+        res.send("DONE");
+    } catch (err) {
+        console.log(err);
+    }
+
+
+});
+
 router.post('/reorder/inc/:prodId/:imgId', async (req, res) => {
     try {
         const item = await Product.findById(req.params.prodId);
@@ -770,6 +897,115 @@ router.post('/reorder/dec/:prodId/:imgId', async (req, res) => {
 
 
 });
+
+
+// Update prod_order by id (in Bulk on frontend)
+router.post('/init-views', async (req, res) => {
+    console.log('INITIALZING VIEWS');
+    try {
+        const prodArray = await Product.find();
+
+        for(var x = 0; x < prodArray.length; x++) { 
+
+            const productFields = {};
+            productFields.prod_views = [];
+            // Update
+            await Product.findOneAndUpdate(
+                { _id: prodArray[x].id }, 
+                { $set: productFields }, 
+                { new: true }
+            );
+        }
+
+        res.send('SUCCESS');
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+// ---- Interactions -----
+
+// @route PUT api/products/view/:id
+// @desc View a Product
+// @access Private
+router.put('/view/:id', auth, async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+
+        if(product.prod_views.length > 0) {
+            // Check if product already liked by same user
+            if(product.prod_views.filter(view => view.user.toString() === req.user.id).length > 0) {
+                res.json(product.view_count);
+            } else {
+                product.prod_views.unshift({ user: req.user.id });
+            }
+        } else {
+            product.prod_views.unshift({ user: req.user.id });
+        }
+
+        await product.save();
+
+        res.json(product.prod_views);
+    } catch (err) {
+        console.error(err.message);
+        
+        res.status(500).send('Server Error'); 
+    }
+})
+
+// @route PUT api/products/like/:id
+// @desc Like a Product
+// @access Private
+router.put('/like/:id', auth, async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+
+        // Check if product already liked by same user
+        if(product.likes.filter(like => like.user.toString() === req.user.id).length > 0) {
+            // Get remove index
+            const removeIndex = product.likes.map(like => like.user.toString()).indexOf(req.user.id);
+
+            product.likes.splice(removeIndex, 1);
+        } else {
+            product.likes.unshift({ user: req.user.id });
+        }
+
+        await product.save();
+
+        res.json(product.likes);
+    } catch (err) {
+        console.error(err.message);
+        
+        res.status(500).send('Server Error'); 
+    }
+})
+
+// // @route PUT api/products/unlike/:id
+// // @desc Unlike a Product
+// // @access Private
+// router.put('/unlike/:id', auth, async (req, res) => {
+//     try {
+//         const product = await Product.findById(req.params.id);
+
+//         // Check if product has been liked by same user
+//         if(product.likes.filter(like => like.user.toString() === req.user.id).length === 0) {
+//             return res.status(400).json({ msg: 'Product has not yet been liked'});
+//         }
+
+//         // Get remove index
+//         const removeIndex = product.likes.map(like => like.user.toString()).indexOf(req.user.id);
+
+//         product.likes.splice(removeIndex, 1);
+
+//         await product.save();
+
+//         res.json(product.likes);
+//     } catch (err) {
+//         console.error(err.message);
+        
+//         res.status(500).send('Server Error'); 
+//     }
+// });
 
 // @route POST api/products/comment/:id
 // @desc Comment on a product
