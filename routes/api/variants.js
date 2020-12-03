@@ -478,6 +478,42 @@ router.delete('/:id', auth, async (req, res) => {
     }
 });
 
+
+// Update initialze view count in document(s)
+router.post('/init-locations/:storeId/:locationId', async (req, res) => {
+    console.log('INITIALZING LOCATIONS');
+    try {
+        const variantArray = await Variant.find({ store: req.params.storeId });
+        console.log('GOT STORE VARS');
+        console.log(variantArray);
+        const darkstore = await Darkstore.findById(req.params.locationId)
+        console.log('GOT LOCATION');
+        console.log(darkstore);
+        for(var x = 0; x < variantArray.length; x++) { 
+            console.log('GETTINGS ARRAY VAR');
+            const variant = await Variant.findById(variantArray[x].id);
+            console.log('GOT ARRAY VAR');
+            console.log(variant);
+            variant.locations.push(
+                {
+                    location: darkstore.id,
+                    qty: variant.inventory_qty,
+                    price: variant.price,
+                    sale_price: variant.sale_price
+                }
+            );
+            console.log('ALMOST SAVED');
+            await variant.save();
+        }
+
+        res.send('SUCCESS');
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+
+
 // ---- Interactions -----
 
 // @route PUT api/products/like/:id

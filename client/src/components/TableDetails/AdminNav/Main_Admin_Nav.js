@@ -91,13 +91,13 @@ const Main_Admin_Nav = ({setSlideForm1, slideForm1, nav, store, match}) => {
                     </div>
                 </div>
                 {nav.page === 'admin detail product' && (
-                    <ProductSideDrawer setSlideForm1={setSlideForm1} storeId={match.params.storeId} /> 
+                    <ProductSideDrawer setSlideForm1={setSlideForm1} storeId={store.store ? store.store._id : undefined} /> 
                 )}
                 {nav.page === 'admin detail collection' && (
-                    <CollectionSideDrawer setSlideForm1={setSlideForm1} storeId={match.params.storeId} /> 
+                    <CollectionSideDrawer setSlideForm1={setSlideForm1} storeId={store.store ? store.store._id : undefined} /> 
                 )}
                 {nav.page === 'admin detail location' && (
-                    <LocationSideDrawer setSlideForm1={setSlideForm1} storeId={match.params.storeId} /> 
+                    <LocationSideDrawer setSlideForm1={setSlideForm1} storeId={store.store ? store.store._id : undefined} /> 
                 )}
                 <div className="store-table-nav-items secondary" style={{width:'234px', margin:'5px 0', padding:'0'}}>
                 </div>

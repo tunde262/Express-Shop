@@ -8,6 +8,9 @@ import { addLike, handleDetail, addToCart, openModal, closeModal, addTotals } fr
 import ReactGA from 'react-ga';
 import mixpanel from 'mixpanel-browser';
 
+import fireEmoji from '../../../utils/imgs/fire_emoji.png';
+import eyeEmoji from '../../../utils/imgs/eye_emoji.png';
+
 import ButtonSpinner from '../../common/ButtonSpinner';
 
 const ProductCard = ({ auth: { user }, preview, addLike, liked, modalOpen, product, handleDetail, addToCart, openModal, closeModal, addTotals}) => {
@@ -15,16 +18,25 @@ const ProductCard = ({ auth: { user }, preview, addLike, liked, modalOpen, produ
     //     console.log(this.props.product);
     // }
 
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
     // Button loader
     const [cartLoading, setCartLoading] = useState(true);
 
     useEffect(() => {
+        window.addEventListener('resize', () => handleWindowSizeChange());
         if(modalOpen) {
             setCartLoading(true);
         } else {
             setCartLoading(false);
         }
+    
+        return () => window.removeEventListener('resize', () => handleWindowSizeChange());
     }, [modalOpen]);
+
+    const handleWindowSizeChange = () => {
+        setWindowWidth(window.innerWidth);
+    };
 
     const onHandleDetailClick = (id) => {
         handleDetail(id);
@@ -91,6 +103,9 @@ const ProductCard = ({ auth: { user }, preview, addLike, liked, modalOpen, produ
         });
     }
 
+    const isMobile = windowWidth <= 500;
+    const isTablet = windowWidth <= 1000;
+
     const { _id, name, img_gallery, price, store, category, inCart, likes, comments } = product;
 
     let sorted_img_gallery = img_gallery.sort((a, b) => a.img_order - b.img_order);
@@ -104,29 +119,33 @@ const ProductCard = ({ auth: { user }, preview, addLike, liked, modalOpen, produ
                 >
                     <Link to={`/details/${_id}`}>
                         {img_gallery[0] &&<img src={`/api/products/image/${sorted_img_gallery[0].img_name}`} alt="product" />}
+                        <div style={{height:'25px', display:'felx', alignItems:'center', margin:'10px', lineHeight:'14px', display:'flex', justifyContent:'center', alignItems:'center', position:'absolute', top:'0', right:'0', padding:'0 10px', borderRadius:'50px', background:'rgba(20,20,20, .5)', color:'#fff', opacity:'1'}}> 
+                            <p style={{margin:'0', fontSize:'12px'}}>$10.99</p>
+                            <img src={fireEmoji} style={{width:'14px', margin:'-3px 0 0 3px', height:'14px'}} alt="fire-emoji" /> 
+                        </div>
+                    
+                        {/* <div className="detail-image-overlay">
+                            <div className="detail-overlay-icon-container">
+                                <i class="fas fa-chevron-left"></i>
+                            </div>
+                            <div className="detail-overlay-icon-container">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div> */}
                     </Link>
-                    {/* <button 
-                        className="cart-btn" 
-                        disabled={inCart ? true : false} 
-                        onClick={this.todo.bind(this, _id)}
-                    >
-                        {inCart ? (
-                            <p className="text-capitalize mb-0" disabled>
-                                {" "}
-                                in cart
-                            </p>
-                        ) : (
-                            <i className="fas fa-cart-plus" />
-                        )}
-                    </button> */}
                 </div>
                 <div className="specifice">
-                    <div className="titles line-clamp-1">
-                        <h2><Link to={`/details/${_id}`}>{name}</Link></h2>
+                    <div className="titles line-clamp">
+                        <Link to={`/details/${_id}`}>{name}</Link>
                     </div>
-                    <div className="price">${price}</div>
-                    <div className="sellers line-clamp-1">
-                        <Link to={`/store/${store._id}`}>{store.name}</Link>
+                    {/* <div className="price" style={{width:'100%', margin:'3px 0', display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+                        <p style={{margin:'0', fontSize:'12px' }}>1,032 sold</p>
+                    </div> */}
+                </div>
+                <div className="sellers">
+                    <img src={`/api/stores/image/${store.img_name}`} />
+                    <div style={{height:'14px', overflow:'hidden'}}>
+                        <Link className="line-clamp-1" to={`/store/${store._id}`}>{store.name}</Link>
                     </div>
                 </div>
             </div>
@@ -289,52 +308,103 @@ const ProductWrapper = styled.div`
         overflow: hidden;
     }
     .product .imgbox {
-        height: 80%;
+        position: relative;
+        height: 72%;
         box-sizing: border-box;
+        cursor: pointer;
     }
     .product .imgbox img {
         display: block;
         height: 100%;
         max-width: 14vw
     }
-    .specifice {
+    
+    .product .detail-image-overlay {
         position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.2);
+        color:#fff;
+        display: flex;
+        justify-content: space-between;
+        opacity: 0;
+    }
+    
+    .product .detail-image-overlay:hover {
+        opacity: 1;
+    }
+
+    .product .detail-overlay-icon-container {
+        height: 100%;
+        width: 25%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+    }
+    
+    .product .detail-overlay-icon-container:hover {
+        background: rgba(46, 49, 49, 0.2);
+    }
+
+    .specifice {
+        width: 100%;
+        height: 28%;
         bottom: 0;
+        display:grid;
+        grid-template-rows: auto;
         background: rgb(247, 247, 247);
-        padding: 10px;
+        padding: calc(1vw - 5px);
         box-sizing: border-box;
         transition: .5s;
         display:flex;
+        position:relative;
         flex-direction:column;
         align-items: flex-start;
     }
     .titles {
         width: 100%;
+        max-height: calc(2vw + 5px);
         overflow: hidden;
-        max-height: 50px;
+        line-height: calc(1vw + 1px);
+        font-weight: 600;
     }
-    h2 {
+    .titles a {
         margin: 0;
         padding: 0;
-        font-size: 14px;
+        font-size: calc(1vw);
         width: 100%;
     }
     .sellers {
+        padding: calc(1vw - 5px);
+        height:30px;
         line-height: 15px;
-        max-height: 20px;
-        overflow: hidden;
         color: #ccc;
+        position:absolute;
+        bottom:0;
+        margin-bottom: calc(1vw - 10px);
+        display: flex; 
+        width: 100%; 
+        align-items: center 
+    }
+    .sellers img {
+        border: 1px solid #e8e8e8; 
+        margin-right: 3px; 
+        height: calc(1vw + 12px); 
+        width: calc(1vw + 12px); 
+        border-radius: 50%; 
+        background: #e8e8e8;
     }
     .sellers a {
-        font-size: 15px;
+        font-size: calc(1vw - 1px);
         color: #ccc;
         font-weight: normal;
     }
     .price {
-        margin-top:5px;
-        color: #000;
-        font-size: 14px;
+        color: #808080;
+        font-size: 12px;
     }
     .actions {
         width: 100%;
@@ -444,6 +514,7 @@ const ProductWrapper = styled.div`
     }
 
     @media screen and (max-width: 1000px){
+
         .product {
             width: 20vw;
             height: calc(20vw + 85px);
@@ -452,22 +523,36 @@ const ProductWrapper = styled.div`
         .product .imgbox img {
             max-width: 20vw
         }
-
         .specifice {
-            padding: 10px 0;
+            padding: calc(2vw - 10px) 0;
         }
 
         .specifice .titles {
-            padding: 0 10px;
-            width: 100%;
             max-height: 50px;
-            display: none;
+            line-height: calc(2vw - 5px);
+            padding: 0 calc(2vw - 10px);
+            width: 100%;
         }
 
-        .specifice .sellers {
-            margin: 5px 0;
-            padding: 0 10px;
+        .specifice .titles a{
+            font-size: calc(2vw - 6px);
         }
+
+        .sellers {
+            padding: 0 calc(2vw - 10px);
+            margin-bottom: calc(2vw - 15px);
+        }
+
+        .sellers img {
+            height: calc(2vw + 5px); 
+            width: calc(2vw + 5px); 
+        }
+
+        .sellers a {
+            font-size: calc(2vw - 4px);
+        }
+
+
         .specifice .price {
             padding: 0 10px;
         }
@@ -483,6 +568,51 @@ const ProductWrapper = styled.div`
     }
 
     
+    @media (max-width: 769px){
+        .product {
+            width: 30vw;
+            height: calc(30vw + 85px);
+        }
+
+        .product .imgbox img {
+            max-width: 30vw
+        }
+
+        .specifice {
+            padding: calc(2vw - 5px) 0;
+        }
+
+        .specifice .titles {
+            line-height: calc(2vw);
+            padding: 0 calc(2vw - 5px);
+            width: 100%;
+        }
+
+        .specifice .titles a{
+            font-size: calc(2vw);
+        }
+
+        .sellers {
+            padding: 0 calc(2vw - 5px);
+            margin-bottom: calc(2vw - 11px);
+        }
+
+        .sellers img {
+            height: calc(2vw + 10px); 
+            width: calc(2vw + 10px); 
+        }
+
+        .sellers a {
+            font-size: 14px;
+        }
+
+        button: 45vw;
+
+        .desktop-actions {
+            display: none;
+        }
+    }
+
     @media (max-width: 500px){
         .product {
             border-radius:0;
@@ -496,14 +626,31 @@ const ProductWrapper = styled.div`
 
         .specifice {
             background: #fff;
+            padding: 10px 0;
         }
 
-        button: 45vw;
-    }
+        .specifice .titles {
+            line-height: 13px;
+            padding: 0 10px;
+            width: 100%;
+        }
 
-    @media (max-width: 768px){
-        .desktop-actions {
-            display: none;
+        .specifice .titles a{
+            font-size: 13px;
+        }
+
+        .sellers {
+            padding: 0 10px;
+            margin-bottom: 7px;
+        }
+
+        .sellers img {
+            height: 25px; 
+            width: 25px; 
+        }
+
+        .sellers a {
+            font-size: 14px;
         }
     }
 
