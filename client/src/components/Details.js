@@ -6,6 +6,7 @@ import {
     handleDetail, 
     addToCart, 
     addLike, 
+    addView,
     openModal, 
     addTotals, 
     getCart, 
@@ -57,6 +58,7 @@ const Details = ({
     getProductVariants,
     addReview,
     addLike,
+    addView,
     deleteReview,
     handleDetail,
     getStoresByTag,
@@ -82,6 +84,9 @@ const Details = ({
     // Has Main Image Index Been Gotten
     const [gotIndex, setGotIndex] = useState(false);
 
+    // Has view been added by profile if auth
+    const [sentView, setSentView] = useState(false);
+    
 
     const [varKeys, setVarKeys] = useState([]);
     const [varValues, setVarValues] = useState([]);
@@ -412,6 +417,11 @@ const Details = ({
         }
         
         setNavLoaded(true);
+    }
+
+    if(!sentView && user && detailProduct) {
+        addView(detailProduct._id)
+        setSentView(true);
     }
 
     if(!storesLoaded && detailProduct) {
@@ -1107,6 +1117,7 @@ Details.propTypes = {
     store: PropTypes.object.isRequired,
     addToCart: PropTypes.func.isRequired,
     addLike: PropTypes.func.isRequired,
+    addView: PropTypes.func.isRequired,
     openModal: PropTypes.func.isRequired,
     addTotals: PropTypes.func.isRequired,
     handleDetail: PropTypes.func.isRequired,
@@ -1132,6 +1143,7 @@ export default connect(
         getProductVariants, 
         addToCart, 
         addLike, 
+        addView,
         getCart, 
         openModal, 
         addTotals, 

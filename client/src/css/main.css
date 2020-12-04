@@ -3527,6 +3527,35 @@ header {
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical; }
 
+#collection-header {
+  padding: 20px 20px 0 20px; }
+
+#collection-actions-mobile {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 5fr auto 1fr;
+  margin: 5px 0;
+  grid-gap: 10px; }
+  #collection-actions-mobile button {
+    width: 100%;
+    background: #fff;
+    border: 1px solid #2fb7ec;
+    color: #2fb7ec; }
+    #collection-actions-mobile button.active {
+      background: #2fb7ec;
+      color: #fff; }
+
+.extra-options-btn {
+  border: 1px solid #0098d3;
+  background: #0098d3;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 35px;
+  border-radius: 5px; }
+
 .store-header {
   background: #fff;
   margin: 10px;
@@ -3594,6 +3623,23 @@ header {
     .store-socials button:hover {
       background: #e8e8e8;
       color: #2fb7ec; }
+
+.follow-collection-btn {
+  width: 300px;
+  background: #fff;
+  border-color: #0098d3;
+  color: #0098d3;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .follow-collection-btn.active, .follow-collection-btn.active:hover {
+    background: #2fb7ec;
+    color: #fff;
+    border-color: #2fb7ec; }
+  .follow-collection-btn:hover {
+    background: #e8e8e8;
+    color: #2fb7ec; }
 
 .ghost-btn {
   margin-right: 10px;

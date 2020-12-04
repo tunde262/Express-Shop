@@ -11,7 +11,7 @@ import Footer from '../components/layout/Footer/Footer';
 import Spinner from '../components/common/Spinner';
 
 import AuthModal from '../components/modals/AuthModal';
-import HomeMain from '../components/page_components/Home/HomeMain';
+import HomeMain from '../components/page_components/home/HomeMain';
 
 const HomePage = ({
     product, 
@@ -23,7 +23,7 @@ const HomePage = ({
     setNav1, 
     setPage
 }) => {
-    
+
     const [skip, setSkip] = useState(0);
 
     // Nav underline Table
@@ -66,7 +66,12 @@ const HomePage = ({
     return (
         <Fragment>
             <div onScroll={handleScroll} style={{height:"100vh", overflowY:'scroll', background:'rgb(247, 247, 247)'}}>
-                <HomeMain skip={skip} setTableShow1={setTableShow1} tableShow1={tableShow1} />
+                <HomeMain 
+                    skip={skip} 
+                    setSkip={setSkip} 
+                    setTableShow1={setTableShow1} 
+                    tableShow1={tableShow1} 
+                />
             </div>
             {/* <Footer /> */}
             {!loading && !isAuthenticated ? <AuthModal /> : null }

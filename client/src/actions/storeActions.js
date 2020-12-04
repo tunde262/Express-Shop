@@ -1,7 +1,20 @@
 import axios from 'axios';
 import { setAlert } from './alertActions';
 
-import { GET_STORE, GET_STORES, GET_SUBSCRIPTIONS, SET_CART_STORES, STORE_ERROR, UPDATE_STORE_FAVORITES, ADD_STORE_REVIEW, REMOVE_STORE_REVIEW, CLEAR_STORE, CLEAR_STORES, STORE_DELETED } from './types';
+import { 
+    GET_STORE, 
+    GET_STORES, 
+    GET_SUBSCRIPTIONS, 
+    SET_CART_STORES, 
+    STORE_ERROR, 
+    UPDATE_STORE_FAVORITES, 
+    UPDATE_STORE_VIEWS,
+    ADD_STORE_REVIEW, 
+    REMOVE_STORE_REVIEW, 
+    CLEAR_STORE, 
+    CLEAR_STORES, 
+    STORE_DELETED 
+} from './types';
 
 // Get Current users Store 
 export const getCurrentStore = () => async dispatch => {
@@ -249,6 +262,20 @@ export const addBannerImg = (imgData, id) => async dispatch => {
         });
     }
 }
+
+// Add view
+export const addView = id => async dispatch => {
+    try {
+      const res = await axios.put(`/api/stores/view/${id}`);
+  
+      dispatch({
+        type: UPDATE_STORE_VIEWS,
+        payload: { id, view_count: res.data }
+      });
+    } catch (err) {
+      console.log(err)
+    }
+};
 
 // Favorite & Unfavorite 
 export const favorite = id => async dispatch => {

@@ -1,5 +1,6 @@
 import {
     SET_LOCATIONS,
+    SET_ALL_LOCATIONS,
     GET_LOCATIONS,
     LOCATION_ERROR,
     DELETE_LOCATION,
@@ -60,6 +61,13 @@ import {
           detailLocation: payload,
           loading: false
         };
+      case SET_ALL_LOCATIONS:
+        const newSetOfLocations = [...state.locations, ...payload];
+        return {
+          ...state,
+          locations: newSetOfLocations,
+          loading: false
+        }
       case SET_LOCATIONS:
         return {
           ...state,

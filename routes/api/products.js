@@ -28,6 +28,10 @@ const { listIndexes } = require('../../models/Product');
 const { Console } = require('console');
 const db = config.get('mongoURI');
 
+// Google Services API
+const { Client } = require("@googlemaps/google-maps-services-js");
+const client = new Client({});
+
 // Create Mongo Connection
 const conn = mongoose.createConnection(db, {
     useUnifiedTopology: true,
@@ -74,7 +78,7 @@ router.get('/', async (req, res) => {
         const skip =
             req.query.skip && /^\d+$/.test(req.query.skip) ? Number(req.query.skip) : 0;
 
-        const products = await Product.find({}, null, { skip, limit: 8 }).sort({ prod_order : 1}).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
+        const products = await Product.find({}, null, { skip, limit: 8 }).sort({ prod_order : 1}).populate('store', ['name', 'img_name']).populate({path: 'locations.location',model: 'darkstore' })
 
         // const products = await Product.find();
 
@@ -100,13 +104,13 @@ router.get('/for-you', auth, async (req, res) => {
         
         const profile = await Profile.findOne({ user: req.user.id });
 
-        const defaultProducts = await Product.find({}, null, { skip, limit: 8 }).sort({ prod_order : 1}).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
+        const defaultProducts = await Product.find({}, null, { skip, limit: 8 }).sort({ prod_order : 1}).populate('store', ['name', 'img_name']).populate({path: 'locations.location',model: 'darkstore' })
 
         for(var i = 0; i < profile.recommendation_tags.length; i++) {
             console.log('TAG VALUE');
             console.log(profile.recommendation_tags[i]);
 
-            fetchedProducts = await Product.find({tags: profile.recommendation_tags[i] }, null, { skip, limit: 8 }).sort({ prod_order : 1}).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
+            fetchedProducts = await Product.find({tags: profile.recommendation_tags[i] }, null, { skip, limit: 8 }).sort({ prod_order : 1}).populate('store', ['name', 'img_name']).populate({path: 'locations.location',model: 'darkstore' })
 
             console.log('NEW PRODUCTS');
             console.log(fetchedProducts);
@@ -132,13 +136,117 @@ router.get('/for-you', auth, async (req, res) => {
 });
 
 // @route GET api/products
+// @desc Get Products
+// @access Public
+router.post('/nearby', async (req, res) => {
+    console.log('FETCHING NEARBY');
+    console.log(req.body.formatted_address)
+
+    const skip =
+        req.query.skip && /^\d+$/.test(req.query.skip) ? Number(req.query.skip) : 0;
+
+    const destination = req.body.formatted_address.toString()
+    // var origin = req.body.origin;
+    // var destination = req.body.destination;
+    
+    // client.distancematrix({
+    //     params: {
+    //         origins: ["3305 Dallas Pkwy, Plano, TX 75093, USA"],
+    //         destinations: ["300 Rivercrest Blvd, Allen, TX 75002, USA"],
+    //         key: "AIzaSyAhxRYq5kVL5I2EEuShO9HPSsRrjCA68_4"
+    //     }
+    // }).then(data => {
+    //     console.log(data.data);
+    //     res.json(data.data);
+    // }).catch(err => console.log(err));
+
+    try {
+
+        const prodArray = [];
+
+        const defaultProducts = await Product.find().populate('store', ['name', 'img_name']).populate({path: 'locations.location',model: 'darkstore' });
+        let prodVars
+        let darkstore;
+        let distancematrix
+
+        for(var i = 0; i < defaultProducts.length; i++) {
+            console.log('LOOPING PRODUCTS');
+
+            for(var y = 0; y < defaultProducts[i].locations.length; y++){
+                console.log('LOOPING PRODUCTS LOCATIONS')
+                console.log(defaultProducts[i].locations[y].location.id)
+                console.log(defaultProducts[i].locations[y].location)
+                darkstore = await Darkstore.findById(defaultProducts[i].locations[y].location.id);
+                console.log('DARKSTORE FOUND:');
+                // console.log(darkstore);
+                distancematrix = await client.distancematrix({
+                    params: {
+                        origins: [darkstore.formatted_address],
+                        destinations: [destination],
+                        unitSystem: 'imperial',
+                        travelMode: 'driving',
+                        key: "AIzaSyAhxRYq5kVL5I2EEuShO9HPSsRrjCA68_4"
+                    }
+                })
+
+                // console.log('VAR LOC DISTANCE HERE')
+                // console.log(distancematrix.data.rows[0].elements[0]);
+        
+                if(distancematrix.data.rows[0].elements[0].distance.value < 32186) {
+                    console.log('PASSED - PUSHING')
+                    if(prodArray.length > 0) {
+                        if(prodArray.filter(prod => prod._id.toString() === defaultProducts[i]._id).length > 0) {
+                            return
+                        } else {
+                            prodArray.push(defaultProducts[i]);
+                        }
+                    } else {
+                        prodArray.push(defaultProducts[i]);
+                    }
+                    // console.log(prodArray);
+                } else {
+                    console.log('FAILED TO PASS');
+                }
+
+                // console.log('ON TO NEXT LOCATION')
+            }
+            console.log('ON TO NEXT PRODUCT')
+        }
+
+        console.log('EXIT FOR LOOP')
+        console.log(prodArray.length)
+
+        let slicedArray;
+
+        if(prodArray.length > 0) {
+            console.log('GREATER THAN 0');
+            console.log(prodArray.length);
+            console.log('DEFAULT LENGTH');
+            console.log(defaultProducts.length)
+            slicedArray = prodArray.slice(skip, skip+8)
+            console.log(slicedArray);
+            res.json(slicedArray);
+        } else {
+            console.log('ARRAY IS 0');
+            console.log(defaultProducts.length)
+            slicedArray = defaultProducts.slice(skip, skip+8)
+            res.json(slicedArray);
+        }
+
+    } catch(err) {
+        console.error(err.message)
+        res.status(500).send('Server Error');
+    }
+});
+
+// @route GET api/products
 // @desc Get Products by user 
 // @access Public
 router.get('/store', auth, async (req, res) => {
     try {
         const profile = await Profile.findOne({ user: req.user.id });
         const store = await Store.findOne({ profile: profile.id });
-        const products = await Product.find({ store: req.query.storeId }).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
+        const products = await Product.find({ store: req.query.storeId }).populate('store', ['name', 'img_name']).populate({path: 'locations.location',model: 'darkstore' })
 
         res.json(products);
     } catch (err) {
@@ -152,7 +260,7 @@ router.get('/store', auth, async (req, res) => {
 // @access Public
 router.get('/store/:id', async (req, res) => {
     try {
-        const products = await Product.find({ store: req.params.id }).sort({ prod_order : 1}).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
+        const products = await Product.find({ store: req.params.id }).sort({ prod_order : 1}).populate('store', ['name', 'img_name']).populate({path: 'locations.location',model: 'darkstore' })
 
         res.json(products);
     } catch (err) {
@@ -172,7 +280,7 @@ router.get('/filter/:filter', async (req, res) => {
         req.query.skip && /^\d+$/.test(req.query.skip) ? Number(req.query.skip) : 0;
 
         if(testLength.length > skip) {
-            const products = await Product.find({tags: req.params.filter }, null, { skip, limit: 8 }).sort({ prod_order : 1}).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
+            const products = await Product.find({tags: req.params.filter }, null, { skip, limit: 8 }).sort({ prod_order : 1}).populate('store', ['name', 'img_name']).populate({path: 'locations.location',model: 'darkstore' })
         
             res.json(products);
         }
@@ -203,7 +311,7 @@ router.post('/edit_collection/:prodId/:collectionId', auth, async (req, res) => 
     try {
         const product = await Product.findById(req.params.prodId);
 
-        // Check if product already liked by same user
+        // Check if product already has collection 
         if(product.collections.filter(collection => collection.collectionId.toString() === req.params.collectionId).length > 0) {
             // Get remove index
             const removeIndex = product.collections.map(collection => collection.collectionId.toString()).indexOf(req.params.collectionId);
@@ -298,11 +406,25 @@ router.get('/liked/:id', auth, async (req, res) => {
     }
 });
 
+// @route GET api/products/liked/:id
+// @desc Get Products viewed by user id
+// @access Private
+router.get('/viewed/:id', auth, async (req, res) => {
+    try {
+        const products = await Product.find({prod_views: {$elemMatch: {user:req.params.id}}}).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']).populate('store', ['name', 'img_name']);
+
+        res.json(products);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
 //@route GET /:id
 //@desc Get single product by id
 router.get('/:id', async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
+        const product = await Product.findById(req.params.id).populate('store', ['name', 'img_name']).populate({path: 'locations.location',model: 'darkstore' })
 
         if(!product) {
             return res.status(404).json({ msg: 'Product not found' });
@@ -320,7 +442,7 @@ router.get('/:id', async (req, res) => {
 // @access Public
 router.get('/category/:category', async (req, res) => {
     try {
-        const products = await Product.find({ category: req.params.category }).sort({ prod_order : 1}).populate('store', ['name', 'img_name']).populate('locationId', ['name', 'img_name', 'formatted_address', 'location']);
+        const products = await Product.find({ category: req.params.category }).sort({ prod_order : 1}).populate('store', ['name', 'img_name']).populate({path: 'locations.location',model: 'darkstore' })
 
         res.json(products);
     } catch (err) {
@@ -697,6 +819,80 @@ router.post('/variant/:prodId/:varId', auth, async (req, res) => {
 
 // });
 
+// Update prod locations to unique variants locations in document(s)
+router.post('/init-locations', async (req, res) => {
+    console.log('INITIALZING LOCATIONS');
+    try {
+        const prodArray = await Product.find();
+        console.log('GOT PRODUCTS');
+        console.log(prodArray);
+    
+        let locationArray;
+        for(var x = 0; x < prodArray.length; x++) { 
+            locationArray = [];
+            console.log('GETTINGS ARRAY VAR');
+            const prodVars = await Variant.find({product: prodArray[x].id});
+            console.log('GOT VARS');
+            console.log(prodVars.length);
+            for(var y = 0; y < prodVars.length; y++) { 
+                for(var z = 0; z < prodVars[y].locations.length; z++) {
+                    // Check if product already liked by same user
+                    if(locationArray.length > 0) {
+                        if(locationArray.filter(location => location.location.toString() === prodVars[y].locations[z].location.toString()).length > 0) {
+                            // Get remove index
+                            const removeIndex = locationArray.map(location => location.location.toString()).indexOf(prodVars[y].locations[z].location.toString());
+                            
+                            let tempQty = Number(locationArray[removeIndex].qty);
+
+                            locationArray.splice(removeIndex, 1);
+
+                            let tempObj = {};
+
+                            tempObj.location = prodVars[y].locations[z].location;
+                            if(prodVars[y].locations[z].qty) tempObj.qty = prodVars[y].locations[z].qty + tempQty;
+                            if(prodVars[y].locations[z].price) tempObj.price = prodVars[y].locations[z].price;
+
+                            locationArray.push(tempObj)
+                        } else {
+                            let tempObj = {};
+
+                            tempObj.location = prodVars[y].locations[z].location;
+                            if(prodVars[y].locations[z].qty) tempObj.qty = prodVars[y].locations[z].qty;
+                            if(prodVars[y].locations[z].price) tempObj.price = prodVars[y].locations[z].price;
+
+                            locationArray.push(tempObj);
+                        }
+                    } else {
+                        let tempObj = {};
+
+                        tempObj.location = prodVars[y].locations[z].location;
+                        if(prodVars[y].locations[z].qty) tempObj.qty = prodVars[y].locations[z].qty;
+                        if(prodVars[y].locations[z].price) tempObj.price = prodVars[y].locations[z].price;
+
+                        locationArray.push(tempObj);
+                    }
+                
+                } 
+            }
+            console.log('FINISHED LOC ARRAY');
+            console.log(locationArray);
+            
+            const productFields = {};
+            productFields.locations = locationArray;
+
+            // Update
+            await Product.updateMany(
+                { _id: prodArray[x].id }, 
+                { $set: productFields }
+            );
+        }
+
+        res.send('SUCCESS');
+    } catch (err) {
+        console.log(err);
+    }
+});
+
 
 // Update prod_order by id (in Bulk on frontend)
 router.post('/reorder/:prodId', async (req, res) => {
@@ -935,7 +1131,7 @@ router.put('/view/:id', auth, async (req, res) => {
         if(product.prod_views.length > 0) {
             // Check if product already liked by same user
             if(product.prod_views.filter(view => view.user.toString() === req.user.id).length > 0) {
-                res.json(product.view_count);
+                res.json(product.prod_views);
             } else {
                 product.prod_views.unshift({ user: req.user.id });
             }

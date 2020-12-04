@@ -6,6 +6,8 @@ import {
     ADD_COLLECTION,
     ADD_PROFILE_COLLECTION,
     UPDATE_COLLECTION_ITEMS,
+    UPDATE_COLLECTION_VIEWS,
+    UPDATE_COLLECTION_LIKES,
     GET_COLLECTION,
     EDIT_COLLECTION,
     OPEN_COLLECTION_MODAL,
@@ -85,6 +87,34 @@ import {
           ),
           loading: false
         };
+      case UPDATE_COLLECTION_LIKES:
+        let tempDetailCollection = state.collection;
+
+        if(tempDetailCollection._id === action.payload.id) { 
+            tempDetailCollection = {...tempDetailCollection, likes: action.payload.likes }
+        }
+
+        return {
+            ...state,
+            collections: state.collections.map(collection =>
+                collection._id === action.payload.id ? { ...collection, likes: action.payload.likes } : collection
+            ),
+            collection: tempDetailCollection
+        };
+      case UPDATE_COLLECTION_VIEWS:
+          let tempDetail = state.collection;
+
+          if(tempDetail._id === action.payload.id) { 
+              tempDetail = {...tempDetail, view_count: action.payload.view_count }
+          }
+
+          return {
+              ...state,
+              collections: state.collections.map(collection =>
+                  collection._id === action.payload.id ? { ...collection, view_count: action.payload.view_count } : collection
+              ),
+              collection: tempDetail
+          };
       case OPEN_COLLECTION_MODAL: 
         return {
             ...state,

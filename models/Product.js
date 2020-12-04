@@ -11,6 +11,15 @@ const ProductSchema = new Schema({
             location: {
                 type: Schema.Types.ObjectId,
                 ref: 'darkstore'
+            },
+            qty: {
+                type: Number
+            },
+            price: {
+                type: Number
+            },
+            sale_price: {
+                type: Number
             }
         }
     ],

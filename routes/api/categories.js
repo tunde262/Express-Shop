@@ -147,6 +147,20 @@ router.get('/store/:id', auth, async (req, res) => {
     }
 });
 
+// @route GET api/products/liked/:id
+// @desc Get Liked Categories by user id
+// @access Private
+router.get('/liked/:id', auth, async (req, res) => {
+    try {
+        const categories = await Category.find({likes: {$elemMatch: {user:req.params.id}}}).populate('store', ['name', 'img_name']);
+
+        res.json(categories);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
 //@route GET /:id
 //@desc Get single category 
 router.get('/:id', auth, async (req, res) => {

@@ -8,7 +8,8 @@ const ProductListBlock = ({storageLocation}) => {
     return (
         <div className="product-list-container" style={{height:'100vh', margin:'10px 10px 10px 0'}}>
             <div style={{height:'100%', width:'100%'}}>
-                <Map storageLocation={storageLocation}/>
+                {storageLocation.locations.length > 0 && <Map storageLocation={storageLocation}/>}
+                
             </div>
         </div>
     )

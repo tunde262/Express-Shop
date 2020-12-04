@@ -45,7 +45,11 @@ const Collections_Element = ({
                                 </div>
                                 <div style={{lineHeight:'20px'}}>
                                     <p style={{margin:'0', fontSize:'15px', fontWeight:'600'}}>{collectionObj.name}</p>
-                                    <p style={{margin:'0', color: '#808080', fontSize:'14px', fontFamily:'Arial, Helvetica, sans-serif'}}>{collectionObj.items.length} items | 4 followers</p>
+                                <p style={{margin:'0', color: '#808080', fontSize:'14px', fontFamily:'Arial, Helvetica, sans-serif'}}>
+                                    {collectionObj.items.length} items {collectionObj.visible && (
+                                        <span style={{margin:'0', color: '#808080', fontSize:'14px', fontFamily:'Arial, Helvetica, sans-serif'}}>| {collectionObj.likes.length} followers</span>
+                                    )}
+                                </p>
                                 </div>
                             </div>
                         </Link>

@@ -1,4 +1,32 @@
-import { SET_PRODUCTS, GET_PRODUCTS, SET_SELECTED_ITEMS, CLEAR_PRODUCTS, SET_SORTED_PRODUCTS, SET_MODAL_PRODUCTS, ADD_TO_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, PRODUCTS_LOADING, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, HANDLE_MAP, CLOSE_MODAL, CLEAR_CART,ADD_TOTALS, GET_CART, GET_ORDERS, HANDLE_TAGS, REMOVE_TAGS, INC_IMG_GALLERY, DEC_IMG_GALLERY } from '../actions/types';
+import { 
+    SET_PRODUCTS, 
+    GET_PRODUCTS, 
+    SET_SELECTED_ITEMS, 
+    CLEAR_PRODUCTS, 
+    SET_SORTED_PRODUCTS, 
+    SET_MODAL_PRODUCTS, 
+    ADD_TO_PRODUCTS, 
+    ADD_PRODUCT, 
+    EDIT_PRODUCT, 
+    UPDATE_PRODUCT_LIKES, 
+    UPDATE_PRODUCT_VIEWS,
+    PRODUCTS_LOADING, 
+    HANDLE_DETAIL, 
+    ADD_TO_CART, 
+    OPEN_OVERVIEW, 
+    CLOSE_OVERVIEW, 
+    OPEN_MODAL, 
+    HANDLE_MAP, 
+    CLOSE_MODAL, 
+    CLEAR_CART,
+    ADD_TOTALS, 
+    GET_CART, 
+    GET_ORDERS, 
+    HANDLE_TAGS, 
+    REMOVE_TAGS, 
+    INC_IMG_GALLERY, 
+    DEC_IMG_GALLERY 
+} from '../actions/types';
 
 const initialState = {
     products: [],
@@ -43,7 +71,6 @@ export default function(state = initialState, action) {
                 ...state,
                 products: [],
                 sortedProducts: [],
-                loading: false
             };
         case SET_PRODUCTS: {
             const products = action.payload;
@@ -171,6 +198,23 @@ export default function(state = initialState, action) {
                     product._id === action.payload.id ? { ...product, likes: action.payload.likes } : product
                 ),
                 detailProduct: tempDetailProd
+            };
+        case UPDATE_PRODUCT_VIEWS:
+            let tempDetail = state.detailProduct;
+
+            if(tempDetail._id === action.payload.id) { 
+                tempDetail = {...tempDetail, prod_views: action.payload.prod_views }
+            }
+
+            return {
+                ...state,
+                products: state.products.map(product =>
+                    product._id === action.payload.id ? { ...product, prod_views: action.payload.prod_views } : product
+                ),
+                sortedProducts: state.products.map(product =>
+                    product._id === action.payload.id ? { ...product, prod_views: action.payload.prod_views } : product
+                ),
+                detailProduct: tempDetail
             };
         // case INC_IMG_GALLERY:
         //     let orderNum;

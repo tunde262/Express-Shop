@@ -1,4 +1,16 @@
-import { GET_STORE, GET_STORES, GET_SUBSCRIPTIONS, SET_CART_STORES, STORE_ERROR, UPDATE_STORE_FAVORITES, ADD_STORE_REVIEW, REMOVE_STORE_REVIEW, CLEAR_STORE, CLEAR_STORES } from "../actions/types";
+import { 
+    GET_STORE, 
+    GET_STORES, 
+    GET_SUBSCRIPTIONS, 
+    SET_CART_STORES, 
+    STORE_ERROR, 
+    UPDATE_STORE_FAVORITES, 
+    UPDATE_STORE_VIEWS,
+    ADD_STORE_REVIEW, 
+    REMOVE_STORE_REVIEW, 
+    CLEAR_STORE, 
+    CLEAR_STORES 
+} from "../actions/types";
 
 const initialState = {
     store: null,
@@ -49,6 +61,14 @@ export default function(state = initialState, action) {
                 ...state,
                 stores: state.stores.map(store => 
                     store._id === payload.id ? { ...store, favorites: payload.favorites } : store
+                ),
+                loading: false
+            };
+        case UPDATE_STORE_VIEWS:
+            return {
+                ...state,
+                stores: state.stores.map(store => 
+                    store._id === payload.id ? { ...store, view_count: payload.view_count } : store
                 ),
                 loading: false
             };

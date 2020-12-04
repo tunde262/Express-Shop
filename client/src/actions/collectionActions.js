@@ -6,6 +6,8 @@ import {
   COLLECTION_ERROR,
   DELETE_COLLECTION,
   UPDATE_COLLECTION_ITEMS,
+  UPDATE_COLLECTION_VIEWS,
+  UPDATE_COLLECTION_LIKES,
   ADD_COLLECTION,
   ADD_PROFILE_COLLECTION,
   GET_COLLECTION,
@@ -169,6 +171,23 @@ export const getCollectionsByTagList = (tagList, skip) => async dispatch => {
       });
   }
 }
+
+// Get products user liked
+export const getLikedCollections = id => async dispatch => {
+  try {
+      const res = await axios.get(`/api/categories/liked/${id}`);
+
+      dispatch({
+          type: GET_COLLECTIONS,
+          payload: res.data
+      });
+  } catch (err) {
+      dispatch({
+          type: GET_COLLECTIONS,
+          payload: []
+      })
+  }
+};
 
 // Add Collection
 export const addCollection = (formData, storeId, history) => async dispatch => {
@@ -389,6 +408,34 @@ export const addCollectionItem = (itemList, id) => async dispatch => {
       });
     }
   })
+};
+
+// Add like
+export const followCollection = id => async dispatch => {
+  try {
+    const res = await axios.put(`/api/categories/like/${id}`);
+
+    dispatch({
+      type: UPDATE_COLLECTION_LIKES,
+      payload: { id, likes: res.data }
+    });
+  } catch (err) {
+    console.log(err)
+  }
+};
+
+// Add view
+export const addView = id => async dispatch => {
+  try {
+    const res = await axios.put(`/api/categories/view/${id}`);
+
+    dispatch({
+      type: UPDATE_COLLECTION_VIEWS,
+      payload: { id, view_count: res.data }
+    });
+  } catch (err) {
+    console.log(err)
+  }
 };
 
 // Open  Modal

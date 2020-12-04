@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getForYouProducts } from '../../../actions/productActions';           
+import { getForYouProducts, getNearbyProducts } from '../../../actions/productActions';           
 
 import mixpanel from 'mixpanel-browser';
 
@@ -20,14 +20,25 @@ const HomeMain = ({
     tableShow1, 
     product,
     skip,
-    getForYouProducts
+    setSkip,
+    getForYouProducts,
+    getNearbyProducts
 }) => {
 
     const [gotProducts, setGotProducts] = useState(false);
 
     useEffect(() => {
-        getForYouProducts(skip);
-    }, [skip]);
+        if(tableShow1 === 'for you') {
+            getForYouProducts(skip);
+        } else if (tableShow1 === 'nearby') {
+            getNearbyProducts(skip);
+        }
+    }, [skip, tableShow1]);
+
+    const handleTableShow1 = (value) => {
+        setTableShow1(value);
+        setSkip(0);
+    }
 
     let pageContent = null;
 
@@ -71,9 +82,9 @@ const HomeMain = ({
     return (
         <Fragment>
             <ul class="home-underline store" style={{background:'#fff', margin:'0', border:'1px solid rgb(214, 214, 214)'}}>
-                <div onClick={e => setTableShow1('for you')} className={tableShow1 === "for you" && "active"}><li><p>For You</p></li></div>
-                <div onClick={e => setTableShow1('popular')} className={tableShow1 === "popular" && "active"}><li><p>Popular</p></li></div>
-                <div onClick={e => setTableShow1('nearby')} className={tableShow1 === "nearby" && "active"}><li><p>Nearby</p></li></div>
+                <div onClick={e => handleTableShow1('for you')} className={tableShow1 === "for you" && "active"}><li><p>For You</p></li></div>
+                <div onClick={e => handleTableShow1('popular')} className={tableShow1 === "popular" && "active"}><li><p>Popular</p></li></div>
+                <div onClick={e => handleTableShow1('nearby')} className={tableShow1 === "nearby" && "active"}><li><p>Nearby</p></li></div>
             </ul>
             
             {pageContent}
@@ -85,6 +96,7 @@ HomeMain.propTypes = {
     product: PropTypes.object.isRequired,
     storageLocation: PropTypes.object.isRequired,
     getForYouProducts: PropTypes.func.isRequired,
+    getNearbyProducts: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -92,4 +104,4 @@ const mapStateToProps = state => ({
     product: state.product
 })
 
-export default connect(mapStateToProps, { getForYouProducts })(HomeMain);
+export default connect(mapStateToProps, { getForYouProducts, getNearbyProducts })(HomeMain);

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getCart } from '../actions/productActions';
-import { favorite, getStoreById } from '../actions/storeActions';
+import { favorite, addView, getStoreById } from '../actions/storeActions';
 import { getProfileSubscriptions } from '../actions/profileActions';
 
 import mixpanel from 'mixpanel-browser';
@@ -15,12 +15,32 @@ import DefaultBanner from '../utils/imgs/placeholderimg.jpg';
 import Banner from '../components/common/Banner';
 
 
-const StorePage = ({getStoreById, getProfileSubscriptions, favorite, profile, store, product: { products, sortedProducts, loading }, auth: { user }, history, match}) => {
+const StorePage = ({
+    getStoreById, 
+    getProfileSubscriptions, 
+    favorite, 
+    addView,
+    profile, 
+    store, 
+    product: { 
+        products, 
+        sortedProducts, 
+        loading 
+    }, 
+    auth: { 
+        user 
+    }, 
+    history, 
+    match
+}) => {
     const [toggleSocial, setToggleSocial] = useState(false);
     const [sentMixpanel, setSentMixpanel] = useState(false);
     const [userLoaded, setUserLoaded] = useState(false);
     const [subscribedToo, setSubscribedToo] = useState(false);
     const [checkSub, setCheckSub] = useState(false);
+
+    // Has view been added by profile if auth
+    const [sentView, setSentView] = useState(false);
 
     // Nav underline Table
     const [tableShow1, setTableShow1] = useState('shop');
@@ -97,7 +117,10 @@ const StorePage = ({getStoreById, getProfileSubscriptions, favorite, profile, st
 
     const isMobile = windowWidth <= 769;
 
-    let buttonContent;
+    if(!sentView && user && store.store) {
+        addView(store.store._id)
+        setSentView(true);
+    }
 
     if(userLoaded && profile.subscriptions.length > 0 && !checkSub) {
         profile.subscriptions.map(subscription => {
@@ -254,6 +277,7 @@ StorePage.propTypes = {
     product: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired,
     favorite: PropTypes.func.isRequired,
+    addView: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired,
 }
@@ -265,4 +289,10 @@ const mapStateToProps = state => ({
     profile: state.profile
 });
 
-export default connect(mapStateToProps, { getStoreById, getProfileSubscriptions, getCart, favorite })(StorePage);
+export default connect(mapStateToProps, { 
+    getStoreById, 
+    getProfileSubscriptions, 
+    getCart, 
+    favorite,
+    addView 
+})(StorePage);

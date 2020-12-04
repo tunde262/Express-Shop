@@ -1,9 +1,41 @@
 import axios from 'axios';
 import { setAlert } from './alertActions';
+import { setAllProductLocations } from './locationActions';
 
 import mixpanel from 'mixpanel-browser';
 
-import { SET_PRODUCTS, GET_PRODUCTS, SET_SELECTED_ITEMS, CLEAR_PRODUCTS, SET_IN_CART, SET_SORTED_PRODUCTS, SET_MODAL_PRODUCTS, ADD_TO_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, UPDATE_PRODUCT_LIKES, ADD_PRODUCT_REVIEW, REMOVE_PRODUCT_REVIEW, PRODUCT_ERROR, HANDLE_TAGS, REMOVE_TAGS, PRODUCTS_LOADING, ADD_TOTALS, HANDLE_DETAIL, ADD_TO_CART, OPEN_OVERVIEW, CLOSE_OVERVIEW, OPEN_MODAL, HANDLE_MAP, CLOSE_MODAL, CLEAR_CART, GET_CART, INC_IMG_GALLERY, DEC_IMG_GALLERY } from './types';
+import { 
+    SET_PRODUCTS, 
+    GET_PRODUCTS, 
+    SET_SELECTED_ITEMS, 
+    CLEAR_PRODUCTS, 
+    SET_IN_CART, 
+    SET_SORTED_PRODUCTS, 
+    SET_MODAL_PRODUCTS, 
+    ADD_TO_PRODUCTS, 
+    ADD_PRODUCT, 
+    EDIT_PRODUCT, 
+    UPDATE_PRODUCT_VIEWS,
+    UPDATE_PRODUCT_LIKES, 
+    ADD_PRODUCT_REVIEW, 
+    REMOVE_PRODUCT_REVIEW, 
+    PRODUCT_ERROR, 
+    HANDLE_TAGS, 
+    REMOVE_TAGS, 
+    PRODUCTS_LOADING, 
+    ADD_TOTALS, 
+    HANDLE_DETAIL, 
+    ADD_TO_CART, 
+    OPEN_OVERVIEW, 
+    CLOSE_OVERVIEW, 
+    OPEN_MODAL, 
+    HANDLE_MAP, 
+    CLOSE_MODAL, 
+    CLEAR_CART, 
+    GET_CART, 
+    INC_IMG_GALLERY, 
+    DEC_IMG_GALLERY 
+} from './types';
 import store from '../store';
 
 // Get Products
@@ -12,6 +44,7 @@ export const getProducts = (skip) => dispatch => {
         .then(res =>
             dispatch({
                 type: SET_PRODUCTS,
+
                 payload: res.data
             })
         )
@@ -23,21 +56,58 @@ export const getProducts = (skip) => dispatch => {
         );
 };
 
-// Get Products
-export const getForYouProducts = (skip) => dispatch => {
-    axios.get(`/api/products/for-you?skip=${skip}`)
-        .then(res =>
-            dispatch({
-                type: SET_PRODUCTS,
-                payload: res.data
-            })
-        )
-        .catch(err => 
-            dispatch({
-                type: SET_PRODUCTS,
-                payload: []
-            })
-        );
+// Get For You Products
+export const getForYouProducts = (skip) => async dispatch => {
+    console.log('FETCHING FOR YOU PRODS')
+    dispatch(clearProducts());
+
+    try {
+        const res = await axios.get(`/api/products/for-you?skip=${skip}`);
+
+        dispatch({
+            type: SET_PRODUCTS,
+            payload: res.data
+        });
+        
+        dispatch(setAllProductLocations(res.data));
+    } catch (err) {
+        console.log(err)
+        dispatch({
+            type: SET_PRODUCTS,
+            payload: []
+        })
+    }
+};
+
+// Get Nearby Products
+export const getNearbyProducts = (skip) => async dispatch => {
+    console.log('FETCHING NEABY PRODS')
+    dispatch(clearProducts());
+
+    const config = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+    };
+
+    try {
+        let data = new FormData();
+        data.append('formatted_address', "300 Rivercrest Blvd, Allen, TX 75002, USA");
+
+        const res = await axios.post(`/api/products/nearby?skip=${skip}`, {"formatted_address": "300 Rivercrest Blvd, Allen, TX 75002, USA" }, config);
+
+        dispatch({
+            type: SET_PRODUCTS,
+            payload: res.data
+        });
+        
+        dispatch(setAllProductLocations(res.data));
+    } catch (err) {
+        dispatch({
+            type: SET_PRODUCTS,
+            payload: []
+        })
+    }
 };
 
 // Get Products by user's store
@@ -73,7 +143,7 @@ export const getProductsByStoreId = id => async dispatch => {
             type: SET_PRODUCTS,
             payload: []
         })
-    }
+    }dispatch(setAlert('New Product Created', 'success'));
 };
 
 // Get Collection Products
@@ -117,6 +187,24 @@ export const getLikedProducts = id => async dispatch => {
     dispatch(setProductsLoading());
     try {
         const res = await axios.get(`/api/products/liked/${id}`);
+
+        dispatch({
+            type: SET_PRODUCTS,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: SET_PRODUCTS,
+            payload: []
+        })
+    }
+};
+
+// Get products user viewed
+export const getViewedProducts = id => async dispatch => {
+    dispatch(setProductsLoading());
+    try {
+        const res = await axios.get(`/api/products/viewed/${id}`);
 
         dispatch({
             type: SET_PRODUCTS,
@@ -663,6 +751,21 @@ export const categoryProducts = (category) => dispatch => {
             })
         );
 }
+
+
+// Add view
+export const addView = id => async dispatch => {
+    try {
+      const res = await axios.put(`/api/products/view/${id}`);
+  
+      dispatch({
+        type: UPDATE_PRODUCT_VIEWS,
+        payload: { id, prod_views: res.data }
+      });
+    } catch (err) {
+      console.log(err)
+    }
+};
 
 
 // Add like

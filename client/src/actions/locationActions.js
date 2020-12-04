@@ -2,6 +2,7 @@ import axios from 'axios';
 import { setAlert } from './alertActions';
 import {
   SET_LOCATIONS,
+  SET_ALL_LOCATIONS,
   GET_LOCATIONS,
   LOCATION_ERROR,
   DELETE_LOCATION,
@@ -134,6 +135,52 @@ export const getProductLocations = (id) => async dispatch => {
     })
   }
 };
+
+export const setAllProductLocations = (prodArray) => dispatch => {
+  const locationArray = [];
+  let darkstore;
+  try {
+
+    if(prodArray.length > 0) {
+      prodArray.map(product => {
+        for(var i = 0; i < product.locations.length; i++) {
+          console.log('Location ID');
+          console.log(product.locations[i].location._id);
+          if(locationArray.length > 0) {
+            
+            if(locationArray.filter(location => location.location.coordinates[1] === product.locations[i].location.location.coordinates[1]).length > 0) {
+              return;
+            } else {
+              locationArray.push(product.locations[i].location);
+            }
+          } else {
+            locationArray.push(product.locations[i].location);
+          }
+          
+          console.log('LOCATIONS ARRAY');
+          console.log(locationArray);
+        }
+        console.log('EXIT FOR LOOP')
+        console.log(locationArray)
+      })
+
+      dispatch({
+        type: SET_ALL_LOCATIONS,
+        payload: locationArray
+      });
+    } else {
+      dispatch({
+        type: SET_ALL_LOCATIONS,
+        payload: []
+      })
+    }
+  } catch (err) {
+    dispatch({
+      type: SET_ALL_LOCATIONS,
+      payload: []
+    })
+  }
+}
 
 // Get Locations by product id
 export const setProductLocations = (id) => async dispatch => {

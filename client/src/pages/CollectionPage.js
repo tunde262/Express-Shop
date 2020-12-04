@@ -1,7 +1,7 @@
 import React, { useEffect, Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getCollectionById, getCollectionsByTagList } from '../actions/collectionActions';
+import { getCollectionById, addView, getCollectionsByTagList } from '../actions/collectionActions';
 import { getProductsInCollection } from '../actions/productActions';
 
 import ProductOverview from '../components/Overview/productOverview/ProductOverview';
@@ -14,12 +14,27 @@ import Title from '../components/Title';
 import CollectionHeader from '../components/page_components/collection/CollectionHeader';
 import CollectionMain from '../components/page_components/collection/CollectionMain';
 
-const CollectionPage = ({ getCollectionById, getCollectionsByTagList, getProductsInCollection, collection, product, auth: { user, isAuthenticated, loading },  match }) => {
+const CollectionPage = ({ getCollectionById, 
+    getCollectionsByTagList, 
+    getProductsInCollection, 
+    collection, 
+    product, 
+    addView,
+    auth: { 
+        user, 
+        isAuthenticated, 
+        loading 
+    }, 
+    match 
+}) => {
 
     // Nav underline Table
     const [tableShow1, setTableShow1] = useState('shop');
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    // Has view been added by profile if auth
+    const [sentView, setSentView] = useState(false);
 
 
     useEffect( async () => {
@@ -34,11 +49,14 @@ const CollectionPage = ({ getCollectionById, getCollectionsByTagList, getProduct
         setWindowWidth(window.innerWidth);
     };
 
-    
+    if(!sentView && user && collection.collection) {
+        addView(collection.collection._id)
+        setSentView(true);
+    }
     
     return (
         <Fragment>
-            <div className="store-table-header" style={{padding:'20px 20px 0 20px'}}>
+            <div className="store-table-header" id="collection-header">
                 <CollectionHeader setTableShow1={setTableShow1} tableShow1={tableShow1} />
             </div>
             <div className="store-table-body">
@@ -55,6 +73,7 @@ const CollectionPage = ({ getCollectionById, getCollectionsByTagList, getProduct
 
 CollectionPage.propTypes = {
     getCollectionById: PropTypes.func.isRequired,
+    addView: PropTypes.func.isRequired,
     getCollectionsByTagList: PropTypes.func.isRequired,
     getProductsInCollection: PropTypes.func.isRequired,
     collection: PropTypes.object.isRequired,
@@ -68,4 +87,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, { getCollectionById, getCollectionsByTagList, getProductsInCollection  })(CollectionPage);
+export default connect(mapStateToProps, { getCollectionById, addView, getCollectionsByTagList, getProductsInCollection  })(CollectionPage);

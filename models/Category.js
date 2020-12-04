@@ -54,7 +54,15 @@ const CategorySchema = new Schema({
                 ref: 'product'
             }
         }
-    ]
+    ],
+    likes: [
+        {
+            user: {
+                type: Schema.Types.ObjectId,
+                ref: 'user'
+            }
+        }
+    ],
 });
 
 module.exports = Category = mongoose.model('category', CategorySchema);
