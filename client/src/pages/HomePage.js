@@ -11,7 +11,7 @@ import Footer from '../components/layout/Footer/Footer';
 import Spinner from '../components/common/Spinner';
 
 import AuthModal from '../components/modals/AuthModal';
-import HomeMain from '../components/page_components/home/HomeMain';
+import HomeMain from '../components/page_components/Home/HomeMain';
 
 const HomePage = ({
     product, 
