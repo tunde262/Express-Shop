@@ -36,7 +36,6 @@ import {
     INC_IMG_GALLERY, 
     DEC_IMG_GALLERY 
 } from './types';
-import store from '../store';
 
 // Get Products
 export const getProducts = (skip) => async dispatch => {
