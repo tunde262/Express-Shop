@@ -168,7 +168,7 @@ const App = () => {
     <Provider store={store}>
       <StripeProvider apiKey="pk_live_TGJb7MssdJJyke7Wg6WpDj1e00gVdDNGxd">
         <Router>
-          <div style={{height: '100%'}}>
+          <div className="body-container">
             <Navbar backdrop={drawer} backdropClickHandler={backdropClickHandler} drawerClickHandler={drawerToggleClickHandler} toggleAuthDrawer={toggleAuthDrawer} toggleCartDrawer={toggleCartDrawer} />
             <SideDrawer show={sideDrawerOpen} toggleAuthDrawer={toggleAuthDrawer} toggleCartDrawer={toggleCartDrawer} drawerClickHandler={drawerToggleClickHandler} />
             <CartDrawer cartStores={cartStores} setStoresList={setStoresList} show={cartDrawerOpen} toggleCartDrawer={toggleCartDrawer} drawerClickHandler={drawerToggleClickHandler} />

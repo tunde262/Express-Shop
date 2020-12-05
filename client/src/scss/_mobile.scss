@@ -126,6 +126,20 @@
         display: none;
     }
 
+    .body-container {
+        overflow: auto;
+    }
+
+    .home-content {
+        &.main {
+            margin-top: 70px;
+        }
+
+        &.nearby {
+            margin-top: 50px;
+        }
+    }
+
     .jumbotron {
         background-position: right; 
     }
@@ -428,6 +442,36 @@
 
     .nav-underline.store {
         margin: 0; 
+    }
+
+    .home-underline {
+        width: 100vw;
+        position: fixed;
+        margin-top: 60px;
+        z-index: 15;
+    }
+
+    .nearby-container {
+        width: 100%; 
+        // height: calc(100vh - 116px); 
+        // position: fixed; 
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "map"
+            "prodList"
+        ;
+
+        & #nearby-container-list {
+            margin-top: 40vh;
+            z-index: 10;
+        }
+
+        & #nearby-container-map {
+            width: 100%;
+            height: calc(100vh - 60px);
+            position: fixed;
+            z-index: 5;
+        }
     }
 
     .grid-rows {

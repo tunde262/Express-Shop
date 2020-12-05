@@ -6,7 +6,11 @@ import Map from '../../common/map/Map';
 const ProductListBlock = ({storageLocation}) => {
 
     return (
-        <div className="product-list-container" style={{height:'100vh', margin:'10px 10px 10px 0'}}>
+        <div 
+            className="product-list-container" 
+            style={{height:'100vh', margin:'10px 10px 10px 0'}}
+            id="nearby-container-map"
+        >
             <div style={{height:'100%', width:'100%'}}>
                 {storageLocation.locations.length > 0 && <Map storageLocation={storageLocation}/>}
                 

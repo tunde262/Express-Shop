@@ -142,19 +142,19 @@ export const setAllProductLocations = (prodArray) => dispatch => {
   try {
 
     if(prodArray.length > 0) {
-      prodArray.map(product => {
-        for(var i = 0; i < product.locations.length; i++) {
+      for(var z = 0; z < prodArray.length; z++) {
+        for(var i = 0; i < prodArray[z].locations.length; i++) {
           console.log('Location ID');
-          console.log(product.locations[i].location._id);
+          console.log(prodArray[z].locations[i].location._id);
           if(locationArray.length > 0) {
             
-            if(locationArray.filter(location => location.location.coordinates[1] === product.locations[i].location.location.coordinates[1]).length > 0) {
-              return;
+            if(locationArray.filter(location => location.placeId === prodArray[z].locations[i].location.placeId).length > 0) {
+              console.log('ALREADY EXIST')
             } else {
-              locationArray.push(product.locations[i].location);
+              locationArray.push(prodArray[z].locations[i].location);
             }
           } else {
-            locationArray.push(product.locations[i].location);
+            locationArray.push(prodArray[z].locations[i].location);
           }
           
           console.log('LOCATIONS ARRAY');
@@ -162,7 +162,7 @@ export const setAllProductLocations = (prodArray) => dispatch => {
         }
         console.log('EXIT FOR LOOP')
         console.log(locationArray)
-      })
+      }
 
       dispatch({
         type: SET_ALL_LOCATIONS,

@@ -39,30 +39,9 @@ import {
 import store from '../store';
 
 // Get Products
-export const getProducts = (skip) => dispatch => {
-    axios.get(`/api/products?skip=${skip}`)
-        .then(res =>
-            dispatch({
-                type: SET_PRODUCTS,
-
-                payload: res.data
-            })
-        )
-        .catch(err => 
-            dispatch({
-                type: SET_PRODUCTS,
-                payload: []
-            })
-        );
-};
-
-// Get For You Products
-export const getForYouProducts = (skip) => async dispatch => {
-    console.log('FETCHING FOR YOU PRODS')
-    dispatch(clearProducts());
-
+export const getProducts = (skip) => async dispatch => {
     try {
-        const res = await axios.get(`/api/products/for-you?skip=${skip}`);
+        const res = await axios.get(`/api/products?skip=${skip}`);
 
         dispatch({
             type: SET_PRODUCTS,
@@ -79,10 +58,31 @@ export const getForYouProducts = (skip) => async dispatch => {
     }
 };
 
+// Get For You Products
+export const getForYouProducts = (skip) => async dispatch => {
+    console.log('FETCHING FOR YOU PRODS')
+
+    try {
+        const res = await axios.get(`/api/products/for-you?skip=${skip}`);
+
+        dispatch({
+            type: SET_PRODUCTS,
+            payload: res.data
+        });
+        
+        // dispatch(setAllProductLocations(res.data));
+    } catch (err) {
+        console.log(err)
+        dispatch({
+            type: SET_PRODUCTS,
+            payload: []
+        })
+    }
+};
+
 // Get Nearby Products
 export const getNearbyProducts = (skip) => async dispatch => {
     console.log('FETCHING NEABY PRODS')
-    dispatch(clearProducts());
 
     const config = {
         headers: {

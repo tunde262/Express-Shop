@@ -63,6 +63,7 @@ import {
         };
       case SET_ALL_LOCATIONS:
         const newSetOfLocations = [...state.locations, ...payload];
+        
         return {
           ...state,
           locations: newSetOfLocations,

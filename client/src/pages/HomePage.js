@@ -27,7 +27,7 @@ const HomePage = ({
     const [skip, setSkip] = useState(0);
 
     // Nav underline Table
-    const [tableShow1, setTableShow1] = useState('for you');
+    const [tableShow1, setTableShow1] = useState('nearby');
 
     const [sentMixpanel, setSentMixpanel] = useState(false);
     
@@ -65,14 +65,13 @@ const HomePage = ({
         
     return (
         <Fragment>
-            <div onScroll={handleScroll} style={{height:"100vh", overflowY:'scroll', background:'rgb(247, 247, 247)'}}>
-                <HomeMain 
-                    skip={skip} 
-                    setSkip={setSkip} 
-                    setTableShow1={setTableShow1} 
-                    tableShow1={tableShow1} 
-                />
-            </div>
+            <HomeMain 
+                skip={skip} 
+                setSkip={setSkip} 
+                handleScroll={handleScroll}
+                setTableShow1={setTableShow1} 
+                tableShow1={tableShow1} 
+            />
             {/* <Footer /> */}
             {!loading && !isAuthenticated ? <AuthModal /> : null }
         </Fragment>
