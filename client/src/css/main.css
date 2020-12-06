@@ -2614,6 +2614,13 @@ header {
   .product-list-container.admin {
     margin: 10px 0; }
 
+.explore-container {
+  background: #f7f7f7;
+  width: 100%;
+  height: calc(100vh - 57px);
+  overflow-x: hidden;
+  overflow-y: scroll; }
+
 .nearby-container {
   width: 100%;
   display: grid;
@@ -3577,6 +3584,20 @@ header {
   width: 35px;
   border-radius: 5px; }
 
+.store-block-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  margin: 10px;
+  border: 1px solid #d6d6d6; }
+
+.store-block {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 2fr 1fr; }
+
 .store-header {
   background: #fff;
   margin: 10px;
@@ -3821,7 +3842,8 @@ header {
     grid-column-end: 4; }
 
 .store-grid {
-  padding: 0 5rem; }
+  padding: 0 3vw;
+  width: 100%; }
 
 .grid-rows {
   margin-top: 50px;
@@ -4417,12 +4439,13 @@ footer .footer-bottom {
 
 @media screen and (max-width: 1000px) {
   .grid-rows {
-    padding: 4rem 1rem;
-    grid-template-columns: repeat(2, 1fr);
+    margin-top: 10px;
+    grid-template-columns: repeat(1, 100%);
     /* see notes below */
-    grid-gap: 1em; }
+    grid-gap: 1em;
+    padding: 0; }
     .grid-rows > div {
-      margin-top: 1rem; }
+      margin-top: 0; }
       .grid-rows > div h3 {
         margin-bottom: 1rem; }
   .secondary-block {
@@ -4443,6 +4466,8 @@ footer .footer-bottom {
     .store-settings-container .store-settings-box {
       width: 75vw;
       padding: 1rem; }
+  .store-grid {
+    padding: 0; }
   /* Profiles Page */
   .profile-table {
     grid-template-columns: 1fr;
@@ -4559,6 +4584,8 @@ footer .footer-bottom {
     position: absolute;
     margin: 10px 0 0 1rem;
     font-size: 1.3rem; }
+  .store-grid {
+    padding: 0; }
   .store-settings-container {
     margin: 2rem 0;
     width: 100%; }
@@ -4669,11 +4696,10 @@ footer .footer-bottom {
       height: calc(100vh - 60px);
       position: fixed;
       z-index: 5; }
-  .grid-rows {
-    padding: 4rem 0;
-    grid-template-columns: repeat(1, 100%);
-    /* see notes below */
-    grid-gap: 1em; }
+  .explore-container {
+    width: 100vw;
+    height: 100%;
+    overflow-y: auto; }
   header {
     flex-direction: column;
     padding: 0; }

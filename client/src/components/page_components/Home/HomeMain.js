@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getProducts, getForYouProducts, getNearbyProducts, clearProducts } from '../../../actions/productActions';           
+import { getProducts, getForYouProducts, getPopularProducts, getNearbyProducts, clearProducts } from '../../../actions/productActions';           
 
 import mixpanel from 'mixpanel-browser';
 
@@ -27,6 +27,7 @@ const HomeMain = ({
     handleScroll,
     getProducts,
     getForYouProducts,
+    getPopularProducts,
     getNearbyProducts,
     clearProducts
 }) => {
@@ -44,6 +45,10 @@ const HomeMain = ({
             } else {
                 getProducts(skip);
             }
+        } else if (tableShow1 === 'popular') {
+            getPopularProducts(skip);
+            console.log('STARTING POPULAR')
+            
         } else if (tableShow1 === 'nearby') {
             getProducts(skip);
             // getNearbyProducts(skip);
@@ -78,6 +83,15 @@ const HomeMain = ({
                     <ProductListBlock handleScroll={handleScroll} />
                 </Fragment>
             )
+        } else if (tableShow1 === 'popular') {
+            pageContent = (
+                <Fragment>
+                    {/* <Banner imgLarge={ImgLarge} imgSmall={ImgSmall} /> */}
+                    <HeaderBlock />
+                    
+                    <ProductListBlock handleScroll={handleScroll} />
+                </Fragment>
+            );
         } else if (tableShow1 === 'nearby') {
             pageContent = (
                 <div className="nearby-container">
@@ -124,6 +138,7 @@ HomeMain.propTypes = {
     storageLocation: PropTypes.object.isRequired,
     getProducts: PropTypes.func.isRequired,
     getForYouProducts: PropTypes.func.isRequired,
+    getPopularProducts: PropTypes.func.isRequired,
     getNearbyProducts: PropTypes.func.isRequired,
     clearProducts: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
@@ -135,4 +150,10 @@ const mapStateToProps = state => ({
     auth: state.auth
 })
 
-export default connect(mapStateToProps, { getProducts, getForYouProducts, getNearbyProducts, clearProducts })(HomeMain);
+export default connect(mapStateToProps, { 
+    getProducts, 
+    getForYouProducts, 
+    getPopularProducts,
+    getNearbyProducts, 
+    clearProducts 
+})(HomeMain);

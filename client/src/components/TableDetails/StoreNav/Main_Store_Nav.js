@@ -21,7 +21,7 @@ const Main_Store_Nav = ({
     getProfileSubscriptions,
     nav: { 
         page,
-        admin 
+        main
     },
     auth: {
         user
@@ -47,7 +47,7 @@ const Main_Store_Nav = ({
             setSlideForm1(true);
         }
 
-        if(admin === true) {
+        if(main === 'admin') {
             setNavValue('admin')
         }
 
@@ -58,7 +58,7 @@ const Main_Store_Nav = ({
         if(user) {
             getProfileSubscriptions(user._id);
         }  
-    }, [page, admin, profile.profile])
+    }, [page, main, profile.profile])
 
     const todo = (page) => {
         setNavHighlight(page);

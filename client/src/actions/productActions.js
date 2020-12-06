@@ -79,6 +79,28 @@ export const getForYouProducts = (skip) => async dispatch => {
     }
 };
 
+// Get For You Products
+export const getPopularProducts = (skip) => async dispatch => {
+    console.log('FETCHING POPULAR PRODS')
+
+    try {
+        const res = await axios.get(`/api/products/popular?skip=${skip}`);
+
+        dispatch({
+            type: SET_PRODUCTS,
+            payload: res.data
+        });
+        
+        // dispatch(setAllProductLocations(res.data));
+    } catch (err) {
+        console.log(err)
+        dispatch({
+            type: SET_PRODUCTS,
+            payload: []
+        })
+    }
+};
+
 // Get Nearby Products
 export const getNearbyProducts = (skip) => async dispatch => {
     console.log('FETCHING NEABY PRODS')

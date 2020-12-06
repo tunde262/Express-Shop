@@ -22,12 +22,13 @@
 
 @media screen and (max-width: 1000px) { 
     .grid-rows {
-        padding: 4rem 1rem;
-        grid-template-columns: repeat(2, 1fr); /* see notes below */
+        margin-top: 10px;
+        grid-template-columns: repeat(1, 100%); /* see notes below */
         grid-gap: 1em;
+        padding: 0;
 
         & > div {
-            margin-top: 1rem;
+            margin-top: 0;
 
             h3 {
                 margin-bottom: 1rem;
@@ -64,6 +65,10 @@
             width: 75vw; 
             padding:1rem;
         }
+    }
+
+    .store-grid {
+        padding: 0;
     }
 
     /* Profiles Page */
@@ -271,6 +276,10 @@
         font-size:1.3rem;
     }
 
+    .store-grid {
+        padding: 0;
+    }
+
     .store-settings-container {
         margin:2rem 0; 
         width:100%; 
@@ -474,10 +483,10 @@
         }
     }
 
-    .grid-rows {
-        padding: 4rem 0;
-        grid-template-columns: repeat(1, 100%); /* see notes below */
-        grid-gap: 1em;
+    .explore-container {
+        width: 100vw;
+        height: 100%;
+        overflow-y: auto;
     }
 
     header {

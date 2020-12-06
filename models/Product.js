@@ -95,6 +95,10 @@ const ProductSchema = new Schema({
     prod_order: {
         type: Number
     },
+    view_count: {
+        type: Number,
+        default: 0
+    },
     prod_views: [
         {
             user: {

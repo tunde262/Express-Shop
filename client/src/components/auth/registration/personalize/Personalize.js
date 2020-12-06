@@ -29,7 +29,20 @@ import { getStoresByTagList } from '../../../../actions/storeActions';
 import { getCollectionsByTagList } from '../../../../actions/collectionActions';
 
 
-const Personalize = ({ createProfile, getStoresByTagList, getCollectionsByTagList, getProducts, getCollections, product, auth: { isAuthenticated, user }, history }) => {
+const Personalize = ({ 
+    createProfile, 
+    getStoresByTagList, 
+    getCollectionsByTagList, 
+    getProducts, 
+    getCollections, 
+    product, 
+    auth: { 
+        isAuthenticated, 
+        user 
+    }, 
+    history 
+}) => {
+    
     const [gender, setGender] = useState('');
 
     const [recommendationTags, setRecommendationTags] = useState([]);
@@ -97,6 +110,10 @@ const Personalize = ({ createProfile, getStoresByTagList, getCollectionsByTagLis
         setGotStores(true);
     }
 
+    if(!user) {
+        history.push(`/register`);
+    }
+
     let formClass;
 
     if(slideform1 && !slideform2 && !slideform3) {
@@ -127,7 +144,7 @@ const Personalize = ({ createProfile, getStoresByTagList, getCollectionsByTagLis
                         <div id="transition-2" style={{width:'100%'}} className={slideform2 ? "auth-form-container active" : "auth-form-container"}>
                             <div style={{width:'100%'}} className="form-settings-transition">
                             <div id="transition-1" style={{width:'100%'}} className={!slideform3 ? "auth-form-container active" : "auth-form-container"}>
-                                <StoreRecommendations product={product} slideform2={slideform2} setSlideForm2={setSlideForm2} slideform3={slideform3} setSlideForm3={setSlideForm3} />
+                                <StoreRecommendations slideform2={slideform2} setSlideForm2={setSlideForm2} slideform3={slideform3} setSlideForm3={setSlideForm3} />
                             </div>
                             <div id="transition-2" style={{width:'100%'}} className={slideform3 ? "auth-form-container active" : "auth-form-container"}>
                                 <div style={{width:'100%'}} className="form-settings-transition">

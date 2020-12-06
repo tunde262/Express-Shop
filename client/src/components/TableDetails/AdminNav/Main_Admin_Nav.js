@@ -9,7 +9,14 @@ import LocationSideDrawer from '../../admin/pages/page_components/location/SideD
 
 import addBookmark from '../../common/add-bookmarks.svg';
 
-const Main_Admin_Nav = ({setSlideForm1, slideForm1, nav, store, match}) => {
+const Main_Admin_Nav = ({
+    setNavValue,
+    navValue,
+    setSlideForm1, 
+    slideForm1, 
+    nav, 
+    store, 
+    match}) => {
     const [slideForm2, setSlideForm2] = useState(false);
     const [adminValue, setAdminValue] = useState(null);
 
@@ -21,9 +28,14 @@ const Main_Admin_Nav = ({setSlideForm1, slideForm1, nav, store, match}) => {
         if(nav.page === 'admin detail product' || nav.page === 'admin detail collection' || nav.page === 'admin detail location') {
             setSlideForm2(true);
         }
+
+        if(nav.main === 'store') {
+            setNavValue('store')
+        }
+
         renderAdminNav();
 
-      }, [nav.page, nav.admin])
+      }, [nav.page, nav.main])
 
     const renderAdminNav = async () => {
         setAdminNav([]);

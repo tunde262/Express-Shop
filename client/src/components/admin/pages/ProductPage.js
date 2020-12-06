@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import mixpanel from 'mixpanel-browser';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
-import { setAdminNav, setPage } from '../../../actions/navActions';
+import { setMainNav, setPage } from '../../../actions/navActions';
 import { setSortedProducts, getProductsByStoreId, getProductsInCollection, handleDetail, addProduct, editProduct, deleteProduct, setModalProducts, addProductImg, setDetailProduct } from '../../../actions/productActions';
 import { getProductVariants, addVariant, deleteVariant, setModalVariants } from '../../../actions/variantActions';
 import { getStoreById } from '../../../actions/storeActions';
@@ -97,7 +97,7 @@ const ProductPage = ({
     match, 
     history,
     location,
-    setAdminNav,
+    setMainNav,
     setSortedProducts,
     setModalProducts,
     setModalVariants,
@@ -196,7 +196,7 @@ const ProductPage = ({
     });
         
     useEffect(() => {
-        setAdminNav(true);
+        setMainNav('admin');
 
         console.log(location);
         console.log(new URLSearchParams(location.search).get('show'));
@@ -2229,7 +2229,7 @@ ProductPage.propTypes = {
     nav: PropTypes.object.isRequired,
     deleteProduct: PropTypes.func.isRequired,
     deleteVariant: PropTypes.func.isRequired,
-    setAdminNav: PropTypes.func.isRequired,
+    setMainNav: PropTypes.func.isRequired,
     getStoreById: PropTypes.func.isRequired,
     getOrderById: PropTypes.func.isRequired,
     setSortedProducts: PropTypes.func.isRequired,
@@ -2267,7 +2267,7 @@ export default connect(mapStateToProps, {
     editProduct, 
     handleDetail, 
     setDetailProduct,
-    setAdminNav,
+    setMainNav,
     getStoreById, 
     getOrderById,
     deleteProduct, 

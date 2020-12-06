@@ -9,12 +9,14 @@ import logo from '../../common/logo.png';
 
 import ReactGA from 'react-ga';
 
+const initialState = {
+    name: '',
+    email: '',
+    password: ''
+};
+
 const Register = ({ setAlert, register, auth: { isAuthenticated }, profile, history }) => {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        password: ''
-    });
+    const [formData, setFormData] = useState(initialState);
 
     const { name, email, password } = formData;
 
@@ -22,7 +24,24 @@ const Register = ({ setAlert, register, auth: { isAuthenticated }, profile, hist
 
     const onSubmit = async e => {
         e.preventDefault();
-        register({ name, email, password });
+
+        const first_name = name.split(' ').slice(0, -1).join(' ');
+        const last_name = name.split(' ').slice(-1).join(' ');
+
+        console.log('FIRST NAME');
+        console.log(first_name)
+        console.log('LAST NAME');
+        console.log(last_name);
+
+        register({ 
+            first_name, 
+            last_name, 
+            email, 
+            password, 
+            history 
+        });
+
+        setFormData(initialState);
         // if(password !== password2) {
         //     setAlert('Passwords do not match', 'danger');
         // } else {
@@ -39,9 +58,9 @@ const Register = ({ setAlert, register, auth: { isAuthenticated }, profile, hist
         });
     }
 
-    if(isAuthenticated && !profile.loading) {
+    if(isAuthenticated && !profile.loading && profile.profile) {
         if(!profile.profile.registration_complete) {
-            history.push(`/success?setup=${profile.profile._id}`);
+            history.push(`/account-setup`);
         } else {
             history.goBack();
         }  

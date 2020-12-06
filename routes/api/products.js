@@ -138,6 +138,27 @@ router.get('/for-you', auth, async (req, res) => {
 // @route GET api/products
 // @desc Get Products
 // @access Public
+router.get('/popular', auth, async (req, res) => {
+    console.log('FETCHING POPULAR');
+
+    try {
+        const skip =
+            req.query.skip && /^\d+$/.test(req.query.skip) ? Number(req.query.skip) : 0;
+
+        const products = await Product.find({}, null, { skip, limit: 8 }).sort({ view_count : -1}).populate('store', ['name', 'img_name']).populate({path: 'locations.location',model: 'darkstore' })
+
+        // const products = await Product.find();
+
+        res.json(products);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
+// @route GET api/products
+// @desc Get Products
+// @access Public
 router.post('/nearby', async (req, res) => {
     console.log('FETCHING NEARBY');
     console.log(req.body.formatted_address)
@@ -1119,6 +1140,30 @@ router.post('/init-views', async (req, res) => {
     }
 });
 
+// Update view count to 0
+router.post('/reset-view-count', async (req, res) => {
+    console.log('RESETING VIEW COUNT');
+    try {
+        const prodArray = await Product.find();
+
+        for(var x = 0; x < prodArray.length; x++) { 
+
+            const productFields = {};
+            productFields.view_count = 0;
+            // Update
+            await Product.findOneAndUpdate(
+                { _id: prodArray[x].id }, 
+                { $set: productFields }, 
+                { new: true }
+            );
+        }
+
+        res.send('SUCCESS');
+    } catch (err) {
+        console.log(err);
+    }
+});
+
 // ---- Interactions -----
 
 // @route PUT api/products/view/:id
@@ -1140,6 +1185,15 @@ router.put('/view/:id', auth, async (req, res) => {
         }
 
         await product.save();
+        
+        const productFields = {};
+        productFields.view_count = product.prod_views.length;
+
+        await Product.findOneAndUpdate(
+            { _id: product.id }, 
+            { $set: productFields }, 
+            { new: true }
+        );
 
         res.json(product.prod_views);
     } catch (err) {

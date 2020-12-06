@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getCart } from '../actions/productActions';
-import { setNav1, setPage } from '../actions/navActions';
+import { setNav1, setPage, setMainNav } from '../actions/navActions';
 
 import mixpanel from 'mixpanel-browser';
 
@@ -20,6 +20,7 @@ const HomePage = ({
         isAuthenticated, 
         loading
     }, 
+    setMainNav,
     setNav1, 
     setPage
 }) => {
@@ -32,6 +33,7 @@ const HomePage = ({
     const [sentMixpanel, setSentMixpanel] = useState(false);
     
     useEffect(() => {
+        setMainNav('store');
         setNav1('explore');
         setPage('home')
     }, []);
@@ -83,6 +85,7 @@ HomePage.propTypes = {
     getCart: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
+    setMainNav: PropTypes.func.isRequired,
     setNav1: PropTypes.func.isRequired,
     setPage: PropTypes.func.isRequired,
     nav: PropTypes.object.isRequired
@@ -94,4 +97,4 @@ const mapStateToProps = state => ({
     nav: state.nav
 });
 
-export default connect(mapStateToProps, { getCart, setNav1, setPage })(HomePage);
+export default connect(mapStateToProps, { getCart, setMainNav, setNav1, setPage })(HomePage);

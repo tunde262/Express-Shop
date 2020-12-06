@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { getCart } from '../actions/productActions';
 import { favorite, addView, getStoreById } from '../actions/storeActions';
 import { getProfileSubscriptions } from '../actions/profileActions';
+import { setMainNav } from '../actions/navActions';
 
 import mixpanel from 'mixpanel-browser';
 
@@ -17,6 +18,7 @@ import Banner from '../components/common/Banner';
 
 const StorePage = ({
     getStoreById, 
+    setMainNav,
     getProfileSubscriptions, 
     favorite, 
     addView,
@@ -49,6 +51,7 @@ const StorePage = ({
 
     
     useEffect( async () => {
+        setMainNav('store');
         getStoreById(match.params.id);
         window.addEventListener('resize', () => handleWindowSizeChange());
 
@@ -272,6 +275,7 @@ const StorePage = ({
 
 StorePage.propTypes = {
     getStoreById: PropTypes.func.isRequired,
+    setMainNav: PropTypes.func.isRequired,
     getProfileSubscriptions: PropTypes.func.isRequired,
     getCart: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
@@ -291,6 +295,7 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, { 
     getStoreById, 
+    setMainNav,
     getProfileSubscriptions, 
     getCart, 
     favorite,

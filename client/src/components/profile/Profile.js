@@ -30,9 +30,25 @@ import { getStoreSubscriptions } from '../../actions/storeActions';
 
 import sampleImg from '../../utils/imgs/20484728.jpeg';
 import { addAddress } from '../../actions/profileActions';
-import { setPage } from '../../actions/navActions';
+import { setMainNav, setPage } from '../../actions/navActions';
 
-const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { user, isAuthenticated, loading }, location, nav: { page }, setPage}) => {
+const Profile = ({ 
+    addAddress, 
+    product, 
+    store, 
+    getStoreSubscriptions, 
+    auth: { 
+        user, 
+        isAuthenticated, 
+        loading 
+    }, 
+    location, 
+    nav: { 
+        page 
+    }, 
+    setMainNav,
+    setPage
+}) => {
     const [skip, setSkip] = useState(0);
     const [tableShow1, setTableShow1] = useState('completed');
     const [tableShow2, setTableShow2] = useState('orders');
@@ -63,6 +79,7 @@ const Profile = ({ addAddress, product, store, getStoreSubscriptions, auth: { us
 
     useEffect(() => {
         window.addEventListener('resize', () => handleWindowSizeChange());
+        setMainNav('store');
         setPage('profile');
         if(user) {
             getStoreSubscriptions(user._id);
@@ -482,6 +499,7 @@ Profile.propTypes = {
     addAddress: PropTypes.func.isRequired,
     nav: PropTypes.object.isRequired,
     setPage: PropTypes.func.isRequired,
+    setMainNav: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -491,4 +509,9 @@ const mapStateToProps = state => ({
     nav: state.nav
 });
 
-export default connect(mapStateToProps, { addAddress, getStoreSubscriptions, setPage })(withRouter(Profile));
+export default connect(mapStateToProps, { 
+    addAddress, 
+    getStoreSubscriptions, 
+    setMainNav,
+    setPage 
+})(withRouter(Profile));

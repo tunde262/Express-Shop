@@ -1,5 +1,13 @@
-import { SET_PAGE, SET_NAV1, REMOVE_NAV1, SET_NAV2, REMOVE_NAV2, SET_NAV3, REMOVE_NAV3, SET_ADMIN } from './types';
-import { setProductsLoading } from './productActions';
+import { 
+    SET_PAGE, 
+    SET_NAV1, 
+    REMOVE_NAV1, 
+    SET_NAV2, 
+    REMOVE_NAV2, 
+    SET_NAV3, 
+    REMOVE_NAV3, 
+    SET_MAIN_NAV
+} from './types';
 
 export const setPage = (page) => dispatch => {
     dispatch({
@@ -43,10 +51,10 @@ export const removeNav3 = () => dispatch => {
     });
 }
 
-// Products loading
-export const setAdminNav = (value) => {
+// Set Admin Nav
+export const setMainNav = (value) => {
     return {
-        type: SET_ADMIN,
+        type: SET_MAIN_NAV,
         payload: value
     }
 }

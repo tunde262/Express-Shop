@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getProducts } from '../actions/productActions';
+import { getCollectionsByTagList, getCollections } from '../actions/collectionActions';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
@@ -26,8 +27,9 @@ import Banner from '../components/common/Banner';
 import carousell1 from '../utils/imgs/carousell1.jpg';
 import carousell2 from '../utils/imgs/carousell2.jpg';
 import Container from '../components/ProductList/Container';
+import DefaultBanner from '../utils/imgs/placeholderimg.jpg'
 
-import { setNav1, setNav2, setNav3, setPage } from '../actions/navActions';
+import { setMainNav, setNav1, setNav2, setNav3, setPage } from '../actions/navActions';
 import { HorizontalNav } from '../components/common/HorizontalNav';
 
 
@@ -41,15 +43,38 @@ import categoryImg from '../utils/imgs/personal_care_promo_block.jpg';
 import helpImg from '../utils/imgs/help_us_banner.jpg';
 import shoeSampleImg from '../utils/imgs/20484728.jpeg';
 import paperTowelImg from '../utils/imgs/paper_towels.jpeg';
+import profileReducer from '../reducers/profileReducer';
 
-const ExplorePage = ({getProducts, setNav1, setNav2, setNav3, setPage, nav: { page }, product: { loading, products, featuredProducts}}) => {
+const ExplorePage = ({
+    getProducts, 
+    getCollectionsByTagList,
+    getCollections,
+    setMainNav, 
+    setNav1, 
+    setNav2, 
+    setNav3, 
+    setPage, 
+    nav: { 
+        page 
+    }, 
+    product: { 
+        loading, 
+        products, 
+        featuredProducts
+    },
+    collection,
+    profile
+}) => {
     const [skip, setSkip] = useState(0);
+    const [gotTopCollections, setGotTopCollections] = useState(false);
+
     const [sentMixpanel, setSentMixpanel] = useState(false);
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     useEffect(() => {
         getProducts(skip);
+        setMainNav('store');
         setPage('explore');
         setNav1('clothing and fashion');
         setNav2('mens clothing and fashion');
@@ -84,15 +109,24 @@ const ExplorePage = ({getProducts, setNav1, setNav2, setNav3, setPage, nav: { pa
         setSentMixpanel(true);
     };
 
+    if(profile.profile && !gotTopCollections) {
+        getCollections(skip);
+        // getCollectionsByTagList(profile.profile.recommendation_tags, skip);
+        setGotTopCollections(true)
+    }
+
     const isMobile = windowWidth <= 769;
 
     const isTablet = windowWidth <= 1000;
     
     return (
-        <div style={{background:'rgb(247, 247, 247)'}}>
+        <div className="explore-container">
+            <TrendingCollections />
+
             <FeaturedStores />
             
-            <SlidingBanner />
+            <Banner imgLarge={DefaultBanner} imgSmall={DefaultBanner} />
+            {/* <SlidingBanner /> */}
 
             {/* Featured Stores */}
             {/* <div className="mobile"style={{margin:'0 1rem'}}>
@@ -120,9 +154,8 @@ const ExplorePage = ({getProducts, setNav1, setNav2, setNav3, setPage, nav: { pa
                 </div>
             )}
 
-            <FeaturedCollections />
+            <FeaturedCollections collections={collection.collections} />
 
-            <TrendingCollections />
 
             <div style={{background:'#fff', margin:'10px', border:'1px solid rgb(214, 214, 214)'}}>
                 <div style={{margin:'1rem 0 3rem 0'}}>
@@ -130,7 +163,8 @@ const ExplorePage = ({getProducts, setNav1, setNav2, setNav3, setPage, nav: { pa
                 </div>
             </div>
 
-            <SlidingBanner />
+            <Banner imgLarge={DefaultBanner} imgSmall={DefaultBanner} />
+            {/* <SlidingBanner /> */}
 
             <div style={{background:'#fff', margin:'10px', border:'1px solid rgb(214, 214, 214)'}}>
                 <p>Popular Locations</p>
@@ -233,17 +267,33 @@ const ExplorePage = ({getProducts, setNav1, setNav2, setNav3, setPage, nav: { pa
 
 ExplorePage.propTypes = {
     getProducts: PropTypes.func.isRequired,
+    getCollections: PropTypes.func.isRequired,
+    getCollectionsByTagList: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
+    collection: PropTypes.object.isRequired,
+    setMainNav: PropTypes.func.isRequired,
     setNav1: PropTypes.func.isRequired,
     setNav2: PropTypes.func.isRequired,
     setNav3: PropTypes.func.isRequired,
     setPage: PropTypes.func.isRequired,
     nav: PropTypes.object.isRequired,
+    profile: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
     product: state.product,
-    nav: state.nav
+    collection: state.collection,
+    nav: state.nav,
+    profile: state.profile
 });
 
-export default connect(mapStateToProps, { getProducts, setNav1, setNav2, setNav3, setPage })(ExplorePage);
+export default connect(mapStateToProps, { 
+    getProducts, 
+    getCollections,
+    getCollectionsByTagList,
+    setMainNav,
+    setNav1, 
+    setNav2, 
+    setNav3, 
+    setPage 
+})(ExplorePage);

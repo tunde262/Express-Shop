@@ -3,34 +3,34 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Spinner from '../../../../common/Spinner';
-import RecommendedStore from '../../../../page_components/store/related/Recommended_Store';
+import RelatedStores from '../../../../page_components/store/related/RelatedStores';
 
 const ListStores = ({ store, product, slideform2, setSlideForm2, slideform3, setSlideForm3 }) => {
-    const [storesList, setStoresList] = useState([]);
+    // const [storesList, setStoresList] = useState([]);
 
-    useEffect(() => {
-        renderStoresList();
-      }, [store.stores])
+    // useEffect(() => {
+    //     renderStoresList();
+    //   }, [store.stores])
 
 
-    const renderStoresList = () => {
-        setStoresList([]);
-        try {
-            if(store.stores.length > 0) {
-                store.stores.map(storeObj => {
-                    setStoresList(storesList => [...storesList, (
-                        <RecommendedStore product={product} store={storeObj} />
-                    )])       
-                });
-            } else {
-                setStoresList([(
-                    <p style={{margin:'0'}}>No Collections</p>
-                )])
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }
+    // const renderStoresList = () => {
+    //     setStoresList([]);
+    //     try {
+    //         if(store.stores.length > 0) {
+    //             store.stores.map(storeObj => {
+    //                 setStoresList(storesList => [...storesList, (
+    //                     <RecommendedStore product={product} store={storeObj} />
+    //                 )])       
+    //             });
+    //         } else {
+    //             setStoresList([(
+    //                 <p style={{margin:'0'}}>No Collections</p>
+    //             )])
+    //         }
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    // }
 
     return (
         <Fragment>
@@ -41,7 +41,7 @@ const ListStores = ({ store, product, slideform2, setSlideForm2, slideform3, set
             <h3>Stores you may like</h3>
             <p style={{margin:'5px 0', color:'#808080', fontSize:'1rem', fontFamily:'Arial, Helvetica, sans-serif'}}>Subscribe to stores you like for easy access</p>
             <div style={{height:'454px', borderTop:'1px solid rgb(214,214,214)', overflowY:'scroll'}}>
-                {!storesList.length > 0 ? <Spinner /> : storesList}
+                <RelatedStores />
             </div>
 
             <button onClick={() => setSlideForm3(!slideform3)} style={{width:'100%', outline:'none', margin:'0', fontSize:'13px', letterSpacing:'1px', display:'flex', alignItems:'center', justifyContent:'center'}}>

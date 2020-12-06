@@ -101,14 +101,14 @@ export const updateAuth = (formObj) => dispatch => {
 }
 
 // Register User
-export const register = ({ name, email, password }) => async dispatch => {
+export const register = ({ first_name, last_name, email, password, history }) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
         }
     }
 
-    const body = JSON.stringify({ name, email, password });
+    const body = JSON.stringify({ first_name, last_name, email, password });
 
     try {
         const res = await axios.post('/api/users', body, config);
@@ -120,11 +120,18 @@ export const register = ({ name, email, password }) => async dispatch => {
 
         dispatch(loadUser(true, false));
         dispatch(getCurrentProfile());
+        
+        history.push(`account-setup`);
     } catch (err) {
-        const errors = err.response.data.errors;
+        console.log('ERRORS')
+        console.log(err);
+        
+        if(err.response) {
+            const errors = err.response.data.errors;
 
-        if(errors) {
-            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+            if(errors) {
+                errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+            }
         }
 
         dispatch({

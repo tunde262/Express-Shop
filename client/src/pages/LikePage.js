@@ -11,13 +11,27 @@ import Container from '../components/ProductList/Container';
 import AuthModal from '../components/modals/AuthModal';
 import BrandOverview from '../components/Overview/brandOverview/BrandOverview';
 import { getStoreSubscriptions } from '../actions/storeActions';
-import { setNav1 } from '../actions/navActions';
+import { setMainNav, setNav1 } from '../actions/navActions';
 
-const LikePage = ({getLikedProducts, getStoreSubscriptions, setNav1, profile, store, product, auth: { user, isAuthenticated, loading}}) => {
+const LikePage = ({
+    getLikedProducts, 
+    getStoreSubscriptions, 
+    setMainNav,
+    setNav1, 
+    profile, 
+    store, 
+    product, 
+    auth: { 
+        user, 
+        isAuthenticated, 
+        loading
+    }
+}) => {
     const [skip, setSkip] = useState(0);
     const [tableShow1, setTableShow1] = useState('saved');
 
     useEffect(() => {
+        setMainNav('store');
         if(user) {
             getStoreSubscriptions(user._id);
             getLikedProducts(user._id);
@@ -80,6 +94,7 @@ LikePage.propTypes = {
     profile: PropTypes.object.isRequired,
     getStoreSubscriptions: PropTypes.func.isRequired,
     setNav1: PropTypes.func.isRequired,
+    setMainNav: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -89,4 +104,9 @@ const mapStateToProps = state => ({
     profile: state.profile
 });
 
-export default connect(mapStateToProps, { getLikedProducts, getStoreSubscriptions, setNav1 })(LikePage);
+export default connect(mapStateToProps, { 
+    getLikedProducts, 
+    getStoreSubscriptions, 
+    setMainNav,
+    setNav1 
+})(LikePage);

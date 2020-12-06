@@ -182,7 +182,7 @@ const App = () => {
                 {/* Auth Pages */}
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
-                <Route exact path="/success" component={Personalize} />
+                <Route exact path="/account-setup" component={Personalize} />
                 {/*Admin Forms */}
                 <Route exact path="/create-store" component={StoreForm} />
                 <div className="store-table">

@@ -14,9 +14,20 @@ import ProductOverview from '../components/Overview/productOverview/ProductOverv
 import ProductList from '../components/ProductList/ProductList';
 import Container from '../components/ProductList/Container';
 import AuthModal from '../components/modals/AuthModal';
-import { setNav1, setNav2, setNav3 } from '../actions/navActions';
+import { setMainNav, setNav1, setNav2, setNav3 } from '../actions/navActions';
 
-const CategoryPage = ({ product, auth: { isAuthenticated, user, loading }, setNav1, setNav2, setNav3 }) => {
+const CategoryPage = ({ 
+    product, 
+    auth: { 
+        isAuthenticated, 
+        user, 
+        loading 
+    }, 
+    setMainNav, 
+    setNav1, 
+    setNav2, 
+    setNav3 
+}) => {
 
     const [tableShow1, setTableShow1] = useState('shop');
     const [productsLoaded, setProductsLoaded] = useState(false);
@@ -250,6 +261,7 @@ const CategoryPage = ({ product, auth: { isAuthenticated, user, loading }, setNa
     }
     
     useEffect(() => {
+        setMainNav('store');
         if(!productsLoaded) {
             handleNavLists(filter);
         }
@@ -306,6 +318,7 @@ const CategoryPage = ({ product, auth: { isAuthenticated, user, loading }, setNa
 CategoryPage.propTypes = {
     product: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
+    setMainNav: PropTypes.func.isRequired,
     setNav1: PropTypes.func.isRequired,
     setNav2: PropTypes.func.isRequired,
     setNav3: PropTypes.func.isRequired,
@@ -316,4 +329,9 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, { setNav1, setNav2, setNav3 })(CategoryPage);
+export default connect(mapStateToProps, { 
+    setMainNav,
+    setNav1, 
+    setNav2, 
+    setNav3 
+})(CategoryPage);

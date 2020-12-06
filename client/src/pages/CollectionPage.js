@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getCollectionById, addView, getCollectionsByTagList } from '../actions/collectionActions';
 import { getProductsInCollection } from '../actions/productActions';
+import { setMainNav } from '../actions/navActions';
 
 import ProductOverview from '../components/Overview/productOverview/ProductOverview';
 import Footer from '../components/layout/Footer/Footer';
@@ -14,7 +15,9 @@ import Title from '../components/Title';
 import CollectionHeader from '../components/page_components/collection/CollectionHeader';
 import CollectionMain from '../components/page_components/collection/CollectionMain';
 
-const CollectionPage = ({ getCollectionById, 
+const CollectionPage = ({ 
+    setMainNav,
+    getCollectionById, 
     getCollectionsByTagList, 
     getProductsInCollection, 
     collection, 
@@ -38,6 +41,7 @@ const CollectionPage = ({ getCollectionById,
 
 
     useEffect( async () => {
+        setMainNav('store');
         getCollectionById(match.params.id);
 
         window.addEventListener('resize', () => handleWindowSizeChange());
@@ -72,6 +76,7 @@ const CollectionPage = ({ getCollectionById,
 }
 
 CollectionPage.propTypes = {
+    setMainNav: PropTypes.func.isRequired,
     getCollectionById: PropTypes.func.isRequired,
     addView: PropTypes.func.isRequired,
     getCollectionsByTagList: PropTypes.func.isRequired,
@@ -87,4 +92,10 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, { getCollectionById, addView, getCollectionsByTagList, getProductsInCollection  })(CollectionPage);
+export default connect(mapStateToProps, { 
+    setMainNav,
+    getCollectionById, 
+    addView, 
+    getCollectionsByTagList, 
+    getProductsInCollection  
+})(CollectionPage);

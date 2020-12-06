@@ -101,7 +101,7 @@ const StoresList = () => {
     );
 
     return (
-        <div style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center',background:'#fff', margin:'10px', border:'1px solid rgb(214, 214, 214)'}} className="desktop">
+        <div className="store-block-container">
             <FeaturedNav setTableShow1={setTableShow1} tableShow1={tableShow1} />
 
             <div className="profile-settings-transition">

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
-import { setAdminNav } from '../../../actions/navActions';
+import { setMainNav } from '../../../actions/navActions';
 import { getStoreById, deleteStore } from '../../../actions/storeActions';
 import { addProductByName } from '../../../actions/productActions';
 import { addCollectionByName } from '../../../actions/collectionActions';
@@ -44,7 +44,7 @@ import Banner from '../../common/Banner';
 import DefaultBanner from '../../../utils/imgs/placeholderimg.jpg';
 
 const Dashboard = ({ 
-    setAdminNav, 
+    setMainNav, 
     getStoreById, 
     store: { store, loading }, 
     storageLocation,
@@ -72,7 +72,7 @@ const Dashboard = ({
     const [addItemLoading, setAddItemLoading] = useState(false);
 
     useEffect(() => { 
-        setAdminNav(true);
+        setMainNav('admin');
         getStoreById(match.params.id);
 
         console.log(location);
@@ -626,7 +626,7 @@ Dashboard.propTypes = {
     getStoreById: PropTypes.func.isRequired,
     deleteStore: PropTypes.func.isRequired,
     store: PropTypes.object.isRequired,
-    setAdminNav: PropTypes.func.isRequired,
+    setMainNav: PropTypes.func.isRequired,
     addProductByName: PropTypes.func.isRequired,
     addCollectionByName: PropTypes.func.isRequired,
     addLocation: PropTypes.func.isRequired,
@@ -638,4 +638,4 @@ const mapStateToProps = state => ({
     storageLocation: state.location
 })
 
-export default connect(mapStateToProps, { setAdminNav, getStoreById, deleteStore, addProductByName, addCollectionByName, addLocation })(withRouter(Dashboard));
+export default connect(mapStateToProps, { setMainNav, getStoreById, deleteStore, addProductByName, addCollectionByName, addLocation })(withRouter(Dashboard));

@@ -1,11 +1,20 @@
-import { SET_PAGE, SET_NAV1, REMOVE_NAV1, SET_NAV2, REMOVE_NAV2, SET_NAV3, REMOVE_NAV3, SET_ADMIN } from '../actions/types';
+import { 
+    SET_PAGE, 
+    SET_NAV1, 
+    REMOVE_NAV1, 
+    SET_NAV2, 
+    REMOVE_NAV2, 
+    SET_NAV3, 
+    REMOVE_NAV3, 
+    SET_MAIN_NAV, 
+} from '../actions/types';
 
 const initialState = {
     nav1: '',
     nav2: '',
     nav3: '',
     page: '',
-    admin: false,
+    main: '',
     loading: true
 }
 
@@ -20,10 +29,10 @@ export default function(state = initialState, action) {
                 loading: false
             };
         }
-        case SET_ADMIN: {
+        case SET_MAIN_NAV: {
             return {
                 ...state,
-                admin: payload,
+                main: payload,
                 loading: false
             };
         }
