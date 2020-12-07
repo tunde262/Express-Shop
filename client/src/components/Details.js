@@ -1096,17 +1096,19 @@ const Details = ({
                     <div onClick={e => setTableShow1('popular')} className={tableShow1 === "popular" && "active"}><li><p>Popular</p></li></div>
                     <div onClick={e => setTableShow1('nearby')} className={tableShow1 === "nearby" && "active"}><li><p>Nearby</p></li></div>
                 </ul>
-                <div className="header-nav-container mobile">
-                    <div style={{padding:'10px'}}>
-                        <h3 style={{fontSize:'12px', letterSpacing:'1px',color:'#808080'}}>
-                            Pick A Category
-                        </h3>
+                <div className="detail-container">
+                    <div className="header-nav-container">
+                        <div style={{padding:'10px'}}>
+                            <h3 style={{fontSize:'12px', letterSpacing:'1px',color:'#808080'}}>
+                                Pick A Category
+                            </h3>
+                        </div>
+                        <div style={{marginTop:'-2rem'}}>
+                            <Header />
+                        </div>
                     </div>
-                    <div style={{marginTop:'-2rem'}}>
-                        <Header />
-                    </div>
+                    {detailItem}
                 </div>
-                {detailItem}
             </div>
         )
 }

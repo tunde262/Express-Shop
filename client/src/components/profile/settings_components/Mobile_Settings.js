@@ -14,19 +14,22 @@ import Modal from 'react-responsive-modal';
 
 import { getStoreSubscriptions } from '../../../actions/storeActions';
 
-import { addAddress } from '../../../actions/profileActions';
+import { setMainNav, setPage } from '../../../actions/navActions';
 
-const Mobile_Settings = ({ product, store, getStoreSubscriptions, auth: { user, isAuthenticated, loading }, history}) => {
+const Mobile_Settings = ({ setMainNav, setPage, product, store, getStoreSubscriptions, auth: { user, isAuthenticated, loading }, history}) => {
 
     const [sentMixpanel, setSentMixpanel] = useState(false);
 
     const [displayAddressModal, toggleAddressModal] = useState(false);
 
     useEffect(() => {
-        if(user) {
-            getStoreSubscriptions(user._id);
-        }
-    }, [user]);
+        setMainNav('store');
+        setPage('profile');
+
+        // if(user) {
+        //     getStoreSubscriptions(user._id);
+        // }
+    }, []);
 
 
     // const handleMixpanel = () => {
@@ -50,7 +53,7 @@ const Mobile_Settings = ({ product, store, getStoreSubscriptions, auth: { user, 
 
     return (
         <Fragment>
-            <div style={{textAlign:'center', marginTop:'1rem'}}>
+            <div className="mobile-profile-table-container" style={{textAlign:'center'}}>
                 {/* <h3 style={{color: '#333', fontWeight:'300'}}>Hey, {user && user.name}</h3> */}
                 <div className="mobile-profile-table">
                     <div className="profile-table-main">
@@ -78,7 +81,8 @@ Mobile_Settings.propTypes = {
     product: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired,
     getStoreSubscriptions: PropTypes.func.isRequired,
-    addAddress: PropTypes.func.isRequired,
+    setMainNav: PropTypes.func.isRequired, 
+    setPage: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -87,4 +91,8 @@ const mapStateToProps = state => ({
     store: state.store
 });
 
-export default connect(mapStateToProps, {addAddress, getStoreSubscriptions})(withRouter(Mobile_Settings));
+export default connect(mapStateToProps, {
+    setMainNav,
+    setPage,
+    getStoreSubscriptions
+})(withRouter(Mobile_Settings));

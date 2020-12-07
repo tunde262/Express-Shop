@@ -235,7 +235,7 @@ const Profile = ({
     const isTablet = windowWidth <= 1000;
 
     return (
-        <Fragment>
+        <div className="profile-container">
             <div className="store-table-header" style={{padding:'20px 20px 0 20px'}}>
                 {tableHeader}
             </div>
@@ -478,7 +478,7 @@ const Profile = ({
                     </Link> */}
                 </div>
             </Modal>
-        </Fragment>
+        </div>
         // <Link to="/profile">
         // <Link to={isTablet ? "/profile/orders" : {pathname:"/profile",search: "?show=orders"}}>
         //     <div onClick={e => setTableShow2('orders')} className={tableShow2 === "orders" ? "profile-table-nav-items active" : "profile-table-nav-items"}>

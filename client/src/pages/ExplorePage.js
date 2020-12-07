@@ -2,8 +2,7 @@ import React, { useEffect, useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getProducts } from '../actions/productActions';
-import { getCollectionsByTagList, getCollections } from '../actions/collectionActions';
+
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
@@ -30,13 +29,16 @@ import Container from '../components/ProductList/Container';
 import DefaultBanner from '../utils/imgs/placeholderimg.jpg'
 
 import { setMainNav, setNav1, setNav2, setNav3, setPage } from '../actions/navActions';
-import { HorizontalNav } from '../components/common/HorizontalNav';
+import { getFeaturedStores, getTrendingStores } from '../actions/storeActions';
+import { getTrendingCollections, getCollectionsByTagList, getCollections } from '../actions/collectionActions';
+import { getProducts } from '../actions/productActions';
 
 
 import FeaturedStores from '../components/explore_components/stores_featured/StoresList';
 import FeaturedCollections from '../components/explore_components/collections_featured/CollectionsList';
 import TrendingCollections from '../components/explore_components/collections_featured/TrendingCollections';
 import SlidingBanner from '../components/explore_components/sliding_banner/SlidingBanner';
+import PreviewList from '../components/explore_components/PreviewList/Preview_List';
 
 import gainLogo from '../utils/imgs/gainlogo.jpg';
 import categoryImg from '../utils/imgs/personal_care_promo_block.jpg';
@@ -47,6 +49,9 @@ import profileReducer from '../reducers/profileReducer';
 
 const ExplorePage = ({
     getProducts, 
+    getFeaturedStores,
+    getTrendingStores,
+    getTrendingCollections,
     getCollectionsByTagList,
     getCollections,
     setMainNav, 
@@ -74,8 +79,12 @@ const ExplorePage = ({
 
     useEffect(() => {
         getProducts(skip);
+        getFeaturedStores(skip);
+        getTrendingStores(skip);
+
         setMainNav('store');
         setPage('explore');
+
         setNav1('clothing and fashion');
         setNav2('mens clothing and fashion');
         setNav3('mens fashion sweatshirts and hoodies');
@@ -109,9 +118,13 @@ const ExplorePage = ({
         setSentMixpanel(true);
     };
 
-    if(profile.profile && !gotTopCollections) {
-        getCollections(skip);
-        // getCollectionsByTagList(profile.profile.recommendation_tags, skip);
+    if(!gotTopCollections) {
+        if(profile.profile) {
+            getCollectionsByTagList(profile.profile.recommendation_tags, skip);
+        } else {
+            getCollections(skip);
+        }
+
         setGotTopCollections(true)
     }
 
@@ -157,11 +170,13 @@ const ExplorePage = ({
             <FeaturedCollections collections={collection.collections} />
 
 
-            <div style={{background:'#fff', margin:'10px', border:'1px solid rgb(214, 214, 214)'}}>
+            <PreviewList tag_value="shoes" img="https://2j6jnda3hor2rfqci2oskova-wpengine.netdna-ssl.com/wp-content/uploads/2019/04/Yoox-Mens-Clothing-Store-Online.jpg" />
+            
+            {/* <div style={{background:'#fff', margin:'10px', border:'1px solid rgb(214, 214, 214)'}}>
                 <div style={{margin:'1rem 0 3rem 0'}}>
                     <ProductOverview title="Flash Deals" products={products} link={`/home`} />
                 </div>
-            </div>
+            </div> */}
 
             <Banner imgLarge={DefaultBanner} imgSmall={DefaultBanner} />
             {/* <SlidingBanner /> */}
@@ -243,23 +258,11 @@ const ExplorePage = ({
                 </div>
             </div>
 
-            <div style={{background:'#fff', margin:'10px', border:'1px solid rgb(214, 214, 214)'}}>
-                <div style={{margin:'1rem 0 3rem 0'}}>
-                    <ProductOverview title="Toilet Paper" products={products} link={`/home`} />
-                </div>
-            </div>
+            <PreviewList tag_value="toilet paper" img="https://2j6jnda3hor2rfqci2oskova-wpengine.netdna-ssl.com/wp-content/uploads/2019/04/Yoox-Mens-Clothing-Store-Online.jpg" />
 
-            <div style={{background:'#fff', margin:'10px', border:'1px solid rgb(214, 214, 214)'}}>
-                <div style={{margin:'1rem 0 3rem 0'}}>
-                    <ProductOverview title="Halloween" products={products} link={`/home`} />
-                </div>
-            </div>
+            <PreviewList tag_value="tops" img="https://www.ramblersway.com/sites/default/files/product_photos/708-Western-Chambray-Shirt.jpg" />
 
-            <div style={{background:'#fff', margin:'10px', border:'1px solid rgb(214, 214, 214)'}}>
-                <div style={{margin:'1rem 0 3rem 0'}}>
-                    <ProductOverview title="Flash Deals" products={products} link={`/home`} />
-                </div>
-            </div>
+            <PreviewList tag_value="personal care" img="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/tomato-skincare-1596733638.jpg?crop=0.394xw:0.639xh;0.290xw,0.166xh&resize=640:*" />
 
         </div>
     )
@@ -267,6 +270,9 @@ const ExplorePage = ({
 
 ExplorePage.propTypes = {
     getProducts: PropTypes.func.isRequired,
+    getFeaturedStores: PropTypes.func.isRequired,
+    getTrendingStores: PropTypes.func.isRequired,
+    getTrendingCollections: PropTypes.func.isRequired,
     getCollections: PropTypes.func.isRequired,
     getCollectionsByTagList: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
@@ -289,6 +295,9 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, { 
     getProducts, 
+    getFeaturedStores,
+    getTrendingStores,
+    getTrendingCollections,
     getCollections,
     getCollectionsByTagList,
     setMainNav,

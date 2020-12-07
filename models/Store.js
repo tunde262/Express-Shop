@@ -92,6 +92,10 @@ const StoreSchema = new Schema({
     order_value: {
         type: Number
     },
+    view_num: {
+        type: Number,
+        default: 0
+    },
     view_count: [
         {
             user: {

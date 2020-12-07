@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getCart } from '../actions/productActions';
 import { setNav1, setPage, setMainNav } from '../actions/navActions';
@@ -22,21 +22,41 @@ const HomePage = ({
     }, 
     setMainNav,
     setNav1, 
-    setPage
+    setPage,
+    location,
+    history
 }) => {
 
     const [skip, setSkip] = useState(0);
 
     // Nav underline Table
-    const [tableShow1, setTableShow1] = useState('nearby');
+    const [tableShow1, setTableShow1] = useState('');
 
     const [sentMixpanel, setSentMixpanel] = useState(false);
+
+    const [initPage, setInitPage] = useState(false);
     
     useEffect(() => {
         setMainNav('store');
         setNav1('explore');
-        setPage('home')
-    }, []);
+        setPage('home');
+
+        if (location.search) {
+            let query = new URLSearchParams(location.search).get('show')
+            if(query === 'for-you') {
+                setTableShow1('for you');
+            } else if (query === 'popular') {
+                setTableShow1('popular');
+            }
+            else if (query === 'nearby') {
+                setTableShow1('nearby');
+            }
+    
+        } else {
+            setTableShow1('for you');
+        }
+        
+    }, [location.search, tableShow1]);
 
     const handleScroll = (e) => {
         const { offsetHeight, scrollTop, scrollHeight} = e.target
@@ -97,4 +117,9 @@ const mapStateToProps = state => ({
     nav: state.nav
 });
 
-export default connect(mapStateToProps, { getCart, setMainNav, setNav1, setPage })(HomePage);
+export default connect(mapStateToProps, { 
+    getCart, 
+    setMainNav, 
+    setNav1, 
+    setPage 
+})(withRouter(HomePage));

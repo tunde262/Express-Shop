@@ -164,7 +164,7 @@ export const getProductsByStoreId = id => async dispatch => {
             type: SET_PRODUCTS,
             payload: []
         })
-    }dispatch(setAlert('New Product Created', 'success'));
+    }
 };
 
 // Get Collection Products

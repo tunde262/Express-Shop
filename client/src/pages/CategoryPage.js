@@ -301,7 +301,7 @@ const CategoryPage = ({
     // }
 
         return (
-            <Fragment>
+            <div className="collection-page-container">
                 <div className="store-table-header" style={{padding:'20px 20px 0 20px'}}>
                     <CategoryHeader categoryName={categoryName} setTableShow1={setTableShow1} tableShow1={tableShow1} />
                 </div>
@@ -311,7 +311,7 @@ const CategoryPage = ({
                 
                 {/* <Footer /> */}
                 {!loading && !isAuthenticated ? <AuthModal /> : null }
-            </Fragment>
+            </div>
         )
 }
 

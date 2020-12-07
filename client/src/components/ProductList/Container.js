@@ -13,27 +13,36 @@ const Container = ({ product, getProducts, page }) => {
 
     const { products, sortedProducts, loading } = product;
 
-    // const header = this.props.title;
-    
-    let productList;
+    const [containerList, setContainerList] = useState([]);
 
-    if(products === null || loading) {
-        productList = <Spinner />;
-    }
-    else {
-        productList = (
-            <Fragment>
-                {/* <CategoryOverview products={products} category={this.props.category} background={this.props.background} /> */}
-                {/* <div style={{marginBottom: '-3rem'}}><Title title={header} /></div> */}
-                <ProductList page={page} products={sortedProducts} />
-                {/* <Spinner /> */}
-            </Fragment>
-        );
-    }
+    useEffect(() => {
+        renderContainerList();
+    }, [products])
+
+    // const header = this.props.title;
+
+    const renderContainerList = () => {
+        setContainerList([]);
+ 
+        if(products === null || loading) {
+            setContainerList([(
+                <Spinner />
+            )])
+        } else {
+            setContainerList([(
+                <Fragment>
+                    {/* <CategoryOverview products={products} category={this.props.category} background={this.props.background} /> */}
+                    {/* <div style={{marginBottom: '-3rem'}}><Title title={header} /></div> */}
+                    <ProductList page={page} products={sortedProducts} />
+                    {/* <Spinner /> */}
+                </Fragment>
+            )])
+        }
+    } 
 
     return (
         <Fragment>
-            {productList}
+            {!containerList.length > 0 ? <Spinner /> : containerList}
         </Fragment>
     )
 }

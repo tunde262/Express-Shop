@@ -5,20 +5,11 @@ import { Link } from 'react-router-dom';
 const StoresBlock = ({ store }) => {
     return (
         <Link to={`/store/${store._id}`} style={{textDecoration:'none'}}>
-            <div style={
-                { 
-                width:'100%', 
-                borderBottom:'1px solid #e8e8e8', 
-                background:'#fff', 
-                height:'100px',
-                display:'flex', 
-                alignItems:'center'
-                }
-            }>
+            <div className="store-block-container">
                 <div className="store-block">
                     <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
-                        <div>
-                            <img style={{border:'1px solid #e8e8e8', height:'4.1vw', width:'4.1vw', borderRadius:'50%', background:'#e8e8e8'}} src={`/api/stores/image/${store.img_name}`}/>
+                        <div className="store-block-img">
+                            <img src={`/api/stores/image/${store.img_name}`}/>
                         </div>
                     </div>
                     <div style={{display:'flex', margin:'0 5px', justifyContent:'flex-start', alignItems:'center', height:'100%', width:'100%', overflow:'hidden'}}>

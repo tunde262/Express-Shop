@@ -1,5 +1,7 @@
 import {
+    SET_COLLECTIONS,
     GET_COLLECTIONS,
+    SET_TRENDING_COLLECTIONS,
     SET_PROFILE_COLLECTIONS,
     COLLECTION_ERROR,
     DELETE_COLLECTION,
@@ -18,6 +20,7 @@ import {
   const initialState = {
     collections: [],
     profile_collections: [],
+    featured: [],
     collection: null,
     loading: true,
     modalOpen: false,
@@ -40,6 +43,33 @@ import {
           collection: payload,
           loading: false
         };
+      case SET_COLLECTIONS: 
+        const categories = payload;
+        let tempCategories = categories; 
+        
+        if(state.collections.length > 0) {
+            tempCategories = [...state.collections, ...tempCategories ];
+        }
+
+        return {
+            ...state,
+            collections: tempCategories,
+            loading: false
+        };
+      case SET_TRENDING_COLLECTIONS: 
+        const featuredCategories = payload;
+        let tempFeatured = featuredCategories; 
+        
+        if(state.featured.length > 0) {
+            tempFeatured = [...state.featured, ...tempFeatured ];
+        }
+
+        return {
+            ...state,
+            featured: tempFeatured,
+            loading: false
+        };
+      
       case SET_PROFILE_COLLECTIONS:
         // const newProfileCollections = [...state.profile_collections, ...payload];
 

@@ -4,6 +4,8 @@ import { setAlert } from './alertActions';
 import { 
     GET_STORE, 
     GET_STORES, 
+    SET_FEATURED_STORES,
+    SET_TRENDING_STORES,
     GET_SUBSCRIPTIONS, 
     SET_CART_STORES, 
     STORE_ERROR, 
@@ -12,7 +14,8 @@ import {
     ADD_STORE_REVIEW, 
     REMOVE_STORE_REVIEW, 
     CLEAR_STORE, 
-    CLEAR_STORES, 
+    CLEAR_STORES,
+    CLEAR_FEATURED, 
     STORE_DELETED 
 } from './types';
 
@@ -93,6 +96,52 @@ export const getStoreSubscriptions = id => async dispatch => {
     } catch (err) {
         dispatch({
             type: GET_SUBSCRIPTIONS,
+            payload: []
+        })
+    }
+};
+
+// Get For You Products
+export const getFeaturedStores = (skip) => async dispatch => {
+    console.log('FETCHING FEATURED STORES')
+  
+    try {
+        const res = await axios.get(`/api/stores/trending?skip=${skip}`);
+  
+        dispatch({
+            type: SET_FEATURED_STORES,
+            payload: res.data
+        });
+        
+        // dispatch(setAllProductLocations(res.data));
+    } catch (err) {
+        console.log(err)
+        dispatch({
+            type: SET_FEATURED_STORES,
+            payload: []
+        })
+    }
+};
+
+// Get For You Products
+export const getTrendingStores = (skip) => async dispatch => {
+    console.log('FETCHING TRENDING STORES')
+
+    let tempSkip = skip + 50;
+  
+    try {
+        const res = await axios.get(`/api/stores/trending?skip=${tempSkip}`);
+  
+        dispatch({
+            type: SET_TRENDING_STORES,
+            payload: res.data
+        });
+        
+        // dispatch(setAllProductLocations(res.data));
+    } catch (err) {
+        console.log(err)
+        dispatch({
+            type: SET_TRENDING_STORES,
             payload: []
         })
     }
@@ -368,6 +417,14 @@ export const deleteStore = id => async dispatch => {
 export const clearStores = () => dispatch => {
     dispatch({
         type: CLEAR_STORES
+    });
+
+}
+
+// Clear Feature List
+export const clearFeatured = () => dispatch => {
+    dispatch({
+        type: CLEAR_FEATURED
     });
 
 }

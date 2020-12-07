@@ -13,14 +13,18 @@ import BrandOverview from '../../Overview/brandOverview/BrandOverview';
 import Modal from 'react-responsive-modal';
 
 import { getStoreSubscriptions } from '../../../actions/storeActions';
+import { setMainNav, setPage } from '../../../actions/navActions';
 
-const Mobile_Sub = ({ product, store, getStoreSubscriptions, auth: { user, isAuthenticated, loading }, history}) => {
+const Mobile_Sub = ({ setMainNav, setPage, product, store, getStoreSubscriptions, auth: { user, isAuthenticated, loading }, history}) => {
 
     const [sentMixpanel, setSentMixpanel] = useState(false);
 
     const [displayAddressModal, toggleAddressModal] = useState(false);
 
     useEffect(() => {
+        setMainNav('store');
+        setPage('profile');
+
         if(user) {
             getStoreSubscriptions(user._id);
         }
@@ -47,7 +51,7 @@ const Mobile_Sub = ({ product, store, getStoreSubscriptions, auth: { user, isAut
 
     return (
         <Fragment>
-            <div style={{textAlign:'center', marginTop:'1rem'}}>
+            <div className="mobile-profile-table-container" style={{textAlign:'center'}}>
                 {/* <h3 style={{color: '#333', fontWeight:'300'}}>Hey, {user && user.name}</h3> */}
                 <div className="mobile-profile-table">
                     <div className="profile-table-main">
@@ -75,6 +79,8 @@ Mobile_Sub.propTypes = {
     product: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired,
     getStoreSubscriptions: PropTypes.func.isRequired,
+    setMainNav: PropTypes.func.isRequired, 
+    setPage: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -83,4 +89,8 @@ const mapStateToProps = state => ({
     store: state.store
 });
 
-export default connect(mapStateToProps, {getStoreSubscriptions})(withRouter(Mobile_Sub));
+export default connect(mapStateToProps, { 
+    setMainNav, 
+    setPage, 
+    getStoreSubscriptions
+})(withRouter(Mobile_Sub));

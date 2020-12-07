@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Fragment } from 'react'
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import StoreBlock from './StoreBlock';
 import FeaturedNav from './FeaturedNav';
@@ -8,22 +9,46 @@ import FeaturedNav from './FeaturedNav';
 import topStores from '../../../utils/featuredStoreData/TopStoresData';
 import trendingStores from '../../../utils/featuredStoreData/TrendingStoresData';
 
-const StoresList = () => {
+const StoresList = ({ 
+    store: { 
+        featured,
+        trending
+    }
+}) => {
 
     const [topStoreList, setTopStoreList] = useState(topStores);
     const [trendingStoreList, setTrendingStoreList] = useState(trendingStores);
 
     // Nav underline Table
     const [tableShow1, setTableShow1] = useState('top stores');
+
+    const [active, setActive] = useState(false);
+
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        window.addEventListener('resize', () => handleWindowSizeChange());
+
+        return () => window.removeEventListener('resize', () => handleWindowSizeChange());
+    }, []);
+
+    const handleWindowSizeChange = () => {
+        setWindowWidth(window.innerWidth);
+    };
+
+    const handleTableShow1 = (value) => {
+        setTableShow1(value);
+        setActive(false);
+    }
     
     let topStoreContent1;
     let topStoreContent2;
     let topStoreContent3;
  
-    if(topStoreList !== null && topStoreList.length > 0) {
-        const storeList1 = topStoreList.slice(0, 3);
-        const storeList2 = topStoreList.slice(3, 6);
-        const storeList3 = topStoreList.slice(6, 9);
+    if(featured !== null && featured.length > 0) {
+        const storeList1 = featured.slice(0, 3);
+        const storeList2 = featured.slice(3, 6);
+        const storeList3 = featured.slice(6, 9);
         topStoreContent1 = storeList1.map(store => (
             <StoreBlock store={store} />
         ));
@@ -41,10 +66,10 @@ const StoresList = () => {
     let trendingStoreContent2;
     let trendingStoreContent3;
  
-    if(trendingStoreList !== null && trendingStoreList.length > 0) {
-        const storeList1 = trendingStoreList.slice(0, 3);
-        const storeList2 = trendingStoreList.slice(3, 6);
-        const storeList3 = trendingStoreList.slice(6, 9);
+    if(trending !== null && trending.length > 0) {
+        const storeList1 = trending.slice(0, 3);
+        const storeList2 = trending.slice(3, 6);
+        const storeList3 = trending.slice(6, 9);
         trendingStoreContent1 = storeList1.map(store => (
             <StoreBlock store={store} />
         ));
@@ -62,7 +87,7 @@ const StoresList = () => {
     let featuredContent2;
 
     featuredContent = (
-        <div className="store-grid">
+        <div className={active ? "store-grid active" : "store-grid short"}>
             {topStoreList.length > 0 ? (
                 <div className="grid-rows">
                     <div>
@@ -81,7 +106,7 @@ const StoresList = () => {
         </div>
     );
     featuredContent2 = (
-        <div className="store-grid">
+        <div className={active ? "store-grid active" : "store-grid short"}>
             {topStoreList.length > 0 ? (
                 <div className="grid-rows">
                     <div>
@@ -100,9 +125,13 @@ const StoresList = () => {
         </div>
     );
 
+    const isMobile = windowWidth <= 769;
+
+    const isTablet = windowWidth <= 1000;
+
     return (
-        <div className="store-block-container">
-            <FeaturedNav setTableShow1={setTableShow1} tableShow1={tableShow1} />
+        <div className="store-list-container">
+            <FeaturedNav setTableShow1={handleTableShow1} tableShow1={tableShow1} />
 
             <div className="profile-settings-transition">
                 <div className={tableShow1 === 'top stores' ? "profile-settings-container active" : "profile-settings-container"} id="transition-3">
@@ -112,12 +141,30 @@ const StoresList = () => {
                     {featuredContent2}
                 </div>
             </div>
+
+            <div onClick={() => setActive(!active)} style={{width:'100%', height:'50px', color:'#808080', display:'flex', justifyContent:'center', alignItems:'center'}}>
+                {active || !isTablet ? (
+                    <Fragment>
+                        <i style={{fontSize:'14px', margin:'2px 10px 0'}} class="fas fa-chevron-down"></i>
+                        <p style={{margin: '0'}}>View all</p>
+                    </Fragment>
+                ): (
+                    <Fragment>
+                        <i style={{fontSize:'14px', margin:'2px 10px 0'}} class="fas fa-chevron-down"></i>
+                        <p style={{margin: '0'}}>Show more</p>
+                    </Fragment>
+                )}
+            </div>
         </div>
     )
 }
 
 StoresList.propTypes = {
+    store: PropTypes.object.isRequired,
+};
 
-}
+const mapStateToProps = state => ({
+    store: state.store,
+})
 
-export default StoresList;
+export default connect(mapStateToProps, null)(StoresList);

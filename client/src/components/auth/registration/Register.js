@@ -15,7 +15,15 @@ const initialState = {
     password: ''
 };
 
-const Register = ({ setAlert, register, auth: { isAuthenticated }, profile, history }) => {
+const Register = ({ 
+    setAlert, 
+    register, 
+    auth: { 
+        isAuthenticated 
+    }, 
+    profile, 
+    history 
+}) => {
     const [formData, setFormData] = useState(initialState);
 
     const { name, email, password } = formData;

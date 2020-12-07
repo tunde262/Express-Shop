@@ -68,7 +68,7 @@ const Main_Stores = ({store, profile: { profile }}) => {
                 })
             }
         } catch(err) {
-
+            console.log(err);
         }
     }
 
@@ -79,7 +79,7 @@ const Main_Stores = ({store, profile: { profile }}) => {
         //     {orderList}
         // </div>
         <Fragment>
-            <div style={{background:'#fff', margin:'20px 0', border:'1px solid #e8e8e8'}}>
+            <div style={{background:'#fff', margin:'10px', border:'1px solid rgb(214,214,214)'}}>
                 {!storesList.length > 0 ? <Spinner /> : storesList}
             </div>
         </Fragment>

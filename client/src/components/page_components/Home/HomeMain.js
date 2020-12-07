@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -29,12 +29,15 @@ const HomeMain = ({
     getForYouProducts,
     getPopularProducts,
     getNearbyProducts,
-    clearProducts
+    clearProducts,
+    history
 }) => {
 
     const [gotProducts, setGotProducts] = useState(false);
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    const [newSet, setNewSet] = useState(false);
 
     useEffect(() => {
         window.addEventListener('resize', () => handleWindowSizeChange());
@@ -42,8 +45,10 @@ const HomeMain = ({
         if(tableShow1 === 'for you') {
             if(user) {
                 getForYouProducts(skip);
+                console.log('STARTING FOR YOU')
             } else {
                 getProducts(skip);
+                console.log('STARTING FOR YOU UN-AUTH')
             }
         } else if (tableShow1 === 'popular') {
             getPopularProducts(skip);
@@ -66,9 +71,18 @@ const HomeMain = ({
     const isTablet = windowWidth <= 1000;
 
     const handleTableShow1 = (value) => {
-        clearProducts();
-        setTableShow1(value);
-        setSkip(0);
+        if(value !== tableShow1) {
+            if(value === 'for you') {
+                history.push('/home?show=for-you');
+            } else if (value === 'popular') {
+                history.push('/home?show=popular');
+            } else if (value === 'nearby') {
+                history.push('/home?show=nearby');
+            }
+            clearProducts();
+            setSkip(0);
+            setTableShow1(value);
+        }
     }
 
     let pageContent = null;
@@ -156,4 +170,4 @@ export default connect(mapStateToProps, {
     getPopularProducts,
     getNearbyProducts, 
     clearProducts 
-})(HomeMain);
+})(withRouter(HomeMain));

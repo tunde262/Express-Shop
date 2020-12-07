@@ -2181,8 +2181,6 @@ header {
 .mobile-profile-table {
     width: 100%;
     background:rgb(247, 247, 247);
-    border: 1px solid rgb(214, 214, 214);
-    margin-top: 5rem;
 
     & .profile-table-main .profile-table-body {
         padding: 0;
@@ -3104,6 +3102,20 @@ header {
 }
 
 /* Profile Page */
+.profile-container {
+    width: 100%;
+    height: calc(100vh - 57px);
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.mobile-profile-table-container {
+    width: 100%;
+    height: calc(100vh - 57px);
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
 .profile-grid {
     display: grid;
     grid-template-areas:
@@ -3386,6 +3398,13 @@ header {
 }
 
 /*Detail Page*/
+.detail-container {
+    width: 100%;
+    height: calc(100vh - 57px);
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
 #detail-content-wrapper {
     width: 100%;
     padding: 0;
@@ -4333,14 +4352,19 @@ header {
       text-decoration: none;
     }
 
-    & > div li:hover, & > div li:focus {
-        background: #e8e8e8;
+    & > div:hover, & > div:focus {
+        padding-top: 13px;
+        li {
+            background: rgb(247, 247, 247);
+            height: 30px;
+            border-radius: 30px;
+        }
         cursor: pointer;
 
         p,i {
             color: #333;
         }
-    } 
+    }
     
     & > div.active {
       border-bottom: 3px solid #ff4b2b;
@@ -4378,8 +4402,9 @@ header {
     grid-template-columns: repeat(3, 1fr);
     text-align: center; 
 
-    &.store div li p{
+    &.store div li p, &.store div li a{
         font-size: 1rem;
+        text-decoration: none;
     }
     
     & > div {
@@ -4404,7 +4429,7 @@ header {
             color: #808080;
           }
     
-          p {
+          p, a {
               margin: 0;
               font-weight: 600;
               color: #3c4043;
@@ -4419,12 +4444,17 @@ header {
       text-decoration: none;
     }
 
-    & > div li:hover, & > div li:focus {
-        background: #e8e8e8;
+    & > div:hover, & > div:focus {
+        padding-top: 13px;
+        li {
+            background: rgb(247, 247, 247);
+            height: 30px;
+            border-radius: 30px;
+        }
         cursor: pointer;
 
-        p,i {
-            color: #3c4043;
+        p,i,a {
+            color: #0645AD;
         }
     } 
     
@@ -4434,8 +4464,8 @@ header {
       li {
           background-color: transparent;
 
-          p,i {
-              color: #3c4043;
+          p,i,a {
+            color: #0645AD;
           }
       }
     }
@@ -4710,7 +4740,14 @@ header {
     border-radius: 5px 
 }
 
-.store-block-container {
+.store-page-container {
+    width: 100%;
+    height: calc(100vh - 57px);
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.store-list-container {
     display: flex;  
     flex-direction: column;  
     justify-content: center;  
@@ -4718,6 +4755,15 @@ header {
     background: #fff;  
     margin: 10px;  
     border: 1px solid rgb(214, 214, 214)
+}
+
+.store-block-container {
+    width: 100%; 
+    border-bottom: 1px solid #e8e8e8; 
+    background: #fff; 
+    height: 100px;
+    display: flex; 
+    align-items: center; 
 }
 
 .store-block {
@@ -4733,6 +4779,16 @@ header {
 
     &.admin {
         margin: 10px 0;
+    }
+}
+
+.store-block-img {
+    img {
+        border: 1px solid #e8e8e8;  
+        height: 4.1vw;  
+        width: 4.1vw;  
+        border-radius: 50%;  
+        background: #e8e8e8; 
     }
 }
 
@@ -4820,6 +4876,13 @@ header {
             color: rgb(47, 183, 236);
         }
     }
+}
+
+.collection-page-container {
+    width: 100%;
+    height: calc(100vh - 57px);
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .follow-collection-btn {
@@ -5049,6 +5112,16 @@ header {
 .store-grid {
     padding: 0 3vw;
     width: 100%;
+    height: auto;
+    overflow-y: hidden;
+
+    &.short {
+        max-height: 360px;
+    }
+
+    &.active {
+        max-height: 1000px;
+    }
 }
 
 .grid-rows {

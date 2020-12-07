@@ -59,7 +59,7 @@ const Main_Address = ({handleAddressModal, auth: { user }, profile: {profile, lo
                 <span style={{fontSize:'13px', fontWeight:'bold', color:'#0098d3', letterSpacing:'2px', margin:'10px'}}>Add New</span>
                 <i class="fas fa-plus" style={{fontSize:'13px',color:'#0098d3'}}></i>
             </div>
-            <div style={{background:'#fff', margin:'0', border:'1px solid #e8e8e8'}}>
+            <div style={{background:'#fff', margin:'0', borderTop:'1px solid #e8e8e8'}}>
                 <div style={
                     {marginTop:'1rem', 
                     width:'100%', 

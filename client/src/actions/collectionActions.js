@@ -2,6 +2,8 @@ import axios from 'axios';
 import { setAlert } from './alertActions';
 import {
   GET_COLLECTIONS,
+  SET_COLLECTIONS,
+  SET_TRENDING_COLLECTIONS,
   SET_PROFILE_COLLECTIONS,
   COLLECTION_ERROR,
   DELETE_COLLECTION,
@@ -171,6 +173,28 @@ export const getCollectionsByTagList = (tagList, skip) => async dispatch => {
       });
   }
 }
+
+// Get For You Products
+export const getTrendingCollections = (skip) => async dispatch => {
+  console.log('FETCHING TRENDING COLLECTIONS')
+
+  try {
+      const res = await axios.get(`/api/categories/trending?skip=${skip}`);
+
+      dispatch({
+          type: SET_TRENDING_COLLECTIONS,
+          payload: res.data
+      });
+      
+      // dispatch(setAllProductLocations(res.data));
+  } catch (err) {
+      console.log(err)
+      dispatch({
+          type: SET_COLLECTIONS,
+          payload: []
+      })
+  }
+};
 
 // Get products user liked
 export const getLikedCollections = id => async dispatch => {

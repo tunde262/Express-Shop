@@ -28,6 +28,10 @@ const CategorySchema = new Schema({
     cat_order: {
         type: Number
     },
+    view_num: {
+        type: Number,
+        default: 0
+    },
     view_count: [
         {
             user: {

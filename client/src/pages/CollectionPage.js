@@ -59,7 +59,7 @@ const CollectionPage = ({
     }
     
     return (
-        <Fragment>
+        <div className="collection-page-container">
             <div className="store-table-header" id="collection-header">
                 <CollectionHeader setTableShow1={setTableShow1} tableShow1={tableShow1} />
             </div>
@@ -71,7 +71,7 @@ const CollectionPage = ({
             
             {/* <Footer /> */}
             {!loading && !isAuthenticated ? <AuthModal /> : null }
-        </Fragment>
+        </div>
     )
 }
 

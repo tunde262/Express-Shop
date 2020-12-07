@@ -15,8 +15,9 @@ import Modal from 'react-responsive-modal';
 import { getStoreSubscriptions } from '../../../actions/storeActions';
 
 import { addAddress } from '../../../actions/profileActions';
+import { setMainNav, setPage } from '../../../actions/navActions';
 
-const Mobile_Address = ({ addAddress, product, auth: { user, isAuthenticated, loading }, history}) => {
+const Mobile_Address = ({ setMainNav, setPage, addAddress, product, auth: { user, isAuthenticated, loading }, history}) => {
 
     const [sentMixpanel, setSentMixpanel] = useState(false);
 
@@ -39,6 +40,11 @@ const Mobile_Address = ({ addAddress, product, auth: { user, isAuthenticated, lo
         phone:'',
         delivery_instructions:''
     });
+
+    useEffect(() => {
+        setMainNav('store');
+        setPage('profile');
+    }, [])
 
     // const handleMixpanel = () => {
     //     mixpanel.init("1b36d59c8a4e85ea3bb964ac4c4d5889");
@@ -108,7 +114,7 @@ const Mobile_Address = ({ addAddress, product, auth: { user, isAuthenticated, lo
 
     return (
         <Fragment>
-            <div style={{textAlign:'center', marginTop:'1rem'}}>
+            <div className="mobile-profile-table-container" style={{textAlign:'center'}}>
                 {/* <h3 style={{color: '#333', fontWeight:'300'}}>Hey, {user && user.name}</h3> */}
                 <div className="mobile-profile-table">
                     <div className="profile-table-main">
@@ -366,6 +372,8 @@ Mobile_Address.propTypes = {
     store: PropTypes.object.isRequired,
     getStoreSubscriptions: PropTypes.func.isRequired,
     addAddress: PropTypes.func.isRequired,
+    setMainNav: PropTypes.func.isRequired,
+    setPage: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -374,4 +382,9 @@ const mapStateToProps = state => ({
     store: state.store
 });
 
-export default connect(mapStateToProps, {addAddress, getStoreSubscriptions})(withRouter(Mobile_Address));
+export default connect(mapStateToProps, { 
+    setMainNav, 
+    setPage, 
+    addAddress, 
+    getStoreSubscriptions
+})(withRouter(Mobile_Address));

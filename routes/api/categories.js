@@ -81,6 +81,27 @@ router.get('/', async (req, res) => {
     }
 });
 
+// @route GET api/categories
+// @desc Get Trending Categories
+// @access Public
+router.get('/trending', async (req, res) => {
+    console.log('FETCHING POPULAR');
+
+    try {
+        const skip =
+            req.query.skip && /^\d+$/.test(req.query.skip) ? Number(req.query.skip) : 0;
+
+        const categories = await Category.find({}, null, { skip, limit: 11 }).sort({ view_num : -1}).populate('store', ['name', 'img_name'])
+
+        // const categories = await categorie.find();
+
+        res.json(categories);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
 // @route GET api/stores
 // @desc Get Categories by Tag Filter
 // @access Public
@@ -147,7 +168,7 @@ router.get('/store/:id', auth, async (req, res) => {
     }
 });
 
-// @route GET api/products/liked/:id
+// @route GET api/categories/liked/:id
 // @desc Get Liked Categories by user id
 // @access Private
 router.get('/liked/:id', auth, async (req, res) => {
@@ -556,6 +577,30 @@ router.post('/init-views', async (req, res) => {
     }
 });
 
+// Update view count to 0
+router.post('/reset-view-count', async (req, res) => {
+    console.log('RESETING VIEW COUNT');
+    try {
+        const categoryArray = await Category.find();
+
+        for(var x = 0; x < categoryArray.length; x++) { 
+
+            const categoryFields = {};
+            categoryFields.view_num = 0;
+            // Update
+            await Product.findOneAndUpdate(
+                { _id: categoryArray[x].id }, 
+                { $set: categoryFields }, 
+                { new: true }
+            );
+        }
+
+        res.send('SUCCESS');
+    } catch (err) {
+        console.log(err);
+    }
+});
+
 // ---- Interactions -----
 
 // @route PUT api/products/view/:id
@@ -577,6 +622,15 @@ router.put('/view/:id', auth, async (req, res) => {
         }
 
         await category.save();
+
+        const catFields = {};
+        catFields.view_num = category.view_count.length;
+
+        await Category.findOneAndUpdate(
+            { _id: category.id }, 
+            { $set: catFields }, 
+            { new: true }
+        );
 
         res.json(category.view_count);
     } catch (err) {

@@ -138,7 +138,7 @@ const StorePage = ({
     return (
         <div style={{marginTop:'10px', background:'rgb(247, 247, 247)'}}>
             {store.loading && store.store === null ? <Spinner /> : (
-                <Fragment>
+                <div className="store-page-container">
                     {store.store !== null ? (
                         <Fragment>  
                             {store !== null && <Banner imgLarge={DefaultBanner} imgSmall={DefaultBanner} />} 
@@ -266,7 +266,7 @@ const StorePage = ({
                         // <h3>This store doesn't exist</h3>
                         <Spinner />
                     )}
-                </Fragment>
+                </div>
             )}
         </div>
     )

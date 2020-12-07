@@ -18,6 +18,7 @@ import ProfileSettings from '../profile/settings_components/Mobile_Settings';
 import ProfileAddresses from '../profile/address_components/Mobile_Address';
 import ProfilePayments from '../profile/pay_components/Mobile_Pay';
 import ProfileSubscriptions from '../profile/sub_components/Mobile_Sub';
+import ProfileMyStores from '../profile/my_stores_components/Mobile_My_Stores';
 
 // import ProfileOrders from '../profile/order_components/Main_Orders';
 import LikePage from '../../pages/LikePage';
@@ -71,6 +72,7 @@ const Routes = props => {
             <PrivateRoute exact path="/profile/order/:orderId" component={CustomerOrderPage} />
             <PrivateRoute exact path="/profile/settings" component={ProfileSettings} />
             <PrivateRoute exact path="/profile/subscriptions" component={ProfileSubscriptions} />
+            <PrivateRoute exact path="/profile/stores" component={ProfileMyStores} />
             <PrivateRoute exact path="/profile/payments" component={ProfilePayments} />
             <PrivateRoute exact path="/profile/addresses" component={ProfileAddresses} />
             <PrivateRoute exact path="/profile/saved" component={LikePage} />

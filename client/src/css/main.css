@@ -1734,9 +1734,7 @@ header {
 
 .mobile-profile-table {
   width: 100%;
-  background: #f7f7f7;
-  border: 1px solid #d6d6d6;
-  margin-top: 5rem; }
+  background: #f7f7f7; }
   .mobile-profile-table .profile-table-main .profile-table-body {
     padding: 0; }
 
@@ -2415,6 +2413,18 @@ header {
         border-left: 1px solid #8ee7fa; }
 
 /* Profile Page */
+.profile-container {
+  width: 100%;
+  height: calc(100vh - 57px);
+  overflow-x: hidden;
+  overflow-y: scroll; }
+
+.mobile-profile-table-container {
+  width: 100%;
+  height: calc(100vh - 57px);
+  overflow-x: hidden;
+  overflow-y: scroll; }
+
 .profile-grid {
   display: grid;
   grid-template-areas: 'top' 'about' 'creds' 'github';
@@ -2634,6 +2644,12 @@ header {
     z-index: 5; }
 
 /*Detail Page*/
+.detail-container {
+  width: 100%;
+  height: calc(100vh - 57px);
+  overflow-x: hidden;
+  overflow-y: scroll; }
+
 #detail-content-wrapper {
   width: 100%;
   padding: 0;
@@ -3328,10 +3344,14 @@ header {
     display: block;
     padding: 10px 15px 5px 15px;
     text-decoration: none; }
-  .nav-underline > div li:hover, .nav-underline > div li:focus {
-    background: #e8e8e8;
+  .nav-underline > div:hover, .nav-underline > div:focus {
+    padding-top: 13px;
     cursor: pointer; }
-    .nav-underline > div li:hover p, .nav-underline > div li:hover i, .nav-underline > div li:focus p, .nav-underline > div li:focus i {
+    .nav-underline > div:hover li, .nav-underline > div:focus li {
+      background: #f7f7f7;
+      height: 30px;
+      border-radius: 30px; }
+    .nav-underline > div:hover p, .nav-underline > div:hover i, .nav-underline > div:focus p, .nav-underline > div:focus i {
       color: #333; }
   .nav-underline > div.active {
     border-bottom: 3px solid #ff4b2b; }
@@ -3356,8 +3376,9 @@ header {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   text-align: center; }
-  .home-underline.store div li p {
-    font-size: 1rem; }
+  .home-underline.store div li p, .home-underline.store div li a {
+    font-size: 1rem;
+    text-decoration: none; }
   .home-underline > div {
     display: flex;
     justify-content: center;
@@ -3375,7 +3396,7 @@ header {
       .home-underline > div li i {
         margin: 0 10px 5px 0;
         color: #808080; }
-      .home-underline > div li p {
+      .home-underline > div li p, .home-underline > div li a {
         margin: 0;
         font-weight: 600;
         color: #3c4043; }
@@ -3384,17 +3405,21 @@ header {
     display: block;
     padding: 10px 15px 5px 15px;
     text-decoration: none; }
-  .home-underline > div li:hover, .home-underline > div li:focus {
-    background: #e8e8e8;
+  .home-underline > div:hover, .home-underline > div:focus {
+    padding-top: 13px;
     cursor: pointer; }
-    .home-underline > div li:hover p, .home-underline > div li:hover i, .home-underline > div li:focus p, .home-underline > div li:focus i {
-      color: #3c4043; }
+    .home-underline > div:hover li, .home-underline > div:focus li {
+      background: #f7f7f7;
+      height: 30px;
+      border-radius: 30px; }
+    .home-underline > div:hover p, .home-underline > div:hover i, .home-underline > div:hover a, .home-underline > div:focus p, .home-underline > div:focus i, .home-underline > div:focus a {
+      color: #0645AD; }
   .home-underline > div.active {
     border-bottom: 3px solid #ff4b2b; }
     .home-underline > div.active li {
       background-color: transparent; }
-      .home-underline > div.active li p, .home-underline > div.active li i {
-        color: #3c4043; }
+      .home-underline > div.active li p, .home-underline > div.active li i, .home-underline > div.active li a {
+        color: #0645AD; }
   .home-underline.secondary {
     float: right;
     display: block; }
@@ -3584,7 +3609,13 @@ header {
   width: 35px;
   border-radius: 5px; }
 
-.store-block-container {
+.store-page-container {
+  width: 100%;
+  height: calc(100vh - 57px);
+  overflow-x: hidden;
+  overflow-y: scroll; }
+
+.store-list-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -3592,6 +3623,14 @@ header {
   background: #fff;
   margin: 10px;
   border: 1px solid #d6d6d6; }
+
+.store-block-container {
+  width: 100%;
+  border-bottom: 1px solid #e8e8e8;
+  background: #fff;
+  height: 100px;
+  display: flex;
+  align-items: center; }
 
 .store-block {
   display: grid;
@@ -3604,6 +3643,13 @@ header {
   border: 1px solid #d6d6d6; }
   .store-header.admin {
     margin: 10px 0; }
+
+.store-block-img img {
+  border: 1px solid #e8e8e8;
+  height: 4.1vw;
+  width: 4.1vw;
+  border-radius: 50%;
+  background: #e8e8e8; }
 
 .store-details {
   width: 100%;
@@ -3665,6 +3711,12 @@ header {
     .store-socials button:hover {
       background: #e8e8e8;
       color: #2fb7ec; }
+
+.collection-page-container {
+  width: 100%;
+  height: calc(100vh - 57px);
+  overflow-x: hidden;
+  overflow-y: scroll; }
 
 .follow-collection-btn {
   width: 300px;
@@ -3843,7 +3895,13 @@ header {
 
 .store-grid {
   padding: 0 3vw;
-  width: 100%; }
+  width: 100%;
+  height: auto;
+  overflow-y: hidden; }
+  .store-grid.short {
+    max-height: 360px; }
+  .store-grid.active {
+    max-height: 1000px; }
 
 .grid-rows {
   margin-top: 50px;
@@ -4468,6 +4526,11 @@ footer .footer-bottom {
       padding: 1rem; }
   .store-grid {
     padding: 0; }
+    .store-grid.short {
+      max-height: 310px; }
+  .store-block-img img {
+    height: 60px;
+    width: 60px; }
   /* Profiles Page */
   .profile-table {
     grid-template-columns: 1fr;

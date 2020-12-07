@@ -15,8 +15,22 @@ import Modal from 'react-responsive-modal';
 import { getStoreSubscriptions } from '../../../actions/storeActions';
 
 import { addAddress } from '../../../actions/profileActions';
+import { setMainNav, setPage } from '../../../actions/navActions';
 
-const Mobile_Orders = ({ product, store, getStoreSubscriptions, auth: { user, isAuthenticated, loading }, history}) => {
+const Mobile_Orders = ({ 
+    setMainNav, 
+    setPage, 
+    product, 
+    store, 
+    getStoreSubscriptions, 
+    auth: { 
+        user, 
+        isAuthenticated, 
+        loading 
+    }, 
+    history
+}) => {
+
     const [skip, setSkip] = useState(0);
     const [tableShow1, setTableShow1] = useState('completed');
     const [tableShow2, setTableShow2] = useState('orders');
@@ -26,6 +40,9 @@ const Mobile_Orders = ({ product, store, getStoreSubscriptions, auth: { user, is
     const [displayAddressModal, toggleAddressModal] = useState(false);
 
     useEffect(() => {
+        setMainNav('store');
+        setPage('profile');
+
         if(user) {
             getStoreSubscriptions(user._id);
         }
@@ -61,7 +78,7 @@ const Mobile_Orders = ({ product, store, getStoreSubscriptions, auth: { user, is
 
     return (
         <Fragment>
-            <div style={{textAlign:'center', marginTop:'1rem'}}>
+            <div className="mobile-profile-table-container" style={{textAlign:'center'}}>
                 {/* <h3 style={{color: '#333', fontWeight:'300'}}>Hey, {user && user.name}</h3> */}
                 <div className="mobile-profile-table">
                     <div className="profile-table-main">
@@ -90,6 +107,8 @@ Mobile_Orders.propTypes = {
     store: PropTypes.object.isRequired,
     getStoreSubscriptions: PropTypes.func.isRequired,
     addAddress: PropTypes.func.isRequired,
+    setMainNav: PropTypes.func.isRequired, 
+    setPage: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -98,4 +117,9 @@ const mapStateToProps = state => ({
     store: state.store
 });
 
-export default connect(mapStateToProps, {addAddress, getStoreSubscriptions})(withRouter(Mobile_Orders));
+export default connect(mapStateToProps, { 
+    setMainNav, 
+    setPage, 
+    addAddress, 
+    getStoreSubscriptions
+})(withRouter(Mobile_Orders));

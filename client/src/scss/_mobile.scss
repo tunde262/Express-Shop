@@ -69,6 +69,17 @@
 
     .store-grid {
         padding: 0;
+
+        &.short {
+            max-height: 310px;
+        }
+    }
+    
+    .store-block-img {
+        img {
+            height: 60px;
+            width: 60px;
+        }
     }
 
     /* Profiles Page */

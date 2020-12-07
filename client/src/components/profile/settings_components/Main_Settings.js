@@ -37,7 +37,7 @@ const Main_Settings = ({deleteAccount, store, auth: { user }, profile: {profile,
         //     {orderList}
         // </div>
         <Fragment>
-            <div style={{background:'#fff', margin:'20px 0', overflow:'hidden', border:'1px solid rgb(214, 214, 214)'}}>
+            <div style={{background:'#fff', margin:'10px', overflow:'hidden', border:'1px solid rgb(214, 214, 214)'}}>
                 <div className="profile-settings-transition">
                     {/** Transition 1 */}
                     <div className={!slideForm1 ? "profile-settings-container active" : "profile-settings-container"} id="transition-1">
@@ -160,7 +160,7 @@ const Main_Settings = ({deleteAccount, store, auth: { user }, profile: {profile,
                     </div>
                 </div>
             </div>
-            <div style={{background:'#fff', margin:'20px 0', border:'1px solid rgb(214, 214, 214)'}}>
+            <div style={{background:'#fff', margin:'5px 10px', border:'1px solid rgb(214, 214, 214)'}}>
                 <div className="profile-settings-transition">
                     {/** Transition 1 */}
                     <div className={!slideForm2 ? "profile-settings-container active" : "profile-settings-container"} id="transition-3">

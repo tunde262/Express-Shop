@@ -124,6 +124,24 @@ router.get('/me', auth, async (req, res) => {
     }
 });
 
+router.get('/trending', async (req, res) => {
+    console.log('FETCHING POPULAR');
+
+    try {
+        const skip =
+            req.query.skip && /^\d+$/.test(req.query.skip) ? Number(req.query.skip) : 0;
+
+        const stores = await Store.find({}, null, { skip, limit: 9 }).sort({ view_num : -1})
+
+        // const stores = await store.find();
+
+        res.json(stores);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
 //@route GET /:id
 //@desc Get single store by id
 router.get('/:id', async (req, res) => {
@@ -140,6 +158,7 @@ router.get('/:id', async (req, res) => {
         res.status(500).send('Server Error'); 
     }
 });
+
 
 // @route GET api/stores
 // @desc Get Stores by Tag Filter
@@ -515,6 +534,15 @@ router.put('/view/:id', auth, async (req, res) => {
         }
 
         await store.save();
+
+        const storeFields = {};
+        storeFields.view_num = store.view_count.length;
+
+        await Store.findOneAndUpdate(
+            { _id: store.id }, 
+            { $set: storeFields }, 
+            { new: true }
+        );
 
         res.json(store.view_count);
     } catch (err) {
