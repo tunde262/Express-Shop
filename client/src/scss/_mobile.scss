@@ -118,7 +118,7 @@
     .stats {
         max-width: 100vw;
     }
-
+    
     .detail-table {
         grid-template-columns: 1fr;
         grid-template-areas: 
@@ -404,6 +404,10 @@
     
     .header-nav-container {
         margin: 10px 0; 
+
+        &.detail {
+            margin-top: 66px;
+        }
     }
 
     .store-header {
@@ -425,6 +429,27 @@
         .product-admin-secondary {
             display: none;
         }
+    }
+
+    .product-detail-main-container {
+      display: none;
+    } 
+
+    .detail-image-overlay {
+        background: transparent;
+        color:transparent;
+    }
+  
+    .detail-overlay-icon-container:hover {
+        display: none;
+    }
+  
+    .product-detail-image-container {
+        height: calc(20vw + 30px);
+    }
+  
+    .product-detail-image-container-actions {
+        display: flex;
     }
 
     .store-details {

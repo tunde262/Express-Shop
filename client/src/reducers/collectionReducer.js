@@ -126,10 +126,10 @@ import {
 
         return {
             ...state,
-            collections: state.collections.map(collection =>
-                collection._id === action.payload.id ? { ...collection, likes: action.payload.likes } : collection
-            ),
-            collection: tempDetailCollection
+            // collections: state.collections.map(collection =>
+            //     collection._id === action.payload.id ? { ...collection, likes: action.payload.likes } : collection
+            // ),
+            // collection: tempDetailCollection
         };
       case UPDATE_COLLECTION_VIEWS:
           let tempDetail = state.collection;

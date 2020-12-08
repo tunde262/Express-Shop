@@ -29,7 +29,7 @@ class Overview extends Component{
     render() {
         const { cartOverview, cartQty } = this.props.product;
         return (
-            <div style={{marginTop: '10px'}}>
+            <div>
                 <div style={{display: 'flex', alignItems: 'center', padding: '0 50px 0 30px'}}>
                     <h5 style={{fontWeight:'300', color:'#ff4b2b'}}>{this.props.title}</h5>
                     <div style={{flex: '1'}} />

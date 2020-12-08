@@ -439,9 +439,11 @@ export const followCollection = id => async dispatch => {
   try {
     const res = await axios.put(`/api/categories/like/${id}`);
 
+    console.log('UPDATE COLLECTION LIKES');
+
     dispatch({
       type: UPDATE_COLLECTION_LIKES,
-      payload: { id, likes: res.data }
+      // payload: { id, likes: res.data }
     });
   } catch (err) {
     console.log(err)

@@ -30,7 +30,7 @@ const Extra_Elements = ({ slideform1, setSlideForm1 }) => {
                 </div>
             </div>
             <button style={{width:'100%', outline:'none', margin:'36px 0 10px', fontSize:'13px', letterSpacing:'1px', display:'flex', alignItems:'center', justifyContent:'center'}}>
-                Start Shopping
+                Start Shopping Instead
             </button> 
             <div style={{padding:'10px'}}> 
                 <p style={{margin:'0', color:'#808080', fontSize:'1rem', fontFamily:'Arial, Helvetica, sans-serif'}}>You can always manage this information in your <span style={{color:'rgb(47, 183, 236)', fontSize:'1rem'}}>Account Settings</span>.</p>

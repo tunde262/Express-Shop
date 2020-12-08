@@ -38,7 +38,7 @@ export const getCurrentStore = () => async dispatch => {
 
 // Get all stores
 export const getStores = () => async dispatch => {
-    dispatch({ type: CLEAR_STORE });
+    dispatch({ type: CLEAR_STORES });
 
     try {
         const res = await axios.get('/api/stores');
@@ -84,7 +84,6 @@ export const getStoreById = Id => async dispatch => {
 
 // Get stores user current user subscribed too
 export const getStoreSubscriptions = id => async dispatch => {
-    dispatch({ type: CLEAR_STORE });
 
     try {
         const res = await axios.get(`/api/stores/subscriptions/${id}`);
@@ -331,9 +330,11 @@ export const favorite = id => async dispatch => {
     try {
       const res = await axios.put(`/api/stores/favorite/${id}`);
   
+      console.log('UPDATE STORE FAVORITES');
+
       dispatch({
         type: UPDATE_STORE_FAVORITES,
-        payload: { id, favorites: res.data }
+        // payload: { id, favorites: res.data }
       });
     } catch (err) {
       dispatch({

@@ -1033,18 +1033,7 @@ header {
   grid-area: product-actions;
   margin-top: -1rem; }
 
-  .product-detail-main-container {
-    width:100%; 
-    display:grid; 
-    grid-template-columns:repeat(2,1fr);
-    border:2px dashed #cecece;
-  }
-
-  .product-detail-image-container {
-    position: relative;
-    margin: 10px; 
-    width: 50%; 
-  }
+  
 
   .product-admin-main {
     grid-area: main;
@@ -1119,9 +1108,6 @@ header {
   }
 
   @media screen and (max-width: 768px) {
-    .product-detail-main-container {
-      display: none;
-    }
 
     .admin-image-overlay {
       display: none;
@@ -1135,89 +1121,6 @@ header {
       display: flex;
     }
   }
-
-
-  /* ----------- Detail Page Images -------------- */
-
-  .product-detail-image-container {
-    position: relative;
-    margin: 10px; 
-    width: 20vw; 
-    height: calc(20vw);
-  }
-
-  .detail-image-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.2);
-    color:#fff;
-    display: flex;
-    justify-content: space-between;
-    opacity: 0;
-  }
-
-  .detail-image-overlay:hover {
-    opacity: 1;
-  }
-
-  .detail-overlay-icon-container {
-    height: 100%;
-    width: 5vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-  }
-
-  .detail-overlay-icon-container:hover {
-    background: rgba(46, 49, 49, 0.2);
-  }
-
-  .product-detail-image-container img {
-    width: 100%; 
-    height: calc(20vw);
-  }
-
-  .product-detail-image-container-actions {
-    display: none; 
-    justify-content: space-around; 
-    align-items: flex-end; 
-    height: 30px;
-  }
-
-  .detail-image-icon-container {
-    height: 25px; 
-    width: 25px; 
-    border-radius: 50%;
-    background: #cecece; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center;
-  }
-
-  @media screen and (max-width: 768px) {
-    .detail-image-overlay {
-      background: transparent;
-      color:transparent;
-    }
-
-    .detail-overlay-icon-container:hover {
-      display: none;
-    }
-
-    .product-detail-image-container {
-      height: calc(20vw + 30px);
-    }
-
-    .product-detail-image-container-actions {
-      display: flex;
-    }
-  }
-
-  /* ----------------------------- END --------------------------- */
 
   .editor {
     width: 100%;

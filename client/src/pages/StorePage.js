@@ -87,32 +87,34 @@ const StorePage = ({
     }
 
     const handleSubscribe= (detailStore) => {
-        favorite(detailStore._id);
-        setSubscribedToo(!subscribedToo);
+        if (profile.profile) {
+            favorite(detailStore._id);
+            setSubscribedToo(!subscribedToo);
 
-        // Check if product already liked by same user
-        if(detailStore.favorites.filter(favorite => favorite.user.toString() === user._id).length > 0) {
-            mixpanel.track("Store Un-Bookmark", {
-                "Store Name": detailStore.name,
-                "Store Category": detailStore.category,
-                // "Store Rating": cartIds,
-                "Total Favorites": detailStore.favorites.length - 1,
-                "Total Reviews": detailStore.reviews.length,
-                "Store ID": detailStore._id,
-            });
-            
-            mixpanel.people.increment("Saved Stores", -1);
-        } else {
-            mixpanel.track("Store Bookmark", {
-                "Store Name": detailStore.name,
-                "Store Category": detailStore.category,
-                // "Store Rating": cartIds,
-                "Total Favorites": detailStore.favorites.length + 1,
-                "Total Reviews": detailStore.reviews.length,
-                "Store ID": detailStore._id,
-            });
-            
-            mixpanel.people.increment("Saved Stores");
+            // Check if product already liked by same user
+            if(detailStore.favorites.filter(favorite => favorite.user.toString() === user._id).length > 0) {
+                mixpanel.track("Store Un-Bookmark", {
+                    "Store Name": detailStore.name,
+                    "Store Category": detailStore.category,
+                    // "Store Rating": cartIds,
+                    "Total Favorites": detailStore.favorites.length - 1,
+                    "Total Reviews": detailStore.reviews.length,
+                    "Store ID": detailStore._id,
+                });
+                
+                mixpanel.people.increment("Saved Stores", -1);
+            } else {
+                mixpanel.track("Store Bookmark", {
+                    "Store Name": detailStore.name,
+                    "Store Category": detailStore.category,
+                    // "Store Rating": cartIds,
+                    "Total Favorites": detailStore.favorites.length + 1,
+                    "Total Reviews": detailStore.reviews.length,
+                    "Store ID": detailStore._id,
+                });
+                
+                mixpanel.people.increment("Saved Stores");
+            }
         }
     }
 
@@ -191,9 +193,11 @@ const StorePage = ({
                                                     ) : null}
                                                 </div>
                                                 
-                                                <p style={{color:'#808080', fontWeight:'600'}}>Wholesaler</p>
+                                                <p style={{color:'#808080', fontWeight: '600'}}>Clothing & Fashion</p>
                                             </div>
-                                            <p id="store-description" className="desktop" style={{color:'#808080'}}>{store.store.description}</p>
+                                            <div style={{maxHeight:'40px', overflow:'hidden', lineHeight:'15px'}} id="store-description">
+                                                <p className="line-clamp desktop" style={{color:'#808080', fontFamily:' Arial, Helvetica,sans-serif'}}>{store.store.description}</p>
+                                            </div>
                                             
                                             <div className="store-socials desktop" id="store-socials">
                                                 {subscribedToo ? (
@@ -221,8 +225,8 @@ const StorePage = ({
                                     </div>
                                     {isMobile && (
                                         <Fragment>
-                                            <div id="store-description-mobile">
-                                                <p style={{color:'#808080'}}>{store.store.description}</p>
+                                            <div style={{maxHeight:'40px', overflow:'hidden', lineHeight:'15px'}} id="store-description-mobile">
+                                                <p className="line-clamp" style={{color:'#808080', fontFamily:' Arial, Helvetica,sans-serif'}}>{store.store.description}</p>
                                             </div>
                                             <div className="store-socials" id="store-socials-mobile">
                                                 {subscribedToo ? (

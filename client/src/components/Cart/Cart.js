@@ -99,7 +99,7 @@ const Cart = ({ history, getCart, product, match }) => {
     }
 
     return (
-        <Fragment>
+        <div className="collection-page-container">
             <div className="store-table-header" style={{padding:'20px 20px 0 20px'}}>
                 <div style={{display:'flex', color:'#ff4b2b', width:'100%', padding:'10px 0', fontSize:'0.8rem', justifyContent:'flex-start', alignItems:'center'}}>
                     <i class="fas fa-long-arrow-alt-left"></i>
@@ -244,7 +244,7 @@ const Cart = ({ history, getCart, product, match }) => {
                     </div>
                 </div>
             </div>
-        </Fragment>
+        </div>
         // <section>
         //     <BackButton onClick={goBack}><i className="fas fa-arrow-left"></i></BackButton>
         //     {/* {cartContent} */} 

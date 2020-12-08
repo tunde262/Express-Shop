@@ -12,6 +12,7 @@ export default class TextEditor extends Component {
 
   state = {
     editorState: EditorState.createEmpty(),
+    fetchData: false
   };
 
   componentDidMount(){
@@ -37,8 +38,17 @@ export default class TextEditor extends Component {
   };
 
   render() {
-    const { editorState } = this.state;
+    const { editorState, fetchData } = this.state;
     console.log(convertToRaw(editorState.getCurrentContent()));
+
+    let newState;
+    if(this.props.descriptionObj !== null && !fetchData) {
+       newState = EditorState.createWithContent(
+        convertFromRaw(JSON.parse(this.props.descriptionObj))
+      );
+      this.setState({editorState: newState, fetchData: true});
+      console.log(newState)
+    }
     return (
       <div style={{background:'#fff', border:'1px solid rgb(214, 214, 214)'}}>
         <Editor
@@ -48,10 +58,10 @@ export default class TextEditor extends Component {
           editorClassName="editorClassName"
           onEditorStateChange={this.onEditorStateChange}
         />
-        {/* <textarea
+        <textarea
           disabled
           value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}
-        ></textarea> */}
+        ></textarea>
       </div>
     );
   }

@@ -41,6 +41,9 @@ const StoreSchema = new Schema({
     stripe_id: {
         type: String
     },
+    department: {
+        type: String
+    },
     products: [
         {
             type: Schema.Types.ObjectId,

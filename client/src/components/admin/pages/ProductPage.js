@@ -1748,7 +1748,7 @@ const ProductPage = ({
     };
 
     return (
-        <Fragment>
+        <div className="detail-container">
             <div className="store-table-header" style={{padding:'20px 20px 0 20px'}}>
                 {pageHeader}
             </div>
@@ -2210,7 +2210,7 @@ const ProductPage = ({
                     </div>
                 </div>
             </Modal>
-        </Fragment>
+        </div>
     )
 }
 

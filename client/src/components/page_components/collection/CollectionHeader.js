@@ -36,6 +36,8 @@ const CollectionHeader = ({
 
     useEffect(() => {
         window.addEventListener('resize', () => handleWindowSizeChange());
+
+        return () => window.removeEventListener('resize', () => handleWindowSizeChange());
     }, []);
 
     const handleWindowSizeChange = () => {

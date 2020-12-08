@@ -8,14 +8,58 @@ import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';
 import mixpanel from 'mixpanel-browser';
 
+import { followCollection } from '../../../actions/collectionActions';
 import Spinner from '../../common/Spinner';
 
-const CollectionCard = ({ auth: { user }, preview, collection }) => {
+const CollectionCard = ({ auth: { user }, preview, collection, followCollection }) => {
     const [collectionImages, setCollectionImages] = useState([]);
+
+    const [checkFollowing, setCheckFollowing] = useState(false);
+    const [following, setFollowing] = useState(false);
 
     useEffect(() => {
         renderCollectionImages();
-      }, [collection.items])
+    }, [collection.items])
+
+
+    const handleFollow = (detailCollection) => {
+        if(user) {
+            followCollection(detailCollection._id);
+            setFollowing(!following);
+
+            // Check if product already liked by same user
+            if(detailCollection.likes.filter(like => like.user.toString() === user._id).length > 0) {
+                mixpanel.track("Collection Un-Bookmark", {
+                    "Collection Name": detailCollection.name,
+                    // "Collection Rating": cartIds,
+                    "Total Followers": detailCollection.likes.length - 1,
+                    "Collection ID": detailCollection._id,
+                });
+                
+                mixpanel.people.increment("Saved Collections", -1);
+            } else {
+                mixpanel.track("Collection Bookmark", {
+                    "Collection Name": detailCollection.name,
+                    "Total Favorites": detailCollection.likes.length + 1,
+                    "Collection ID": detailCollection._id,
+                });
+                
+                mixpanel.people.increment("Saved Collections");
+            }
+        }
+    }
+
+    if(user && collection && !checkFollowing) {
+        if(collection.likes.length > 0) {
+            collection.likes.map(like => {
+                if (like.user === user._id) {
+                    setFollowing(true);
+                }
+            })
+        }  
+
+        setCheckFollowing(true);
+    }
 
 
     const renderCollectionImages = async () => {
@@ -172,9 +216,30 @@ const CollectionCard = ({ auth: { user }, preview, collection }) => {
                 ) : collectionImages}
             </div>  
             <div style={{padding:'10px', width:'100%', background:'rgb(247, 247, 247)'}}>
+                <Link to={`/collection/${_id}`} style={{margin:'0',}}>{name}</Link>
+                <p style={{margin:'0 0', color:'#808080', fontSize:'12px'}}>20.6k followers</p>
+                <div className="store-socials store">
+                    {following ? (
+                        <button 
+                            className="active"
+                            style={{width:'100%', margin:'10px 0'}}
+                            onClick={collection ? () => handleFollow(collection) : undefined}
+                        >
+                            Following
+                            <i style={{marginLeft:'10px', fontSize:'12px'}} class="fas fa-check"></i>
+                        </button>
+                    ) : (
+                        <button
+                            style={{width:'100%', margin:'10px 0',}}
+                            onClick={collection ? () => handleFollow(collection) : undefined}
+                        >
+                            Follow
+                            <i style={{marginLeft:'10px', fontSize:'12px'}} class="fas fa-plus"></i>
+                        </button>
+                    )}
+                </div>
                 
-                <p style={{margin:'0 0 1rem 0', color:'#808080', fontSize:'12px'}}>20.6k monthly shoppers</p>
-                <button style={{width:'100%', background:'#e8e8e8', color:'#808080', border:'#e8e8e8', margin:'0'}}>Follow</button>
+                {/* <button style={{width:'100%', background:'#e8e8e8', color:'#808080', border:'#e8e8e8', margin:'0'}}>Follow</button> */}
                 {/* <h3>{name}</h3> */}
             </div>
         </div>
@@ -183,13 +248,14 @@ const CollectionCard = ({ auth: { user }, preview, collection }) => {
 
 CollectionCard.propTypes = {
     auth: PropTypes.object.isRequired,
+    followCollection: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
     auth: state.auth,
 });
 
-export default connect(mapStateToProps, null)(CollectionCard);
+export default connect(mapStateToProps, { followCollection })(CollectionCard);
 
 
 

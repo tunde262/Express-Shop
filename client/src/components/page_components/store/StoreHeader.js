@@ -101,10 +101,12 @@ const StoreHeader = ({ store: { store, loading }, admin, setTable }) => {
                                         ) : null}
                                     </div>
                                     
-                                    <p style={{color:'#808080', fontWeight:'600'}}>Wholesaler</p>
+                                    <p style={{color:'#808080', fontWeight:'600'}}>Clothing & Fashion</p>
                                 </div>
-
-                                <p id="store-description" className="desktop" style={{color:'#808080', textAlign:'start'}}>{store && store.description}</p>
+                                
+                                <div style={{maxHeight:'40px', overflow:'hidden', lineHeight:'15px'}} className="desktop" id="store-description">
+                                    <p className="line-clamp" style={{color:'#808080', textAlign:'start', fontFamily:' Arial, Helvetica,sans-serif'}}>{store && store.description}</p>
+                                </div>
                                 
                                 <div className="store-socials desktop" id="store-socials">
                                     <Link to={store && {pathname:`/admin/${store._id}`,search: "?show=edit"}}>

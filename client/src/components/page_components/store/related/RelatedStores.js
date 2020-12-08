@@ -8,8 +8,9 @@ import Spinner from '../../../common/Spinner';
 import RecommendedStore from './Recommended_Store';
 
 import mixpanel from 'mixpanel-browser';
+import { favorite } from '../../../../actions/storeActions';
 
-const RelatedStores = ({ store, product}) => {
+const RelatedStores = ({ store, product, profile, favorite }) => {
 
     const [storesList, setStoresList] = useState([]);
 
@@ -25,7 +26,7 @@ const RelatedStores = ({ store, product}) => {
                 store.stores.map(async storeObj => {
                     const res = await axios.get(`/api/products/store/${storeObj._id}`);
                     setStoresList(storesList => [...storesList, (
-                        <RecommendedStore products={res.data} store={storeObj} />
+                        <RecommendedStore products={res.data} store={storeObj} profile={profile} favorite={favorite} />
                     )])       
                 });
             } else {
@@ -49,11 +50,14 @@ const RelatedStores = ({ store, product}) => {
 RelatedStores.propTypes = {
     store: PropTypes.object.isRequired,
     product: PropTypes.object.isRequired,
+    profile: PropTypes.object.isRequired,
+    favorite: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
     store: state.store,
-    product: state.product
+    product: state.product,
+    profile: state.profile
 })
 
-export default connect(mapStateToProps, null)(RelatedStores);
+export default connect(mapStateToProps, { favorite })(RelatedStores);

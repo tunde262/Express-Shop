@@ -90,9 +90,9 @@ export default function(state = initialState, action) {
         case UPDATE_STORE_FAVORITES:
             return {
                 ...state,
-                stores: state.stores.map(store => 
-                    store._id === payload.id ? { ...store, favorites: payload.favorites } : store
-                ),
+                // stores: state.stores.map(store => 
+                //     store._id === payload.id ? { ...store, favorites: payload.favorites } : store
+                // ),
                 loading: false
             };
         case UPDATE_STORE_VIEWS:

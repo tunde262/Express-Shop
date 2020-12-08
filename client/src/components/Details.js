@@ -2,6 +2,12 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
+
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import draftToHtml from "draftjs-to-html";
+
 import { 
     handleDetail, 
     addToCart, 
@@ -12,9 +18,10 @@ import {
     getCart, 
     addReview, 
     deleteReview, 
-    getCategoryProducts 
+    getCategoryProducts,
+    clearProducts
 } from '../actions/productActions';
-import { getStoresByTag } from '../actions/storeActions';
+import { getStoresByTag, favorite } from '../actions/storeActions';
 import { getProductVariants } from '../actions/variantActions';
 import { setAlert } from '../actions/alertActions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -27,12 +34,13 @@ import Footer from '../components/layout/Footer/Footer';
 import Modal from 'react-responsive-modal';
 import { ButtonContainer } from './Button';
 import { BackButton } from './common/BackButton';
-import { setNav1 } from '../actions/navActions';
+import { setNav1, setMainNav } from '../actions/navActions';
 import { openCollectionModal } from '../actions/collectionActions';
 import Spinner from './common/Spinner';
 import ButtonSpinner from './common/ButtonSpinner';
 import ProductOverview from './Overview/productOverview/ProductOverview';
 import BrandOverview from './Overview/brandOverview/BrandOverview';
+import ImageOverview from './Overview/imageOverview/ImageOverview';
 import TableDetails from './TableDetails/TableDetails';
 import { HorizontalNav } from '../components/common/HorizontalNav';
 import Header from './header/Header';
@@ -47,11 +55,13 @@ const Details = ({
     auth: {
         user
     },
+    profile,
     variant,
     store,
     match, 
     history, 
     addToCart, 
+    clearProducts,
     addTotals, 
     getCart,
     openModal,
@@ -62,8 +72,10 @@ const Details = ({
     deleteReview,
     handleDetail,
     getStoresByTag,
+    favorite,
     getCategoryProducts,
     setNav1,
+    setMainNav,
     openCollectionModal,
     setAlert
 }) => {
@@ -79,10 +91,16 @@ const Details = ({
     const [displayModal, toggleModal] = useState(false);
     const [varsLoaded, setVarsLoaded] = useState(false);
 
-    const [tableShow1, setTableShow1] = useState('for you');
+    const [tableShow1, setTableShow1] = useState('');
+
+    // Item Store
+    const [subscribedToo, setSubscribedToo] = useState(false);
+    const [checkSub, setCheckSub] = useState(false);
 
     // Has Main Image Index Been Gotten
     const [gotIndex, setGotIndex] = useState(false);
+
+    const [gotDescription, setGotDescription] = useState(false);
 
     // Has view been added by profile if auth
     const [sentView, setSentView] = useState(false);
@@ -132,6 +150,8 @@ const Details = ({
     const flavorArray = [];
     const materialArray = [];
 
+    const [descriptionState, setDescriptionState] = useState(null);
+
     // Button loader
     const [cartLoading, setCartLoading] = useState(true);
 
@@ -148,6 +168,7 @@ const Details = ({
     const [skip, setSkip] = useState(0);
 
     useEffect(() => {
+        setMainNav('store');
         handleDetail(match.params.id);
         getProductVariants(match.params.id);
 
@@ -178,6 +199,65 @@ const Details = ({
     const goBack = () => {
         history.goBack();
     }
+
+    const handleTableShow1 = (value) => {
+        if(value !== tableShow1) {
+            if(value === 'for you') {
+                history.push('/home?show=for-you');
+            } else if (value === 'popular') {
+                history.push('/home?show=popular');
+            } else if (value === 'nearby') {
+                history.push('/home?show=nearby');
+            }
+            clearProducts();
+            setSkip(0);
+            setTableShow1(value);
+        }
+    }
+
+    const handleSubscribe= (detailStore) => {
+        if (user) {
+            favorite(detailStore._id);
+            setSubscribedToo(!subscribedToo);
+
+            // Check if product already liked by same user
+            if(detailStore.favorites){
+                if(detailStore.favorites.filter(favorite => favorite.user.toString() === user._id).length > 0) {
+                    mixpanel.track("Store Un-Bookmark", {
+                        "Store Name": detailStore.name,
+                        "Store Category": detailStore.category,
+                        // "Store Rating": cartIds,
+                        "Total Favorites": detailStore.favorites.length - 1,
+                        "Total Reviews": detailStore.reviews.length,
+                        "Store ID": detailStore._id,
+                    });
+                    
+                    mixpanel.people.increment("Saved Stores", -1);
+                } else {
+                    mixpanel.track("Store Bookmark", {
+                        "Store Name": detailStore.name,
+                        "Store Category": detailStore.category,
+                        // "Store Rating": cartIds,
+                        "Total Favorites": detailStore.favorites.length + 1,
+                        "Total Reviews": detailStore.reviews.length,
+                        "Store ID": detailStore._id,
+                    });
+                    
+                    mixpanel.people.increment("Saved Stores");
+                }
+            }
+        }
+    }
+
+    if(user && detailProduct && profile.subscriptions.length > 0 && !checkSub) {
+        profile.subscriptions.map(subscription => {
+            if (subscription._id === detailProduct.store._id.toString()) {
+                setSubscribedToo(true);
+            }
+        })
+        
+        setCheckSub(true);
+    }  
 
     const onAddToCart = (id) => {
         addToCart(id);
@@ -225,7 +305,7 @@ const Details = ({
         }
         if (materialState.length > 0) {
             tempVars = [...tempVars.filter(prodVar => prodVar.material === selectedMaterial)];
-        }
+        }http://localhost:3000/admin/5f73eea1ce775100176937a0
 
         selectedVariant = tempVars[0];
 
@@ -431,8 +511,49 @@ const Details = ({
 
     if(!productsLoaded && detailProduct) {
         getCategoryProducts(detailProduct.category, skip);
-        setProductsLoaded(true);
+        setProductsLoaded(true)
     }
+
+    // if (detailProduct && !gotDescription) {
+    //     console.log('DESCRIPTION BLOCK')
+
+    //     let unRawState;
+
+    //     if(detailProduct.description !== null) {
+    //         unRawState = EditorState.createWithContent(
+    //             convertFromRaw(JSON.parse(detailProduct.description))
+    //         );
+        
+    //         console.log(unRawState)
+
+    //         console.log(draftToHtml(convertToRaw(unRawState.getCurrentContent())))
+            
+    //         const unRawDescription = draftToHtml(convertToRaw(unRawState.getCurrentContent()));
+
+    //         setDescriptionState(unRawDescription);
+    //     }
+
+        
+    //     // let editorState = detailProduct.description
+    //     // const rawContentState = editorState.getCurrentContent();
+ 
+    //     // const markup = draftToHtml(
+    //     //     rawContentState
+    //     // );
+
+    //     // console.log(markup)
+
+    //     setGotDescription(true)
+    // }
+
+    // let htmlDescription;
+
+    // if(descriptionState !== null) {
+    //     const descString = descriptionState;
+    //     htmlDescription = descString.substring(1, descString.length-1);
+
+    //     console.log(htmlDescription);
+    // }
 
     let varKeyList = [];
     let varValueList = [];
@@ -814,6 +935,10 @@ const Details = ({
                                         <i class="fas fa-chevron-right"></i>
                                     </div>
                                 </div> */}
+                                <div className="mobile" style={{width:'100%', background:'yellow', overflow:'hidden'}}>
+                                    <ImageOverview images={img_gallery} title="Imgs" changeImage={changeImage} showImage={showImage} detailProduct={detailProduct} />
+                                </div>
+
                                 <div className="detail-image-container desktop">
                                     {detailProduct && img_gallery && img_gallery.length > 0 && <img src={`/api/products/image/${img_gallery[showImage].img_name}`} className="img-fluid" alt="product" />}
                                     <div className="detail-image-overlay">
@@ -856,6 +981,7 @@ const Details = ({
                                 <div style={{marginTop:'10px'}}>
                                     <p style={{color:'#808080', fontWeight:'bold', fontSize:'12px'}}><i style={{marginRight:'10px'}} class="far fa-hand-pointer"></i> Click image for more photos...</p>
                                 </div>
+                                
                                 <div className="product-detail-main-container">
                                     {img_gallery.map((item, index) => {
                                         if (index === showImage) {
@@ -879,10 +1005,9 @@ const Details = ({
                             <div class="detail-info">
                                 <div class="detail-status-box">
                                     <div className="detail-status-box-header">
-                                <div><p style={{color:'#333', fontWeight:'bold'}}>{detailProduct.name}:{selectedColor} {selectedSize} {selectedType} {selectedFit} {selectedWeight} {selectedMaterial} {selectedBundle} {selectedScent} {selectedFlavor}</p></div>
+                                        <div><p style={{color:'#333', fontWeight:'bold'}}>{detailProduct.name}:{selectedColor} {selectedSize} {selectedType} {selectedFit} {selectedWeight} {selectedMaterial} {selectedBundle} {selectedScent} {selectedFlavor}</p></div>
                                         <div>
-                                            {/* <span>{detailProduct.likes.length > 0 && <span>{detailProduct.likes.length}</span>}</span>{' '}
-                                            {liked ? <i style={{color:'#ff4b2b', fontSize:'1.4rem', margin:'1rem 1rem 0 0'}} onClick={() => addLike(detailProduct._id)} class="fas fa-heart"></i> : <i onClick={() => addLike(detailProduct._id)} style={{color:'#808080', margin:'1rem 1rem 0 0'}} className="far fa-heart detail-heart"></i>} */}
+                                            <i style={{color:'#808080', margin:'1rem 1rem 0 0', fontSize:'20px'}} onClick={handleCollectionModalOpen} class="far fa-bookmark"></i>
                                         </div>
                                     </div>
                                     <h3 style={{color:'#ff4b2b', marginTop:'-1rem', fontWeight:'bold'}}>${detailProduct.price}</h3>
@@ -895,17 +1020,23 @@ const Details = ({
                                             <Link to={"/store/" + detailProduct.store._id}>
                                                 <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${detailProduct.store.img_name}`} alt="img" />
                                             </Link>
-                                            <div style={{ display: 'flex', flexDirection:'column', marginTop:'0.5rem'}}>
+                                            <div style={{ display: 'flex', flexDirection:'column', lineHeight:'17px', marginTop:'0.5rem'}}>
                                                 <a href={"https://www.cardboardexpress.com/store/" + detailProduct.store._id}>
                                                     {detailProduct.store.name}
                                                 </a>
-                                                <p style={{color:'#808080'}}>Wholesaler</p>
+                                                <p style={{color:'#808080', fontSize:'13px', fontFamily:'Arial, Helvetica,sans-serif'}}>Wholesaler</p>
                                                 {/* <Link to={"/location/" + detailProduct.locationId._id} style={{color:'#808080'}}>Wholesaler</Link> */}
                                             </div>
                                         </div>
-                                        {/* <div style={{display:'flex', paddingTop:'10px', color:'#808080', alignItems: 'center'}}>
-                                            <p style={{fontWeight:500}}>Subscribe <i style={{marginLeft:'10px'}} class="far fa-bookmark"></i></p>
-                                        </div> */}
+                                        {subscribedToo ? (
+                                            <div className="detail-sub-btn active" onClick={() => handleSubscribe(detailProduct.store)}>
+                                                <p style={{fontWeight:'500', margin:'0'}}>Subscribed <i style={{marginLeft:'10px'}} class="fas fa-check"></i></p>
+                                            </div>
+                                        ) : (
+                                            <div className="detail-sub-btn" onClick={() => handleSubscribe(detailProduct.store)}>
+                                                <p style={{fontWeight:'500', margin:'0'}}>Subscribe <i style={{marginLeft:'10px'}} class="fas fa-plus"></i></p>
+                                            </div>
+                                        )}
                                     </div>
                                     <hr style={{marginTop:'-0.5rem', background:'#dfe1e5', height:'1px'}}/>
                                 </div>
@@ -953,9 +1084,6 @@ const Details = ({
                                                     ></i> 
                                                 </button>
                                             )}
-                                            <button onClick={handleCollectionModalOpen} style={{height:'40px', width:'35px', margin:'0 10px 0 0', borderRadius:'5px'}}>
-                                                <i style={{fontSize:'14px'}}class="fas fa-plus"></i>
-                                            </button>
                                         </div>
                                         {detailProduct.likes.length > 2 && <div style={{width:'100%', textAlign:'center'}}><span style={{color:'#808080',}}> <span>{detailProduct.likes.length}</span> Others favorited</span></div>}
                                     {/* </div> */}
@@ -964,8 +1092,13 @@ const Details = ({
                                     <div style={{marginTop:'50px'}}>
                                         <p style={{color:'#333', fontWeight:'bold'}}>Description</p>
                                         <hr style={{marginTop:'-0.5rem', background:'#dfe1e5', height:'1px'}}/>
-                                        {detailProduct.description && <p>{detailProduct.description}</p>}
+                                        {/* {descriptionState !== null && (<div dangerouslySetInnerHTML={{__html: descriptionState}} />)} */}
+                                        
                                     </div>
+                                    {/* <textarea
+                                            disabled
+                                            value={draftToHtml(convertFromRaw(JSON.parse(detailProduct.description)))}
+                                        ></textarea> */}
                                 </div>
                             </div>
                             {/* <div class="content-box container-fluid">
@@ -1091,13 +1224,14 @@ const Details = ({
 
         return (
             <div style={{maxWidth:'100vw', background:'rgb(247, 247, 247)'}}>
-                <ul class="home-underline store" style={{background:'#fff', margin:'0', border:'1px solid rgb(214, 214, 214)'}}>
-                    <div onClick={e => setTableShow1('for you')} className={tableShow1 === "for you" && "active"}><li><p>For You</p></li></div>
-                    <div onClick={e => setTableShow1('popular')} className={tableShow1 === "popular" && "active"}><li><p>Popular</p></li></div>
-                    <div onClick={e => setTableShow1('nearby')} className={tableShow1 === "nearby" && "active"}><li><p>Nearby</p></li></div>
-                </ul>
                 <div className="detail-container">
-                    <div className="header-nav-container">
+                    <ul class="home-underline store" style={{background:'#fff', margin:'0', border:'1px solid rgb(214, 214, 214)'}}>
+                        <div onClick={e => handleTableShow1('for you')} className={tableShow1 === "for you" && "active"}><li><p>For You</p></li></div>
+                        <div onClick={e => handleTableShow1('popular')} className={tableShow1 === "popular" && "active"}><li><p>Popular</p></li></div>
+                        <div onClick={e => handleTableShow1('nearby')} className={tableShow1 === "nearby" && "active"}><li><p>Nearby</p></li></div>
+                    </ul>
+                    
+                    <div className="header-nav-container detail">
                         <div style={{padding:'10px'}}>
                             <h3 style={{fontSize:'12px', letterSpacing:'1px',color:'#808080'}}>
                                 Pick A Category
@@ -1117,7 +1251,10 @@ Details.propTypes = {
     product: PropTypes.object.isRequired,
     variant: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
+    profile: PropTypes.object.isRequired,
     addToCart: PropTypes.func.isRequired,
+    clearProducts: PropTypes.func.isRequired,
     addLike: PropTypes.func.isRequired,
     addView: PropTypes.func.isRequired,
     openModal: PropTypes.func.isRequired,
@@ -1127,8 +1264,10 @@ Details.propTypes = {
     addReview: PropTypes.func.isRequired,
     getProductVariants: PropTypes.func.isRequired,
     getStoresByTag: PropTypes.func.isRequired,
+    favorite: PropTypes.func.isRequired,
     getCategoryProducts: PropTypes.func.isRequired,
     setNav1: PropTypes.func.isRequired,
+    setMainNav: PropTypes.func.isRequired,
     openCollectionModal: PropTypes.func.isRequired,
     setAlert: PropTypes.func.isRequired,
 }
@@ -1138,12 +1277,14 @@ const mapStateToProps = state => ({
     variant: state.variant,
     auth: state.auth,
     store: state.store,
+    profile: state.profile
 });
 
 export default connect(
     mapStateToProps, { 
         getProductVariants, 
         addToCart, 
+        clearProducts,
         addLike, 
         addView,
         getCart, 
@@ -1152,8 +1293,10 @@ export default connect(
         handleDetail, 
         addReview, 
         getStoresByTag, 
+        favorite,
         getCategoryProducts, 
         setNav1, 
+        setMainNav,
         openCollectionModal, 
         setAlert 
     }

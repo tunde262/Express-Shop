@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import StoreBlock from './StoreBlock';
 import FeaturedNav from './FeaturedNav';
 
+import { favorite } from '../../../actions/storeActions';
+
 import topStores from '../../../utils/featuredStoreData/TopStoresData';
 import trendingStores from '../../../utils/featuredStoreData/TrendingStoresData';
 
@@ -13,7 +15,9 @@ const StoresList = ({
     store: { 
         featured,
         trending
-    }
+    },
+    profile,
+    favorite
 }) => {
 
     const [topStoreList, setTopStoreList] = useState(topStores);
@@ -50,15 +54,15 @@ const StoresList = ({
         const storeList2 = featured.slice(3, 6);
         const storeList3 = featured.slice(6, 9);
         topStoreContent1 = storeList1.map(store => (
-            <StoreBlock store={store} />
+            <StoreBlock store={store} profile={profile} favorite={favorite} />
         ));
 
         topStoreContent2 = storeList2.map(store => (
-            <StoreBlock store={store} />
+            <StoreBlock store={store} profile={profile} favorite={favorite} />
         ));
 
         topStoreContent3 = storeList3.map(store => (
-            <StoreBlock store={store} />
+            <StoreBlock store={store} profile={profile} favorite={favorite} />
         ));
     };
 
@@ -71,15 +75,15 @@ const StoresList = ({
         const storeList2 = trending.slice(3, 6);
         const storeList3 = trending.slice(6, 9);
         trendingStoreContent1 = storeList1.map(store => (
-            <StoreBlock store={store} />
+            <StoreBlock store={store} profile={profile} favorite={favorite} />
         ));
 
         trendingStoreContent2 = storeList2.map(store => (
-            <StoreBlock store={store} />
+            <StoreBlock store={store} profile={profile} favorite={favorite} />
         ));
 
         trendingStoreContent3 = storeList3.map(store => (
-            <StoreBlock store={store} />
+            <StoreBlock store={store} profile={profile} favorite={favorite} />
         ));
     };
 
@@ -161,10 +165,13 @@ const StoresList = ({
 
 StoresList.propTypes = {
     store: PropTypes.object.isRequired,
+    profile: PropTypes.object.isRequired,
+    favorite: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
     store: state.store,
+    profile: state.profile
 })
 
-export default connect(mapStateToProps, null)(StoresList);
+export default connect(mapStateToProps, { favorite })(StoresList);
