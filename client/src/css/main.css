@@ -509,6 +509,11 @@ textarea {
 .desktop-column {
   display: column; }
 
+.button-hover-class {
+  cursor: pointer; }
+  .button-hover-class:hover > div {
+    border: 2px solid #ff4b2b !important; }
+
 .table th,
 .table td {
   padding: 1rem;
@@ -4306,9 +4311,13 @@ header {
       grid-template-columns: 1fr 2fr 1fr;
       padding: 1.5rem 0;
       width: 100%; }
-      .profile-settings-container .profile-settings-box .profile-settings-box-element:nth-child(1):hover {
-        background: #fff;
-        cursor: auto; }
+      .profile-settings-container .profile-settings-box .profile-settings-box-element.img-block {
+        display: flex;
+        justify-content: center;
+        align-items: center; }
+        .profile-settings-container .profile-settings-box .profile-settings-box-element.img-block:hover {
+          background: #fff;
+          cursor: auto; }
       .profile-settings-container .profile-settings-box .profile-settings-box-element:hover {
         background: #f7f7f7;
         cursor: pointer; }

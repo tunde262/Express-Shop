@@ -24,7 +24,7 @@ const Gender_Elements = ({ slideform1, setSlideForm1, setGender, gender }) => {
                     </div>
                 </div>
                 <div style={{padding:'10px'}}> 
-                    <p onClick={() => todo('n/a')} className="tertiary-form-text">Prefer not to answer?</p>
+                    <p onClick={() => todo('N/A')} className="tertiary-form-text">Prefer not to answer?</p>
                     {/* <button onClick={() => setSlideForm1(!slideform1)} style={{width:'100%', outline:'none', margin:'10px 0', fontSize:'13px', letterSpacing:'1px', display:'flex', alignItems:'center', justifyContent:'center'}}>
                         Continue
                     </button>  */}

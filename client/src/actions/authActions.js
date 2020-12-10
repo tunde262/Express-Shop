@@ -185,3 +185,124 @@ export const setSidebar = (type) => {
     }
 }
 
+// Update auth inputs
+export const editUserName = (formData) => async dispatch => {
+    try {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        console.log('USER ID')
+        console.log(formData);
+
+        const first_name = formData.first_name;
+        const last_name = formData.last_name;
+        
+        const body = JSON.stringify({ first_name, last_name });
+
+        const res = await axios.post(`/api/users/${formData.userId}`, body, config);
+
+        dispatch({
+            type: UPDATE_AUTH,
+            payload: res.data
+        });
+
+        dispatch(setAlert('Profile Updated', 'success'));
+
+    } catch (err) {
+        console.log('ERRORS')
+        console.log(err);
+        
+        if(err.response) {
+            const errors = err.response.data.errors;
+
+            if(errors) {
+                errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+            }
+        } else {
+            setAlert('Something went wrong', 'danger')
+        }
+    }
+}
+
+// Update auth inputs
+export const changePassword = (formData) => async dispatch => {
+    try {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        console.log('USER ID')
+        console.log(formData);
+
+        const { password, userId } = formData;
+
+        const body = JSON.stringify({ password });
+
+        const res = await axios.post(`/api/users/${userId}`, body, config);
+
+        dispatch({
+            type: UPDATE_AUTH,
+            payload: res.data
+        });
+
+        dispatch(setAlert('Profile Updated', 'success'));
+
+    } catch (err) {
+        console.log('ERRORS')
+        console.log(err);
+        
+        if(err.response) {
+            const errors = err.response.data.errors;
+
+            if(errors) {
+                errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+            }
+        } else {
+            setAlert('Something went wrong', 'danger')
+        }
+    }
+}
+
+// Update auth inputs
+export const changeUserEmail = (formData) => async dispatch => {
+    try {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const { email, userId } = formData;
+
+        const body = JSON.stringify({ email });
+
+        const res = await axios.post(`/api/users/email/${userId}`, body, config);
+
+        dispatch({
+            type: UPDATE_AUTH,
+            payload: res.data
+        });
+
+        dispatch(setAlert('Profile Updated', 'success'));
+
+    } catch (err) {
+        console.log('ERRORS')
+        console.log(err);
+        
+        if(err.response) {
+            const errors = err.response.data.errors;
+
+            if(errors) {
+                errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+            }
+        } else {
+            setAlert('Something went wrong', 'danger')
+        }
+    }
+}
+

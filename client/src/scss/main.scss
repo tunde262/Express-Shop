@@ -497,6 +497,15 @@ textarea {
     display: column;
 }
 
+.button-hover-class {
+    cursor: pointer;
+    &:hover {
+        & > div {
+            border: 2px solid #ff4b2b !important;
+        }
+    }
+}
+
 .table th,
 .table td {
   padding: 1rem;
@@ -5684,7 +5693,10 @@ header {
             padding: 1.5rem 0;
             width:100%; 
 
-            &:nth-child(1) {
+            &.img-block {
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 &:hover {
                     background: #fff;
                     cursor: auto;
