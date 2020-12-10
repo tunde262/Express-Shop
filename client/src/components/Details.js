@@ -514,46 +514,46 @@ const Details = ({
         setProductsLoaded(true)
     }
 
-    // if (detailProduct && !gotDescription) {
-    //     console.log('DESCRIPTION BLOCK')
+    if (detailProduct && !gotDescription) {
+        console.log('DESCRIPTION BLOCK')
 
-    //     let unRawState;
+        let unRawState;
 
-    //     if(detailProduct.description !== null) {
-    //         unRawState = EditorState.createWithContent(
-    //             convertFromRaw(JSON.parse(detailProduct.description))
-    //         );
+        if(detailProduct.description !== null) {
+            unRawState = EditorState.createWithContent(
+                convertFromRaw(JSON.parse(detailProduct.description))
+            );
         
-    //         console.log(unRawState)
+            console.log(unRawState)
 
-    //         console.log(draftToHtml(convertToRaw(unRawState.getCurrentContent())))
+            console.log(draftToHtml(convertToRaw(unRawState.getCurrentContent())))
             
-    //         const unRawDescription = draftToHtml(convertToRaw(unRawState.getCurrentContent()));
+            const unRawDescription = draftToHtml(convertToRaw(unRawState.getCurrentContent()));
 
-    //         setDescriptionState(unRawDescription);
-    //     }
+            setDescriptionState(unRawDescription);
+        }
 
         
-    //     // let editorState = detailProduct.description
-    //     // const rawContentState = editorState.getCurrentContent();
+        // let editorState = detailProduct.description
+        // const rawContentState = editorState.getCurrentContent();
  
-    //     // const markup = draftToHtml(
-    //     //     rawContentState
-    //     // );
+        // const markup = draftToHtml(
+        //     rawContentState
+        // );
 
-    //     // console.log(markup)
+        // console.log(markup)
 
-    //     setGotDescription(true)
-    // }
+        setGotDescription(true)
+    }
 
-    // let htmlDescription;
+    let htmlDescription;
 
-    // if(descriptionState !== null) {
-    //     const descString = descriptionState;
-    //     htmlDescription = descString.substring(1, descString.length-1);
+    if(descriptionState !== null) {
+        const descString = descriptionState;
+        htmlDescription = descString.substring(1, descString.length-1);
 
-    //     console.log(htmlDescription);
-    // }
+        console.log(htmlDescription);
+    }
 
     let varKeyList = [];
     let varValueList = [];
@@ -1092,7 +1092,7 @@ const Details = ({
                                     <div style={{marginTop:'50px'}}>
                                         <p style={{color:'#333', fontWeight:'bold'}}>Description</p>
                                         <hr style={{marginTop:'-0.5rem', background:'#dfe1e5', height:'1px'}}/>
-                                        {/* {descriptionState !== null && (<div dangerouslySetInnerHTML={{__html: descriptionState}} />)} */}
+                                        {descriptionState !== null && (<div dangerouslySetInnerHTML={{__html: descriptionState}} />)}
                                         
                                     </div>
                                     {/* <textarea

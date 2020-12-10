@@ -5,7 +5,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { Elements } from 'react-stripe-elements';
 import FormDetails from './FormDetails';
 import FormAddress from './FormAddress';
-import FormPayment from './FormPayment';
+import Cart from './Cart';
 import Confirm from './Confirm';
 import Success from './Success';
 
@@ -81,52 +81,11 @@ const CheckoutForm = ({total, user, product: { cart, cartStores, cartQty, cartTa
         const { firstname, lastname, email, address, city, state, zipcode, telephone, amount, userId } = formData;
         const values = { firstname, lastname, email, address, city, state, zipcode, telephone, amount, userId };
 
-        switch(step) {
-            case 1:
-                return (
-                    <FormDetails
-                        nextStep = {nextStep}
-                        onChange = {onChange}
-                        history = {handleHistory}
-                        values = {values}
-                    />
-                )
-            case 2:
-                return (
-                    <FormAddress
-                        nextStep = {nextStep}
-                        prevStep = {prevStep}
-                        onChange = {onChange}
-                        values = {values}
-                    />
-                )
-            case 3:
-                return (
-                    <Confirm
-                        nextStep = {nextStep}
-                        prevStep = {prevStep}
-                        values = {values}
-                    />
-                )
-            case 4:
-                return (
-                    <Elements>
-                        <FormPayment
-                            nextStep = {nextStep}
-                            prevStep = {prevStep}
-                            values = {values}
-                            cartStores = {cartStores}
-                            cart = {cart}
-                            cartQty = {cartQty} 
-                            cartTax = {cartTax} 
-                            cartSubtotal = {cartSubtotal} 
-                            cartTotal = {cartTotal}
-                        />
-                    </Elements>
-                )
-            case 5:
-                return <Success />;
-        }
+        return (
+            <Elements>
+                <Cart history={history} />
+            </Elements>
+        )
         // return (
         //     <main className="container">
         //         <form 

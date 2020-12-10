@@ -1,44 +1,80 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import { connect } from 'react-redux';
-import { getCart } from '../../actions/productActions';
 import { withRouter, Link } from 'react-router-dom';
 
-import {useStripe, Elements, useElements, CardElement} from '@stripe/react-stripe-js';
+import { injectStripe } from 'react-stripe-elements';
+import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
 
 import mixpanel from 'mixpanel-browser';
 
-import CartAddress from './CartAddress';
-import CartList from './CartList';
-import CartTotals from './CartTotals';
-import CartColumns from './CartColumns';
-import EmptyCart from './EmptyCart';
-import Title from '../Title';
-import Spinner from '../common/Spinner';
-import { BackButton } from '../common/BackButton';
-import sampleShoe from '../../utils/imgs/20484728.jpeg';
-import paperTowels from '../../utils/imgs/paper_towels.jpeg';
-import OrderSummary from '../admin/pages/page_components/common/OrderSummaryBlock';
+import CartAddress from '../CartAddress';
+import CartList from '../CartList';
+import CartTotals from '../CartTotals';
+import CartColumns from '../CartColumns';
+import EmptyCart from '../EmptyCart';
 
-import { setPage, setMainNav } from '../../actions/navActions';
+import Spinner from '../../common/Spinner';
+import { BackButton } from '../../common/BackButton';
+import sampleShoe from '../../../utils/imgs/20484728.jpeg';
+import paperTowels from '../../../utils/imgs/paper_towels.jpeg';
+import OrderSummary from '../../admin/pages/page_components/common/OrderSummaryBlock';
 
-import paymentSignatures from '../../utils/imgs/visa_PNG2.png';
-import paypalLogo from '../../utils/imgs/PayPal_logo_logotype_emblem.png';
+import { setPage, setMainNav } from '../../../actions/navActions';
+import { clearCart } from '../../../actions/productActions';
 
-import { loadStripe } from '@stripe/stripe-js';
+import paymentSignatures from '../../../utils/imgs/visa_PNG2.png';
+import paypalLogo from '../../../utils/imgs/PayPal_logo_logotype_emblem.png';
 
-const stripePromise = loadStripe("pk_test_Hbz4uQovQLzsxsEZ4clF5WfI00TSBRJTac");
+// import { loadStripe } from '@stripe/stripe-js';
 
-const Cart = ({ history, getCart, setPage, setMainNav, product, profile, match }) => {
+// const stripePromise = loadStripe("pk_test_Hbz4uQovQLzsxsEZ4clF5WfI00TSBRJTac");
+
+const initialState = {
+    address_name: '',
+    first_name: '',
+    last_name: '',
+    email: '',
+    city: '',
+    state: '',
+    country: '',
+    area: '',
+    street_number: '',
+    formatted_address: '',
+    street_name: '',
+    postalCode: '',
+    placeId: '',
+    delivery_instructions: '',
+    latLng: '',
+    phone: '',
+    amount: ''
+};
+
+const Cart = ({ setPage, setMainNav, auth: { user }, product, clearCart, profile, history, match }) => {
+
+    const [formData, setFormData] = useState(initialState);
 
     // Mixpanel
     const [sentMixpanel, setSentMixpanel] = useState(false);
 
+    const [gotProfileAddress, setGotProfileAddress] = useState(false);
+    const [foundProfileAddress, setFoundProfileAddress] = useState(false);
+    const [cartAddressId, setCartAddressId] = useState(null);
+
     useEffect(() => {
         setMainNav('store');
         setPage('profile');
-        getCart();
-    }, []);
+
+        let total;
+        if(product.cart.length > 0) {
+            total = Number(product.cartTotal).toFixed(2);
+
+            setFormData({...formData, amount: `${total}`});
+        }
+
+        setActiveAddress();
+    }, [product.cart, cartAddressId]);
 
     const handleMixpanel = () => {
         let cartIds = [];
@@ -69,38 +105,198 @@ const Cart = ({ history, getCart, setPage, setMainNav, product, profile, match }
         });
     }
 
-    const goBack = () => {
-        history.goBack();
-    }
+    const { 
+        loading, 
+        cart, 
+        cartStores, 
+        cartQty, 
+        cartTax, 
+        cartSubtotal, 
+        cartTotal 
+    } = product;
 
-    const { cart, loading } = product;
+    if(!gotProfileAddress && profile.profile) {
+        let activeAddress;
 
-    let cartContent;
+        setFormData({...formData, email: user.email});
 
-    if(loading) {
-        cartContent = <Spinner />;
-    }
-    else {
-        if(cart.length > 0) {
-            if(!sentMixpanel) {
-                handleMixpanel();
-                setSentMixpanel(true);
+        if(profile.profile.address_book.length > 0) {
+            activeAddress = profile.profile.address_book.find(address => address.active === true); 
+
+            console.log('ACTIVE ADDRESS HERE');
+            console.log(user.email)
+            if(activeAddress) setFoundProfileAddress(true);
+            console.log(activeAddress);
+
+            const tempFields = {};
+
+            if(activeAddress) {
+                setCartAddressId(activeAddress._id);
+                console.log('DEFUALT ADDRESS ID')
+                console.log(activeAddress._id);
+
+                if(activeAddress.first_name)tempFields.first_name = activeAddress.first_name;
+                if(activeAddress.last_name)tempFields.last_name = activeAddress.last_name;
+                tempFields.email = user.email;
+                if(activeAddress.address_name)tempFields.address_name = activeAddress.address_name;
+                if(activeAddress.address_components.city) tempFields.city = activeAddress.address_components.city;
+                if(activeAddress.address_components.postalcode) tempFields.postalCode = activeAddress.address_components.postalcode;
+                if(activeAddress.address_components.state) tempFields.state = activeAddress.address_components.state;
+                if(activeAddress.address_components.country) tempFields.country = activeAddress.address_components.country;
+                if(activeAddress.address_components.area) tempFields.area = activeAddress.address_components.area;
+                if(activeAddress.address_components.street_name) tempFields.street_name= activeAddress.address_components.street_name;
+                if(activeAddress.address_components.street_number) tempFields.street_number = activeAddress.address_components.street_number;
+                if(activeAddress.formatted_address) tempFields.formatted_address = activeAddress.formatted_address;
+                if(activeAddress.placeId) tempFields.placeId = activeAddress.placeId;
+                if(activeAddress.delivery_instructions) tempFields.delivery_instructions = activeAddress.delivery_instructions;
+                if(activeAddress.phone) tempFields.phone = activeAddress.phone;
+                if(activeAddress.location) tempFields.latLng = `${activeAddress.location.coordinates[0]}, ${activeAddress.location.coordinates[1]}`;
+            } 
+            
+
+            setFormData({ 
+                ...formData, 
+                ...tempFields
+            })
+            
+            // setDefaultAddress(activeAddress);
+        }
+        setGotProfileAddress(true);
+     }
+
+     const setActiveAddress = () => {
+        let tempAddress;
+
+        if(profile.profile) {
+            if(profile.profile.address_book.length > 0 && cartAddressId) {
+                tempAddress = profile.profile.address_book.find(address => address._id === cartAddressId); 
+    
+                const tempAddressFields = {};
+    
+                if(tempAddress) {
+                    if(tempAddress.first_name)tempAddressFields.first_name = tempAddress.first_name;
+                    if(tempAddress.last_name)tempAddressFields.last_name = tempAddress.last_name;
+                    tempAddressFields.email = user.email;
+                    if(tempAddress.address_name)tempAddressFields.address_name = tempAddress.address_name;
+                    if(tempAddress.address_components.city) tempAddressFields.city = tempAddress.address_components.city;
+                    if(tempAddress.address_components.postalcode) tempAddressFields.postalCode = tempAddress.address_components.postalcode;
+                    if(tempAddress.address_components.state) tempAddressFields.state = tempAddress.address_components.state;
+                    if(tempAddress.address_components.country) tempAddressFields.country = tempAddress.address_components.country;
+                    if(tempAddress.address_components.area) tempAddressFields.area = tempAddress.address_components.area;
+                    if(tempAddress.address_components.street_name) tempAddressFields.street_name= tempAddress.address_components.street_name;
+                    if(tempAddress.address_components.street_number) tempAddressFields.street_number = tempAddress.address_components.street_number;
+                    if(tempAddress.formatted_address) tempAddressFields.formatted_address = tempAddress.formatted_address;
+                    if(tempAddress.placeId) tempAddressFields.placeId = tempAddress.placeId;
+                    if(tempAddress.delivery_instructions) tempAddressFields.delivery_instructions = tempAddress.delivery_instructions;
+                    if(tempAddress.phone) tempAddressFields.phone = tempAddress.phone;
+                    if(tempAddress.location) tempAddressFields.latLng = `${tempAddress.location.coordinates[0]}, ${tempAddress.location.coordinates[1]}`;
+                } 
+                
+    
+                setFormData({ 
+                    ...formData, 
+                    ...tempAddressFields
+                })
+            }
+        }   
+     }
+
+    const { address_name, first_name, last_name, email, city, state, country, area, stateProvince, street_number, formatted_address, street_name, postalCode, placeId, delivery_instructions, latLng, phone, amount } = formData;
+
+
+    const stripe = useStripe();
+    const elements = useElements();
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const data = {
+                user: user._id,
+                stores: cartStores,
+                name: `${first_name} ${last_name}`,
+                email,
+                address: {
+                    address_name,
+                    first_name,
+                    last_name,
+                    coordinates: latLng, 
+                    formatted_address,
+                    address_components: {
+                        street_name,
+                        street_number,
+                        city,
+                        state,
+                        country,
+                        postalCode,
+                        area
+                    },
+                    placeId,
+                },
+                // address_2,
+                phone,
+                delivery_instructions,
+                amount,
+                store: 'acct_1Ga5xHEcxd8GBhWp'
             }
 
-            cartContent = (
-                <React.Fragment>
-                    <Title name="your" title="cart" />
-                    <div className="cart-container">
-                        <CartList cart={cart} />
-                        <CartTotals totals={product} history={history} />
-                    </div>
-                </React.Fragment>
-            );
-        } 
-        else {
-            cartContent = <EmptyCart />;
+            console.log('ALMOST');
+            if (!stripe || !elements) {
+                console.log('FAIL');
+                // Stripe.js has not yet loaded.
+                // Make sure to disable form submission until Stripe.js has loaded.
+                return;
+            }
+
+            console.log('PASS');
+
+            const res = await axios.post('/api/stripe/donate', data);
+          
+            const result = await stripe.confirmCardPayment(res.data.client_secret, {
+                payment_method: {
+                  card: elements.getElement(CardElement),
+                  billing_details: {
+                    name: `${first_name} ${last_name}`,
+                    email: user.email,
+                    phone,
+                    address: {
+                        city,
+                        state,
+                        postal_code: postalCode,
+                        country: 'US'
+                    }
+                  },
+                }
+            });
+          
+            if (result.error) {
+                // Show error to your customer (e.g., insufficient funds)
+                console.log(result.error.message);
+            } else {
+                // The payment has been processed!
+                if (result.paymentIntent.status === 'succeeded') {
+                  // Show a success message to your customer
+                  // There's a risk of the customer closing the window before callback
+                  // execution. Set up a webhook or plugin to listen for the
+                  // payment_intent.succeeded event that handles any business critical
+                  // post-payment actions.
+                  console.log("The payment was succeeded!");
+                    // this.props.clearCart();
+
+                    // nextStep();
+                    clearCart();
+                    history.push(`/profile/order/${res.data.orderId}`);
+                }
+            }
+
+            // this.props.clearCart();
+            // this.props.history.push('/');
+            
+        } catch (err) {
+            console.log(err)
         }
-    }
+
+    };
 
     return (
         <div className="collection-page-container">
@@ -128,7 +324,7 @@ const Cart = ({ history, getCart, setPage, setMainNav, product, profile, match }
                                                     </div>
                                                 </div>
                                                 <div class="card-body">
-                                                    <CartAddress profile={profile} />
+                                                    <CartAddress cartAddressId={cartAddressId} setCartAddressId={setCartAddressId} profile={profile} />
                                                 </div>
                                             </div>
                                         </div>
@@ -152,9 +348,9 @@ const Cart = ({ history, getCart, setPage, setMainNav, product, profile, match }
                                                             <i class="fas fa-lock"></i>
                                                             <p style={{margin:'0 10px', letterSpacing:'0', fontSize:'12px', color:'#808080', fontFamily:'"Courier New", Courier, monospace'}}>Payment data protection powered Stripe</p>
                                                         </div>
-                                                        <Elements stripe={stripePromise}>
+ 
                                                             <CardElement className="my-2 p-2 border" />
-                                                        </Elements>
+  
                                                         
                                                         {/* <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', height:'50px'}}>
                                                             <div style={{width:'100%', height:'100%', border:'1px solid #e8e8e8', textAlign:'center', display:'flex', justifyContent:'center', alignItems:'center'}}>
@@ -202,7 +398,7 @@ const Cart = ({ history, getCart, setPage, setMainNav, product, profile, match }
                                     </div>
                                     
                                     <div className="checkout-actions">
-                                        <button>Place Order</button>
+                                        <button onClick={(e) => onSubmit(e)}>Place Order</button>
                                     </div>
                                     {/* <h5>item added to the cart</h5>
                                     <img src={`/api/products/image/${img_gallery[0].img_name}`} className="img-fluid" alt="product" />
@@ -249,24 +445,22 @@ const Cart = ({ history, getCart, setPage, setMainNav, product, profile, match }
                 </div>
             </div>
         </div>
-        // <section>
-        //     <BackButton onClick={goBack}><i className="fas fa-arrow-left"></i></BackButton>
-        //     {/* {cartContent} */} 
-        // </section>
     )
 }
 
 Cart.propTypes = {
     product: PropTypes.object.isRequired,
-    getCart: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
     setPage: PropTypes.func.isRequired, 
     setMainNav: PropTypes.func.isRequired,
     profile: PropTypes.object.isRequired,
+    clearCart: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
     product: state.product,
-    profile: state.profile
+    profile: state.profile,
+    auth: state.auth
 });
 
-export default connect(mapStateToProps, { getCart, setPage, setMainNav })(withRouter(Cart));
+export default connect(mapStateToProps, { setPage, setMainNav, clearCart })(injectStripe(Cart));

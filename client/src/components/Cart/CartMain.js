@@ -1,10 +1,12 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import { connect } from 'react-redux';
 import { getCart } from '../../actions/productActions';
 import { withRouter, Link } from 'react-router-dom';
 
-import {useStripe, Elements, useElements, CardElement} from '@stripe/react-stripe-js';
+import { injectStripe } from 'react-stripe-elements';
+import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
 
 import mixpanel from 'mixpanel-browser';
 
@@ -21,15 +23,38 @@ import paperTowels from '../../utils/imgs/paper_towels.jpeg';
 import OrderSummary from '../admin/pages/page_components/common/OrderSummaryBlock';
 
 import { setPage, setMainNav } from '../../actions/navActions';
+import { clearCart } from '../../actions/productActions';
 
 import paymentSignatures from '../../utils/imgs/visa_PNG2.png';
 import paypalLogo from '../../utils/imgs/PayPal_logo_logotype_emblem.png';
 
-import { loadStripe } from '@stripe/stripe-js';
+// import { loadStripe } from '@stripe/stripe-js';
 
-const stripePromise = loadStripe("pk_test_Hbz4uQovQLzsxsEZ4clF5WfI00TSBRJTac");
+// const stripePromise = loadStripe("pk_test_Hbz4uQovQLzsxsEZ4clF5WfI00TSBRJTac");
 
-const Cart = ({ history, getCart, setPage, setMainNav, product, profile, match }) => {
+const initialState = {
+    name: '',
+    first_name: '',
+    last_name: '',
+    city: '',
+    state: '',
+    country: '',
+    area: '',
+    stateProvince: '',
+    street_number: '',
+    formatted_address: '',
+    street_name: '',
+    postalCode: '',
+    placeId: '',
+    delivery_instructions: '',
+    latLng: '',
+    phone: '',
+    amount: ''
+};
+
+const Cart = ({ getCart, setPage, setMainNav, auth: { user }, product, clearCart, profile, match }) => {
+
+    const [formData, setFormData] = useState(initialState);
 
     // Mixpanel
     const [sentMixpanel, setSentMixpanel] = useState(false);
@@ -69,38 +94,110 @@ const Cart = ({ history, getCart, setPage, setMainNav, product, profile, match }
         });
     }
 
-    const goBack = () => {
-        history.goBack();
-    }
+    const { 
+        loading, 
+        cart, 
+        cartStores, 
+        cartQty, 
+        cartTax, 
+        cartSubtotal, 
+        cartTotal 
+    } = product;
 
-    const { cart, loading } = product;
+    const { address_name, first_name, last_name, city, state, country, area, stateProvince, street_number, formatted_address, street_name, postalCode, placeId, delivery_instructions, latLng, phone, amount } = formData;
 
-    let cartContent;
 
-    if(loading) {
-        cartContent = <Spinner />;
-    }
-    else {
-        if(cart.length > 0) {
-            if(!sentMixpanel) {
-                handleMixpanel();
-                setSentMixpanel(true);
+    const stripe = useStripe();
+    const elements = useElements();
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const data = {
+                user: user._id,
+                stores: cartStores,
+                name: `${first_name} ${last_name}`,
+                email: user.email,
+                address: {
+                    address_name,
+                    first_name,
+                    last_name,
+                    coordinates: latLng, 
+                    formatted_address,
+                    address_components: {
+                        street_name,
+                        street_number,
+                        city,
+                        state,
+                        country,
+                        postalCode,
+                        area
+                    },
+                    placeId,
+                },
+                // address_2,
+                phone,
+                delivery_instructions,
+                amount,
+                store: 'acct_1Ga5xHEcxd8GBhWp'
             }
 
-            cartContent = (
-                <React.Fragment>
-                    <Title name="your" title="cart" />
-                    <div className="cart-container">
-                        <CartList cart={cart} />
-                        <CartTotals totals={product} history={history} />
-                    </div>
-                </React.Fragment>
-            );
-        } 
-        else {
-            cartContent = <EmptyCart />;
+            console.log('ALMOST');
+            if (!stripe || !elements) {
+                console.log('FAIL');
+                // Stripe.js has not yet loaded.
+                // Make sure to disable form submission until Stripe.js has loaded.
+                return;
+            }
+
+            console.log('PASS');
+
+            const res = await axios.post('/api/stripe/donate', data);
+          
+            const result = await stripe.confirmCardPayment(res.data.client_secret, {
+                payment_method: {
+                  card: elements.getElement(CardElement),
+                  billing_details: {
+                    name: `${first_name} ${last_name}`,
+                    email: user.email,
+                    phone,
+                    address: {
+                        city,
+                        state,
+                        postal_code: postalCode,
+                        country: 'US'
+                    }
+                  },
+                }
+            });
+          
+            if (result.error) {
+                // Show error to your customer (e.g., insufficient funds)
+                console.log(result.error.message);
+            } else {
+                // The payment has been processed!
+                if (result.paymentIntent.status === 'succeeded') {
+                  // Show a success message to your customer
+                  // There's a risk of the customer closing the window before callback
+                  // execution. Set up a webhook or plugin to listen for the
+                  // payment_intent.succeeded event that handles any business critical
+                  // post-payment actions.
+                  console.log("The payment was succeeded!");
+                    // this.props.clearCart();
+
+                    // nextStep();
+                }
+            }
+
+            // this.props.clearCart();
+            // this.props.history.push('/');
+            
+        } catch (err) {
+            console.log(err)
         }
-    }
+
+    };
 
     return (
         <div className="collection-page-container">
@@ -152,9 +249,9 @@ const Cart = ({ history, getCart, setPage, setMainNav, product, profile, match }
                                                             <i class="fas fa-lock"></i>
                                                             <p style={{margin:'0 10px', letterSpacing:'0', fontSize:'12px', color:'#808080', fontFamily:'"Courier New", Courier, monospace'}}>Payment data protection powered Stripe</p>
                                                         </div>
-                                                        <Elements stripe={stripePromise}>
+ 
                                                             <CardElement className="my-2 p-2 border" />
-                                                        </Elements>
+  
                                                         
                                                         {/* <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', height:'50px'}}>
                                                             <div style={{width:'100%', height:'100%', border:'1px solid #e8e8e8', textAlign:'center', display:'flex', justifyContent:'center', alignItems:'center'}}>
@@ -249,24 +346,23 @@ const Cart = ({ history, getCart, setPage, setMainNav, product, profile, match }
                 </div>
             </div>
         </div>
-        // <section>
-        //     <BackButton onClick={goBack}><i className="fas fa-arrow-left"></i></BackButton>
-        //     {/* {cartContent} */} 
-        // </section>
     )
 }
 
 Cart.propTypes = {
     product: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
     getCart: PropTypes.func.isRequired,
     setPage: PropTypes.func.isRequired, 
     setMainNav: PropTypes.func.isRequired,
     profile: PropTypes.object.isRequired,
+    clearCart: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
     product: state.product,
-    profile: state.profile
+    profile: state.profile,
+    auth: state.auth
 });
 
-export default connect(mapStateToProps, { getCart, setPage, setMainNav })(withRouter(Cart));
+export default injectStripe(connect(mapStateToProps, { getCart, clearCart, setPage, setMainNav })(Cart));

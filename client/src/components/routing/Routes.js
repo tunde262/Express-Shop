@@ -6,7 +6,7 @@ import Alert from '../layout/alert';
 
 // Pages
 import Details from '../Details';
-import Cart from '../Cart/Cart';
+import Cart from '../Cart/Checkout';
 import Default from '../Default';
 import Checkout from '../Cart/checkout/Checkout';
 
@@ -64,7 +64,7 @@ const Routes = props => {
             {/* Location Shop Page */}
             <Route exact path="/location/:id" component={LocationShopPage} />
             {/* Cart & Checkout */}
-            <PrivateRoute exact path="/cart" component={Cart} />
+            <PrivateRoute exact path="/cart" component={Checkout} />
             <PrivateRoute exact path="/checkout" component={Checkout} />
             {/* Profile  */}
             <PrivateRoute exact path="/profile" component={Profile} />

@@ -227,7 +227,7 @@ const Profile = ({
 
     const bg = {
         overlay: {
-          background: "rgba(255,255,255,0.5)"
+            background: "rgba(20,20,20, .5)"
         }
     };
 
@@ -251,13 +251,13 @@ const Profile = ({
                             <div style={{margin:'0 10px', color:'#ff4b2b'}}>
                                 <i class="fas fa-map-marker-alt"></i>
                             </div>
-                            <div className="checkout-confirmed"><p>Add New Location</p></div>
+                            <div className="checkout-confirmed"><p>Add Address</p></div>
                         </div>
                         <div className="checkout-cart">
                             <div style={{margin: '0', borderRadius:'0'}} class="card card-default">
                                 <div className="card-header" style={{background:'rgb(247, 247, 247)'}}>
                                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                                        <p style={{margin:'0'}}>Location Name</p>
+                                        <p style={{margin:'0'}}>Address Name</p>
                                     </div>
                                 </div>
                                 <div class="card-body">

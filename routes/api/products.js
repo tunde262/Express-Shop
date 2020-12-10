@@ -1141,6 +1141,30 @@ router.post('/init-views', async (req, res) => {
 });
 
 // Update view count to 0
+router.post('/reset-desc', async (req, res) => {
+    console.log('RESETING DESCRIPTION');
+    try {
+        const prodArray = await Product.find();
+
+        for(var x = 0; x < prodArray.length; x++) { 
+
+            const productFields = {};
+            productFields.description = null;
+            // Update
+            await Product.findOneAndUpdate(
+                { _id: prodArray[x].id }, 
+                { $set: productFields }, 
+                { new: true }
+            );
+        }
+
+        res.send('SUCCESS');
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+// Update view count to 0
 router.post('/reset-view-count', async (req, res) => {
     console.log('RESETING VIEW COUNT');
     try {
@@ -1338,6 +1362,8 @@ router.get('/add-to-cart/:id', (req, res, next) => {
 
         cart.add(variant, variant.id);
         req.session.cart = cart;
+
+        console.log('CART CONTENTS');
         console.log(req.session.cart);
         res.json(req.session.cart);
     });

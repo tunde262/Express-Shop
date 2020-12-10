@@ -219,10 +219,7 @@ router.delete('/:id', auth, async (req, res) => {
 // @desc Add to profile address book
 // @access Private
 router.put('/address_book', [ auth, [
-    check('address_1', 'Address 1 is required').not().isEmpty(),
-    check('city', 'City is required').not().isEmpty(),
-    check('state', 'State is required').not().isEmpty(),
-    check('zipcode', 'Zipcode is required').not().isEmpty(),
+    check('formatted_address', 'Address is required').not().isEmpty()
 ]], async (req, res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
@@ -233,38 +230,65 @@ router.put('/address_book', [ auth, [
         address_name,
         first_name,
         last_name,
-        address_1,
-        address_2,
+        name,
+        street_name,
+        street_number,
         city,
-        state,
         country,
-        zipcode,
+        state, 
+        postalcode,
+        formatted_address,
+        area,
+        coordinates,
+        placeId,
         phone,
+        address_2,
         delivery_instructions,
         active
     } = req.body;
 
     console.log('ENTERING PROFILE ADD ACTION');
 
+    console.log(first_name)
+    console.log(last_name)
+
     // Build profile object
     const newAddress = {};
     if(address_name) newAddress.address_name = address_name;
     if(first_name) newAddress.first_name = first_name;
     if(last_name) newAddress.last_name = last_name;
-    if(address_1) newAddress.address_1 = address_1;
+    if(placeId) newAddress.placeId = placeId;
+    if(formatted_address) newAddress.formatted_address = formatted_address;
     if(address_2) newAddress.address_2 = address_2;
-    if(city) newAddress.city = city;
-    if(state) newAddress.state = state;
-    if(country) newAddress.country = country;
-    if(zipcode) newAddress.zipcode = zipcode;
     if(phone) newAddress.phone = phone;
     if(delivery_instructions) newAddress.delivery_instructions = delivery_instructions;
     if(active) newAddress.active = active;
+
+    // Build location obj
+    newAddress.location = {};
+    if(coordinates) {
+        newAddress.location.coordinates = coordinates.split(',').map(coordinate => coordinate.trim());
+    }
+
+    // Build address component obj
+    newAddress.address_components = {};
+    if(postalcode) newAddress.address_components.postalcode = postalcode;
+    if(street_name) newAddress.address_components.street_name = street_name;
+    if(street_number) newAddress.address_components.street_number = street_number;
+    if(city) newAddress.address_components.city = city;
+    if(state) newAddress.address_components.state = state;
+    if(country) newAddress.address_components.country = country;
+    if(area) newAddress.address_components.area = area;
 
     try {
         const profile = await Profile.findOne({ user: req.user.id });
         console.log('PROFILE FIND ONE');
         console.log(profile);
+
+        console.log('NAME INFORMATION');
+        console.log(newAddress.first_name);
+        console.log(newAddress.last_name)
+
 
         profile.address_book.push(newAddress);
 

@@ -93,8 +93,31 @@ router.get('/clear', (req, res) => {
 });
 
 router.post('/donate', async (req, res, next) => {
-    const amount = req.body.amount;
-    const session = req.body.session;
+
+    console.log('SUBMITTING ORDER');
+    const {
+        address_name,
+        first_name,
+        last_name,
+        street_name,
+        street_number,
+        city,
+        country,
+        state, 
+        postalcode,
+        formatted_address,
+        area,
+        coordinates,
+        placeId,
+        phone,
+        address_2,
+        delivery_instructions,
+        stores,
+        store, 
+        user,
+        amount, 
+    } = req.body;
+
     const cart = new Cart(req.session.cart);
 
     try {
@@ -105,22 +128,50 @@ router.post('/donate', async (req, res, next) => {
             currency: 'usd',
             application_fee_amount: 123,
             transfer_data: {
-              destination: req.body.store,
+              destination: store,
             },
         });
-        res.json({client_secret: paymentIntent.client_secret});
-        console.log('Sent: ' + paymentIntent.client_secret)
-        const order = new Order({
-            user: req.body.user,
-            stores: req.body.stores,
-            cart: cart,
-            address: req.body.address,
-            telephone: req.body.telephone,
-            name: req.body.name,
-            paymentId: paymentIntent.id
-        });
+
+
+        // Build profile object
+        const newOrder = {};
+        if(address_name) newOrder.address_name = address_name;
+        if(first_name) newOrder.first_name = first_name;
+        if(last_name) newOrder.last_name = last_name;
+        if(placeId) newOrder.placeId = placeId;
+        if(formatted_address) newOrder.formatted_address = formatted_address;
+        if(address_2) newOrder.address_2 = address_2;
+        if(phone) newOrder.phone = phone;
+        if(delivery_instructions) newOrder.delivery_instructions = delivery_instructions;
+
+        // Build location obj
+        newOrder.location = {};
+        if(coordinates) {
+            newOrder.location.coordinates = coordinates.split(',').map(coordinate => coordinate.trim());
+        }
+
+        // Build address component obj
+        newOrder.address_components = {};
+        if(postalcode) newOrder.address_components.postalcode = postalcode;
+        if(street_name) newOrder.address_components.street_name = street_name;
+        if(street_number) newOrder.address_components.street_number = street_number;
+        if(city) newOrder.address_components.city = city;
+        if(state) newOrder.address_components.state = state;
+        if(country) newOrder.address_components.country = country;
+        if(area) newOrder.address_components.area = area;
+
+        if(user) newOrder.user = user;
+        if(stores) newOrder.stores = stores;
+        newOrder.cart = cart;
+        newOrder.paymentId = paymentIntent.id;
+
+        const order = new Order(newOrder);
+        
         await order.save();
         console.log('Order: ' + order);
+
+        res.json({client_secret: paymentIntent.client_secret, orderId : order.id});
+        console.log('Sent: ' + paymentIntent.client_secret)
         // const customer = await stripe.customers.create({
         //     email: req.body.email,
         //     source: req.body.token.id
@@ -151,6 +202,127 @@ router.post('/donate', async (req, res, next) => {
         // });
         // await order.save();
         // console.log('Order: ' + order);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+router.post('/store-checkout', async (req, res, next) => {
+
+    console.log('SUBMITTING STORE ORDER');
+    const {
+        address_name,
+        first_name,
+        last_name,
+        street_name,
+        street_number,
+        city,
+        country,
+        state, 
+        postalcode,
+        formatted_address,
+        area,
+        coordinates,
+        placeId,
+        phone,
+        address_2,
+        delivery_instructions,
+        stores,
+        store, 
+        user,
+        amount, 
+        notStoreItems
+    } = req.body;
+
+    const notStoreItemsArray = notStoreItems;
+    
+
+    try {
+        let cart;
+    
+        cart = new Cart(req.session.cart);
+
+        req.session.reload( async () => {
+            if(notStoreItemsArray.length > 0) {
+                for (var i = 0; i < notStoreItemsArray.length; i++) {
+                    let item = notStoreItemsArray[i];
+
+                    cart.totalQty -= cart.items[item].qty;
+                    cart.totalPrice -= cart.items[item].price;
+                    delete cart.items[item];
+                    
+                }
+            }
+
+            let subTotal = cart.totalPrice;
+            const tempTax = subTotal * 0.1;
+            const tax = parseFloat(tempTax.toFixed(2));
+            const total = Number(subTotal + tax).toFixed(2);
+            const totalQty = cart.totalQty;
+
+
+            console.log('TOTAL:' + total);
+            console.log('CART: ' + cart)
+            const paymentIntent = await stripe.paymentIntents.create({
+                payment_method_types: ['card'],
+                amount: total * 100,
+                currency: 'usd',
+                application_fee_amount: 123,
+                transfer_data: {
+                destination: store,
+                },
+            });
+
+
+            console.log('BUILD ORDER OBJECT');
+            // Build profile object
+            const newOrder = {};
+            if(address_name) newOrder.address_name = address_name;
+            if(first_name) newOrder.first_name = first_name;
+            if(last_name) newOrder.last_name = last_name;
+            if(placeId) newOrder.placeId = placeId;
+            if(formatted_address) newOrder.formatted_address = formatted_address;
+            if(address_2) newOrder.address_2 = address_2;
+            if(phone) newOrder.phone = phone;
+            if(delivery_instructions) newOrder.delivery_instructions = delivery_instructions;
+
+            console.log('GET ORDER COORDS');
+            // Build location obj
+            newOrder.location = {};
+            if(coordinates) {
+                newOrder.location.coordinates = coordinates.split(',').map(coordinate => coordinate.trim());
+            }
+
+            console.log('BUILD ORDER ADDY COMPONENTS');
+            // Build address component obj
+            newOrder.address_components = {};
+            if(postalcode) newOrder.address_components.postalcode = postalcode;
+            if(street_name) newOrder.address_components.street_name = street_name;
+            if(street_number) newOrder.address_components.street_number = street_number;
+            if(city) newOrder.address_components.city = city;
+            if(state) newOrder.address_components.state = state;
+            if(country) newOrder.address_components.country = country;
+            if(area) newOrder.address_components.area = area;
+
+            if(user) newOrder.user = user;
+            if(stores) newOrder.stores = stores;
+            newOrder.cart = cart;
+            newOrder.paymentId = paymentIntent.id;
+
+            console.log('CREATE NEW ORDER');
+            const order = new Order(newOrder);
+            
+            console.log('SAVE OBJECT ORDER');
+            await order.save();
+            console.log('Order: ' + order);
+
+            res.json({client_secret: paymentIntent.client_secret, orderId : order.id});
+            console.log('Sent: ' + paymentIntent.client_secret)
+            console.log('CART HERE')
+            console.log(cart);
+        });
+
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');

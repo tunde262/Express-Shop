@@ -134,6 +134,8 @@ const ExplorePage = ({
     
     return (
         <div className="explore-container">
+            <Banner imgLarge={DefaultBanner} imgSmall={DefaultBanner} />
+            
             <TrendingCollections />
 
             <FeaturedStores />

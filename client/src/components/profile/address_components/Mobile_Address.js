@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
+import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+
 import mixpanel from 'mixpanel-browser';
 
 import Spinner from '../../common/Spinner';
@@ -12,10 +14,49 @@ import AuthModal from '../../modals/AuthModal';
 import BrandOverview from '../../Overview/brandOverview/BrandOverview';
 import Modal from 'react-responsive-modal';
 
+import AddName from '../../modals/collection-modal/createNew/new_components/Name_Add';
+import AddFullName from '../common/AddFullName';
+import AddressBlock from '../../page_components/forms_inventory/common/AddressBlock';
+import PhoneBlock from '../common/PhoneBlock';
+import InstructionsBlock from '../common/InstructionsBlock';
+import ConfirmAddress from '../common/ConfirmAddress';
+import AddressType from '../common/Type_Address';
+
+
+import cardboardLogo from '../../common/logo.jpg';
+import { Logo } from '../../Logo';
+
 import { getStoreSubscriptions } from '../../../actions/storeActions';
 
 import { addAddress } from '../../../actions/profileActions';
 import { setMainNav, setPage } from '../../../actions/navActions';
+
+const initialState = {
+    name: '',
+    first_name: '',
+    last_name: '',
+    city: '',
+    state: '',
+    country: '',
+    area: '',
+    stateProvince: '',
+    street_number: '',
+    formatted_address: '',
+    street_name: '',
+    postalCode: '',
+    placeId: '',
+    delivery_instructions: '',
+    latLng: '',
+    phone: ''
+};
+
+const initialFirstName = {
+    first: ''
+};
+
+const initialLastName = {
+    last: ''
+};
 
 const Mobile_Address = ({ setMainNav, setPage, addAddress, product, auth: { user, isAuthenticated, loading }, history}) => {
 
@@ -25,26 +66,43 @@ const Mobile_Address = ({ setMainNav, setPage, addAddress, product, auth: { user
 
     const [active, setActive] = useState(false);
 
+    const [addressType, setAddressType] = useState('');
+
     const [addressEdit, setAddressEdit] = useState(false);
 
-    const [formData, setFormData] = useState({
-        address_name:'',
-        first_name:'',
-        last_name:'',
-        address_1:'',
-        address_2:'',
-        city:'',
-        state:'',
-        country:'',
-        zipcode:'',
-        phone:'',
-        delivery_instructions:''
+    const [formData, setFormData] = useState(initialState);
+
+    const [firstName, setFirstName] = useState(initialFirstName);
+
+    const [lastName, setLastName] = useState(initialLastName);
+
+    // Location Info  
+    const [address, setAddress] = useState("");
+    const [coordinates, setCoordinates] = useState({
+        lat: null, 
+        lng: null
     });
 
+    const [slideform1, setSlideForm1] = useState(false);
+    const [slideform2, setSlideForm2] = useState(false);
+    const [slideform3, setSlideForm3] = useState(false);
+    const [slideform4, setSlideForm4] = useState(false);
+    const [slideform5, setSlideForm5] = useState(false);
+
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
     useEffect(() => {
+        window.addEventListener('resize', () => handleWindowSizeChange());
+
         setMainNav('store');
         setPage('profile');
+
+        return () => window.removeEventListener('resize', () => handleWindowSizeChange());
     }, [])
+
+    const handleWindowSizeChange = () => {
+        setWindowWidth(window.innerWidth);
+    };
 
     // const handleMixpanel = () => {
     //     mixpanel.init("1b36d59c8a4e85ea3bb964ac4c4d5889");
@@ -57,6 +115,27 @@ const Mobile_Address = ({ setMainNav, setPage, addAddress, product, auth: { user
     const handleAddressModal = (bool) => {
         if(!addressEdit && bool) setAddressEdit(true);
         if(addressEdit && !bool) setAddressEdit(false);
+
+        if(displayAddressModal) {
+            setFormData(initialState);
+            setFirstName(initialFirstName);
+            setLastName(initialLastName);
+            setActive(false);
+            setAddressType('');
+
+            setAddress("");
+            setCoordinates({
+                lat: null, 
+                lng: null
+            });
+
+            setSlideForm1(false);
+            setSlideForm2(false);
+            setSlideForm3(false);
+            setSlideForm4(false);
+            setSlideForm5(false);
+        }
+
         toggleAddressModal(!displayAddressModal);
     }
 
@@ -65,52 +144,270 @@ const Mobile_Address = ({ setMainNav, setPage, addAddress, product, auth: { user
     }
 
     const { 
-        address_name,
+        name,
         first_name,
         last_name,
-        address_1,
-        address_2,
+        street_name,
+        street_number,
         city,
         state,
+        postalCode,
         country,
-        zipcode,
+        area,
+        placeId,
+        stateProvince,
+        formatted_address,
         phone,
-        delivery_instructions
-     } = formData;
+        delivery_instructions,
+        latLng 
+    } = formData;
+
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value});
+
+    const handleLocationSelect = async (value) => {
+        const result = await geocodeByAddress(value);
+        const latLng = await getLatLng(result[0])
+        console.log('VALUE:');
+        console.log(value);
+        console.log('RESULTS:')
+        console.log(result);
+        console.log('LATLNG');
+        console.log(latLng);
+  
+        let locationTags = [];
+  
+        if(result[0].types && result[0].types.length > 0) {
+            result[0].types.map(type => locationTags.push(type));
+        };
+        const address = result[0].formatted_address;
+        const placeId = result[0].place_id;
+        const addressArray =  result[0].address_components;
+        const city = getCity(addressArray);
+        const country = getCountry(addressArray );
+        const area = getArea(addressArray);
+        const state = getState(addressArray);
+        const postalCode = getPostalCode(addressArray);
+        const street = getStreet(addressArray);
+        const number = getNumber(addressArray);
+  
+  
+        console.log('city: ' + city);
+        console.log('state: ' + state);
+        console.log('country: ' + country);
+        console.log('area: ' + area);
+        console.log('state: ' + state);
+        console.log('number: ' + number);
+        console.log('street: ' + street);
+        console.log('postalCode: ' + postalCode);
+        console.log("formatted address: " + address);
+        console.log("placeId: " + placeId);
+        console.log("phone: " + phone);
+        console.log("location tags: ")
+        // console.log(tags);
+  
+        // let newTags;
+        // if (Array.isArray(tags)) {
+        //     newTags = tags.join(', ');
+        // }
+  
+        setAddress(value);
+        setFormData({
+            name: (name) ? name : '',
+            city: (city) ? city : '',
+            state: (state) ? state : '',
+            country: (country) ? country : '',
+            area: (area) ? area : '',
+            stateProvince: (state) ? state : '',
+            street_number: (number) ? number : '',
+            formatted_address: (address) ? address : '',
+            street_name: (street) ? street : '',
+            postalCode: (postalCode) ? postalCode : '',
+            placeId: (placeId) ? placeId : '',
+            phone: (phone) ? phone : '',
+            latLng: `${latLng.lat}, ${latLng.lng}`
+        })
+        setCoordinates(latLng);
+    };
+  
+    const getCity = ( addressArray ) => {
+        let city = '';
+        for( let i = 0; i < addressArray.length; i++ ) {
+            if ( addressArray[ i ].types[0] && 'locality' === addressArray[ i ].types[0] ) {
+                city = addressArray[ i ].long_name;
+                return city;
+            }
+        }
+    };
+
+    const getArea = ( addressArray ) => {
+        let area = '';
+        for( let i = 0; i < addressArray.length; i++ ) {
+            if ( addressArray[ i ].types[0]  ) {
+                for ( let j = 0; j < addressArray[ i ].types.length; j++ ) {
+                    if ( 'administrative_area_level_2' === addressArray[ i ].types[j] ) {
+                        area = addressArray[ i ].long_name;
+                        return area;
+                    }
+                }
+            }
+        }
+    };
+    
+    const getCountry = ( addressArray ) => {
+        let area = '';
+        for( let i = 0; i < addressArray.length; i++ ) {
+            if ( addressArray[ i ].types[0]  ) {
+                for ( let j = 0; j < addressArray[ i ].types.length; j++ ) {
+                    if ( 'country' === addressArray[ i ].types[j] ) {
+                        area = addressArray[ i ].long_name;
+                        return area;
+                    }
+                }
+            }
+        }
+    };
+
+    const getPostalCode = ( addressArray ) => {
+        let area = '';
+        for( let i = 0; i < addressArray.length; i++ ) {
+            if ( addressArray[ i ].types[0]  ) {
+                for ( let j = 0; j < addressArray[ i ].types.length; j++ ) {
+                    if ( 'postal_code' === addressArray[ i ].types[j] ) {
+                        area = addressArray[ i ].long_name;
+                        return area;
+                    }
+                }
+            }
+        }
+    };
+
+    const getState = ( addressArray ) => {
+        let state = '';
+        for( let i = 0; i < addressArray.length; i++ ) {
+            for( let i = 0; i < addressArray.length; i++ ) {
+                if ( addressArray[ i ].types[0] && 'administrative_area_level_1' === addressArray[ i ].types[0] ) {
+                    state = addressArray[ i ].long_name;
+                    return state;
+                }
+            }
+        }
+    };
+    
+    const getNumber = ( addressArray ) => {
+        let state = '';
+        for( let i = 0; i < addressArray.length; i++ ) {
+            for( let i = 0; i < addressArray.length; i++ ) {
+                if ( addressArray[ i ].types[0] && 'street_number' === addressArray[ i ].types[0] ) {
+                    state = addressArray[ i ].long_name;
+                    return state;
+                }
+            }
+        }
+    };
+    
+    const getStreet = ( addressArray ) => {
+        let state = '';
+        for( let i = 0; i < addressArray.length; i++ ) {
+            for( let i = 0; i < addressArray.length; i++ ) {
+                if ( addressArray[ i ].types[0] && 'route' === addressArray[ i ].types[0] ) {
+                    state = addressArray[ i ].long_name;
+                    return state;
+                }
+            }
+        }
+    };
 
     const onSubmit = async e => {
         e.preventDefault();
             
-        if(address_name !== '' && first_name !== '' && last_name !== '' && address_1 !== '' && city !== '' && state !== '' && country !== '' && zipcode !== '') {
-            let data = new FormData();
-
-            if(address_name !== '')data.append('address_name', address_name);
-            if(first_name !== '')data.append('first_name', first_name);
-            if(last_name !== '')data.append('last_name', last_name);
-            if(address_1 !== '')data.append('address_1', address_1);
-            if(address_2 !== '')data.append('address_2', address_2);
-            if(city !== '')data.append('city', city);
-            if(state !== '')data.append('state', state);
-            if(country !== '')data.append('country', country);
-            if(zipcode !== '')data.append('zipcode', zipcode);
-            if(phone !== '')data.append('phone', phone);
-            if(delivery_instructions !== '')data.append('delivery_instructions', delivery_instructions);
-            data.append('active', active);
-
-            addAddress(data);
-
-            toggleAddressModal(false)
+        const newLocation = {
+            address_name: name,
+            street_name: street_name,
+            street_number: street_number,
+            city: city,
+            state: state,
+            postalcode: postalCode,
+            country: country,
+            area: area,
+            placeId: placeId,
+            stateProvince: stateProvince,
+            formatted_address: formatted_address,
+            first_name: firstName.first,
+            last_name: lastName.last,
+            delivery_instructions: delivery_instructions,
+            phone: phone,
+            coordinates: latLng,
+            active: active
         }
+
+        console.log('SENDING ADDRESS')
+        console.log(firstName.first)
+        console.log(lastName.last)
+
+        addAddress(newLocation);
+
+        handleAddressModal();
     }
 
+    const isMobile = windowWidth <= 769;
+    const isTablet = windowWidth <= 1000;
 
-    const bg = {
-        overlay: {
-          background: "rgba(255,255,255,0.5)"
-        }
-    };
+    let bg;
+
+    if (isMobile) {
+        bg = {
+            modal: {
+                borderRadius:"5px",
+                width: "100vw"
+            },
+            overlay: {
+                background: "rgba(20,20,20, .5)"
+            }
+        };
+    } else {
+        bg = {
+            modal: {
+                borderRadius:"5px",
+                width: "600px"
+            },
+            overlay: {
+                background: "rgba(20,20,20, .5)"
+            }
+        };
+    }
+
+    let bg2;
+
+    if(slideform5) {
+        bg2 = {
+            modal: {
+                boxShadow: "none",
+                borderRadius: "15px",
+                border: "1px solid rgb(214, 214, 214)",
+                padding: "0",
+                width: "600px",
+                transition: "all 1s"
+            },
+            overlay: {
+              background: "rgba(20,20,20, .5)"
+            }
+        };
+    } else {
+        bg2 = {
+            modal: {
+                boxShadow: "none",
+                borderRadius: "15px",
+                border: "1px solid rgb(214, 214, 214)",
+                padding: "0",
+                transition: "all 1s"
+            },
+            overlay: {
+              background: "rgba(20,20,20, .5)"
+            }
+        };
+    }
+    
 
     return (
         <Fragment>
@@ -128,238 +425,112 @@ const Mobile_Address = ({ setMainNav, setPage, addAddress, product, auth: { user
                 </div>
             </div>
             {!loading && !isAuthenticated ? <AuthModal /> : null }
-            <Modal open={displayAddressModal} onClose={handleAddressModal} center styles={bg}>
-                <div className="checkout-modal">
-                    <div className="checkout-modal-main">
-                        <div style={{display:'flex'}}>
-                            <div style={{margin:'0 10px', color:'#ff4b2b'}}>
-                                <i class="fas fa-map-marker-alt"></i>
+            <Modal open={displayAddressModal} onClose={handleAddressModal} center styles={bg2}>
+                <div className={slideform5 ? "collection-form active" : "collection-form"}>
+                    <div style={{width:'100%', minHeight:'40px', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'flex-center', height:'40px'}}>
+                    <p style={{margin:'0', fontSize:'12px', color:'#0098d3'}}><i style={{fontSize:'10px'}} class="fas fa-plus"></i> New</p>
+                    </div>
+                    <Logo>
+                        <img src={cardboardLogo} style={{maxHeight: '40px'}} alt="cardboard express logo" />
+                    </Logo>
+                    <div style={{padding:'0 10px', display:'flex', flexDirection:'column', alignItems:'center'}}>
+                        <div style={{width:'100%', fontFamily:'Arial, Helvetica, sans-serif', display:'flex', justifyContent:'center', alignItems:'center', color:'#0098d3', textAlign:'center'}}>
+                            <i style={{margin:'10px', fontSize:'1.2rem'}} class="fas fa-plus"></i>
+                            <h3> New Address</h3>
+                        </div>  
+                        <div style={{width:'100%'}} className="form-settings-transition">
+                            <div id="transition-1" style={{width:'100%', padding:'0 10px'}} className={!slideform1 ? "auth-form-container active" : "auth-form-container"}>
+                                <AddressType setAddressType={setAddressType} addressType={addressType} setSlideForm1={setSlideForm1} slideform1={slideform1} />
                             </div>
-                            <div className="checkout-confirmed"><p>Add New Location</p></div>
-                        </div>
-                        <div className="checkout-cart">
-                            <div style={{margin: '0', borderRadius:'0'}} class="card card-default">
-                                <div className="card-header" style={{background:'rgb(247, 247, 247)'}}>
-                                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                                        <p style={{margin:'0'}}>Location Name</p>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div style={{width:'100%'}}>
-                                        <div>
-                                            <input
-                                                type="text"
-                                                name="address_name"
-                                                className="input_line"
-                                                value={address_name}
-                                                onChange={e => onChange(e)}
-                                                placeholder="Name this locaction..."
-                                                style={{margin:'10px 0', width:'100%', height:'50px'}}
+                            <div id="transition-2" style={{width:'100%'}} className={slideform1 ? "auth-form-container active" : "auth-form-container"}>
+                                <div style={{width:'100%'}} className="form-settings-transition">
+                                    <div id="transition-1" style={{width:'100%', padding:'0 10px'}} className={!slideform2 ? "auth-form-container active" : "auth-form-container"}>
+                                        {addressType === 'residence' ? (
+                                            <AddFullName 
+                                                firstName={firstName}
+                                                lastName={lastName}
+                                                setFirstName={setFirstName}
+                                                setLastName={setLastName}
+                                                setSlideForm1={setSlideForm1} 
+                                                slideform1={slideform1} 
+                                                setSlideForm2={setSlideForm2} 
+                                                slideform2={slideform2} 
                                             />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="checkout-addy">
-                            <div style={{marginTop: '-10px', borderRadius:'0'}} class="card card-default">
-                                <div className="card-header" style={{background:'rgb(247, 247, 247)'}}>
-                                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                                        <p style={{margin:'0'}}>Address</p>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div style={{display:'flex'}}>
-                                        <input
-                                            type="text"
-                                            name="first_name"
-                                            className="input_line"
-                                            value={first_name}
-                                            onChange={e => onChange(e)}
-                                            className="input_line"
-                                            placeholder="First Name"
-                                            style={{margin:'10px 10px 10px 0', width:'50%', height:'50px'}}
-                                        />
-                                        <input
-                                            type="text"
-                                            name="last_name"
-                                            className="input_line"
-                                            value={last_name}
-                                            onChange={e => onChange(e)}
-                                            className="input_line"
-                                            placeholder="Last Name"
-                                            style={{margin:'10px 0 10px 10px', width:'50%', height:'50px'}}
-                                        />
-                                    </div>
-                                    <div style={{width:'100%'}}>
-                                        <div style={{display:'flex'}}>
-                                            <input
-                                                type="text"
-                                                name="address_1"
-                                                className="input_line"
-                                                value={address_1}
-                                                onChange={e => onChange(e)}
-                                                className="input_line"
-                                                placeholder="Address 1"
-                                                style={{margin:'10px 0', width:'100%', height:'50px'}}
+                                        ) : (
+                                            <AddName 
+                                                name={name}
+                                                onChange={onChange} 
+                                                setSlideForm1={setSlideForm1} 
+                                                slideform1={slideform1} 
+                                                setSlideForm2={setSlideForm2} 
+                                                slideform2={slideform2} 
                                             />
-                                        </div>
-                                        <div style={{display:'flex'}}>
-                                            <p style={{color:'#0098d3'}}>Add Address 2</p>
-                                        </div>
-                                        <div style={{display:'flex'}}>
-                                            <input
-                                                type="text"
-                                                name="zipcode"
-                                                className="input_line"
-                                                value={zipcode}
-                                                onChange={e => onChange(e)}
-                                                className="input_line"
-                                                placeholder="Zipcode"
-                                                style={{margin:'10px 0', width:'48%', height:'50px'}}
-                                            />
-                                        </div>
-                                        <div style={{display:'flex'}}>
-                                            <input
-                                                type="text"
-                                                name="city"
-                                                className="input_line"
-                                                value={city}
-                                                onChange={e => onChange(e)}
-                                                className="input_line"
-                                                placeholder="City"
-                                                style={{margin:'10px 10px 10px 0', width:'50%', height:'50px'}}
-                                            />
-                                            <input
-                                                type="text"
-                                                name="state"
-                                                className="input_line"
-                                                value={state}
-                                                onChange={e => onChange(e)}
-                                                className="input_line"
-                                                placeholder="State/Province"
-                                                style={{margin:'10px 0 10px 10px', width:'50%', height:'50px'}}
-                                            />
-                                        </div>
-                                        <div style={{display:'flex'}}>
-                                            <input
-                                                type="text"
-                                                name="country"
-                                                className="input_line"
-                                                value={country}
-                                                onChange={e => onChange(e)}
-                                                className="input_line"
-                                                placeholder="United States"
-                                                style={{margin:'10px 0', width:'100%', height:'50px'}}
-                                            />
-                                        </div>
-                                        <div style={{display:'flex'}}>
-                                            <input
-                                                type="text"
-                                                name="phone"
-                                                className="input_line"
-                                                value={phone}
-                                                onChange={e => onChange(e)}
-                                                className="input_line"
-                                                placeholder="Phone number (for delivery issues only)"
-                                                style={{margin:'10px 0', width:'100%', height:'50px'}}
-                                            />
-                                        </div>
+                                        )}
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="checkout-pay">
-                            <div style={{marginTop: '-10px', borderRadius:'0'}} class="card card-default">
-                                <div className="card-header" style={{background:'rgb(247, 247, 247)'}}>
-                                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                                        <p style={{margin:'0'}}>Delivery Instructions</p>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div style={{display:'flex'}}>
-                                        <textarea
-                                            type="text"
-                                            name="delivery_instructions"
-                                            className="input_line"
-                                            value={delivery_instructions}
-                                            onChange={e => onChange(e)}
-                                            placeholder="Delivery instructions..."
-                                            style={{margin:'10px 0', width:'100%', background:'#ededed', border:'0', color:'#808080', height:'100px'}}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="checkout-deliv">
-                            <div style={{marginTop: '-10px', borderRadius:'0'}} class="card card-default">
-                                <div className="card-header" style={{background:'rgb(247, 247, 247)'}}>
-                                    <div style={{display: 'flex', flexDirection:'column'}}>
-                                        <p style={{margin:'0'}}>Default Shipping</p>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div>
-                                        <p style={{color:'#808080'}}>Set as my preferred shipping address</p>
-                                        <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', height:'50px'}}>
-                                            <div onClick={handleAddressDefault} style={{width:'100%', height:'100%', border:'1px solid #e8e8e8', textAlign:'center', display:'flex', justifyContent:'center', alignItems:'center'}}>
-                                                {active ? (
-                                                    <div style={{display:'flex', justifyContent:'center', alignItems:'center',height:'20px', width:'20px', border:'2px solid #ff4b2b', padding:'2px', borderRadius:'50%', marginRight:'10px'}}>
-                                                        <div style={{height:'100%', width:'100%', background:'#ff4b2b', borderRadius:'50%'}}></div>
-                                                    </div>
-                                                ) : ( 
-                                                    <div style={{height:'14px', width:'14px', border:'2px solid #cecece', borderRadius:'50%', marginRight:'10px'}}></div>
-                                                )}
-                                                <p style={{margin:'0'}}>Yes</p>
+                                    <div id="transition-2" style={{width:'100%'}} className={slideform2 ? "auth-form-container active" : "auth-form-container"}>
+                                        <div style={{width:'100%'}} className="form-settings-transition">
+                                            <div id="transition-1" style={{width:'100%', padding:'0 10px'}} className={!slideform3 ? "auth-form-container active" : "auth-form-container"}>
+                                                <AddressBlock
+                                                    origin="store"
+                                                    address={address}
+                                                    setAddress={setAddress}
+                                                    handleLocationSelect={handleLocationSelect}
+                                                    setSlideForm1={setSlideForm2} 
+                                                    slideform1={slideform2} 
+                                                    setSlideForm2={setSlideForm3} 
+                                                    slideform2={slideform3} 
+                                                />
                                             </div>
-                                            <div onClick={handleAddressDefault} style={{width:'100%', height:'100%', border:'1px solid #e8e8e8', textAlign:'center', display:'flex', justifyContent:'center', alignItems:'center'}}>
-                                                {active ? (
-                                                    <div style={{height:'14px', width:'14px', border:'2px solid #cecece', borderRadius:'50%', marginRight:'10px'}}></div>
-                                                ) : ( 
-                                                    <div style={{display:'flex', justifyContent:'center', alignItems:'center',height:'20px', width:'20px', border:'2px solid #ff4b2b', padding:'2px', borderRadius:'50%', marginRight:'10px'}}>
-                                                        <div style={{height:'100%', width:'100%', background:'#ff4b2b', borderRadius:'50%'}}></div>
+                                            <div id="transition-2" style={{width:'100%'}} className={slideform3 ? "auth-form-container active" : "auth-form-container"}>
+                                                <div style={{width:'100%'}} className="form-settings-transition">
+                                                    <div id="transition-1" style={{width:'100%', padding:'0 10px'}} className={!slideform4 ? "auth-form-container active" : "auth-form-container"}>
+                                                        <PhoneBlock 
+                                                            phone={phone}
+                                                            onChange={onChange} 
+                                                            setSlideForm1={setSlideForm3} 
+                                                            slideform1={slideform3} 
+                                                            setSlideForm2={setSlideForm4} 
+                                                            slideform2={slideform4} 
+                                                        />
                                                     </div>
-                                                )}
-                                                <p style={{margin:'0'}}>No</p>
+                                                    <div id="transition-2" style={{width:'100%'}} className={slideform4 ? "auth-form-container active" : "auth-form-container"}>
+                                                        <div style={{width:'100%'}} className="form-settings-transition">
+                                                            <div id="transition-1" style={{width:'100%', padding:'0 10px'}} className={!slideform5 ? "auth-form-container active" : "auth-form-container"}>
+                                                                <InstructionsBlock
+                                                                    instructions={delivery_instructions}
+                                                                    onChange={onChange} 
+                                                                    setSlideForm1={setSlideForm4} 
+                                                                    slideform1={slideform4} 
+                                                                    setSlideForm2={setSlideForm5} 
+                                                                    slideform2={slideform5} 
+                                                                />
+                                                            </div>
+                                                            <div id="transition-2" style={{width:'100%'}} className={slideform5 ? "auth-form-container active" : "auth-form-container"}>
+                                                                <ConfirmAddress
+                                                                    data={formData}
+                                                                    firstName={firstName}
+                                                                    lastName={lastName}
+                                                                    setFirstName={setFirstName}
+                                                                    setLastName={setLastName}
+                                                                    addressType={addressType}
+                                                                    setSlideForm1={setSlideForm5} 
+                                                                    slideform1={slideform5} 
+                                                                    handleAddressDefault={handleAddressDefault}
+                                                                    active={active}
+                                                                    onChange={onChange}
+                                                                    submit={onSubmit}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>  
                         </div>
                     </div>
-                    
-                    <div className="checkout-actions" style={{display:'grid', gridTemplateColumns:'1fr 1fr', gridGap:'1rem'}}>
-                        <button style={{background:'#ededed', border:'1px solid #ededed', color:'#808080'}}>Cancel</button>
-                        {!addressEdit ? <button onClick={onSubmit}>Add New</button> : <button onClick={onSubmit}>Update</button>}
-                    </div>
-                    {/* <p>address_name: {address_name}</p>
-                    <p>address_1: {address_1}</p>
-                    <p>address_2: {address_2}</p>
-                    <p>first_name: {first_name}</p>
-                    <p>last_name: {last_name}</p>
-                    <p>city: {city}</p>
-                    <p>state: {state}</p>
-                    <p>zipcode: {zipcode}</p>
-                    <p>phone: {phone}</p>
-                    <p>country: {country}</p> */}
-                    {/* <h5>item added to the cart</h5>
-                    <img src={`/api/products/image/${img_gallery[0].img_name}`} className="img-fluid" alt="product" />
-                    <h5>{title}</h5>
-                    <h5 className="text-muted">price : $ {price}</h5>
-                    <button
-                        onClick={handleModalClose}
-                    >
-                        Continue Shopping
-                    </button>
-                    <Link to='/cart'>
-                        <button
-                            cart
-                            onClick={handleModalClose}
-                        >
-                            go to cart
-                        </button>
-                    </Link> */}
                 </div>
             </Modal>
         </Fragment>

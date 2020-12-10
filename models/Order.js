@@ -26,31 +26,62 @@ const OrderSchema = new Schema({
         type: String,
         default:'new order'
     },
-    address: {
-        street: {
+    
+    address_name: {
+        type: String,
+    },
+    first_name: {
+        type: String,
+    },
+    last_name: {
+        type: String,
+    },
+    location: {
+        type: {
             type: String,
-            required: true
+            default: "Point"
+        },
+        coordinates: {
+            type: [Number]
+        } 
+    },
+    formatted_address: {
+        type: String,
+    },
+    address_components: {
+        street_name: {
+            type: String
+        },
+        street_number: {
+            type: String
         },
         city: {
-            type: String,
-            required: true
+            type: String
         },
         state:{
-            type: String,
-            required: true
+            type: String
         },
-        zipcode: {
+        country: {
+            type: String
+        },
+        postalcode: {
+            type: String
+        },
+        area: {
             type: String,
-            required: true
         }
     },
-    telephone: {
-        type: Number,
-        required: true
-    },
-    name: {
+    placeId: {
         type: String,
-        required: true
+    },
+    address_2: {
+        type: String
+    },
+    phone: {
+        type: String
+    },
+    delivery_instructions: {
+        type: String
     },
     paymentId: {
         type: String,

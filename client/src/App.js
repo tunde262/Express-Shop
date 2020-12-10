@@ -8,6 +8,10 @@ import './css/main.css';
 // Redux
 import { Provider } from 'react-redux';
 import { StripeProvider } from 'react-stripe-elements';
+
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+
 import store from './store';
 import { loadUser } from './actions/authActions';
 import setAuthToken from './utils/setAuthToken';
@@ -48,6 +52,8 @@ import AdminNavElements from './components/TableDetails/AdminNav/Main_Admin_Nav'
 if(localStorage.token) {
   setAuthToken(localStorage.token);
 }
+
+const stripePromise = loadStripe("pk_test_Hbz4uQovQLzsxsEZ4clF5WfI00TSBRJTac");
 
 // Collection Data
 const initialState = {
@@ -209,7 +215,11 @@ const App = () => {
               </Switch>
             </main>
           </div>
-          <AddToCartModal />
+
+          <Elements stripe={stripePromise}>
+            <AddToCartModal />
+          </Elements>
+          
           <CreateCollectionModal 
             displayCollectionModal={displayCollectionModal} 
             setCollectionModal={setCollectionModal} 

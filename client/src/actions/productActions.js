@@ -923,9 +923,15 @@ export const removeItem = (id) => dispatch => {
 }
 
 // Remove all items from cart
-export const clearCart = () => {
-    return {
-        type: CLEAR_CART
+export const clearCart = () => async dispatch => {
+    try {
+        await axios.get('/api/stripe/clear');
+
+        dispatch({
+            type: CLEAR_CART,
+        });
+    } catch (err) {
+        console.log(err)
     }
 }
 

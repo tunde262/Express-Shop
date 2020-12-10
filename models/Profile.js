@@ -91,9 +91,6 @@ const ProfileSchema = new Schema({
             placeId: {
                 type: String,
             },
-            address_1: {
-                type: String,
-            },
             address_2: {
                 type: String
             },

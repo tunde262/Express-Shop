@@ -4,11 +4,12 @@ import CartItem from './CartItem';
 import CartColumns from './CartColumns';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { setCartStores } from '../../actions/storeActions';
+import { getStoreById, setCartStores } from '../../actions/storeActions';
 
 import Spinner from '../common/Spinner';
+import { openModal } from '../../actions/productActions';
 
-const CartList = ({cart, setCartStores, product: { cartStores} }) => {
+const CartList = ({cart, openModal, getStoreById, setCartStores, product: { cartStores} }) => {
     const [stores, setStoreList] = useState([]);
 
     useEffect(() => {
@@ -31,6 +32,11 @@ const CartList = ({cart, setCartStores, product: { cartStores} }) => {
 
         getCartStores();
     }, []);
+
+    const handleStoreCheckout = (prodId, storeId) => {
+        openModal(prodId);
+        getStoreById(storeId)
+    }
     
 
     console.log('STORES DATA');
@@ -39,18 +45,39 @@ const CartList = ({cart, setCartStores, product: { cartStores} }) => {
 
     if(stores.length > 0) {
         cartList = stores.map(store => {
+            let checkoutDisabled = true;
+            for(var x = 0; x < cart.length; x++) {
+                if(cart[x].item.store.toString() === store.id.toString()) {
+                    checkoutDisabled = false;
+                    break;
+                }
+            }
+            
             return (
                 <Fragment>
                     <div style={{minHeight:'50px', padding:'1rem 20px', width:'100%', borderBottom:'1px solid rgb(214,214,214)'}}>
                         <div style={{display: 'flex', alignItems:'center', justifyContent: 'space-between'}}>
                             <div style={{display: 'flex', alignItems: 'center'}}>
-                                <img style={{height: '40px', width: '40px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${store.img}`} alt="img" />
+                                <img style={{height: '40px', width: '40px', border:'1px solid #e8e8e8', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${store.img}`} alt="img" />
                                 <div style={{display:'flex', lineHeight:'1rem', flexDirection:'column', alignItems:'flex-start'}}>
-                                    <p style={{margin:'0'}}>{store.name}</p>
-                                    <small style={{margin:'0', color:'#ff4b2b'}}><span style={{color:'#808080'}}>Total: </span> $15</small>
+                                    <p style={{margin:'0', fontSize:'1rem'}}>{store.name}:</p>
                                 </div>
+                                {/* <p style={{margin:'0 0 0 10px', fontSize:'16px', fontFamily:'Arial, Helvetica,sans-serif'}}> $15</p> */}
                             </div>
-                            <button style={{margin:'0'}}>Checkout with store</button>
+                            <div className="store-socials store">
+                                {!checkoutDisabled ? (
+                                    <button
+                                        onClick={() =>handleStoreCheckout(cart[0].item.product, store.id)}
+                                        style={{width:'100%', margin:'10px 0',}}
+                                    >
+                                        Checkout with store
+                                    </button>
+                                ) : (
+                                    <div className="detail-sub-btn active">
+                                        <p style={{fontWeight:'500', margin:'0'}}>Order Placed <i style={{marginLeft:'10px'}} class="fas fa-check"></i></p>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
                     {cart.map(item => (
@@ -73,9 +100,10 @@ const CartList = ({cart, setCartStores, product: { cartStores} }) => {
 }
 
 CartList.propTypes = {
-    setCartStores: PropTypes.func.isRequired,
+    getStoreById: PropTypes.func.isRequired,
     store: PropTypes.object.isRequired,
-    product: PropTypes.object.isRequired
+    product: PropTypes.object.isRequired,
+    openModal:  PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -83,4 +111,4 @@ const mapStateToProps = state => ({
     product: state.product
 });
 
-export default connect(mapStateToProps, { setCartStores })(CartList);
+export default connect(mapStateToProps, { getStoreById, openModal })(CartList);

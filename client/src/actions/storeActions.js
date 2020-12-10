@@ -73,6 +73,10 @@ export const getStoreById = Id => async dispatch => {
             type: GET_STORE,
             payload: res.data
         });
+
+        console.log('GET BY ID DATA');
+        console.log(Id)
+        console.log(res.data)
     } catch (err) {
         // dispatch({
         //     type: STORE_ERROR,
