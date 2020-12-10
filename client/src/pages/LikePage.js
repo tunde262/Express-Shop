@@ -1,7 +1,11 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
 import { getLikedProducts } from '../actions/productActions';
+import { getLikedCollections } from '../actions/collectionActions';
+import { getStoreSubscriptions } from '../actions/storeActions';
+import { setMainNav, setNav1 } from '../actions/navActions';
 
 import Header from '../components/header/Header';
 import CategoryOverview from '../components/Overview/categoryOverview/CategoryOverview';
@@ -10,15 +14,16 @@ import Spinner from '../components/common/Spinner';
 import Container from '../components/ProductList/Container';
 import AuthModal from '../components/modals/AuthModal';
 import BrandOverview from '../components/Overview/brandOverview/BrandOverview';
-import { getStoreSubscriptions } from '../actions/storeActions';
-import { setMainNav, setNav1 } from '../actions/navActions';
+import LikedCollections from '../components/explore_components/collections_featured/CollectionsList';
 
 const LikePage = ({
     getLikedProducts, 
+    getLikedCollections,
     getStoreSubscriptions, 
     setMainNav,
     setNav1, 
     profile, 
+    collection,
     store, 
     product, 
     auth: { 
@@ -34,6 +39,7 @@ const LikePage = ({
         setMainNav('store');
         if(user) {
             getStoreSubscriptions(user._id);
+            getLikedCollections(user._id);
             getLikedProducts(user._id);
             setNav1('explore')
         }
@@ -55,19 +61,21 @@ const LikePage = ({
                     <h3 style={{color: '#333', fontWeight:'300'}}>Hey, {user && user.name}</h3>
                 </div>
                 <div style={{margin:'10px', background:'#fff', border: '1px solid rgb(214, 214, 214)'}}>
-                    <BrandOverview title={`Store Subscriptions`} stores={store.subscriptions} />
+                    <BrandOverview title={`Store Subscriptions`} stores={store.subscriptions} profile={profile} />
                 </div>
-                
+
                 <div className="header-nav-container">
                     <div style={{padding:'10px 30px'}}>
                         <h5 style={{fontWeight:'300'}}>
-                            Collections
+                            My Collections
                         </h5>
                     </div>
                     <div style={{marginTop:'-2rem'}}>
                         <Header />
                     </div>
                 </div>
+
+                <LikedCollections collections={collection.collections} />
                 
                 <div className="product-list-container">
                     <div style={{padding:'10px 30px'}}>
@@ -92,7 +100,10 @@ LikePage.propTypes = {
     auth: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired,
+    collection: PropTypes.object.isRequired,
     getStoreSubscriptions: PropTypes.func.isRequired,
+    getLikedProducts: PropTypes.func.isRequired,
+    getLikedCollections: PropTypes.func.isRequired,
     setNav1: PropTypes.func.isRequired,
     setMainNav: PropTypes.func.isRequired,
 }
@@ -101,11 +112,13 @@ const mapStateToProps = state => ({
     product: state.product,
     auth: state.auth,
     store: state.store,
-    profile: state.profile
+    profile: state.profile,
+    collection: state.collection
 });
 
 export default connect(mapStateToProps, { 
     getLikedProducts, 
+    getLikedCollections,
     getStoreSubscriptions, 
     setMainNav,
     setNav1 

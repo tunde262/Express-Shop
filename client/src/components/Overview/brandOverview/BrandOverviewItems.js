@@ -1,51 +1,35 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+
+import Spinner from '../../common/Spinner';
+import StoreCard from './StoreCard';
 
 import { HorizontalNav } from '../../common/HorizontalNav';
-import Spinner from '../../common/Spinner';
 
-const BrandOverviewItems = ({stores}) => {
+const BrandOverviewItems = ({stores, profile}) => {
     let storeList;
 
     if(stores && stores.length > 0) {
-        storeList = stores.map(store => (
-            <Link key={store._id} to={`/store/${store._id}`}>
-                <BrandOverviewItem>
-                    <div class="card__container">
-                        <div class="card__image">
-                            {store.banner_imgs && store.banner_imgs.length > 0 && <img src={`/api/stores/image/${store.banner_imgs[0].img_name}`} alt="" />}
-                        </div>
-                        <div className="card__logo__image">
-                            <img src={`/api/stores/image/${store.img_name}`} />
-                        </div>
-                        <div class="card__body">
-                            <h3 class="card__body__heading">{store.name}</h3>
-                        </div>
-                    </div>
-                </BrandOverviewItem>
-            </Link>
-        ));
+        storeList = stores.map(storeObj => (
+            <StoreCard key={storeObj._id} storeObj={storeObj} profile={profile} />
+        ))
     }
     else {
-        storeList = <h2 style={{color:'#333', fontWeight:'300'}}><Spinner/></h2>
+        storeList = <Spinner />
     }
 
     return (
-        <HorizontalNav background="white">
+        <HorizontalNav background="var(--body-color)">
             {storeList}
-            {/* <BrandOverviewItem>
-                <div class="card__container" style={{color:'#808080', justifyContent: 'center', textAlign:'center'}}>
-                    <h4>See <br/> Others</h4>
-                </div>
-            </BrandOverviewItem> */}
         </HorizontalNav>
     )
 }
 
-const BrandOverviewItem = styled.div`
-    display: inline-box;
-    margin: 0 15px;
-`;
+BrandOverviewItems.propTypes = {
+
+}
+
 
 export default BrandOverviewItems;

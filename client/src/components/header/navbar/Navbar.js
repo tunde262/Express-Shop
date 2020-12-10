@@ -396,17 +396,17 @@ const Navbar = ({
     return (
         <Fragment>
             {nav.nav1 !== '' && (
-                <HorizontalNav>
+                <HorizontalNav nowrap="nowrap">
                     {navList}
                 </HorizontalNav>
             )}
             {nav.nav1 !== '' && nav.nav1 !== 'explore' ? (
-                <HorizontalNav>
+                <HorizontalNav nowrap="nowrap">
                     {secondNavList}
                 </HorizontalNav>
             ) : null}
             {nav.nav2 !== '' && (
-                <HorizontalNav>
+                <HorizontalNav nowrap="nowrap">
                     {thirdNavList}
                 </HorizontalNav>
             )}

@@ -1145,7 +1145,7 @@ const Details = ({
 
                 {store.stores.length > 0 && detailProduct && (
                     <div style={{margin:'10px', background:'#fff', border: '1px solid rgb(214, 214, 214)'}}>
-                        <BrandOverview title={`Other Stores For ${detailProduct.category}`} stores={store.stores} />
+                        <BrandOverview title={`Other Stores For ${detailProduct.category}`} stores={store.stores} profile={profile} />
                     </div>
                 )}
     

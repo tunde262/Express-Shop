@@ -2890,7 +2890,7 @@ header {
     color: #fff; }
 
 .card__container {
-  width: 200px;
+  width: 150px;
   max-height: 200px;
   height: 200px;
   background: #fff;
@@ -2898,6 +2898,7 @@ header {
   -moz-box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
+  overflow: hidden;
   transition: all .2s;
   position: relative;
   display: flex;
@@ -2921,18 +2922,18 @@ header {
   height: 100%; }
 
 .card__logo__image {
-  height: 75px;
-  width: 75px;
+  height: 65px;
+  width: 65px;
   z-index: 1;
   border-radius: 50%;
   background: #fff;
-  position: absolute;
   justify-self: center;
-  margin-top: 70px; }
+  margin-top: 25px; }
   .card__logo__image img {
-    height: 75px;
-    width: 75px;
-    border-radius: 50%; }
+    height: 65px;
+    width: 65px;
+    border-radius: 50%;
+    border: 1px solid #e8e8e8; }
 
 .card__body {
   height: 50%;
@@ -2940,19 +2941,17 @@ header {
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   overflow: hidden;
   position: relative;
-  padding: 10px 35px;
+  padding: 10px 0 0;
   text-align: center; }
   .card__body h3 {
-    margin-top: 20px;
     font-weight: bold; }
 
 .card__body__heading {
-  font-weight: 400;
-  color: #5f6368;
-  font-size: .95rem; }
+  font-size: .95rem;
+  margin: 0; }
 
 .variant_option {
   height: 50px;

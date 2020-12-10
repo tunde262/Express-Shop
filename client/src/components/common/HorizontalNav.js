@@ -6,7 +6,7 @@ export const HorizontalNav = styled.div`
     overflow-x: scroll;
     overflow-y: hidden;
     display: flex;
-    white-space: nowrap;
+    white-space: ${props => props.nowrap};
     &::-webkit-scrollbar {
         display: none;
     }
