@@ -4876,6 +4876,8 @@ footer .footer-bottom {
     position: fixed;
     margin-top: 60px;
     z-index: 15; }
+  .collection-page-container {
+    width: 100vw; }
   .nearby-container {
     width: 100%;
     grid-template-columns: 1fr;

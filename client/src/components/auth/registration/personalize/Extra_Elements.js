@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom';
 
 const Extra_Elements = ({ slideform1, setSlideForm1 }) => {
     return (
@@ -29,9 +30,11 @@ const Extra_Elements = ({ slideform1, setSlideForm1 }) => {
                     <p style={{margin:'10px 0'}}>Add a payment method</p>
                 </div>
             </div>
-            <button style={{width:'100%', outline:'none', margin:'36px 0 10px', fontSize:'13px', letterSpacing:'1px', display:'flex', alignItems:'center', justifyContent:'center'}}>
-                Start Shopping Instead
-            </button> 
+            <Link to="/home">
+                <button style={{width:'100%', outline:'none', margin:'36px 0 10px', fontSize:'13px', letterSpacing:'1px', display:'flex', alignItems:'center', justifyContent:'center'}}>
+                    Start Shopping Instead
+                </button> 
+            </Link>
             <div style={{padding:'10px'}}> 
                 <p style={{margin:'0', color:'#808080', fontSize:'1rem', fontFamily:'Arial, Helvetica, sans-serif'}}>You can always manage this information in your <span style={{color:'rgb(47, 183, 236)', fontSize:'1rem'}}>Account Settings</span>.</p>
             </div>

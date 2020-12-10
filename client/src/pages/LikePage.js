@@ -54,11 +54,11 @@ const LikePage = ({
     }
         
     return (
-        <Fragment>
+        <div className="collection-page-container">
             <div onScroll={handleScroll} style={{height:"100vh", overflowY:'scroll', background:'rgb(247, 247, 247)'}}>
                 <div style={{textAlign:'center', display:'flex', alignItems:' center', justifyContent:'center', marginTop:'1rem'}} class="container-fluid">
                     <i style={{color: '#ff4b2b', margin:'0 1rem', fontSize:'24px'}} className="fas fa-heart"></i>
-                    <h3 style={{color: '#333', fontWeight:'300'}}>Hey, {user && user.name}</h3>
+                    <h3 style={{color: '#333', fontWeight:'300'}}>Hey, {user && user.first_name}</h3>
                 </div>
                 <div style={{margin:'10px', background:'#fff', border: '1px solid rgb(214, 214, 214)'}}>
                     <BrandOverview title={`Store Subscriptions`} stores={store.subscriptions} profile={profile} />
@@ -88,7 +88,7 @@ const LikePage = ({
             </div>
             {/* <Footer /> */}
             {!loading && !isAuthenticated ? <AuthModal /> : null }
-        </Fragment>
+        </div>
     )
     
 }
