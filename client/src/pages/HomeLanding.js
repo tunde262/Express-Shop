@@ -26,7 +26,7 @@ const initialState = {
   password2: ''
 };
 
-const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) => {
+const HomeLanding = ({history, auth: { isAuthenticated, user, loading }, updateAuth, register, login}) => {
   // const [formData, setFormData] = useState({
   //   firstname: '',
   //   lastname: '',
@@ -133,7 +133,7 @@ const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) =>
     setSentMixpanel(true);
   }
 
-  if(isAuthenticated) {
+  if(user && !loading && isAuthenticated) {
     history.push('/home');
   } else {
     history.push('/login');
@@ -378,10 +378,11 @@ HomeLanding.propTypes = {
   updateAuth: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+  auth: state.auth
 });
 
 
