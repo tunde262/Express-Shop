@@ -58,10 +58,10 @@ export default class TextEditor extends Component {
           editorClassName="editorClassName"
           onEditorStateChange={this.onEditorStateChange}
         />
-        <textarea
+        {/* <textarea
           disabled
           value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}
-        ></textarea>
+        ></textarea> */}
       </div>
     );
   }

@@ -6,7 +6,7 @@ import Header from '../../header/Header';
 const HeaderBlock = () => {
 
     return (
-        <div className="header-nav-container mobile">
+        <div className="header-nav-container">
             <div style={{padding:'10px'}}>
                 <h3 style={{fontSize:'12px', letterSpacing:'1px',color:'#808080'}}>
                     Pick A Category

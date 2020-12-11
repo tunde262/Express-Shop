@@ -110,7 +110,6 @@ const HomeMain = ({
             pageContent = (
                 <div className="nearby-container">
                     {/* <Banner imgLarge={ImgLarge} imgSmall={ImgSmall} /> */}
-                    <HeaderBlock />
 
                     <ProductListBlock handleScroll={handleScroll} />
 

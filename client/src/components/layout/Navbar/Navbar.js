@@ -623,7 +623,7 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                         <i style={{fontSize:'1rem'}} className="fas fa-bars"></i>
                     </div>
                     <div className="branding">
-                        <a href={`https://www.cardboardexpress.com/`}><img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" /></a>
+                        <a href={`https://www.cardboardexpress.com/home`}><img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" /></a>
 
                         {/* <div className="social-container">
                             <a href="https://instagram.com/cardboardexpress" target="_blank" className="social"><i className="fab fa-instagram"></i></a>

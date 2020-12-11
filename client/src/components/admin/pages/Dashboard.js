@@ -430,7 +430,7 @@ const Dashboard = ({
     const isTablet = windowWidth <= 1000;
 
     return (
-        <Fragment>
+        <div className="detail-container">
            {tableShow1 === 'store' && (
                 <Fragment>
                     <div className="store-table-header">
@@ -618,7 +618,7 @@ const Dashboard = ({
                     </div>
                 </div>
             </Modal>
-        </Fragment>
+        </div>
     )
 }
 
