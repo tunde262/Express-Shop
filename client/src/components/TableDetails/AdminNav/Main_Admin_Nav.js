@@ -63,7 +63,7 @@ const Main_Admin_Nav = ({
                         </h3>
                     </div>
                 </a>
-                <a style={{margin:'5px 0'}} to={store.store ? `https://www.cardboardexpress.com/admin/${store.store._id}?show=inventory` : "#"}>
+                <a style={{margin:'5px 0'}} href={store.store ? `https://www.cardboardexpress.com/admin/${store.store._id}?show=inventory` : "#"}>
                     <div className="store-table-nav-items main active">
                         <h3 style={{fontWeight:'600'}}><span><i style={{fontSize:'20px', marginRight:'10px'}} className="fas fa-box"></i></span>Inventory</h3>
                     </div>

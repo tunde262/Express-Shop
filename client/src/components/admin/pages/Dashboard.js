@@ -59,7 +59,7 @@ const Dashboard = ({
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     // Main Dashboard Nav / Sidenav Display page
-    const [tableShow1, setTableShow1] = useState('store');
+    const [tableShow1, setTableShow1] = useState('shop');
 
     // Show Add Item Modal
     const [displayItemModal, toggleItemModal] = useState(false);
@@ -82,7 +82,7 @@ const Dashboard = ({
         if (location.search) {
             let query = new URLSearchParams(location.search).get('show')
             if(query === 'store') {
-                setTableShow1('store');
+                setTableShow1('shop');
             } else if (query === 'edit') {
                 setTableShow1('edit');
             } else if (query === 'inventory') {
@@ -431,7 +431,7 @@ const Dashboard = ({
 
     return (
         <div className="detail-container">
-           {tableShow1 === 'store' && (
+           {tableShow1 === 'shop' && (
                 <Fragment>
                     <div className="store-table-header">
                         <StoreHeader setTable={setTableShow1} />
