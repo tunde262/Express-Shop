@@ -183,7 +183,7 @@ const App = () => {
             <main id="home">
               <Switch>
                 {/* Landing Pages */}
-                <Route exact path="/" component={Login} />
+                <Route exact path="/" component={HomeLanding} />
                 <Route exact path="/business" component={BusinessLanding} />
                 {/* Auth Pages */}
                 <Route exact path="/login" component={Login} />
