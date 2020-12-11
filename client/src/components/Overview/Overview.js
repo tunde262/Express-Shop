@@ -61,8 +61,8 @@ class Overview extends Component{
                     )} */}
             
                     {this.props.shop ? (
-                        <Link 
-                            to={this.props.link}
+                        <a 
+                            href={`https://www.cardboardexpress.com/${this.props.link}`}
                             style={{
                             fontWeight: '400', 
                             color: '#5f6368', 
@@ -71,7 +71,7 @@ class Overview extends Component{
                         >
                             <i class="fas fa-shopping-bag"></i>{'  '}
                             Shop All
-                        </Link>
+                        </a>
                     ) : null}
                 </div>
                 {this.props.children}

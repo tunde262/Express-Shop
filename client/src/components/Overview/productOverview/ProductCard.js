@@ -117,7 +117,7 @@ const ProductCard = ({ auth: { user }, preview, addLike, liked, modalOpen, produ
                     className="imgbox" 
                     onClick={() => onHandleDetailClick(_id)}
                 >
-                    <Link to={`/details/${_id}`}>
+                    <a href={`https://www.cardboardexpress.com/details/${_id}`}>
                         {img_gallery[0] &&<img src={`/api/products/image/${sorted_img_gallery[0].img_name}`} alt="product" />}
                         <div style={{height:'25px', display:'felx', alignItems:'center', margin:'10px', lineHeight:'14px', display:'flex', justifyContent:'center', alignItems:'center', position:'absolute', top:'0', right:'0', padding:'0 10px', borderRadius:'50px', background:'rgba(20,20,20, .5)', color:'#fff', opacity:'1'}}> 
                             <p style={{margin:'0', fontSize:'12px'}}>$10.99</p>
@@ -132,11 +132,11 @@ const ProductCard = ({ auth: { user }, preview, addLike, liked, modalOpen, produ
                                 <i class="fas fa-chevron-right"></i>
                             </div>
                         </div> */}
-                    </Link>
+                    </a>
                 </div>
                 <div className="specifice">
                     <div className="titles line-clamp">
-                        <Link to={`/details/${_id}`}>{name}</Link>
+                        <a href={`https://www.cardboardexpress.com/details/${_id}`}>{name}</a>
                     </div>
                     {/* <div className="price" style={{width:'100%', margin:'3px 0', display:'flex', justifyContent:'space-between', alignItems:'center'}}>
                         <p style={{margin:'0', fontSize:'12px' }}>1,032 sold</p>
@@ -145,7 +145,7 @@ const ProductCard = ({ auth: { user }, preview, addLike, liked, modalOpen, produ
                 <div className="sellers">
                     <img src={`/api/stores/image/${store.img_name}`} />
                     <div style={{height:'14px', overflow:'hidden'}}>
-                        <Link className="line-clamp-1" to={`/store/${store._id}`}>{store.name}</Link>
+                        <a className="line-clamp-1" href={`https://www.cardboardexpress.com/store/${store._id}`}>{store.name}</a>
                     </div>
                 </div>
             </div>

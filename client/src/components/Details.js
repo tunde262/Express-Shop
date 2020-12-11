@@ -217,7 +217,7 @@ const Details = ({
 
     const handleSubscribe= (detailStore) => {
         if (user) {
-            favorite(detailStore._id);
+            favorite(detailStore._id, user._id);
             setSubscribedToo(!subscribedToo);
 
             // Check if product already liked by same user
@@ -1017,9 +1017,9 @@ const Details = ({
                                     <hr style={{background:'#dfe1e5', height:'1px', marginBottom:'0.5rem'}}/>
                                     <div style={{display:'flex', justifyContent:'space-between', alignItems: 'center', marginTop:'-0.6rem', padding:'0 1rem'}}>
                                         <div style={{display:'flex', alignItems: 'center'}}>
-                                            <Link to={"/store/" + detailProduct.store._id}>
+                                            <a href={`https://www.cardboardexpress.com/store/${detailProduct.store._id}`}>
                                                 <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${detailProduct.store.img_name}`} alt="img" />
-                                            </Link>
+                                            </a>
                                             <div style={{ display: 'flex', flexDirection:'column', lineHeight:'17px', marginTop:'0.5rem'}}>
                                                 <a href={"https://www.cardboardexpress.com/store/" + detailProduct.store._id}>
                                                     {detailProduct.store.name}

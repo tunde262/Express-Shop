@@ -24,7 +24,7 @@ const SideDrawerProduct = ({setSlideForm1, getProductsByStoreId, storeId, produc
                     const res = await axios.get(`/api/variants/product/${product._id}`);
                     console.log(res.data);
                     setProductList(productList => [...productList, (
-                        <Link style={{textDecoration:'none'}} to={{pathname:`/admin/product/${storeId}/${product._id}`,search: "?show=detail"}}>
+                        <a style={{textDecoration:'none'}} href={`https://www.cardboardexpress.com/admin/product/${storeId}/${product._id}?show=detail`}>
                             <div key={product._id} style={{display:'flex', height:'100px', width:'100%', padding:'10px', borderBottom:'1px solid #cecece'}}>
                                 <div style={{height:'100%', width:'100px', overflow:'hidden', display:'flex', justifyContent:'center', alignItems:'center'}}>
                                     {product.img_gallery[0] && <img src={`/api/products/image/${product.img_gallery[0].img_name}`} style={{height:'100%'}} />}
@@ -37,7 +37,7 @@ const SideDrawerProduct = ({setSlideForm1, getProductsByStoreId, storeId, produc
                                     <p style={{margin:'0', fontSize:'12px', color:'#808080'}}>${product.price}</p>
                                 </div>
                             </div>
-                        </Link>
+                        </a>
                     )])
                 });
             } else {

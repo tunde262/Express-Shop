@@ -24,7 +24,7 @@ const SideDrawerCollection = ({setSlideForm1, getCollectionsByStoreId, storeId, 
                     const res = await axios.get(`/api/products/collection/${collection._id}`);
                     console.log(res.data);
                     setCollectionList(collectionList => [...collectionList, (
-                        <Link style={{textDecoration:'none'}} to={{pathname:`/admin/collection/${storeId}/${collection._id}`,search: "?show=detail"}}>
+                        <a style={{textDecoration:'none'}} href={`https://www.cardboardexpress.com/admin/collection/${storeId}/${collection._id}?show=detail`}>
                             <div key={collection._id} style={{display:'flex', justifyContent:'space-between', height:'100px', width:'100%', padding:'10px', borderBottom:'1px solid #cecece'}}>
                                 <div style={{display:'flex', height:'100%', overflow:'hidden', width:'200px', paddingLeft:'10px', flexDirection:'column', justifyContent:'center', alignItems:'flex-start'}}>
                                     <div className="line-clamp-1" style={{height:'20px', overflow:'hidden', width:'100%'}}>
@@ -36,7 +36,7 @@ const SideDrawerCollection = ({setSlideForm1, getCollectionsByStoreId, storeId, 
                                     <i className="fas fa-chevron-right"></i>
                                 </div>
                             </div>
-                        </Link>
+                        </a>
                     )])
                 });
             } else {

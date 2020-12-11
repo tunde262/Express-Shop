@@ -18,7 +18,7 @@ const Header_Location = ({
         //     {orderList}
         // </div>
         <Fragment>
-            <Link style={{textDecoration:'none'}} to={store.store && {pathname:`/admin/${store.store._id}`,search: "?show=inventory"}}>
+            <Link style={{textDecoration:'none'}} href={store.store && `https://www.cardboardexpress.com/admin/${store.store._id}?show=inventory`}>
                 <div style={{display:'flex', color:'#ff4b2b', width:'100%', padding:'10px 0', fontSize:'0.8rem', justifyContent:'flex-start', alignItems:'center'}}>
                     <i className="fas fa-long-arrow-alt-left"></i>
                     <p style={{margin:'0 10px'}}>  Back to store</p>

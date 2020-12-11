@@ -14,9 +14,9 @@ const Cat_Nav_Item = ({slideForm2, setSlideForm2, item, setCatValue, catValue })
             <div style={{width:'234px', display: 'grid', gridTemplateColumns:'1fr 3fr 1fr', paddingLeft: '16px'}}>
                 <img src={item.img} style={{borderRadius: '50%', height: '40px', overflow: 'hidden', width: '40px', margin: '2px 5px 2px 0'}} />
                 <div style={{width:'100%', overflow:'hidden', display:'flex', alignItems:'center'}}>
-                    <Link className="link-decoration" to={{pathname:`/category`,search: `?filter=${item.tag_value}`}}>
+                    <a className="link-decoration" href={`https://www.cardboardexpress.com/category?filter=${item.tag_value}`}>
                         <h3 style={{fontWeight:'600', fontSize:'14px'}}>{item.text_value}</h3>
-                    </Link>
+                    </a>
                 </div>
                 <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
                     <i style={{color:'#808080', fontSize:'12px'}} class="fas fa-chevron-right"></i>

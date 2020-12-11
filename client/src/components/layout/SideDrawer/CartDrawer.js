@@ -72,7 +72,7 @@ const CartDrawer = ({
                 (
                     <div style={{marginTop:'1rem'}}>
                         <div style={{padding:'0 10px'}}>
-                            <Link to="/cart"><button onClick={toggleCartDrawer} style={{margin:0, width:'100%'}}>Checkout</button></Link>
+                            <a href={`https://www.cardboardexpress.com/cart`}><button onClick={toggleCartDrawer} style={{margin:0, width:'100%'}}>Checkout</button></a>
                         </div>
                         <div style={{overflowY:'scroll', height:'80vh'}}>
                             {cart.map(item => {
@@ -107,7 +107,7 @@ const CartDrawer = ({
                             })}
                         </div>
                         <div style={{padding:'0 10px', marginTop:'-2rem'}}>
-                            <Link to="/cart"><button onClick={toggleCartDrawer} style={{margin:0, width:'100%'}}>Checkout</button></Link>
+                            <a href={`https://www.cardboardexpress.com/cart`}><button onClick={toggleCartDrawer} style={{margin:0, width:'100%'}}>Checkout</button></a>
                         </div>
                         {/* <div className="cart-actions">
                             <div style={{padding:'1rem 1rem 0 1rem', marginTop:'-2rem', boxSizing:'border-box'}}>

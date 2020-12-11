@@ -66,13 +66,13 @@ const Item = ({
                     <Fragment>
                         <div className="table-row-img"><div>{detailProduct.img_gallery[0] && <img style={{width: '100%'}} src={`/api/products/image/${detailProduct.img_gallery[0].img_name}`} alt="img" />}</div></div>
                         <div>
-                            <Link 
+                            <a 
                                 className="line-clamp-1" 
                                 style={{maxHeight:'40px', overflow:'hidden', color:'#0098d3'}}
-                                to={{pathname:`/admin/product/${store.store._id}/${detailProduct._id}`,search: "?show=detail"}}
+                                href={`https://www.cardboardexpress.com/admin/product/${store.store._id}/${detailProduct._id}?show=detail`}
                             >
                                 {detailProduct.name}
-                            </Link>
+                            </a>
                             <div><p style={{margin:'0'}}><span style={{color:'#ff4b2b', fontSize:'14px'}}>{detailProduct.inventory_qty}</span> Stock / <span style={{color:'#ff4b2b', fontSize:'14px'}}>{itemVariants.length}</span> Variants</p></div>
                             <div><p style={{margin:'0'}}>${detailProduct.price}</p></div>
                         </div>
@@ -84,13 +84,13 @@ const Item = ({
                         </div>
                         <div className="table-row-img"><div>{detailProduct.img_gallery[0] && <img style={{width: '100%'}} src={`/api/products/image/${detailProduct.img_gallery[0].img_name}`} alt="img" />}</div></div>
                         <div>
-                            <Link 
+                            <a 
                                 className="line-clamp-1" 
                                 style={{maxHeight:'40px', overflow:'hidden', color:'#0098d3'}}
-                                to={{pathname:`/admin/product/${store.store._id}/${detailProduct._id}`,search: "?show=detail"}}
+                                href={`https://www.cardboardexpress.com/admin/product/${store.store._id}/${detailProduct._id}?show=detail`}
                             >
                                 {detailProduct.name}
-                            </Link>
+                            </a>
                             <div><span style={{color:'#ff4b2b', fontSize:'14px'}}>{detailProduct.inventory_qty}</span> Stock / <span style={{color:'#ff4b2b', fontSize:'14px'}}>{itemVariants.length}</span> Variants</div>
                             <div>${detailProduct.price}</div>
                         </div>
@@ -102,27 +102,27 @@ const Item = ({
             ) : (
                 (isTablet ? (
                     <Fragment>
-                        <Link className="table-row-img" to={{pathname:`/admin/product/${store.store._id}/${detailProduct._id}`,search: "?show=detail"}}><div>{detailProduct.img_gallery[0] && <img style={{width: '100%'}} src={`/api/products/image/${detailProduct.img_gallery[0].img_name}`} alt="img" />}</div></Link>
-                        <Link to={{pathname:`/admin/product/${store.store._id}/${detailProduct._id}`,search: "?show=detail"}}>
+                        <a className="table-row-img" href={`https://www.cardboardexpress.com/admin/product/${store.store._id}/${detailProduct._id}?show=detail`}><div>{detailProduct.img_gallery[0] && <img style={{width: '100%'}} src={`/api/products/image/${detailProduct.img_gallery[0].img_name}`} alt="img" />}</div></a>
+                        <a href={`https://www.cardboardexpress.com/admin/product/${store.store._id}/${detailProduct._id}?show=detail`}>
                             <div className="line-clamp-1" style={{maxHeight:'40px', overflow:'hidden', color:'#0098d3'}}>{detailProduct.name}</div>
                             <div><p style={{margin:'0'}}><span style={{color:'#ff4b2b', fontSize:'14px'}}>{detailProduct.inventory_qty}</span> Stock / <span style={{color:'#ff4b2b', fontSize:'14px'}}>{itemVariants.length}</span> Variants</p></div>
                             <div><p style={{margin:'0'}}>${detailProduct.price}</p></div>
-                        </Link>
+                        </a>
                     </Fragment>
                 ) : (
                     <Fragment>
                         <div>
                             <input type="checkbox" value=""/>
                         </div>
-                        <Link className="table-row-img" to={{pathname:`/admin/product/${store.store._id}/${detailProduct._id}`,search: "?show=detail"}}><div>{detailProduct.img_gallery[0] && <img style={{width: '100%'}} src={`/api/products/image/${detailProduct.img_gallery[0].img_name}`} alt="img" />}</div></Link>
-                        <Link to={{pathname:`/admin/product/${store.store._id}/${detailProduct._id}`,search: "?show=detail"}}>
+                        <a className="table-row-img" href={`https://www.cardboardexpress.com/admin/product/${store.store._id}/${detailProduct._id}?show=detail`}><div>{detailProduct.img_gallery[0] && <img style={{width: '100%'}} src={`/api/products/image/${detailProduct.img_gallery[0].img_name}`} alt="img" />}</div></a>
+                        <a href={`https://www.cardboardexpress.com/admin/product/${store.store._id}/${detailProduct._id}?show=detail`}>
                             <div className="line-clamp-1" style={{maxHeight:'40px', overflow:'hidden', color:'#0098d3'}}>{detailProduct.name}</div>
                             <div><span style={{color:'#ff4b2b', fontSize:'14px'}}>{detailProduct.inventory_qty}</span> Stock / <span style={{color:'#ff4b2b', fontSize:'14px'}}>{itemVariants.length}</span> Variants</div>
                             <div>${detailProduct.price}</div>
-                        </Link>
-                        <Link to={{pathname:`/admin/product/${store.store._id}/${detailProduct._id}`,search: "?show=detail"}}><div className="line-clamp" style={{maxHeight:'40px', overflow:'hidden'}}>5</div></Link>
-                        <Link to={{pathname:`/admin/product/${store.store._id}/${detailProduct._id}`,search: "?show=detail"}}><div>6</div></Link>
-                        <Link to={{pathname:`/admin/product/${store.store._id}/${detailProduct._id}`,search: "?show=detail"}}><div style={{width:'50px'}}><i onClick={() => deleteProduct(detailProduct._id)} className="fas fa-trash"></i></div></Link>
+                        </a>
+                        <a href={`https://www.cardboardexpress.com/admin/product/${store.store._id}/${detailProduct._id}?show=detail`}><div className="line-clamp" style={{maxHeight:'40px', overflow:'hidden'}}>5</div></a>
+                        <a href={`https://www.cardboardexpress.com/admin/product/${store.store._id}/${detailProduct._id}?show=detail`}><div>6</div></a>
+                        <a href={`https://www.cardboardexpress.com/admin/product/${store.store._id}/${detailProduct._id}?show=detail`}><div style={{width:'50px'}}><i onClick={() => deleteProduct(detailProduct._id)} className="fas fa-trash"></i></div></a>
                     </Fragment>
                 ) )
             )}

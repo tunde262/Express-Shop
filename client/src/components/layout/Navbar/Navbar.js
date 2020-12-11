@@ -8,6 +8,8 @@ import { reorderItems } from '../../../actions/productActions';
 import { FaAlignRight } from 'react-icons/fa';
 import logo from '../../common/logo.png';
 
+import ProfileCircle from '../../common/ProfileCircle';
+
 import mixpanel from 'mixpanel-browser';
 
 import sampleImg from '../../../utils/imgs/20484728.jpeg';
@@ -103,7 +105,7 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
         authLinks = (
             <Fragment>
                 <li className={navHighlight === "favorited" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('favorited')}>
-                    <Link to="/profile/saved">
+                    <a href={`https://www.cardboardexpress.com/profile/saved`}>
                         <div
                             onMouseEnter={handleMouseHoverHeart}
                             onMouseLeave={handleMouseHoverHeart}
@@ -115,7 +117,7 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                             )}
                             
                         </div>  
-                    </Link>
+                    </a>
                 </li>
                 {/* <li className={navHighlight === "categories" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('categories')}>
                     <div 
@@ -153,11 +155,9 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                     >
                         {navHighlight === "profile" || isHovering ? (
                             <Fragment>
-                                <Link to="/profile">
-                                    <div className="profile-circle">
-                                        <p style={{fontWeight:'bold', color:'#333'}}>T</p>
-                                    </div>
-                                </Link>
+                                <a href={`https://www.cardboardexpress.com/profile`}>
+                                    <ProfileCircle />
+                                </a>
                                 <div 
                                     className="profile-toggle"
                                     onClick={() => setDropdown(!dropdown)}
@@ -173,11 +173,9 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                             ) 
                             : (
                                 <Fragment>
-                                    <Link to="/profile">
-                                        <div style={{display:'flex', justifyContent:'center', paddingTop:'20px', alignItems:'center', width:'40px', height:'40px', borderRadius:'50%', background:'#ececec'}}>
-                                            <p style={{fontWeight:'bold', color:'#333'}}>T</p>
-                                        </div>
-                                    </Link>
+                                    <a href={`https://www.cardboardexpress.com/profile`}>
+                                        <ProfileCircle />
+                                    </a>
                                     <div 
                                         className="profile-toggle"
                                         onClick={() => setDropdown(!dropdown)}
@@ -204,27 +202,25 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                             >
                                 <div className="menu">
                                     <a href="#" className="menu-item" onClick={() => setActiveMenu('profile')}>
-                                        <div style={{display:'flex', justifyContent:'center', paddingTop:'20px', alignItems:'center', width:'40px', height:'40px', borderRadius:'50%', background:'#ececec', border:'2px solid #ff4b2b'}}>
-                                            <p style={{fontWeight:'bold', color:'#333'}}>T</p>
-                                        </div>
+                                        <ProfileCircle />
                                         <div style={{marginLeft:'1rem'}}>
                                             <p style={{margin:0}}>{user.name}</p>
                                             <p style={{margin:0}}>4.5 / 5 stars</p>
                                         </div>
                                     </a>
                                     <hr style={{margin:'10px 0'}} />
-                                    <Link to="/profile/saved" className="menu-item">
+                                    <a href={`https://www.cardboardexpress.com/profile/saved`} className="menu-item">
                                         <i className="fas fa-heart"></i>{' '}
                                         Saved
-                                    </Link>
+                                    </a>
                                     <hr style={{margin:'10px 0'}} />
-                                    <Link to="/profile/orders" className="menu-item">
+                                    <a href={`https://www.cardboardexpress.com/profile/orders`} className="menu-item">
                                         My Orders
-                                    </Link>
+                                    </a>
                                     {/* <hr style={{margin:'10px 0'}} />
-                                    <Link to="/admin" className="menu-item">
+                                    <a href={`https://www.cardboardexpress.com/admin`} className="menu-item">
                                         My Stores
-                                    </Link> */}
+                                    </a> */}
                                     <hr style={{margin:'10px 0'}} />
                                     <a href="#" className="menu-item" onClick={logout}>
                                         <i className="fas fa-sign-out-alt" />{' '}
@@ -244,19 +240,19 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                                     <a href="#" className="menu-item" onClick={() => setActiveMenu('main')}>
                                         <i className="fas fa-arrow-left"></i>
                                     </a>
-                                    <Link to="/profile/orders" className="menu-item">
+                                    <a href={`https://www.cardboardexpress.com/profile/orders`} className="menu-item">
                                         My Orders
-                                    </Link>
-                                    <Link to="/profile/addresses" className="menu-item">
+                                    </a>
+                                    <a href={`https://www.cardboardexpress.com/profile/addresses`} className="menu-item">
                                         Saved Locations
-                                    </Link>
-                                    <Link to="/profile/payments" className="menu-item">
+                                    </a>
+                                    <a href={`https://www.cardboardexpress.com/profile/payments`} className="menu-item">
                                         payment
-                                    </Link>
-                                    <Link to="/profile/settings" className="menu-item">
+                                    </a>
+                                    <a href={`https://www.cardboardexpress.com/profile/settings`} className="menu-item">
                                         <i className="fas fa-cog"></i>{' '}
                                         Settings
-                                    </Link>
+                                    </a>
                                 </div>
                             </CSSTransition>
                         </div>
@@ -308,26 +304,26 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                                     <a href="#" className="menu-item" onClick={() => setActiveMenu('main')}>
                                         <i className="fas fa-arrow-left"></i>
                                     </a>
-                                    <Link to="/profile" className="menu-item">
+                                    <a to="/profile" className="menu-item">
                                         <div style={{background:'#333', height:'50px', width:'50px', borderRadius:'50px'}}></div>
                                         <div style={{marginLeft:'1rem'}}>
                                             <p style={{margin:0}}>Tunde Adepitan</p>
                                             <p style={{margin:0}}>4.5 / 5 stars</p>
                                         </div>
-                                    </Link>
-                                    <Link to="/profile/payments" className="menu-item">
+                                    </a>
+                                    <a to="/profile/payments" className="menu-item">
                                         payment
-                                    </Link>
-                                    <Link to="/profile/addresses" className="menu-item">
+                                    </a>
+                                    <a to="/profile/addresses" className="menu-item">
                                         address
-                                    </Link>
-                                    <Link to="/profile/orders" className="menu-item">
+                                    </a>
+                                    <a to="/profile/orders" className="menu-item">
                                         My Orders
-                                    </Link>
-                                    <Link to="/profile/settings" className="menu-item">
+                                    </a>
+                                    <a to="/profile/settings" className="menu-item">
                                         <i className="fas fa-cog"></i>{' '}
                                         Settings
-                                    </Link>
+                                    </a>
                                 </div>
                             </CSSTransition> */}
                         </div>
@@ -345,7 +341,7 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                                 <div className="menu">
                                     <div style={{display:'flex', alignItems:'center'}}>
                                         <div style={{background:'#333', height:'50px', width:'50px', borderRadius:'50px'}}></div>
-                                        <Link to="/profile" className="menu-item">My Profile</Link>
+                                        <a to="/profile" className="menu-item">My Profile</a>
                                         <i className="fas fa-chevron-right"></i>
                                     </div>
                                     <hr style={{margin:'10px 0'}} />
@@ -358,9 +354,9 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                                         My Orders
                                     </a>
                                     <hr style={{margin:'10px 0'}} />
-                                    <Link to="/admin" className="menu-item">
+                                    <a to="/admin" className="menu-item">
                                         My Stores
-                                    </Link>
+                                    </a>
                                     <hr style={{margin:'10px 0'}} />
                                     <a href="#" className="menu-item" onClick={logout}>
                                         <i className="fas fa-sign-out-alt" />{' '}
@@ -402,11 +398,9 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                     >
                         {navHighlight === "profile" || isHovering ? (
                             <Fragment>
-                                <Link to="/profile">
-                                    <div className="profile-circle">
-                                        <p style={{fontWeight:'bold', color:'#333'}}>T</p>
-                                    </div>
-                                </Link>
+                                <a href={`https://www.cardboardexpress.com/profile`}>
+                                    <ProfileCircle />
+                                </a>
                                 <div 
                                     className="profile-toggle"
                                     onClick={() => setDropdown(!dropdown)}
@@ -422,11 +416,11 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                             ) 
                             : (
                                 <Fragment>
-                                    <Link to="/profile">
+                                    <a href={`https://www.cardboardexpress.com/profile`}>
                                         <div style={{display:'flex', justifyContent:'center', paddingTop:'20px', alignItems:'center', width:'40px', height:'40px', borderRadius:'50%', background:'#ececec'}}>
                                             <p style={{fontWeight:'bold', color:'#333'}}>T</p>
                                         </div>
-                                    </Link>
+                                    </a>
                                     <div 
                                         className="profile-toggle"
                                         onClick={() => setDropdown(!dropdown)}
@@ -462,22 +456,22 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                                         </div>
                                     </a>
                                     <hr style={{margin:'10px 0'}} />
-                                    <Link to="/profile/saved" className="menu-item">
+                                    <a href={`https://www.cardboardexpress.com/profile/saved`} className="menu-item">
                                         <small style={{color:'#ff4b2b', marginRight:'10px'}}><i className="fas fa-arrow-left"></i></small>{' '}
                                         Exit Dashboard
-                                    </Link>
+                                    </a>
                                     <hr style={{margin:'10px 0'}} />
-                                    <Link to="/profile/orders" className="menu-item">
+                                    <a href={`https://www.cardboardexpress.com/profile/orders`} className="menu-item">
                                         Billing
-                                    </Link>
+                                    </a>
                                     <hr style={{margin:'10px 0'}} />
-                                    <Link to="/profile/orders" className="menu-item">
+                                    <a href={`https://www.cardboardexpress.com/profile/orders`} className="menu-item">
                                         Settings
-                                    </Link>
+                                    </a>
                                     {/* <hr style={{margin:'10px 0'}} />
-                                    <Link to="/admin" className="menu-item">
+                                    <a to="/admin" className="menu-item">
                                         My Stores
-                                    </Link> */}
+                                    </a> */}
                                     <hr style={{margin:'10px 0'}} />
                                     <a href="#" className="menu-item" onClick={logout}>
                                         <i className="fas fa-sign-out-alt" />{' '}
@@ -495,24 +489,24 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
     const guestLinks = (
         <Fragment>
             {/* <li className="nav-offset">
-                <Link style={{fontSize:'1rem'}} className="cta" to="/about">About</Link>
+                <a style={{fontSize:'1rem'}} className="cta" to="/about">About</a>
             </li> */}
             <li className="nav-offset">
                 <a href="https://business.cardboardexpress.com" target="_blank" style={{fontSize:'1rem'}} className="cta" to="/business">Business</a>
             </li>
             <li className="nav-offset">
-                <Link to="/login" style={{fontSize:'1rem'}} className="cta">Login</Link>
+                <a href={`https://www.cardboardexpress.com/login`} style={{fontSize:'1rem'}} className="cta">Login</a>
             </li>
             {/* <li className="nav-offset">
-                <Link style={{fontSize:'1rem'}} className="cta" to="/blog">Blog</Link>
+                <a style={{fontSize:'1rem'}} className="cta" to="/blog">Blog</a>
             </li> */}
             {/* <li className="nav-offset">
-                <Link style={{fontSize:'1rem'}} className="cta" to="/login">Login</Link>
+                <a style={{fontSize:'1rem'}} className="cta" to="/login">Login</a>
             </li> */}
             <li className="nav-offset">
-                <Link style={{fontSize:'1rem'}} className="cta" to="/home">
+                <a style={{fontSize:'1rem'}} className="cta" href={`https://www.cardboardexpress.com/home`}>
                     <button>Start Shopping</button>
-                </Link>
+                </a>
             </li>
         </Fragment>
     );
@@ -523,21 +517,21 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
         authMobileLinks = (
             <div className="nav-mobile-links">
                 <li className="nav-offset" onClick={e => setNavHighlight('home')}>
-                    <Link to="/home">
+                    <a href={`https://www.cardboardexpress.com/home`}>
                         {navHighlight === "home" ? (
                             <i style={{color:'#ff4b2b', fontSize:'22px'}} className="fas fa-home"></i>
                         ) : (
                             <i style={{fontSize:'22px'}} className="fas fa-home"></i>
                         )}
-                    </Link>
+                    </a>
                 </li>
                 <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
-                    <Link to="/explore">
+                    <a href={`https://www.cardboardexpress.com/explore`}>
                         <i style={{fontSize:'22px'}} className="far fa-compass"></i>
-                    </Link>
+                    </a>
                 </li>
                 <li className="nav-offset" onClick={e => setNavHighlight('profile')}>
-                    <Link to="/profile">
+                    <a href={`https://www.cardboardexpress.com/profile`}>
                         <div  
                             style={{display:'flex', alignItems:'center', justifyContent:'center'}}
                             className={navHighlight === "profile" && "active"}
@@ -546,37 +540,33 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                         >
                             {navHighlight === "profile" || isHovering ? (
                                 <Fragment>
-                                        <div className="profile-circle">
-                                            <p style={{fontWeight:'bold', color:'#333'}}>T</p>
-                                        </div>
+                                        <ProfileCircle />
                                 </Fragment>
                                 ) 
                                 : (
                                     <Fragment>
-                                        <div className="profile-circle">
-                                            <p style={{fontWeight:'bold', color:'#333'}}>T</p>
-                                        </div>
+                                        <ProfileCircle />
                                     </Fragment>
                                 )}
                         </div>
-                    </Link>
+                    </a>
                 </li>
                 <li className={navHighlight === "favorited" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('favorited')}>
-                    <Link to="/profile/saved">
+                    <a href={`https://www.cardboardexpress.com/profile/saved`}>
                         <i style={{marginLeft:'-6px', fontSize:'22px'}} className="far fa-heart"></i>
-                    </Link>
+                    </a>
                 </li>
                 <li onClick={toggleCart}>
                     <a href="#">
                         <i style={{marginLeft:'-6px', fontSize:'22px'}} className="fas fa-shopping-cart"></i>
                     </a>
                 </li>
-                {/* <Link className="cta" to="/register">
+                {/* <a className="cta" to="/register">
                     {/* <button type="button" className="nav-btn nav-icon" onClick={drawerClickHandler}>
                         Sell
                     </button> */}
                     
-                {/* </Link> */} 
+                {/* </a> */} 
                 {/* <div className="mobile">
                     {backdrop ? (
                         <i style={{fontSize:'1.5rem'}} className={backdrop ? "fas fa-times menu-btn nav-btn close" : "fas fa-times nav-btn menu-btn"} onClick={handleToggle}></i>
@@ -611,15 +601,15 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
     const guestMobileLinks = (
         <Fragment>
             {/* <li className="nav-offset">
-                <Link style={{fontSize:'1rem'}} className="cta" to="/about">About</Link>
+                <a style={{fontSize:'1rem'}} className="cta" to="/about">About</a>
             </li> */}
             <li className="nav-offset">
                 <a href="https://business.cardboardexpress.com" target="_blank" style={{fontSize:'1rem'}} className="cta" to="/business">Business</a>
             </li>
             <li className="nav-offset">
-                <Link style={{fontSize:'1rem'}} className="cta" to="/home">
+                <a style={{fontSize:'1rem'}} className="cta" href={`https://www.cardboardexpress.com/home`}>
                     <button>Start Shopping</button>
-                </Link>
+                </a>
             </li>
         </Fragment>
     );
@@ -633,7 +623,7 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                         <i style={{fontSize:'1rem'}} className="fas fa-bars"></i>
                     </div>
                     <div className="branding">
-                        <Link to="/"><img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" /></Link>
+                        <a href={`https://www.cardboardexpress.com/`}><img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" /></a>
 
                         {/* <div className="social-container">
                             <a href="https://instagram.com/cardboardexpress" target="_blank" className="social"><i className="fab fa-instagram"></i></a>
@@ -645,25 +635,25 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                     {/* {!nav.admin && (
                         <Fragment>
                             <li className={navHighlight === "home" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('home')}>
-                                <Link to="/home" className={navHighlight === "home" && "active"}>
+                                <a to="/home" className={navHighlight === "home" && "active"}>
                                     <i className="fas fa-home"></i>{' '}
                                     Home
-                                </Link>
+                                </a>
                             </li>
                             <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
-                                <Link to="/explore">
+                                <a to="/explore">
                                     <i className="far fa-compass"></i>{' '}
                                     Explore
-                                </Link>
+                                </a>
                             </li>
                         </Fragment>
                     )} */}
-                    {/* <Link className="cta" to="/register">
+                    {/* <a className="cta" to="/register">
                         {/* <button type="button" className="nav-btn nav-icon" onClick={drawerClickHandler}>
                             Sell
                         </button> */}
                         
-                    {/* </Link> */} 
+                    {/* </a> */} 
                     {/* <div className="mobile">
                         {backdrop ? (
                             <i style={{fontSize:'1.5rem'}} className={backdrop ? "fas fa-times menu-btn nav-btn close" : "fas fa-times nav-btn menu-btn"} onClick={handleToggle}></i>

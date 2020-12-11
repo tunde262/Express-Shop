@@ -36,7 +36,7 @@ const Main_Stores = ({store, profile: { profile }}) => {
                     const res = await axios.get(`/api/stores/${store.store}`);
 
                     setStoresList(storesList => [...storesList, (
-                        <Link to={`/admin/${res.data._id}`} className="admin-store-card">
+                        <a href={`https://www.cardboardexpress.com/admin/${res.data._id}`} className="admin-store-card">
                             <div>
                                 <div style={{display:'grid', width: '100%', gridTemplateColumns:'1fr 2fr 1fr'}}>
                                     <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
@@ -63,7 +63,7 @@ const Main_Stores = ({store, profile: { profile }}) => {
                                     </div>
                                 </div>
                             </div>
-                        </Link>
+                        </a>
                     )])
                 })
             }

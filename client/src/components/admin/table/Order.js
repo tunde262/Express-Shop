@@ -15,7 +15,7 @@ const Order = ({ order, store: { store, loading } }) => {
         if(order.orders.length > 0) {
             orderList = order.orders.map(order => (
                 <tr key={order._id}>
-                    <td><Link to={"/admin/order/" + store._id + "/" + order._id}>{order._id}</Link></td>
+                    <td><a href={`https://www.cardboardexpress.com/admin/order/${store._id}/${order._id}`}>{order._id}</a></td>
                     <td className="hide-sm"><Moment format='MM/DD/YYYY'>{order.date}</Moment></td>
                     <td>{order.name}</td>
                     <td>{order.status}</td>

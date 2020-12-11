@@ -1956,8 +1956,7 @@ header {
 
 .profile-circle {
     display: flex; 
-    justify-content: center; 
-    padding-top: 20px; 
+    justify-content: center;  
     align-items: center; 
     width: 40px; 
     height: 40px; 
@@ -1965,6 +1964,14 @@ header {
     background: #ececec; 
     border: 2px solid #ff4b2b; 
     cursor: pointer;
+    font-weight: bold;
+
+    &.small {
+        height: 30px;
+        width: 30px;
+        margin: 0 10px;
+        font-weight: 300;
+    }
 
     &.big {
         width: 150px; 
@@ -2683,7 +2690,6 @@ header {
 
 .jumbotron {
     min-height: calc(100vh - 60px);
-    margin-top: 60px; 
     background-image: url(http://n82.15b.myftpupload.com/wp-content/uploads/2020/08/banner-03.jpg); 
     background-size: cover; 
     background-position: center; 
@@ -5368,10 +5374,12 @@ header {
     display: flex; 
     align-items: center; 
     justify-content: center;
+    border-radius: 0;
 
     &.disabled {
-        background: darken(#ffbf00, 5);
-        color: darken(#ffbf00, 15);
+        background: #cecece;
+        border-color: #cecece;
+        color: #808080;
 
         &:hover {
             opacity: 1;

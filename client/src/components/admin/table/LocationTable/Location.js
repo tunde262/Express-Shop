@@ -115,7 +115,7 @@ const Location = ({
                 className={rowClassName1} 
                 id="transition-1"
             >
-                <Link onClick={rowClick} to={page === "dashboard" ? {pathname:`/admin/location/${store.store._id}/${detailLocation._id}`,search: "?show=detail"} : null}>
+                <a onClick={rowClick} href={page === "dashboard" ? `https://www.cardboardexpress.com/admin/location/${store.store._id}/${detailLocation._id}?show=detail` : null}>
                     <div>
                         <div><i style={{color:'#3CB371', margin:'0 10px', fontSize:'1.1rem'}} class="fas fa-map-marker-alt"></i></div>
                         <div>
@@ -127,13 +127,13 @@ const Location = ({
                             <div className="line-clamp-1" style={{maxHeight:'40px', overflow:'hidden', color:'#808080'}}>{detailLocation.formatted_address}</div>
                         </div>
                     </div>
-                </Link>
-                <Link onClick={rowClick} to={page === "dashboard" ? {pathname:`/admin/location/${store.store._id}/${detailLocation._id}`,search: "?show=detail"} : null}>
+                </a>
+                <a onClick={rowClick} href={page === "dashboard" ? `https://www.cardboardexpress.com/admin/location/${store.store._id}/${detailLocation._id}?show=detail` : null}>
                     <div><p style={{margin:'0'}}>{rowData.qty}</p></div>
-                </Link>
-                <Link onClick={rowClick} to={page === "dashboard" ? {pathname:`/admin/location/${store.store._id}/${detailLocation._id}`,search: "?show=detail"} : null}>
+                </a>
+                <a onClick={rowClick} href={page === "dashboard" ? `https://www.cardboardexpress.com/admin/location/${store.store._id}/${detailLocation._id}?show=detail` : null}>
                     <div><p style={{margin:'0'}}>${rowData.price}</p></div>
-                </Link>
+                </a>
             </div>
 
             {/** Transition 2 */}

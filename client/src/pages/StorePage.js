@@ -88,7 +88,7 @@ const StorePage = ({
 
     const handleSubscribe= (detailStore) => {
         if (profile.profile) {
-            favorite(detailStore._id);
+            favorite(detailStore._id, user._id);
             setSubscribedToo(!subscribedToo);
 
             // Check if product already liked by same user

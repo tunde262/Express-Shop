@@ -216,7 +216,7 @@ const CollectionCard = ({ auth: { user }, preview, collection, followCollection 
                 ) : collectionImages}
             </div>  
             <div style={{padding:'10px', width:'100%', background:'rgb(247, 247, 247)'}}>
-                <Link to={`/collection/${_id}`} style={{margin:'0',}}>{name}</Link>
+                <a href={`https://www.cardboardexpress.com/collection/${_id}`} style={{margin:'0',}}>{name}</a>
                 <p style={{margin:'0 0', color:'#808080', fontSize:'12px'}}>20.6k followers</p>
                 <div className="store-socials store">
                     {following ? (

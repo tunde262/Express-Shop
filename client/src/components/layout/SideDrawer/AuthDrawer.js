@@ -90,46 +90,46 @@ const AuthDrawer = ({ drawerClickHandler, toggleAuthDrawer, getCurrentProfile, d
                             <i className="fas fa-chevron-right"></i>
                         </div>
                     </a>
-                    <Link onClick={toggleAuth} to={{pathname:`/admin/${store.store && store.store._id}`,search: "?show=store"}}>
+                    <a onClick={toggleAuth} href={store.store && `https://www.cardboardexpress.com/admin/${store.store._id}?show=store`}>
                         <div className="profile-table-nav-items active">
                             <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
                                 <h3>Store</h3>
                                 <p>Track, manage, & return</p>
                             </div>
                         </div>
-                    </Link>
-                    <Link onClick={toggleAuth} to={{pathname:`/admin/${store.store && store.store._id}`,search: "?show=inventory"}}>
+                    </a>
+                    <a onClick={toggleAuth} href={store.store && `https://www.cardboardexpress.com/admin/${store.store._id}?show=inventory`}>
                         <div className="profile-table-nav-items">
                             <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
                                 <h3>Inventory</h3>
                                 <p>Track, manage, & return</p>
                             </div>
                         </div>
-                    </Link>
-                    <Link onClick={toggleAuth} to={{pathname:`/admin/${store.store && store.store._id}`,search: "?show=orders"}}>
+                    </a>
+                    <a onClick={toggleAuth} href={store.store && `https://www.cardboardexpress.com/admin/${store.store._id}?show=orders`}>
                         <div className="profile-table-nav-items">
                             <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
                                 <h3>Orders</h3>
                                 <p>Track, manage, & return</p>
                             </div>
                         </div>
-                    </Link>
-                    <Link onClick={toggleAuth} to={{pathname:`/admin/${store.store && store.store && store.store._id}`,search: "?show=people"}}>
+                    </a>
+                    <a onClick={toggleAuth} href={store.store && `https://www.cardboardexpress.com/admin/${store.store._id}?show=people`}>
                         <div className="profile-table-nav-items">
                             <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
                                 <h3>People</h3>
                                 <p>Track, manage, & return</p>
                             </div>
                         </div>
-                    </Link>
-                    <Link onClick={toggleAuth} to={{pathname:`/admin/${store.store && store.store._id}`,search: "?show=settings"}}>
+                    </a>
+                    <a onClick={toggleAuth} href={store.store && `https://www.cardboardexpress.com/admin/${store.store._id}?show=settings`}>
                         <div className="profile-table-nav-items">
                             <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
                                 <h3>Settings</h3>
                                 <p>Track, manage, & return</p>
                             </div>
                         </div>
-                    </Link>
+                    </a>
                 </div>
                 {/** Transition 2 */}
                 <div className={slideForm1 ? "admin-nav-drawer active" : "admin-nav-drawer"} id="transition-2">
@@ -140,13 +140,13 @@ const AuthDrawer = ({ drawerClickHandler, toggleAuthDrawer, getCurrentProfile, d
                                     <p style={{margin:'0', color:'#808080'}}><span style={{margin:'0 10px'}}><i className="fas fa-arrow-left"></i></span>Back to menu</p>
                                 </div>
                             </div>
-                            <Link onClick={toggleAuth} to="/profile/saved">
+                            <a onClick={toggleAuth} href={`https://www.cardboardexpress.com/profile/saved`}>
                                 <div className="profile-table-nav-items active">
                                     <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
                                         <h3>Exit Dashboard</h3>
                                     </div>
                                 </div>
-                            </Link>
+                            </a>
                             <a href="#">
                                 <div className="profile-table-nav-items">
                                     <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>

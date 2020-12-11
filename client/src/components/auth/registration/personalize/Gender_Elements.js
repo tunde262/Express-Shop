@@ -16,11 +16,17 @@ const Gender_Elements = ({ slideform1, setSlideForm1, setGender, gender }) => {
                 <h3 style={{marginTop:'36px'}}>What's are you?</h3>
                 <p style={{margin:'5px 0', color:'#808080', fontSize:'1rem', fontFamily:'Arial, Helvetica, sans-serif'}}>We'll use this info to personalize our selection</p>
                 <div className="gender-form">
-                    <div onClick={() => todo('male')} className={gender === 'male' ? "gender-form-box active" : "gender-form-box"}>
-                        <h3>Male</h3>
+                    <div onClick={() => todo('male')} className={gender === 'male' ? "form-square active" : "form-square"}>
+                        <div style={{display:'flex', alignItems:'flex-end', justifyContent:'center'}}>
+                            <i style={{fontSize:'24px',}} class="fas fa-mars"></i>
+                        </div>
+                        <p style={{margin:'10px 0', fontSize:'1rem', color:'#333'}}>Male</p>
                     </div>
-                    <div onClick={() => todo('female')} className={gender === 'female' ? "gender-form-box active" : "gender-form-box"}>
-                        <h3>Female</h3>
+                    <div onClick={() => todo('female')} className={gender === 'female' ? "form-square active" : "form-square"}>
+                        <div style={{display:'flex', alignItems:'flex-end', justifyContent:'center'}}>
+                            <i style={{fontSize:'24px',}} class="fas fa-venus"></i>
+                        </div>
+                        <p style={{margin:'10px 0', fontSize:'1rem', color:'#333'}}>Female</p>
                     </div>
                 </div>
                 <div style={{padding:'10px'}}> 

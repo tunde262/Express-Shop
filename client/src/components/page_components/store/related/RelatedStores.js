@@ -10,7 +10,7 @@ import RecommendedStore from './Recommended_Store';
 import mixpanel from 'mixpanel-browser';
 import { favorite } from '../../../../actions/storeActions';
 
-const RelatedStores = ({ store, product, profile, favorite }) => {
+const RelatedStores = ({ store, product, auth, profile, favorite }) => {
 
     const [storesList, setStoresList] = useState([]);
 
@@ -26,7 +26,7 @@ const RelatedStores = ({ store, product, profile, favorite }) => {
                 store.stores.map(async storeObj => {
                     const res = await axios.get(`/api/products/store/${storeObj._id}`);
                     setStoresList(storesList => [...storesList, (
-                        <RecommendedStore products={res.data} store={storeObj} profile={profile} favorite={favorite} />
+                        <RecommendedStore products={res.data} store={storeObj} profile={profile} auth={auth} favorite={favorite} />
                     )])       
                 });
             } else {
@@ -49,6 +49,7 @@ const RelatedStores = ({ store, product, profile, favorite }) => {
 
 RelatedStores.propTypes = {
     store: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
     product: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired,
     favorite: PropTypes.func.isRequired,
@@ -56,6 +57,7 @@ RelatedStores.propTypes = {
 
 const mapStateToProps = state => ({
     store: state.store,
+    auth: state.auth,
     product: state.product,
     profile: state.profile
 })

@@ -38,7 +38,7 @@ class Order extends Component {
         });
         
         return (
-            <Link to={`/profile/order/${_id}`} style={{textDecoration:'none'}}>
+            <a href={`https://www.cardboardexpress.com/profile/order/${_id}`} style={{textDecoration:'none'}}>
                 <div className="customer-order-item">
                     <div style={{display:'grid', width: '100%', gridTemplateColumns:'1fr 2fr 1fr 1fr'}}>
                         <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
@@ -58,7 +58,7 @@ class Order extends Component {
                         </div>
                     </div>
                 </div>
-            </Link>
+            </a>
 
 
             // <div style={{margin: '15px'}} class="card card-default">

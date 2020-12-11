@@ -26,7 +26,7 @@ const VarLocationItem = ({ detailItem, product: { selectedItems }, setModalForm1
                 <input checked={selected} class="edit_info" type="checkbox" style={{width:'15px'}}/>
             </td>
             <td>{detailItem.img_gallery[0] && <img style={{width: '50px'}} src={`/api/products/image/${detailItem.img_gallery[0].img_name}`} alt="img" />}</td>
-            <td><Link to={"/admin/product/" + detailItem._id}>{detailItem.name}</Link></td>
+            <td><a href={`https://www.cardboardexpress.com/admin/product/${detailItem._id}`}>{detailItem.name}</a></td>
             <td>5 Stock / 2 Variants</td>
         </tr>
     )

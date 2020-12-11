@@ -45,9 +45,9 @@ const StoresBlock = ({ store, profile, favorite }) => {
                 <div style={{display:'flex', margin:'0 5px', justifyContent:'flex-start', alignItems:'center', height:'100%', width:'100%', overflow:'hidden'}}>
                     <div style={{height:'100%', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'flex-start'}}>
                         <div style={{height:'1rem', overflow:'hidden', lineHeight:'15px'}}>
-                            <Link to={`/store/${store._id}`} style={{textDecoration:'none'}} className="line-clamp-1">
+                            <a to={`https://www.cardboardexpress.com/store/${store._id}`} style={{textDecoration:'none'}} className="line-clamp-1">
                                 {store.name}
-                            </Link>
+                            </a>
                         </div>
                         <div style={{maxHeight:'40px', overflow:'hidden', lineHeight:'15px'}}>
                             <p className="line-clamp" style={{margin:'0', fontFamily:' Arial, Helvetica,sans-serif', color:'#808080'}}>{store.category}</p>

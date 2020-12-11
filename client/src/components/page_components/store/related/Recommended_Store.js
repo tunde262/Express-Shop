@@ -5,7 +5,7 @@ import { favorite } from '../../../../actions/productActions';
 
 import ProductOverview from '../../../Overview/productOverview/ProductOverview';
 
-const Recommended_Store = ({ store, products, profile, favorite }) => {
+const Recommended_Store = ({ store, products, profile, auth: { user }, favorite }) => {
     const [subList, setSubList] = useState([]);
 
     const [checkedSubs, setCheckedSubs] = useState(false);
@@ -13,7 +13,7 @@ const Recommended_Store = ({ store, products, profile, favorite }) => {
 
     const handleSubscribe = (detailStore) => {
         if(profile.profile) {
-            favorite(detailStore._id);
+            favorite(detailStore._id, user._id);
 
             setSubscribedToo(!subscribedToo);
 

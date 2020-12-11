@@ -45,9 +45,9 @@ const SideDrawer = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, st
     const authLinks = (
         <ul className={drawerClasses}>
             <li onClick={drawerClickHandler}>
-                <Link to="/home">
+                <a href={`https://www.cardboardexpress.com/home`}>
                     <i className="fas fa-home"></i>
-                </Link>
+                </a>
             </li>
             {/* <li onClick={drawerClickHandler}>
                 <Link to="/explore">
@@ -87,34 +87,34 @@ const SideDrawer = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, st
     return (
         <nav className={drawerClasses}>
             <div className="admin-nav-drawer">
-                <Link onClick={toggleAuth} to={{pathname:`/admin/${store.store && store.store && store.store._id}`,search: "?show=people"}}>
+                <a onClick={toggleAuth} href={store.store && `https://www.cardboardexpress.com/admin/${store.store._id}?show=people`}>
                     <div className="profile-table-nav-items">
                         <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
                             <h3>Create Order</h3>
                         </div>
                     </div>
-                </Link>
-                <Link onClick={toggleAuth} to={{pathname:`/admin/${store.store && store.store._id}`,search: "?show=store"}}>
+                </a>
+                <a onClick={toggleAuth} href={store.store && `https://www.cardboardexpress.com/admin/${store.store._id}?show=store`}>
                     <div className="profile-table-nav-items active">
                         <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
                             <h3>New Item</h3>
                         </div>
                     </div>
-                </Link>
-                <Link onClick={toggleAuth} to={{pathname:`/admin/${store.store && store.store._id}`,search: "?show=inventory"}}>
+                </a>
+                <a onClick={toggleAuth} href={store.store && `https://www.cardboardexpress.com/admin/${store.store._id}?show=inventory`}>
                     <div className="profile-table-nav-items">
                         <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
                             <h3>Create Collection</h3>
                         </div>
                     </div>
-                </Link>
-                <Link onClick={toggleAuth} to={{pathname:`/admin/${store.store && store.store._id}`,search: "?show=orders"}}>
+                </a>
+                <a onClick={toggleAuth} href={store.store && `https://www.cardboardexpress.com/admin/${store.store._id}?show=orders`}>
                     <div className="profile-table-nav-items">
                         <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
                             <h3>Create Location</h3>
                         </div>
                     </div>
-                </Link>
+                </a>
             </div>
             {/* <div style={{display:'flex'}}>
                 { !loading && (<Fragment>{authLinks}</Fragment>) } */}

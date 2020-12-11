@@ -63,15 +63,15 @@ const CategoryHeader = ({
                 
                     <div className={dropdown ? "edit-dropdown active" : "edit-dropdown"} style={{height: menuHeight}}>
                         <div className="menu">
-                            <Link to="/profile/saved" className="menu-item">
+                            <a href={`https://www.cardboardexpress.com/profile/saved`} className="menu-item">
                                 <i style={{color:'#0098d3', fontSize:'1.2rem', marginRight:'10px'}} class="fas fa-eye"></i>
                                 View Store
-                            </Link>
+                            </a>
                             <hr style={{margin:'10px 0', height:'1px', background:'#f2f2f2'}} />
-                            <Link to="/profile/orders" className="menu-item">
+                            <a href={`https://www.cardboardexpress.com/profile/orders`} className="menu-item">
                                 <i style={{color:'#0098d3', fontSize:'1.2rem', marginRight:'10px'}} class="fas fa-qrcode"></i>
                                 Qr Code
-                            </Link>
+                            </a>
                         </div>
                     </div>
                     

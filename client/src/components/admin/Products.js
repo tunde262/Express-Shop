@@ -14,7 +14,7 @@ class Products extends Component {
         let product = this.props.products.map(prod => (
             <tr key={prod._id}>
                 <td><img style={{width: '50px'}} src={`/api/products/image/${prod.img_name}`} alt="img" /></td>
-                <td><Link to={`/` + prod._id}>{prod.title}</Link></td>
+                <td><a href={`https://www.cardboardexpress.com/${prod._id}`}>{prod.title}</a></td>
                 <td>{prod.price}</td>
                 <td><div><i className="fas fa-trash" onClick={this.onDeleteClick.bind(this, prod._id)}></i></div></td>
             </tr>
@@ -29,9 +29,9 @@ class Products extends Component {
                                 {this.props.products.length} Items
                             </th>
                             <th colspan="3">
-                                <Link to="/admin/add">
+                                <a href={`https://www.cardboardexpress.com/admin/add`}>
                                     Add Product
-                                </Link>
+                                </a>
                             </th>
                         </tr>
                         <tr>

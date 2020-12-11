@@ -24,7 +24,7 @@ const SideDrawerLocation = ({setSlideForm1, getLocationsByStoreId, storeId, loca
                     const res = await axios.get(`/api/products/location/${location._id}`);
                     console.log(res.data);
                     setLocationList(locationList => [...locationList, (
-                        <Link key={location._id} style={{textDecoration:'none'}} to={{pathname:`/admin/location/${storeId}/${location._id}`,search: "?show=detail"}}>
+                        <Link key={location._id} style={{textDecoration:'none'}} href={`https://www.cardboardexpress.com/admin/location/${storeId}/${location._id}?show=detail`}>
                             <div key={location._id} style={{display:'flex', justifyContent:'space-between', height:'100px', width:'100%', padding:'10px', borderBottom:'1px solid #cecece'}}>
                                 <div style={{display:'flex'}}>
                                     <div style={{height:'100%', display:'flex', alignItems:'center', justifyContent:'center'}}>

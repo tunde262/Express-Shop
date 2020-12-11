@@ -40,6 +40,7 @@ const Personalize = ({
         isAuthenticated, 
         user 
     }, 
+    profile,
     history 
 }) => {
     
@@ -57,9 +58,19 @@ const Personalize = ({
     const [slideform5, setSlideForm5] = useState(false);
     const [slideform6, setSlideForm6] = useState(false);
 
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
     useEffect(() => {
         getProducts(0);
+
+        window.addEventListener('resize', () => handleWindowSizeChange());
+
+        return () => window.removeEventListener('resize', () => handleWindowSizeChange());
     }, []);
+
+    const handleWindowSizeChange = () => {
+        setWindowWidth(window.innerWidth);
+    };
 
     // const handleScroll = (e) => {
     //     const { offsetHeight, scrollTop, scrollHeight} = e.target
@@ -114,6 +125,8 @@ const Personalize = ({
         history.push(`/register`);
     }
 
+    const isMobile = windowWidth <= 769;
+
     let formClass;
 
     if(slideform1 && !slideform2 && !slideform3) {
@@ -123,6 +136,8 @@ const Personalize = ({
         if(!gotStores) {
             fetchStores(recommendationTags)
         }
+    } else if (slideform3 && !slideform4) {
+        formClass = {width:'600px', height:'525px', overflowY:'scroll', padding:'0'}
     } else if(slideform1 && slideform2 && slideform3 && !slideform4) {
         formClass = {width:'600px', overflowY:'scroll', padding:'0'}
     } else {
@@ -144,15 +159,15 @@ const Personalize = ({
                         <div id="transition-2" style={{width:'100%'}} className={slideform2 ? "auth-form-container active" : "auth-form-container"}>
                             <div style={{width:'100%'}} className="form-settings-transition">
                             <div id="transition-1" style={{width:'100%'}} className={!slideform3 ? "auth-form-container active" : "auth-form-container"}>
-                                <StoreRecommendations slideform2={slideform2} setSlideForm2={setSlideForm2} slideform3={slideform3} setSlideForm3={setSlideForm3} />
+                                <StoreRecommendations profile={profile} slideform2={slideform2} setSlideForm2={setSlideForm2} slideform3={slideform3} setSlideForm3={setSlideForm3} />
                             </div>
                             <div id="transition-2" style={{width:'100%'}} className={slideform3 ? "auth-form-container active" : "auth-form-container"}>
                                 <div style={{width:'100%'}} className="form-settings-transition">
                                 <div id="transition-1" style={{width:'100%'}} className={!slideform4 ? "auth-form-container active" : "auth-form-container"}>
-                                    <CollectionElements slideform3={slideform3} setSlideForm3={setSlideForm3} slideform4={slideform4} setSlideForm4={setSlideForm4} />
+                                    <CollectionElements profile={profile} slideform3={slideform3} setSlideForm3={setSlideForm3} slideform4={slideform4} setSlideForm4={setSlideForm4} />
                                 </div>
                                 <div id="transition-2" style={{width:'100%'}} className={slideform4 ? "auth-form-container active" : "auth-form-container"}>
-                                    <ExtraElements slideform4={slideform4} setSlideForm4={setSlideForm4} />
+                                    <ExtraElements slideform4={slideform4} setSlideForm4={setSlideForm4} history={history} />
                                 </div>
                                 </div>
                             </div>
@@ -409,12 +424,14 @@ Personalize.propTypes = {
     getProducts: PropTypes.func.isRequired,
     getCollections: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
+    profile: PropTypes.object.isRequired,
     getCollectionsByTagList: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
     auth: state.auth,
     product: state.product,
+    profile: state.profile
 });
 
 export default connect(mapStateToProps, { createProfile, getStoresByTagList, getCollectionsByTagList, getProducts, getCollections })(Personalize);

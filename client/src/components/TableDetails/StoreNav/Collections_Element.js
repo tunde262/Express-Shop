@@ -29,7 +29,7 @@ const Collections_Element = ({
             if(collection.profile_collections.length > 0) {
                 collection.profile_collections.map(collectionObj => {
                     setCollectionList(collectionList => [...collectionList, (
-                        <Link to={`/collection/${collectionObj._id}`}>
+                        <a href={`https://www.cardboardexpress.com/collection/${collectionObj._id}`}>
                             <div style={{display:'flex', alignItems:'center'}} className="store-table-nav-items secondary">
                                 <div className="store-nav-collection-img-container">
                                     <div className="store-nav-collection-img">
@@ -52,7 +52,7 @@ const Collections_Element = ({
                                 </p>
                                 </div>
                             </div>
-                        </Link>
+                        </a>
                     )])       
                 });
             } else {

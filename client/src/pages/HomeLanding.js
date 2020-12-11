@@ -18,6 +18,14 @@ import logo from '../components/common/logo.png';
 import ReactGA from 'react-ga';
 import mixpanel from 'mixpanel-browser';
 
+
+const initialState = {
+  name: '',
+  email: '',
+  password: '',
+  password2: ''
+};
+
 const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) => {
   // const [formData, setFormData] = useState({
   //   firstname: '',
@@ -66,12 +74,7 @@ const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) =>
     // });
   }
 
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    password2: ''
-  });
+  const [formData, setFormData] = useState(initialState);
 
   const [rightPanelActive, setPanel] = useState(false);
 
@@ -87,6 +90,25 @@ const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) =>
 
   const signUp = async e => {
       e.preventDefault();
+
+      const first_name = name.split(' ').slice(0, -1).join(' ');
+      const last_name = name.split(' ').slice(-1).join(' ');
+
+      console.log('FIRST NAME');
+      console.log(first_name)
+      console.log('LAST NAME');
+      console.log(last_name);
+
+      register({ 
+          first_name, 
+          last_name, 
+          email, 
+          password, 
+          history 
+      });
+
+      setFormData(initialState);
+
       register({ name, email, password });
   }
 
@@ -116,7 +138,7 @@ const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) =>
   }
   
   return (
-    <Fragment>
+    <div className="explore-container">
       <div className="jumbotron">
         <div className="jumbocontainer">
           <div className="jumbocontent">
@@ -124,12 +146,12 @@ const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) =>
                 <h1 id="main-heading">The Fastest Place To Shop Online.</h1>
                 <h1 id="sub-heading">Cardboard Express is your local online retail store. Enjoy Free Unlimited access to all your favorite stores in one place.</h1>
             </div>
-            <a className="desktop" href="#auth-form">
+            <div className="desktop">
               <div className="scroll-down"></div>
-            </a>
-            <a className="mobile" href="#auth-form2">
+            </div>
+            <div className="mobile">
               <div className="scroll-down"></div>
-            </a>
+            </div>
           </div>
         </div>
         
@@ -188,7 +210,7 @@ const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) =>
                     onChange={e => onChange(e)}
                     style={{margin:'10px 0', width:'100%', height:'50px'}}
                 />
-                <button style={{width: '100%'}} type="submit">Log In</button>
+                <button onClick={(e) => signIn(e)} style={{width: '100%'}} type="submit">Log In</button>
                 <div className="desktop">
                     <span style={{cursor: "pointer", color:'#808080'}} onClick={e => formChange(e)}>Don't have an account?</span>
                 </div>
@@ -234,7 +256,7 @@ const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) =>
                     onChange={e => onChange(e)}
                     style={{margin:'10px 0', width:'100%', height:'50px'}}
                 /> */}
-                <button style={{width: '100%'}} type="submit">Create An Account</button>
+                <button onClick={(e) => signUp(e)} style={{width: '100%'}} type="submit">Create An Account</button>
                 <div className="desktop">
                     <span style={{cursor: "pointer", color:'#808080'}} onClick={e => formChange(e)}>Already have an account?</span>
                 </div>
@@ -346,7 +368,7 @@ const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) =>
           </form>
         </div>
       </div>
-    </Fragment>
+    </div>
   )
 }
 

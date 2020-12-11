@@ -95,20 +95,20 @@ const Main_Store_Nav = ({
                     </div>
                 </div>
             )}
-            <Link to="/home" onClick={() => todo('home')}>
+            <a href="https://www.cardboardexpress.com/home" onClick={() => todo('home')}>
                 <div className={navHighlight === "home" ? "store-table-nav-items main active" : "store-table-nav-items main"}>
                     <h3 style={{fontWeight:'600'}}><span><i style={{fontSize:'22px', marginRight:'10px'}} className="fas fa-home"></i></span>Home</h3>
                 </div>
-            </Link>
+            </a>
             {/* <div onClick={e => setTableShow1('payments')} className={tableShow1 === "payments" ? "profile-table-nav-items active" : "store-table-nav-items"}>
                 <h3>Payments</h3>
                 <p>Add payment methods</p>
             </div> */}
-            <Link to="/explore" onClick={() => todo('explore')}>
+            <a href="https://www.cardboardexpress.com/explore" onClick={() => todo('explore')}>
                 <div className={navHighlight === "explore" ? "store-table-nav-items main active" : "store-table-nav-items main"}>
                     <h3 style={{fontWeight:'600'}}><span><i style={{fontSize:'22px', marginRight:'1rem'}} className="fas fa-compass"></i></span>Explore</h3>
                 </div>
-            </Link>
+            </a>
             
             <div onClick={toggleCategory} className={navHighlight2 === "category" ? "store-table-nav-items main active": "store-table-nav-items main"} style={{padding:'0 16px 0 0'}}>
                 <div style={{width:'100%', display: 'flex',alignItems: 'center',justifyContent: 'flexStart',padding: '0 16px',whiteSpace: 'nowrap',overflow: 'hidden',textOverflow: 'ellipsis'}}>
@@ -126,7 +126,7 @@ const Main_Store_Nav = ({
                 <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}} className="store-table-nav-items header">
                     <h3 style={{fontWeight:'600', color:'#808080'}}>Account</h3>
                 </div>
-                <Link to={{pathname:`/profile/`,search: "?show=settings"}}>
+                <a href="https://www.cardboardexpress.com/profile/settings">
                     <div onClick={() => toggleProfile('profile')} className={navHighlight === "profile" ? "store-table-nav-items main active" : "store-table-nav-items main"}>
                         <h3 style={{fontWeight:'600'}}>
                             <span>
@@ -135,12 +135,12 @@ const Main_Store_Nav = ({
                             Settings
                         </h3>
                     </div>
-                </Link>
+                </a>
                 {/* <div onClick={e => setTableShow1('payments')} className={tableShow1 === "payments" ? "profile-table-nav-items active" : "store-table-nav-items"}>
                     <h3>Payments</h3>
                     <p>Add payment methods</p>
                 </div> */}
-                <Link to={{pathname:`/admin/`,search: "?show=inventory"}}>
+                <a href="https://www.cardboardexpress.com/">
                     <div className="store-table-nav-items secondary">
                         <h3 style={{fontWeight:'600'}}>
                             <span>
@@ -149,9 +149,9 @@ const Main_Store_Nav = ({
                             View History
                         </h3>
                     </div>
-                </Link>
+                </a>
                 
-                <Link to={{pathname:`/admin/`,search: "?show=orders"}}>
+                <a href="https://www.cardboardexpress.com/">
                     <div className="store-table-nav-items secondary">
                         <h3 style={{fontWeight:'600'}}>
                             <span>
@@ -160,8 +160,8 @@ const Main_Store_Nav = ({
                             Help
                         </h3>
                     </div>
-                </Link>
-                <Link to={{pathname:`/admin/`,search: "?show=orders"}}>
+                </a>
+                <a href="https://www.cardboardexpress.com/">
                     <div className="store-table-nav-items secondary">
                         <h3 style={{fontWeight:'600'}}>
                             <span>
@@ -170,7 +170,7 @@ const Main_Store_Nav = ({
                             Send Feedback
                         </h3>
                     </div>
-                </Link>
+                </a>
                 <div className="store-table-nav-items header"></div>
             </div>          
             <div style={{height:'auto', zIndex:'30', background:'#fff'}}></div>

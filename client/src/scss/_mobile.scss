@@ -529,6 +529,13 @@
         overflow-y: auto;
     }
 
+    .store-form {
+        height: calc(100vh - 57px); 
+        border: none;
+        width: 100vw;
+        margin-top: 50px;
+    }
+
     header {
         flex-direction: column;
         padding: 0;

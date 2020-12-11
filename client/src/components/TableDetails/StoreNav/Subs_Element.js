@@ -25,7 +25,7 @@ const Subs_Element = ({
             if(profile.subscriptions.length > 0) {
                 profile.subscriptions.map(storeObj => {
                     setSubscriptionList(subscriptionList => [...subscriptionList, (
-                        <Link to={`/store/${storeObj._id}`}>
+                        <a href={`https://www.cardboardexpress.com/store/${storeObj._id}`}>
                             <div style={{display:'flex', alignItems:'center'}} className="store-table-nav-items secondary">
                                 <img 
                                     alt="" 
@@ -38,7 +38,7 @@ const Subs_Element = ({
                                     {storeObj.name}
                                 </h3>
                             </div>
-                        </Link>
+                        </a>
                     )])       
                 });
             } else {

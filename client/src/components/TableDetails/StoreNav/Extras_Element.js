@@ -8,7 +8,7 @@ const Extras_Element = props => {
             <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}} className="store-table-nav-items header">
                 <h3 style={{fontWeight:'600', color:'#808080'}}>Account</h3>
             </div>
-            <Link to={{pathname:`/admin/`,search: "?show=store"}}>
+            <a href={`https://www.cardboardexpress.com/history`}>
                 <div className="store-table-nav-items secondary active">
                     <h3 style={{fontWeight:'600'}}>
                         <span>
@@ -17,12 +17,12 @@ const Extras_Element = props => {
                         Settings
                     </h3>
                 </div>
-            </Link>
+            </a>
             {/* <div onClick={e => setTableShow1('payments')} className={tableShow1 === "payments" ? "profile-table-nav-items active" : "store-table-nav-items"}>
                 <h3>Payments</h3>
                 <p>Add payment methods</p>
             </div> */}
-            <Link to={{pathname:`/admin/`,search: "?show=inventory"}}>
+            <a href={`https://www.cardboardexpress.com/history`}>
                 <div className="store-table-nav-items secondary">
                     <h3 style={{fontWeight:'600'}}>
                         <span>
@@ -31,9 +31,9 @@ const Extras_Element = props => {
                         View History
                     </h3>
                 </div>
-            </Link>
+            </a>
             
-            <Link to={{pathname:`/admin/`,search: "?show=orders"}}>
+            <a href={`https://www.cardboardexpress.com/history`}>
                 <div className="store-table-nav-items secondary">
                     <h3 style={{fontWeight:'600'}}>
                         <span>
@@ -42,8 +42,8 @@ const Extras_Element = props => {
                         Help
                     </h3>
                 </div>
-            </Link>
-            <Link to={{pathname:`/admin/`,search: "?show=orders"}}>
+            </a>
+            <a href={`https://www.cardboardexpress.com/history`}>
                 <div className="store-table-nav-items secondary">
                     <h3 style={{fontWeight:'600'}}>
                         <span>
@@ -52,7 +52,7 @@ const Extras_Element = props => {
                         Send Feedback
                     </h3>
                 </div>
-            </Link>
+            </a>
             <div className="store-table-nav-items header"></div>
         </div>
     )

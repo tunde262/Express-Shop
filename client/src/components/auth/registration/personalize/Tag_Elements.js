@@ -80,8 +80,8 @@ const Tag_Elements = ({
                 {categoryListContent}
             </div>
 
-            <button disabled={recommendationTags.length > 0 ? false : true} onClick={(e) => todo(e)} className={recommendationTags.length > 0 ? "step-form-btn" : "step-form-btn disabled"}>
-                {recommendationTags.length > 0 ? "Continue" : "Click on what interests you"}
+            <button disabled={recommendationTags.length > 2 ? false : true} onClick={(e) => todo(e)} className={recommendationTags.length > 2 ? "step-form-btn" : "step-form-btn disabled"}>
+                {recommendationTags.length > 2 ? "Continue" : "Select 3"}
             </button> 
         </Fragment>
     )

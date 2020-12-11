@@ -53,7 +53,7 @@ const Main_Admin_Nav = ({
                     </div>
                 ) : null} 
 
-                <Link style={{margin:'5px 0'}} to={store.store ? {pathname:`/admin/${store.store._id}`,search: "?show=store"} : "#"}>
+                <a style={{margin:'5px 0'}}  href={store.store ? `https://www.cardboardexpress.com/admin/${store.store._id}?show=store` : "#"}>
                     <div className="store-table-nav-items main">
                         <h3 style={{fontWeight:'600'}}>
                         <span>
@@ -62,23 +62,23 @@ const Main_Admin_Nav = ({
                         Store
                         </h3>
                     </div>
-                </Link>
-                <Link style={{margin:'5px 0'}} to={store.store ? {pathname:`/admin/${store.store._id}`,search: "?show=inventory"} : "#"}>
+                </a>
+                <a style={{margin:'5px 0'}} to={store.store ? `https://www.cardboardexpress.com/admin/${store.store._id}?show=inventory` : "#"}>
                     <div className="store-table-nav-items main active">
                         <h3 style={{fontWeight:'600'}}><span><i style={{fontSize:'20px', marginRight:'10px'}} className="fas fa-box"></i></span>Inventory</h3>
                     </div>
-                </Link>
+                </a>
                 {/* <div onClick={e => setTableShow1('payments')} className={tableShow1 === "payments" ? "profile-table-nav-items active" : "store-table-nav-items"}>
                     <h3>Payments</h3>
                     <p>Add payment methods</p>
                 </div>  */}
-                <Link style={{margin:'5px 0'}} to={store.store ? {pathname:`/admin/${store.store._id}`,search: "?show=orders"} : "#"}>
+                <a style={{margin:'5px 0'}} href={store.store ? `https://www.cardboardexpress.com/admin/${store.store._id}?show=orders` : "#"}>
                     <div className="store-table-nav-items main">
                         <h3 style={{fontWeight:'600'}}><span><i style={{fontSize:'22px', marginRight:'1rem'}} className="fas fa-address-book"></i></span>Orders</h3>
                     </div>
-                </Link>
+                </a>
                 
-                <Link style={{margin:'5px 0'}} to={store.store ? {pathname:`/admin/${store.store._id}`,search: "?show=people"} : "#"}>
+                <a style={{margin:'5px 0'}} href={store.store ? `https://www.cardboardexpress.com/admin/${store.store._id}?show=people` : "#"}>
                     <div className="store-table-nav-items main">
                         <h3 style={{fontWeight:'600'}}>
                         <span>
@@ -87,13 +87,13 @@ const Main_Admin_Nav = ({
                         People
                         </h3>
                     </div>
-                </Link>
+                </a>
 
-                <Link style={{margin:'5px 0'}} to={store.store ? {pathname:`/admin/${store.store._id}`,search: "?show=settings"} : "#"}>
+                <a style={{margin:'5px 0'}} href={store.store ? `https://www.cardboardexpress.com/admin/${store.store._id}?show=settings` : "#"}>
                     <div className="store-table-nav-items main">
                         <h3 style={{fontWeight:'600'}}><span><i style={{fontSize:'22px', marginRight:'1rem'}} className="fas fa-layer-group"></i></span>Settings</h3>
                     </div>
-                </Link>
+                </a>
     
             </div>
             <div className={slideForm2 ? "store-side-nav-container active" : "store-side-nav-container"} id="transition-2">

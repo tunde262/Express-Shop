@@ -571,7 +571,7 @@ router.put('/favorite/:id', auth, async (req, res) => {
 
         await store.save();
 
-        res.json(store.favorites);
+        res.json(store);
     } catch (err) {
         console.error(err.message);
         

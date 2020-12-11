@@ -1580,14 +1580,19 @@ header {
 .profile-circle {
   display: flex;
   justify-content: center;
-  padding-top: 20px;
   align-items: center;
   width: 40px;
   height: 40px;
   border-radius: 50%;
   background: #ececec;
   border: 2px solid #ff4b2b;
-  cursor: pointer; }
+  cursor: pointer;
+  font-weight: bold; }
+  .profile-circle.small {
+    height: 30px;
+    width: 30px;
+    margin: 0 10px;
+    font-weight: 300; }
   .profile-circle.big {
     width: 150px;
     height: 150px; }
@@ -2122,7 +2127,6 @@ header {
 
 .jumbotron {
   min-height: calc(100vh - 60px);
-  margin-top: 60px;
   background-image: url(http://n82.15b.myftpupload.com/wp-content/uploads/2020/08/banner-03.jpg);
   background-size: cover;
   background-position: center;
@@ -4093,10 +4097,12 @@ header {
   letter-spacing: 1px;
   display: flex;
   align-items: center;
-  justify-content: center; }
+  justify-content: center;
+  border-radius: 0; }
   .step-form-btn.disabled {
-    background: #e6ac00;
-    color: #b38600; }
+    background: #cecece;
+    border-color: #cecece;
+    color: #808080; }
     .step-form-btn.disabled:hover {
       opacity: 1; }
 
@@ -4894,6 +4900,11 @@ footer .footer-bottom {
     width: 100vw;
     height: 100%;
     overflow-y: auto; }
+  .store-form {
+    height: calc(100vh - 57px);
+    border: none;
+    width: 100vw;
+    margin-top: 50px; }
   header {
     flex-direction: column;
     padding: 0; }

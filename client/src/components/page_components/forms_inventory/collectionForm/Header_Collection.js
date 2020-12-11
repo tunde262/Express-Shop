@@ -23,12 +23,12 @@ const Header_Collection = ({
         //     {orderList}
         // </div>
         <Fragment>
-            <Link style={{textDecoration:'none'}} to={store.store && {pathname:`/admin/${store.store._id}`,search: "?show=inventory"}}>
+            <a style={{textDecoration:'none'}} href={store.store && `https://www.cardboardexpress.com/admin/${store.store._id}?show=inventory`}>
                 <div style={{display:'flex', color:'#ff4b2b', width:'100%', padding:'10px 0', fontSize:'0.8rem', justifyContent:'flex-start', alignItems:'center'}}>
                     <i class="fas fa-long-arrow-alt-left"></i>
                     <p style={{margin:'0 10px'}}>  Back to store</p>
                 </div>
-            </Link>
+            </a>
             <div style={{width:'100%', display:'flex', justifyContent:'space-between'}}>
                 <h3>New Collection</h3>
                 <button onClick={(e) => handleSave(e)} style={{width:'300px'}}>

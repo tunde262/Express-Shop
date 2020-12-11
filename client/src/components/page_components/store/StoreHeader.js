@@ -109,27 +109,27 @@ const StoreHeader = ({ store: { store, loading }, admin, setTable }) => {
                                 </div>
                                 
                                 <div className="store-socials desktop" id="store-socials">
-                                    <Link to={store && {pathname:`/admin/${store._id}`,search: "?show=edit"}}>
+                                    <a href={store && `https://www.cardboardexpress.com/admin/${store._id}?show=edit`}>
                                         <button onClick={() => setTable('edit')}>
                                             Edit Store
                                             <i style={{marginLeft:'10px', fontSize:'12px'}} class="fas fa-pen"></i>
                                         </button>
-                                    </Link>
+                                    </a>
                                     <div onClick={() => setDropdown(!dropdown)} style={{border:'1px solid #0098d3', background:'#0098d3', color:'#fff', display:'flex', justifyContent:'center', alignItems:'center', height:'40px', width:'35px', borderRadius:'5px'}}>
                                         <i style={{fontSize:'14px'}}class="fas fa-chevron-down"></i>
                                     </div>
                               
                                     <div className={dropdown ? "edit-dropdown active" : "edit-dropdown"} style={{height: menuHeight}}>
                                         <div className="menu">
-                                            <Link to="/profile/saved" className="menu-item">
+                                            <a href="https://www.cardboardexpress.com/profile/saved" className="menu-item">
                                                 <i style={{color:'#0098d3', fontSize:'1.2rem', marginRight:'10px'}} class="fas fa-eye"></i>
                                                 View Store
-                                            </Link>
+                                            </a>
                                             <hr style={{margin:'10px 0', height:'1px', background:'#f2f2f2'}} />
-                                            <Link to="/profile/orders" className="menu-item">
+                                            <a href="https://www.cardboardexpress.com/profile/orders" className="menu-item">
                                                 <i style={{color:'#0098d3', fontSize:'1.2rem', marginRight:'10px'}} class="fas fa-qrcode"></i>
                                                 Qr Code
-                                            </Link>
+                                            </a>
                                         </div>
                                     </div>
                                     

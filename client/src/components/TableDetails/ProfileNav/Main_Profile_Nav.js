@@ -12,7 +12,7 @@ const Main_Profile_Nav = ({setSlideForm1, slideForm1}) => {
                     <p style={{margin:'0', color:'#808080'}}><span style={{margin:'0 10px'}}><i className="fas fa-arrow-left"></i></span>Main menu</p>
                 </div>
             </div>
-            <Link style={{margin:'5px 0'}} to='/profile/stores'>
+            <a style={{margin:'5px 0'}}  href='https://www.cardboardexpress.com/profile/stores'>
                 <div className="store-table-nav-items main">
                     <h3 style={{fontWeight:'600'}}>
                     <span>
@@ -21,23 +21,23 @@ const Main_Profile_Nav = ({setSlideForm1, slideForm1}) => {
                     My Stores
                     </h3>
                 </div>
-            </Link>
-            <Link style={{margin:'5px 0'}} to='/profile/orders'>
+            </a>
+            <a style={{margin:'5px 0'}} href='https://www.cardboardexpress.com/profile/orders'>
                 <div className="store-table-nav-items main active">
                     <h3 style={{fontWeight:'600'}}><span><i style={{fontSize:'20px', marginRight:'10px'}} className="fas fa-box"></i></span>Orders</h3>
                 </div>
-            </Link>
+            </a>
             {/* <div onClick={e => setTableShow1('payments')} className={tableShow1 === "payments" ? "profile-table-nav-items active" : "store-table-nav-items"}>
                 <h3>Payments</h3>
                 <p>Add payment methods</p>
             </div>  */}
-            <Link style={{margin:'5px 0'}} to='/profile/addresses'>
+            <a style={{margin:'5px 0'}} href='https://www.cardboardexpress.com/profile/addresses'>
                 <div className="store-table-nav-items main">
                     <h3 style={{fontWeight:'600'}}><span><i style={{fontSize:'22px', marginRight:'1rem'}} className="fas fa-address-book"></i></span>Addresses</h3>
                 </div>
-            </Link>
+            </a>
             
-            <Link style={{margin:'5px 0'}} to='/profile/subscriptions'>
+            <a style={{margin:'5px 0'}} href='https://www.cardboardexpress.com/profile/subscriptions'>
                 <div className="store-table-nav-items main">
                     <h3 style={{fontWeight:'600'}}>
                     <span>
@@ -46,13 +46,13 @@ const Main_Profile_Nav = ({setSlideForm1, slideForm1}) => {
                     Subscriptions
                     </h3>
                 </div>
-            </Link>
+            </a>
 
-            <Link style={{margin:'5px 0'}} to='/profile/settings'>
+            <a style={{margin:'5px 0'}} href='https://www.cardboardexpress.com/profile/settings'>
                 <div className="store-table-nav-items main">
                     <h3 style={{fontWeight:'600'}}><span><i style={{fontSize:'22px', marginRight:'1rem'}} className="fas fa-layer-group"></i></span>Settings</h3>
                 </div>
-            </Link>
+            </a>
         </Fragment>
     )
 }

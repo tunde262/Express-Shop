@@ -73,14 +73,14 @@ const StoreCard = ({ storeObj, profile, favorite }) => {
                 {/* <div class="card__image">
                     {storeObj.banner_imgs && storeObj.banner_imgs.length > 0 && <img src={`/api/stores/image/${storeObj.banner_imgs[0].img_name}`} alt="" />}
                 </div> */}
-                <Link to={`/store/${storeObj._id}`}>
+                <a href={`https://www.cardboardexpress.com/store/${storeObj._id}`}>
                     <div className="card__logo__image">
                         <img src={`/api/stores/image/${storeObj.img_name}`} />
                     </div>
-                </Link>
+                </a>
                 <div class="card__body">
                     <div style={{height:'30px', lineHeight:'15px', overflow:'hidden'}}>
-                        <Link style={{textDecoration:'none'}} to={`/store/${storeObj._id}`}><p class="card__body__heading line-clamp">{storeObj.name}</p></Link>
+                        <a style={{textDecoration:'none'}} href={`https://www.cardboardexpress.com/store/${storeObj._id}`}><p class="card__body__heading line-clamp">{storeObj.name}</p></a>
                     </div>
                     <div style={{width:'100%', position:'absolute', bottom:'0', padding:'0 10px'}} className="store-socials store">
                         {subList.includes(storeObj._id) ? (

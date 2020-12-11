@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { setAlert } from './alertActions';
+import { getProfileSubscriptions } from './profileActions';
 
 import { 
     GET_STORE, 
@@ -330,7 +331,7 @@ export const addView = id => async dispatch => {
 };
 
 // Favorite & Unfavorite 
-export const favorite = id => async dispatch => {
+export const favorite = (id, userId) => async dispatch => {
     try {
       const res = await axios.put(`/api/stores/favorite/${id}`);
   
@@ -340,6 +341,8 @@ export const favorite = id => async dispatch => {
         type: UPDATE_STORE_FAVORITES,
         // payload: { id, favorites: res.data }
       });
+
+      dispatch(getProfileSubscriptions(userId));
     } catch (err) {
       dispatch({
         type: STORE_ERROR,

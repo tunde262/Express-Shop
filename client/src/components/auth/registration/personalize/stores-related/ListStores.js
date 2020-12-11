@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Spinner from '../../../../common/Spinner';
 import RelatedStores from '../../../../page_components/store/related/RelatedStores';
 
-const ListStores = ({ store, product, slideform2, setSlideForm2, slideform3, setSlideForm3 }) => {
+const ListStores = ({ store, profile, product, slideform2, setSlideForm2, slideform3, setSlideForm3 }) => {
     // const [storesList, setStoresList] = useState([]);
 
     // useEffect(() => {
@@ -44,8 +44,8 @@ const ListStores = ({ store, product, slideform2, setSlideForm2, slideform3, set
                 <RelatedStores />
             </div>
 
-            <button onClick={() => setSlideForm3(!slideform3)} style={{width:'100%', outline:'none', margin:'0', fontSize:'13px', letterSpacing:'1px', display:'flex', alignItems:'center', justifyContent:'center'}}>
-                Continue
+            <button disabled={profile.subscriptions.length > 2 ? false : true} onClick={() => setSlideForm3(!slideform3)} className={profile.subscriptions.length > 2 ? "step-form-btn" : "step-form-btn disabled"}>
+                {profile.subscriptions.length > 2 ? "Continue" : "Select 3"}
             </button> 
         </Fragment>
     )

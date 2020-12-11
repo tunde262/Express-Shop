@@ -46,7 +46,7 @@ const ShortLocation = ({ storageLocation: {loading, locations}, store, handleCli
                         <td>
                             <input class="edit_info" type="checkbox" style={{width:'15px'}}/>
                         </td>
-                        <td><Link to={"/admin/location/" + store.store._id + "/" + location._id}>{location.name}</Link></td>
+                        <td><a href={`https://www.cardboardexpress.com/admin/location/${store.store._id}/${location._id}`}>{location.name}</a></td>
                         <td>120</td>
                     </tr>
                 )
