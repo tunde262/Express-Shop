@@ -134,7 +134,9 @@ const HomeLanding = ({history, isAuthenticated, updateAuth, register, login}) =>
   }
 
   if(isAuthenticated) {
-      history.push('/home');
+    history.push('/home');
+  } else {
+    history.push('/login');
   }
   
   return (
