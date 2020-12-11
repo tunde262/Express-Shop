@@ -388,7 +388,7 @@ const Dashboard = ({
     let storeContent;
 
     if(storeNav === 'shop') {
-        storeContent = <StoreMain admin="true" setTable={setTable} />;
+        storeContent = <StoreMain admin="true" tableShow1={tableShow1} setTable={setTable} />;
     } else if(storeNav === 'edit') {
         storeContent = <EditMain setTable={setTable} /> 
     } else if (storeNav === 'inventory') {
@@ -434,7 +434,7 @@ const Dashboard = ({
            {tableShow1 === 'shop' && (
                 <Fragment>
                     <div className="store-table-header">
-                        <StoreHeader setTable={setTableShow1} />
+                        <StoreHeader tableShow1={tableShow1} setTable={setTableShow1} />
                     </div>
                     <div className="store-table-body">
                         <div className="product-list-container">
