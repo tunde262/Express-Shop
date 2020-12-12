@@ -13,12 +13,15 @@ import eyeEmoji from '../../../utils/imgs/eye_emoji.png';
 
 import ButtonSpinner from '../../common/ButtonSpinner';
 
-const ProductCard = ({ auth: { user }, preview, addLike, liked, modalOpen, product, handleDetail, addToCart, openModal, closeModal, addTotals}) => {
+const ProductCard = ({ auth: { user }, preview, addLike, modalOpen, product, handleDetail, addToCart, openModal, closeModal, addTotals}) => {
     // componentDidMount() {
     //     console.log(this.props.product);
     // }
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    const [liked, setLiked] = useState(false);
+    const [checkLike, setCheckLike] = useState(false);
 
     // Button loader
     const [cartLoading, setCartLoading] = useState(true);
@@ -51,7 +54,10 @@ const ProductCard = ({ auth: { user }, preview, addLike, liked, modalOpen, produ
     }
     
     const handleLike = (item) => {
-        addLike(item._id);
+        if(user) {
+            addLike(item._id);
+            setLiked(!liked);
+        }
 
         // Check if product already liked by same user
         if(item.likes.filter(like => like.user.toString() === user._id).length > 0) {
@@ -103,12 +109,20 @@ const ProductCard = ({ auth: { user }, preview, addLike, liked, modalOpen, produ
         });
     }
 
-    const isMobile = windowWidth <= 500;
-    const isTablet = windowWidth <= 1000;
-
     const { _id, name, img_gallery, price, store, category, inCart, likes, comments, view_count } = product;
 
     let sorted_img_gallery = img_gallery.sort((a, b) => a.img_order - b.img_order);
+
+    if(user && !checkLike) {
+        if(likes.filter(like => like.user.toString() === user._id).length > 0){
+            setLiked(true);
+        }
+        
+        setCheckLike(true);
+    }  
+
+    const isMobile = windowWidth <= 500;
+    const isTablet = windowWidth <= 1000;
 
     return (
         <ProductWrapper className="mx-1 my-2">

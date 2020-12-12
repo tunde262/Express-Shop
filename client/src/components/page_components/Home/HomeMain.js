@@ -61,7 +61,7 @@ const HomeMain = ({
         }
 
         return () => window.removeEventListener('resize', () => handleWindowSizeChange());
-    }, [skip, tableShow1, user]);
+    }, [skip, tableShow1]);
 
     const handleWindowSizeChange = () => {
         setWindowWidth(window.innerWidth);

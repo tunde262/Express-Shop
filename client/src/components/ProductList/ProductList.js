@@ -19,15 +19,8 @@ const ProductList = ({products, page, product, auth: { user }, handleScroll}) =>
     else {
         if(products.length > 0) {
             productList = products.map(product => {
-                let liked = false;
-                if (user) {
-                    if(product.likes.filter(like => like.user.toString() === user._id).length > 0){
-                        liked = true
-                        console.log('LIKED!!!!!');
-                    }
-                }
                 return (
-                    <ProductCard liked={liked} key={product._id} product={product} />
+                    <ProductCard key={product._id} product={product} />
                 )
             })
         }

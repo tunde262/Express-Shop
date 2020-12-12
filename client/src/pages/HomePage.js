@@ -86,7 +86,7 @@ const HomePage = ({
     }
         
     return (
-        <Fragment>
+        <div onScroll={handleScroll} className="scroll-container">
             <HomeMain 
                 skip={skip} 
                 setSkip={setSkip} 
@@ -96,7 +96,7 @@ const HomePage = ({
             />
             {/* <Footer /> */}
             {!loading && !isAuthenticated ? <AuthModal /> : null }
-        </Fragment>
+        </div>
     )
     
 }

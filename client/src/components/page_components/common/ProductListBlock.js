@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Container from '../../ProductList/Container';
+import Spinner from '../../common/Spinner';
 
 const ProductListBlock = ({ handleScroll }) => {
 
@@ -22,7 +23,15 @@ const ProductListBlock = ({ handleScroll }) => {
 
     return (
         <div className="product-list-container" id="nearby-container-list">
-            {isMobile ? (
+            <Fragment>
+                <div className="filter-container">
+                    <span style={{fontSize:'15px', fontWeight:'bold', color:'#808080', letterSpacing:'2px', margin:'10px'}}>Filter</span>
+                    <i class="fas fa-sliders-h"></i>
+                </div>
+                <Container />
+                <Spinner />
+            </Fragment>
+            {/* {isMobile ? (
                 <Fragment>
                     <div className="filter-container">
                         <span style={{fontSize:'15px', fontWeight:'bold', color:'#808080', letterSpacing:'2px', margin:'10px'}}>Filter</span>
@@ -38,7 +47,7 @@ const ProductListBlock = ({ handleScroll }) => {
                     </div>
                     <Container />
                 </div>
-            )}
+            )} */}
         </div>
     )
 }
