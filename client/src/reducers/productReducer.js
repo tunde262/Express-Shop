@@ -16,8 +16,10 @@ import {
     OPEN_OVERVIEW, 
     CLOSE_OVERVIEW, 
     OPEN_MODAL, 
+    OPEN_CART_MODAL, 
     HANDLE_MAP, 
-    CLOSE_MODAL, 
+    CLOSE_MODAL,
+    CLOSE_CART_MODAL, 
     CLEAR_CART,
     ADD_TOTALS, 
     GET_CART, 
@@ -52,6 +54,7 @@ const initialState = {
     cartStores: [],
     cartOverview: false,
     modalOpen: false,
+    cartModalOpen: false,
     modalProduct: null,
     cartSubtotal: 0,
     cartTax: 0,
@@ -398,6 +401,11 @@ export default function(state = initialState, action) {
                 modalProduct: action.payload,
                 modalOpen: true
             }
+        case OPEN_CART_MODAL: 
+            return {
+                ...state,
+                cartModalOpen: true
+            }
         case HANDLE_MAP: 
             return {
                 ...state,
@@ -407,6 +415,11 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 modalOpen: false
+            }
+        case CLOSE_CART_MODAL: 
+            return {
+                ...state,
+                cartModalOpen: false
             }
 
         case CLEAR_CART: 

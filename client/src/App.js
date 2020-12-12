@@ -39,7 +39,8 @@ import Backdrop from './components/layout/Backdrop/Backdrop';
 import StoreForm from './components/admin/forms/store_form/StoreForm';
 
 import Routes from './components/routing/Routes';
-import AddToCartModal from './components/modals/cart-modal/AddToCartModal';
+import CartModal from './components/modals/cart-modal/CartModal';
+import AddToCartModal from './components/modals/cart-modal/AddToCart';
 import CreateCollectionModal from './components/modals/collection-modal/createNew/CreateCollectionModal';
 import AddToCollectionModal from './components/modals/collection-modal/addTo/AddToCollectionModal';
 
@@ -216,8 +217,10 @@ const App = () => {
             </main>
           </div>
 
+          <AddToCartModal />
+
           <Elements stripe={stripePromise}>
-            <AddToCartModal />
+            <CartModal />
           </Elements>
           
           <CreateCollectionModal 

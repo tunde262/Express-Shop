@@ -8,7 +8,7 @@ import axios from 'axios';
 import { injectStripe } from 'react-stripe-elements';
 import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
 
-import { closeModal, removeItem } from '../../../actions/productActions';
+import { closeCartModal, removeItem } from '../../../actions/productActions';
 import Modal from 'react-responsive-modal';
 
 import paymentSignatures from '../../../utils/imgs/visa_PNG2.png';
@@ -39,7 +39,7 @@ const initialState = {
     amount: ''
 };
 
-const ModalBody = ({closeModal, removeItem, product, auth: { user }, store, profile }) => {
+const ModalBody = ({closeCartModal, removeItem, product, auth: { user }, store, profile }) => {
 
     const [formData, setFormData] = useState(initialState);
 
@@ -60,8 +60,7 @@ const ModalBody = ({closeModal, removeItem, product, auth: { user }, store, prof
 
 
     const { 
-        modalOpen, 
-        modalProduct,
+        cartModalOpen, 
         cart, 
         cartStores,
         loading, 
@@ -71,7 +70,7 @@ const ModalBody = ({closeModal, removeItem, product, auth: { user }, store, prof
         cartQty 
     } = product; 
 
-    if(!gotProfileAddress && modalOpen && profile.profile) {
+    if(!gotProfileAddress && cartModalOpen && profile.profile) {
         let activeAddress;
 
         setFormData({...formData, email: user.email});
@@ -278,7 +277,7 @@ const ModalBody = ({closeModal, removeItem, product, auth: { user }, store, prof
     };
 
     const handleModalClose = () => {
-        closeModal();
+        closeCartModal();
     }
 
     let modal;
@@ -289,14 +288,13 @@ const ModalBody = ({closeModal, removeItem, product, auth: { user }, store, prof
         }
     };
 
-    if(!modalOpen) {
+    if(!cartModalOpen) {
         modal = null;
     }
     else {
-        const { title, img_gallery, price } = modalProduct;
 
         modal = (
-            <Modal open={modalOpen} onClose={handleModalClose} center styles={bg}>
+            <Modal open={cartModalOpen} onClose={handleModalClose} center styles={bg}>
                 <div className="checkout-modal">
                     <div className="checkout-modal-main">
                         <div className="checkout-confirmed"><p>Quick Checkout</p></div>
@@ -470,7 +468,7 @@ const ModalContainer = styled.div`
 `;
 
 ModalBody.propTypes = {
-    closeModal: PropTypes.func.isRequired,
+    closeCartModal: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired,
@@ -485,4 +483,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, { closeModal, removeItem })(injectStripe(ModalBody));
+export default connect(mapStateToProps, { closeCartModal, removeItem })(injectStripe(ModalBody));

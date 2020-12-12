@@ -4089,6 +4089,14 @@ header {
   .tertiary-form-text:hover {
     color: #0645AD; }
 
+.skinny-text {
+  font-family: Arial, Helvetica,sans-serif;
+  font-size: 14px;
+  color: #808080;
+  cursor: pointer; }
+  .skinny-text:hover {
+    color: #0645AD; }
+
 .step-form-btn {
   width: 100%;
   outline: none;

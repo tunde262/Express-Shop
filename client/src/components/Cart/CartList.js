@@ -7,9 +7,9 @@ import { connect } from 'react-redux';
 import { getStoreById, setCartStores } from '../../actions/storeActions';
 
 import Spinner from '../common/Spinner';
-import { openModal } from '../../actions/productActions';
+import { openCartModal } from '../../actions/productActions';
 
-const CartList = ({cart, openModal, getStoreById, setCartStores, product: { cartStores} }) => {
+const CartList = ({cart, openCartModal, getStoreById, setCartStores, product: { cartStores} }) => {
     const [stores, setStoreList] = useState([]);
 
     useEffect(() => {
@@ -33,8 +33,8 @@ const CartList = ({cart, openModal, getStoreById, setCartStores, product: { cart
         getCartStores();
     }, []);
 
-    const handleStoreCheckout = (prodId, storeId) => {
-        openModal(prodId);
+    const handleStoreCheckout = (storeId) => {
+        openCartModal();
         getStoreById(storeId)
     }
     
@@ -67,7 +67,7 @@ const CartList = ({cart, openModal, getStoreById, setCartStores, product: { cart
                             <div className="store-socials store">
                                 {!checkoutDisabled ? (
                                     <button
-                                        onClick={() =>handleStoreCheckout(cart[0].item.product, store.id)}
+                                        onClick={() =>handleStoreCheckout(store.id)}
                                         style={{width:'100%', margin:'10px 0',}}
                                     >
                                         Checkout with store
@@ -103,7 +103,7 @@ CartList.propTypes = {
     getStoreById: PropTypes.func.isRequired,
     store: PropTypes.object.isRequired,
     product: PropTypes.object.isRequired,
-    openModal:  PropTypes.func.isRequired,
+    openCartModal:  PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -111,4 +111,4 @@ const mapStateToProps = state => ({
     product: state.product
 });
 
-export default connect(mapStateToProps, { getStoreById, openModal })(CartList);
+export default connect(mapStateToProps, { getStoreById, openCartModal })(CartList);

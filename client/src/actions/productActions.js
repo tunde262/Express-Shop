@@ -28,9 +28,11 @@ import {
     ADD_TO_CART, 
     OPEN_OVERVIEW, 
     CLOSE_OVERVIEW, 
-    OPEN_MODAL, 
+    OPEN_MODAL,
+    OPEN_CART_MODAL, 
     HANDLE_MAP, 
     CLOSE_MODAL, 
+    CLOSE_CART_MODAL, 
     CLEAR_CART, 
     GET_CART, 
     INC_IMG_GALLERY, 
@@ -839,7 +841,7 @@ export const addToCart = (id) => dispatch => {
                 payload: res.data
             });
 
-            dispatch(setInCart(id));
+            // dispatch(setInCart(id));
         })
         .catch(err => 
             dispatch({
@@ -897,6 +899,13 @@ export const openModal = (id) => dispatch => {
         );
 }
 
+// Open Cart Modal
+export const openCartModal = () => dispatch => {
+    dispatch({
+        type: OPEN_CART_MODAL
+    });
+}
+
 // Set Modal
 export const handleMap = () => dispatch => {
     dispatch({
@@ -908,6 +917,13 @@ export const handleMap = () => dispatch => {
 export const closeModal = () => {
     return {
         type: CLOSE_MODAL
+    }
+}
+
+// Close Modal
+export const closeCartModal = () => {
+    return {
+        type: CLOSE_CART_MODAL
     }
 }
 

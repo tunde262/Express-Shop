@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -153,7 +153,7 @@ const Details = ({
     const [descriptionState, setDescriptionState] = useState(null);
 
     // Button loader
-    const [cartLoading, setCartLoading] = useState(true);
+    const [cartLoading, setCartLoading] = useState(false);
 
     // Show Img Index
     const [showImage, setShowImage] = useState(0);
@@ -177,7 +177,9 @@ const Details = ({
         } else {
             setCartLoading(false);
         }
+
     }, [modalOpen]);
+
 
     const handleMixpanel = () => {
         mixpanel.identify(user._id);
@@ -272,7 +274,9 @@ const Details = ({
         openCollectionModal();
     }
 
-    const todo = (id, item) => {
+    const todo = (e, id, item) => {
+        e.preventDefault();
+
         let selectedVariant;
         let tempVars = [...variant.sortedVariants];
         
@@ -1054,7 +1058,7 @@ const Details = ({
                                     </div>
                                     {/* <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}> */}
                                         <button 
-                                            onClick={() =>todo(detailProduct._id, detailProduct)}
+                                            onClick={(e) =>todo(e, detailProduct._id, detailProduct)}
                                             disabled={cartLoading ? true : false} 
                                             style={{marginTop:'50px'}}
                                         >

@@ -106,7 +106,7 @@ const ProductCard = ({ auth: { user }, preview, addLike, liked, modalOpen, produ
     const isMobile = windowWidth <= 500;
     const isTablet = windowWidth <= 1000;
 
-    const { _id, name, img_gallery, price, store, category, inCart, likes, comments } = product;
+    const { _id, name, img_gallery, price, store, category, inCart, likes, comments, view_count } = product;
 
     let sorted_img_gallery = img_gallery.sort((a, b) => a.img_order - b.img_order);
 
@@ -118,10 +118,10 @@ const ProductCard = ({ auth: { user }, preview, addLike, liked, modalOpen, produ
                     onClick={() => onHandleDetailClick(_id)}
                 >
                     <a href={`https://www.cardboardexpress.com/details/${_id}`}>
-                        {img_gallery[0] &&<img src={`/api/products/image/${sorted_img_gallery[0].img_name}`} alt="product" />}
+                        {img_gallery[0] && <img src={`/api/products/image/${sorted_img_gallery[0].img_name}`} alt="product" />}
                         <div style={{height:'25px', display:'felx', alignItems:'center', margin:'10px', lineHeight:'14px', display:'flex', justifyContent:'center', alignItems:'center', position:'absolute', top:'0', right:'0', padding:'0 10px', borderRadius:'50px', background:'rgba(20,20,20, .5)', color:'#fff', opacity:'1'}}> 
-                            <p style={{margin:'0', fontSize:'12px'}}>$10.99</p>
-                            <img src={fireEmoji} style={{width:'14px', margin:'-3px 0 0 3px', height:'14px'}} alt="fire-emoji" /> 
+                            <p style={{margin:'0', fontSize:'12px'}}>${price}</p>
+                            {view_count > 0 && <img src={fireEmoji} style={{width:'14px', margin:'-3px 0 0 3px', height:'14px'}} alt="fire-emoji" /> }
                         </div>
                     
                         {/* <div className="detail-image-overlay">
