@@ -1,9 +1,6 @@
 import React, { Fragment } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-// Alerts
-import Alert from '../layout/Alert';
-
 // Pages
 import Details from '../Details';
 import Cart from '../Cart/Checkout';
@@ -49,7 +46,6 @@ import PrivateRoute from './PrivateRoute';
 const Routes = props => {
   return (
     <Fragment>
-        <Alert />
         <Switch>
             <Route exact path="/home" component={HomePage} />
             <Route exact path="/category" component={CategoryPage} />

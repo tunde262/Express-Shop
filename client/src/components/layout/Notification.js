@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 
 
-const Alert = ({ alerts }) => {
+const Notification = ({ alerts }) => {
 
     let alertList;
 
@@ -30,7 +30,7 @@ const Alert = ({ alerts }) => {
     )
 }
 
-Alert.propTypes = {
+Notification.propTypes = {
     alerts: PropTypes.array.isRequired,
 }
 
@@ -38,4 +38,4 @@ const mapStateToProps = state => ({
     alerts: state.alert
 });
 
-export default connect(mapStateToProps, null)(Alert)
+export default connect(mapStateToProps, null)(Notification)
