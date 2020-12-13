@@ -89,10 +89,8 @@ const Main_Store_Nav = ({
     return (
         <Fragment>
             {page === 'profile' && (
-                <div style={{marginBottom:'5px', cursor:'pointer'}} onClick={() => handleBackSlide('profile')}>
-                    <div style={{display:'flex', flexDirection:'row', width:'100%', justifyContent:'flex-end'}}>
-                        <p style={{margin:'0', color:'#808080'}}>View Settings<span style={{margin:'0 10px'}}><i className="fas fa-arrow-right"></i></span></p>
-                    </div>
+                <div className="slide-btn" style={{justifyContent: 'flex-end'}} onClick={() => handleBackSlide('profile')}>
+                    <p style={{margin:'0', color:'#808080'}}>View Settings<span style={{margin:'0 0 0 10px'}}><i className="fas fa-arrow-right"></i></span></p>
                 </div>
             )}
             <a href="https://www.cardboardexpress.com/home" onClick={() => todo('home')}>

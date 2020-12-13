@@ -51,7 +51,16 @@ const initialState = {
     amount: ''
 };
 
-const Cart = ({ setPage, setMainNav, auth: { user }, product, clearCart, profile, history, match }) => {
+const Cart = ({ 
+    setPage, 
+    setMainNav, 
+    auth: { user }, 
+    product, 
+    clearCart, 
+    profile, 
+    history, 
+    match 
+}) => {
 
     const [formData, setFormData] = useState(initialState);
 
@@ -301,7 +310,7 @@ const Cart = ({ setPage, setMainNav, auth: { user }, product, clearCart, profile
     return (
         <div className="collection-page-container">
             <div className="store-table-header" style={{padding:'20px 20px 0 20px'}}>
-                <div style={{display:'flex', color:'#ff4b2b', width:'100%', padding:'10px 0', fontSize:'0.8rem', justifyContent:'flex-start', alignItems:'center'}}>
+                <div onClick={() => history.goBack()} className="back-btn">
                     <i class="fas fa-long-arrow-alt-left"></i>
                     <p style={{margin:'0 10px'}}>  Back</p>
                 </div>
@@ -397,8 +406,8 @@ const Cart = ({ setPage, setMainNav, auth: { user }, product, clearCart, profile
                                         </div>
                                     </div>
                                     
-                                    <div className="checkout-actions">
-                                        <button onClick={(e) => onSubmit(e)}>Place Order</button>
+                                    <div className="checkout-actions store-socials store">
+                                        <button className="active" onClick={(e) => onSubmit(e)}>Place Order</button>
                                     </div>
                                     {/* <h5>item added to the cart</h5>
                                     <img src={`/api/products/image/${img_gallery[0].img_name}`} className="img-fluid" alt="product" />
@@ -422,7 +431,7 @@ const Cart = ({ setPage, setMainNav, auth: { user }, product, clearCart, profile
                         </div>
                     </div>
                     <div class="product-admin-secondary">
-                        <div id="order-totals" style={{background:'#fff', margin:'10px 0', padding:'10px', height:'300px', border:'1px solid rgb(214, 214, 214)'}}>
+                        <div id="order-totals" className="sticky" style={{background:'#fff', margin:'10px 0', padding:'10px', height:'300px', border:'1px solid rgb(214, 214, 214)'}}>
                             <p>Order Summary</p>
                             <div style={{display:'flex', color:'#808080', justifyContent:'space-between'}}>
                                 <p>Item(s) Subtotal:</p>
@@ -439,6 +448,9 @@ const Cart = ({ setPage, setMainNav, auth: { user }, product, clearCart, profile
                             <div style={{display:'flex', color:'#ff4b2b', justifyContent:'space-between'}}>
                                 <p>Completed Total:</p>
                                 <p>$10</p>
+                            </div>
+                            <div className="store-socials store">
+                                <button className="active" onClick={(e) => onSubmit(e)}>Place Order</button>
                             </div>
                         </div>
                     </div>

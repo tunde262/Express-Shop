@@ -7,10 +7,8 @@ import addBookmark from '../../common/add-bookmarks.svg';
 const Main_Profile_Nav = ({setSlideForm1, slideForm1}) => {
     return (
         <Fragment>
-            <div style={{marginBottom:'5px', cursor:'pointer'}} onClick={() => setSlideForm1(!slideForm1)}>
-                <div style={{display:'flex', flexDirection:'row', width:'100%', justifyContent:'flex-start'}}>
-                    <p style={{margin:'0', color:'#808080'}}><span style={{margin:'0 10px'}}><i className="fas fa-arrow-left"></i></span>Main menu</p>
-                </div>
+            <div className="slide-btn" onClick={() => setSlideForm1(!slideForm1)}>
+                <p style={{margin:'0', color:'#808080'}}><span style={{margin:'0 10px 0 0'}}><i className="fas fa-arrow-left"></i></span>Main menu</p>
             </div>
             <a style={{margin:'5px 0'}}  href='https://www.cardboardexpress.com/profile/stores'>
                 <div className="store-table-nav-items main">

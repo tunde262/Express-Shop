@@ -10,7 +10,7 @@ export default function CartTotals({totals, history}) {
     cartTotal = parseFloat(cartTotal.toFixed(2));
 
     return (
-        <React.Fragment>
+        <div style={{position:'fixed'}}>
             <div className="container">
                 <div className="row">
                     <div className="col-10 mt-2 ml-sm-5 ml-md-auto col-sm-8 text-capitalize text-right">
@@ -49,6 +49,6 @@ export default function CartTotals({totals, history}) {
                     </div>
                 </div>
             </div>
-        </React.Fragment>
+        </div>
     )
 }

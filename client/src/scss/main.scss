@@ -524,6 +524,26 @@ button:hover {
     cursor: pointer;
     height: 30px;
     border-radius: 30px;
+    margin: 0 0 0 -1rem;
+
+    &.cart {
+        margin: 0 0 0 8px;
+    }
+
+    &:hover {
+        background: rgb(247, 247, 247);
+    }
+}
+
+.slide-btn {
+    margin-bottom: 5px; 
+    cursor: pointer; 
+    display: flex;
+    padding: 10px 1rem;  
+    justify-content: flex-start;  
+    align-items: center; 
+    height: 30px;
+    border-radius: 30px;
 
     &:hover {
         background: rgb(247, 247, 247);
@@ -4265,6 +4285,10 @@ header {
 		overflow: hidden;
         position: relative;
         border-radius: 0;
+
+        &:hover {
+            background: #f4f4f4;
+        }
 		
 		&:before, 
 		&:after {
@@ -5212,9 +5236,15 @@ header {
 
 /*Cart Page*/
 .cart-container {
-    display: grid;
-    grid-template-columns: 3fr 1fr;
+    display: flex;
+    justify-content: space-between;
     width: 100%;
+}
+
+.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 6%;
 }
 
 /* Slider */

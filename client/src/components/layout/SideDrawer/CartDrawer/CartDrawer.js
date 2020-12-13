@@ -2,12 +2,13 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { decrement, removeItem, addToCart } from '../../../actions/productActions';
+import { decrement, removeItem, addToCart } from '../../../../actions/productActions';
 
 import './CartDrawer.css';
-import cart_logo from '../../../utils/imgs/cart_logo.png';
-import cartbags from '../../../utils/imgs/cartbags.png';
-import placeholderImg from '../../../utils/imgs/placeholder_img.jpg';
+import cart_logo from '../../../../utils/imgs/cart_logo.png';
+import cartbags from '../../../../utils/imgs/cartbags.png';
+import placeholderImg from '../../../../utils/imgs/placeholder_img.jpg';
+import CartDrawerItem from './CartDrawerItem';
 
 const CartDrawer = ({ 
     drawerClickHandler, 
@@ -75,36 +76,7 @@ const CartDrawer = ({
                             <a href={`https://www.cardboardexpress.com/cart`}><button onClick={toggleCartDrawer} style={{margin:0, width:'100%'}}>Checkout</button></a>
                         </div>
                         <div style={{overflowY:'scroll', height:'80vh'}}>
-                            {cart.map(item => {
-                                const { qty, price } = item;
-                                const { _id, img_gallery, name} = item.item;
-                                const tempTotal = price;
-                                const total = parseFloat(tempTotal.toFixed(2));
-                                const itemPrice = parseFloat(item.item.price.toFixed(2));
-                                return (
-                                    <div style={{display:'flex', height:'100px', width:'100%', padding:'10px', borderBottom:'1px solid #cecece'}}>
-                                        <div style={{height:'100%', width:'100px'}}>
-                                            <img src={img_gallery ? `/api/products/image/${img_gallery[0].img_name}` : placeholderImg} style={{height:'100%'}} alt="product" />
-                                        </div>
-                                        <div style={{display:'flex', height:'100%', overflow:'hidden', width:'150px', marginLeft:'-10px', flexDirection:'column', alignItems:'flex-start'}}>
-                                            <div className="line-clamp" style={{height:'40px', overflow:'hidden', width:'100%'}}>
-                                                <p style={{margin:'0', fontSize:'12px', width:'100%'}}>{name}</p>
-                                            </div>
-                                            {qty > 1 ? (
-                                                <p style={{margin:'0', fontSize:'12px', color:'#808080'}}>{qty} for ${total}</p>
-                                            ) : (
-                                                <p style={{margin:'0', fontSize:'12px', color:'#808080'}}>${itemPrice}</p>
-                                            )}
-                                            <p style={{color:'#ff4b2b', margin:'0', fontSize:'12px'}} onClick={() => onRemoveItem(_id)}>Remove</p>
-                                        </div>
-                                        <div style={{display:'flex', margin:'0 10px', color:'#808080', height:'100%', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
-                                            <div className="btn-circle inc" onClick={() => handleIncrement(_id)}><i className="fas fa-chevron-up"></i></div>
-                                            <div className="btn-circle num">{qty}</div>
-                                            <div className="btn-circle inc" onClick={()=> handleDecrement(_id)}><i class="fas fa-chevron-down"></i></div>
-                                        </div>
-                                    </div>
-                                );
-                            })}
+                            {cart.map((item, index) => <CartDrawerItem key={index} item={item} />)}
                         </div>
                         <div style={{padding:'0 10px', marginTop:'-2rem'}}>
                             <a href={`https://www.cardboardexpress.com/cart`}><button onClick={toggleCartDrawer} style={{margin:0, width:'100%'}}>Checkout</button></a>

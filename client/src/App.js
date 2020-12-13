@@ -36,7 +36,7 @@ import HomePage from './pages/HomePage';
 import HomeLanding from './pages/HomeLanding';
 import Navbar from './components/layout/Navbar/Navbar';
 import SideDrawer from './components/layout/SideDrawer/SideDrawer';
-import CartDrawer from './components/layout/SideDrawer/CartDrawer';
+import CartDrawer from './components/layout/SideDrawer/CartDrawer/CartDrawer';
 import AuthDrawer from './components/layout/SideDrawer/AuthDrawer';
 import Backdrop from './components/layout/Backdrop/Backdrop';
 
