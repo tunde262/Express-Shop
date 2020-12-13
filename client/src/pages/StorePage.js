@@ -195,7 +195,7 @@ const StorePage = ({
                                                 
                                                 <p style={{color:'#808080', fontWeight: '600'}}>Clothing & Fashion</p>
                                             </div>
-                                            <div style={{maxHeight:'40px', overflow:'hidden', lineHeight:'15px'}} id="store-description">
+                                            <div style={{maxHeight:'30px', overflow:'hidden', lineHeight:'15px'}} id="store-description">
                                                 <p className="line-clamp desktop" style={{color:'#808080', fontFamily:' Arial, Helvetica,sans-serif'}}>{store.store.description}</p>
                                             </div>
                                             
