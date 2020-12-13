@@ -1,6 +1,7 @@
 import React, { useEffect, Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { getCollectionById, addView, getCollectionsByTagList } from '../actions/collectionActions';
 import { getProductsInCollection } from '../actions/productActions';
 import { setMainNav } from '../actions/navActions';
@@ -28,7 +29,8 @@ const CollectionPage = ({
         isAuthenticated, 
         loading 
     }, 
-    match 
+    match,
+    history 
 }) => {
 
     // Nav underline Table
@@ -61,7 +63,11 @@ const CollectionPage = ({
     return (
         <div className="collection-page-container">
             <div className="store-table-header" id="collection-header">
-                <CollectionHeader setTableShow1={setTableShow1} tableShow1={tableShow1} />
+                <CollectionHeader 
+                    setTableShow1={setTableShow1} 
+                    tableShow1={tableShow1} 
+                    history={history}
+                />
             </div>
             <div className="store-table-body">
                 <div style={{background:'rgb(247, 247, 247)'}}>
@@ -98,4 +104,4 @@ export default connect(mapStateToProps, {
     addView, 
     getCollectionsByTagList, 
     getProductsInCollection  
-})(CollectionPage);
+})(withRouter(CollectionPage));

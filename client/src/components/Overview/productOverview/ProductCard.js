@@ -157,7 +157,11 @@ const ProductCard = ({ auth: { user }, preview, addLike, modalOpen, product, han
                     </div> */}
                 </div>
                 <div className="sellers">
-                    <img src={`/api/stores/image/${store.img_name}`} />
+                    {store.img_name ? (
+                        <img className="img" src={`/api/stores/image/${store.img_name}`} />
+                    ) : (
+                        <div className="img" />
+                    )}
                     <div style={{height:'14px', overflow:'hidden'}}>
                         <a className="line-clamp-1" href={`https://www.cardboardexpress.com/store/${store._id}`}>{store.name}</a>
                     </div>
@@ -403,7 +407,7 @@ const ProductWrapper = styled.div`
         width: 100%; 
         align-items: center 
     }
-    .sellers img {
+    .sellers .img {
         border: 1px solid #e8e8e8; 
         margin-right: 3px; 
         height: calc(1vw + 12px); 

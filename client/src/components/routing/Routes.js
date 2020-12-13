@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 // Alerts
-import Alert from '../layout/alert';
+import Alert from '../layout/Alert';
 
 // Pages
 import Details from '../Details';

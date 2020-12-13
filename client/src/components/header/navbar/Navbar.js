@@ -395,12 +395,12 @@ const Navbar = ({
     
     return (
         <Fragment>
-            {nav.nav1 !== '' && (
+            {nav.nav1 === '' ||  nav.nav1 === 'explore' ? (
                 <HorizontalNav nowrap="nowrap">
                     {navList}
                 </HorizontalNav>
-            )}
-            {nav.nav1 !== '' && nav.nav1 !== 'explore' ? (
+            ) : null}
+            {nav.nav1 !== '' && nav.nav1 !== 'explore' && nav.nav2 === '' ? (
                 <HorizontalNav nowrap="nowrap">
                     {secondNavList}
                 </HorizontalNav>

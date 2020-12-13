@@ -1,6 +1,7 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 
 import ReactGA from 'react-ga';
@@ -26,7 +27,8 @@ const CategoryPage = ({
     setMainNav, 
     setNav1, 
     setNav2, 
-    setNav3 
+    setNav3,
+    history 
 }) => {
 
     const [tableShow1, setTableShow1] = useState('shop');
@@ -303,7 +305,12 @@ const CategoryPage = ({
         return (
             <div className="collection-page-container">
                 <div className="store-table-header" style={{padding:'20px 20px 0 20px'}}>
-                    <CategoryHeader categoryName={categoryName} setTableShow1={setTableShow1} tableShow1={tableShow1} />
+                    <CategoryHeader 
+                        categoryName={categoryName} 
+                        setTableShow1={setTableShow1} 
+                        tableShow1={tableShow1} 
+                        history={history}
+                    />
                 </div>
                 <div className="store-table-body">
                     <CategoryMain filter={filter} setTableShow1={setTableShow1} tableShow1={tableShow1} />
@@ -334,4 +341,4 @@ export default connect(mapStateToProps, {
     setNav1, 
     setNav2, 
     setNav3 
-})(CategoryPage);
+})(withRouter(CategoryPage));

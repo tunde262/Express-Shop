@@ -1022,7 +1022,11 @@ const Details = ({
                                     <div style={{display:'flex', justifyContent:'space-between', alignItems: 'center', marginTop:'-0.6rem', padding:'0 1rem'}}>
                                         <div style={{display:'flex', alignItems: 'center'}}>
                                             <a href={`https://www.cardboardexpress.com/store/${detailProduct.store._id}`}>
-                                                <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${detailProduct.store.img_name}`} alt="img" />
+                                                {detailProduct.store.img_name ? (
+                                                    <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${detailProduct.store.img_name}`} alt="img" /> 
+                                                ) : (
+                                                    <div style={{background:'#f4f4f4', height: '35px', width:'35px', marginRight: '1rem', borderRadius: '50px'}} />
+                                                )}
                                             </a>
                                             <div style={{ display: 'flex', flexDirection:'column', lineHeight:'17px', marginTop:'0.5rem'}}>
                                                 <a href={"https://www.cardboardexpress.com/store/" + detailProduct.store._id}>

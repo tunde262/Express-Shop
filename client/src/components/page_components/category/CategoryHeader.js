@@ -8,7 +8,8 @@ import { connect } from 'react-redux';
 const CategoryHeader = ({ 
     categoryName, 
     setTableShow1, 
-    tableShow1 
+    tableShow1,
+    history 
 }) => {
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -35,7 +36,7 @@ const CategoryHeader = ({
 
     return (
         <Fragment>
-            <div style={{display:'flex', color:'#ff4b2b', width:'100%', padding:'10px 0', fontSize:'0.8rem', justifyContent:'flex-start', alignItems:'center'}}>
+            <div onClick={() => history.goBack()} className="back-btn">
                 <i class="fas fa-long-arrow-alt-left"></i>
                 <p style={{margin:'0 10px'}}>  Back</p>
             </div>

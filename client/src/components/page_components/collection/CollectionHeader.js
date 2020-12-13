@@ -19,7 +19,8 @@ const CollectionHeader = ({
     tableShow1,
     auth: {
         user
-    }
+    },
+    history
 }) => {
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -96,7 +97,7 @@ const CollectionHeader = ({
 
     return (
         <Fragment>
-            <div style={{display:'flex', color:'#ff4b2b', width:'100%', padding:'10px 0', fontSize:'0.8rem', justifyContent:'flex-start', alignItems:'center'}}>
+            <div onClick={() => history.goBack()} className="back-btn">
                 <i class="fas fa-long-arrow-alt-left"></i>
                 <p style={{margin:'0 10px'}}>  Back</p>
             </div>
