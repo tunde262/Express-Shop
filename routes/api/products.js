@@ -284,7 +284,7 @@ router.get('/store/:id', async (req, res) => {
         const skip =
         req.query.skip && /^\d+$/.test(req.query.skip) ? Number(req.query.skip) : 0;
 
-        const products = await Product.find({ store: req.params.id }, null, { skip, limit: 10 }).populate('store', ['name', 'img_name']).populate({path: 'locations.location',model: 'darkstore' })
+        const products = await Product.find({ store: req.params.id }).populate('store', ['name', 'img_name']).populate({path: 'locations.location',model: 'darkstore' })
 
         res.json(products);
     } catch (err) {

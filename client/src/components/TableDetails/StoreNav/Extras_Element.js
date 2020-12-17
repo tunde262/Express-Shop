@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Extras_Element = props => {
     return (
         <div style={{zIndex:'30', background:'#fff'}}>
-            <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}} className="store-table-nav-items header">
+            <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}} className="store-table-nav-items header-btn">
                 <h3 style={{fontWeight:'600', color:'#808080'}}>Account</h3>
             </div>
             <a href={`https://www.cardboardexpress.com/history`}>

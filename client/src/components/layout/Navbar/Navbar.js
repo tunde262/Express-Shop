@@ -16,13 +16,14 @@ import sampleImg from '../../../utils/imgs/20484728.jpeg';
 
 
 
-const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, backdrop, backdropClickHandler, nav, auth: { isAuthenticated, loading, user }, logout }) => {
+const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, toggleGuestDrawer, backdrop, backdropClickHandler, nav, auth: { isAuthenticated, loading, user }, logout }) => {
     // Page
     const [navHighlight, setNavHighlight] = useState('home');
     // Toggle Sidebar
     const [isOpen, setIsOpen] = useState(false);
     // Toggle Dropdwon
     const [dropdown, setDropdown] = useState(false);
+    const [dropdown2, setDropdown2] = useState(false);
     // Toggle Cart Popup
     const [cartPopup, setCartPopup] = useState(false);
     // const [cart, toggleCart] = useState(false);
@@ -90,6 +91,10 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
 
     const toggleAuth = () => {
         toggleAuthDrawer();
+    }
+
+    const toggleGuest = () => {
+        toggleGuestDrawer();
     }
 
     const toggleCreateDrawer = () => {
@@ -192,7 +197,7 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                     </div>
 
                     {dropdown && (
-                        <div className="dropdown" style={{height: menuHeight}}>
+                        <div className="dropdown landing store" style={{height: menuHeight}}>
                             <CSSTransition 
                                 in={activeMenu === 'main'} 
                                 unmountOnExit 
@@ -486,34 +491,84 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
         )
     }
 
-    const guestLinks = (
-        <Fragment>
-            {/* <li className="nav-offset">
-                <a style={{fontSize:'1rem'}} className="cta" to="/about">About</a>
-            </li> */}
-            <li className="nav-offset">
-                <a href="https://business.cardboardexpress.com" target="_blank" style={{fontSize:'1rem'}} className="cta" to="/business">Business</a>
-            </li>
-            <li className="nav-offset">
-                <a href={`https://www.cardboardexpress.com/login`} style={{fontSize:'1rem'}} className="cta">Login</a>
-            </li>
-            {/* <li className="nav-offset">
-                <a style={{fontSize:'1rem'}} className="cta" to="/blog">Blog</a>
-            </li> */}
-            {/* <li className="nav-offset">
-                <a style={{fontSize:'1rem'}} className="cta" to="/login">Login</a>
-            </li> */}
-            <li className="nav-offset">
-                <a style={{fontSize:'1rem'}} className="cta" href={`https://www.cardboardexpress.com/home`}>
-                    <button>Start Shopping</button>
-                </a>
-            </li>
-        </Fragment>
-    );
+    let guestLinks;
+
+    if(nav.page === 'business') {
+        guestLinks = (
+            <Fragment>
+                <li className="nav-offset">
+                    <Link className="cta" to="/business">Solution</Link>
+                </li>
+                <li className="nav-offset">
+                    <Link className="cta" to="/pricing">Pricing</Link>
+                </li>
+                <li className="nav-offset">
+                    <Link className="cta" to="/cost-calculator">Cost Calculator</Link>
+                </li>
+                <li className="nav-offset">
+                    <Link className="cta" to="/learn">Learn</Link>
+                </li>
+                <li onClick={() => setDropdown2(!dropdown2)} className="nav-offset">
+                    <a className="cta" href="#">
+                        Company <i className="fas fa-chevron-down"></i>
+                    </a>
+
+                    {dropdown2 && (
+                        <div className="dropdown landing business" style={{height: menuHeight}}>
+                            <div className="menu">
+                                <Link to="/about" className="menu-item">
+                                    About Us
+                                </Link>
+                                <Link to="/become-a-fulfiller" className="menu-item">
+                                    Become a Fulfiller
+                                </Link>
+                                <Link to="/warehousing" className="menu-item">
+                                    Become a warehouse
+                                </Link>
+                            </div>
+                        </div>
+                    )}
+                </li>
+                <li className="nav-offset">
+                    <Link to="/login" className="cta">Login</Link>
+                </li>
+                <li className="nav-offset">
+                    <Link className="cta" to="/home">
+                        <button>Sign Up</button>
+                    </Link>
+                </li>
+            </Fragment>
+        );
+    } else {
+        guestLinks = (
+            <Fragment>
+                {/* <li className="nav-offset">
+                    <a style={{fontSize:'1rem'}} className="cta" to="/about">About</a>
+                </li> */}
+                <li className="nav-offset">
+                    <a href="https://business.cardboardexpress.com" target="_blank" style={{fontSize:'1rem'}} className="cta" to="/business">Business</a>
+                </li>
+                <li className="nav-offset">
+                    <a href={`https://www.cardboardexpress.com/login`} style={{fontSize:'1rem'}} className="cta">Login</a>
+                </li>
+                {/* <li className="nav-offset">
+                    <a style={{fontSize:'1rem'}} className="cta" to="/blog">Blog</a>
+                </li> */}
+                {/* <li className="nav-offset">
+                    <a style={{fontSize:'1rem'}} className="cta" to="/login">Login</a>
+                </li> */}
+                <li className="nav-offset">
+                    <a style={{fontSize:'1rem'}} className="cta" href={`https://www.cardboardexpress.com/home`}>
+                        <button>Start Shopping</button>
+                    </a>
+                </li>
+            </Fragment>
+        );
+    }
 
     let authMobileLinks;
 
-    if(!nav.admin) {
+    if(nav.main === 'store') {
         authMobileLinks = (
             <div className="nav-mobile-links">
                 <li className="nav-offset" onClick={e => setNavHighlight('home')}>
@@ -575,7 +630,7 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                 </div> */}
             </div>
         ) 
-    } else {
+    } else if (nav.main === 'admin') {
         authMobileLinks = (
             <div className="nav-mobile-auth">
                 <li onClick={toggleCreateDrawer} className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"}>
@@ -599,19 +654,35 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
     };
 
     const guestMobileLinks = (
-        <Fragment>
-            {/* <li className="nav-offset">
-                <a style={{fontSize:'1rem'}} className="cta" to="/about">About</a>
-            </li> */}
-            <li className="nav-offset">
-                <a href="https://business.cardboardexpress.com" target="_blank" style={{fontSize:'1rem'}} className="cta" to="/business">Business</a>
+        <div className="nav-mobile-auth">
+            <div className="branding" style={{margin:'0 1rem'}}>
+                <a href={`https://www.cardboardexpress.com/`}><img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" /></a>
+
+                {/* <div className="social-container">
+                    <a href="https://instagram.com/cardboardexpress" target="_blank" className="social"><i className="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/Cardboard-Express-106068867830320/?view_public_for=106068867830320" target="_blank" className="social"><i className="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/cardboardxpress" target="_blank" className="social"><i className="fab fa-twitter"></i></a>
+                </div> */}
+            </div>
+            <li onClick={toggleGuest}>
+                <div>
+                    <i style={{fontSize:'22px'}} className="fas fa-bars"></i>
+                </div>
             </li>
-            <li className="nav-offset">
-                <a style={{fontSize:'1rem'}} className="cta" href={`https://www.cardboardexpress.com/home`}>
-                    <button>Start Shopping</button>
-                </a>
-            </li>
-        </Fragment>
+        </div>
+        // <Fragment>
+        //     {/* <li className="nav-offset">
+        //         <a style={{fontSize:'1rem'}} className="cta" to="/about">About</a>
+        //     </li> */}
+        //     <li className="nav-offset">
+        //         <a href="https://business.cardboardexpress.com" target="_blank" style={{fontSize:'1rem'}} className="cta" to="/business">Business</a>
+        //     </li>
+        //     <li className="nav-offset">
+        //         <a style={{fontSize:'1rem'}} className="cta" href={`https://www.cardboardexpress.com/home`}>
+        //             <button>Start Shopping</button>
+        //         </a>
+        //     </li>
+        // </Fragment>
     );
 
 
@@ -691,7 +762,7 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
             </div>
             <div className={isOpen ? "nav-bar show-nav" : "nav-bar"}>
                 <nav>
-                    <ul className="nav-links">
+                    <ul className={nav.page !== 'business' ? "nav-links" : "nav-links landing"}>
                         {/* <li><Link to="/chat">Chat</Link></li>
                         <li><Link to="/jobs">Jobs</Link></li> */}
                         { !loading && ( isAuthenticated ? authLinks : guestLinks )}

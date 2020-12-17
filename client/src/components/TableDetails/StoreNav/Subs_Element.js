@@ -53,7 +53,7 @@ const Subs_Element = ({
 
     return (
         <div style={{zIndex:'20', background:'#fff'}}>
-            <div className="store-table-nav-items header">
+            <div className="store-table-nav-items header-btn">
                 <h3 style={{fontWeight:'600'}}>Subscriptions</h3>
             </div>
             <div className={active ? "table-nav-dropdown active" : "table-nav-dropdown short"}>

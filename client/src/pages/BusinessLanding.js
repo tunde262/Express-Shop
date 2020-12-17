@@ -225,13 +225,13 @@ const BusinessLanding = ({history, isAuthenticated, updateAuth}) => {
   }
   
   return (
-    <div>
+    <div className="explore-container landing">
       <div className={classes.landing_banner}>
         <div className={classes.landing_banner_container}>
           <div class={classes.landing_banner_content}>
             <div>
-                <h1>Selling Online Has Never Been Easier.<br/> Delivered On Time.</h1>
-                <p>With Cardboard Express businesses get easy access to all the 
+                <h1 style={{fontSize:'3rem'}}>Selling Online Has Never Been Easier.<br/> Delivered On Time.</h1>
+                <p style={{margin:'0', fontSize:'1rem', fontFamily:'Arial, Helvetica,sans-serif'}}>With Cardboard Express businesses get easy access to all the 
                   tools they need to sell online, find local storage for what they're sellin,
                   and quickly deliver to their customers.
                 </p>

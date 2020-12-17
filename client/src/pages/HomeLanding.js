@@ -135,9 +135,10 @@ const HomeLanding = ({history, auth: { isAuthenticated, user, loading }, updateA
 
   if(user && !loading && isAuthenticated) {
     history.push('/home');
-  } else {
-    history.push('/login');
-  }
+  } 
+  // else {
+  //   history.push('/login');
+  // }
   
   return (
     <div className="explore-container">

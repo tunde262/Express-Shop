@@ -6,6 +6,8 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { updateAuth } from '../actions/authActions';
 
+import { setPage } from '../actions/navActions';
+
 import StopwatchEmoji from '../utils/imgs/stopwatch.png';
 import BoxEmoji from '../utils/imgs/box.png';
 import MoneyBagEmoji from '../utils/imgs/moneybag.png';
@@ -14,7 +16,7 @@ import DesktopMobile from '../utils/imgs/CE_DESKTOP_MOBILE.png';
 
 import ReactGA from 'react-ga';
 
-const Landing = ({history, isAuthenticated, updateAuth}) => {
+const Landing = ({history, setPage, isAuthenticated, updateAuth}) => {
   const [formData, setFormData] = useState({
     firstname: '',
     lastname: '',
@@ -25,6 +27,7 @@ const Landing = ({history, isAuthenticated, updateAuth}) => {
   });
 
   useEffect(() => {
+    setPage('landing');
     history.listen(location => ReactGA.pageview(location.pathname));
   }, [])
 
@@ -133,6 +136,7 @@ const Landing = ({history, isAuthenticated, updateAuth}) => {
 
 Landing.propTypes = {
   updateAuth: PropTypes.func.isRequired,
+  setPage: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -140,4 +144,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, { updateAuth })(withRouter(Landing));
+export default connect(mapStateToProps, { updateAuth, setPage })(withRouter(Landing));

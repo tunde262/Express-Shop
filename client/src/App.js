@@ -25,7 +25,11 @@ import ReactGA from 'react-ga';
 import Register from './components/auth/registration/Register';
 import Personalize from './components/auth/registration/personalize/Personalize';
 import Login from './components/auth/Login';
-import BusinessLanding from './pages/BusinessLanding';
+import BusinessLanding from './pages/Landing/LandingPage';
+import BusinessPricing from './pages/Landing/Pricing';
+import BusinessCalculator from './pages/Landing/Calculator';
+import BusinessBlog from './pages/Landing/Blog';
+import BusinessWarehousePage from './pages/Landing/Warehouse';
 
 // Layout
 
@@ -38,6 +42,7 @@ import Navbar from './components/layout/Navbar/Navbar';
 import SideDrawer from './components/layout/SideDrawer/SideDrawer';
 import CartDrawer from './components/layout/SideDrawer/CartDrawer/CartDrawer';
 import AuthDrawer from './components/layout/SideDrawer/AuthDrawer';
+import GuestDrawer from './components/layout/SideDrawer/GuestDrawer';
 import Backdrop from './components/layout/Backdrop/Backdrop';
 
 import StoreForm from './components/admin/forms/store_form/StoreForm';
@@ -91,6 +96,8 @@ const App = () => {
   const [cartDrawerOpen, setCartDrawer] = useState(false);
 
   const [authDrawerOpen, setAuthDrawer] = useState(false);
+  
+  const [guestDrawerOpen, setGuestDrawer] = useState(false);
 
   const [drawer, showDrawer] = useState(false);
 
@@ -158,6 +165,12 @@ const App = () => {
     showDrawer(true);
   };
 
+  const toggleGuestDrawer = () => {
+    clicked();
+    setGuestDrawer(!guestDrawerOpen);
+    showDrawer(true);
+  };
+
 
   const backdropClickHandler = () => {
     setSideDrawer(false );
@@ -166,12 +179,14 @@ const App = () => {
 
     setAuthDrawer(false);
 
+    setGuestDrawer(false);
+
     showDrawer(false);
   }
 
   let backdrop;
 
-  if (sideDrawerOpen || cartDrawerOpen || authDrawerOpen) {
+  if (sideDrawerOpen || cartDrawerOpen || authDrawerOpen || guestDrawerOpen) {
     backdrop = <Backdrop click={backdropClickHandler} />;
   }
   
@@ -181,16 +196,21 @@ const App = () => {
         <Router>
           <div className="body-container">
             <Alert />
-            <Navbar backdrop={drawer} backdropClickHandler={backdropClickHandler} drawerClickHandler={drawerToggleClickHandler} toggleAuthDrawer={toggleAuthDrawer} toggleCartDrawer={toggleCartDrawer} />
+            <Navbar backdrop={drawer} backdropClickHandler={backdropClickHandler} drawerClickHandler={drawerToggleClickHandler} toggleAuthDrawer={toggleAuthDrawer} toggleGuestDrawer={toggleGuestDrawer} toggleCartDrawer={toggleCartDrawer} />
             <SideDrawer show={sideDrawerOpen} toggleAuthDrawer={toggleAuthDrawer} toggleCartDrawer={toggleCartDrawer} drawerClickHandler={drawerToggleClickHandler} />
             <CartDrawer cartStores={cartStores} setStoresList={setStoresList} show={cartDrawerOpen} toggleCartDrawer={toggleCartDrawer} drawerClickHandler={drawerToggleClickHandler} />
             <AuthDrawer show={authDrawerOpen} toggleAuthDrawer={toggleAuthDrawer} drawerClickHandler={drawerToggleClickHandler} />
+            <GuestDrawer show={guestDrawerOpen} toggleGuestDrawer={toggleGuestDrawer} drawerClickHandler={drawerToggleClickHandler} />
             {backdrop}
             <main id="home">
               <Switch>
                 {/* Landing Pages */}
                 <Route exact path="/" component={HomeLanding} />
                 <Route exact path="/business" component={BusinessLanding} />
+                <Route exact path="/pricing" component={BusinessPricing} />
+                <Route exact path="/cost-calculator" component={BusinessCalculator} />
+                <Route exact path="/blog" component={BusinessBlog} />
+                <Route exact path="/warehousing" component={BusinessWarehousePage} />
                 {/* Auth Pages */}
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
