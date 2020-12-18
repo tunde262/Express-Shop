@@ -546,7 +546,7 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                     <a style={{fontSize:'1rem'}} className="cta" to="/about">About</a>
                 </li> */}
                 <li className="nav-offset">
-                    <a href="https://business.cardboardexpress.com" target="_blank" style={{fontSize:'1rem'}} className="cta" to="/business">Business</a>
+                    <a href="https://www.cardboardexpress.com/business" target="_blank" style={{fontSize:'1rem'}} className="cta" to="/business">Business</a>
                 </li>
                 <li className="nav-offset">
                     <a href={`https://www.cardboardexpress.com/login`} style={{fontSize:'1rem'}} className="cta">Login</a>
