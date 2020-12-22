@@ -35,6 +35,8 @@
     "multer-gridfs-storage": "^3.3.0",
     "react-router-dom": "^5.2.0",
     "react-youtube": "^7.13.0",
+    "simple-react-lightbox": "^3.5.1",
+    "simplelightbox": "^2.7.0",
     "stripe": "^7.15.0"
   },
   "devDependencies": {

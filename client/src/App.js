@@ -2,6 +2,8 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import mixpanel from 'mixpanel-browser';
 
+import SimpleReactLightbox from 'simple-react-lightbox'
+
 // CSS - controlled by /scss
 import './css/main.css';
 
@@ -25,11 +27,11 @@ import ReactGA from 'react-ga';
 import Register from './components/auth/registration/Register';
 import Personalize from './components/auth/registration/personalize/Personalize';
 import Login from './components/auth/Login';
-import BusinessLanding from './pages/Landing/LandingPage';
-import BusinessPricing from './pages/Landing/Pricing';
-import BusinessCalculator from './pages/Landing/Calculator';
-import BusinessBlog from './pages/Landing/Blog';
-import BusinessWarehousePage from './pages/Landing/Warehouse';
+import BusinessLanding from './pages/Business/LandingPage';
+import BusinessPricing from './pages/Business/Pricing';
+import BusinessCalculator from './pages/Business/Calculator';
+import BusinessBlog from './pages/Business/Blog';
+import BusinessWarehousePage from './pages/Business/Warehouse';
 
 // Layout
 
@@ -37,7 +39,7 @@ import BusinessWarehousePage from './pages/Landing/Warehouse';
 import Alert from './components/layout/Notification';
 
 import HomePage from './pages/HomePage';
-import HomeLanding from './pages/HomeLanding';
+import HomeLanding from './pages/Home/Landing';
 import Navbar from './components/layout/Navbar/Navbar';
 import SideDrawer from './components/layout/SideDrawer/SideDrawer';
 import CartDrawer from './components/layout/SideDrawer/CartDrawer/CartDrawer';
@@ -193,83 +195,85 @@ const App = () => {
   return (
     <Provider store={store}>
       <StripeProvider apiKey="pk_live_TGJb7MssdJJyke7Wg6WpDj1e00gVdDNGxd">
-        <Router>
-          <div className="body-container">
-            <Alert />
-            <Navbar backdrop={drawer} backdropClickHandler={backdropClickHandler} drawerClickHandler={drawerToggleClickHandler} toggleAuthDrawer={toggleAuthDrawer} toggleGuestDrawer={toggleGuestDrawer} toggleCartDrawer={toggleCartDrawer} />
-            <SideDrawer show={sideDrawerOpen} toggleAuthDrawer={toggleAuthDrawer} toggleCartDrawer={toggleCartDrawer} drawerClickHandler={drawerToggleClickHandler} />
-            <CartDrawer cartStores={cartStores} setStoresList={setStoresList} show={cartDrawerOpen} toggleCartDrawer={toggleCartDrawer} drawerClickHandler={drawerToggleClickHandler} />
-            <AuthDrawer show={authDrawerOpen} toggleAuthDrawer={toggleAuthDrawer} drawerClickHandler={drawerToggleClickHandler} />
-            <GuestDrawer show={guestDrawerOpen} toggleGuestDrawer={toggleGuestDrawer} drawerClickHandler={drawerToggleClickHandler} />
-            {backdrop}
-            <main id="home">
-              <Switch>
-                {/* Landing Pages */}
-                <Route exact path="/" component={HomeLanding} />
-                <Route exact path="/business" component={BusinessLanding} />
-                <Route exact path="/pricing" component={BusinessPricing} />
-                <Route exact path="/cost-calculator" component={BusinessCalculator} />
-                <Route exact path="/blog" component={BusinessBlog} />
-                <Route exact path="/warehousing" component={BusinessWarehousePage} />
-                {/* Auth Pages */}
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/register" component={Register} />
-                <Route exact path="/account-setup" component={Personalize} />
-                {/*Admin Forms */}
-                <Route exact path="/create-store" component={StoreForm} />
-                <div className="store-table">
-                    <div style={{height:'100%'}} className="store-table-nav">
-                      <div className="store-settings-transition">
-                        {/** Transition 1 */}
-                        <div className={!slideForm1 ? "store-side-nav-container active" : "store-side-nav-container"} id="transition-1">
-                          {navValue === 'admin' ? 
-                            <AdminNavElements setNavValue={setNavValue} navValue={navValue} setSlideForm1={setSlideForm1} slideForm1={slideForm1} /> 
-                            : <StoreNavElements setCollectionModal={setCollectionModal} displayCollectionModal={displayCollectionModal} setNavValue={setNavValue} navValue={navValue} setSlideForm1={setSlideForm1} slideForm1={slideForm1} />
-                          }
+        <SimpleReactLightbox>
+          <Router>
+            <div className="body-container">
+              <Alert />
+              <Navbar backdrop={drawer} backdropClickHandler={backdropClickHandler} drawerClickHandler={drawerToggleClickHandler} toggleAuthDrawer={toggleAuthDrawer} toggleGuestDrawer={toggleGuestDrawer} toggleCartDrawer={toggleCartDrawer} />
+              <SideDrawer show={sideDrawerOpen} toggleAuthDrawer={toggleAuthDrawer} toggleCartDrawer={toggleCartDrawer} drawerClickHandler={drawerToggleClickHandler} />
+              <CartDrawer cartStores={cartStores} setStoresList={setStoresList} show={cartDrawerOpen} toggleCartDrawer={toggleCartDrawer} drawerClickHandler={drawerToggleClickHandler} />
+              <AuthDrawer show={authDrawerOpen} toggleAuthDrawer={toggleAuthDrawer} drawerClickHandler={drawerToggleClickHandler} />
+              <GuestDrawer show={guestDrawerOpen} toggleGuestDrawer={toggleGuestDrawer} drawerClickHandler={drawerToggleClickHandler} />
+              {backdrop}
+              <main id="home">
+                <Switch>
+                  {/* Landing Pages */}
+                  <Route exact path="/" component={HomeLanding} />
+                  <Route exact path="/business" component={BusinessLanding} />
+                  <Route exact path="/pricing" component={BusinessPricing} />
+                  <Route exact path="/cost-calculator" component={BusinessCalculator} />
+                  <Route exact path="/blog" component={BusinessBlog} />
+                  <Route exact path="/warehousing" component={BusinessWarehousePage} />
+                  {/* Auth Pages */}
+                  <Route exact path="/login" component={Login} />
+                  <Route exact path="/register" component={Register} />
+                  <Route exact path="/account-setup" component={Personalize} />
+                  {/*Admin Forms */}
+                  <Route exact path="/create-store" component={StoreForm} />
+                  <div className="store-table">
+                      <div style={{height:'100%'}} className="store-table-nav">
+                        <div className="store-settings-transition">
+                          {/** Transition 1 */}
+                          <div className={!slideForm1 ? "store-side-nav-container active" : "store-side-nav-container"} id="transition-1">
+                            {navValue === 'admin' ? 
+                              <AdminNavElements setNavValue={setNavValue} navValue={navValue} setSlideForm1={setSlideForm1} slideForm1={slideForm1} /> 
+                              : <StoreNavElements setCollectionModal={setCollectionModal} displayCollectionModal={displayCollectionModal} setNavValue={setNavValue} navValue={navValue} setSlideForm1={setSlideForm1} slideForm1={slideForm1} />
+                            }
+                          </div>
+                          <div className={slideForm1 ? "store-side-nav-container active" : "store-side-nav-container"} id="transition-2">
+                            {navValue === 'category' && <CategoryNavElements setSlideForm1={setSlideForm1} slideForm1={slideForm1} />}
+                            {navValue === 'profile' && <ProfileNavElements setSlideForm1={setSlideForm1} slideForm1={slideForm1} />}
+                          </div>
                         </div>
-                        <div className={slideForm1 ? "store-side-nav-container active" : "store-side-nav-container"} id="transition-2">
-                          {navValue === 'category' && <CategoryNavElements setSlideForm1={setSlideForm1} slideForm1={slideForm1} />}
-                          {navValue === 'profile' && <ProfileNavElements setSlideForm1={setSlideForm1} slideForm1={slideForm1} />}
-                        </div>
+                          
                       </div>
-                        
-                    </div>
-                    <div className="store-table-main home">
-                      <Route component={Routes} />
-                    </div>
-                </div>
-              </Switch>
-            </main>
-          </div>
+                      <div className="store-table-main home">
+                        <Route component={Routes} />
+                      </div>
+                  </div>
+                </Switch>
+              </main>
+            </div>
 
-          <AddToCartModal />
+            <AddToCartModal />
 
-          <Elements stripe={stripePromise}>
-            <CartModal />
-          </Elements>
-          
-          <CreateCollectionModal 
-            displayCollectionModal={displayCollectionModal} 
-            setCollectionModal={setCollectionModal} 
-            formData={formData}
-            switchChange={switchChange}
-            onChange={onChange}
-            onAddCollectionTag={onAddCollectionTag}
-            loadCollectionTags={loadCollectionTags}
-            onDeleteCollectionTag={onDeleteCollectionTag}
-            handleModalClose={handleModalClose}
-            collectionTags={collectionTags}
-          />
-          <AddToCollectionModal 
-            formData={formData}
-            switchChange={switchChange}
-            onChange={onChange}
-            onAddCollectionTag={onAddCollectionTag}
-            loadCollectionTags={loadCollectionTags}
-            onDeleteCollectionTag={onDeleteCollectionTag}
-            collectionTags={collectionTags}
-          />
-        </Router>
+            <Elements stripe={stripePromise}>
+              <CartModal />
+            </Elements>
+            
+            <CreateCollectionModal 
+              displayCollectionModal={displayCollectionModal} 
+              setCollectionModal={setCollectionModal} 
+              formData={formData}
+              switchChange={switchChange}
+              onChange={onChange}
+              onAddCollectionTag={onAddCollectionTag}
+              loadCollectionTags={loadCollectionTags}
+              onDeleteCollectionTag={onDeleteCollectionTag}
+              handleModalClose={handleModalClose}
+              collectionTags={collectionTags}
+            />
+            <AddToCollectionModal 
+              formData={formData}
+              switchChange={switchChange}
+              onChange={onChange}
+              onAddCollectionTag={onAddCollectionTag}
+              loadCollectionTags={loadCollectionTags}
+              onDeleteCollectionTag={onDeleteCollectionTag}
+              collectionTags={collectionTags}
+            />
+          </Router>
+        </SimpleReactLightbox>
       </StripeProvider>
     </Provider>
   );

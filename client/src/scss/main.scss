@@ -1431,7 +1431,8 @@ textarea {
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #51596A;
+            // color: #51596A;
+            color: #111111;
             font-size: 1.3rem;
             text-decoration: none;
             @include easeOut;
@@ -1529,7 +1530,7 @@ header {
     background: $primary-color;
     font-size: 1rem;
     font-weight: 700;
-    border-bottom: 1px solid rgb(214,214,214);
+    // border-bottom: 1px solid rgb(214,214,214);
 
     .nav li{
         border-radius: 56px;

@@ -1214,8 +1214,391 @@ header {
 .content-box {
   grid-area: table; }
 
-
   /* ------ LANDING CONTENT -------  */
+  
+  .landing-banner {
+    color: #111111;
+    overflow: hidden;
+    background: rgb(250,250,250);
+    height: calc(100vh - 60px);
+  }
+
+  .banner-inner {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    height: 100%;
+    position: relative;
+    max-width: 1060px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .landing-banner-img-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 8rem;
+    overflow: hidden;
+  }
+
+  .landing-banner-img {
+    width: 100%;
+  }
+
+  .landing-banner-content {
+    width: 100%;
+    padding-top: 10rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .landing-banner-text {
+    margin-bottom: 3.2rem;
+    font-size: 5.4rem;
+    font-style: normal;
+    text-align: start;
+    font-weight: 500;
+    line-height: 95%;
+  }
+
+  .landing-banner-sub-text {
+    margin-bottom: 4.8rem;
+    color: #505050;
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 140%;
+  }
+
+  .shop-guide {
+    position: relative;
+    background: rgb(250,250,250);
+    border-top: 0.2rem solid #F7F7F7;
+    padding-bottom: 0;
+  }
+
+  .shop-guide-img {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 0;
+    margin-bottom: 3.2rem;
+  }
+
+  .shop-guide-content {
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -60%);
+    text-align: center;
+    font-family: 'Catamaran', sans-serif;;
+  }
+
+  .shop-guide-content.mobile {
+    height: 250px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: relative;
+    transform: translate(0, 0);
+    text-align: center;
+    font-family: 'Catamaran', sans-serif;;
+  }
+
+  .shop-guide-content .top-text {
+    display: block;
+    padding-top: 20px;
+    margin: 0 auto;
+    max-width: 100%;
+    width: 450px;
+    
+  }
+  
+  .shop-guide-content .top-text p {
+    color: #515969;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 500;
+    margin: 0;
+    text-align: center;
+  }
+
+  .shop-guide-header {
+    font-size: 5vw;
+    text-align: inherit;
+    line-height: 110%;
+  }
+
+  .shop-guide-content.mobile .shop-guide-header {
+    font-size: 3rem;
+    text-align: inherit;
+    line-height: 110%;
+  }
+
+  .shop-guide-btn {
+    margin-top: 1.9vw;
+    height: 4.2vw;
+    font-size: 1vw;
+    letter-spacing: 2px;
+    padding: 6px 16px;
+    min-width: 64px;
+    box-sizing: border-box;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    border-radius: 4px;
+  }
+
+  .shop-guide-content.mobile .shop-guide-btn {
+    margin-top: 1.5rem;
+    height: 60px;
+    font-size: 1rem;
+  }
+
+  .section-b {
+    position: relative;
+    background: url('../../../utils/imgs/shopping-b.jpg') no-repeat bottom center/cover;
+    background-position: center;
+    height: 600px;
+  }
+
+  .section-b-inner {
+    color: #fff;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    max-width: 860px;
+    padding: 5rem 0;
+  }
+
+  .section-b-inner h3{
+    font-size: 2rem;
+    font-family: 'Catamaran', sans-serif;;
+  }
+
+  .section-b-inner h2 {
+    font-size: 5rem;
+    margin-top: 1rem;
+    font-family: 'Catamaran', sans-serif;
+  }
+
+  .section-b-inner p {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-top: 1rem;
+    font-family: 'Catamaran', sans-serif;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  /* Gallery */
+  .section-c {
+    height: 600px;
+    background: rgb(250,250,250);
+    padding-top: 4.8rem;
+    margin-bottom: 300px;
+  }
+
+  .section-c .heading {
+    color: #02172c;
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.5;
+    margin: 0 0 20px;
+    max-width: 100%;
+    padding: 0;
+    text-align: center;
+  }
+
+  .section-c .heading-text {
+    display: block;
+    max-width: 100%;
+    width: 660px;
+    margin: 0 auto 4.8rem;
+  }
+  
+  .section-c .heading-text p {
+    color: #515969;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+    text-align: center;
+  }
+
+  /* .section-c p {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    font-family: 'Catamaran', sans-serif;
+    text-align: center;
+  } */
+
+  .section-c .gallery {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    height: 100%;
+    width: 100%;
+  }
+
+  .section-c .gallery a:first-child{
+    grid-row: 1/3;
+    grid-column: 1/3;
+  }
+
+  .section-c .gallery a:nth-child(2){
+    grid-column: 3/5;
+  }
+
+  .section-c .gallery a {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .section-c .gallery img, .section-c .gallery a {
+    height: 100%;
+    width: 100%;
+  }
+
+  @media (max-width: 767px){
+  
+    .banner-inner {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    .landing-banner-content {
+      padding-top: 0;
+      height: fit-content;
+      background-color: yellow;
+    }
+
+    .landing-banner-text {
+      margin-bottom: 1.6rem;
+      font-size: 3rem;
+      text-align: flex-start;
+    }
+
+    .landing-banner-sub-text {
+      text-align: flex-start;
+      font-size: 1rem;
+    }
+
+    .landing-banner-img-container {
+      background-color: orange;
+      height: 500px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding-top: 0;
+      overflow: hidden;
+    }
+  
+    .landing-banner-img {
+      width: auto;
+      height: 100%;
+    }
+
+    .shop-guide {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+
+    .shop-guide-img {
+      margin-top: 1.2rem;
+      margin-bottom: 4.0rem;
+    } 
+
+    .section-b-inner h2{
+      font-size: 3.5rem;
+    }
+
+    .section-b-inner p {
+      font-size: 1.3rem;
+    }
+
+    .section-c {
+      padding-top: 2.4rem;
+      margin-bottom: 300px;
+    }
+
+    .section-c .gallery {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .section-c .gallery a:first-child {
+      grid-row: 1/3;
+      grid-column: 1/3;
+    }
+    
+    .section-c .gallery a:nth-child(2) {
+      grid-row: 3/4;
+      grid-column: 2/4;
+    }
+
+    .section-c .gallery a:nth-child(5) {
+      display: none;
+    }
+
+    .section-c .gallery a:last-child {
+      grid-row: 3/4;
+      grid-column: 1/1;
+    }
+  }
+
+  @media(max-width: 690px) {
+    .section-c {
+      margin-bottom: 250px;
+    }
+  }
+
+  @media(max-width: 635px) {
+    .section-c {
+      margin-bottom: 200px;
+    }
+  }
+
+  @media(max-width: 570px) {
+    .section-c {
+      margin-bottom: 150px;
+    }
+  }
+
+  @media(max-width: 500px) {
+    .section-c {
+      margin-bottom: 100px;
+    }
+  }
+
+  @media(max-width: 460px) {
+    .section-c {
+      margin-bottom: 80px;
+    }
+  }
+
+  @media(max-width: 430px) {
+    .section-c {
+      margin-bottom: 80px;
+    }
+  }
+
+
+  /* ------ BUSINESS LANDING CONTENT -------  */
 
 :root{
   /* theme colors*/
@@ -2538,6 +2921,14 @@ header ul li a {
   text-align: center;
 }
 
+.hadvantage .box-heading.home {
+  color: #02172c;
+  font-size: 2rem;
+  line-height: 135%;
+  margin: 0 0 40px;
+  text-align: center;
+}
+
 .hadvantage .hadvantage-wrapper {
   position: relative;
 }
@@ -2567,6 +2958,44 @@ header ul li a {
   padding: 60px 30px 30px;
 }
 
+.hadvantage .box-item#box-item-1 {
+  background-color: #29bef3;
+}
+
+.hadvantage .box-item#box-item-2 {
+  background-color: #1e69eb;
+}
+
+.hadvantage .box-item#box-item-3 {
+  background-color: #703cee;
+}
+
+.hadvantage .box-item.home#box-item-1 {
+  background-color: #FFBF00;
+}
+
+.hadvantage .box-item.home#box-item-2 {
+  background-color: #FFB6C1;
+}
+
+.hadvantage .box-item.home#box-item-3 {
+  background-color: #87CEFA;
+}
+
+.hadvantage .box-item.home.box-shadow-1 {
+  box-shadow: 0 16px 48px 0 rgba(255, 191, 0,.4);
+  height: 100%;
+  padding: 60px 30px 30px;
+}
+
+.hadvantage .box-item.home.box-shadow-2 {
+  box-shadow: 0 16px 48px 0 rgba(255, 182, 193,.4);
+}
+
+.hadvantage .box-item.home.box-shadow-3 {
+  box-shadow: 0 16px 48px 0 rgba(135, 231, 250,.4);
+}
+
 .hadvantage .box-item.box-shadow-1 {
   box-shadow: 0 16px 48px 0 rgba(41,190,243,.4);
   height: 100%;
@@ -2591,6 +3020,10 @@ header ul li a {
   width: 64px;
 }
 
+.hadvantage .box-item .box-item-icon.home {
+  margin: 0 auto 20px;
+}
+
 .hadvantage .box-item .box-item-icon img {
   border-radius: 50%;
   display: block;
@@ -2607,6 +3040,10 @@ header ul li a {
   line-height: 135%;
   margin: 0 0 15px;
   text-align: center;
+}
+
+.hadvantage .box-item .box-item-title.home {
+  font-size: 24px;
 }
 
 .hadvantage .box-item .box-item-content p:last-child {
@@ -4345,6 +4782,7 @@ svg:not(:root) {
   margin: 60px auto 0;
   padding: 17px 60px;
   text-decoration: none;
+  width: fit-content;
 }
 
 /* END */
@@ -4607,8 +5045,8 @@ align-items: center; }
 /* Footer */
 
 .goobye {
-  color: rgb(255, 255, 255);
-  background-color: rgb(2, 23, 44);
+  color: #111111;
+  background-color: rgb(250,250,250);
   display: block;
   height: auto;
 }
@@ -4643,15 +5081,13 @@ align-items: center; }
   -webkit-box-pack: center;
   justify-content: center;
   -webkit-box-align: center;
-  align-items: center;
-  text-decoration: none;
-  font-weight: bold;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  line-height: 1.71;
+  text-align: center;
+  text-transform: uppercase;
   margin-top: 35px;
-  width: 164px;
-  height: 42px;
-  color: rgb(255, 255, 255);
-  background-color: rgb(255, 73, 73);
-  transition: background-color 0.3s ease-in-out 0s;
 }
 
 .goodbye-btn-sub-text {
@@ -4698,14 +5134,14 @@ align-items: center; }
 
 .goobye-content-links-list-item {
   text-decoration: none;
-  color: rgb(255, 255, 255);
+  color: #111111;
   font-weight: 400;
   font-size: 14px;
   background-color: transparent;
 }
 
 .goobye-content-sub-links {
-  color: rgba(255, 255, 255, 0.5);
+  color: #111111;
   display: block;
 }
 
@@ -4719,8 +5155,8 @@ align-items: center; }
 }
 
 footer {
-  background: rgb(2, 23, 44);
-  color: #fff;
+  background: rgb(250,250,250);
+  color: #111111;
   height: auto;
 }
 
