@@ -33,7 +33,7 @@ const GuestDrawer = ({ drawerClickHandler, toggleGuestDrawer, getCurrentProfile,
     return (
         <nav className={drawerClasses}>
             <ul>
-                <li style={{minHeight:'35px', position:'relative', verticalAlign:'middle', padding:'0', display:'block', width:'100%'}}>
+                {/* <li style={{minHeight:'35px', position:'relative', verticalAlign:'middle', padding:'0', display:'block', width:'100%'}}>
                     <Link onClick={toggleGuest} to="/business">
                         Solution
                     </Link>
@@ -47,8 +47,8 @@ const GuestDrawer = ({ drawerClickHandler, toggleGuestDrawer, getCurrentProfile,
                     <Link onClick={toggleGuest} to="/cost-calculator">
                         Cost Calculator
                     </Link>
-                </li>
-                <li style={{minHeight:'35px', position:'relative', verticalAlign:'middle', padding:'0', display:'block', width:'100%'}}>
+                </li> */}
+                {/* <li style={{minHeight:'35px', position:'relative', verticalAlign:'middle', padding:'0', display:'block', width:'100%'}}>
                     <Link onClick={toggleGuest} to="/about">
                         About Us
                     </Link>
@@ -57,8 +57,8 @@ const GuestDrawer = ({ drawerClickHandler, toggleGuestDrawer, getCurrentProfile,
                     <Link onClick={toggleGuest} to="/open-a-store">
                         Start Selling
                     </Link>
-                </li>
-                <li style={{minHeight:'35px', position:'relative', verticalAlign:'middle', padding:'0', display:'block', width:'100%'}}>
+                </li> */}
+                {/* <li style={{minHeight:'35px', position:'relative', verticalAlign:'middle', padding:'0', display:'block', width:'100%'}}>
                     <Link onClick={toggleGuest} to="/become-a-fulfiller">
                         Become a Fulfiller
                     </Link>
@@ -67,7 +67,7 @@ const GuestDrawer = ({ drawerClickHandler, toggleGuestDrawer, getCurrentProfile,
                     <Link onClick={toggleGuest} to="/warehousing">
                         Become a warehouse
                     </Link>
-                </li>
+                </li> */}
                 <li style={{minHeight:'35px', position:'relative', verticalAlign:'middle', padding:'0', display:'block', width:'100%'}}>
                     <Link onClick={toggleGuest} to="/login">
                         Log In

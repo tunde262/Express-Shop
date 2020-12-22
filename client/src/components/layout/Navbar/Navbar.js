@@ -545,11 +545,14 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                 {/* <li className="nav-offset">
                     <a style={{fontSize:'1rem'}} className="cta" to="/about">About</a>
                 </li> */}
-                <li className="nav-offset">
+                {/* <li className="nav-offset">
                     <a href="https://www.cardboardexpress.com/business" target="_blank" style={{fontSize:'1rem'}} className="cta" to="/business">Business</a>
-                </li>
+                </li> */}
                 <li className="nav-offset">
                     <a href={`https://www.cardboardexpress.com/login`} style={{fontSize:'1rem'}} className="cta">Login</a>
+                </li>
+                <li className="nav-offset">
+                    <a href={`https://www.cardboardexpress.com/login`} style={{fontSize:'1rem'}} className="cta">Sign Up</a>
                 </li>
                 {/* <li className="nav-offset">
                     <a style={{fontSize:'1rem'}} className="cta" to="/blog">Blog</a>
@@ -557,11 +560,11 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                 {/* <li className="nav-offset">
                     <a style={{fontSize:'1rem'}} className="cta" to="/login">Login</a>
                 </li> */}
-                <li className="nav-offset">
+                {/* <li className="nav-offset">
                     <a style={{fontSize:'1rem'}} className="cta" href={`https://www.cardboardexpress.com/home`}>
                         <button>Start Shopping</button>
                     </a>
-                </li>
+                </li> */}
             </Fragment>
         );
     }
@@ -687,7 +690,7 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
 
 
     return (
-        <header>
+        <header style={nav.main === 'store' || nav.main === 'admin' ? {borderBottom: '1px solid rgb(214,214,214)'} : undefined}>
             <div className="desktop">
                 <div className="nav">
                     <div style={{margin:'0 20px 0 1rem', cursor:'pointer'}}>
