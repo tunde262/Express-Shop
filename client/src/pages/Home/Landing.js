@@ -198,8 +198,8 @@ const Landing = ({history, auth: { isAuthenticated, user, loading }, updateAuth,
                 <div className="overlay">
                     <div className="section-b-inner">
                         <h3>Support Local Businesses.</h3>
-                        <h2>Shop Local. Less waiting, more living.</h2>
-                        <p>We partner with sellers in your community to offer consistent and reliable same-delivery.</p>
+                        <h2>Shop Local.<br/> Less waiting.</h2>
+                        <p>We partner with sellers in your community to offer reliable same-delivery.</p>
                         <div className="store-socials store home">
                             <button style={{margin:'0', fontWeight:'500', fontSize:'18px'}}>Get Started</button>
                         </div>
