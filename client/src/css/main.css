@@ -3902,6 +3902,18 @@ header {
     .store-socials button:hover {
       background: #e8e8e8;
       color: #2fb7ec; }
+  .store-socials.home button {
+    background: transparent;
+    border: 1px solid #fff;
+    color: #fff; }
+    .store-socials.home button.active, .store-socials.home button.active:hover {
+      background: #fff;
+      color: #111111;
+      border-color: #fff; }
+    .store-socials.home button:hover {
+      background: #fff;
+      color: #111111;
+      border-color: #fff; }
 
 .collection-page-container {
   width: 100%;

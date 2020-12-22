@@ -14,7 +14,7 @@ const Footer = () => {
                         </p>
                         <div className="store-socials store">
                             <button className="goobye-heading-btn active">
-                                Start Shopping Same-Day
+                                Start Shopping
                             </button>
                         </div>
                         <p className="goodbye-btn-sub-text">

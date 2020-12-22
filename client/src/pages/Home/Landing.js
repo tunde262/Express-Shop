@@ -182,14 +182,14 @@ const Landing = ({history, auth: { isAuthenticated, user, loading }, updateAuth,
                         <p>Cardboard Express is your local online retail store. Enjoy Free Unlimited access to all your favorite stores in one place.</p>
                     </div>
                     <div className="store-socials store">
-                        <button className="shop-guide-btn active">View Guide</button>
+                        <button className="shop-guide-btn active">Start Shopping</button>
                     </div>
                 </div>
                 <img className="shop-guide-img" src={isMobile ? "https://fastaf.com/static/media/holiday-cta-mobile.7970b79d.png" : "https://fastaf.com/static/media/holiday-cta-desktop.61b3471e.png"} alt="img" />
                 <div className="shop-guide-content desktop-column">
                     <h2 className="shop-guide-header">The Fastest <br/> Way To Shop.</h2>
                     <div className="store-socials store">
-                        <button className="shop-guide-btn active">View Guide</button>
+                        <button className="shop-guide-btn active">Start Shopping</button>
                     </div>
                 </div>
             </div>
@@ -200,10 +200,49 @@ const Landing = ({history, auth: { isAuthenticated, user, loading }, updateAuth,
                         <h3>Support Local Businesses.</h3>
                         <h2>Shop Local. Less waiting, more living.</h2>
                         <p>We partner with sellers in your community to offer consistent and reliable same-delivery.</p>
-                        <p style={{margin:'0', fontWeight:'500', fontSize:'18px'}}>Get Started <i style={{margin:'0', margin:'5px', fontSize:'14px'}} class="fas fa-arrow-right"></i></p>
+                        <div className="store-socials store home">
+                            <button style={{margin:'0', fontWeight:'500', fontSize:'18px'}}>Get Started</button>
+                        </div>
                     </div>
                 </div>
             </section>
+
+            {/* Gallery */}
+            <div className="section-c">
+                <h3 className="heading">
+                Shop Hot Deals at Best Prices
+                </h3>
+                <div className="heading-text">
+                    <p>With hundreds of verified store owners and trusted marketplace sellers, shop now to discover the best deals and enjoy great savings.</p>
+                </div>
+                
+                <SRLWrapper>
+                    <div className="gallery">
+                        <a href={headphonesImg} className="big">
+                            <img src={headphonesImg} alt="" />
+                        </a>
+                        <a href={earbudsImg} className="big">
+                            <img src={earbudsImg} alt="" />
+                        </a>
+                        <a href={tieImg} className="big">
+                            <img src={tieImg} alt="" />
+                        </a>
+                        <a href={shoesImg} className="big">
+                            <img src={shoesImg} alt="" />
+                        </a>
+                        <a href={shirtImg} className="big">
+                            <img src={shirtImg} alt="" />
+                        </a>
+                        <a href={bundleImg} className="big">
+                            <img src={bundleImg} alt="" />
+                        </a>
+                    </div>
+                </SRLWrapper>
+                <div style={{width:'100%', borderTop:'1px solid #f4f4f4', borderBottom:'1px solid #f4f4f4', height:'50px', color:'#808080', display:'flex', justifyContent:'center', alignItems:'center'}}>
+                    <i style={{fontSize:'1rem', margin:'0 10px', color:'#0098d3'}} class="fab fa-instagram"></i>
+                    <p style={{margin: '0', color:'#0098d3'}}>Shop Instagram</p>
+                </div>
+            </div>
             
             <div className="how-long-section">
                 <div className="container xl">
@@ -273,47 +312,10 @@ const Landing = ({history, auth: { isAuthenticated, user, loading }, updateAuth,
                     <div className="text-center">
                         <div className="store-socials store">
                             <button className="btn active">
-                                Start Shopping Same-Day
+                                Start Shopping
                             </button>
                         </div>
                     </div>
-                </div>
-            </div>
-            
-            {/* Gallery */}
-            <div className="section-c">
-                <h3 className="heading">
-                Shop Hot Deals at Best Prices
-                </h3>
-                <div className="heading-text">
-                    <p>With hundreds of verified store owners and trusted marketplace sellers, shop now to discover the best deals and enjoy great savings.</p>
-                </div>
-                
-                <SRLWrapper>
-                    <div className="gallery">
-                        <a href={headphonesImg} className="big">
-                            <img src={headphonesImg} alt="" />
-                        </a>
-                        <a href={earbudsImg} className="big">
-                            <img src={earbudsImg} alt="" />
-                        </a>
-                        <a href={tieImg} className="big">
-                            <img src={tieImg} alt="" />
-                        </a>
-                        <a href={shoesImg} className="big">
-                            <img src={shoesImg} alt="" />
-                        </a>
-                        <a href={shirtImg} className="big">
-                            <img src={shirtImg} alt="" />
-                        </a>
-                        <a href={bundleImg} className="big">
-                            <img src={bundleImg} alt="" />
-                        </a>
-                    </div>
-                </SRLWrapper>
-                <div style={{width:'100%', borderTop:'1px solid #f4f4f4', height:'50px', color:'#808080', display:'flex', justifyContent:'center', alignItems:'center'}}>
-                    <i style={{fontSize:'1rem', margin:'0 10px', color:'#0098d3'}} class="fab fa-instagram"></i>
-                    <p style={{margin: '0', color:'#0098d3'}}>Shop Instagram</p>
                 </div>
             </div>
 

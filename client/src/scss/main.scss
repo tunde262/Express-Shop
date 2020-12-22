@@ -5149,6 +5149,7 @@ header {
         text-decoration: none;
     }
     
+    
     button {
         display: flex; 
         align-items: center; 
@@ -5168,6 +5169,26 @@ header {
         &:hover {
             background: #e8e8e8;
             color: rgb(47, 183, 236);
+        }
+    }
+
+    &.home {
+        button {
+            background: transparent;
+            border: 1px solid #fff;
+            color: #fff;
+
+            &.active, &.active:hover {
+                background:#fff;
+                color: #111111;
+                border-color: #fff;
+            }
+
+            &:hover {
+                background:#fff;
+                color: #111111;
+                border-color: #fff;
+            }
         }
     }
 }
