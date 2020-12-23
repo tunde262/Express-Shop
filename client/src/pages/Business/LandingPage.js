@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { setPage } from '../../actions/navActions';
 
-import Footer from '../../components/layout/Footer/Footer';
+import Footer from './Footer';
 
 const LandingPage = ({history, setPage, isAuthenticated}) => {
 
@@ -427,7 +427,7 @@ const LandingPage = ({history, setPage, isAuthenticated}) => {
                         <div className="box-button">
                             <a href="#">Get Started</a>
                         </div>
-                        <div className="social-container">
+                        <div className="social-container landing">
                             <a href="#" target="_blank" className="social"><i className="fab fa-instagram"></i></a>
                             <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
                             <a href="#" target="_blank" className="social"><i className="fab fa-twitter"></i></a>

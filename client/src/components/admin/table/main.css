@@ -3113,11 +3113,11 @@ header ul li a {
   text-decoration: underline;
 }
 
-.social-container {
+.social-container.landing {
   display: flex !important; 
 }
 
-.social-container a {
+.social-container.landing a {
   border: 2px solid #11d1b0;
   border-radius: 50%;
   display: inline-flex;
