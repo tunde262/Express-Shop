@@ -27,6 +27,9 @@ import carousell1 from '../utils/imgs/carousell1.jpg';
 import carousell2 from '../utils/imgs/carousell2.jpg';
 import Container from '../components/ProductList/Container';
 import DefaultBanner from '../utils/imgs/placeholderimg.jpg'
+import topImage from '../utils/imgs/christmasDraw.jpeg';
+import secondaryImage from '../utils/imgs/carousellChristmas.jpeg';
+import bottomImage from '../utils/imgs/stayHome.jpeg'
 
 import { setMainNav, setNav1, setNav2, setNav3, setPage } from '../actions/navActions';
 import { getFeaturedStores, getTrendingStores } from '../actions/storeActions';
@@ -134,13 +137,13 @@ const ExplorePage = ({
     
     return (
         <div className="explore-container">
-            <Banner imgLarge={DefaultBanner} imgSmall={DefaultBanner} />
+            <Banner imgLarge={topImage} imgSmall={topImage} />
             
             <TrendingCollections />
 
             <FeaturedStores />
             
-            <Banner imgLarge={DefaultBanner} imgSmall={DefaultBanner} />
+            <Banner imgLarge={secondaryImage} imgSmall={secondaryImage} />
             {/* <SlidingBanner /> */}
 
             {/* Featured Stores */}
@@ -152,7 +155,7 @@ const ExplorePage = ({
             </div> */}
 
 
-            {!isMobile && (
+            {/* {!isMobile && (
                 <div style={{background:'#fff', margin:'10px', display:'grid', gridTemplateColumns:'repeat(3, 1fr)', border:'1px solid rgb(214, 214, 214)'}}>
                     <div style={{margin:'10px', height:'100px',display:'flex', borderRight:'1px solid #e8e8e8', justifyContent:'center', alignItems:'center'}}>
                         <div style={{height:'56px', width:'56px', borderRadius:'50%',  background:'#ffbf00', margin:'0 1.5rem'}}></div>
@@ -167,7 +170,7 @@ const ExplorePage = ({
                         <p style={{margin:'0', fontSize:'1rem'}}>24/7 Customer Support</p>
                     </div>
                 </div>
-            )}
+            )} */}
 
             <FeaturedCollections collections={collection.collections} />
 
@@ -180,10 +183,10 @@ const ExplorePage = ({
                 </div>
             </div> */}
 
-            <Banner imgLarge={DefaultBanner} imgSmall={DefaultBanner} />
+            <Banner imgLarge={bottomImage} imgSmall={bottomImage} />
             {/* <SlidingBanner /> */}
 
-            <div style={{background:'#fff', margin:'10px', border:'1px solid rgb(214, 214, 214)'}}>
+            {/* <div style={{background:'#fff', margin:'10px', border:'1px solid rgb(214, 214, 214)'}}>
                 <p>Popular Locations</p>
                 <div className="trending-block">
                     <div style={{height:'100px',display:'grid', gridGap:'1rem', gridTemplateColumns:'2fr 1fr', border:'1px solid #e8e8e8'}}>
@@ -225,7 +228,7 @@ const ExplorePage = ({
                         </div>
                     )}
                 </div>
-            </div>
+            </div> */}
 
             <div style={{background:'#fff', margin:'10px', border:'1px solid rgb(214, 214, 214)'}}>
                 <div style={{margin:'1rem 0 3rem 0'}}>
@@ -233,7 +236,7 @@ const ExplorePage = ({
                 </div>
             </div>
 
-            <div className="secondary-block" style={{background:'#fff', margin:'10px', border:'1px solid rgb(214, 214, 214)'}}>
+            {/* <div className="secondary-block" style={{background:'#fff', margin:'10px', border:'1px solid rgb(214, 214, 214)'}}>
                 <div style={{height:'100%', width:'100%', marginBottom:'1rem'}}>
                     <div style={{height:'236px', width:'100%', overflow:'hidden', marginBottom:'10px', backgroundColor:'#333', borderRadius:'15px'}}>
                         <img style={{width:'100%', height:'100%'}} src={categoryImg} />
@@ -258,7 +261,7 @@ const ExplorePage = ({
                     <h2 style={{fontSize:'20px', margin:'5px 0 10px 0'}}>#WritingGoals</h2>
                     <p style={{fontWeight:'600',fontSize:'12px', color:'#808080'}}>Ulysses productivty tools keep wordsmith on track.</p>
                 </div>
-            </div>
+            </div> */}
 
             <PreviewList tag_value="toilet paper" img="https://2j6jnda3hor2rfqci2oskova-wpengine.netdna-ssl.com/wp-content/uploads/2019/04/Yoox-Mens-Clothing-Store-Online.jpg" />
 
