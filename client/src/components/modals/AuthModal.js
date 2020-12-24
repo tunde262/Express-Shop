@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alertActions';
@@ -12,18 +12,18 @@ import smallLogo from '../common/logo.png';
 import { ButtonContainer } from '../Button';
 import AuthForm from './forms/authForm';
 
+
 const initialState = {
     name: '',
     email: '',
     password: '',
-    password2: '',
     signup: true
-}
+};
 
-const AuthModal = ({ setAlert, register, login, auth: { isAuthenticated, user } }) => {
+const AuthModal = ({ setAlert, register, login, auth: { isAuthenticated, user }, history }) => {
 
     const [displayModal, toggleModal] = useState(false);
-    const [formData, setFormData] = useState(user);
+    const [formData, setFormData] = useState(initialState);
     const [formSignUp, setFormSignUp] = useState(true);
 
     useEffect(() => {
@@ -48,15 +48,33 @@ const AuthModal = ({ setAlert, register, login, auth: { isAuthenticated, user } 
         console.log(formData);
     };
 
+    const { name, email, password } = formData;
+
     const onSubmit = async e => {
         e.preventDefault();
+
+        const first_name = name.split(' ').slice(0, -1).join(' ');
+        const last_name = name.split(' ').slice(-1).join(' ');
+
+        console.log('FIRST NAME');
+        console.log(first_name)
+        console.log('LAST NAME');
+        console.log(last_name);
+
         if(formSignUp) {
-            const { name, email, password } = formData;
             // const fullName = `${formData.firstname} ${formData.lastname}`
-            register({ name, email, password });
+            register({ 
+                first_name, 
+                last_name, 
+                email, 
+                password, 
+                history 
+            });
         } else {
-            login(formData.email, formData.password);
+            login(email, password);
         }
+
+        setFormData(initialState);
     }
 
 
@@ -89,4 +107,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, { setAlert, register, login })(AuthModal);
+export default connect(mapStateToProps, { setAlert, register, login })(withRouter(AuthModal));
