@@ -628,6 +628,25 @@ textarea {
     display: column;
 }
 
+.word-hover {
+    text-decoration: none;
+
+    cursor: pointer;
+
+    &:hover {
+        color: #0645AD;
+        text-decoration: none;
+    }
+}
+
+.img-hover .store-block-img{
+
+    &:hover{
+        border: 2px solid #ff4b2b; 
+        cursor: pointer;
+    }
+}
+
 .button-hover-class {
     cursor: pointer;
     &:hover {
