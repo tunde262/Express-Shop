@@ -39,7 +39,7 @@ const HomePage = ({
     useEffect(() => {
         setMainNav('store');
         setNav1('explore');
-        setPage('home');
+        setPage('explore');
 
         if (location.search) {
             let query = new URLSearchParams(location.search).get('show')

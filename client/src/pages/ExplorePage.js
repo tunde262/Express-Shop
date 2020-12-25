@@ -89,7 +89,7 @@ const ExplorePage = ({
         getTrendingStores(skip);
 
         setMainNav('store');
-        setPage('explore');
+        setPage('home');
 
         setNav1('clothing and fashion');
         setNav2('mens clothing and fashion');
