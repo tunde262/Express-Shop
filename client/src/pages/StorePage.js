@@ -10,6 +10,8 @@ import { setMainNav } from '../actions/navActions';
 import mixpanel from 'mixpanel-browser';
 
 import Footer from '../components/layout/Footer/Footer';
+import AuthModal from '../components/modals/AuthModal';
+
 import Spinner from '../components/common/Spinner';
 import StoreMain from '../components/page_components/store/StoreMain';
 import DefaultBanner from '../utils/imgs/placeholderimg.jpg';
@@ -29,9 +31,7 @@ const StorePage = ({
         sortedProducts, 
         loading 
     }, 
-    auth: { 
-        user 
-    }, 
+    auth, 
     history, 
     match
 }) => {
@@ -58,7 +58,7 @@ const StorePage = ({
         return () => window.removeEventListener('resize', () => handleWindowSizeChange());
     }, []);
 
-    if(!userLoaded && user) {
+    if(!userLoaded && auth.user) {
         // getProfileSubscriptions(user._id);
         setUserLoaded(true);
     }  
@@ -88,11 +88,11 @@ const StorePage = ({
 
     const handleSubscribe= (detailStore) => {
         if (profile.profile) {
-            favorite(detailStore._id, user._id);
+            favorite(detailStore._id, auth.user._id);
             setSubscribedToo(!subscribedToo);
 
             // Check if product already liked by same user
-            if(detailStore.favorites.filter(favorite => favorite.user.toString() === user._id).length > 0) {
+            if(detailStore.favorites.filter(favorite => favorite.user.toString() === auth.user._id).length > 0) {
                 mixpanel.track("Store Un-Bookmark", {
                     "Store Name": detailStore.name,
                     "Store Category": detailStore.category,
@@ -122,7 +122,7 @@ const StorePage = ({
 
     const isMobile = windowWidth <= 769;
 
-    if(!sentView && user && store.store) {
+    if(!sentView && auth.user && store.store) {
         addView(store.store._id)
         setSentView(true);
     }
@@ -272,6 +272,8 @@ const StorePage = ({
                     )}
                 </div>
             )}
+
+            {!auth.loading && !auth.isAuthenticated ? <AuthModal /> : null }
         </div>
     )
     
