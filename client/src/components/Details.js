@@ -45,6 +45,8 @@ import TableDetails from './TableDetails/TableDetails';
 import { HorizontalNav } from '../components/common/HorizontalNav';
 import Header from './header/Header';
 
+import AuthModal from './modals/AuthModal';
+
 const Details = ({
     product: {
         detailProduct,
@@ -52,9 +54,7 @@ const Details = ({
         loading,
         products
     }, 
-    auth: {
-        user
-    },
+    auth,
     profile,
     variant,
     store,
@@ -182,7 +182,7 @@ const Details = ({
 
 
     const handleMixpanel = () => {
-        mixpanel.identify(user._id);
+        mixpanel.identify(auth.user._id);
         mixpanel.track("View Item Detail Page", {
             // "Entry Point": "Home Page",
             "Item Name": detailProduct.name,
@@ -218,13 +218,13 @@ const Details = ({
     }
 
     const handleSubscribe= (detailStore) => {
-        if (user) {
-            favorite(detailStore._id, user._id);
+        if (auth.user) {
+            favorite(detailStore._id, auth.user._id);
             setSubscribedToo(!subscribedToo);
 
-            // Check if product already liked by same user
+            // Check if product already liked by same auth.user
             if(detailStore.favorites){
-                if(detailStore.favorites.filter(favorite => favorite.user.toString() === user._id).length > 0) {
+                if(detailStore.favorites.filter(favorite => favorite.user.toString() === auth.user._id).length > 0) {
                     mixpanel.track("Store Un-Bookmark", {
                         "Store Name": detailStore.name,
                         "Store Category": detailStore.category,
@@ -251,7 +251,7 @@ const Details = ({
         }
     }
 
-    if(user && detailProduct && profile.subscriptions.length > 0 && !checkSub) {
+    if(auth.user && detailProduct && profile.subscriptions.length > 0 && !checkSub) {
         profile.subscriptions.map(subscription => {
             if (subscription._id === detailProduct.store._id.toString()) {
                 setSubscribedToo(true);
@@ -470,7 +470,7 @@ const Details = ({
         });
     };
 
-    if(!sentMixpanel && user !== null) {
+    if(!sentMixpanel && auth.user !== null) {
         if(detailProduct) {
             handleMixpanel();
             setSentMixpanel(true);
@@ -503,7 +503,7 @@ const Details = ({
         setNavLoaded(true);
     }
 
-    if(!sentView && user && detailProduct) {
+    if(!sentView && auth.user && detailProduct) {
         addView(detailProduct._id)
         setSentView(true);
     }
@@ -892,8 +892,8 @@ const Details = ({
     }
     else {
         let liked = false;
-        if (user) {
-            if(detailProduct.likes.filter(like => like.user.toString() === user._id).length > 0){
+        if (auth.user) {
+            if(detailProduct.likes.filter(like => like.user.toString() === auth.user._id).length > 0){
                 liked = true
             }
         }
@@ -1231,27 +1231,31 @@ const Details = ({
         }
 
         return (
-            <div style={{maxWidth:'100vw', background:'rgb(247, 247, 247)'}}>
-                <div className="detail-container">
-                    <ul class="home-underline store" style={{background:'#fff', margin:'0', border:'1px solid rgb(214, 214, 214)'}}>
-                        <div onClick={e => handleTableShow1('for you')} className={tableShow1 === "for you" && "active"}><li><p>For You</p></li></div>
-                        <div onClick={e => handleTableShow1('popular')} className={tableShow1 === "popular" && "active"}><li><p>Popular</p></li></div>
-                        <div onClick={e => handleTableShow1('nearby')} className={tableShow1 === "nearby" && "active"}><li><p>Nearby</p></li></div>
-                    </ul>
-                    
-                    <div className="header-nav-container detail">
-                        <div style={{padding:'10px'}}>
-                            <h3 style={{fontSize:'12px', letterSpacing:'1px',color:'#808080'}}>
-                                Pick A Category
-                            </h3>
+            <Fragment>
+                <div style={{maxWidth:'100vw', background:'rgb(247, 247, 247)'}}>
+                    <div className="detail-container">
+                        <ul class="home-underline store" style={{background:'#fff', margin:'0', border:'1px solid rgb(214, 214, 214)'}}>
+                            <div onClick={e => handleTableShow1('for you')} className={tableShow1 === "for you" && "active"}><li><p>For You</p></li></div>
+                            <div onClick={e => handleTableShow1('popular')} className={tableShow1 === "popular" && "active"}><li><p>Popular</p></li></div>
+                            <div onClick={e => handleTableShow1('nearby')} className={tableShow1 === "nearby" && "active"}><li><p>Nearby</p></li></div>
+                        </ul>
+                        
+                        <div className="header-nav-container detail">
+                            <div style={{padding:'10px'}}>
+                                <h3 style={{fontSize:'12px', letterSpacing:'1px',color:'#808080'}}>
+                                    Pick A Category
+                                </h3>
+                            </div>
+                            <div style={{marginTop:'-2rem'}}>
+                                <Header />
+                            </div>
                         </div>
-                        <div style={{marginTop:'-2rem'}}>
-                            <Header />
-                        </div>
+                        {detailItem}
                     </div>
-                    {detailItem}
                 </div>
-            </div>
+                
+                {!auth.loading && !auth.isAuthenticated ? <AuthModal /> : null }
+            </Fragment>
         )
 }
 

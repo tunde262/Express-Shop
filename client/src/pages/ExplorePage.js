@@ -12,6 +12,8 @@ import mixpanel from 'mixpanel-browser';
 // Footer
 import Footer from '../components/layout/Footer/Footer';
 
+import AuthModal from '../components/modals/AuthModal';
+
 
 import ProductOverview from '../components/Overview/productOverview/ProductOverview';
 import BrandOverview from '../components/Overview/brandOverview/BrandOverview';
@@ -62,6 +64,7 @@ const ExplorePage = ({
     setNav2, 
     setNav3, 
     setPage, 
+    auth,
     nav: { 
         page 
     }, 
@@ -269,6 +272,7 @@ const ExplorePage = ({
 
             <PreviewList tag_value="personal care" img="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/tomato-skincare-1596733638.jpg?crop=0.394xw:0.639xh;0.290xw,0.166xh&resize=640:*" />
 
+            {!auth.loading && !auth.isAuthenticated ? <AuthModal /> : null }
         </div>
     )
 }
@@ -295,7 +299,8 @@ const mapStateToProps = state => ({
     product: state.product,
     collection: state.collection,
     nav: state.nav,
-    profile: state.profile
+    profile: state.profile,
+    auth: state.auth
 });
 
 export default connect(mapStateToProps, { 
