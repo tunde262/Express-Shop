@@ -8,7 +8,8 @@ import Spinner from '../../common/Spinner';
 import gainLogo from '../../../utils/imgs/gainlogo.jpg';
 
 const Subs_Element = ({
-    profile
+    profile,
+    auth
 }) => {
     const [active, setActive] = useState(false);
 
@@ -16,7 +17,7 @@ const Subs_Element = ({
 
     useEffect(() => {
         renderSubscriptionList();
-      }, [profile.subscriptions])
+      }, [profile.subscriptions, auth.user])
 
 
     const renderSubscriptionList = () => {
@@ -78,10 +79,12 @@ const Subs_Element = ({
 
 Subs_Element.propTypes = {
     profile: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
-    profile: state.profile
+    profile: state.profile,
+    auth: state.auth
 });
 
 export default connect(mapStateToProps, null)(Subs_Element);

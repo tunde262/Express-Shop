@@ -9,7 +9,7 @@ import CollectionsElement from './Collections_Element';
 
 import { setPage } from '../../../actions/navActions';
 import { getCollectionsByIdList } from '../../../actions/collectionActions';
-import { getProfileSubscriptions } from '../../../actions/profileActions';
+import { getCurrentProfile, getProfileSubscriptions } from '../../../actions/profileActions';
 
 const Main_Store_Nav = ({
     setCollectionModal,
@@ -28,11 +28,14 @@ const Main_Store_Nav = ({
     },
     profile,
     setNavValue,
-    navValue
+    navValue,
+    getCurrentProfile
 }) => {
     // Page
     const [navHighlight, setNavHighlight] = useState(null);
     const [navHighlight2, setNavHighlight2] = useState(null);
+
+    const [gotProfile, setGotProfile] = useState(false);
 
     useEffect(() => { 
         if(page === 'home') {
@@ -58,7 +61,13 @@ const Main_Store_Nav = ({
         if(user) {
             getProfileSubscriptions(user._id);
         }  
-    }, [page, main, profile.profile])
+
+        if(!profile.profile && user && !gotProfile) {
+            getCurrentProfile();
+    
+            setGotProfile(true);
+        }
+    }, [page, main, profile.profile, user])
 
     const todo = (page) => {
         setNavHighlight(page);
@@ -183,6 +192,7 @@ Main_Store_Nav.propTypes = {
     nav: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
+    getCurrentProfile: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -191,4 +201,4 @@ const mapStateToProps = state => ({
     profile: state.profile
 });
 
-export default connect(mapStateToProps, { setPage, getCollectionsByIdList, getProfileSubscriptions })(Main_Store_Nav);
+export default connect(mapStateToProps, { setPage, getCollectionsByIdList, getProfileSubscriptions, getCurrentProfile })(Main_Store_Nav);

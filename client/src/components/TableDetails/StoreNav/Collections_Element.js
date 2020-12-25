@@ -11,7 +11,8 @@ import paperTowels from '../../../utils/imgs/paper_towels.jpeg';
 const Collections_Element = ({
     setCollectionModal,
     displayCollectionModal,
-    collection
+    collection,
+    auth
 }) => {
 
     const [active, setActive] = useState(false);
@@ -20,7 +21,7 @@ const Collections_Element = ({
 
     useEffect(() => {
         renderCollectionList();
-      }, [collection.profile_collections])
+      }, [collection.profile_collections, auth.user])
 
 
     const renderCollectionList = () => {
@@ -93,10 +94,12 @@ const Collections_Element = ({
 
 Collections_Element.propTypes = {
     collection: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
-    collection: state.collection
+    collection: state.collection,
+    auth: state.auth
 });
 
 export default connect(mapStateToProps, null)(Collections_Element);
