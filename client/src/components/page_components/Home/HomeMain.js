@@ -73,11 +73,11 @@ const HomeMain = ({
     const handleTableShow1 = (value) => {
         if(value !== tableShow1) {
             if(value === 'for you') {
-                history.push('/home?show=for-you');
+                history.push('/explore?show=for-you');
             } else if (value === 'popular') {
-                history.push('/home?show=popular');
+                history.push('/explore?show=popular');
             } else if (value === 'nearby') {
-                history.push('/home?show=nearby');
+                history.push('/explore?show=nearby');
             }
             clearProducts();
             setSkip(0);
