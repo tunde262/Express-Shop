@@ -119,9 +119,6 @@ const Cart = ({
         cart, 
         cartStores, 
         cartQty, 
-        cartTax, 
-        cartSubtotal, 
-        cartTotal 
     } = product;
 
     if(!gotProfileAddress && profile.profile) {
@@ -307,6 +304,11 @@ const Cart = ({
 
     };
 
+    let { cartSubtotal, cartTax, cartTotal } = product;
+    cartSubtotal = parseFloat(cartSubtotal.toFixed(2));
+    cartTax = parseFloat(cartTax.toFixed(2));
+    cartTotal = parseFloat(cartTotal.toFixed(2));
+
     return (
         <div className="collection-page-container">
             <div className="store-table-header" style={{padding:'20px 20px 0 20px'}}>
@@ -405,10 +407,33 @@ const Cart = ({
                                             </div>
                                         </div>
                                     </div>
-                                    
-                                    <div className="checkout-actions store-socials store">
-                                        <button className="active" onClick={(e) => onSubmit(e)}>Place Order</button>
+
+                                    <div id="order-totals" className="sticky mobile" style={{background:'#fff', width:'100%', margin:'10px 0', padding:'10px', height:'300px', border:'1px solid rgb(214, 214, 214)'}}>
+                                        <p>Order Summary</p>
+                                        <div style={{display:'flex', color:'#808080', justifyContent:'space-between'}}>
+                                            <p>Item(s) Subtotal:</p>
+                                            <p>${cartSubtotal}</p>
+                                        </div>
+                                        <div style={{display:'flex', color:'#808080', justifyContent:'space-between'}}>
+                                            <p>Shipping & Handling:</p>
+                                            <p>$0.00</p>
+                                        </div>
+                                        <div style={{display:'flex', color:'#808080', justifyContent:'space-between'}}>
+                                            <p>Estimated Tax:</p>
+                                            <p>${cartTax}</p>
+                                        </div>
+                                        <div style={{display:'flex', color:'#ff4b2b', justifyContent:'space-between'}}>
+                                            <p>Completed Total:</p>
+                                            <p>${cartTotal}</p>
+                                        </div>
+                                        <div className="store-socials store">
+                                            <button className="active" onClick={(e) => onSubmit(e)}>Place Order</button>
+                                        </div>
                                     </div>
+                                    
+                                    {/* <div className="checkout-actions store-socials store">
+                                        <button className="active" onClick={(e) => onSubmit(e)}>Place Order</button>
+                                    </div> */}
                                     {/* <h5>item added to the cart</h5>
                                     <img src={`/api/products/image/${img_gallery[0].img_name}`} className="img-fluid" alt="product" />
                                     <h5>{title}</h5>
@@ -435,7 +460,7 @@ const Cart = ({
                             <p>Order Summary</p>
                             <div style={{display:'flex', color:'#808080', justifyContent:'space-between'}}>
                                 <p>Item(s) Subtotal:</p>
-                                <p>$5</p>
+                                <p>${cartSubtotal}</p>
                             </div>
                             <div style={{display:'flex', color:'#808080', justifyContent:'space-between'}}>
                                 <p>Shipping & Handling:</p>
@@ -443,11 +468,11 @@ const Cart = ({
                             </div>
                             <div style={{display:'flex', color:'#808080', justifyContent:'space-between'}}>
                                 <p>Estimated Tax:</p>
-                                <p>$3.98</p>
+                                <p>${cartTax}</p>
                             </div>
                             <div style={{display:'flex', color:'#ff4b2b', justifyContent:'space-between'}}>
                                 <p>Completed Total:</p>
-                                <p>$10</p>
+                                <p>${cartTotal}</p>
                             </div>
                             <div className="store-socials store">
                                 <button className="active" onClick={(e) => onSubmit(e)}>Place Order</button>
