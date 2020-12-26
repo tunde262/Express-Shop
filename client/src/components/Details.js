@@ -709,7 +709,7 @@ const Details = ({
             setColorValue((
                 <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
                     <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Color:</p>
-                    <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
+                    <hr style={{background:'#f4f4f4', height:'1px', margin:'0 0 1rem 0'}}/>
                     <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
                     </div>
@@ -729,7 +729,7 @@ const Details = ({
             setSizeValue((
                 <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
                     <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Size:</p>
-                    <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
+                    <hr style={{background:'#f4f4f4', height:'1px', margin:'0 0 1rem 0'}}/>
                     <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
                     </div>
@@ -749,7 +749,7 @@ const Details = ({
             setWeightValue((
                 <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
                     <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Weight:</p>
-                    <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
+                    <hr style={{background:'#f4f4f4', height:'1px', margin:'0 0 1rem 0'}}/>
                     <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
                     </div>
@@ -769,7 +769,7 @@ const Details = ({
             setTypeValue((
                 <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
                     <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Type:</p>
-                    <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
+                    <hr style={{background:'#f4f4f4', height:'1px', margin:'0 0 1rem 0'}}/>
                     <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
                     </div>
@@ -789,7 +789,7 @@ const Details = ({
             setBundleValue((
                 <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
                     <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Bundle:</p>
-                    <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
+                    <hr style={{background:'#f4f4f4', height:'1px', margin:'0 0 1rem 0'}}/>
                     <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
                     </div>
@@ -809,7 +809,7 @@ const Details = ({
             setScentValue((
                 <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
                     <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Scent:</p>
-                    <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
+                    <hr style={{background:'#f4f4f4', height:'1px', margin:'0 0 1rem 0'}}/>
                     <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
                     </div>
@@ -829,7 +829,7 @@ const Details = ({
             setFitValue((
                 <div style={{display:'flex', flexDirection:'column', width: '100%', marginBottom:'10px'}}>
                     <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Fit:</p>
-                    <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
+                    <hr style={{background:'#f4f4f4', height:'1px', margin:'0 0 1rem 0'}}/>
                     <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
                     </div>
@@ -849,7 +849,7 @@ const Details = ({
             setFlavorValue((
                 <div style={{display:'flex', flexDirection:'column', width:'100%'}}>
                     <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Flavor:</p>
-                    <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
+                    <hr style={{background:'#f4f4f4', height:'1px', margin:'0 0 1rem 0'}}/>
                     <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
                     </div>
@@ -869,7 +869,7 @@ const Details = ({
             setMaterialValue((
                 <div style={{display:'flex', flexDirection:'column', width:'100%'}}>
                     <p style={{fontWeight:'bold', color:'#333', fontSize:'12px'}}>Material:</p>
-                    <hr style={{background:'#dfe1e5', height:'1px', margin:'0 0 1rem 0'}}/>
+                    <hr style={{background:'#f4f4f4', height:'1px', margin:'0 0 1rem 0'}}/>
                     <div style={{display:'flex', flexWrap:'wrap'}}>
                         {choices}
                     </div>
@@ -1018,7 +1018,7 @@ const Details = ({
                                     {/* <p><i style={{color:'#808080'}} class="fas fa-truck"></i> Next Delivery Time: <span style={{fontWeight:'bold', color:'#ff4b2b'}}>1pm</span></p> */}
                                     <p><i style={{color:'#808080'}} class="fas fa-truck"></i> Est. Delivery Time: <span style={{fontWeight:'bold', color:'#ff4b2b'}}>2 hr</span></p>
                                     <p style={{color:'#808080', marginTop:'-1rem'}}><i className="fas fa-sign-out-alt" /> Return eligible</p>
-                                    <hr style={{background:'#dfe1e5', height:'1px', marginBottom:'0.5rem'}}/>
+                                    <hr style={{background:'#f4f4f4', height:'1px', marginBottom:'0.5rem'}}/>
                                     <div style={{display:'flex', justifyContent:'space-between', alignItems: 'center', marginTop:'-0.6rem', padding:'0 1rem'}}>
                                         <div style={{display:'flex', alignItems: 'center'}}>
                                             <a href={`https://www.cardboardexpress.com/store/${detailProduct.store._id}`}>
@@ -1046,7 +1046,7 @@ const Details = ({
                                             </div>
                                         )}
                                     </div>
-                                    <hr style={{marginTop:'-0.5rem', background:'#dfe1e5', height:'1px'}}/>
+                                    <hr style={{marginTop:'-0.5rem', background:'#f4f4f4', height:'1px'}}/>
                                 </div>
                                 <div class="detail-description-box">
                                     <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}>
@@ -1099,7 +1099,7 @@ const Details = ({
 
                                     <div style={{marginTop:'50px'}}>
                                         <p style={{color:'#333', fontWeight:'bold'}}>Description</p>
-                                        <hr style={{marginTop:'-0.5rem', background:'#dfe1e5', height:'1px'}}/>
+                                        <hr style={{marginTop:'-0.5rem', background:'#f4f4f4', height:'1px'}}/>
                                         {descriptionState !== null && (<div dangerouslySetInnerHTML={{__html: descriptionState}} />)}
                                         
                                     </div>

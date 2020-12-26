@@ -65,7 +65,7 @@ if(localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
-const stripePromise = loadStripe("pk_test_Hbz4uQovQLzsxsEZ4clF5WfI00TSBRJTac");
+const stripePromise = loadStripe("pk_live_TGJb7MssdJJyke7Wg6WpDj1e00gVdDNGxd");
 
 // Collection Data
 const initialState = {
