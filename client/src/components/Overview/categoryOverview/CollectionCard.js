@@ -126,7 +126,7 @@ const CollectionCard = ({ auth: { user }, preview, collection, followCollection 
                         )])  
                     });
                 } else {
-                    collection.items.slice(0, 3).map(async itemObj => {
+                    collection.items.slice(0, 4).map(async itemObj => {
                         const res = await axios.get(`/api/products/${itemObj.item}`);
                         let sorted_img_gallery = res.data.img_gallery.sort((a, b) => a.img_order - b.img_order);
                         
