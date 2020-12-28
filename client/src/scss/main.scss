@@ -2429,7 +2429,11 @@ header {
 .scroll-container {
     height: calc(100vh - 60px); 
     overflow-y:scroll; 
-    background:'rgb(247, 247, 247)';
+    background: rgb(247, 247, 247);
+
+    &.clear {
+        background: #fff;
+    }
 }
 
 .admin-store-card {
@@ -5871,6 +5875,10 @@ header {
     width:100%;
     display: flex;
     flex-direction: column;
+
+    &.menu {
+        padding-top: 30px;
+    }
 }
 
 .profile-settings-transition {

@@ -10,7 +10,7 @@ import ProductSideDrawer from '../../admin/pages/page_components/product/SideDra
 import CollectionSideDrawer from '../../admin/pages/page_components/collection/SideDrawerCollection';
 import LocationSideDrawer from '../../admin/pages/page_components/location/SideDrawerLocation';
 
-import './CartDrawer/CartDrawer.css';
+import './SideDrawer.css';
 import paper_towels from '../../../utils/imgs/paper_towels.jpeg';
 
 const AuthDrawer = ({ drawerClickHandler, toggleAuthDrawer, getCurrentProfile, deleteAccount, nav, store, profile: { profile }, auth: { isAuthenticated, user, loading }, logout, show, match}) => {
@@ -59,9 +59,9 @@ const AuthDrawer = ({ drawerClickHandler, toggleAuthDrawer, getCurrentProfile, d
         }
     }
 
-    let drawerClasses = 'cart-drawer';
+    let drawerClasses = 'side-drawer';
     if (show) {
-        drawerClasses = 'cart-drawer open';
+        drawerClasses = 'side-drawer open';
     }
 
     return (

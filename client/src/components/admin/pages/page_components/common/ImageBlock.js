@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import mixpanel from 'mixpanel-browser';
 
@@ -7,7 +8,9 @@ import { incImg, decImg, editProduct } from '../../../../../actions/productActio
 
 const ImageBlock = ({
     detailProduct,
-    setImageModal
+    setImageModal,
+    incImg, 
+    decImg
 }) => {
 
     const imgBack = (imgId) => {
@@ -91,8 +94,14 @@ const ImageBlock = ({
     )
 }
 
+
 ImageBlock.propTypes = {
-
+    incImg: PropTypes.func.isRequired,
+    decImg: PropTypes.func.isRequired,
 }
+const mapStateToProps = state => ({
 
-export default ImageBlock
+})
+
+export default connect(mapStateToProps, { incImg, decImg })(ImageBlock);
+

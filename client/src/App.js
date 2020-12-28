@@ -23,6 +23,8 @@ import { getCurrentProfile } from './actions/profileActions';
 // Google Analytics
 import ReactGA from 'react-ga';
 
+import MenuPage from './pages/Menu';
+
 // Auth
 import Register from './components/auth/registration/Register';
 import Personalize from './components/auth/registration/personalize/Personalize';
@@ -217,6 +219,7 @@ const App = () => {
                   {/* Auth Pages */}
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/register" component={Register} />
+                  <Route exact path="/menu" component={MenuPage} />
                   <Route exact path="/account-setup" component={Personalize} />
                   {/*Admin Forms */}
                   <Route exact path="/create-store" component={StoreForm} />

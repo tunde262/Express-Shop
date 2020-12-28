@@ -1908,7 +1908,9 @@ header {
 .scroll-container {
   height: calc(100vh - 60px);
   overflow-y: scroll;
-  background: 'rgb(247, 247, 247)'; }
+  background: #f7f7f7; }
+  .scroll-container.clear {
+    background: #fff; }
 
 .admin-store-card > div {
   padding: 1rem 0;
@@ -4410,6 +4412,8 @@ header {
   width: 100%;
   display: flex;
   flex-direction: column; }
+  .store-side-nav-container.menu {
+    padding-top: 30px; }
 
 .profile-settings-transition {
   display: flex;

@@ -741,7 +741,7 @@ const ProductPage = ({
         console.log('IMG FILES');
         console.log(fileList);
 
-        addProductImg(fileList, product.detailProduct._id);
+        addProductImg(fileList, detailProduct._id);
         toggleImageModal();
     };
     
@@ -1592,7 +1592,7 @@ const ProductPage = ({
             pageContent = <Spinner />
         }
     } else if(tableShow1 === 'collection detail') {
-        if(collection.collection && !product.loading) { //!storageLocation.loading 
+        if(collection.collection && !loading) { //!storageLocation.loading 
             pageContent = (
                 <DetailCollection 
                     setModal={handleStorageModal} 

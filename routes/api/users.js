@@ -67,7 +67,7 @@ router.post('/', [
 });
 
 // @route POST api/users
-// @desc Register user
+// @desc Update user
 // @access Public
 router.post('/:id', async (req, res) => {
 

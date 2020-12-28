@@ -1084,6 +1084,7 @@ header {
 
   .admin-overlay-icon-container:hover {
     background: rgba(46, 49, 49, 0.2);
+    cursor: pointer;
   }
 
   .product-admin-image-container img {

@@ -37,9 +37,9 @@ const SideDrawer = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, st
         toggleAuthDrawer();
     }
 
-    let drawerClasses = 'side-drawer';
+    let drawerClasses = 'cart-drawer';
     if (show) {
-        drawerClasses = 'side-drawer open';
+        drawerClasses = 'cart-drawer open';
     }
 
     const authLinks = (
@@ -87,31 +87,31 @@ const SideDrawer = ({ drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, st
     return (
         <nav className={drawerClasses}>
             <div className="admin-nav-drawer">
-                <a onClick={toggleAuth} href={store.store && `https://www.cardboardexpress.com/admin/${store.store._id}?show=people`}>
+                {/* <a onClick={toggleAuth} href={store.store && `https://www.cardboardexpress.com/admin/${store.store._id}?show=people`}>
                     <div className="profile-table-nav-items">
                         <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
                             <h3>Create Order</h3>
                         </div>
                     </div>
-                </a>
+                </a> */}
                 <a onClick={toggleAuth} href={store.store && `https://www.cardboardexpress.com/admin/${store.store._id}?show=store`}>
                     <div className="profile-table-nav-items active">
                         <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                            <h3>New Item</h3>
+                            <h3>Add Item</h3>
                         </div>
                     </div>
                 </a>
                 <a onClick={toggleAuth} href={store.store && `https://www.cardboardexpress.com/admin/${store.store._id}?show=inventory`}>
                     <div className="profile-table-nav-items">
                         <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                            <h3>Create Collection</h3>
+                            <h3>New Collection</h3>
                         </div>
                     </div>
                 </a>
                 <a onClick={toggleAuth} href={store.store && `https://www.cardboardexpress.com/admin/${store.store._id}?show=orders`}>
                     <div className="profile-table-nav-items">
                         <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
-                            <h3>Create Location</h3>
+                            <h3>New Location</h3>
                         </div>
                     </div>
                 </a>
