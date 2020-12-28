@@ -469,7 +469,7 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                     </div>
 
                     {dropdown && (
-                        <div className="dropdown" style={{height: menuHeight}}>
+                        <div className="dropdown landing store" style={{height: menuHeight}}>
                             <CSSTransition 
                                 in={activeMenu === 'main'} 
                                 unmountOnExit 
