@@ -909,7 +909,7 @@ const Details = ({
 
         detailItem = (
             <Fragment>
-                <div style={{background:'#fff', border: '1px solid rgb(214, 214, 214)', margin:'10px'}}>
+                <div style={{background:'#fff', border: '1px solid #e3e8ee', margin:'10px'}}>
                     <section className="container">
                         <div id="detail-content-wrapper">
                             {/* <div id="breadcrumb">
@@ -1147,12 +1147,12 @@ const Details = ({
                         </div>
                     </section>
                 </div>
-                <div style={{margin:'10px', background:'#fff', border: '1px solid rgb(214, 214, 214)'}}>
+                <div style={{margin:'10px', background:'#fff', border: '1px solid #e3e8ee'}}>
                     <ProductOverview shop title="You may also like..." products={products} link={`/collection?filter=${detailProduct.category}`} />
                 </div>
 
                 {store.stores.length > 0 && detailProduct && (
-                    <div style={{margin:'10px', background:'#fff', border: '1px solid rgb(214, 214, 214)'}}>
+                    <div style={{margin:'10px', background:'#fff', border: '1px solid #e3e8ee'}}>
                         <BrandOverview title={`Other Stores For ${detailProduct.category}`} stores={store.stores} profile={profile} />
                     </div>
                 )}
@@ -1232,9 +1232,9 @@ const Details = ({
 
         return (
             <Fragment>
-                <div style={{maxWidth:'100vw', background:'rgb(247, 247, 247)'}}>
+                <div style={{maxWidth:'100vw', background:'#f7fafc'}}>
                     <div className="detail-container">
-                        <ul class="home-underline store" style={{background:'#fff', margin:'0', border:'1px solid rgb(214, 214, 214)'}}>
+                        <ul class="home-underline store" style={{background:'#fff', border:'1px solid #e3e8ee'}}>
                             <div onClick={e => handleTableShow1('for you')} className={tableShow1 === "for you" && "active"}><li><p>For You</p></li></div>
                             <div onClick={e => handleTableShow1('popular')} className={tableShow1 === "popular" && "active"}><li><p>Popular</p></li></div>
                             <div onClick={e => handleTableShow1('nearby')} className={tableShow1 === "nearby" && "active"}><li><p>Nearby</p></li></div>
