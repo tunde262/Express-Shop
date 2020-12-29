@@ -25,7 +25,7 @@ const SideDrawerProduct = ({setSlideForm1, getProductsByStoreId, storeId, produc
                     console.log(res.data);
                     setProductList(productList => [...productList, (
                         <a style={{textDecoration:'none'}} href={`https://www.cardboardexpress.com/admin/product/${storeId}/${product._id}?show=detail`}>
-                            <div key={product._id} style={{display:'flex', height:'100px', width:'100%', padding:'10px', borderBottom:'1px solid #cecece'}}>
+                            <div key={product._id} style={{display:'flex', height:'100px', width:'100%', padding:'10px', borderBottom:'1px solid #e3e8ee'}}>
                                 <div style={{height:'100%', width:'100px', overflow:'hidden', display:'flex', justifyContent:'center', alignItems:'center'}}>
                                     {product.img_gallery[0] && <img src={`/api/products/image/${product.img_gallery[0].img_name}`} style={{height:'100%'}} />}
                                 </div>

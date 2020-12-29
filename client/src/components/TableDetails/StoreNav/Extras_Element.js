@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Extras_Element = props => {
     return (
-        <div style={{zIndex:'30', background:'#fff'}}>
+        <div style={{zIndex:'30', background:'rgb(247, 247, 247)'}}>
             <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}} className="store-table-nav-items header-btn">
                 <h3 style={{fontWeight:'600', color:'#808080'}}>Account</h3>
             </div>

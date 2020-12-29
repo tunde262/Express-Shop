@@ -67,7 +67,7 @@ const Collections_Element = ({
     }
 
     return (
-        <div style={{zIndex:'10', background:'#fff'}}>
+        <div style={{zIndex:'10'}}>
             <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}} className="store-table-nav-items header-btn">
                 <h3 style={{fontWeight:'600'}}>Wishlist</h3>
                 <small onClick={() => setCollectionModal(!displayCollectionModal)}><i class="fas fa-plus"></i>Create</small>

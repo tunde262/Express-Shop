@@ -129,7 +129,7 @@ const Main_Store_Nav = ({
             
             <CollectionsElement setCollectionModal={setCollectionModal} displayCollectionModal={displayCollectionModal} />
 
-            <div style={{zIndex:'30', background:'#fff'}}>
+            <div style={{zIndex:'30'}}>
                 <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}} className="store-table-nav-items header-btn">
                     <h3 style={{fontWeight:'600', color:'#808080'}}>Account</h3>
                 </div>

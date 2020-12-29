@@ -53,7 +53,7 @@ const Subs_Element = ({
     }
 
     return (
-        <div style={{zIndex:'20', background:'#fff'}}>
+        <div style={{zIndex:'20'}}>
             <div className="store-table-nav-items header-btn">
                 <h3 style={{fontWeight:'600'}}>Subscriptions</h3>
             </div>

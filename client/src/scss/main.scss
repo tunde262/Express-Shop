@@ -670,7 +670,7 @@ textarea {
     padding: 1rem;
     display: grid;
     grid-template-columns: auto 1fr 4fr 3fr 2fr auto;
-    border-bottom: 1px solid rgb(214, 214, 214);
+    border-bottom: 1px solid #e3e8ee;
     width: 100%;
     min-height: 50px;
     &:hover{
@@ -742,7 +742,7 @@ textarea {
     display: grid;
     grid-template-columns: 1fr 3fr;
     grid-gap: 5px;
-    border-bottom: 1px solid rgb(214, 214, 214);
+    border-bottom: 1px solid #e3e8ee;
     width: 100%;
     min-height: 50px;
     &:hover, &:focus{
@@ -792,7 +792,7 @@ textarea {
     padding: 1rem;
     display: grid;
     grid-template-columns: auto 1fr 4fr 3fr 2fr auto;
-    border-bottom: 1px solid rgb(214, 214, 214);
+    border-bottom: 1px solid #e3e8ee;
     width: 100%;
     min-height: 50px;
     &:hover{
@@ -880,7 +880,7 @@ textarea {
     max-height: 200px;
     height: 200px;
     background: #fff;
-    border: 1px solid rgb(214, 214, 214);
+    border: 1px solid #e3e8ee;
     border-radius: 5px;
     position: relative;
     display: flex;
@@ -947,7 +947,7 @@ textarea {
     display: grid;
     grid-template-columns: 1fr 3fr;
     grid-gap: 5px;
-    border-bottom: 1px solid rgb(214, 214, 214);
+    border-bottom: 1px solid #e3e8ee;
     width: 100%;
     min-height: 50px;
     &:hover, &:focus{
@@ -998,7 +998,7 @@ textarea {
     display: grid;
     grid-template-columns: auto 2fr 1fr 1fr 5fr auto;
     grid-gap: 5px;
-    border-bottom: 1px solid rgb(214, 214, 214);
+    border-bottom: 1px solid #e3e8ee;
     width: 100%;
     min-height: 50px;
     &:hover{
@@ -1062,7 +1062,7 @@ textarea {
     display: grid;
     grid-template-columns: 3fr 1fr 1fr;
     grid-gap: 5px;
-    border-bottom: 1px solid rgb(214, 214, 214);
+    border-bottom: 1px solid #e3e8ee;
     width: 100%;
     min-height: 50px;
     &:hover, &:focus{
@@ -1103,7 +1103,7 @@ textarea {
     padding: 1rem;
     display: grid;
     grid-template-columns: auto 1fr 4fr 3fr 2fr auto;
-    border-bottom: 1px solid rgb(214, 214, 214);
+    border-bottom: 1px solid #e3e8ee;
     width: 100%;
     min-height: 50px;
     &:hover{
@@ -1186,7 +1186,7 @@ textarea {
     display: grid;
     grid-template-columns: 1fr 3fr;
     grid-gap: 5px;
-    border-bottom: 1px solid rgb(214, 214, 214);
+    border-bottom: 1px solid #e3e8ee;
     width: 100%;
     min-height: 50px;
     &:hover, &:focus{
@@ -1256,7 +1256,7 @@ textarea {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 2fr auto;
     grid-gap: 10px;
-    border-bottom: 1px solid rgb(214, 214, 214);
+    border-bottom: 1px solid #e3e8ee;
     width: 100%;
     min-height: 50px;
 
@@ -1279,7 +1279,7 @@ textarea {
     padding: 1rem;
     display: grid;
     grid-template-columns: 1fr 2fr 2fr 1fr;
-    border-bottom: 1px solid rgb(214, 214, 214);
+    border-bottom: 1px solid #e3e8ee;
     width: 100%;
     min-height: 50px;
     &:hover{
@@ -1318,7 +1318,7 @@ textarea {
     display: grid;
     grid-template-columns: 1fr 3fr;
     grid-gap: 5px;
-    border-bottom: 1px solid rgb(214, 214, 214);
+    border-bottom: 1px solid #e3e8ee;
     width: 100%;
     min-height: 50px;
     &:hover, &:focus{
@@ -1886,13 +1886,13 @@ header {
     
     .slide-item {
         height: 40px;
-        border-bottom: 1px solid rgb(214, 214, 214);
+        border-bottom: 1px solid #e3e8ee;
         display: flex;
         align-items: center;
     }
 
     & > a {
-        border-bottom: 1px solid rgb(214, 214, 214);
+        border-bottom: 1px solid #e3e8ee;
         background: #fff;
         height: 75px;
         max-height: 75px;
@@ -2229,8 +2229,8 @@ header {
     grid-template-areas: 
         "sections main";
     width: 100%;
-    background:rgb(247, 247, 247);
-    border: 1px solid rgb(214, 214, 214);
+    background:#f7fafc;
+    border: 1px solid #e3e8ee;
     margin-top: 55px;
     overflow: hidden;
     // height: calc(100vh - 60px);
@@ -2242,8 +2242,8 @@ header {
     grid-template-areas: 
         "main";
     width: 100%;
-    background:rgb(247, 247, 247);
-    border: 1px solid rgb(214, 214, 214);
+    background:#f7fafc;
+    border: 1px solid #e3e8ee;
     margin-top: 55px;
     overflow: hidden;
 }
@@ -2255,20 +2255,20 @@ header {
     overflow-y: scroll;
     display: flex;
     flex-direction: column;
-    background: #fff;
-    border-right: 1px solid rgb(214, 214, 214);
+    background-color: #f7fafc;
+    border-right: 1px solid #e3e8ee;
     position: fixed;
 
     & > a { 
         text-decoration: none;
-        margin-right: 8px;
+        // margin-right: 8px;
 
         &:first-child {
             margin-top: 50px;
         }
     }
     & > div { 
-        margin-right: 8px;
+        // margin-right: 8px;
 
         a {
             text-decoration: none;
@@ -2414,7 +2414,7 @@ header {
     .store-table-header {
         min-height: 125px;
         background: #fff;
-        border-bottom: 1px solid rgb(214, 214, 214);
+        border-bottom: 1px solid #e3e8ee;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -2429,7 +2429,7 @@ header {
 .scroll-container {
     height: calc(100vh - 60px); 
     overflow-y:scroll; 
-    background: rgb(247, 247, 247);
+    // background: rgb(247, 247, 247);
 
     &.clear {
         background: #fff;
@@ -2463,7 +2463,7 @@ header {
         "sections main";
     width: 100%;
     background:rgb(247, 247, 247);
-    border: 1px solid rgb(214, 214, 214);
+    border: 1px solid #e3e8ee;
     margin-top: 5rem;
     overflow: hidden;
 }
@@ -2485,9 +2485,9 @@ header {
     flex-direction: column;
 
     & > a {
-        border-bottom: 1px solid rgb(214, 214, 214);
-        border-right: 1px solid rgb(214, 214, 214);
-        border-left: 1px solid rgb(214, 214, 214);
+        border-bottom: 1px solid #e3e8ee;
+        border-right: 1px solid #e3e8ee;
+        border-left: 1px solid #e3e8ee;
         background: #fff;
         height: 75px;
         max-height: 75px;
@@ -2533,9 +2533,9 @@ header {
     flex-direction: column;
 
     & > a {
-        border-bottom: 1px solid rgb(214, 214, 214);
-        border-right: 1px solid rgb(214, 214, 214);
-        border-left: 1px solid rgb(214, 214, 214);
+        border-bottom: 1px solid #e3e8ee;
+        border-right: 1px solid #e3e8ee;
+        border-left: 1px solid #e3e8ee;
         background: #fff;
         height: 75px;
         max-height: 75px;
@@ -2598,7 +2598,7 @@ header {
     .profile-table-header {
         min-height: 125px;
         background: #fff;
-        border-bottom: 1px solid rgb(214, 214, 214);
+        border-bottom: 1px solid #e3e8ee;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -2617,7 +2617,7 @@ header {
         "sections main";
     width: 100%;
     background:rgb(247, 247, 247);
-    border: 1px solid rgb(214, 214, 214);
+    border: 1px solid #e3e8ee;
     margin: 10px 5px;
     overflow: hidden;
 }
@@ -2625,7 +2625,7 @@ header {
 .mobile-detail-table {
     width: 100%;
     background:rgb(247, 247, 247);
-    border: 1px solid rgb(214, 214, 214);
+    border: 1px solid #e3e8ee;
     margin-top: 5rem;
 
     & .detail-table-main .detail-table-body {
@@ -2641,9 +2641,9 @@ header {
     flex-direction: column;
 
     & > a {
-        border-bottom: 1px solid rgb(214, 214, 214);
-        border-right: 1px solid rgb(214, 214, 214);
-        border-left: 1px solid rgb(214, 214, 214);
+        border-bottom: 1px solid #e3e8ee;
+        border-right: 1px solid #e3e8ee;
+        border-left: 1px solid #e3e8ee;
         background: #fff;
         height: 75px;
         max-height: 75px;
@@ -2688,11 +2688,11 @@ header {
     display: flex;
     flex-direction: column;
     background: #fff;
-    border-right: 1px solid rgb(214, 214, 214);
+    border-right: 1px solid #e3e8ee;
     position: fixed;
 
     & .detail-settings-transition .detail-nav-container > a {
-        border-bottom: 1px solid rgb(214, 214, 214);
+        border-bottom: 1px solid #e3e8ee;
         background: #fff;
         height: 75px;
         max-height: 75px;
@@ -2739,7 +2739,7 @@ header {
     .detail-table-header {
         min-height: 125px;
         background: #fff;
-        border-bottom: 1px solid rgb(214, 214, 214);
+        border-bottom: 1px solid #e3e8ee;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -2774,7 +2774,7 @@ header {
         "sections main";
     width: 100%;
     background:rgb(247, 247, 247);
-    border: 1px solid rgb(214, 214, 214);
+    border: 1px solid #e3e8ee;
     margin-top: 55px;
     overflow: hidden;
 }
@@ -2786,7 +2786,7 @@ header {
         "main";
     width: 100%;
     background:rgb(247, 247, 247);
-    border: 1px solid rgb(214, 214, 214);
+    border: 1px solid #e3e8ee;
     margin-top: 55px;
     overflow: hidden;
 }
@@ -2798,12 +2798,12 @@ header {
     display: flex;
     flex-direction: column;
     background: #fff;
-    border-right: 1px solid rgb(214, 214, 214);
+    border-right: 1px solid #e3e8ee;
     position: fixed;
 
     & > a {
-        border-bottom: 1px solid rgb(214, 214, 214);
-        border-left: 1px solid rgb(214, 214, 214);
+        border-bottom: 1px solid #e3e8ee;
+        border-left: 1px solid #e3e8ee;
         background: #fff;
         height: 75px;
         max-height: 75px;
@@ -2860,7 +2860,7 @@ header {
     .admin-table-header {
         min-height: 125px;
         background: rgb(247, 247, 247);
-        border-bottom: 1px solid rgb(214, 214, 214);
+        border-bottom: 1px solid #e3e8ee;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -3643,13 +3643,13 @@ header {
 .header-nav-container {
     background: #fff; 
     margin: 10px; 
-    border: 1px solid rgb(214, 214, 214);
+    border: 1px solid #e3e8ee;
 }
 
 .product-list-container {
     background: #fff; 
     margin: 10px; 
-    border: 1px solid rgb(214, 214, 214);
+    border: 1px solid #e3e8ee;
     
     &.admin {
         margin: 10px 0;
@@ -4386,7 +4386,7 @@ header {
 			
 			&:before,
 			&:after {
-				background: rgb(214, 214, 214);
+				background: #e3e8ee;
 			}
 		}
 	}
@@ -4394,7 +4394,7 @@ header {
 
 .qty-input {
     border-radius: 4px;
-    border: 1px solid rgb(214, 214, 214);
+    border: 1px solid #e3e8ee;
 }
 
 .checkout-panel {
@@ -4621,7 +4621,7 @@ header {
     &.store {
         background: #fff; 
         margin: 0 10px; 
-        border: 1px solid rgb(214, 214, 214);
+        border: 1px solid #e3e8ee;
     }
 
     &.admin {
@@ -4712,7 +4712,7 @@ header {
 
 .home-underline {
     width: 100%;
-    margin: 1rem 0 0 0;
+    margin: 3px 10px 0;
     padding-left: 0;
     list-style: none;
     display: grid;
@@ -5071,7 +5071,7 @@ header {
     align-items: center; 
     background: #fff;  
     margin: 10px;  
-    border: 1px solid rgb(214, 214, 214)
+    border: 1px solid #e3e8ee
 }
 
 .store-block-container {
@@ -5092,7 +5092,7 @@ header {
 .store-header {
     background: #fff; 
     margin: 10px; 
-    border: 1px solid rgb(214, 214, 214);
+    border: 1px solid #e3e8ee;
 
     &.admin {
         margin: 10px 0;
@@ -6155,7 +6155,7 @@ header {
         grid-area: table;
         margin: 10px 0;
         background: #fff;
-        border: 1px solid rgb(214, 214, 214);
+        border: 1px solid #e3e8ee;
     }
 }
 
@@ -6191,7 +6191,7 @@ header {
         grid-area: table;
         margin: 10px 0;
         background: #fff;
-        border: 1px solid rgb(214, 214, 214);
+        border: 1px solid #e3e8ee;
     }
 }
 
@@ -6238,7 +6238,7 @@ header {
 
 .stats {
     background: #fff; 
-    border: 1px solid rgb(214, 214, 214);
+    border: 1px solid #e3e8ee;
 }
 
 .stats-box {
