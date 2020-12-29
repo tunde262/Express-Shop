@@ -33,13 +33,14 @@ const Collections_Element = ({
                         <a href={`https://www.cardboardexpress.com/collection/${collectionObj._id}`}>
                             <div style={{display:'flex', alignItems:'center'}} className="store-table-nav-items secondary">
                                 <div className="store-nav-collection-img-container">
-                                    <div className="store-nav-collection-img">
+                                    <i style={{fontSize:'18px'}} class="fas fa-list-ul"></i>
+                                    {/* <div className="store-nav-collection-img"> */}
                                         {/* <img 
                                             alt="" 
                                             style={{width:'100%'}}
                                             src={sampleShoe}
                                         /> */}
-                                    </div>
+                                    {/* </div> */}
                                     {/* <span style={{position:'absolute', top:'0', marginRight:'-10px', marginTop:'-10px', right:'0', width:'20px', height:'20px', color:'#fff', borderRadius:'50%', background:'#ff4b2b', display:'flex', justifyContent:'center', alignItems:'center'}}>
                                         1
                                     </span> */}
@@ -69,7 +70,7 @@ const Collections_Element = ({
     return (
         <div style={{zIndex:'10'}}>
             <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}} className="store-table-nav-items header-btn">
-                <h3 style={{fontWeight:'600'}}>Wishlist</h3>
+                <h3 style={{fontWeight:'600'}}>Collection</h3>
                 <small onClick={() => setCollectionModal(!displayCollectionModal)}><i class="fas fa-plus"></i>Create</small>
             </div>
             <div className={active ? "table-nav-dropdown active" : "table-nav-dropdown short"}>
