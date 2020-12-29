@@ -196,7 +196,7 @@ const CollectionCard = ({ auth: { user }, preview, collection, followCollection 
     const { _id, name } = collection;
 
     return (
-        <div style={{width:'200px', border:'1px solid rgb(214, 214, 214)', margin:'10px 1rem'}}>
+        <div style={{width:'200px', border:'1px solid #e3e8ee', margin:'10px 1rem'}}>
             <div style={{height:'200px', padding:'5px', gridGap:'5px', width:'100%', marginBottom:'5px', display:'grid', gridTemplateColumns:'1fr 1fr', gridTemplateRows:'1fr 1fr'}}>
                 {!collectionImages.length > 0 ? (
                     <Fragment>

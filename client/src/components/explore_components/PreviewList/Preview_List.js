@@ -41,9 +41,9 @@ const Preview_List = ({ tag_value, img }) => {
             style={{
                 background:'#fff', 
                 margin:'10px', 
-                borderLeft:'1px solid rgb(214, 214, 214)',
-                borderRight:'1px solid rgb(214, 214, 214)',
-                borderBottom:'1px solid rgb(214, 214, 214)'
+                borderLeft:'1px solid #e3e8ee',
+                borderRight:'1px solid #e3e8ee',
+                borderBottom:'1px solid #e3e8ee'
             }}
         >
             <RecommendedCategory products={productList} category={{tag_value, img}} />

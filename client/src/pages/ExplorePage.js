@@ -233,7 +233,7 @@ const ExplorePage = ({
                 </div>
             </div> */}
 
-            <div style={{background:'#fff', margin:'10px', border:'1px solid rgb(214, 214, 214)'}}>
+            <div style={{background:'#fff', margin:'10px', border:'1px solid #e3e8ee'}}>
                 <div style={{margin:'1rem 0 3rem 0'}}>
                     <ProductOverview title="Recently looked at..." products={products} link={`/home`} />
                 </div>

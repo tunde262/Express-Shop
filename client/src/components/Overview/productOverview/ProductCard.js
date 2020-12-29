@@ -321,7 +321,7 @@ const ProductWrapper = styled.div`
         background: #fff;
         width: 14vw;
         height: calc(14vw + 85px);
-        border: 0.5px solid #dfe1e5;
+        border: 0.5px solid #e3e8ee;
         border-radius: 5px;
         overflow: hidden;
     }

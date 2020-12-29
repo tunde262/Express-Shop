@@ -48,7 +48,7 @@ const Recommended_Categories = ({ products, category }) => {
 
     return (
         <Fragment>
-            <div style={{minHeight:'50px', background:'rgb(247,247,247)', padding:'1rem 20px', width:'100%', borderTop:'1px solid rgb(214,214,214)', borderBottom:'1px solid rgb(214,214,214)'}}>
+            <div style={{minHeight:'50px', background:'rgb(247,247,247)', padding:'1rem 20px', width:'100%', borderTop:'1px solid #e3e8ee', borderBottom:'1px solid #e3e8ee'}}>
                 <div style={{display: 'flex', alignItems:'center', justifyContent: 'space-between'}}>
                     <div style={{display: 'flex', alignItems: 'center'}}>
                         <img style={{height: '40px', width: '40px', border:'1px solid #e8e8e8', marginRight: '10px', borderRadius: '50px'}} src={category.img} alt="img" />

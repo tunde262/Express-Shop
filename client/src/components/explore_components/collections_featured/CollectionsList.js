@@ -10,7 +10,7 @@ import shoeSampleImg from '../../../utils/imgs/20484728.jpeg';
 
 const CollectionsList = ({collections}) => {
     return (
-        <div style={{background:'#fff', margin:'10px', border:'1px solid rgb(214, 214, 214)'}}>
+        <div style={{background:'#fff', margin:'10px', border:'1px solid #e3e8ee'}}>
             <CollectionOverview collections={collections} shop={false} link={`/home`} />
         </div>
     )
