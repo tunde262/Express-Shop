@@ -1794,11 +1794,14 @@ header {
   border-right: 1px solid #e3e8ee;
   position: fixed; }
   .store-table-nav > a {
-    text-decoration: none; }
+    text-decoration: none;
+    margin-right: 8px; }
     .store-table-nav > a:first-child {
       margin-top: 50px; }
   .store-table-nav > div a {
     text-decoration: none; }
+  .store-table-nav.right-margin > div {
+    margin-right: 8px; }
 
 .table-nav-dropdown {
   height: auto;

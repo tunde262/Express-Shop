@@ -224,7 +224,7 @@ const App = () => {
                   {/*Admin Forms */}
                   <Route exact path="/create-store" component={StoreForm} />
                   <div className="store-table">
-                      <div style={{height:'100%'}} className="store-table-nav">
+                      <div style={{height:'100%'}} className={navValue === 'profile' ? "store-table-nav right-margin" : "store-table-nav"}>
                         <div className="store-settings-transition">
                           {/** Transition 1 */}
                           <div className={!slideForm1 ? "store-side-nav-container active" : "store-side-nav-container"} id="transition-1">

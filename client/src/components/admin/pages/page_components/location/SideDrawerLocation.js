@@ -25,7 +25,7 @@ const SideDrawerLocation = ({setSlideForm1, getLocationsByStoreId, storeId, loca
                     console.log(res.data);
                     setLocationList(locationList => [...locationList, (
                         <Link key={location._id} style={{textDecoration:'none'}} href={`https://www.cardboardexpress.com/admin/location/${storeId}/${location._id}?show=detail`}>
-                            <div key={location._id} style={{display:'flex', justifyContent:'space-between', height:'100px', width:'100%', padding:'10px', borderBottom:'1px solid #cecece'}}>
+                            <div key={location._id} style={{display:'flex', justifyContent:'space-between', height:'100px', width:'100%', padding:'10px', borderBottom:'1px solid #e3e8ee'}}>
                                 <div style={{display:'flex'}}>
                                     <div style={{height:'100%', display:'flex', alignItems:'center', justifyContent:'center'}}>
                                         <i style={{color:'#3CB371', margin:'0 10px', fontSize:'1.3rem'}} className="fas fa-map-marker-alt"></i>
@@ -72,7 +72,7 @@ const SideDrawerLocation = ({setSlideForm1, getLocationsByStoreId, storeId, loca
                 <i className="fas fa-long-arrow-alt-left"></i>
                 <p style={{margin:'0 10px'}}>  Back to menu</p>
             </div> */}
-            <div style={{overflowY:'scroll', borderTop:'1px solid #f2f2f2', marginTop:'10px', height:'80vh'}}>
+            <div style={{overflowY:'scroll', borderTop:'1px solid #f2f2f2', marginTop:'10px', marginRight:'-8px', height:'80vh'}}>
                 {!locationList.length > 0 ? <Spinner /> : locationList}
             </div>
         </Fragment>

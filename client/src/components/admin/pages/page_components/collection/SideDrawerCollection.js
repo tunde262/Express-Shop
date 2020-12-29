@@ -24,8 +24,8 @@ const SideDrawerCollection = ({setSlideForm1, getCollectionsByStoreId, storeId, 
                     const res = await axios.get(`/api/products/collection/${collection._id}`);
                     console.log(res.data);
                     setCollectionList(collectionList => [...collectionList, (
-                        <a style={{textDecoration:'none'}} href={`https://www.cardboardexpress.com/admin/collection/${storeId}/${collection._id}?show=detail`}>
-                            <div key={collection._id} style={{display:'flex', justifyContent:'space-between', height:'100px', width:'100%', padding:'10px', borderBottom:'1px solid #cecece'}}>
+                        <a style={{textDecoration:'none', marginRight:'-8px'}} href={`https://www.cardboardexpress.com/admin/collection/${storeId}/${collection._id}?show=detail`}>
+                            <div key={collection._id} style={{display:'flex', justifyContent:'space-between', height:'100px', width:'100%', padding:'10px', borderBottom:'1px solid #e3e8ee'}}>
                                 <div style={{display:'flex', height:'100%', overflow:'hidden', width:'200px', paddingLeft:'10px', flexDirection:'column', justifyContent:'center', alignItems:'flex-start'}}>
                                     <div className="line-clamp-1" style={{height:'20px', overflow:'hidden', width:'100%'}}>
                                         <h3 style={{color: '#333', fontWeight: '300', fontSize: '16px', color: 'rgb(51, 51, 51)'}}>{collection.name}</h3>

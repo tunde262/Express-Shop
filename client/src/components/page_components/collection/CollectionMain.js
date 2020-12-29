@@ -40,9 +40,9 @@ const CollectionMain = ({
                 <Fragment>
                     <div className="header-nav-container mobile">
                         <div style={{padding:'10px'}}>
-                            <h3 style={{fontSize:'12px', letterSpacing:'1px',color:'#808080'}}>
+                            {/* <h3 style={{fontSize:'12px', letterSpacing:'1px',color:'#808080'}}>
                                 Pick A Category
-                            </h3>
+                            </h3> */}
                         </div>
                         <div style={{marginTop:'-2rem'}}>
                             <Header />
