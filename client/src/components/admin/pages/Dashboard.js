@@ -25,8 +25,8 @@ import HeaderLocationForm from '../../page_components/forms_inventory/locationFo
 import MainLocationForm from '../../page_components/forms_inventory/locationForm/Form_Location';
 
 
-import SettingsMain from '../../page_components/setting/Main_Settings';
-import SettingsHeader from '../../page_components/setting/Header_Settings';
+// import SettingsMain from '../../page_components/setting/Main_Settings';
+// import SettingsHeader from '../../page_components/setting/Header_Settings';
 
 import EditHeader from './page_components/edit/Header_Edit';
 import EditMain from './page_components/edit/Main_Edit';
@@ -83,9 +83,11 @@ const Dashboard = ({
             let query = new URLSearchParams(location.search).get('show')
             if(query === 'store') {
                 setTableShow1('shop');
-            } else if (query === 'edit') {
-                setTableShow1('edit');
-            } else if (query === 'inventory') {
+            } 
+            // else if (query === 'edit') {
+            //     setTableShow1('edit');
+            // } 
+            else if (query === 'inventory') {
                 setTableShow1('inventory');
             } else if (query === 'add_item') {
                 setTableShow1('add_item');
@@ -389,7 +391,7 @@ const Dashboard = ({
 
     if(storeNav === 'shop') {
         storeContent = <StoreMain admin="true" tableShow1={tableShow1} setTable={setTable} />;
-    } else if(storeNav === 'edit') {
+    } else if(storeNav === 'settings') {
         storeContent = <EditMain setTable={setTable} /> 
     } else if (storeNav === 'inventory') {
         storeContent = <InventoryMain /> 
@@ -443,7 +445,7 @@ const Dashboard = ({
                     </div>
                 </Fragment>
             )}
-            {tableShow1 === 'edit' && (
+            {tableShow1 === 'settings' && (
                 <Fragment>
                     <div className="store-table-header" style={{background:'#fff'}}>
                         <EditHeader setTable={setTableShow1} />
@@ -518,7 +520,7 @@ const Dashboard = ({
                     </div>
                 </Fragment>
             )}
-            {tableShow1 === 'settings' && (
+            {/* {tableShow1 === 'settings' && (
                 <Fragment>
                     <div className="store-table-header" style={{background:'#fff'}}>
                         <SettingsHeader settingsNav={settingsNav}  setTable={setSettingsNav} />
@@ -527,7 +529,7 @@ const Dashboard = ({
                         {store && <SettingsMain settingsNav={settingsNav}  setTable={setSettingsNav} />}
                     </div>
                 </Fragment>
-            )}
+            )} */}
 
             <Modal open={displayItemModal} onClose={toggleItemModal} center styles={bg}>
                 <div className="checkout-modal">

@@ -1,12 +1,16 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import Modal from 'react-responsive-modal';
 import { findDOMNode } from 'react-dom';
 import $ from 'jquery';
 
 import categoryList from './categoryList';
 import { NavItem } from '../../../../header/navbar/NavItem';
+
+import paymentSignatures from '../../../../../utils/imgs/visa_PNG2.png';
+import paypalLogo from '../../../../../utils/imgs/PayPal_logo_logotype_emblem.png';
 
 // import { deleteStore } from '../../../../../actions/storeActions';
 
@@ -58,6 +62,16 @@ const Main_Edit = ({store, auth: { user }, profile: {profile, loading }}) => {
         document.getElementById('fileButton').onchange = () =>{      
             setFileUploadState(document.getElementById('fileButton').value);
         }
+    }
+
+    const startStripeAuthorization = async () => {
+        console.log('STARTING AUTH!!!!!');
+
+        const res = await axios.get('/api/stripe/authorize');
+
+        console.log('AUTH LINK: ' + res.data)
+
+        window.location.href = res.data; 
     }
 
     let categoryListContent = categoryList.map((nav_item, index) => (
@@ -633,6 +647,35 @@ const Main_Edit = ({store, auth: { user }, profile: {profile, loading }}) => {
                             </Fragment>
                         )}
                     </div>
+                </div>
+            </div>
+
+            <div style={{background:'#fff', height:'300px', margin:'10px 0', border:'1px solid rgb(214, 214, 214)'}}>
+                <div className="profile-settings-container">
+                    <div style={{width:'100%', padding:'1rem 3rem 0 3rem', display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'flex-end'}}>
+                        <div style={{display:'grid', gridTemplateColumns:'2fr 1fr', width:'100%'}}>
+                            <div style={{display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center'}}>
+                                <p style={{fontSize:'1.3rem'}}>Choose Payment Methods</p>
+                                <p style={{color:'#808080', margin:'0'}}>Choose how you would like to collect payments.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="profile-settings-box">
+                        <div>
+                            <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', height:'50px'}}>
+                                <div style={{width:'100%', height:'100%', border:'1px solid #e8e8e8', textAlign:'center', display:'flex', justifyContent:'center', alignItems:'center'}}>
+                                    <div style={{height:'14px', width:'14px', border:'2px solid #cecece', borderRadius:'50%', marginRight:'10px'}}></div>
+                                    <img src={paymentSignatures} style={{height:'30px'}} alt="payment signatures" />
+                                </div>
+                                <div style={{width:'100%', height:'100%', border:'1px solid #e8e8e8', textAlign:'center', display:'flex', justifyContent:'center', alignItems:'center'}}>
+                                    <div style={{height:'14px', width:'14px', border:'2px solid #cecece', borderRadius:'50%', marginRight:'10px'}}></div>
+                                    <img src={paypalLogo} style={{height:'30px'}} alt="payment signatures" />
+                                </div>
+                            </div>
+                            <button onClick={startStripeAuthorization} style={{width:'300px', background:'#0098d3', borderColor:'#0098d3', outline:'none', display:'flex', alignItems:'center', justifyContent:'center'}}>Set Up</button>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
 

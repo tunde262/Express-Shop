@@ -73,7 +73,7 @@ const Landing = ({history, auth: { isAuthenticated, user, loading }, updateAuth,
     console.log(formData);
     updateAuth(formData);
     if(formData.email !== '') {
-      history.push('/home');
+      history.push('/shop');
     } else {
       if(type) {
         history.push('/register');

@@ -1,7 +1,9 @@
 {
+    "publicDomain": "https://www.cardboardexpress.com",
     "mongoURI": "mongodb+srv://tunde243:adepitan1@cecluster-9pidx.mongodb.net/test?retryWrites=true&w=majority",
     "jwtSecret": "mysecrettoken",
     "stripePublishableKey": "pk_live_TGJb7MssdJJyke7Wg6WpDj1e00gVdDNGxd",
     "stripeSecretKey": "sk_live_FJLkArMQmgvxdolsxJqlTaIj00uhwvY2Hc",
-    "clientId": "ca_FFrwHQdAK0nXGIwX2zR00sYcYQ9qGiSY"
+    "clientId": "ca_FFrwHQdAK0nXGIwX2zR00sYcYQ9qGiSY",
+    "authorizeUri": "https://connect.stripe.com/express/oauth/authorize"
 }

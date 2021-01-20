@@ -102,7 +102,7 @@ const Main_Store_Nav = ({
                     <p style={{margin:'0', color:'#808080'}}>View Settings<span style={{margin:'0 0 0 10px'}}><i className="fas fa-arrow-right"></i></span></p>
                 </div>
             )}
-            <a href="https://www.cardboardexpress.com/home" onClick={() => todo('home')}>
+            <a href="https://www.cardboardexpress.com/shop" onClick={() => todo('home')}>
                 <div className={navHighlight === "home" ? "store-table-nav-items main active" : "store-table-nav-items main"}>
                     <h3 style={{fontWeight:'600'}}><span><i style={{fontSize:'22px', marginRight:'10px'}} className="fas fa-home"></i></span>Home</h3>
                 </div>

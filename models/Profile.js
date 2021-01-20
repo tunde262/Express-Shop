@@ -35,6 +35,10 @@ const ProfileSchema = new Schema({
             }
         }
     ],
+    recent_store: {
+        type: Schema.Types.ObjectId,
+        ref: 'store'
+    },
     img: {
         type: Schema.Types.ObjectId, // There is no need to create references here
         ref: 'uploads'

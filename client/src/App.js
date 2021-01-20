@@ -50,6 +50,7 @@ import GuestDrawer from './components/layout/SideDrawer/GuestDrawer';
 import Backdrop from './components/layout/Backdrop/Backdrop';
 
 import StoreForm from './components/admin/forms/store_form/StoreForm';
+import NewStore from './pages/NewStore';
 
 import Routes from './components/routing/Routes';
 import CartModal from './components/modals/cart-modal/CartModal';
@@ -223,6 +224,8 @@ const App = () => {
                   <Route exact path="/account-setup" component={Personalize} />
                   {/*Admin Forms */}
                   <Route exact path="/create-store" component={StoreForm} />
+                  <Route exact path="/success" component={NewStore} />
+
                   <div className="store-table">
                       <div style={{height:'100%'}} className={navValue === 'profile' ? "store-table-nav right-margin" : "store-table-nav"}>
                         <div className="store-settings-transition">

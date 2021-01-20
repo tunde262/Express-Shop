@@ -22,7 +22,8 @@ const Header_Settings = ({store, auth: { user }, profile: {profile, loading }}) 
                 </div>
             </a>
             <div>
-                <h3>Edit Store Profile</h3>
+                {/* <h3>Edit Store Profile</h3> */}
+                <h3>Store Settings</h3>
             </div>
             <div>
                 <ul class="profile-underline">

@@ -10,6 +10,7 @@ import { Logo } from '../../../Logo';
 import Login from './Login';
 import Name from './Name';
 import Terms from './Terms';
+import PaymentTerms from './PaymentTerms';
 import Description from './Description';
 import Category from './Category';
 import Return from './Return';
@@ -175,7 +176,14 @@ const StoreForm = ({
                                                 <Website slideform9={slideform9} setSlideForm9={setSlideForm9} slideform10={slideform10} setSlideForm10={setSlideForm10} onChange={onChange}/>
                                               </div>
                                               <div id="transition-2" style={{width:'100%'}} className={slideform10 ? "auth-form-container active" : "auth-form-container"}> 
-                                                <SocialMedia slideform10={slideform10} setSlideForm10={setSlideForm10} slideform11={slideform11} setSlideForm11={setSlideForm11} onChange={onChange}/>
+                                                <div style={{width:'100%'}} className="form-settings-transition">
+                                                  <div id="transition-1" style={{width:'100%'}} className={!slideform11 ? "auth-form-container active" : "auth-form-container"}> 
+                                                    <SocialMedia slideform10={slideform10} setSlideForm10={setSlideForm10} slideform11={slideform11} setSlideForm11={setSlideForm11} onChange={onChange}/>
+                                                  </div>
+                                                  <div id="transition-2" style={{width:'100%'}} className={slideform11 ? "auth-form-container active" : "auth-form-container"}> 
+                                                    <PaymentTerms slideform1={slideform11} setSlideForm1={setSlideForm11} slideform2={slideform11} setSlideForm2={setSlideForm11} onChange={onChange}/>
+                                                  </div>
+                                                </div>
                                               </div>
                                             </div>
                                           </div>

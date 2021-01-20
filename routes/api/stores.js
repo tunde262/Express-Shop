@@ -267,7 +267,10 @@ router.post('/', upload.single('file'), [ auth, [
         
             await newStore.save();
 
+            // Update profile
             profile.stores.unshift({ store: newStore._id });
+
+            profile.recent_store = newStore._id;
 
             await profile.save();
             

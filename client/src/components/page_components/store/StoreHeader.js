@@ -109,7 +109,7 @@ const StoreHeader = ({ store: { store, loading }, admin, tableShow1, setTable })
                                 </div>
                                 
                                 <div className="store-socials desktop" id="store-socials">
-                                    <a href={store && `https://www.cardboardexpress.com/admin/${store._id}?show=edit`}>
+                                    <a href={store && `https://www.cardboardexpress.com/admin/${store._id}?show=settings`}>
                                         <button onClick={() => setTable('edit')}>
                                             Edit Store
                                             <i style={{marginLeft:'10px', fontSize:'12px'}} class="fas fa-pen"></i>

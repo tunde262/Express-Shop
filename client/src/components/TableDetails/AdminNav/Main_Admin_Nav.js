@@ -57,15 +57,16 @@ const Main_Admin_Nav = ({
                     <div className="store-table-nav-items main">
                         <h3 style={{fontWeight:'600'}}>
                         <span>
-                            <img src={addBookmark} style={{width:'20px', marginRight:'1rem'}} alt="subscribe" />
+                            {/* <img src={addBookmark} style={{width:'20px', marginRight:'1rem'}} alt="subscribe" />*/}
+                            <i style={{fontSize:'20px', marginRight:'10px'}} className="fas fa-store"></i> 
                         </span>
-                        Store
+                        My Store
                         </h3>
                     </div>
                 </a>
                 <a style={{margin:'5px 0'}} href={store.store ? `https://www.cardboardexpress.com/admin/${store.store._id}?show=inventory` : "#"}>
                     <div className="store-table-nav-items main active">
-                        <h3 style={{fontWeight:'600'}}><span><i style={{fontSize:'20px', marginRight:'10px'}} className="fas fa-box"></i></span>Inventory</h3>
+                        <h3 style={{fontWeight:'600'}}><span><i style={{fontSize:'20px', marginRight:'10px'}} className="fas fa-boxes"></i></span>Inventory</h3>
                     </div>
                 </a>
                 {/* <div onClick={e => setTableShow1('payments')} className={tableShow1 === "payments" ? "profile-table-nav-items active" : "store-table-nav-items"}>
@@ -74,7 +75,7 @@ const Main_Admin_Nav = ({
                 </div>  */}
                 <a style={{margin:'5px 0'}} href={store.store ? `https://www.cardboardexpress.com/admin/${store.store._id}?show=orders` : "#"}>
                     <div className="store-table-nav-items main">
-                        <h3 style={{fontWeight:'600'}}><span><i style={{fontSize:'22px', marginRight:'1rem'}} className="fas fa-address-book"></i></span>Orders</h3>
+                        <h3 style={{fontWeight:'600'}}><span><i style={{fontSize:'22px', marginRight:'1rem'}} className="fas fa-cash-register"></i></span>Orders</h3>
                     </div>
                 </a>
                 
@@ -82,16 +83,17 @@ const Main_Admin_Nav = ({
                     <div className="store-table-nav-items main">
                         <h3 style={{fontWeight:'600'}}>
                         <span>
-                            <img src={addBookmark} style={{width:'20px', marginRight:'1rem'}} alt="subscribe" />
+                            {/* <img src={addBookmark} style={{width:'20px', marginRight:'1rem'}} alt="subscribe" /> */}
+                            <i style={{fontSize:'22px', marginRight:'9px'}} className="fas fa-user-tag"></i>
                         </span>
-                        People
+                        Customers
                         </h3>
                     </div>
                 </a>
 
                 <a style={{margin:'5px 0'}} href={store.store ? `https://www.cardboardexpress.com/admin/${store.store._id}?show=settings` : "#"}>
                     <div className="store-table-nav-items main">
-                        <h3 style={{fontWeight:'600'}}><span><i style={{fontSize:'22px', marginRight:'1rem'}} className="fas fa-layer-group"></i></span>Settings</h3>
+                        <h3 style={{fontWeight:'600'}}><span><i style={{fontSize:'22px', marginRight:'1rem'}} className="fas fa-cog"></i></span>Settings</h3>
                     </div>
                 </a>
     
