@@ -23,6 +23,7 @@ const ProductListBlock = ({ handleScroll }) => {
 
     return (
         <div className="product-list-container" id="nearby-container-list">
+            
             <Fragment>
                 <div className="filter-container">
                     <span style={{fontSize:'15px', fontWeight:'bold', color:'#808080', letterSpacing:'2px', margin:'10px'}}>Filter</span>

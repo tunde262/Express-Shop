@@ -133,11 +133,11 @@ const HomeMain = ({
 
     return (
         <Fragment>
-            <ul class="home-underline store" style={{background:'#fff', border:'1px solid #e3e8ee'}}>
+            {/* <ul class="home-underline store" style={{background:'#fff', border:'1px solid #e3e8ee'}}>
                 <div onClick={e => handleTableShow1('for you')} className={tableShow1 === "for you" && "active"}><li><p>For You</p></li></div>
                 <div onClick={e => handleTableShow1('popular')} className={tableShow1 === "popular" && "active"}><li><p>Popular</p></li></div>
                 <div onClick={e => handleTableShow1('nearby')} className={tableShow1 === "nearby" && "active"}><li><p>Nearby</p></li></div>
-            </ul>
+            </ul> */}
             
             <div className={tableShow1 === "nearby" ? "home-content nearby" : "home-content main"}>
                 {pageContent}

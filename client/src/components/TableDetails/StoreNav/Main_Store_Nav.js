@@ -127,7 +127,7 @@ const Main_Store_Nav = ({
             
             <SubscriptionsElement />
             
-            <CollectionsElement setCollectionModal={setCollectionModal} displayCollectionModal={displayCollectionModal} />
+            {/* <CollectionsElement setCollectionModal={setCollectionModal} displayCollectionModal={displayCollectionModal} /> */}
 
             <div style={{zIndex:'30'}}>
                 <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}} className="store-table-nav-items header-btn">

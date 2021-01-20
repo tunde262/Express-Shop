@@ -49,7 +49,7 @@ const Routes = props => {
         <Switch>
             <Route exact path="/explore" component={HomePage} />
             <Route exact path="/category" component={CategoryPage} />
-            <Route exact path="/home" component={ExplorePage} />
+            <Route exact path="/shop" component={ExplorePage} />
             {/* Category Pages */}
             <Route exact path="/categories" component={CategoryPage} />
             <Route exact path="/stores" component={StoresPage} />

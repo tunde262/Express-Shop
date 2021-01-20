@@ -83,7 +83,7 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
 
     const logoClicked = () => {
         mixpanel.track("Logo Click");
-        reorderItems();
+        // reorderItems();
     }
 
     const toggleCart = () => {

@@ -140,13 +140,13 @@ const ExplorePage = ({
     
     return (
         <div className="explore-container">
-            <Banner imgLarge={topImage} imgSmall={topImage} />
+            {/* <Banner imgLarge={topImage} imgSmall={topImage} /> */}
             
-            <TrendingCollections />
+            {/* <TrendingCollections /> */}
 
             <FeaturedStores />
             
-            <Banner imgLarge={secondaryImage} imgSmall={secondaryImage} />
+            {/* <Banner imgLarge={secondaryImage} imgSmall={secondaryImage} /> */}
             {/* <SlidingBanner /> */}
 
             {/* Featured Stores */}
@@ -175,7 +175,7 @@ const ExplorePage = ({
                 </div>
             )} */}
 
-            <FeaturedCollections collections={collection.collections} />
+            {/* <FeaturedCollections collections={collection.collections} /> */}
 
 
             <PreviewList tag_value="shoes" img="https://2j6jnda3hor2rfqci2oskova-wpengine.netdna-ssl.com/wp-content/uploads/2019/04/Yoox-Mens-Clothing-Store-Online.jpg" />
@@ -186,7 +186,7 @@ const ExplorePage = ({
                 </div>
             </div> */}
 
-            <Banner imgLarge={bottomImage} imgSmall={bottomImage} />
+            {/* <Banner imgLarge={bottomImage} imgSmall={bottomImage} /> */}
             {/* <SlidingBanner /> */}
 
             {/* <div style={{background:'#fff', margin:'10px', border:'1px solid rgb(214, 214, 214)'}}>

@@ -61,10 +61,10 @@ const LikePage = ({
                     <h3 style={{color: '#333', fontWeight:'300'}}>Hey, {user && user.first_name}</h3>
                 </div>
                 <div style={{margin:'10px', background:'#fff', border: '1px solid #e3e8ee'}}>
-                    <BrandOverview title={`Store Subscriptions`} stores={store.subscriptions} profile={profile} />
+                    <BrandOverview stores={store.subscriptions} profile={profile} />
                 </div>
 
-                <div className="header-nav-container">
+                {/* <div className="header-nav-container">
                     <div style={{padding:'10px 30px'}}>
                         <h5 style={{fontWeight:'300'}}>
                             My Collections
@@ -73,9 +73,9 @@ const LikePage = ({
                     <div style={{marginTop:'-2rem'}}>
                         <Header />
                     </div>
-                </div>
+                </div> */}
 
-                <LikedCollections collections={collection.collections} />
+                <LikedCollections collections={collection.collections} title="My Collections" />
                 
                 <div className="product-list-container">
                     <div style={{padding:'10px 30px'}}>

@@ -31,7 +31,7 @@ class Overview extends Component{
         return (
             <div>
                 <div style={{display: 'flex', alignItems: 'center', padding: '0 50px 0 30px'}}>
-                    <h5 style={{fontWeight:'300', color:'#ff4b2b'}}>{this.props.title}</h5>
+                    <h5 style={{fontWeight:'300', color:'#3c4043'}}>{this.props.title}</h5>
                     <div style={{flex: '1'}} />
                     {/* {this.props.toggle ? (
                         <Fragment>
