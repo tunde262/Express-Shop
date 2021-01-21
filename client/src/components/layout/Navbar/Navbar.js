@@ -393,7 +393,10 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                         ) : ( */}
                             <div onClick={() => setCreateDropdown(!createDropdown)} style={{display:'flex', alignItems:'center'}}>
                                 <div style={{display:'flex', alignItems:'center'}}>
-                                    <i style={{fontSize:'1rem'}}  className="fas fa-plus"></i>
+                                    
+                                    <button style={{fontSize:'14px', backgroundColor:'#ebf1ff', color:'#3374ff', padding:'7px 16px', border:'1px solid #ebf1ff', borderRadius:'4px', fontWeight:'500', outline:'none', textAlign:'center'}}>
+                                        <i className="fas fa-plus"></i> Add
+                                    </button>
                                 </div>
                             </div>
                         {/* )} */}
@@ -488,16 +491,16 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                                         </div>
                                     </a>
                                     <hr style={{margin:'10px 0'}} />
-                                    <a href={`https://www.cardboardexpress.com/profile/saved`} className="menu-item">
+                                    <a href={`https://www.cardboardexpress.com/shop`} className="menu-item">
                                         <small style={{color:'#ff4b2b', marginRight:'10px'}}><i className="fas fa-arrow-left"></i></small>{' '}
                                         Exit Dashboard
                                     </a>
-                                    <hr style={{margin:'10px 0'}} />
+                                    {/* <hr style={{margin:'10px 0'}} />
                                     <a href={`https://www.cardboardexpress.com/profile/orders`} className="menu-item">
                                         Billing
-                                    </a>
+                                    </a> */}
                                     <hr style={{margin:'10px 0'}} />
-                                    <a href={`https://www.cardboardexpress.com/profile/orders`} className="menu-item">
+                                    <a href={`https://www.cardboardexpress.com/profile/settings`} className="menu-item">
                                         Settings
                                     </a>
                                     {/* <hr style={{margin:'10px 0'}} />

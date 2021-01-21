@@ -72,7 +72,7 @@ const StoreMain = ({
                 <div className="store-main"> 
                     {/* {admin === "true" && store !== null && <Banner admin={admin} imgLarge={DefaultBanner} imgSmall={DefaultBanner} />} */}
                     {/* <Header /> */}
-                    <Container title="Bottoms" category="bottoms" background="MediumSlateBlue"  />
+                    <Container title="Bottoms" page={admin === "true" ? "admin" : undefined} category="bottoms" background="MediumSlateBlue"  />
                 </div>
             )
         } else if (tableShow1 === 'info') {

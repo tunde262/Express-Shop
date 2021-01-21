@@ -33,7 +33,7 @@ const ProductList = ({products, page, product, auth: { user }, handleScroll}) =>
     let addBlock = null;
 
     if (page) {
-        if(page === "collection") {
+        if(page === "collection" || page === "admin") {
             addBlock = (
                 <div className="add-to-list">
                     <i class="fas fa-plus"></i>

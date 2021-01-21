@@ -7,7 +7,7 @@ import { setNav1, setPage, setMainNav } from '../actions/navActions';
 
 import mixpanel from 'mixpanel-browser';
 
-import Footer from '../components/layout/Footer/Footer';
+import Footer from './Home/Footer';
 import Spinner from '../components/common/Spinner';
 
 import AuthModal from '../components/modals/AuthModal';
@@ -94,7 +94,7 @@ const HomePage = ({
                 setTableShow1={setTableShow1} 
                 tableShow1={tableShow1} 
             />
-            {/* <Footer /> */}
+            <Footer />
             {!loading && !isAuthenticated ? <AuthModal /> : null }
         </div>
     )

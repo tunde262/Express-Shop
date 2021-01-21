@@ -15,6 +15,7 @@ import { getCollectionById, addCollectionItem, addCollection, editCollection } f
 import { addLocation, editLocation, getLocationById, getProductLocations, getCollectionLocations, setLocations, addProductToLocation } from '../../../actions/locationActions';
 import { getOrderById } from '../../../actions/orderActions';
 
+import Footer from '../../../pages/Home/Footer';
 import Spinner from '../../common/Spinner';
 import Modal from 'react-responsive-modal';
 import InputTag from '../../common/InputTag/InputTag';
@@ -1757,6 +1758,8 @@ const ProductPage = ({
                     {pageContent}
                 </div>
             </div>
+
+            <Footer />
 
             <Modal open={displayImageModal} onClose={toggleImageModal} center styles={bg}>
                 <input

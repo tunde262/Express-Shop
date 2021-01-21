@@ -12,6 +12,8 @@ import { addProductByName } from '../../../actions/productActions';
 import { addCollectionByName } from '../../../actions/collectionActions';
 import { addLocation, editLocation } from '../../../actions/locationActions';
 
+import Footer from '../../../pages/Home/Footer';
+
 import InventoryMain from '../../page_components/inventory/InventoryMain';
 import InventoryHeader from '../../page_components/inventory/Header_Inventory';
 
@@ -530,6 +532,8 @@ const Dashboard = ({
                     </div>
                 </Fragment>
             )} */}
+
+            <Footer/>
 
             <Modal open={displayItemModal} onClose={toggleItemModal} center styles={bg}>
                 <div className="checkout-modal">

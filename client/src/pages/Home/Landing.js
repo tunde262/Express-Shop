@@ -398,7 +398,7 @@ const Landing = ({history, auth: { isAuthenticated, user, loading }, updateAuth,
                     </div>
                 </div>
             </div>
-            <Footer />
+            <Footer full />
         </main>
     </div>
   )

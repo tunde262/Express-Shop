@@ -7,6 +7,7 @@ import axios from 'axios';
 import ReactGA from 'react-ga';
 import mixpanel from 'mixpanel-browser';
 
+import Footer from './Home/Footer';
 import CategoryHeader from '../components/page_components/category/CategoryHeader';
 import CategoryMain from '../components/page_components/category/CategoryMain';
 import Header from '../components/header/Header';
@@ -316,7 +317,7 @@ const CategoryPage = ({
                     <CategoryMain filter={filter} setTableShow1={setTableShow1} tableShow1={tableShow1} />
                 </div>
                 
-                {/* <Footer /> */}
+                <Footer />
                 {!loading && !isAuthenticated ? <AuthModal /> : null }
             </div>
         )

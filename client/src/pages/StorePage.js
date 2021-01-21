@@ -9,7 +9,7 @@ import { setMainNav } from '../actions/navActions';
 
 import mixpanel from 'mixpanel-browser';
 
-import Footer from '../components/layout/Footer/Footer';
+import Footer from './Home/Footer';
 import AuthModal from '../components/modals/AuthModal';
 
 import Spinner from '../components/common/Spinner';
@@ -264,7 +264,7 @@ const StorePage = ({
                             <div className="product-list-container">
                                 <StoreMain tableShow1={tableShow1} setTableShow1={setTableShow1} admin='false' />
                             </div>
-                            {/* <Footer /> */}
+                            <Footer />
                         </Fragment>
                     ) : (
                         // <h3>This store doesn't exist</h3>
@@ -272,7 +272,7 @@ const StorePage = ({
                     )}
                 </div>
             )}
-
+            
             {!auth.loading && !auth.isAuthenticated ? <AuthModal /> : null }
         </div>
     )

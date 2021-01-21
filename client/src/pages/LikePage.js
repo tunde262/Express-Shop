@@ -11,6 +11,7 @@ import Header from '../components/header/Header';
 import CategoryOverview from '../components/Overview/categoryOverview/CategoryOverview';
 import ProductOverview from '../components/Overview/productOverview/ProductOverview';
 import Spinner from '../components/common/Spinner';
+import Footer from './Home/Footer';
 import Container from '../components/ProductList/Container';
 import AuthModal from '../components/modals/AuthModal';
 import BrandOverview from '../components/Overview/brandOverview/BrandOverview';
@@ -86,7 +87,7 @@ const LikePage = ({
                     <Container />
                 </div>
             </div>
-            {/* <Footer /> */}
+            <Footer />
             {!loading && !isAuthenticated ? <AuthModal /> : null }
         </div>
     )

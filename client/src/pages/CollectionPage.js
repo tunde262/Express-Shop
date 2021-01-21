@@ -7,7 +7,7 @@ import { getProductsInCollection } from '../actions/productActions';
 import { setMainNav } from '../actions/navActions';
 
 import ProductOverview from '../components/Overview/productOverview/ProductOverview';
-import Footer from '../components/layout/Footer/Footer';
+import Footer from './Home/Footer';
 import Header from '../components/header/Header';
 import Container from '../components/ProductList/Container';
 import AuthModal from '../components/modals/AuthModal';
@@ -75,7 +75,7 @@ const CollectionPage = ({
                 </div>
             </div>
             
-            {/* <Footer /> */}
+            <Footer />
             {!loading && !isAuthenticated ? <AuthModal /> : null }
         </div>
     )

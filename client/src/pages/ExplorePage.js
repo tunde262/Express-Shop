@@ -10,7 +10,7 @@ import "slick-carousel/slick/slick-theme.css";
 import mixpanel from 'mixpanel-browser';
 
 // Footer
-import Footer from '../components/layout/Footer/Footer';
+import Footer from './Home/Footer';
 
 import AuthModal from '../components/modals/AuthModal';
 
@@ -272,6 +272,7 @@ const ExplorePage = ({
 
             <PreviewList tag_value="personal care" img="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/tomato-skincare-1596733638.jpg?crop=0.394xw:0.639xh;0.290xw,0.166xh&resize=640:*" />
 
+            <Footer />
             {!auth.loading && !auth.isAuthenticated ? <AuthModal /> : null }
         </div>
     )

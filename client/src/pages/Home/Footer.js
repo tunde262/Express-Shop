@@ -1,27 +1,29 @@
 import React from 'react';
 
-const Footer = () => {
+const Footer = ({full}) => {
     return (
         <footer className="footer">
             <div className="goodbye">
                 <div className="goobye-content-container">
-                    <div className="goobye-content-heading">
-                        <div className="goodbye-heading-title">
-                        Start Shopping Today... It's Easy.
+                    {full && (
+                        <div className="goobye-content-heading">
+                            <div className="goodbye-heading-title">
+                            Start Selling Today... It's Easy.
+                            </div>
+                            <p>
+                            If you need help there's 24/7 email, social media DM, and text message customer support.
+                            </p>
+                            <div className="store-socials store">
+                                <button className="goobye-heading-btn active">
+                                    Start Selling
+                                </button>
+                            </div>
+                            <p className="goodbye-btn-sub-text">
+                                Need more info?
+                                <a href="#">Let's chat!</a>
+                            </p>
                         </div>
-                        <p>
-                        If you need help there's 24/7 email, social media DM, and text message customer support.
-                        </p>
-                        <div className="store-socials store">
-                            <button className="goobye-heading-btn active">
-                                Start Shopping
-                            </button>
-                        </div>
-                        <p className="goodbye-btn-sub-text">
-                            Need more info?
-                            <a href="#">Let's chat!</a>
-                        </p>
-                    </div>
+                    )}
                     {/* <div className="goobye-content-links">
                         <div>
                             <div className="goobye-content-links-list-title">

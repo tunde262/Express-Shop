@@ -58,7 +58,7 @@ const Menu = ({
     return (
         <div className="scroll-container clear">
             <div className="store-side-nav-container menu">
-                <a href="#"style={{paddingLeft:'1rem', display:'grid', gridTemplateColumns:'1fr 3fr 1fr'}}>
+                {/* <a href="#"style={{paddingLeft:'1rem', display:'grid', gridTemplateColumns:'1fr 3fr 1fr'}}>
                     <div style={{display:'flex', padding:'0', justifyContent:'center', alignItems:'center'}}>
                         <ProfileCircle />
                     </div>
@@ -69,7 +69,7 @@ const Menu = ({
                     <div style={{display:'flex', padding:'0', color:'#808080', justifyContent:'center', alignItems:'center'}}>
                         <i className="fas fa-chevron-right"></i>
                     </div>
-                </a>
+                </a> */}
                 <a href="https://www.cardboardexpress.com/home">
                     <div className="store-table-nav-items main">
                         <h3 style={{fontWeight:'600'}}><span><i style={{fontSize:'22px', marginRight:'10px'}} className="fas fa-home"></i></span>Home</h3>
@@ -113,6 +113,16 @@ const Menu = ({
                         <div className="store-table-nav-items main">
                             <h3 style={{fontWeight:'600'}}>
                                 <span>
+                                    <i style={{fontSize:'22px', marginRight:'10px'}} class="fas fa-user-circle"></i>
+                                </span>
+                                My Profile
+                            </h3>
+                        </div>
+                    </a>
+                    <a href="https://www.cardboardexpress.com/profile/settings">
+                        <div className="store-table-nav-items main">
+                            <h3 style={{fontWeight:'600'}}>
+                                <span>
                                     <i style={{fontSize:'22px', marginRight:'10px'}} className="fas fa-cog"></i>
                                 </span>
                                 Settings
@@ -151,6 +161,16 @@ const Menu = ({
                                     <i style={{fontSize:'22px', marginRight:'1rem'}} className="fas fa-flag"></i>
                                 </span>
                                 Send Feedback
+                            </h3>
+                        </div>
+                    </a>
+                    <a href="https://www.cardboardexpress.com/">
+                        <div className="store-table-nav-items secondary">
+                            <h3 style={{fontWeight:'600'}}>
+                                <span>
+                                    <i style={{fontSize:'22px', marginRight:'1rem'}} class="fas fa-sign-out-alt"></i>
+                                </span>
+                                Logout
                             </h3>
                         </div>
                     </a>
