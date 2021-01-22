@@ -163,7 +163,7 @@ const Landing = ({history, auth: { isAuthenticated, user, loading }, updateAuth,
             <div className="banner-inner">
                 <div className="landing-banner-content">
                     <h1 className="landing-banner-text">
-                        The Fastest <br/> Way To Shop
+                        The Fastest<br/> Way To Shop
                     </h1>
                     <h3 className="landing-banner-sub-text">
                         Same-Day Delivery + Thousands of stores <br/> all in one place.
