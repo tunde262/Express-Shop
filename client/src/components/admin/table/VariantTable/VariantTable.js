@@ -47,6 +47,7 @@ const VariantTable = ({
     varTags,
     onChange,
 }) => {
+    const [variantHeader, setVariantHeader] = useState(null);
     const [variantList, setVariantList] = useState([]);
     const [gotVariants, setGotVariants] = useState(false);
 
@@ -138,52 +139,135 @@ const VariantTable = ({
         setVariantList([]);
         try {
             if(sortedVariants.length > 0) {
-                sortedVariants.map(async variant => {
-                    if (variant) {
-                        if(page === 'inventory') {
-                            for(var i = 0; i < variant.locations.length; i++) {
-                                console.log('Location ID');
-                                console.log(variant.locations[i].location);
-            
-                                if(variant.locations[i].location.toString() === locId) {
-                                    const res = await axios.get(`/api/products/${variant.product}`);
-                                    setVariantList(variantList => [...variantList, (
-                                        <Variant 
-                                            detailVariant={variant} 
-                                            prodId={prodId}
-                                            handleToggle={handleToggle} 
-                                            variantItem={res.data} 
-                                            deleteVariant={deleteVariant}
-                                            editVariant={editVariant} 
-                                            onChange={onChange}
-                                            store={store}
-                                        />
-                                    )])
+                if( 
+                    sortedVariants[0].color || 
+                    sortedVariants[0].size || 
+                    sortedVariants[0].weight || 
+                    sortedVariants[0].bundle || 
+                    sortedVariants[0].type || 
+                    sortedVariants[0].scent || 
+                    sortedVariants[0].fit || 
+                    sortedVariants[0].flavor || 
+                    sortedVariants[0].material
+                ) {
+                    setVariantHeader((
+                        <div className="variant-thead">
+                            <div></div>
+                            <div>Options</div>
+                            <div>Stock</div>
+                            <div>Price</div>
+                            <div>Sale $</div>
+                            <div></div>
+                        </div> 
+                    ))
+                    sortedVariants.map(async variant => {
+                        if (variant) {
+                            if(page === 'inventory') {
+                                for(var i = 0; i < variant.locations.length; i++) {
+                                    console.log('Location ID');
+                                    console.log(variant.locations[i].location);
+                
+                                    if(variant.locations[i].location.toString() === locId) {
+                                        const res = await axios.get(`/api/products/${variant.product}`);
+                                        setVariantList(variantList => [...variantList, (
+                                            <Variant 
+                                                detailVariant={variant} 
+                                                prodId={prodId}
+                                                handleToggle={handleToggle} 
+                                                variantItem={res.data} 
+                                                deleteVariant={deleteVariant}
+                                                editVariant={editVariant} 
+                                                onChange={onChange}
+                                                store={store}
+                                            />
+                                        )])
+                                    }
+                                    
+                                    break;
                                 }
-                                
-                                break;
+                            } else {
+                                const res = await axios.get(`/api/products/${variant.product}`);
+                                setVariantList(variantList => [...variantList, (
+                                    <Variant 
+                                        detailVariant={variant} 
+                                        prodId={prodId}
+                                        handleToggle={handleToggle} 
+                                        variantItem={res.data} 
+                                        deleteVariant={deleteVariant}
+                                        editVariant={editVariant} 
+                                        onChange={onChange}
+                                        store={store}
+                                    />
+                                )])
                             }
-                        } else {
-                            const res = await axios.get(`/api/products/${variant.product}`);
-                            setVariantList(variantList => [...variantList, (
-                                <Variant 
-                                    detailVariant={variant} 
-                                    prodId={prodId}
-                                    handleToggle={handleToggle} 
-                                    variantItem={res.data} 
-                                    deleteVariant={deleteVariant}
-                                    editVariant={editVariant} 
-                                    onChange={onChange}
-                                    store={store}
-                                />
-                            )])
                         }
-                    }
-                });
+                    });
+                } else if (sortedVariants[1]) {
+                    setVariantHeader((
+                        <div className="variant-thead">
+                            <div></div>
+                            <div>Options</div>
+                            <div>Stock</div>
+                            <div>Price</div>
+                            <div>Sale $</div>
+                            <div></div>
+                        </div> 
+                    ))
+                    sortedVariants.slice(1).map(async variant => {
+                        if (variant) {
+                            if(page === 'inventory') {
+                                for(var i = 0; i < variant.locations.length; i++) {
+                                    console.log('Location ID');
+                                    console.log(variant.locations[i].location);
+                
+                                    if(variant.locations[i].location.toString() === locId) {
+                                        const res = await axios.get(`/api/products/${variant.product}`);
+                                        setVariantList(variantList => [...variantList, (
+                                            <Variant 
+                                                detailVariant={variant} 
+                                                prodId={prodId}
+                                                handleToggle={handleToggle} 
+                                                variantItem={res.data} 
+                                                deleteVariant={deleteVariant}
+                                                editVariant={editVariant} 
+                                                onChange={onChange}
+                                                store={store}
+                                            />
+                                        )])
+                                    }
+                                    
+                                    break;
+                                }
+                            } else {
+                                const res = await axios.get(`/api/products/${variant.product}`);
+                                setVariantList(variantList => [...variantList, (
+                                    <Variant 
+                                        detailVariant={variant} 
+                                        prodId={prodId}
+                                        handleToggle={handleToggle} 
+                                        variantItem={res.data} 
+                                        deleteVariant={deleteVariant}
+                                        editVariant={editVariant} 
+                                        onChange={onChange}
+                                        store={store}
+                                    />
+                                )])
+                            }
+                        }
+                    });
+                } else {
+                    setVariantList([(
+                        <div className="no-rides">
+                            <h1>No Variants</h1>
+                            <h2>What exactly is a variant? <a href="#">Learn More.</a></h2>
+                        </div>
+                    )])
+                }
             } else {
                 setVariantList([(
-                    <div style={{width:'100%', display:'flex', justifyContent:'center', alignItems:'center'}}>
-                        <p>No Variants</p>
+                    <div className="no-rides">
+                        <h1>No Variants</h1>
+                        <h2>What exactly is a variant? <a href="#"> Learn More.</a></h2>
                     </div>
                 )])
             }
@@ -199,7 +283,27 @@ const VariantTable = ({
 
     let count;
     if(sortedVariants !== null && !loading) {
-        count = sortedVariants.length;
+        if(sortedVariants.length > 0) {
+            if(
+                sortedVariants[0].color || 
+                sortedVariants[0].size || 
+                sortedVariants[0].weight || 
+                sortedVariants[0].bundle || 
+                sortedVariants[0].type || 
+                sortedVariants[0].scent || 
+                sortedVariants[0].fit || 
+                sortedVariants[0].flavor || 
+                sortedVariants[0].material
+            ) {
+                count = sortedVariants.length;
+            } else if (sortedVariants[1]){
+                count = sortedVariants.length - 1;
+            } else {
+                count = 0;
+            }
+        } else {
+            count = 0;
+        }
     }
 
     const modalStyles = {
@@ -241,12 +345,10 @@ const VariantTable = ({
             {page !== 'dashboard' ? (
                 <div onClick={setModal} style={{display:'flex', justifyContent:'space-between', alignItems:'center', height:'50px'}}>
                     <p style={{margin:'0 20px', color:'#208cec'}}>{count} Options</p>
-                    <div className="store-socials">
-                        <button style={{outline:'none', display:'flex', alignItems:'center', justifyContent:'center'}}>
-                            <i style={{margin:'0 10px', fontSize:'1rem'}} class="fas fa-plus-circle"></i>
-                            Add Variant
-                        </button>
-                    </div>
+                    <button style={{fontSize:'14px', backgroundColor:'#ebf1ff', color:'#3374ff', padding:'7px 16px', border:'1px solid #ebf1ff', borderRadius:'4px', fontWeight:'500', outline:'none', textAlign:'center'}}>
+                        {/* <i style={{margin:'0 10px', fontSize:'1rem'}} class="fas fa-plus"></i> */}
+                        Add Variant
+                    </button>
                 </div>
                 // <section>
                 //     <p style={{alignSelf: "flex-end"}}>{count} Varients</p>
@@ -255,14 +357,7 @@ const VariantTable = ({
             ) : null}
 
             <div className="table">
-                <div className="variant-thead">
-                    <div></div>
-                    <div>Options</div>
-                    <div>Stock</div>
-                    <div>Price</div>
-                    <div>Sale $</div>
-                    <div></div>
-                </div>
+                {variantHeader}
                 <div className="tbody">{!variantList.length > 0 ? <Spinner /> : variantList}</div>
             </div>
 

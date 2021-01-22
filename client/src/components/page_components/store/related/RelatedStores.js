@@ -31,7 +31,13 @@ const RelatedStores = ({ store, product, auth, profile, favorite }) => {
                 });
             } else {
                 setStoresList([(
-                    <p style={{margin:'0'}}>Sorry no stores...</p>
+                    <div className="no-rides">
+                        <h1>Nothing Found</h1>
+                        <h2>
+                            Sorry we couldn't find anything.{' '} 
+                            <a href="/explore">Find Stores</a>
+                        </h2> 
+                    </div>
                 )])
             }
         } catch (err) {

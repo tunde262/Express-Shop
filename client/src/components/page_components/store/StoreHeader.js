@@ -158,14 +158,14 @@ const StoreHeader = ({ store: { store, loading }, admin, tableShow1, setTable })
                             </Fragment>
                         )}
                     </div>
-                    <ul class="nav-underline store admin">
+                    <ul class="profile-underline store admin">
                         <div onClick={e => setTable('shop')} className={tableShow1 === "shop" && "active"}><li><i class="fas fa-shopping-bag"></i><p>Shop</p></li></div>
-                        <div onClick={e => setTable('info')} className={tableShow1 === "info" && "active"}><li><i class="fas fa-info-circle"></i><p>Info</p></li></div>
+                        {/* <div onClick={e => setTable('info')} className={tableShow1 === "info" && "active"}><li><i class="fas fa-info-circle"></i><p>Info</p></li></div> */}
                         <div onClick={e => setTable('related')} className={tableShow1 === "related" && "active"}><li><i class="fas fa-clipboard-list"></i><p>Related</p></li></div>
                     </ul>
                 </Fragment>
             ) : (
-                <h3>This store doesn't exist</h3>
+                null
             )}
         </Fragment>
     )

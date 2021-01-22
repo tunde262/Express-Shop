@@ -91,7 +91,10 @@ const Collection = ({ collection: {loading, collections}, store, getStoreCollect
                 });
             } else {
                 setCollectionList(collectionList => [...collectionList, (
-                    <button>Add Item</button>
+                    <div className="no-rides">
+                        <h1>No Collections</h1>
+                        <h2>Help customers navigate your store. <a href="#">Learn More.</a></h2>
+                    </div>
                 )])
             }
         } catch (err) {
@@ -99,7 +102,7 @@ const Collection = ({ collection: {loading, collections}, store, getStoreCollect
         }
     }
 
-    if(!gotCollections && !loading && collections.length > 0) {
+    if(!gotCollections && !loading) {
         renderCollectionList();
         setGotCollections(true);
     }
@@ -144,27 +147,29 @@ const Collection = ({ collection: {loading, collections}, store, getStoreCollect
                 <Link to="/admin/add-collection" style={{background: '#42b499', color:'#fff'}} className="btn">Add Collection</Link>
             </section> */}
             <table className="table">
-                <div className={!isTablet ? "secondary-thead" : "secondary-thead-mobile"}>
-                    {!isTablet ? (
-                        <Fragment>
-                            <div>
-                                <input type="checkbox" value=""/>
-                            </div>
-                            <div><p>Name</p></div>
-                            <div><p>Qty</p></div>
-                            <div><p>Sold</p></div>
-                            <div><p>Tag(s)</p></div>
-                            <div></div>
-                        </Fragment>
-                    ) : (
-                        <Fragment>
-                            <div><p>Name</p></div>
-                            <div><p>Qty</p></div>
-                            <div><p>Sold</p></div>
-                        </Fragment>
-                    )}
-                </div>
-                <div className="tbody">{!collectionList.length > 0 ? <Spinner /> : collectionList}</div>
+                {collections.length > 0 && 
+                    <div className={!isTablet ? "secondary-thead" : "secondary-thead-mobile"}>
+                        {!isTablet ? (
+                            <Fragment>
+                                <div>
+                                    <input type="checkbox" value=""/>
+                                </div>
+                                <div><p>Name</p></div>
+                                <div><p>Qty</p></div>
+                                <div><p>Sold</p></div>
+                                <div><p>Tag(s)</p></div>
+                                <div></div>
+                            </Fragment>
+                        ) : (
+                            <Fragment>
+                                <div><p>Name</p></div>
+                                <div><p>Qty</p></div>
+                                <div><p>Sold</p></div>
+                            </Fragment>
+                        )}
+                    </div>
+                }
+                <div className="tbody">{!collectionList.length > 0 || !gotCollections ? <Spinner /> : collectionList}</div>
             </table>
 
             {/* <Modal open={modalShow} onClose={() => setModal(false)}>

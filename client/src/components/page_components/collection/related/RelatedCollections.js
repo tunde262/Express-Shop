@@ -35,7 +35,13 @@ const RelatedCollections = ({ collection, product, followCollection, auth: { use
                 });
             } else {
                 setCollectionsList([(
-                    <p style={{margin:'0'}}>Sorry no collections...</p>
+                    <div className="no-rides">
+                        <h1>Nothing Found</h1>
+                        <h2>
+                            Sorry we couldn't find anything.{' '} 
+                            <a href="/explore">Explore Products</a>
+                        </h2> 
+                    </div>
                 )])
             }
         } catch (err) {

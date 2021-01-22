@@ -25,10 +25,10 @@ const ProductListBlock = ({ handleScroll }) => {
         <div className="product-list-container" id="nearby-container-list">
             
             <Fragment>
-                <div className="filter-container">
+                {/* <div className="filter-container">
                     <span style={{fontSize:'15px', fontWeight:'bold', color:'#808080', letterSpacing:'2px', margin:'10px'}}>Filter</span>
                     <i class="fas fa-sliders-h"></i>
-                </div>
+                </div> */}
                 <Container />
                 <Spinner />
             </Fragment>

@@ -30,7 +30,7 @@ import TextField from 'material-ui/TextField';
 import ReactGA from 'react-ga';
 import mixpanel from 'mixpanel-browser';
 
-import Footer from '../components/layout/Footer/Footer';
+import Footer from '../pages/Home/Footer';
 import Modal from 'react-responsive-modal';
 import { ButtonContainer } from './Button';
 import { BackButton } from './common/BackButton';
@@ -909,7 +909,7 @@ const Details = ({
 
         detailItem = (
             <Fragment>
-                <div style={{background:'#fff', border: '1px solid #e3e8ee', margin:'10px'}}>
+                <div style={{background:'#fff', boxShadow: '0 1px 2px 0 rgba(0,0,0,.1)', border: '1px solid #ddd', borderRadius: '6px', margin:'10px'}}>
                     <section className="container">
                         <div id="detail-content-wrapper">
                             {/* <div id="breadcrumb">
@@ -1016,16 +1016,15 @@ const Details = ({
                                     </div>
                                     <h3 style={{color:'#ff4b2b', marginTop:'-1rem', fontWeight:'bold'}}>${detailProduct.price}</h3>
                                     {/* <p><i style={{color:'#808080'}} class="fas fa-truck"></i> Next Delivery Time: <span style={{fontWeight:'bold', color:'#ff4b2b'}}>1pm</span></p> */}
-                                    <p><i style={{color:'#808080'}} class="fas fa-truck"></i> Est. Delivery Time: <span style={{fontWeight:'bold', color:'#ff4b2b'}}>2 hr</span></p>
-                                    <p style={{color:'#808080', marginTop:'-1rem'}}><i className="fas fa-sign-out-alt" /> Return eligible</p>
-                                    <hr style={{background:'#f4f4f4', height:'1px', marginBottom:'0.5rem'}}/>
-                                    <div style={{display:'flex', justifyContent:'space-between', alignItems: 'center', marginTop:'-0.6rem', padding:'0 1rem'}}>
+                                    {/* <p><i style={{color:'#808080'}} class="fas fa-truck"></i> Est. Delivery Time: <span style={{fontWeight:'bold', color:'#ff4b2b'}}>2 hr</span></p> */}
+                                    {/* <p style={{color:'#808080', marginTop:'-1rem'}}><i className="fas fa-sign-out-alt" /> Return eligible</p> */}
+                                    <div style={{display:'flex', justifyContent:'space-between', alignItems: 'center', /*marginTop:'-0.6rem',*/ margin:'0.6rem auto', padding:'0 1rem', boxShadow: '0 1px 2px 0 rgba(0,0,0,.1)', border: '1px solid #ddd', borderRadius: '6px'}}>
                                         <div style={{display:'flex', alignItems: 'center'}}>
                                             <a href={`https://www.cardboardexpress.com/store/${detailProduct.store._id}`}>
                                                 {detailProduct.store.img_name ? (
-                                                    <img style={{height: '35px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${detailProduct.store.img_name}`} alt="img" /> 
+                                                    <img style={{height: '35px', width:'35px', marginRight: '1rem', boxShadow: '0 1px 2px 0 rgba(0,0,0,.1)', border: '1px solid #ddd', borderRadius: '50px'}} src={`/api/stores/image/${detailProduct.store.img_name}`} alt="img" /> 
                                                 ) : (
-                                                    <div style={{background:'#f4f4f4', height: '35px', width:'35px', marginRight: '1rem', borderRadius: '50px'}} />
+                                                    <div style={{background:'#f4f4f4', height: '35px', width:'35px', marginRight: '1rem', boxShadow: '0 1px 2px 0 rgba(0,0,0,.1)', border: '1px solid #ddd', borderRadius: '50px'}} />
                                                 )}
                                             </a>
                                             <div style={{ display: 'flex', flexDirection:'column', lineHeight:'17px', marginTop:'0.5rem'}}>
@@ -1046,7 +1045,6 @@ const Details = ({
                                             </div>
                                         )}
                                     </div>
-                                    <hr style={{marginTop:'-0.5rem', background:'#f4f4f4', height:'1px'}}/>
                                 </div>
                                 <div class="detail-description-box">
                                     <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}>
@@ -1147,12 +1145,12 @@ const Details = ({
                         </div>
                     </section>
                 </div>
-                <div style={{margin:'10px', background:'#fff', border: '1px solid #e3e8ee'}}>
+                <div style={{margin:'10px', background:'#fff', boxShadow: '0 1px 2px 0 rgba(0,0,0,.1)', border: '1px solid #ddd', borderRadius: '6px'}}>
                     <ProductOverview shop title="You may also like..." products={products} link={`/collection?filter=${detailProduct.category}`} />
                 </div>
 
                 {store.stores.length > 0 && detailProduct && (
-                    <div style={{margin:'10px', background:'#fff', border: '1px solid #e3e8ee'}}>
+                    <div style={{margin:'10px', background:'#fff', boxShadow: '0 1px 2px 0 rgba(0,0,0,.1)', border: '1px solid #ddd', borderRadius: '6px'}}>
                         <BrandOverview title={`Other Stores For ${detailProduct.category}`} stores={store.stores} profile={profile} />
                     </div>
                 )}
@@ -1234,11 +1232,11 @@ const Details = ({
             <Fragment>
                 <div style={{maxWidth:'100vw', background:'#f7fafc'}}>
                     <div className="detail-container">
-                        <ul class="home-underline store" style={{background:'#fff', border:'1px solid #e3e8ee'}}>
+                        {/* <ul class="home-underline store" style={{background:'#fff', border:'1px solid #e3e8ee'}}>
                             <div onClick={e => handleTableShow1('for you')} className={tableShow1 === "for you" && "active"}><li><p>For You</p></li></div>
                             <div onClick={e => handleTableShow1('popular')} className={tableShow1 === "popular" && "active"}><li><p>Popular</p></li></div>
                             <div onClick={e => handleTableShow1('nearby')} className={tableShow1 === "nearby" && "active"}><li><p>Nearby</p></li></div>
-                        </ul>
+                        </ul> */}
                         
                         <div className="header-nav-container detail">
                             <div style={{padding:'10px'}}>
@@ -1251,9 +1249,11 @@ const Details = ({
                             </div>
                         </div>
                         {detailItem}
+
+                        <Footer />
                     </div>
                 </div>
-                
+
                 {!auth.loading && !auth.isAuthenticated ? <AuthModal /> : null }
             </Fragment>
         )

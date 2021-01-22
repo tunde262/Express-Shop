@@ -50,13 +50,14 @@ export default class TextEditor extends Component {
       console.log(newState)
     }
     return (
-      <div style={{background:'#fff', border:'1px solid rgb(214, 214, 214)'}}>
+      <div style={{background:'#fff', minHeight:'200px'}}>
         <Editor
           editorState={editorState}
           toolbarClassName="toolbarClassName"
           wrapperClassName="wrapperClassName"
           editorClassName="editorClassName"
           onEditorStateChange={this.onEditorStateChange}
+          editorStyle={{ minHeight:'200px', cursor:'text', paddingLeft:'10px', paddingRight:'10px' }}
         />
         {/* <textarea
           disabled

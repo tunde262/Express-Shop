@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 // import { deleteStore } from '../../../../../actions/storeActions';
 
-const Header_Settings = ({store, inventoryNav, setTable, auth: { user }, profile: {profile, loading }}) => { 
+const Header_Settings = ({store, ordersNav, setTable, auth: { user }, profile: {profile, loading }}) => { 
 
     return (
         // <div>
@@ -24,19 +24,19 @@ const Header_Settings = ({store, inventoryNav, setTable, auth: { user }, profile
             <div>
                 <ul class="admin-underline">
                     <div 
-                        onClick={e => setTable('products')} className={inventoryNav === "products" && "active"}
+                        onClick={e => setTable('all')} className={ordersNav === "all" && "active"}
                     >
-                        <li><p>Items</p></li>
+                        <li><p>All</p></li>
                     </div>
                     <div 
-                        onClick={e => setTable('collections')} className={inventoryNav === "collections" && "active"}
+                        onClick={e => setTable('open')} className={ordersNav === "open" && "active"}
                     >
-                        <li><p>Collections</p></li>
+                        <li><p>Open</p></li>
                     </div>
                     <div 
-                        onClick={e => setTable('locations')} className={inventoryNav === "locations" && "active"}
+                        onClick={e => setTable('closed')} className={ordersNav === "closed" && "active"}
                     >
-                        <li><p>Locations</p></li>
+                        <li><p>Closed</p></li>
                     </div>
                 </ul>
             </div>

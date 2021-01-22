@@ -13,7 +13,7 @@ import eyeEmoji from '../../../utils/imgs/eye_emoji.png';
 
 import ButtonSpinner from '../../common/ButtonSpinner';
 
-const ProductCard = ({ auth: { user }, preview, addLike, modalOpen, product, handleDetail, addToCart, openModal, closeModal, addTotals}) => {
+const ProductCard = ({ auth: { user }, preview, page, addLike, modalOpen, product, handleDetail, addToCart, openModal, closeModal, addTotals}) => {
     // componentDidMount() {
     //     console.log(this.props.product);
     // }
@@ -167,7 +167,7 @@ const ProductCard = ({ auth: { user }, preview, addLike, modalOpen, product, han
                     </div>
                 </div>
             </div>
-            {preview ? null : (
+            {preview || page === "admin" ? null : (
                 <div className="actions">
                     <div className="desktop-actions" style={{width:'100%', alignItems:'center', paddingRight:'10px'}}>
                         {/* <button 

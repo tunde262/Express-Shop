@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Table from '../../admin/table/Table';
 
-const OrdersMain = ({ ordersNav, setTable, store: { store, loading } }) => {
+const OrdersMain = ({ ordersNav, order, setTable, store: { store, loading } }) => {
     const accountLink = 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=http://localhost:3000/dashboard/&client_id=ca_FFrwAOlKVRTGBrORx2OTVFLXJeM3gHHe&state=SECRET';
     useEffect(() => {
         var url_string = (window.location.href);
@@ -56,27 +56,29 @@ const OrdersMain = ({ ordersNav, setTable, store: { store, loading } }) => {
 
     return (
         <Fragment>
-            <section className="stats">
-                {/* <p onClick={viewDashboard}>View Dashboard</p> */}
-                <div className="stats-box">
-                    <div>
-                        <h4 style={{color:'#808080'}}>Sold Today</h4>
-                        <h2 style={{color:'#ff4b2b', fontWeight:'300'}}> 2</h2>
+            {order.orders.length > 0 && (
+                <section className="stats" style={{marginTop:'10px'}}>
+                    {/* <p onClick={viewDashboard}>View Dashboard</p> */}
+                    <div className="stats-box">
+                        <div>
+                            <h4 style={{color:'#808080'}}>Sold Today</h4>
+                            <h2 style={{color:'#ff4b2b', fontWeight:'300'}}> 2</h2>
+                        </div>
+                        <div>  
+                            <h4 style={{color:'#808080'}}>Sold Last 7 Days</h4>
+                            <h2 style={{color:'#ff4b2b', fontWeight:'300'}}> 2</h2>
+                        </div>
+                        <div>   
+                            <h4 style={{color:'#808080'}}>Sales Today</h4>
+                            <h2 style={{color:'#ff4b2b', fontWeight:'300'}}>$0.00</h2>
+                        </div>
+                        <div>   
+                            <h4 style={{color:'#808080'}}>Sales Last 7 Days</h4>
+                            <h2 style={{color:'#ff4b2b', fontWeight:'300'}}>$0.00</h2>
+                        </div>
                     </div>
-                    <div>  
-                        <h4 style={{color:'#808080'}}>Sold Last 7 Days</h4>
-                        <h2 style={{color:'#ff4b2b', fontWeight:'300'}}> 2</h2>
-                    </div>
-                    <div>   
-                        <h4 style={{color:'#808080'}}>Sales Today</h4>
-                        <h2 style={{color:'#ff4b2b', fontWeight:'300'}}>$0.00</h2>
-                    </div>
-                    <div>   
-                        <h4 style={{color:'#808080'}}>Sales Last 7 Days</h4>
-                        <h2 style={{color:'#ff4b2b', fontWeight:'300'}}>$0.00</h2>
-                    </div>
-                </div>
-            </section>
+                </section>
+            )}
             <Table page="orders" inventoryNav="orders"  setTable={setTable} />
         </Fragment>
     )
@@ -84,10 +86,12 @@ const OrdersMain = ({ ordersNav, setTable, store: { store, loading } }) => {
 
 OrdersMain.propTypes = {
     store: PropTypes.object.isRequired,
+    order: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-    store: state.store
+    store: state.store,
+    order: state.order
 })
 
 export default connect(mapStateToProps)(OrdersMain);

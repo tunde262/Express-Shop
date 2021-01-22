@@ -20,19 +20,33 @@ const ProductList = ({products, page, product, auth: { user }, handleScroll}) =>
         if(products.length > 0) {
             productList = products.map(product => {
                 return (
-                    <ProductCard key={product._id} product={product} />
+                    <ProductCard key={product._id} page={page} product={product} />
                 )
             })
         }
         else {
             // productList = <Title name="No Products" title="Available" />
-            productList = <p>Sorry no items...</p>;
+            productList = (
+                <div className="no-rides">
+                    <h1>No Products</h1>
+                    {page && page === "admin" ? (
+                        <h2>
+                            Sorry this store is not currently selling anything.{' '} 
+                            <a href="#"> Add Product</a>
+                        </h2> 
+                    ) : (
+                        <h2>
+                            Sorry we could't find anything. 
+                        </h2> 
+                    )}
+                </div>
+            );
         }
     }
 
     let addBlock = null;
 
-    if (page) {
+    if (page && products.length > 0) {
         if(page === "collection" || page === "admin") {
             addBlock = (
                 <div className="add-to-list">
@@ -44,7 +58,7 @@ const ProductList = ({products, page, product, auth: { user }, handleScroll}) =>
 
     return (
         <Fragment>
-            <div style={{padding: '0', display:'flex', justifyContent:'center', flexWrap:'wrap'}}>
+            <div style={{padding: '0', display:'flex', borderRadius:'6px', overflow:'hidden', justifyContent:'center', flexWrap:'wrap'}}>
                 {addBlock}
                 {productList}
             </div>

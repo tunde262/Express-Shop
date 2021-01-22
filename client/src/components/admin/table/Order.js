@@ -25,23 +25,30 @@ const Order = ({ order, store: { store, loading } }) => {
 
             ));
         } else {
-            orderList = <h3>No Orders</h3>
+            orderList = (
+                <div className="no-rides">
+                    <h1>No Orders</h1>
+                    <h2>Learn how to increase sales. <a href="#">Learn more.</a></h2>
+                </div>
+            );
         }
     }
     return (
         <Fragment>
-            <h2 className="my-2">Orders</h2>
+            {/* <h2 className="my-2">Orders</h2> */}
             <table className="table">
-                <thead>
-                    <tr>
-                        <th>Order</th>
-                        <th className="hide-sm">Date</th>
-                        <th className="hide-sm">Customer</th>
-                        <th>Status</th>
-                        <th>Total</th>
-                        <th />
-                    </tr>
-                </thead>
+                {order.orders.length > 0 && (
+                    <thead>
+                        <tr>
+                            <th>Order</th>
+                            <th className="hide-sm">Date</th>
+                            <th className="hide-sm">Customer</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                            <th />
+                        </tr>
+                    </thead>
+                )}
                 <tbody>{orderList}</tbody>
             </table>
         </Fragment>

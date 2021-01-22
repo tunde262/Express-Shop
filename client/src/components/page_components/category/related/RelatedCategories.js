@@ -502,7 +502,15 @@ const RelatedCategories = ({ filter, product }) => {
     } else if (filter === 'mens facial tissues') {
         relatedList = <CategoryList product={product} listData={mensSkinCare} />
     } else {
-        relatedList = <p>Sorry not a category...</p>
+        relatedList = (
+            <div className="no-rides">
+                <h1>Nothing Found</h1>
+                <h2>
+                    Sorry something went wrong.{' '} 
+                    <a href="/explore">Explore Products</a>
+                </h2> 
+            </div>
+        )
     }
 
 

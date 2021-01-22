@@ -12,7 +12,7 @@ const MapBlock = ({
 }) => {
     return (
         <div id="order-map" style={{marginTop:'10px', overflow:'hidden'}}>
-            <div style={{margin:'0', width:'100%',border:'2px dashed #cecece',borderRadius: '10px'}}>
+            <div style={{margin:'0', width:'100%', boxShadow: '0 1px 2px 0 rgba(0,0,0,.1)', border: '1px solid #ddd', borderRadius: '6px'}}>
                 <div style={{height:'250px', maxHeight:'250px', width:'100%'}}>
                     {/* <Map 
                         defaultZoom="8"

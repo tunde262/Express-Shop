@@ -129,6 +129,11 @@
             display: none;
         }
     }
+
+    .add-to-list {
+        width: 20vw;
+        height: calc(20vw + 85px);
+    }
 }
 
 
@@ -334,6 +339,11 @@
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 1rem;
+    }
+
+    .add-to-list {
+        width: 30vw;
+        height: calc(30vw + 85px);
     }
 
     .cart-actions {
@@ -733,5 +743,10 @@
 
     main#home h1 {
         margin-top: 10vh;
+    }
+
+    .add-to-list {
+        width: 45vw;
+        height: calc(45vw + 85px);
     }
 }

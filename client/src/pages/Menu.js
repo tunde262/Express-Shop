@@ -4,6 +4,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getCart } from '../actions/productActions';
 import { setNav1, setPage, setMainNav } from '../actions/navActions';
+import { logout } from '../actions/authActions';
 
 import mixpanel from 'mixpanel-browser';
 
@@ -25,6 +26,7 @@ const Menu = ({
     setMainNav,
     setNav1, 
     setPage,
+    logout,
     location,
     history
 }) => {
@@ -70,7 +72,7 @@ const Menu = ({
                         <i className="fas fa-chevron-right"></i>
                     </div>
                 </a> */}
-                <a href="https://www.cardboardexpress.com/home">
+                <a href="https://www.cardboardexpress.com/shop">
                     <div className="store-table-nav-items main">
                         <h3 style={{fontWeight:'600'}}><span><i style={{fontSize:'22px', marginRight:'10px'}} className="fas fa-home"></i></span>Home</h3>
                     </div>
@@ -93,15 +95,15 @@ const Menu = ({
                     <i style={{color:'#808080', fontSize:'12px'}} class="fas fa-chevron-right"></i>
                 </div>
                 
-                <a href="https://www.cardboardexpress.com/explore">
+                <a href="https://www.cardboardexpress.com/profile/subscriptions">
                     <div className="store-table-nav-items main">
                         <h3 style={{fontWeight:'600'}}><span><i style={{fontSize:'22px', marginRight:'1rem'}} className="fas fa-compass"></i></span>Subscriptions</h3>
                     </div>
                 </a>
 
-                <a href="https://www.cardboardexpress.com/explore">
+                <a href="https://www.cardboardexpress.com/profile/saved">
                     <div className="store-table-nav-items main">
-                        <h3 style={{fontWeight:'600'}}><span><i style={{fontSize:'22px', marginRight:'1rem'}} className="fas fa-compass"></i></span>Saved</h3>
+                        <h3 style={{fontWeight:'600'}}><span><i style={{fontSize:'22px', marginRight:'1rem'}} className="fas fa-heart"></i></span>Saved</h3>
                     </div>
                 </a>
 
@@ -109,7 +111,7 @@ const Menu = ({
                     <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}} className="store-table-nav-items header-btn">
                         <h3 style={{fontWeight:'600', color:'#808080'}}>Account</h3>
                     </div>
-                    <a href="https://www.cardboardexpress.com/profile/settings">
+                    <a href="https://www.cardboardexpress.com/profile">
                         <div className="store-table-nav-items main">
                             <h3 style={{fontWeight:'600'}}>
                                 <span>
@@ -133,7 +135,7 @@ const Menu = ({
                         <h3>Payments</h3>
                         <p>Add payment methods</p>
                     </div> */}
-                    <a href="https://www.cardboardexpress.com/">
+                    {/* <a href="https://www.cardboardexpress.com/history">
                         <div className="store-table-nav-items secondary">
                             <h3 style={{fontWeight:'600'}}>
                                 <span>
@@ -163,8 +165,8 @@ const Menu = ({
                                 Send Feedback
                             </h3>
                         </div>
-                    </a>
-                    <a href="https://www.cardboardexpress.com/">
+                    </a> */}
+                    <a href="/" onClick={logout}>
                         <div className="store-table-nav-items secondary">
                             <h3 style={{fontWeight:'600'}}>
                                 <span>
@@ -190,7 +192,8 @@ Menu.propTypes = {
     setMainNav: PropTypes.func.isRequired,
     setNav1: PropTypes.func.isRequired,
     setPage: PropTypes.func.isRequired,
-    nav: PropTypes.object.isRequired
+    nav: PropTypes.object.isRequired,
+    logout: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -203,5 +206,6 @@ export default connect(mapStateToProps, {
     getCart, 
     setMainNav, 
     setNav1, 
-    setPage 
+    setPage,
+    logout 
 })(withRouter(Menu));

@@ -82,39 +82,49 @@ const InventoryActivityBlock = ({
                 <ul id="progress">
                     <li>
                         <div class="node green"></div>
-                        <p>Order Placed</p>
-                        <p style={{marginTop:'20px', color:'#808080'}}><small>05/10/2001 5:35pm</small></p>
+                        <p>
+                            Order Placed<br/>
+                            <small style={{marginTop:'20px', color:'#808080'}}>05/10/2001 5:35pm</small>
+                        </p>
                     </li>
                     <li>
                         <div class="divider grey"></div>
                     </li>
                     <li>
                         <div class="node grey"></div>
-                        <p>Collecting Items</p>
-                        <p style={{marginTop:'20px', color:'#808080'}}><small>05/10/2001 5:35pm</small></p>
+                        <p>
+                            Collecting Items<br/>
+                            <small style={{marginTop:'20px', color:'#808080'}}>05/10/2001 5:35pm</small>
+                        </p>
                     </li>
                     <li>
                         <div class="divider grey"></div></li>
                     <li>
                         <div class="node grey"></div>
-                        <p>Awaiting Delivery</p>
-                        <p style={{marginTop:'20px', color:'#808080'}}><small>05/10/2001 5:35pm</small></p>
+                        <p>
+                            Awaiting Delivery<br/>
+                            <small style={{marginTop:'20px', color:'#808080'}}>05/10/2001 5:35pm</small>
+                        </p>
                     </li>
                     <li>
                         <div class="divider grey"></div>
                     </li>
                     <li>
                         <div class="node grey"></div>
-                        <p>En Route Started</p>
-                        <p style={{marginTop:'20px', color:'#808080'}}><small>05/10/2001 5:35pm</small></p>
+                        <p>
+                            En Route Started<br/>
+                            <small style={{marginTop:'20px', color:'#808080'}}>05/10/2001 5:35pm</small>
+                        </p>
                     </li>
                     <li>
                         <div class="divider grey"></div>
                     </li>
                     <li>
                         <div class="node grey"></div>
-                        <p>Left At Door</p>
-                        <p style={{marginTop:'20px', color:'#808080'}}><small>05/10/2001 5:35pm</small></p>
+                        <p>
+                            Left At Door<br/>
+                            <small style={{marginTop:'20px', color:'#808080'}}>05/10/2001 5:35pm</small>
+                        </p>
                     </li>
                 </ul>
             </div>

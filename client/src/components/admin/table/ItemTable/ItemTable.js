@@ -135,7 +135,10 @@ const ItemTable = ({
                 });
             } else {
                 setProductList([(
-                    <button>Add Item</button>
+                    <div className="no-rides">
+                        <h1>No Products</h1>
+                        <h2>Get closer to your first sale by adding products. <a href="#">Learn More.</a></h2>
+                    </div>
                 )])
             }
         } catch (err) {
@@ -212,20 +215,22 @@ const ItemTable = ({
             ) : null}
             
             <div className="table">
-                <div className="thead">
-                    {!isTablet && (
-                        <Fragment>
-                            <div>
-                                <input type="checkbox" value=""/>
-                            </div>
-                            <div><p>Img</p></div>
-                            <div><p>Name</p></div>
-                            <div><p>Awaiting</p></div>
-                            <div><p>Sold</p></div>
-                            <div></div>
-                        </Fragment>
-                    )}
-                </div>
+                {gotProducts && (
+                    <div className="thead">
+                        {!isTablet && (
+                            <Fragment>
+                                <div>
+                                    <input type="checkbox" value=""/>
+                                </div>
+                                <div><p>Img</p></div>
+                                <div><p>Name</p></div>
+                                <div><p>Awaiting</p></div>
+                                <div><p>Sold</p></div>
+                                <div></div>
+                            </Fragment>
+                        )}
+                    </div>
+                )}
                 <div className="tbody">{!productList.length > 0 ? <Spinner /> : productList}</div>
             </div>
 

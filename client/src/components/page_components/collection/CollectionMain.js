@@ -51,10 +51,10 @@ const CollectionMain = ({
         
                     {/* <h1>Collection Page</h1> */}
                     <div className="product-list-container">
-                        <div className="filter-container">
+                        {/* <div className="filter-container">
                             <span style={{fontSize:'15px', fontWeight:'bold', color:'#808080', letterSpacing:'2px', margin:'10px'}}>Filter</span>
                             <i class="fas fa-sliders-h"></i>
-                        </div>
+                        </div> */}
                         <Container page="collection" />
                     </div>
                 </Fragment>
@@ -65,7 +65,15 @@ const CollectionMain = ({
             );
         }
     } else {
-        pageContent = (<h3>This Collection doesn't exist</h3>);
+        pageContent = (
+            <div className="no-rides">
+                <h1>Nothing Found</h1>
+                <h2>
+                    Sorry something went wrong.{' '} 
+                    <a href="/explore">Explore Products</a>
+                </h2> 
+            </div>
+        );
     }
 
     if(!gotCollections && tableShow1 === 'related' && collection.collection) {

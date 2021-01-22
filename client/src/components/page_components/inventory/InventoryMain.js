@@ -106,7 +106,7 @@ const InventoryMain = ({ inventoryNav, setTable, store: { store, loading } }) =>
     return (
         <Fragment>
             {inventoryNav === 'products' || inventoryNav ==='inventory' ? (
-                <section className="stats">
+                <section className="stats" style={{marginTop:'10px'}}>
                     <div className="stats-box">
                         <div>
                             <h2 style={{color:'#ff4b2b', fontWeight:'300'}}>2,000</h2>

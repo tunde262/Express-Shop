@@ -31,6 +31,7 @@ const LocationTable = ({
     setVarModal,
     editVarLocation
 }) => {
+    const [locationHeader, setLocationHeader] = useState(null);
     const [locationList, setLocationList] = useState([]);
     const [gotLocations, setGotLocations] = useState(false);
 
@@ -67,6 +68,13 @@ const LocationTable = ({
         try {
             if(page === "variant"){
                 if(detailVariant.locations.length > 0) {
+                    setLocationHeader((
+                        <div className="secondary-thead-mobile">
+                            <div style={{padding:'0 1rem'}}><p>Nickname</p></div>
+                            <div><p>Qty</p></div>
+                            <div><p>Sold</p></div>
+                        </div>
+                    ))
                     detailVariant.locations.map(async location => {
                         if (location) {
                             const res = await axios.get(`/api/darkstores/${location.location}`);
@@ -86,11 +94,21 @@ const LocationTable = ({
                     });
                 } else {
                     setLocationList([(
-                        <button>Add Location</button>
+                        <div className="no-rides">
+                            <h1>No Locations</h1>
+                            <h2>Manage inventory better by adding storage locations. <a href="#">Learn More.</a></h2>
+                        </div>
                     )])
                 }
             } else {
                 if(locations.length > 0) {
+                    setLocationHeader((
+                        <div className="secondary-thead-mobile">
+                            <div style={{padding:'0 1rem'}}><p>Nickname</p></div>
+                            <div><p>Qty</p></div>
+                            <div><p>Sold</p></div>
+                        </div>
+                    ))
                     locations.map(async location => {
                         setLocationList(locationList => [...locationList, (
                             <Location 
@@ -106,7 +124,10 @@ const LocationTable = ({
                     });
                 } else {
                     setLocationList([(
-                        <button>Add Location</button>
+                        <div className="no-rides">
+                            <h1>No Locations</h1>
+                            <h2>Manage inventory better by adding storage locations. <a href="#">Learn More.</a></h2>
+                        </div>
                     )])
                 }
             }
@@ -127,11 +148,7 @@ const LocationTable = ({
                 <Link to="/admin/add-location" style={{background: '#42b499', color:'#fff'}} className="btn">Add Location</Link>
             </section> */}
             <div className="table">
-                <div className="secondary-thead-mobile">
-                    <div style={{padding:'0 1rem'}}><p>Nickname</p></div>
-                    <div><p>Qty</p></div>
-                    <div><p>Sold</p></div>
-                </div>
+                {locationHeader}
                 <div className="tbody">{!locationList.length > 0 ? <Spinner /> : locationList}</div>
             </div>
         </Fragment>

@@ -83,7 +83,15 @@ const StoreMain = ({
             );
         }
     } else {
-        storeContent = (<h3>This store doesn't exist</h3>);
+        storeContent = (
+            <div className="no-rides">
+                <h1>Nothing Found</h1>
+                <h2>
+                    Sorry this store doesn't exist.{' '} 
+                    <a href="/explore">Find Stores</a>
+                </h2> 
+            </div>
+        );
     }
 
     if(!gotStores && tableShow1 === 'related' && store !== null) {

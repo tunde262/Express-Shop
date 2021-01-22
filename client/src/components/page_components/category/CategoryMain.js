@@ -58,10 +58,10 @@ const CategoryMain = ({
 
                     {/* <h1>Collection Page</h1> */}
                     <div className="product-list-container">
-                        <div className="filter-container">
+                        {/* <div className="filter-container">
                             <span style={{fontSize:'15px', fontWeight:'bold', color:'#808080', letterSpacing:'2px', margin:'10px'}}>Filter</span>
                             <i class="fas fa-sliders-h"></i>
-                        </div>
+                        </div> */}
                         <Container />
                     </div>
                 </div>

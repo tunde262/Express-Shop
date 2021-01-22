@@ -307,7 +307,11 @@ router.get('/filter/:filter', async (req, res) => {
             const products = await Product.find({tags: req.params.filter }, null, { skip, limit: 8 }).sort({ prod_order : 1}).populate('store', ['name', 'img_name']).populate({path: 'locations.location',model: 'darkstore' })
         
             res.json(products);
-        }
+        } 
+        // Solution tried #1
+        // else {
+        //     res.json([]);
+        // }
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error'); 

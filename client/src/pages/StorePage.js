@@ -255,9 +255,9 @@ const StorePage = ({
                                         </Fragment>
                                     )}
                                 </div>
-                                <ul class="nav-underline store">
+                                <ul class="profile-underline store">
                                     <div onClick={e => setTableShow1('shop')} className={tableShow1 === "shop" && "active"}><li><i class="fas fa-shopping-bag"></i><p>Shop</p></li></div>
-                                    <div onClick={e => setTableShow1('info')} className={tableShow1 === "info" && "active"}><li><i class="fas fa-info-circle"></i><p>Info</p></li></div>
+                                    {/* <div onClick={e => setTableShow1('info')} className={tableShow1 === "info" && "active"}><li><i class="fas fa-info-circle"></i><p>Info</p></li></div> */}
                                     <div onClick={e => setTableShow1('related')} className={tableShow1 === "related" && "active"}><li><i class="fas fa-clipboard-list"></i><p>Related</p></li></div>
                                 </ul>
                             </div>

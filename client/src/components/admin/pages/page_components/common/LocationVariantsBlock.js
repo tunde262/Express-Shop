@@ -18,15 +18,15 @@ const LocationVariantsBlock = ({
             {/* <div class="table-responsive table-filter">
                 <Variant setModal={setModal} page="product" prodId={match.params.productId} deleteVariant={deleteVariant} />
             </div> */}
-            <div style={{background:'#fff', margin:'10px 0', border:'1px solid rgb(214, 214, 214)'}}>
-                <div style={{background:'#fff', padding:'1rem', width:'100%', justifyContent:'space-between', display:'flex', alignItems:'center', borderBottom:'1px solid rgb(214, 214, 214)'}}>
-                    <div style={{display: 'flex', margin:'0 1rem', alignItems: 'center'}}>
-                        <i style={{color:'#3CB371', margin:'0 10px', fontSize:'1.1rem'}} class="fas fa-map-marker-alt"></i>
-                        <p style={{margin:'1rem 0'}}>{detailLocation.name}</p>
+            <div style={{background:'#fff', overflow:'hidden', margin:'10px 0', boxShadow: '0 1px 2px 0 rgba(0,0,0,.1)', border: '1px solid #ddd', borderRadius: '6px'}}>
+                <div style={{background:'#fff', padding:'0', width:'100%', justifyContent:'space-between', display:'flex', alignItems:'center', borderBottom:'1px solid #f2f2f2'}}>
+                    <div style={{display: 'flex', margin:'0 10px', alignItems: 'center'}}>
+                        <i style={{color:'#3CB371', margin:'0 10px 0 0', fontSize:'1.1rem'}} class="fas fa-map-marker-alt"></i>
+                        <p style={{margin:'1rem 0'}}>{detailLocation.name ? detailLocation.name : detailLocation.formatted_address}</p>
                     </div>
-                    <div style={{margin:'0 1rem'}}>
+                    {/* <div style={{margin:'0 1rem'}}>
                         <button disabled className="btn">Save</button>
-                    </div>
+                    </div> */}
                 </div>
                 <div class="table-responsive table-filter">
                     <VariantTable 

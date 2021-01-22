@@ -144,7 +144,7 @@ const Table = ({
         <Fragment>
             {/* main content */}
             <div id="page-content-wrapper" style={{width:'100%'}}>
-                <div class="content-box">
+                <div class="content-box" style={inventoryNav === 'orders' ? {marginTop:'10px'} : undefined}>
                     <div class="table-responsive table-filter">
                         {/* <Navbar products={product.products} handleOrders={handleOrders} page={page} background='#ff4b2b' /> */}
                         {tableContent}

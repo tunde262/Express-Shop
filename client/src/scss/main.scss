@@ -2217,7 +2217,7 @@ header {
     font-size: 2rem;
     margin: 10px 5px 0;
     width: 14vw;
-    height: calc(14vw + 130px);
+    height: calc(14vw + 83px);
     border: 2px dashed #cecece; 
     border-radius: 5px;
     display: flex; 
@@ -2226,8 +2226,9 @@ header {
 }
 
 .add-to-list:hover {
-    color: #fff;
-    background: #cecece;
+    color: #3374ff;
+    background: #ebf1ff;
+    cursor: pointer;
 }
 
 .store-table {
@@ -2264,8 +2265,10 @@ header {
     flex-direction: column;
     // background-color: #f7fafc;
     background-color: #fff;
-    border-right: 1px solid #e3e8ee;
     position: fixed;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.1); 
+    border-right: 1px solid #ddd; 
+    border-radius: 6px;
 
     & > a { 
         text-decoration: none;
@@ -2426,7 +2429,8 @@ header {
     .store-table-header {
         min-height: 125px;
         background: #fff;
-        border-bottom: 1px solid #e3e8ee;
+        box-shadow: 0 1px 2px 0 rgba(0,0,0,.1); 
+        border-bottom: 1px solid #ddd; 
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -3655,16 +3659,23 @@ header {
 .header-nav-container {
     background: #fff; 
     margin: 10px; 
-    border: 1px solid #e3e8ee;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.1); 
+    border: 1px solid #ddd; 
+    border-radius: 6px;
 }
 
 .product-list-container {
     background: #fff; 
     margin: 10px; 
-    border: 1px solid #e3e8ee;
+    overflow: hidden;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.1); 
+    border: 1px solid #ddd; 
+    border-radius: 6px;
     
     &.admin {
         margin: 10px 0;
+        border: none;
+        box-shadow: none;
     }
 }
 
@@ -4822,6 +4833,20 @@ header {
     grid-template-columns: repeat(2, 1fr);
     text-align: center; 
     margin-bottom: 0;
+
+    &.store {
+        background: #fff; 
+        margin: 0 10px; 
+        border: 1px solid #e3e8ee;
+    }
+
+    &.admin {
+        margin: 0;
+    }
+
+    &.store div li p{
+        font-size: 1rem;
+    }
     
     & > div {
       display: flex;
@@ -5320,6 +5345,10 @@ header {
   
 .content-box {
     grid-area: table; 
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.1); 
+    border: 1px solid #ddd; 
+    border-radius: 6px;
+    overflow: hidden;
 }
 
 .cart-actions {
@@ -5891,6 +5920,10 @@ header {
 
     &.menu {
         padding-top: 30px;
+         
+        & a {
+            text-decoration: none;
+        }
     }
 }
 
@@ -6239,7 +6272,8 @@ header {
     
     li {
         list-style: none;
-        line-height: 1px;
+        line-height: 15px;
+        position: relative;
     }
     
     
@@ -6251,7 +6285,9 @@ header {
 
 .stats {
     background: #fff; 
-    border: 1px solid #e3e8ee;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.1); 
+    border: 1px solid #ddd; 
+    border-radius: 6px;
 }
 
 .stats-box {
@@ -6439,7 +6475,8 @@ header {
     font-weight: 500;
 }
   
-.group.chart .no-rides {
+.no-rides {
+    margin-bottom: -1rem;
     width: 100%;
     min-height: 250px;
     background: #edf3f7;
@@ -6449,7 +6486,7 @@ header {
     align-items: center;
 }
   
-.group.chart .no-rides .rocket {
+.no-rides .rocket {
     width: 52px;
     height: 52px;
 
@@ -6459,7 +6496,7 @@ header {
     }
 }
   
-.group.chart .no-rides h1 {
+.no-rides h1 {
     color: #525f7f;
     font-size: 24px;
     font-weight: 400;
@@ -6468,11 +6505,16 @@ header {
     margin-bottom: 10px;
 }
   
-.group.chart .no-rides h2 {
+.no-rides h2 {
     color: #8898aa;
     font-size: 13px;
     font-weight: 500;
     text-align: center;
+
+    & a {
+        color: $btn-color;
+        font-size: 13px;
+    }
 }
 
 .group.chart .list {
