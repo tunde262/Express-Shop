@@ -39,15 +39,17 @@ const Recommended_Store = ({ store, products, profile, auth: { user }, favorite 
         <Fragment>
             <div style={{minHeight:'50px', background:'rgb(247,247,247)', padding:'1rem 20px', width:'100%', borderTop:'1px solid rgb(214,214,214)', borderBottom:'1px solid rgb(214,214,214)'}}>
                 <div style={{display: 'flex', alignItems:'center', justifyContent: 'space-between'}}>
-                    <div style={{display: 'flex', alignItems: 'center'}}>
-                        <img style={{height: '40px', width: '40px', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${store.img_name}`} alt="img" />
-                        <div style={{display:'flex', lineHeight:'1rem', flexDirection:'column', alignItems:'flex-start'}}>
-                            <p style={{margin:'0'}}>{store.name}</p>
-                            <div style={{maxHeight:'40px', overflow:'hidden', lineHeight:'15px'}}>
-                                <p className="line-clamp" style={{margin:'0', fontFamily:' Arial, Helvetica,sans-serif', color:'#808080'}}>{store.category}</p>
+                    <a href={'/store/' + store._id} className="text-bubble-2">
+                        <div style={{display: 'flex', alignItems: 'center'}}>
+                            <img style={{height: '40px', width: '40px', border:'1px solid #e8e8e8', marginRight: '1rem', borderRadius: '50px'}} src={`/api/stores/image/${store.img_name}`} alt="img" />
+                            <div style={{display:'flex', lineHeight:'1rem', flexDirection:'column', alignItems:'flex-start'}}>
+                                <p style={{margin:'0'}}>{store.name}</p>
+                                <div style={{maxHeight:'40px', overflow:'hidden', lineHeight:'15px'}}>
+                                    <p className="line-clamp" style={{margin:'0', fontFamily:' Arial, Helvetica,sans-serif', color:'#808080'}}>{store.category}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                     <div className="store-socials store">
                         {subList.includes(store._id) ? (
                             <button 
