@@ -564,7 +564,7 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                     <Link to="/login" className="cta">Login</Link>
                 </li>
                 <li className="nav-offset">
-                    <Link className="cta" to="/home">
+                    <Link className="cta" to="/register">
                         <button>Sign Up</button>
                     </Link>
                 </li>

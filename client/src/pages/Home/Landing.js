@@ -182,7 +182,7 @@ const Landing = ({history, auth: { isAuthenticated, user, loading }, updateAuth,
                         <p>Cardboard Express is your local online retail store. Enjoy Free Unlimited access to all your favorite stores in one place.</p>
                     </div>
                     <div className="store-socials store">
-                        <button onClick={() => history.push('/home')} className="shop-guide-btn active">Start Shopping</button>
+                        <button onClick={() => history.push('/register')} className="shop-guide-btn active">Start Shopping</button>
                     </div>
                 </div>
                 {/* <img className="shop-guide-img" src={isMobile ? "https://fastaf.com/static/media/holiday-cta-mobile.7970b79d.png" : "https://fastaf.com/static/media/holiday-cta-desktop.61b3471e.png"} alt="img" /> */}
@@ -192,7 +192,7 @@ const Landing = ({history, auth: { isAuthenticated, user, loading }, updateAuth,
                         <p>Cardboard Express is your local online retail store. Enjoy Free Unlimited access to all your favorite stores in one place.</p>
                     </div>
                     <div className="store-socials store">
-                        <button onClick={() => history.push('/home')} className="shop-guide-btn active">Start Shopping</button>
+                        <button onClick={() => history.push('/register')} className="shop-guide-btn active">Start Shopping</button>
                     </div>
                     {/* <h2 className="shop-guide-header">The Fastest <br/> Way To Shop.</h2>
                     <div className="store-socials store">
