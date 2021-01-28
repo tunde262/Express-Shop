@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../../actions/authActions';
@@ -16,7 +16,7 @@ import sampleImg from '../../../utils/imgs/20484728.jpeg';
 
 
 
-const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, toggleGuestDrawer, backdrop, backdropClickHandler, nav, auth: { isAuthenticated, loading, user }, logout }) => {
+const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, toggleGuestDrawer, backdrop, backdropClickHandler, nav, auth: { isAuthenticated, loading, user }, logout, history }) => {
     // Page
     const [navHighlight, setNavHighlight] = useState('home');
     // Toggle Sidebar
@@ -95,7 +95,8 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
     }
 
     const toggleStoreAuth = () => {
-        toggleAuthDrawer();
+        // toggleAuthDrawer();
+        history.push('/menu');
     }
 
     const toggleGuest = () => {
@@ -606,12 +607,12 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
             <div className="nav-mobile-auth">
                 <li onClick={toggleStoreAuth}>
                     <div>
-                        <i style={{fontSize:'22px'}} className="fas fa-bars"></i>
+                        <i style={{fontSize:'22px', cursor:'pointer'}} className="fas fa-bars"></i>
                     </div>
                 </li>
                 <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
                     <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                        <p style={{margin:'0 10px', color:'#808080'}}>Tommy Bahama</p>
+                        <h2 style={{margin:'0 10px', color:'#333'}}><i class="fas fa-store"></i></h2>
                         <i style={{color:'#808080'}} className="fas fa-caret-down"></i>
                     </div>
                 </li>
@@ -692,7 +693,7 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                 </li>
                 <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
                     <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                        <p style={{margin:'0 10px', color:'#808080'}}>Tommy Bahama</p>
+                        <h2 style={{margin:'0 10px', color:'#333'}}><i class="fas fa-store"></i></h2>
                         <i style={{color:'#808080'}} className="fas fa-caret-down"></i>
                     </div>
                 </li>
@@ -742,11 +743,12 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
         <header style={nav.main === 'store' || nav.main === 'admin' ? {borderBottom: '1px solid rgb(214,214,214)'} : undefined}>
             <div className="desktop">
                 <div className="nav">
-                    <div style={{margin:'0 20px 0 1rem', cursor:'pointer'}}>
+                    {/* <div style={{margin:'0 20px 0 1rem', cursor:'pointer'}}>
                         <i style={{fontSize:'1rem'}} className="fas fa-bars"></i>
-                    </div>
+                    </div> */}
                     <div className="branding">
-                        <a href={`https://www.cardboardexpress.com/`}><img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" /></a>
+                        <a href={`https://www.cardboardexpress.com/`} style={{color:'#333', textDecoration:'none'}}><h2><i class="fas fa-store"></i> My Store</h2></a>
+                        {/* <a href={`https://www.cardboardexpress.com/`}><img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" /></a> */}
 
                         {/* <div className="social-container">
                             <a href="https://instagram.com/cardboardexpress" target="_blank" className="social"><i className="fab fa-instagram"></i></a>
@@ -837,4 +839,4 @@ const mapStateToProps = state => ({
     nav: state.nav
 })
 
-export default connect(mapStateToProps, { reorderItems, logout })(Navbar);
+export default connect(mapStateToProps, { reorderItems, logout })(withRouter(Navbar));
