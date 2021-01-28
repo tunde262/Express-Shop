@@ -1147,6 +1147,9 @@ const Details = ({
                 </div>
                 <div style={{margin:'10px', background:'#fff', boxShadow: '0 1px 2px 0 rgba(0,0,0,.1)', border: '1px solid #ddd', borderRadius: '6px'}}>
                     <ProductOverview shop title="You may also like..." products={products} link={`/collection?filter=${detailProduct.category}`} />
+                    {/* <div style={{width:'100%', borderTop:'0.5px solid #e3e8ee', height:'50px', color:'#808080', display:'flex', justifyContent:'center', alignItems:'center'}}>
+                        <a href={'/category?filter='} className="text-bubble">View All</a>
+                    </div> */}
                 </div>
 
                 {store.stores.length > 0 && detailProduct && (

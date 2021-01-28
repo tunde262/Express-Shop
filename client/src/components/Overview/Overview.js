@@ -60,7 +60,7 @@ class Overview extends Component{
                         <div onClick={this.openOverview.bind(this)}><i class="fas fa-plus"></i></div>
                     )} */}
             
-                    {this.props.shop ? (
+                    {/* {this.props.shop ? (
                         <a 
                             href={`https://www.cardboardexpress.com/${this.props.link}`}
                             style={{
@@ -72,7 +72,7 @@ class Overview extends Component{
                             <i class="fas fa-shopping-bag"></i>{'  '}
                             Shop All
                         </a>
-                    ) : null}
+                    ) : null} */}
                 </div>
                 {this.props.children}
             </div>

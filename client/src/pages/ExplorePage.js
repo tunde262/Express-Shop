@@ -45,6 +45,10 @@ import TrendingCollections from '../components/explore_components/collections_fe
 import SlidingBanner from '../components/explore_components/sliding_banner/SlidingBanner';
 import PreviewList from '../components/explore_components/PreviewList/Preview_List';
 
+import paperPlasticData from '../utils/categoryData/household_essentials/paper_plastic/ess_paperPlastic';
+import mainData from '../utils/categoryData/main';
+import clothingData from '../utils/categoryData/clothing_fashion/clothingFashion_main';
+
 import gainLogo from '../utils/imgs/gainlogo.jpg';
 import categoryImg from '../utils/imgs/personal_care_promo_block.jpg';
 import helpImg from '../utils/imgs/help_us_banner.jpg';
@@ -178,7 +182,7 @@ const ExplorePage = ({
             {/* <FeaturedCollections collections={collection.collections} /> */}
 
 
-            <PreviewList tag_value="shoes" img="https://2j6jnda3hor2rfqci2oskova-wpengine.netdna-ssl.com/wp-content/uploads/2019/04/Yoox-Mens-Clothing-Store-Online.jpg" />
+            <PreviewList tag_value={mainData[2].tag_value} img={mainData[2].img} />
             
             {/* <div style={{background:'#fff', margin:'10px', border:'1px solid rgb(214, 214, 214)'}}>
                 <div style={{margin:'1rem 0 3rem 0'}}>
@@ -234,7 +238,7 @@ const ExplorePage = ({
             </div> */}
 
             <div style={{background:'#fff', margin:'10px', border:'1px solid #e3e8ee'}}>
-                <div style={{margin:'1rem 0 3rem 0'}}>
+                <div style={{margin:'1rem 0'}}>
                     <ProductOverview title="Recently looked at..." products={products} link={`/home`} />
                 </div>
             </div>
@@ -266,11 +270,11 @@ const ExplorePage = ({
                 </div>
             </div> */}
 
-            <PreviewList tag_value="toilet paper" img="https://2j6jnda3hor2rfqci2oskova-wpengine.netdna-ssl.com/wp-content/uploads/2019/04/Yoox-Mens-Clothing-Store-Online.jpg" />
+            <PreviewList tag_value={paperPlasticData[1].tag_value} img={paperPlasticData[1].img} />
 
-            <PreviewList tag_value="tops" img="https://www.ramblersway.com/sites/default/files/product_photos/708-Western-Chambray-Shirt.jpg" />
+            <PreviewList tag_value={clothingData[2].tag_value} img={clothingData[2].img} />
 
-            <PreviewList tag_value="personal care" img="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/tomato-skincare-1596733638.jpg?crop=0.394xw:0.639xh;0.290xw,0.166xh&resize=640:*" />
+            <PreviewList tag_value={mainData[4].tag_value} img={mainData[4].img} />
 
             <Footer />
             {!auth.loading && !auth.isAuthenticated ? <AuthModal /> : null }
