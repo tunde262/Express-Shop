@@ -147,7 +147,7 @@ const Landing = ({history, auth: { isAuthenticated, user, loading }, updateAuth,
   }
 
   if(user && !loading && isAuthenticated) {
-    history.push('/home');
+    history.push('/shop');
   } 
   // else {
   //   history.push('/login');
@@ -318,7 +318,7 @@ const Landing = ({history, auth: { isAuthenticated, user, loading }, updateAuth,
                     </div>
                     <div className="text-center">
                         <div className="store-socials store">
-                            <button onClick={() => history.push('/home')} className="btn active">
+                            <button onClick={() => history.push('/register')} className="btn active">
                                 Start Shopping
                             </button>
                         </div>
