@@ -43,9 +43,20 @@ class ProductOverviewItems extends Component {
             }
         }
 
+        let addBlock = null;
+
+        if (products.length > 0) {
+            addBlock = (
+                <div className="invisible-block">
+                    
+                </div>
+            )
+        }
+
         return (
             <HorizontalNav style={{padding: '0 1rem'}} background="var(--body-color)">
                 {productList}
+                {addBlock}
             </HorizontalNav>
         )
     }

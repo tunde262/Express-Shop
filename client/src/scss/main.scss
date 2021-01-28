@@ -2231,6 +2231,37 @@ header {
     cursor: pointer;
 }
 
+.invisible-block {
+    margin: 10px 5px 0;
+    min-width: 14vw;
+    height: calc(14vw + 83px);
+    // border: 0.5px solid #e3e8ee; 
+    border-radius: 5px;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    font-family: 'News Cycle', sans-serif;
+}
+
+.text-bubble {
+    margin: 0; 
+    color: #0098d3;
+}
+
+.text-bubble:hover, .text-bubble:focus {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(247, 247, 247);
+    height: 30px;
+    border-radius: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #551A8B;
+}
+
 .store-table {
     display: grid;
     grid-template-columns: 250px 1fr;

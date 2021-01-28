@@ -47,6 +47,10 @@ const Preview_List = ({ tag_value, img }) => {
             }}
         >
             <RecommendedCategory products={productList} category={{tag_value, img}} />
+
+            <div style={{width:'100%', borderTop:'0.5px solid #e3e8ee', height:'50px', color:'#808080', display:'flex', justifyContent:'center', alignItems:'center'}}>
+                <a href={'/category?filter=' + tag_value} className="text-bubble">View All</a>
+            </div>
         </div>
     )
 }

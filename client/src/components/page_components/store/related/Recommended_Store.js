@@ -73,7 +73,7 @@ const Recommended_Store = ({ store, products, profile, auth: { user }, favorite 
             <ProductOverview products={products} shop={false} link={`/home`} />
 
             <div style={{width:'100%', borderTop:'1px solid rgb(214,214,214)', height:'50px', color:'#808080', display:'flex', justifyContent:'center', alignItems:'center'}}>
-                <p style={{margin: '0', color:'#0098d3'}}>View Shop</p>
+                <a href={'/store/' + store._id} className="text-bubble">View Shop</a>
             </div>
         </Fragment>
     )
