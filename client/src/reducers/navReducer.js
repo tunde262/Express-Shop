@@ -6,7 +6,13 @@ import {
     REMOVE_NAV2, 
     SET_NAV3, 
     REMOVE_NAV3, 
-    SET_MAIN_NAV, 
+    SET_MAIN_NAV,
+    TOGGLE_ITEM_MODAL, 
+    TOGGLE_COLLECTION_MODAL, 
+    TOGGLE_LOCATION_MODAL, 
+    REMOVE_ITEM_MODAL, 
+    REMOVE_COLLECTION_MODAL, 
+    REMOVE_LOCATION_MODAL,  
 } from '../actions/types';
 
 const initialState = {
@@ -15,6 +21,9 @@ const initialState = {
     nav3: '',
     page: '',
     main: '',
+    itemModal: false,
+    collectionModal: false,
+    locationModal: false,
     loading: true
 }
 
@@ -74,6 +83,36 @@ export default function(state = initialState, action) {
                 nav3: ''
             };
         }
+        case TOGGLE_ITEM_MODAL: 
+            return {
+                ...state,
+                itemModal: true
+            }
+        case TOGGLE_COLLECTION_MODAL: 
+            return {
+                ...state,
+                collectionModal: true
+            }
+        case TOGGLE_LOCATION_MODAL: 
+            return {
+                ...state,
+                locationModal: true
+            }
+        case REMOVE_ITEM_MODAL: 
+            return {
+                ...state,
+                itemModal: false
+            }
+        case REMOVE_COLLECTION_MODAL: 
+            return {
+                ...state,
+                collectionModal: false
+            }
+        case REMOVE_LOCATION_MODAL: 
+            return {
+                ...state,
+                locationModal: false
+            }
         default:
             return state;
     }

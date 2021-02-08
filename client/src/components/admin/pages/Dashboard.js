@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
-import { setMainNav } from '../../../actions/navActions';
+import { setMainNav, removeItemModal, removeCollectionModal, removeLocationModal } from '../../../actions/navActions';
 import { getStoreById, deleteStore } from '../../../actions/storeActions';
 import { addProductByName } from '../../../actions/productActions';
 import { addCollectionByName } from '../../../actions/collectionActions';
@@ -47,14 +47,19 @@ import DefaultBanner from '../../../utils/imgs/placeholderimg.jpg';
 
 const Dashboard = ({ 
     setMainNav, 
+    removeItemModal, 
+    removeCollectionModal, 
+    removeLocationModal,
     getStoreById, 
     store: { store, loading }, 
     storageLocation,
+    nav,
     match, 
     location, 
     addProductByName, 
     addCollectionByName, 
     addLocation, 
+    editLocation,
     history 
 }) => {
     // Calc isMobile by window width
@@ -535,7 +540,7 @@ const Dashboard = ({
 
             <Footer/>
 
-            <Modal open={displayItemModal} onClose={toggleItemModal} center styles={bg}>
+            <Modal open={nav.itemModal} onClose={removeItemModal} center styles={bg}>
                 <div className="checkout-modal">
                     <div className="checkout-modal-main">
                         <div className="checkout-confirmed" style={{padding:'10px', textAlign:'center'}}>
@@ -566,7 +571,7 @@ const Dashboard = ({
                     </div>
                 </div>
             </Modal>
-            <Modal open={displayCollectionModal} onClose={toggleCollectionModal} center styles={bg}>
+            <Modal open={nav.collectionModal} onClose={removeCollectionModal} center styles={bg}>
                 <div className="checkout-modal">
                     <div className="checkout-modal-main">
                         <div className="checkout-confirmed" style={{padding:'10px', textAlign:'center'}}>
@@ -597,7 +602,7 @@ const Dashboard = ({
                     </div>
                 </div>
             </Modal>
-            <Modal open={displayLocationModal} onClose={toggleLocationModal} center styles={bg}>
+            <Modal open={nav.locationModal} onClose={removeLocationModal} center styles={bg}>
                 <div className="checkout-modal">
                     <div className="checkout-modal-main">
                         <div className="checkout-confirmed" style={{padding:'10px', textAlign:'center'}}>
@@ -608,7 +613,7 @@ const Dashboard = ({
                                 New Location
                             </h3>
                         </div>
-                        <div className="checkout-deliv" style={{padding:'0 1rem', display:'flex', justifyContent:'center'}}>
+                        <div className="checkout-deliv" style={{padding:'0 1rem'}}>
                             <AddressBlock
                                 address={address}
                                 setAddress={setAddress}
@@ -633,15 +638,24 @@ Dashboard.propTypes = {
     deleteStore: PropTypes.func.isRequired,
     store: PropTypes.object.isRequired,
     setMainNav: PropTypes.func.isRequired,
+    removeItemModal: PropTypes.func.isRequired,
+    removeCollectionModal: PropTypes.func.isRequired,
+    removeLocationModal: PropTypes.func.isRequired,
     addProductByName: PropTypes.func.isRequired,
     addCollectionByName: PropTypes.func.isRequired,
     addLocation: PropTypes.func.isRequired,
+    editLocation: PropTypes.func.isRequired,
     storageLocation: PropTypes.object.isRequired,
+    nav: PropTypes.object.isRequired,
+    removeItemModal: PropTypes.object.isRequired, 
+    removeCollectionModal: PropTypes.object.isRequired, 
+    removeLocationModal: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
     store: state.store,
-    storageLocation: state.location
+    storageLocation: state.location,
+    nav: state.nav
 })
 
-export default connect(mapStateToProps, { setMainNav, getStoreById, deleteStore, addProductByName, addCollectionByName, addLocation })(withRouter(Dashboard));
+export default connect(mapStateToProps, { setMainNav, getStoreById, deleteStore, addProductByName, addCollectionByName, addLocation, editLocation, removeItemModal, removeCollectionModal, removeLocationModal })(withRouter(Dashboard));

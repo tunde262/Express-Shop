@@ -149,13 +149,14 @@ const StoresList = ({
             <div onClick={() => setActive(!active)} style={{width:'100%', height:'50px', color:'#808080', display:'flex', justifyContent:'center', alignItems:'center'}}>
                 {active || !isTablet ? (
                     <Fragment>
-                        <i style={{fontSize:'14px', margin:'2px 10px 0'}} class="fas fa-chevron-down"></i>
-                        <p style={{margin: '0'}}>View all</p>
+                        <a href={'/stores'} className="text-bubble">View All</a>
                     </Fragment>
                 ): (
                     <Fragment>
-                        <i style={{fontSize:'14px', margin:'2px 10px 0'}} class="fas fa-chevron-down"></i>
-                        <p style={{margin: '0'}}>Show more</p>
+                        <p style={{margin: '0'}} className="text-bubble">
+                            <i style={{fontSize:'14px', margin:'2px 10px 0'}} class="fas fa-chevron-down"></i> 
+                            {' '}Show more
+                        </p>
                     </Fragment>
                 )}
             </div>

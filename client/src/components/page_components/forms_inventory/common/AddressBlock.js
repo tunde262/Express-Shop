@@ -53,21 +53,25 @@ const AddressBlock = ({
                     </div>
                 )}
             </PlacesAutocomplete>
-            <button 
-                onClick={origin === 'store' ? () => setSlideForm2(!slideform2) : () => console.log('SUBMIT')} 
-                style={{width:'100%', outline:'none', margin:'83px 0 10px 0', fontSize:'13px', letterSpacing:'1px', display:'flex', alignItems:'center', justifyContent:'center'}}>
-                Continue 
-                <i 
-                    style={{margin:'0 10px', fontSize:'1rem'}} 
-                    class="fas fa-arrow-right"
-                ></i>
-            </button>
-            <p 
-                onClick={() => setSlideForm1(!slideform1)}
-                style={{margin:'0', textAlign:'center', color:'#808080'}}
-            >
-                Cancel
-            </p>
+            {origin === 'store' && (
+                <Fragment>
+                    <button 
+                        onClick={origin === 'store' ? () => setSlideForm2(!slideform2) : () => console.log('SUBMIT')} 
+                        style={{width:'100%', outline:'none', margin:'83px 0 10px 0', fontSize:'13px', letterSpacing:'1px', display:'flex', alignItems:'center', justifyContent:'center'}}>
+                        Continue 
+                        <i 
+                            style={{margin:'0 10px', fontSize:'1rem'}} 
+                            class="fas fa-arrow-right"
+                        ></i>
+                    </button>
+                    <p 
+                        onClick={() => setSlideForm1(!slideform1)}
+                        style={{margin:'0', textAlign:'center', color:'#808080'}}
+                    >
+                        Cancel
+                    </p>
+                </Fragment>
+            )}
         </Fragment>
     )
 }

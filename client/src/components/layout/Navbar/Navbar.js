@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../../actions/authActions';
 import { reorderItems } from '../../../actions/productActions';
+import { toggleItemModal, toggleCollectionModal, toggleLocationModal } from '../../../actions/navActions';
 import { FaAlignRight } from 'react-icons/fa';
 import logo from '../../common/logo.png';
 
@@ -16,7 +17,26 @@ import sampleImg from '../../../utils/imgs/20484728.jpeg';
 
 
 
-const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuthDrawer, toggleGuestDrawer, backdrop, backdropClickHandler, nav, auth: { isAuthenticated, loading, user }, logout, history }) => {
+const Navbar = ({ 
+    reorderItems, 
+    toggleItemModal, 
+    toggleCollectionModal, 
+    toggleLocationModal,
+    drawerClickHandler, 
+    toggleCartDrawer, 
+    toggleAuthDrawer, 
+    toggleGuestDrawer, 
+    backdrop, 
+    backdropClickHandler, 
+    nav, 
+    auth: { 
+        isAuthenticated, 
+        loading, 
+        user 
+    }, 
+    logout, 
+    history 
+}) => {
     // Page
     const [navHighlight, setNavHighlight] = useState('home');
     // Toggle Sidebar
@@ -105,6 +125,24 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
 
     const toggleCreateDrawer = () => {
         drawerClickHandler();
+    }
+
+    const todo = (e) => {
+        e.preventDefault();
+        toggleItemModal();
+        setCreateDropdown(false);
+    }
+
+    const todo2 = (e) => {
+        e.preventDefault();
+        toggleCollectionModal();
+        setCreateDropdown(false);
+    }
+
+    const todo3 = (e) => {
+        e.preventDefault();
+        toggleLocationModal();
+        setCreateDropdown(false);
     }
 
     const isMobile = windowWidth <= 769;
@@ -410,15 +448,15 @@ const Navbar = ({ reorderItems, drawerClickHandler, toggleCartDrawer, toggleAuth
                                     Create Order
                                 </a>
                                 <hr style={{margin:'10px 0'}} /> */}
-                                <a href={`https://www.cardboardexpress.com/profile/orders`} className="menu-item">
+                                <a href="#" onClick={(e) => todo(e)} className="menu-item">
                                     Add Item
                                 </a>
                                 <hr style={{margin:'10px 0'}} />
-                                <a href={`https://www.cardboardexpress.com/admin`} className="menu-item">
+                                <a href="#" onClick={(e) => todo2(e)} className="menu-item">
                                     New Collection
                                 </a>
                                 <hr style={{margin:'10px 0'}} />
-                                <a href="#" className="menu-item" onClick={logout}>
+                                <a href="#" onClick={(e) => todo3(e)} className="menu-item">
                                     New Location
                                 </a>
                             </div>
@@ -832,6 +870,9 @@ Navbar.propTypes = {
     auth: PropTypes.object.isRequired,
     nav: PropTypes.object.isRequired,
     reorderItems: PropTypes.func.isRequired,
+    toggleItemModal: PropTypes.func.isRequired, 
+    toggleCollectionModal: PropTypes.func.isRequired, 
+    toggleLocationModal: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -839,4 +880,4 @@ const mapStateToProps = state => ({
     nav: state.nav
 })
 
-export default connect(mapStateToProps, { reorderItems, logout })(withRouter(Navbar));
+export default connect(mapStateToProps, { reorderItems, toggleItemModal, toggleCollectionModal, toggleLocationModal, logout })(withRouter(Navbar));

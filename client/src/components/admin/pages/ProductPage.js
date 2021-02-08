@@ -7,16 +7,18 @@ import { connect } from 'react-redux';
 import mixpanel from 'mixpanel-browser';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
-import { setMainNav, setPage } from '../../../actions/navActions';
-import { setSortedProducts, getProductsByStoreId, getProductsInCollection, handleDetail, addProduct, editProduct, deleteProduct, setModalProducts, addProductImg, setDetailProduct } from '../../../actions/productActions';
+import { setMainNav, setPage, removeItemModal, removeCollectionModal, removeLocationModal } from '../../../actions/navActions';
+import { setSortedProducts, getProductsByStoreId, getProductsInCollection, handleDetail, addProduct, editProduct, deleteProduct, setModalProducts, addProductImg, setDetailProduct, addProductByName } from '../../../actions/productActions';
 import { getProductVariants, addVariant, deleteVariant, setModalVariants } from '../../../actions/variantActions';
 import { getStoreById } from '../../../actions/storeActions';
-import { getCollectionById, addCollectionItem, addCollection, editCollection } from '../../../actions/collectionActions';
+import { getCollectionById, addCollectionItem, addCollection, editCollection, addCollectionByName } from '../../../actions/collectionActions';
 import { addLocation, editLocation, getLocationById, getProductLocations, getCollectionLocations, setLocations, addProductToLocation } from '../../../actions/locationActions';
 import { getOrderById } from '../../../actions/orderActions';
 
 import Footer from '../../../pages/Home/Footer';
 import Spinner from '../../common/Spinner';
+import AddressBlock from '../../page_components/forms_inventory/common/AddressBlock';
+import ButtonSpinner from '../../common/ButtonSpinner';
 import Modal from 'react-responsive-modal';
 import InputTag from '../../common/InputTag/InputTag';
 import ItemTable from '../table/ItemTable/ItemTable';
@@ -89,6 +91,11 @@ const ProductPage = ({
     addVariant,
     handleDetail, 
     setDetailProduct,
+    addProductByName, 
+    addCollectionByName, 
+    removeItemModal, 
+    removeCollectionModal, 
+    removeLocationModal,
     addProduct,
     editProduct,
     deleteProduct,
@@ -138,6 +145,18 @@ const ProductPage = ({
     const [itemTags, setItemTags] = useState([]);
     const [categoryData, setCategoryData] = useState('');
     const [conditionData, setConditionData] = useState('');
+
+    // ------ Add item / collection / location states ------
+
+    // Show Add Item Modal
+    const [displayItemModal, toggleItemModal] = useState(false);
+    // Show Add Collection Modal
+    const [displayCollectionModal, toggleCollectionModal] = useState(false);
+
+    // Button loader
+    const [addItemLoading, setAddItemLoading] = useState(false);
+
+    // ----- End -----
 
     // Toggle
     const [displayOption1, toggleOption1] = useState(true);
@@ -487,6 +506,42 @@ const ProductPage = ({
         });
     
     };
+
+    // Add modal functions
+    const todo = (e) => {
+        onSubmitItem(e);
+        setAddItemLoading(true);
+    }
+
+    const todo2 = (e) => {
+        onSubmitCollection(e);
+        setAddItemLoading(true);
+    }
+
+    const todo3 = (e) => {
+        onSubmitLocation(e);
+        setAddItemLoading(true);
+    }
+
+    const onSubmitItem = async e => {
+        e.preventDefault();
+
+        let data = new FormData();
+
+        if(name !== '')data.append('name', name);
+  
+        addProductByName(data, store.store._id, history);
+    }
+
+    const onSubmitCollection = async e => {
+        e.preventDefault();
+
+        let data = new FormData();
+
+        if(name !== '')data.append('name', name);
+  
+        addCollectionByName(data, store.store._id, history);
+    }
 
     const onAddCollection = async (e) => {
         e.preventDefault();
@@ -1748,6 +1803,18 @@ const ProductPage = ({
         }
     };
 
+    const bg3 = {
+        modal: {
+            paddingLeft: "0",
+            paddingRight: "0",
+            border:"1px solid rgb(214,214,214)",
+            boxShadow: "none"
+        },
+        overlay: {
+          background: "rgba(255,255,255,0.5)"
+        }
+    };
+
     return (
         <div className="detail-container">
             <div className="store-table-header" style={{padding:'20px 20px 0 20px'}}>
@@ -1760,6 +1827,96 @@ const ProductPage = ({
             </div>
 
             <Footer />
+
+            <Modal open={nav.itemModal} onClose={removeItemModal} center styles={bg3}>
+                <div className="checkout-modal">
+                    <div className="checkout-modal-main">
+                        <div className="checkout-confirmed" style={{padding:'10px', textAlign:'center'}}>
+                            <h3>
+                                <span>
+                                    <i style={{margin:'0 10px', fontSize:'1.3rem', color:'#0098d3'}} class="fas fa-tag"></i>
+                                </span> 
+                                Add Item
+                            </h3>
+                        </div>
+                        <div className="checkout-deliv" style={{padding:'0 1rem', display:'flex', justifyContent:'center'}}>
+                            <input
+                                type="text"
+                                name="name"
+                                className="input_line"
+                                placeholder="Enter item name . . ."
+                                value={name}
+                                onChange={e => onChange(e)}
+                                style={{margin:'0', width:'80%', outline:'none', padding:'0 10px', height:'50px', background:'#fff', fontSize:'14px', borderBottom:'2px dashed #cecece', borderRadius:'5px'}}
+                            />
+                        </div>
+                    </div>
+                    
+                    <div style={{margin:'1rem auto 0', display:'flex', justifyContent:'center'}}>
+                        <button onClick={(e) => todo(e)}>
+                            {addItemLoading ? <ButtonSpinner /> : "Continue"}
+                        </button>
+                    </div>
+                </div>
+            </Modal>
+            <Modal open={nav.collectionModal} onClose={removeCollectionModal} center styles={bg3}>
+                <div className="checkout-modal">
+                    <div className="checkout-modal-main">
+                        <div className="checkout-confirmed" style={{padding:'10px', textAlign:'center'}}>
+                            <h3>
+                                <span>
+                                    <i style={{margin:'0 10px', fontSize:'1.3rem', color:'#0098d3'}} class="fas fa-layer-group"></i>
+                                </span> 
+                                New Collection
+                            </h3>
+                        </div>
+                        <div className="checkout-deliv" style={{padding:'0 1rem', display:'flex', justifyContent:'center'}}>
+                            <input
+                                type="text"
+                                name="name"
+                                className="input_line"
+                                placeholder="Enter a title . . ."
+                                value={name}
+                                onChange={e => onChange(e)}
+                                style={{margin:'0', width:'80%', outline:'none', padding:'0 10px', height:'50px', background:'#fff', fontSize:'14px', borderBottom:'2px dashed #cecece', borderRadius:'5px'}}
+                            />
+                        </div>
+                    </div>
+                    
+                    <div style={{margin:'1rem auto 0', display:'flex', justifyContent:'center'}}>
+                        <button onClick={(e) => todo2(e)}>
+                            {addItemLoading ? <ButtonSpinner /> : "Continue"}
+                        </button>
+                    </div>
+                </div>
+            </Modal>
+            <Modal open={nav.locationModal} onClose={removeLocationModal} center styles={bg3}>
+                <div className="checkout-modal">
+                    <div className="checkout-modal-main">
+                        <div className="checkout-confirmed" style={{padding:'10px', textAlign:'center'}}>
+                            <h3>
+                                <span>
+                                    <i style={{margin:'0 10px', fontSize:'1.3rem', color:'#0098d3'}} class="fas fa-map-marker-alt"></i>
+                                </span> 
+                                New Location
+                            </h3>
+                        </div>
+                        <div className="checkout-deliv" style={{padding:'0 1rem'}}>
+                            <AddressBlock
+                                address={address}
+                                setAddress={setAddress}
+                                handleLocationSelect={handleLocationSelect}
+                            />
+                        </div>
+                    </div>
+                    
+                    <div style={{margin:'1rem auto 0', display:'flex', justifyContent:'center'}}>
+                        <button onClick={(e) => todo3(e)}>
+                            {addItemLoading ? <ButtonSpinner /> : "Continue"}
+                        </button>
+                    </div>
+                </div>
+            </Modal>
 
             <Modal open={displayImageModal} onClose={toggleImageModal} center styles={bg}>
                 <input
@@ -2222,6 +2379,11 @@ ProductPage.propTypes = {
     addVariant: PropTypes.func.isRequired,
     handleDetail: PropTypes.func.isRequired,
     setDetailProduct: PropTypes.func.isRequired,
+    addProductByName: PropTypes.func.isRequired, 
+    addCollectionByName: PropTypes.func.isRequired,
+    removeItemModal: PropTypes.func.isRequired, 
+    removeCollectionModal: PropTypes.func.isRequired,
+    removeLocationModal: PropTypes.func.isRequired,
     addProduct: PropTypes.func.isRequired,
     editProduct: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
@@ -2266,6 +2428,11 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, { 
     addVariant, 
+    addProductByName, 
+    addCollectionByName,
+    removeItemModal, 
+    removeCollectionModal, 
+    removeLocationModal,
     addProduct,
     editProduct, 
     handleDetail, 

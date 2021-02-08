@@ -309,7 +309,7 @@ const Details = ({
         }
         if (materialState.length > 0) {
             tempVars = [...tempVars.filter(prodVar => prodVar.material === selectedMaterial)];
-        }http://localhost:3000/admin/5f73eea1ce775100176937a0
+        }
 
         selectedVariant = tempVars[0];
 

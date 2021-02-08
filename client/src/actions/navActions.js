@@ -6,7 +6,13 @@ import {
     REMOVE_NAV2, 
     SET_NAV3, 
     REMOVE_NAV3, 
-    SET_MAIN_NAV
+    SET_MAIN_NAV,
+    TOGGLE_ITEM_MODAL,
+    TOGGLE_COLLECTION_MODAL,
+    TOGGLE_LOCATION_MODAL,
+    REMOVE_ITEM_MODAL,
+    REMOVE_COLLECTION_MODAL,
+    REMOVE_LOCATION_MODAL
 } from './types';
 
 export const setPage = (page) => dispatch => {
@@ -57,4 +63,40 @@ export const setMainNav = (value) => {
         type: SET_MAIN_NAV,
         payload: value
     }
+}
+
+export const toggleItemModal = () => dispatch => {
+    dispatch({
+        type: TOGGLE_ITEM_MODAL,
+    });
+}
+
+export const toggleCollectionModal = () => dispatch => {
+    dispatch({
+        type: TOGGLE_COLLECTION_MODAL,
+    });
+}
+
+export const toggleLocationModal = () => dispatch => {
+    dispatch({
+        type: TOGGLE_LOCATION_MODAL,
+    });
+}
+
+export const removeItemModal = () => dispatch => {
+    dispatch({
+        type: REMOVE_ITEM_MODAL,
+    });
+}
+
+export const removeCollectionModal = () => dispatch => {
+    dispatch({
+        type: REMOVE_COLLECTION_MODAL,
+    });
+}
+
+export const removeLocationModal = () => dispatch => {
+    dispatch({
+        type: REMOVE_LOCATION_MODAL,
+    });
 }
