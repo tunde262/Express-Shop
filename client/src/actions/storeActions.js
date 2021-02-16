@@ -309,6 +309,12 @@ export const addBannerImg = (imgData, id) => async dispatch => {
         const res = await axios.post(`/api/stores/bannerImg/${id}`, data, config);
 
         console.log('Banner img added');
+
+        dispatch({
+            type: GET_STORE,
+            payload: res.data
+        });
+        
         dispatch(setAlert('Image Added', 'success'));
     } catch (err) {
         dispatch({

@@ -25,6 +25,7 @@ const Inventory = ({ page, setModal, store, variant: {loading, sortedVariants}, 
     // };
 
     const [variantList, setVariantList] = useState([]);
+    const [gotVariants, setGotVariants] = useState(false);
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -91,10 +92,13 @@ const Inventory = ({ page, setModal, store, variant: {loading, sortedVariants}, 
                         )])
                     }
                 });
+                
+                setGotVariants(true);
             } else {
                 setVariantList([(
-                    <div style={{width:'100%', display:'flex', justifyContent:'center', alignItems:'center'}}>
-                        <p>No Variants</p>
+                    <div className="no-rides">
+                        <h1>No Variants</h1>
+                        <h2>No item variants to display yet. <a href="#">Need Help?</a></h2>
                     </div>
                 )])
             }
@@ -153,20 +157,22 @@ const Inventory = ({ page, setModal, store, variant: {loading, sortedVariants}, 
                 // </section>
             ) : null}
             <div className="table">
-                <div className="thead">
-                    {!isTablet && (
-                        <Fragment>
-                            <div>
-                                <input type="checkbox" value=""/>
-                            </div>
-                            <div><p>Img</p></div>
-                            <div><p>Name</p></div>
-                            <div><p>Awaiting</p></div>
-                            <div><p>Sold</p></div>
-                            <div></div>
-                        </Fragment>
-                    )}
-                </div>
+                {gotVariants && (
+                    <div className="thead">
+                        {!isTablet && (
+                            <Fragment>
+                                <div>
+                                    <input type="checkbox" value=""/>
+                                </div>
+                                <div><p>Img</p></div>
+                                <div><p>Name</p></div>
+                                <div><p>Awaiting</p></div>
+                                <div><p>Sold</p></div>
+                                <div></div>
+                            </Fragment>
+                        )}
+                    </div>
+                )}
                 <div className="tbody">{!variantList.length > 0 ? <Spinner /> : variantList}</div>
             </div>
 

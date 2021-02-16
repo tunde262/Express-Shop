@@ -117,6 +117,8 @@ const Dashboard = ({
                 setTableShow1('settings');
                 setPage('admin settings');
             }
+        } else {
+            setPage('admin shop');
         }
 
         window.addEventListener('resize', () => handleWindowSizeChange());

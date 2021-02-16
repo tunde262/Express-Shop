@@ -7,9 +7,38 @@ import Banner from '../../common/Banner';
 import { CSSTransition } from 'react-transition-group';
 import DefaultBanner from '../../../utils/imgs/placeholderimg.jpg';
 
+import Modal from 'react-responsive-modal';
+import { addBannerImg } from '../../../actions/storeActions';
+import img1 from '../../../utils/imgs/img_soccer.jpg';
+import img2 from '../../../utils/imgs/img_americanfootball.jpg';
+import img3 from '../../../utils/imgs/img_soccer.jpg';
+import img4 from '../../../utils/imgs/img_soccer.jpg';
+import img5 from '../../../utils/imgs/img_fencing.jpg';
+import img6 from '../../../utils/imgs/img_cyclingbmx.jpg';
+import img7 from '../../../utils/imgs/img_volleyball.jpg';
+
+import DragAndDrop from '../../admin/forms/utils/DragAndDrop';
+
 import mixpanel from 'mixpanel-browser';
 
-const StoreHeader = ({ store: { store, loading }, admin, tableShow1, setTable }) => {
+const StoreHeader = ({ 
+    store: { 
+        store, 
+        loading 
+    }, 
+    product, 
+    admin, 
+    addBannerImg,
+    tableShow1, 
+    setTable 
+}) => {
+
+    const [files, setFiles] = useState([]);
+
+    const [modalShow1, setModalShow1] = useState('upload');
+
+    // Toggle
+    const [displayModal, toggleModal] = useState(false);
 
     const [sentMixpanel, setSentMixpanel] = useState(false);
     const [tableShow2, setTableShow2] = useState('shop');
@@ -25,6 +54,61 @@ const StoreHeader = ({ store: { store, loading }, admin, tableShow1, setTable })
     useEffect(() => {
         window.addEventListener('resize', () => handleWindowSizeChange());
     }, []);
+
+    const fileChanged = e => {
+        console.log(files)
+        let fileList = [];
+        files.map(file => fileList.push(file));
+        for (var i = 0; i < e.target.files.length; i++) {
+          if(!e.target.files[i]) return;
+          fileList.push(e.target.files[i])
+        }
+        setFiles(fileList);
+    }
+
+    const handleDrop = newFiles => {
+        console.log(files)
+        let fileList = [];
+        files.map(file => fileList.push(file));
+        for (var i = 0; i < newFiles.length; i++) {
+          if(!newFiles[i]) return;
+          fileList.push(newFiles[i])
+        }
+        setFiles(fileList);
+      }
+
+    const setModal = () => {
+        toggleModal(!displayModal);
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+
+        // if(!detailProduct) {
+        addBannerImg(files, store._id);
+        // } else {
+        //   editProduct(data, detailProduct._id, store._id, history);
+        // }
+
+        let banner_value = false;
+
+        if (store.banner_imgs.length > 0) {
+            banner_value = true;
+        }
+        
+        mixpanel.track("Store Banner Update", {
+            // "Entry Point": "Home Landing",
+            "# of Public Store Items": product.products.length,
+            // "# of People Part of Store": "Home Landing",
+            "Store Name": store.name,
+            // "Store Category": "Home Landing",
+            // "Store ID": store._id,
+            "Banner Value": banner_value,
+        });
+    
+        setModal();
+    };
+
 
     // const handleMixpanel = () => {
     //     let banner_value = false;
@@ -57,6 +141,72 @@ const StoreHeader = ({ store: { store, loading }, admin, tableShow1, setTable })
     //     handleMixpanel();
     //     setSentMixpanel(true);
     // }
+
+    let tableContent;
+
+    if(modalShow1 === 'upload') {
+        tableContent = (
+            <Fragment>
+                <DragAndDrop handleDrop={handleDrop}>
+                    <input
+                        type="file"
+                        name="file"
+                        id="file"
+                        multiple
+                        className="form-control"
+                        placeholder="Choose images or Drag/Drop"
+                        onChange={fileChanged}
+                    />
+                    {files.length > 0 ? (
+                        <div style={{minHeight: 300, width: 250}}>
+                            {files.map((file, i) => (
+                                <Fragment key={i}>
+                                <div>{file.name}</div>
+                                <br/>
+                                </Fragment>
+                            )
+                            )}
+                        </div>
+                        ) : <h3><small>or</small> <br/>Drag / Drop</h3>
+                    }
+                </DragAndDrop>
+            </Fragment>
+        );
+    } else if (modalShow1 === 'general') {
+        tableContent = (
+            <div className="wrapper">  
+                <section style={{display: 'grid ', gridGap:'5px', gridTemplateColumns: 'repeat(3, 1fr)'}}>
+                    <div style={{overflow:'hidden'}}>
+                        <img style={{width:'100%'}} src={img2} alt="img" />
+                    </div>
+                    <div style={{overflow:'hidden'}}>
+                        <img style={{width:'100%'}} src={img3} alt="img" />
+                    </div>
+                    <div style={{overflow:'hidden'}}>
+                        <img style={{width:'100%'}} src={img4} alt="img" />
+                    </div>
+                    <div style={{overflow:'hidden'}}>
+                        <img style={{width:'100%'}} src={img5} alt="img" />
+                    </div>
+                    <div style={{overflow:'hidden'}}>
+                        <img style={{width:'100%'}} src={img6} alt="img" />
+                    </div>
+                    <div style={{overflow:'hidden'}}>
+                        <img style={{width:'100%'}} src={img7} alt="img" />
+                    </div>
+                </section>
+                <button>Upload</button>
+            </div>
+        );
+    } else if(modalShow1 === 'clothing') {
+        tableContent = <h1>clothing</h1>; 
+    } else if(modalShow1 === 'pets') {
+        tableContent = <h1>pets</h1>; 
+    } else if(modalShow1 === 'kids') {
+        tableContent = <h1>kids</h1>; 
+    } else if(modalShow1 === 'sports') {
+        tableContent = <h1>sports</h1>; 
+    }
 
     const isMobile = windowWidth <= 769;
 
@@ -122,12 +272,17 @@ const StoreHeader = ({ store: { store, loading }, admin, tableShow1, setTable })
                                     <div className={dropdown ? "edit-dropdown active" : "edit-dropdown"} style={{height: menuHeight}}>
                                         <div className="menu">
                                             <a href="https://www.cardboardexpress.com/profile/saved" className="menu-item">
-                                                <i style={{color:'#0098d3', fontSize:'1.2rem', marginRight:'10px'}} class="fas fa-eye"></i>
+                                                <i style={{color:'#0098d3', fontSize:'1.3rem', marginRight:'10px'}} class="fas fa-eye"></i>
                                                 View Store
                                             </a>
                                             <hr style={{margin:'10px 0', height:'1px', background:'#f2f2f2'}} />
+                                            <a onClick={setModal} className="menu-item">
+                                                <i style={{color:'#0098d3', fontSize:'1.4rem', marginRight:'10px'}} class="far fa-image"></i>
+                                                Update Banner
+                                            </a>
+                                            <hr style={{margin:'10px 0', height:'1px', background:'#f2f2f2'}} />
                                             <a href="https://www.cardboardexpress.com/profile/orders" className="menu-item">
-                                                <i style={{color:'#0098d3', fontSize:'1.2rem', marginRight:'10px'}} class="fas fa-qrcode"></i>
+                                                <i style={{color:'#0098d3', fontSize:'1.3rem', marginRight:'10px'}} class="fas fa-qrcode"></i>
                                                 Qr Code
                                             </a>
                                         </div>
@@ -158,15 +313,29 @@ const StoreHeader = ({ store: { store, loading }, admin, tableShow1, setTable })
                             </Fragment>
                         )}
                     </div>
-                    <ul class="profile-underline store admin">
+                    {/* <ul class="profile-underline store admin">
                         <div onClick={e => setTable('shop')} className={tableShow1 === "shop" && "active"}><li><i class="fas fa-shopping-bag"></i><p>Shop</p></li></div>
-                        {/* <div onClick={e => setTable('info')} className={tableShow1 === "info" && "active"}><li><i class="fas fa-info-circle"></i><p>Info</p></li></div> */}
+                        <div onClick={e => setTable('info')} className={tableShow1 === "info" && "active"}><li><i class="fas fa-info-circle"></i><p>Info</p></li></div>
                         <div onClick={e => setTable('related')} className={tableShow1 === "related" && "active"}><li><i class="fas fa-clipboard-list"></i><p>Related</p></li></div>
-                    </ul>
+                    </ul> */}
                 </Fragment>
             ) : (
                 null
             )}
+
+            <Modal open={displayModal} onClose={setModal} center>
+                <h1 style={{color:'#333', fontWeight:'300'}}>Gallery</h1>
+                <ul class="modal-underline">
+                    <li className={modalShow1 === "upload" && "active"} onClick={e => setModalShow1('upload')}><a>upload</a></li>
+                    <li className={modalShow1 === "general" && "active"} onClick={e => setModalShow1('general')}><i class="fas fa-candy-cane"></i></li>
+                    <li className={modalShow1 === "clothing" && "active"} onClick={e => setModalShow1('clothing')}><i class="fas fa-tshirt"></i></li>
+                    <li className={modalShow1 === "pets" && "active"} onClick={e => setModalShow1('pets')}><i class="fas fa-paw"></i></li>
+                    <li className={modalShow1 === "kids" && "active"} onClick={e => setModalShow1('kids')}><i class="fas fa-baby"></i></li>
+                    <li className={modalShow1 === "sports" && "active"} onClick={e => setModalShow1('sports')}><i class="fas fa-basketball-ball"></i></li>
+                </ul>
+                {tableContent}
+                <button onClick={onSubmit} class="btn btn-primary">Upload</button>
+            </Modal>
         </Fragment>
     )
 }
@@ -174,6 +343,7 @@ const StoreHeader = ({ store: { store, loading }, admin, tableShow1, setTable })
 StoreHeader.propTypes = {
     store: PropTypes.object.isRequired,
     product: PropTypes.object.isRequired,
+    addBannerImg: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -181,4 +351,4 @@ const mapStateToProps = state => ({
     product: state.product
 })
 
-export default connect(mapStateToProps, null)(StoreHeader);
+export default connect(mapStateToProps, { addBannerImg })(StoreHeader);

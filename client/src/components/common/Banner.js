@@ -179,7 +179,7 @@ const Banner = ({imgLarge, imgSmall, admin, store, product, addBannerImg}) => {
                     {store.store && store.store.banner_imgs[0] ? <img src={`/api/stores/image/${store.store.banner_imgs[0].img_name}`} alt="banner img 1" /> : <img src={img} alt="img" />}
                 </BannerContainer>
             </div>
-            <Modal open={displayModal} onClose={setModal} center>
+            {/* <Modal open={displayModal} onClose={setModal} center>
                 <h1 style={{color:'#333', fontWeight:'300'}}>Gallery</h1>
                 <ul class="modal-underline">
                     <li className={tableShow1 === "upload" && "active"} onClick={e => setTableShow1('upload')}><a>upload</a></li>
@@ -191,7 +191,7 @@ const Banner = ({imgLarge, imgSmall, admin, store, product, addBannerImg}) => {
                 </ul>
                 {tableContent}
                 <button onClick={onSubmit} class="btn btn-primary">Upload</button>
-            </Modal>
+            </Modal> */}
         </Fragment>
     )
 }

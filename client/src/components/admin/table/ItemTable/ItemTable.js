@@ -133,6 +133,8 @@ const ItemTable = ({
                         )])
                     }
                 });
+
+                setGotProducts(true);
             } else {
                 setProductList([(
                     <div className="no-rides">
