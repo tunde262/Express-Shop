@@ -235,6 +235,8 @@ export const getFullStoresByTag = (tag) => async dispatch =>  {
 // Create or update store
 export const createStore = (formData, history, edit = false) => async dispatch => {
     try {
+        console.log('creating store');
+        console.log(formData); 
         const config = {
             headers: {
                 'Content-Type': 'application/json'
@@ -250,7 +252,7 @@ export const createStore = (formData, history, edit = false) => async dispatch =
 
         dispatch(setAlert(edit ? 'Store Updated' : 'Store Created', 'success'));
 
-        history.push('/admin');
+        history.push(`/admin/${res.data._id}`);
     } catch (err) {
         const errors = err.response.data.errors;
 

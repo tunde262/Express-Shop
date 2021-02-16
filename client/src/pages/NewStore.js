@@ -14,11 +14,13 @@ const NewStore = ({
         loading
     },
     match,
+    history,
     profile
 }) => {
 
     const [gotStore, setGotStore] = useState(false);
     const [gotCode, setGotCode] = useState(false);
+    const [paymentReady, setPaymentReady] = useState(false);
 
     var url_string = (window.location.href);
     var url = new URL(url_string);
@@ -47,6 +49,9 @@ const NewStore = ({
         const accountNum = res.data;
         console.log('state: ' + accountNum);
         // setAccountLink(res.data.url);
+        if(accountNum) {
+            setPaymentReady(true);
+        }
     }
 
     const viewDashboard = async () => {
@@ -79,6 +84,10 @@ const NewStore = ({
         setGotCode(true);
     }
 
+    if(paymentReady || store && store.stripe_id !== null) {
+        history.push(`/admin/${store._id}`) 
+    }
+
     return (
         <Fragment>
             <div className="page-full">
@@ -86,16 +95,16 @@ const NewStore = ({
                     Congratulations! <br/>You store was just created . . .
                 </h2>
 
-                <div className="qr-img-container">
+                {/* <div className="qr-img-container">
                     <img className="qr-img" src={qrPNG} />
                 </div>
 
                 <p>
 		            Scan this QR code with your phone's camera app to see your store live (or click it):
-                </p>
+                </p> */}
 
 
-                <div className="group design">
+                {/* <div className="group design">
                     <div className="heading">
                         SHARE YOUR STORE
                     </div>
@@ -113,7 +122,7 @@ const NewStore = ({
                             Send me link
                         </div>
                     </div> 
-                </div>
+                </div> */}
                 
                 {/* <div style={{display:'flex', justifyContent:'center'}}>
                     <YoutubeBlock videoId='_nBlN9yp9R8' />

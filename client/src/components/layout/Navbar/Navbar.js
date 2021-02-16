@@ -650,7 +650,7 @@ const Navbar = ({
                 </li>
                 <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
                     <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                        <h2 style={{margin:'0 10px', color:'#333'}}><i class="fas fa-store"></i></h2>
+                        <h2 style={{margin:'0 10px', color:'#333'}}><i className="fas fa-store"></i></h2>
                         <i style={{color:'#808080'}} className="fas fa-caret-down"></i>
                     </div>
                 </li>
@@ -731,7 +731,7 @@ const Navbar = ({
                 </li>
                 <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
                     <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                        <h2 style={{margin:'0 10px', color:'#333'}}><i class="fas fa-store"></i></h2>
+                        <h2 style={{margin:'0 10px', color:'#333'}}><i className="fas fa-store"></i></h2>
                         <i style={{color:'#808080'}} className="fas fa-caret-down"></i>
                     </div>
                 </li>
@@ -785,7 +785,7 @@ const Navbar = ({
                         <i style={{fontSize:'1rem'}} className="fas fa-bars"></i>
                     </div> */}
                     <div className="branding">
-                        <a href={`https://www.cardboardexpress.com/`} style={{color:'#333', textDecoration:'none'}}><h2><i class="fas fa-store"></i> My Store</h2></a>
+                        <a href={`https://www.cardboardexpress.com/`} style={{color:'#333', textDecoration:'none'}}><h2><i className="fas fa-store"></i> My Store</h2></a>
                         {/* <a href={`https://www.cardboardexpress.com/`}><img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" /></a> */}
 
                         {/* <div className="social-container">

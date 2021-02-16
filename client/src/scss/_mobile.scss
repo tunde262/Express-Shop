@@ -270,6 +270,17 @@
         }
     }
 
+    .dash-header {
+        width: 100%; 
+        display: flex; 
+        flex-direction: column;
+        justify-content: start;
+    }
+
+    .dash-btn {
+        width: calc(100vw - 2.5rem);  
+    }
+
     .category-boxes {
         grid-gap: 2rem 15px;
         grid-template-columns: repeat(2, minmax(200px, 1fr));

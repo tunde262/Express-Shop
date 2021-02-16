@@ -2148,6 +2148,23 @@ header {
     }
 }
 
+.dash-header {
+    width: 100%; 
+    display: flex; 
+    justify-content: space-between; 
+}
+
+.dash-btn {
+    width: 300px;  
+    background: #0098d3;  
+    border-color: #0098d3;  
+    outline: none;  
+    display: flex;  
+    align-items: center;  
+    justify-content: center; 
+    margin-top: 30px;
+}
+
 .profile-circle {
     display: flex; 
     justify-content: center;  

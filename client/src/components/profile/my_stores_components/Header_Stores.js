@@ -15,12 +15,14 @@ const Header_Stores = ({deleteAccount, store, auth: { user }, profile: {profile,
             <div>
                 <p>Account / My Stores</p>
             </div>
-            <div style={{display:'flex', justifyContent:'space-between', width:'100%'}}>
+            <div className="dash-header">
                 <h3>My Stores</h3>
-                <button>
-                    Subscribe
-                    <i style={{marginLeft:'10px', fontSize:'12px'}} class="fas fa-plus"></i>
-                </button>
+                <a href="/create-store" style={{textDecoration:'none'}} target="_blank">
+                    <button className="dash-btn">
+                        <i style={{marginRight:'10px', fontSize:'12px'}} class="fas fa-plus"></i>
+                        Start Selling
+                    </button>
+                </a>
             </div>
             <div>
                 <ul class="profile-underline">

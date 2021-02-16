@@ -39,14 +39,14 @@ const Header_Inventory = ({store, setItemModal, setCollectionModal, setLocationM
             <div>
                 <p><span style={{color:'#ff4b2b'}}>Cera Ve</span> / Inventory</p>
             </div>
-            <div style={{width:'100%', display:'flex', justifyContent:'space-between'}}>
+            <div className="dash-header">
                 <h3>Store Inventory</h3>
                 <div>
-                    <button onClick={() => setDropdown(!dropdown)} style={{width:'300px', background:'#0098d3', borderColor:'#0098d3', outline:'none', display:'flex', alignItems:'center', justifyContent:'center'}}>
-                        Create New
-                        <i style={{margin:'0 10px'}} class="fas fa-plus"></i>
+                    <button /*onClick={() => setDropdown(!dropdown)} */ className="dash-btn">
+                        Request Storage
+                        {/* <i style={{margin:'0 10px'}} class="fas fa-box"></i> */}
                     </button>
-                    <div className={dropdown ? "create-dropdown active" : "create-dropdown"} style={{height: menuHeight}}>
+                    {/* <div className={dropdown ? "create-dropdown active" : "create-dropdown"} style={{height: menuHeight}}>
                         <div className="menu">
                             <div onClick={todo} className="menu-item">
                                 <i style={{color:'#0098d3', fontSize:'1.2rem', marginRight:'10px'}} class="fas fa-tag"></i>
@@ -63,7 +63,7 @@ const Header_Inventory = ({store, setItemModal, setCollectionModal, setLocationM
                                  New Location
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <div>

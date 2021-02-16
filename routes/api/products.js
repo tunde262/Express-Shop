@@ -847,6 +847,35 @@ router.post('/variant/:prodId/:varId', auth, async (req, res) => {
 
 // });
 
+// Get count of Active products
+// Update prod_order by id (in Bulk on frontend)
+router.post('/stats/:storeId', async (req, res) => {
+    console.log('COUNTING PRODUCTS...');
+    try {
+        const prod_obj = {};
+
+        const prod_active = await Product.find({visible: true, store: req.params.storeId}).count(); 
+        const prod_paused = await Product.find({visible: false, store: req.params.storeId}).count(); 
+        const prod_low = await Product.find({inventory_qty: { $lt: 15 }, store: req.params.storeId}).count(); 
+        console.log('ACTIVE #:');
+        console.log(prod_active);
+
+        console.log('PAUSED #:');
+        console.log(prod_paused);
+
+        console.log('LOW QTY #:');
+        console.log(prod_low);
+
+        prod_obj.active = prod_active;
+        prod_obj.paused = prod_paused;
+        prod_obj.low = prod_low;
+
+        res.json(prod_obj);
+    } catch (err) {
+        console.log(err);
+    }
+});
+
 // Update prod locations to unique variants locations in document(s)
 router.post('/init-locations', async (req, res) => {
     console.log('INITIALZING LOCATIONS');

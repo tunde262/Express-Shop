@@ -35,6 +35,12 @@ const StoreSchema = new Schema({
     description: {
         type: String
     },
+    email: {
+        type: String,
+    },
+    phone: {
+        type: String,
+    },
     tags: {
         type: [String]
     },
@@ -43,6 +49,49 @@ const StoreSchema = new Schema({
     },
     department: {
         type: String
+    },
+    zipcode: {
+        type: String
+    },
+    return_location: {
+        type: {
+            type: String,
+            default: "Point"
+        },
+        coordinates: {
+            type: [Number]
+        } 
+    },
+    formatted_return_address: {
+        type: String,
+        required: true
+    },
+    return_address: {
+        street_name: {
+            type: String
+        },
+        street_number: {
+            type: String
+        },
+        city: {
+            type: String
+        },
+        state:{
+            type: String
+        },
+        country: {
+            type: String
+        },
+        postalcode: {
+            type: String
+        },
+        area: {
+            type: String,
+        }
+    },
+    return_placeId: {
+        type: String,
+        required: true
     },
     products: [
         {

@@ -23,14 +23,40 @@ const Main_Admin_Nav = ({
     const [adminNav, setAdminNav] = useState([]);
     const [gotLocations, setGotLocations] = useState(false);
 
+    // Page
+    const [navHighlight, setNavHighlight] = useState(null);
+
 
     useEffect(() => {
-        if(nav.page === 'admin detail product' || nav.page === 'admin detail collection' || nav.page === 'admin detail location') {
+        if(
+            nav.page === 'admin detail product' || 
+            nav.page === 'admin detail collection' || 
+            nav.page === 'admin detail location'
+        ){
             setSlideForm2(true);
         }
 
-        if(nav.main === 'store') {
-            setNavValue('store')
+        if(nav.page === 'admin shop') {
+            setNavHighlight('shop');
+        }
+        if(nav.page === 'admin inventory') {
+            setNavHighlight('inventory');
+        }
+
+        if(nav.page === 'admin orders') {
+            setNavHighlight('orders');
+        }
+
+        if(nav.page === 'admin people') {
+            setNavHighlight('people');
+        }
+
+        if(nav.page === 'admin settings') {
+            setNavHighlight('settings');
+        }
+
+        if(nav.main === 'people') {
+            setNavValue('people')
         }
 
         renderAdminNav();
@@ -54,7 +80,7 @@ const Main_Admin_Nav = ({
                 ) : null} 
 
                 <a style={{margin:'5px 0'}}  href={store.store ? `https://www.cardboardexpress.com/admin/${store.store._id}?show=store` : "#"}>
-                    <div className="store-table-nav-items main">
+                    <div className={navHighlight === "shop" ? "store-table-nav-items main active": "store-table-nav-items main"}>
                         <h3 style={{fontWeight:'600'}}>
                         <span>
                             {/* <img src={addBookmark} style={{width:'20px', marginRight:'1rem'}} alt="subscribe" />*/}
@@ -65,7 +91,7 @@ const Main_Admin_Nav = ({
                     </div>
                 </a>
                 <a style={{margin:'5px 0'}} href={store.store ? `https://www.cardboardexpress.com/admin/${store.store._id}?show=inventory` : "#"}>
-                    <div className="store-table-nav-items main active">
+                    <div className={navHighlight === "inventory" ? "store-table-nav-items main active": "store-table-nav-items main"}>
                         <h3 style={{fontWeight:'600'}}><span><i style={{fontSize:'20px', marginRight:'10px'}} className="fas fa-boxes"></i></span>Inventory</h3>
                     </div>
                 </a>
@@ -74,13 +100,13 @@ const Main_Admin_Nav = ({
                     <p>Add payment methods</p>
                 </div>  */}
                 <a style={{margin:'5px 0'}} href={store.store ? `https://www.cardboardexpress.com/admin/${store.store._id}?show=orders` : "#"}>
-                    <div className="store-table-nav-items main">
+                    <div className={navHighlight === "orders" ? "store-table-nav-items main active": "store-table-nav-items main"}>
                         <h3 style={{fontWeight:'600'}}><span><i style={{fontSize:'22px', marginRight:'1rem'}} className="fas fa-cash-register"></i></span>Orders</h3>
                     </div>
                 </a>
                 
                 <a style={{margin:'5px 0'}} href={store.store ? `https://www.cardboardexpress.com/admin/${store.store._id}?show=people` : "#"}>
-                    <div className="store-table-nav-items main">
+                    <div className={navHighlight === "customers" ? "store-table-nav-items main active": "store-table-nav-items main"}>
                         <h3 style={{fontWeight:'600'}}>
                         <span>
                             {/* <img src={addBookmark} style={{width:'20px', marginRight:'1rem'}} alt="subscribe" /> */}
@@ -92,7 +118,7 @@ const Main_Admin_Nav = ({
                 </a>
 
                 <a style={{margin:'5px 0'}} href={store.store ? `https://www.cardboardexpress.com/admin/${store.store._id}?show=settings` : "#"}>
-                    <div className="store-table-nav-items main">
+                    <div className={navHighlight === "settings" ? "store-table-nav-items main active": "store-table-nav-items main"}>
                         <h3 style={{fontWeight:'600'}}><span><i style={{fontSize:'22px', marginRight:'1rem'}} className="fas fa-cog"></i></span>Settings</h3>
                     </div>
                 </a>

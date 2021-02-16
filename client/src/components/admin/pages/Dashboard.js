@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
-import { setMainNav, removeItemModal, removeCollectionModal, removeLocationModal } from '../../../actions/navActions';
+import { setMainNav, setPage, removeItemModal, removeCollectionModal, removeLocationModal } from '../../../actions/navActions';
 import { getStoreById, deleteStore } from '../../../actions/storeActions';
 import { addProductByName } from '../../../actions/productActions';
 import { addCollectionByName } from '../../../actions/collectionActions';
@@ -47,6 +47,7 @@ import DefaultBanner from '../../../utils/imgs/placeholderimg.jpg';
 
 const Dashboard = ({ 
     setMainNav, 
+    setPage,
     removeItemModal, 
     removeCollectionModal, 
     removeLocationModal,
@@ -88,14 +89,18 @@ const Dashboard = ({
 
         if (location.search) {
             let query = new URLSearchParams(location.search).get('show')
+            console.log('QUERY HERE:');
+            console.log(query);
             if(query === 'store') {
                 setTableShow1('shop');
+                setPage('admin shop');
             } 
             // else if (query === 'edit') {
             //     setTableShow1('edit');
             // } 
             else if (query === 'inventory') {
                 setTableShow1('inventory');
+                setPage('admin inventory');
             } else if (query === 'add_item') {
                 setTableShow1('add_item');
             } else if (query === 'add_location') {
@@ -104,10 +109,13 @@ const Dashboard = ({
                 setTableShow1('add_collection');
             } else if (query === 'orders') {
                 setTableShow1('orders');
+                setPage('admin orders');
             } else if (query === 'people') {
                 setTableShow1('people');
+                setPage('admin people');
             } else if (query === 'settings') {
                 setTableShow1('settings');
+                setPage('admin settings');
             }
         }
 
@@ -638,6 +646,7 @@ Dashboard.propTypes = {
     deleteStore: PropTypes.func.isRequired,
     store: PropTypes.object.isRequired,
     setMainNav: PropTypes.func.isRequired,
+    setPage: PropTypes.func.isRequired,
     removeItemModal: PropTypes.func.isRequired,
     removeCollectionModal: PropTypes.func.isRequired,
     removeLocationModal: PropTypes.func.isRequired,
@@ -658,4 +667,16 @@ const mapStateToProps = state => ({
     nav: state.nav
 })
 
-export default connect(mapStateToProps, { setMainNav, getStoreById, deleteStore, addProductByName, addCollectionByName, addLocation, editLocation, removeItemModal, removeCollectionModal, removeLocationModal })(withRouter(Dashboard));
+export default connect(mapStateToProps, { 
+    setMainNav, 
+    setPage, 
+    getStoreById, 
+    deleteStore, 
+    addProductByName, 
+    addCollectionByName, 
+    addLocation, 
+    editLocation, 
+    removeItemModal, 
+    removeCollectionModal, 
+    removeLocationModal 
+})(withRouter(Dashboard));

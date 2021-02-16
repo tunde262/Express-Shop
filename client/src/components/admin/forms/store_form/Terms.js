@@ -19,9 +19,9 @@ const Terms = ({ slideform1, setSlideForm1, slideform2, setSlideForm2 }) => {
             </div>
 
             <button onClick={() => setSlideForm2(!slideform2)} style={{width:'100%', outline:'none', margin:'10px 0', fontSize:'13px', letterSpacing:'1px', display:'flex', alignItems:'center', justifyContent:'center'}}>
-            Accept & Continue <i style={{margin:'0 10px', fontSize:'1rem'}} class="fas fa-arrow-right"></i>
+            Accept & Continue <i style={{margin:'0 10px', fontSize:'1rem'}} className="fas fa-arrow-right"></i>
             </button>
-            <p onClick={() => setSlideForm1(!slideform1)} style={{margin:'0', color:'#808080'}}>Back</p>
+            {/* <p onClick={() => setSlideForm1(!slideform1)} style={{margin:'0', color:'#808080'}}>Back</p> */}
         </Fragment>
     )
 }

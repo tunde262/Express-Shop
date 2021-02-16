@@ -2,15 +2,16 @@ import React, { Fragment } from 'react'
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-const PaymentTerms = ({ slideform1, setSlideForm1, slideform2, setSlideForm2 }) => {
-    const startStripeAuthorization = async () => {
+const PaymentTerms = ({ slideform1, setSlideForm1, slideform2, setSlideForm2, onSubmit }) => {
+    const startStripeAuthorization = async (e) => {
         console.log('STARTING AUTH!!!!!');
 
-        const res = await axios.get('/api/stripe/authorize');
+        // const res = await axios.get('/api/stripe/authorize');
 
-        console.log('AUTH LINK: ' + res.data)
+        // console.log('AUTH LINK: ' + res.data)
 
-        window.location.href = res.data; 
+        // window.location.href = res.data; 
+        onSubmit(e);
     }
 
     return (
@@ -20,7 +21,7 @@ const PaymentTerms = ({ slideform1, setSlideForm1, slideform2, setSlideForm2 }) 
             </div>
 
             <button /* onClick={() => setSlideForm2(!slideform2)} */ onClick={startStripeAuthorization} style={{width:'100%', outline:'none', margin:'10px 0', fontSize:'13px', letterSpacing:'1px', display:'flex', alignItems:'center', justifyContent:'center'}}>
-            Save & Continue <i style={{margin:'0 10px', fontSize:'1rem'}} class="fas fa-arrow-right"></i>
+            Save & Continue <i style={{margin:'0 10px', fontSize:'1rem'}} className="fas fa-arrow-right"></i>
             </button>
             <p onClick={() => setSlideForm1(!slideform1)} style={{margin:'0', color:'#808080'}}>Back</p>
         </Fragment>

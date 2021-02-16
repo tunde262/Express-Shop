@@ -212,7 +212,21 @@ router.post('/', upload.single('file'), [ auth, [
         const {
             name, 
             description,
+            email,
+            phone,
+            department,
             tags,
+            zipcode,
+            street_name,
+            street_number,
+            city,
+            country,
+            state, 
+            postalcode,
+            formatted_return_address,
+            area,
+            coordinates,
+            return_placeId,
             youtube,
             instagram,
             facebook,
@@ -226,6 +240,31 @@ router.post('/', upload.single('file'), [ auth, [
         if(req.file) storeFields.img = req.file.id;
         if(req.file) storeFields.img_name = req.file.filename;
         if(description) storeFields.description = description;
+        if(email) storeFields.email = email;
+        if(phone) storeFields.phone = phone;
+        if(department) storeFields.department = department;
+        if(zipcode) storeFields.zipcode = zipcode;
+        // return address
+        if(return_placeId) storeFields.return_placeId = return_placeId;
+        if(area) storeFields.area = area;
+        if(coordinates) storeFields.coordinates = coordinates;
+        if(formatted_return_address) storeFields.formatted_return_address = formatted_return_address;
+
+        // Build return location obj
+        storeFields.return_location = {};
+        if(coordinates) {
+            storeFields.return_location.coordinates = coordinates.split(',').map(coordinate => coordinate.trim());
+        }
+
+        // Build address component obj
+        storeFields.return_address = {};
+        if(postalcode) storeFields.return_address.postalcode = postalcode;
+        if(street_name) storeFields.return_address.street_name = street_name;
+        if(street_number) storeFields.return_address.street_number = street_number;
+        if(city) storeFields.return_address.city = city;
+        if(state) storeFields.return_address.state = state;
+        if(country) storeFields.return_address.country = country;
+        if(area) storeFields.return_address.area = area;
         
         // Tags - Split into array
         if(tags) {
