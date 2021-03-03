@@ -194,7 +194,7 @@ const HomeLanding = ({history, auth: { isAuthenticated, user, loading }, updateA
         <div className="form-container sign-in-container">
             <form id="auth-form" onSubmit={e => signIn(e)}>
                 <h1>Sign In</h1>
-                <span>Welcome back to our Circle :)</span>
+                <span>Welcome back to Cardboard Express :)</span>
                 <input
                   type="email"
                   name="email"
