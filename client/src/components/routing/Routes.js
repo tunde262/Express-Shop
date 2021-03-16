@@ -47,9 +47,9 @@ const Routes = props => {
   return (
     <Fragment>
         <Switch>
-            <Route exact path="/explore" component={HomePage} />
+            <Route exact path="/explore" component={ExplorePage} />
             <Route exact path="/category" component={CategoryPage} />
-            <Route exact path="/shop" component={ExplorePage} />
+            {/* <Route exact path="/shop" component={} /> */}
             {/* Category Pages */}
             <Route exact path="/categories" component={CategoryPage} />
             <Route exact path="/stores" component={StoresPage} />

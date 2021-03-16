@@ -211,7 +211,7 @@ const App = () => {
               <main id="home">
                 <Switch>
                   {/* Landing Pages */}
-                  <Route exact path="/" component={HomeLanding} />
+                  <Route exact path="/" component={HomePage} />
                   <Route exact path="/business" component={BusinessLanding} />
                   <Route exact path="/pricing" component={BusinessPricing} />
                   <Route exact path="/cost-calculator" component={BusinessCalculator} />

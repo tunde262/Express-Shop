@@ -785,8 +785,8 @@ const Navbar = ({
                         <i style={{fontSize:'1rem'}} className="fas fa-bars"></i>
                     </div> */}
                     <div className="branding">
-                        <a href={`https://www.cardboardexpress.com/`} style={{color:'#333', textDecoration:'none'}}><h2><i className="fas fa-store"></i> My Store</h2></a>
-                        {/* <a href={`https://www.cardboardexpress.com/`}><img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" /></a> */}
+                        {/* <a href={`https://www.cardboardexpress.com/`} style={{color:'#333', textDecoration:'none'}}><h2><i className="fas fa-store"></i> My Store</h2></a> */}
+                        <a href={`https://www.cardboardexpress.com/`}><img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" /></a>
 
                         {/* <div className="social-container">
                             <a href="https://instagram.com/cardboardexpress" target="_blank" className="social"><i className="fab fa-instagram"></i></a>
