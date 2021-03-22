@@ -11,13 +11,13 @@ const bathroomImg = "https://media.manufactum.de/is/image/Manufactum/750s_shop/s
 const laundryImg = "https://forthemommas.com/wp-content/uploads/2014/07/target-.jpg";
 
 export default [
-    {
-        text_value: 'Explore',
-        img: exploreImg,
-        tag_value: 'explore',
-        background_color: 'OrangeRed',
-        icon: 'fab fa-wpexplorer'
-    },
+    // {
+    //     text_value: 'Explore',
+    //     img: exploreImg,
+    //     tag_value: 'explore',
+    //     background_color: 'OrangeRed',
+    //     icon: 'fab fa-wpexplorer'
+    // },
     {
         text_value: 'Clothing & Fashion',
         img: clothingFashionImg,

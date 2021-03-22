@@ -23,7 +23,9 @@ import { getCurrentProfile } from './actions/profileActions';
 // Google Analytics
 import ReactGA from 'react-ga';
 
-import MenuPage from './pages/Menu';
+// Menus
+import MenuPage from './pages/menu/Menu';
+import CategoryMenu from './pages/menu/CategoryMenu';
 
 // Auth
 import Register from './components/auth/registration/Register';
@@ -41,6 +43,7 @@ import BusinessWarehousePage from './pages/Business/Warehouse';
 import Alert from './components/layout/Notification';
 
 import HomePage from './pages/HomePage';
+import ContactPage from './pages/ContactPage';
 import HomeLanding from './pages/Home/Landing';
 import Navbar from './components/layout/Navbar/Navbar';
 import SideDrawer from './components/layout/SideDrawer/SideDrawer';
@@ -97,6 +100,8 @@ const App = () => {
   const [slideForm1, setSlideForm1] = useState(false);
 
   const [navValue, setNavValue] = useState('profile');
+
+  const [sideNavOpen, setSideNav] = useState(true);
 
   const [cartDrawerOpen, setCartDrawer] = useState(false);
 
@@ -164,6 +169,10 @@ const App = () => {
     showDrawer(true);
   };
 
+  const toggleSideNav = () => {
+    setSideNav(!sideNavOpen);
+  };
+
   const toggleAuthDrawer = () => {
     clicked();
     setAuthDrawer(!authDrawerOpen);
@@ -202,7 +211,7 @@ const App = () => {
           <Router>
             <div className="body-container">
               <Alert />
-              <Navbar backdrop={drawer} backdropClickHandler={backdropClickHandler} drawerClickHandler={drawerToggleClickHandler} toggleAuthDrawer={toggleAuthDrawer} toggleGuestDrawer={toggleGuestDrawer} toggleCartDrawer={toggleCartDrawer} />
+              <Navbar backdrop={drawer} backdropClickHandler={backdropClickHandler} drawerClickHandler={drawerToggleClickHandler} toggleSideNav={toggleSideNav} toggleAuthDrawer={toggleAuthDrawer} toggleGuestDrawer={toggleGuestDrawer} toggleCartDrawer={toggleCartDrawer} />
               <SideDrawer show={sideDrawerOpen} toggleAuthDrawer={toggleAuthDrawer} toggleCartDrawer={toggleCartDrawer} drawerClickHandler={drawerToggleClickHandler} />
               <CartDrawer cartStores={cartStores} setStoresList={setStoresList} show={cartDrawerOpen} toggleCartDrawer={toggleCartDrawer} drawerClickHandler={drawerToggleClickHandler} />
               <AuthDrawer show={authDrawerOpen} toggleAuthDrawer={toggleAuthDrawer} drawerClickHandler={drawerToggleClickHandler} />
@@ -211,7 +220,7 @@ const App = () => {
               <main id="home">
                 <Switch>
                   {/* Landing Pages */}
-                  <Route exact path="/" component={HomePage} />
+                  <Route exact path="/contact" component={ContactPage} />
                   <Route exact path="/business" component={BusinessLanding} />
                   <Route exact path="/pricing" component={BusinessPricing} />
                   <Route exact path="/cost-calculator" component={BusinessCalculator} />
@@ -221,12 +230,13 @@ const App = () => {
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/menu" component={MenuPage} />
+                  <Route exact path="/categories" component={CategoryMenu} />
                   <Route exact path="/account-setup" component={Personalize} />
                   {/*Admin Forms */}
                   <Route exact path="/create-store" component={StoreForm} />
                   <Route exact path="/success" component={NewStore} />
 
-                  <div className="store-table">
+                  <div className={sideNavOpen ? "store-table" : "store-table closed"}>
                       <div style={{height:'100%'}} className={navValue === 'profile' ? "store-table-nav right-margin" : "store-table-nav"}>
                         <div className="store-settings-transition">
                           {/** Transition 1 */}
@@ -244,9 +254,11 @@ const App = () => {
                           
                       </div>
                       <div className="store-table-main home">
+                        <Route exact path="/" component={HomePage} />
                         <Route component={Routes} />
                       </div>
                   </div>
+
                 </Switch>
               </main>
             </div>

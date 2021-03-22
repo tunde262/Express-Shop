@@ -19,6 +19,7 @@ import sampleImg from '../../../utils/imgs/20484728.jpeg';
 
 const Navbar = ({ 
     reorderItems, 
+    toggleSideNav,
     toggleItemModal, 
     toggleCollectionModal, 
     toggleLocationModal,
@@ -650,8 +651,11 @@ const Navbar = ({
                 </li>
                 <li className={navHighlight === "explore" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('explore')}>
                     <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                        <h2 style={{margin:'0 10px', color:'#333'}}><i className="fas fa-store"></i></h2>
-                        <i style={{color:'#808080'}} className="fas fa-caret-down"></i>
+                        <h2 style={{margin:'0 10px', color:'#333'}}>
+                            <img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" />
+                            {/*<i className="fas fa-store"></i>*/}
+                        </h2>
+                        <i className="fas fa-caret-down"></i>
                     </div>
                 </li>
                 <li onClick={toggleCart}>
@@ -781,9 +785,9 @@ const Navbar = ({
         <header style={nav.main === 'store' || nav.main === 'admin' ? {borderBottom: '1px solid rgb(214,214,214)'} : undefined}>
             <div className="desktop">
                 <div className="nav">
-                    {/* <div style={{margin:'0 20px 0 1rem', cursor:'pointer'}}>
+                    <div onClick={toggleSideNav} style={{margin:'0 20px 0 1rem', cursor:'pointer'}}>
                         <i style={{fontSize:'1rem'}} className="fas fa-bars"></i>
-                    </div> */}
+                    </div>
                     <div className="branding">
                         {/* <a href={`https://www.cardboardexpress.com/`} style={{color:'#333', textDecoration:'none'}}><h2><i className="fas fa-store"></i> My Store</h2></a> */}
                         <a href={`https://www.cardboardexpress.com/`}><img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" /></a>

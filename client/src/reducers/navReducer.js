@@ -7,6 +7,7 @@ import {
     SET_NAV3, 
     REMOVE_NAV3, 
     SET_MAIN_NAV,
+    TOGGLE_SIDE_NAV,
     TOGGLE_ITEM_MODAL, 
     TOGGLE_COLLECTION_MODAL, 
     TOGGLE_LOCATION_MODAL, 
@@ -21,6 +22,7 @@ const initialState = {
     nav3: '',
     page: '',
     main: '',
+    sideNav: false,
     itemModal: false,
     collectionModal: false,
     locationModal: false,
@@ -83,6 +85,11 @@ export default function(state = initialState, action) {
                 nav3: ''
             };
         }
+        case TOGGLE_SIDE_NAV: 
+            return {
+                ...state,
+                sideNav: !state.sideNav
+            }
         case TOGGLE_ITEM_MODAL: 
             return {
                 ...state,

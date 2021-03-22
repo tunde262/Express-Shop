@@ -589,9 +589,10 @@ textarea {
     text-decoration: none; }
 
 .link-decoration:hover {
-  text-decoration: underline; }
-  .link-decoration:hover p, .link-decoration:hover h1, .link-decoration:hover h2, .link-decoration:hover h3, .link-decoration:hover h4 {
-    color: #0645AD; }
+  text-decoration: none; }
+  .link-decoration:hover p, .link-decoration:hover h1, .link-decoration:hover h2, .link-decoration:hover h3, .link-decoration:hover h4, .link-decoration:hover a {
+    color: #0645AD !important;
+    transition: 100ms cubic-bezier(0.77, 0, 0.175, 1); }
 
 .mobile {
   display: none; }
@@ -1831,6 +1832,12 @@ header {
   border: 1px solid #e3e8ee;
   margin-top: 55px;
   overflow: hidden; }
+  .store-table.closed {
+    grid-template-areas: "main main"; }
+    .store-table.closed .store-table-nav {
+      width: 0; }
+    .store-table.closed .store-table-main.home {
+      width: 100vw; }
 
 .store-table-mobile {
   display: grid;
@@ -4954,6 +4961,54 @@ header {
   font-size: 16px;
   margin-bottom: 14px;
   background: #fbfbfb; }
+
+.layout-centered {
+  padding: 3em 1em;
+  word-break: break-word;
+  text-align: center; }
+
+.layout-centered-content {
+  margin: 0 auto;
+  max-width: 650px;
+  text-align: center;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; }
+  .layout-centered-content > h1 {
+    font-size: 1.777em;
+    line-height: 1.2em;
+    margin-top: 1.6em;
+    margin-bottom: .6em; }
+  .layout-centered-content > h2 {
+    font-size: 1.422em;
+    line-height: 1.2em;
+    margin-top: 1.6em;
+    margin-bottom: .6em; }
+  .layout-centered-content > img {
+    width: 250px;
+    margin: 0 auto; }
+
+.layout-two-up {
+  overflow: hidden;
+  padding: 3em 0; }
+
+a.contact-button {
+  background: #E2E4E6 100%;
+  border: 0;
+  border-radius: .3em;
+  box-shadow: 0 1px 0 #a5acb0;
+  color: #4d4d4d;
+  cursor: pointer;
+  display: inline-block;
+  font-size: .9em;
+  font-weight: bold;
+  line-height: 1.2;
+  margin: .3em 1em 1em 0;
+  outline: 0;
+  padding: .7em 3em;
+  position: relative;
+  text-decoration: none; }
 
 footer {
   padding: 20px;

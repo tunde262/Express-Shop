@@ -17,7 +17,7 @@
   "author": "Tunde Adepitan",
   "license": "ISC",
   "dependencies": {
-    "@googlemaps/google-maps-services-js": "^3.1.13",
+    "@googlemaps/google-maps-services-js": "^3.1.16",
     "bcrypt": "^5.0.0",
     "config": "^3.3.1",
     "connect-flash": "^0.1.1",
@@ -30,7 +30,7 @@
     "gridfs-stream": "^1.1.1",
     "jquery": "^3.5.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.25",
+    "mongoose": "^5.12.1",
     "multer": "^1.4.2",
     "multer-gridfs-storage": "^3.3.0",
     "react-router-dom": "^5.2.0",

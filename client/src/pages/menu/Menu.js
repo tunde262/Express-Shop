@@ -2,21 +2,21 @@ import React, { useEffect, useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getCart } from '../actions/productActions';
-import { setNav1, setPage, setMainNav } from '../actions/navActions';
-import { logout } from '../actions/authActions';
+import { getCart } from '../../actions/productActions';
+import { setNav1, setPage, setMainNav } from '../../actions/navActions';
+import { logout } from '../../actions/authActions';
 
 import mixpanel from 'mixpanel-browser';
 
-import ProfileCircle from '../components/common/ProfileCircle';
+import ProfileCircle from '../../components/common/ProfileCircle';
 
-import Footer from '../components/layout/Footer/Footer';
-import Spinner from '../components/common/Spinner';
+import Footer from '../../components/layout/Footer/Footer';
+import Spinner from '../../components/common/Spinner';
 
-import AuthModal from '../components/modals/AuthModal';
-import HomeMain from '../components/page_components/Home/HomeMain';
+import AuthModal from '../../components/modals/AuthModal';
+import HomeMain from '../../components/page_components/Home/HomeMain';
 
-const Menu = ({
+const MainMenu = ({
     product, 
     auth: { 
         user, 
@@ -87,13 +87,24 @@ const Menu = ({
                     </div>
                 </a>
                 
-                <div className="store-table-nav-items main" style={{padding:'0 16px 0 0'}}>
+                {/* <div className="store-table-nav-items main" style={{padding:'0 16px 0 0'}}>
                     <div style={{width:'100%', display: 'flex',alignItems: 'center',justifyContent: 'flexStart',padding: '0 16px',whiteSpace: 'nowrap',overflow: 'hidden',textOverflow: 'ellipsis'}}>
                         <i style={{fontSize:'22px', marginRight:'1rem'}} className="fas fa-layer-group"></i>
                         <h3 style={{fontWeight:'600'}}>Categories</h3>
                     </div>
                     <i style={{color:'#808080', fontSize:'12px'}} class="fas fa-chevron-right"></i>
-                </div>
+                </div> */}
+
+                <Link to="/categories">
+                    <div className="store-table-nav-items main">
+                        <h3 style={{fontWeight:'600'}}>
+                            <span>
+                                <i style={{fontSize:'22px', marginRight:'1rem'}} className="fas fa-layer-group"></i>
+                            </span>
+                            Categories
+                        </h3>
+                    </div>
+                </Link>
                 
                 <a href="https://www.cardboardexpress.com/profile/subscriptions">
                     <div className="store-table-nav-items main">
@@ -185,7 +196,7 @@ const Menu = ({
     
 }
 
-Menu.propTypes = {
+MainMenu.propTypes = {
     getCart: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
@@ -208,4 +219,4 @@ export default connect(mapStateToProps, {
     setNav1, 
     setPage,
     logout 
-})(withRouter(Menu));
+})(withRouter(MainMenu));

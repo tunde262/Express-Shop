@@ -12,7 +12,8 @@ import {
     TOGGLE_LOCATION_MODAL,
     REMOVE_ITEM_MODAL,
     REMOVE_COLLECTION_MODAL,
-    REMOVE_LOCATION_MODAL
+    REMOVE_LOCATION_MODAL,
+    TOGGLE_SIDE_NAV
 } from './types';
 
 export const setPage = (page) => dispatch => {
@@ -63,6 +64,13 @@ export const setMainNav = (value) => {
         type: SET_MAIN_NAV,
         payload: value
     }
+}
+
+// Toggle Main Side Nav
+export const toggleSideNav = () => dispatch => {
+    dispatch({
+        type: TOGGLE_SIDE_NAV,
+    });
 }
 
 export const toggleItemModal = () => dispatch => {
