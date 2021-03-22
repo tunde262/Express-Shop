@@ -531,7 +531,7 @@ const Navbar = ({
                                         </div>
                                     </a>
                                     <hr style={{margin:'10px 0'}} />
-                                    <a href={`https://www.cardboardexpress.com/shop`} className="menu-item">
+                                    <a href={`https://www.cardboardexpress.com/`} className="menu-item">
                                         <small style={{color:'#ff4b2b', marginRight:'10px'}}><i className="fas fa-arrow-left"></i></small>{' '}
                                         Exit Dashboard
                                     </a>
