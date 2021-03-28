@@ -7,6 +7,7 @@ import SubscriptionsElement from './Subs_Element';
 import ExtrasElement from './Extras_Element';
 import CollectionsElement from './Collections_Element';
 
+import { logout } from '../../../actions/authActions';
 import { setPage } from '../../../actions/navActions';
 import { getCollectionsByIdList } from '../../../actions/collectionActions';
 import { getCurrentProfile, getProfileSubscriptions } from '../../../actions/profileActions';
@@ -24,11 +25,13 @@ const Main_Store_Nav = ({
         main
     },
     auth: {
+        isAuthenticated,
         user
     },
     profile,
     setNavValue,
     navValue,
+    logout,
     getCurrentProfile
 }) => {
     // Page
@@ -124,30 +127,110 @@ const Main_Store_Nav = ({
                 </div>
                 <i style={{color:'#808080', fontSize:'12px'}} class="fas fa-chevron-right"></i>
             </div>
+
+            {!isAuthenticated ? (
+                <a href="https://www.cardboardexpress.com/">
+                    <div className="store-table-nav-items secondary">
+                        <h3 style={{fontWeight:'600'}}>
+                            <span>
+                                <i style={{fontSize:'22px', marginRight:'1rem'}} className="fas fa-compass"></i>
+                            </span>
+                            Subscriptions
+                        </h3>
+                    </div>
+                </a>
+            ) : null}
+
+            <a href="/profile/saved">
+                <div className="store-table-nav-items secondary">
+                    <h3 style={{fontWeight:'600'}}>
+                        <span>
+                            <i style={{fontSize:'22px', marginRight:'1rem'}} className="fas fa-heart"></i>
+                        </span>
+                        Saved
+                    </h3>
+                </div>
+            </a>
             
-            <SubscriptionsElement />
+            {isAuthenticated ? <SubscriptionsElement /> : null}
+            
             
             {/* <CollectionsElement setCollectionModal={setCollectionModal} displayCollectionModal={displayCollectionModal} /> */}
 
             <div style={{zIndex:'30'}}>
-                <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}} className="store-table-nav-items header-btn">
-                    <h3 style={{fontWeight:'600', color:'#808080'}}>Account</h3>
-                </div>
-                <a href="https://www.cardboardexpress.com/profile/settings">
-                    <div onClick={() => toggleProfile('profile')} className={navHighlight === "profile" ? "store-table-nav-items main active" : "store-table-nav-items main"}>
-                        <h3 style={{fontWeight:'600'}}>
-                            <span>
-                                <i style={{fontSize:'22px', marginRight:'10px'}} className="fas fa-cog"></i>
-                            </span>
-                            Settings
-                        </h3>
-                    </div>
-                </a>
+
+                {isAuthenticated ? (
+                    <Fragment>
+                        <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}} className="store-table-nav-items header-btn">
+                            <h3 style={{fontWeight:'600', color:'#808080'}}>Account</h3>
+                        </div>
+
+                        <a href="/profile">
+                            <div className="store-table-nav-items secondary">
+                                <h3 style={{fontWeight:'600'}}>
+                                    <span>
+                                        <i style={{fontSize:'22px', marginRight:'1rem'}} className="fas fa-user-circle"></i>
+                                    </span>
+                                    My Profile
+                                </h3>
+                            </div>
+                        </a>
+                        
+                        <a href="/profile/settings">
+                            <div onClick={() => toggleProfile('profile')} className={navHighlight === "profile" ? "store-table-nav-items main active" : "store-table-nav-items main"}>
+                                <h3 style={{fontWeight:'600'}}>
+                                    <span>
+                                        <i style={{fontSize:'22px', marginRight:'10px'}} className="fas fa-cog"></i>
+                                    </span>
+                                    Settings
+                                </h3>
+                            </div>
+                        </a>
+
+                        <div onClick={logout} className={navHighlight === "profile" ? "store-table-nav-items main active" : "store-table-nav-items main"}>
+                            <h3 style={{fontWeight:'600'}}>
+                                <span>
+                                    <i style={{fontSize:'22px', marginRight:'10px'}} className="fas fa-sign-out-alt"></i>
+                                </span>
+                                Logout
+                            </h3>
+                        </div>
+                    </Fragment>
+                ) : (
+                    <Fragment>
+                        <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}} className="store-table-nav-items header-btn">
+                            <h3 style={{fontWeight:'600', color:'#808080'}}>Settings</h3>
+                        </div>
+
+                        <a href="https://www.cardboardexpress.com/">
+                            <div className="store-table-nav-items secondary">
+                                <h3 style={{fontWeight:'600'}}>
+                                    <span>
+                                        <i style={{fontSize:'22px', marginRight:'1rem'}} className="fas fa-question-circle"></i>
+                                    </span>
+                                    Help
+                                </h3>
+                            </div>
+                        </a>
+
+                        <a href="https://www.cardboardexpress.com/">
+                            <div className="store-table-nav-items secondary">
+                                <h3 style={{fontWeight:'600'}}>
+                                    <span>
+                                        <i style={{fontSize:'22px', marginRight:'1rem'}} className="fas fa-flag"></i>
+                                    </span>
+                                    Send Feedback
+                                </h3>
+                            </div>
+                        </a>
+                    </Fragment>
+                )}
+                
                 {/* <div onClick={e => setTableShow1('payments')} className={tableShow1 === "payments" ? "profile-table-nav-items active" : "store-table-nav-items"}>
                     <h3>Payments</h3>
                     <p>Add payment methods</p>
                 </div> */}
-                <a href="https://www.cardboardexpress.com/">
+                {/* <a href="https://www.cardboardexpress.com/">
                     <div className="store-table-nav-items secondary">
                         <h3 style={{fontWeight:'600'}}>
                             <span>
@@ -156,9 +239,9 @@ const Main_Store_Nav = ({
                             View History
                         </h3>
                     </div>
-                </a>
+                </a> */}
                 
-                <a href="https://www.cardboardexpress.com/">
+                {/* <a href="https://www.cardboardexpress.com/">
                     <div className="store-table-nav-items secondary">
                         <h3 style={{fontWeight:'600'}}>
                             <span>
@@ -177,7 +260,7 @@ const Main_Store_Nav = ({
                             Send Feedback
                         </h3>
                     </div>
-                </a>
+                </a> */}
                 <div className="store-table-nav-items header-btn"></div>
             </div>          
             <div style={{height:'auto', zIndex:'30', background:'#fff'}}></div>
@@ -189,6 +272,7 @@ Main_Store_Nav.propTypes = {
     setPage: PropTypes.func.isRequired,
     getCollectionsByIdList: PropTypes.func.isRequired,
     getProfileSubscriptions: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired,
     nav: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
@@ -201,4 +285,10 @@ const mapStateToProps = state => ({
     profile: state.profile
 });
 
-export default connect(mapStateToProps, { setPage, getCollectionsByIdList, getProfileSubscriptions, getCurrentProfile })(Main_Store_Nav);
+export default connect(mapStateToProps, { 
+    setPage, 
+    getCollectionsByIdList, 
+    getProfileSubscriptions, 
+    getCurrentProfile,
+    logout 
+})(Main_Store_Nav);

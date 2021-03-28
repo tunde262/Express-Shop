@@ -154,7 +154,7 @@ const Navbar = ({
     if(nav.main === 'store') {
         authLinks = (
             <Fragment>
-                <li className={navHighlight === "favorited" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('favorited')}>
+                {/* <li className={navHighlight === "favorited" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('favorited')}>
                     <a href={`https://www.cardboardexpress.com/profile/saved`}>
                         <div
                             onMouseEnter={handleMouseHoverHeart}
@@ -168,7 +168,7 @@ const Navbar = ({
                             
                         </div>  
                     </a>
-                </li>
+                </li> */}
                 {/* <li className={navHighlight === "categories" ? "nav-offset active" : "nav-offset"} onClick={e => setNavHighlight('categories')}>
                     <div 
                         onMouseEnter={handleMouseHoverCat}
@@ -196,7 +196,7 @@ const Navbar = ({
                         )}
                     </div>
                 </li> */}
-                <li className="nav-offset" onClick={e => setNavHighlight('profile')}>
+                {/* <li className="nav-offset" onClick={e => setNavHighlight('profile')}>
                     <div  
                         style={{display:'flex', alignItems:'center', justifyContent:'center'}}
                         className={navHighlight === "profile" ? "active" : undefined}
@@ -267,10 +267,10 @@ const Navbar = ({
                                     <a href={`https://www.cardboardexpress.com/profile/orders`} className="menu-item">
                                         My Orders
                                     </a>
-                                    {/* <hr style={{margin:'10px 0'}} />
+                                    <hr style={{margin:'10px 0'}} />
                                     <a href={`https://www.cardboardexpress.com/admin`} className="menu-item">
                                         My Stores
-                                    </a> */}
+                                    </a> 
                                     <hr style={{margin:'10px 0'}} />
                                     <a href="#" className="menu-item" onClick={logout}>
                                         <i className="fas fa-sign-out-alt" />{' '}
@@ -307,9 +307,27 @@ const Navbar = ({
                             </CSSTransition>
                         </div>
                     )}
-                </li>
+                </li> */}
                 <li className="nav-offset" onClick={e => setNavHighlight('cart')}>
-                    <div 
+                <div 
+                        onMouseEnter={handleMouseHoverCat}
+                        onMouseLeave={handleMouseHoverCat}
+                        style={{marginRight:'-14px'}}
+                    >
+                        {/* {navHighlight === "categories" || isHoveringCat ? (
+                            <i onClick={() => setCreateDropdown(!createDropdown)} style={{marginRight:'-14px', fontSize:'1rem'}} className="far fa-plus"></i>
+                        ) : ( */}
+                            <div onClick={() => toggleCartDrawer()}  style={{display:'flex', alignItems:'center'}}>
+                                <div style={{display:'flex', alignItems:'center'}}>
+                                    
+                                    <button style={{fontSize:'14px', backgroundColor:'#ebf1ff', color:'#3374ff', padding:'7px 16px', border:'1px solid #ebf1ff', borderRadius:'4px', fontWeight:'500', outline:'none', textAlign:'center'}}>
+                                        <i className="fas fa-shopping-cart"></i> Cart
+                                    </button>
+                                </div>
+                            </div>
+                        {/* )} */}
+                    </div>
+                    {/* <div 
                         onClick={() => toggleCartDrawer()} 
                         className={navHighlight === "cart" ? "active" : undefined}
                         onMouseEnter={handleMouseHover2}
@@ -324,7 +342,7 @@ const Navbar = ({
                                 <i className="fas fa-shopping-cart"></i>
                             </div>
                         )}
-                    </div>
+                    </div> */}
 
                     {cartPopup && (
                         <div className="cartPopup" style={{height: menuHeight}}>
