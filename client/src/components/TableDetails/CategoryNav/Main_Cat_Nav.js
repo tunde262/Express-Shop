@@ -34,6 +34,7 @@ const Main_Store_Nav = ({slideForm1, setSlideForm1}) => {
                 {mainCategoryItems.map(item => (
                     <CategoryItem 
                         item={item} 
+                        slide
                         setSlideForm2={setSlideForm2} 
                         slideForm2={slideForm2} 
                         setCatValue={setCatValue} 
@@ -44,6 +45,7 @@ const Main_Store_Nav = ({slideForm1, setSlideForm1}) => {
                     
                 </div>
             </div>
+            {/** Transition 2 */}
             <div className={slideForm2 ? "store-side-nav-container active" : "store-side-nav-container"} id="transition-2">
                 <div style={{marginBottom:'5px'}} onClick={() => setSlideForm2(!slideForm2)}>
                     <div style={{display:'flex', flexDirection:'row', width:'100%', justifyContent:'flex-start'}}>

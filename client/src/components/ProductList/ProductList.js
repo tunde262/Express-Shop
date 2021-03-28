@@ -19,9 +19,11 @@ const ProductList = ({products, page, product, auth: { user }, handleScroll}) =>
     else {
         if(products.length > 0) {
             productList = products.map(product => {
-                return (
-                    <ProductCard key={product._id} page={page} product={product} />
-                )
+                if(product) {
+                    return (
+                        <ProductCard key={product._id} page={page} product={product} />
+                    )
+                }
             })
         }
         else {

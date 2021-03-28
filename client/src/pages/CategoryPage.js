@@ -16,7 +16,9 @@ import ProductOverview from '../components/Overview/productOverview/ProductOverv
 import ProductList from '../components/ProductList/ProductList';
 import Container from '../components/ProductList/Container';
 import AuthModal from '../components/modals/AuthModal';
+
 import { setMainNav, setNav1, setNav2, setNav3 } from '../actions/navActions';
+import { getCategoryProducts  } from '../actions/productActions'; 
 
 const CategoryPage = ({ 
     product, 
@@ -25,6 +27,7 @@ const CategoryPage = ({
         user, 
         loading 
     }, 
+    getCategoryProducts,
     setMainNav, 
     setNav1, 
     setNav2, 
@@ -35,6 +38,7 @@ const CategoryPage = ({
     const [tableShow1, setTableShow1] = useState('shop');
     const [productsLoaded, setProductsLoaded] = useState(false);
     // const [maxSkip, setMaxSkip] = useState(null);
+    const [skip, setSkip] = useState(0);
 
     const [categoryName, setCategoryName] = useState('');
 
@@ -268,9 +272,11 @@ const CategoryPage = ({
         if(!productsLoaded) {
             handleNavLists(filter);
         }
+
+        getCategoryProducts(filter, skip);
         
         console.log("FILTER: " + filter);
-    }, [filter]);
+    }, [filter, skip]);
 
     // const getInitialProducts = async () => {
     //     setProductsLoaded(true);
@@ -281,13 +287,13 @@ const CategoryPage = ({
     //     getProducts();
     // }
 
-    // const handleScroll = (e) => {
-    //     const { offsetHeight, scrollTop, scrollHeight} = e.target
+    const handleScroll = (e) => {
+        const { offsetHeight, scrollTop, scrollHeight} = e.target
     
-    //     if (offsetHeight + scrollTop === scrollHeight) {
-    //       setSkip(product.products.length)
-    //     }
-    // }
+        if (offsetHeight + scrollTop === scrollHeight) {
+          setSkip(product.products.length)
+        }
+    }
 
     // const handleMixpanel = () => {
     //     var url_filter = (window.location.href);
@@ -304,22 +310,24 @@ const CategoryPage = ({
     // }
 
         return (
-            <div className="collection-page-container">
-                <div className="store-table-header" style={{padding:'20px 20px 0 20px'}}>
-                    <CategoryHeader 
-                        categoryName={categoryName} 
-                        setTableShow1={setTableShow1} 
-                        tableShow1={tableShow1} 
-                        history={history}
-                    />
-                </div>
-                <div className="store-table-body">
-                    <CategoryMain filter={filter} setTableShow1={setTableShow1} tableShow1={tableShow1} />
-                </div>
-                
-                <Footer />
+            <Fragment>
+                <div onScroll={handleScroll} className="collection-page-container">
+                    <div className="store-table-header" style={{padding:'20px 20px 0 20px'}}>
+                        <CategoryHeader 
+                            categoryName={categoryName} 
+                            setTableShow1={setTableShow1} 
+                            tableShow1={tableShow1} 
+                            history={history}
+                        />
+                    </div>
+                    <div className="store-table-body">
+                        <CategoryMain filter={filter} setTableShow1={setTableShow1} tableShow1={tableShow1} />
+                    </div>
+
+                    <Footer />
                 {!loading && !isAuthenticated ? <AuthModal /> : null }
-            </div>
+                </div>
+            </ Fragment>
         )
 }
 
@@ -327,6 +335,7 @@ CategoryPage.propTypes = {
     product: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
     setMainNav: PropTypes.func.isRequired,
+    getCategoryProducts: PropTypes.func.isRequired,
     setNav1: PropTypes.func.isRequired,
     setNav2: PropTypes.func.isRequired,
     setNav3: PropTypes.func.isRequired,
@@ -339,6 +348,7 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, { 
     setMainNav,
+    getCategoryProducts,
     setNav1, 
     setNav2, 
     setNav3 

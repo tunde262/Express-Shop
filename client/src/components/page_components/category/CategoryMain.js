@@ -25,17 +25,17 @@ const CategoryMain = ({
     const [gotCategories, setGotCategories] = useState(false);
     const [skip, setSkip] = useState(0);
 
-    useEffect(() => {
-        getCategoryProducts(filter, skip);
-    }, [skip]);
+    // useEffect(() => {
+    //     getCategoryProducts(filter, skip);
+    // }, [skip]);
 
-    const handleScroll = (e) => {
-        const { offsetHeight, scrollTop, scrollHeight} = e.target
+    // const handleScroll = (e) => {
+    //     const { offsetHeight, scrollTop, scrollHeight} = e.target
     
-        if (offsetHeight + scrollTop === scrollHeight) {
-          setSkip(product.products.length)
-        }
-    }
+    //     if (offsetHeight + scrollTop === scrollHeight) {
+    //       setSkip(product.products.length)
+    //     }
+    // }
 
 
     let pageContent = null;
@@ -43,7 +43,7 @@ const CategoryMain = ({
     if(!product.loading) {
         if(tableShow1 === 'shop') {
             pageContent = (
-                <div onScroll={handleScroll} style={{height:"80vh", overflowY:'scroll', background:'rgb(247, 247, 247)'}}>
+                <div style={{background:'rgb(247, 247, 247)'}}>
                     {/* <Banner imgLarge={ImgLarge} imgSmall={ImgSmall} /> */}
                     <div className="header-nav-container">
                         <div style={{padding:'10px'}}>
@@ -63,6 +63,7 @@ const CategoryMain = ({
                             <i class="fas fa-sliders-h"></i>
                         </div> */}
                         <Container />
+                        {/* {product.products.length > 0 ? <Spinner /> : null} */}
                     </div>
                 </div>
             )

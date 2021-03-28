@@ -107,7 +107,7 @@ const CollectionHeader = ({
                         <h3><i style={{color:'#ff4b2b', marginRight:'10px'}} class="fas fa-tag"></i>{collectionName}</h3>
                     </div>
                 </div>
-                <p id="store-description" className="desktop" style={{color:'#808080'}}>description</p>
+                {/* <p id="store-description" className="desktop" style={{color:'#808080'}}>description</p> */}
 
                 <div className="store-socials desktop" style={{paddingRight:'10px'}} id="store-socials">
                     {following ? (
