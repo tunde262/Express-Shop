@@ -48,6 +48,10 @@ const Main_Store_Nav = ({
             setNavHighlight('explore');
         }
 
+        if(page === 'saved') {
+            setNavHighlight('saved');
+        }
+
         if(page === 'profile') {
             setNavHighlight('profile');
             setSlideForm1(true);
@@ -141,8 +145,8 @@ const Main_Store_Nav = ({
                 </a>
             ) : null}
 
-            <a href="/profile/saved">
-                <div className="store-table-nav-items secondary">
+            <a href="/profile/saved" onClick={() => todo('explore')}>
+                <div className={navHighlight === "saved" ? "store-table-nav-items main active" : "store-table-nav-items main"}>
                     <h3 style={{fontWeight:'600'}}>
                         <span>
                             <i style={{fontSize:'22px', marginRight:'1rem'}} className="fas fa-heart"></i>

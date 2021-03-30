@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { getLikedProducts } from '../actions/productActions';
 import { getLikedCollections } from '../actions/collectionActions';
 import { getStoreSubscriptions } from '../actions/storeActions';
-import { setMainNav, setNav1 } from '../actions/navActions';
+import { setMainNav, setPage, setNav1 } from '../actions/navActions';
 
 import Header from '../components/header/Header';
 import CategoryOverview from '../components/Overview/categoryOverview/CategoryOverview';
@@ -23,6 +23,7 @@ const LikePage = ({
     getStoreSubscriptions, 
     setMainNav,
     setNav1, 
+    setPage,
     profile, 
     collection,
     store, 
@@ -38,6 +39,7 @@ const LikePage = ({
 
     useEffect(() => {
         setMainNav('store');
+        setPage('saved');
         if(user) {
             getStoreSubscriptions(user._id);
             getLikedCollections(user._id);
@@ -106,6 +108,7 @@ LikePage.propTypes = {
     getLikedProducts: PropTypes.func.isRequired,
     getLikedCollections: PropTypes.func.isRequired,
     setNav1: PropTypes.func.isRequired,
+    setPage: PropTypes.func.isRequired,
     setMainNav: PropTypes.func.isRequired,
 }
 
@@ -122,5 +125,6 @@ export default connect(mapStateToProps, {
     getLikedCollections,
     getStoreSubscriptions, 
     setMainNav,
-    setNav1 
+    setNav1,
+    setPage
 })(LikePage);

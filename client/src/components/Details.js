@@ -939,7 +939,7 @@ const Details = ({
                                         <i class="fas fa-chevron-right"></i>
                                     </div>
                                 </div> */}
-                                <div className="mobile" style={{width:'100%', background:'yellow', overflow:'hidden'}}>
+                                <div className="mobile" style={{width:'100%', marginTop:'130px', background:'yellow', overflow:'hidden'}}>
                                     <ImageOverview images={img_gallery} title="Imgs" changeImage={changeImage} showImage={showImage} detailProduct={detailProduct} />
                                 </div>
 

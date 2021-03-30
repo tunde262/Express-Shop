@@ -72,7 +72,7 @@ const MainMenu = ({
                         <i className="fas fa-chevron-right"></i>
                     </div>
                 </a> */}
-                <a href="https://www.cardboardexpress.com/shop">
+                <a href="https://www.cardboardexpress.com/">
                     <div className="store-table-nav-items main">
                         <h3 style={{fontWeight:'600'}}><span><i style={{fontSize:'22px', marginRight:'10px'}} className="fas fa-home"></i></span>Home</h3>
                     </div>
