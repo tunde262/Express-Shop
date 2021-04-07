@@ -362,9 +362,9 @@ const DetailOrder = ({
                         order={order}
                     />
 
-                    <InventoryActivityBlock
+                    {/* <InventoryActivityBlock
                         isMobile={isMobile}
-                    />
+                    /> */}
 
                     {/* <TagsBlock 
                         isMobile={isMobile} 
@@ -380,9 +380,9 @@ const DetailOrder = ({
                 <Fragment>
                     <LocationsBlock />
 
-                    <InventoryActivityBlock
+                    {/* <InventoryActivityBlock
                         isMobile={isMobile}
-                    />
+                    /> */}
                 </Fragment>
             );
         }

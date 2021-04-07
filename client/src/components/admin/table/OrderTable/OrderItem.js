@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -14,9 +15,33 @@ const OrderItem = ({
     orderItem
 }) => {
 
+    const [gotDetail, setGotDetail] = useState(false);
+    const [orderImg, setOrderImg] = useState([]);
+
+    let res = null;
+
     useEffect(() => {
- 
+        renderImg();
     }, [])
+
+    const fetchDetail = async () => {
+        try {
+            res = await axios.get(`/api/products/${orderItem.item.product}`);
+            console.log(`ORD ITEM RETRIEVED: `);
+            console.log(res.data);
+            renderImg();
+        } catch (err) {
+            console.log(`FAILED TO RETRIEVE W ERR: ${err}`);
+        }
+
+        console.log('ORDER ITEM ID: ');
+        console.log(orderItem.item.product)
+    };
+
+    if(!gotDetail && orderItem) {
+        fetchDetail();
+        setGotDetail(true);
+    }
 
 
     let rowClassName1;
@@ -28,13 +53,32 @@ const OrderItem = ({
         rowClassName1 = "order-table-row-mobile"
     }
 
+    const renderImg = () => {
+        setOrderImg([]);
+        console.log('RENDER IMG PROCESS')
+        console.log(res)
+        if(res) {
+            if(res.data.img_gallery[0]) {
+                let sorted_img_gallery = res.data.img_gallery.sort((a, b) => a.img_order - b.img_order);
+
+                setOrderImg([(<img style={{width: '100%'}} src={`/api/products/image/${sorted_img_gallery[0].img_name}`} alt="img" />)]);
+            } else {
+                setOrderImg([(<img style={{width: '100%'}} src={placeholderImg} alt="img" />)]);
+            }  
+        } else {
+            setOrderImg([(<img style={{width: '100%'}} src={placeholderImg} alt="img" />)]);
+        } 
+    }
+
     return (
         <div  
             className={rowClassName1} 
         >
             {isTablet ? (
                 <Fragment>
-                    <div className="table-row-img"><img style={{width: '100%'}} src={orderItem.item.img_gallery ? `/api/products/image/${orderItem.item.img_gallery[0].img_name}` : placeholderImg} alt="img" /></div>
+                    <div className="table-row-img">
+                        {!orderImg.length > 0 ? null : orderImg}
+                    </div>
                     <div>
                         <div className="line-clamp-1" style={{maxHeight:'40px', overflow:'hidden', color:'#0098d3'}}>
                             {orderItem.item.name}
@@ -52,7 +96,9 @@ const OrderItem = ({
                 </Fragment>
             ) : (
                 <Fragment>
-                    <div className="table-row-img"><img style={{width: '100%'}} src={orderItem.item.img_gallery ? `/api/products/image/${orderItem.item.img_gallery[0].img_name}` : placeholderImg} alt="img" /></div>
+                    <div className="table-row-img">
+                        {!orderImg.length > 0 ? null : orderImg}
+                    </div>
                     <div>
                         <div className="line-clamp-1" style={{maxHeight:'40px', overflow:'hidden', color:'#0098d3'}}>
                             {orderItem.item.name}

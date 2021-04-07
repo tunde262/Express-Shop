@@ -68,7 +68,7 @@ const Login = ({ auth: { isAuthenticated, user }, login, history }) => {
                 <button onClick={onSubmit} style={{width:'100%', outline:'none', margin:'10px 0', fontSize:'13px', letterSpacing:'1px', display:'flex', alignItems:'center', justifyContent:'center'}}>
                     Continue 
                 </button>
-                <a href={`https://www.cardboardexpress.com/register`} style={{color:'#808080'}}>Don't have an account?</a>
+                <a href={`/register`} style={{color:'#808080'}}>Don't have an account?</a>
             </div>
         </main>
     )

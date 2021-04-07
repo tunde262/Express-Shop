@@ -121,7 +121,7 @@ const DetailOrder = ({ getOrderById, setPage, product, store, auth: { user, isAu
     }
 
     return (
-        <Fragment>
+        <div className="detail-container">
             <div className="store-table-header">
                 <DetailOrderHeader />
             </div>
@@ -131,7 +131,7 @@ const DetailOrder = ({ getOrderById, setPage, product, store, auth: { user, isAu
             <Modal open={displayAddressModal} onClose={() => toggleAddressModal(!displayAddressModal)} center styles={bg}>
                 <h1>Hello</h1>
             </Modal>
-        </Fragment>
+        </div>
     )
 }
 

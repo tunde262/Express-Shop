@@ -491,7 +491,7 @@ const Navbar = ({
                     >
                         {navHighlight === "profile" || isHovering ? (
                             <Fragment>
-                                <a href={`https://www.cardboardexpress.com/profile`}>
+                                <a href={`/profile`}>
                                     <ProfileCircle />
                                 </a>
                                 <div 
@@ -509,7 +509,7 @@ const Navbar = ({
                             ) 
                             : (
                                 <Fragment>
-                                    <a href={`https://www.cardboardexpress.com/profile`}>
+                                    <a href={`/profile`}>
                                         <div style={{display:'flex', justifyContent:'center', paddingTop:'20px', alignItems:'center', width:'40px', height:'40px', borderRadius:'50%', background:'#ececec'}}>
                                             <p style={{fontWeight:'bold', color:'#333'}}>T</p>
                                         </div>
@@ -549,7 +549,7 @@ const Navbar = ({
                                         </div>
                                     </a>
                                     <hr style={{margin:'10px 0'}} />
-                                    <a href={`https://www.cardboardexpress.com/`} className="menu-item">
+                                    <a href={`/`} className="menu-item">
                                         <small style={{color:'#ff4b2b', marginRight:'10px'}}><i className="fas fa-arrow-left"></i></small>{' '}
                                         Exit Dashboard
                                     </a>
@@ -558,7 +558,7 @@ const Navbar = ({
                                         Billing
                                     </a> */}
                                     <hr style={{margin:'10px 0'}} />
-                                    <a href={`https://www.cardboardexpress.com/profile/settings`} className="menu-item">
+                                    <a href={`/profile/settings`} className="menu-item">
                                         Settings
                                     </a>
                                     {/* <hr style={{margin:'10px 0'}} />
@@ -637,10 +637,10 @@ const Navbar = ({
                     <a href="https://www.cardboardexpress.com/business" target="_blank" style={{fontSize:'1rem'}} className="cta" to="/business">Business</a>
                 </li> */}
                 <li className="nav-offset">
-                    <a href={`https://www.cardboardexpress.com/login`} style={{fontSize:'1rem'}} className="cta">Login</a>
+                    <a href={`/login`} style={{fontSize:'1rem'}} className="cta">Login</a>
                 </li>
                 <li className="nav-offset">
-                    <a href={`https://www.cardboardexpress.com/register`} style={{fontSize:'1rem'}} className="cta">Sign Up</a>
+                    <a href={`/register`} style={{fontSize:'1rem'}} className="cta">Sign Up</a>
                 </li>
                 {/* <li className="nav-offset">
                     <a style={{fontSize:'1rem'}} className="cta" to="/blog">Blog</a>
@@ -808,7 +808,7 @@ const Navbar = ({
                     </div>
                     <div className="branding">
                         {/* <a href={`https://www.cardboardexpress.com/`} style={{color:'#333', textDecoration:'none'}}><h2><i className="fas fa-store"></i> My Store</h2></a> */}
-                        <a href={`https://www.cardboardexpress.com/`}><img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" /></a>
+                        <a href={`/`}><img onClick={logoClicked} src={logo} style={{maxHeight: '40px'}} alt="cardboard express logo" /></a>
 
                         {/* <div className="social-container">
                             <a href="https://instagram.com/cardboardexpress" target="_blank" className="social"><i className="fab fa-instagram"></i></a>

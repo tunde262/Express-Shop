@@ -111,7 +111,7 @@ const Register = ({
                 <button onClick={onSubmit} style={{width:'100%', outline:'none', margin:'10px 0', fontSize:'13px', letterSpacing:'1px', display:'flex', alignItems:'center', justifyContent:'center'}}>
                     Create Account
                 </button>
-                <a href={`https://www.cardboardexpress.com/login`} style={{color:'#808080'}}>Already have an account?</a>
+                <a href={`/login`} style={{color:'#808080'}}>Already have an account?</a>
             </div>
         </main>
     )
