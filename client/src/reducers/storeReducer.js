@@ -1,6 +1,7 @@
 import { 
     GET_STORE, 
     GET_STORES, 
+    SET_STORES,
     SET_FEATURED_STORES,
     SET_TRENDING_STORES,
     GET_SUBSCRIPTIONS, 
@@ -40,6 +41,13 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 stores: payload,
+                loading: false
+            }
+        case SET_STORES:
+            const newStores = [...state.stores, payload];
+            return {
+                ...state,
+                stores: newStores,
                 loading: false
             }
         case SET_FEATURED_STORES: 

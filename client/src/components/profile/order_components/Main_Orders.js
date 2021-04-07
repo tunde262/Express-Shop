@@ -9,7 +9,7 @@ import OrderList from '../../admin/OrderList';
 import { BackButton } from '../../common/BackButton';
 import BrandOverview from '../../Overview/brandOverview/BrandOverview';
 
-const Main_Orders = ({deleteAccount, setTableShow2, store, auth: { user, loading }}) => {
+const Main_Orders = ({deleteAccount, setTableShow2, profile, store, auth: { user, loading }}) => {
 
     const [sentMixpanel, setSentMixpanel] = useState(false);
 
@@ -45,7 +45,7 @@ const Main_Orders = ({deleteAccount, setTableShow2, store, auth: { user, loading
                 <i class="fas fa-sliders-h"></i>
             </div>
             <div style={{background:'#fff', border:'1px solid #e8e8e8'}}>
-                <BrandOverview title={`Recently purchased from`} stores={store.stores} />
+                <BrandOverview title={`Recently purchased from`} stores={store.stores} profile={profile} />
             </div>
 
             <div className="profile-orders-header">

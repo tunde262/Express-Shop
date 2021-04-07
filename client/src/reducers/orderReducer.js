@@ -36,10 +36,24 @@ export default function(state = initialState, action) {
                 loading: false
             }
         case GET_ORDERS:
+            const ordersArr = [];
+            const storeList2 = [];
+
+            for (let i = 0; i < payload.length; i++) {
+                for (const id in Object.values(payload[i].cart.items)) {
+                    ordersArr.push(Object.values(payload[i].cart.items)[id]);
+                    console.log(Object.values(payload[i].cart.items)[id]);
+                }
+            }
+
+            ordersArr.map(item => storeList2.includes(item.item.store) ? null : storeList2.push({
+                store: item.item.store
+            }));
+
             return {
                 ...state,
                 orders: payload,
-                orderStores: [],
+                orderStores: storeList2,
                 loading: false
             }
         case CLEAR_ORDER:

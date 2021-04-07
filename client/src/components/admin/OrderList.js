@@ -1,14 +1,17 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getOrders, getCustomerOrders } from '../../actions/orderActions';
+import { setStores } from '../../actions/storeActions';
 
 import Spinner from '../common/Spinner';
 import Title from '../Title';
 import Order from './Order';
 
-const OrderList = ({order, admin, getCustomerOrders, getOrders, profile, auth: {user}}) => {
+const OrderList = ({order, admin, getCustomerOrders, getOrders, setStores, profile, auth: {user}}) => {
+    const [gotOrderStores, setGotOrderStores] = useState(false);
+
     useEffect(() => {
         if(admin) {
             getOrders();
@@ -19,7 +22,17 @@ const OrderList = ({order, admin, getCustomerOrders, getOrders, profile, auth: {
         }
     },[user])
 
-    const { orders, loading } = order;
+    const { orders, orderStores, loading } = order;
+
+    const loopOrderStores = (orderStores) => {
+        orderStores.map(store => setStores(store.store));
+    }
+
+    if(!gotOrderStores && profile && orderStores.length > 0) {
+        loopOrderStores(orderStores);
+
+        setGotOrderStores(true);
+    }
         
     let orderList;
 
@@ -68,6 +81,7 @@ const OrderList = ({order, admin, getCustomerOrders, getOrders, profile, auth: {
 OrderList.propTypes = {
     getOrders: PropTypes.func.isRequired,
     getCustomerOrders: PropTypes.func.isRequired,
+    setStores: PropTypes.func.isRequired,
     order: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired
 }
@@ -77,4 +91,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, { getOrders, getCustomerOrders })(OrderList);
+export default connect(mapStateToProps, { getOrders, getCustomerOrders, setStores })(OrderList);

@@ -5,6 +5,7 @@ import { getProfileSubscriptions } from './profileActions';
 import { 
     GET_STORE, 
     GET_STORES, 
+    SET_STORES,
     SET_FEATURED_STORES,
     SET_TRENDING_STORES,
     GET_SUBSCRIPTIONS, 
@@ -55,6 +56,28 @@ export const getStores = () => async dispatch => {
         });
     }
 }
+
+// Get Stores by id
+export const setStores = (id) => async dispatch => {
+    try {
+      const storeData = await axios.get(`/api/stores/${id}`);
+  
+      console.log('GOT STORE BY ID DATA');
+      console.log(id)
+      console.log(storeData.data);
+
+    dispatch({
+        type: SET_STORES,
+        payload: storeData.data
+    });
+
+    } catch (err) {
+      dispatch({
+        type: SET_STORES,
+        payload: []
+      })
+    }
+  };
 
 export const setCartStores = (stores) => dispatch => {
     dispatch({
