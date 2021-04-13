@@ -691,17 +691,66 @@ router.delete('/review/:id/:review_id', auth, async (req, res) => {
 // @access Private
 router.post('/bannerImg/:id', upload.single('file'), async (req, res) => {
 
+    console.log('UPDATING BANNER');
     const store = await Store.findById(req.params.id);
 
+    console.log('UPDATING BANNER 2');
+
     try {
+        console.log('UPDATING BANNER 3');
         const newImg = {
             img_id: req.file.id,
             img_name: req.file.filename
         };
 
+        console.log('UPDATING BANNER 3.5');
+
         store.banner_imgs.unshift(newImg);
+
+        console.log('UPDATING BANNER 3.7');
+        console.log(store);
+
         await store.save();
+
+        console.log('UPDATING BANNER 3.8');
+
         console.log('Banner Img Added');
+
+        res.json(store);
+    } catch (err) {
+        console.log('UPDATING BANNER 4');
+        console.error(err.message);
+        res.status(500).send('Server Error'); 
+    }
+});
+
+// @route POST api/stores/image/:id
+// @desc Change profile img
+// @access Private
+router.post('/profileImg/:id', upload.single('file'), async (req, res) => {
+    console.log('UPDATING PROFILE IMG');
+
+    console.log('UPDATING PROFILE IMG 2');
+    try {
+        console.log('UPDATING PROFILE IMG 3');
+
+        const storeImg = {
+            img: req.file.id,
+            img_name: req.file.filename
+        };
+
+        console.log('UPDATING PROFILE IMG 3.5');
+
+        // Update
+        let store = await Store.findOneAndUpdate(
+            { _id: req.params.id }, 
+            { $set: storeImg }
+        );
+
+        console.log('UPDATING PROFILE IMG 3.7');
+        console.log(store);
+
+        console.log('Profile Img Updated');
 
         res.json(store);
     } catch (err) {

@@ -90,6 +90,9 @@ const StoreHeader = ({
         //   editProduct(data, detailProduct._id, store._id, history);
         // }
 
+        console.log('STORE IMG ID: ');
+        console.log(store._id);
+        
         let banner_value = false;
 
         if (store.banner_imgs.length > 0) {

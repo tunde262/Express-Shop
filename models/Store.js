@@ -63,8 +63,7 @@ const StoreSchema = new Schema({
         } 
     },
     formatted_return_address: {
-        type: String,
-        required: true
+        type: String
     },
     return_address: {
         street_name: {
@@ -90,8 +89,7 @@ const StoreSchema = new Schema({
         }
     },
     return_placeId: {
-        type: String,
-        required: true
+        type: String
     },
     products: [
         {

@@ -5,14 +5,14 @@ import { Link, withRouter } from 'react-router-dom';
 import mixpanel from 'mixpanel-browser';
 
 import { getOrderById } from '../../../../actions/orderActions';
-import { setPage } from '../../../../actions/navActions';
+import { setMainNav, setPage } from '../../../../actions/navActions';
 
 import Spinner from '../../../common/Spinner';
 import Modal from 'react-responsive-modal';
 import DetailOrderHeader from './Header_Detail_Order';
 import DetailOrderMain from './Main_Detail_Order';
 
-const DetailOrder = ({ getOrderById, setPage, product, store, auth: { user, isAuthenticated, loading }, history, match}) => {
+const DetailOrder = ({ getOrderById, setPage, setMainNav, product, store, auth: { user, isAuthenticated, loading }, history, match}) => {
     const [skip, setSkip] = useState(0);
     const [tableShow1, setTableShow1] = useState('completed');
     const [tableShow2, setTableShow2] = useState('orders');
@@ -24,7 +24,8 @@ const DetailOrder = ({ getOrderById, setPage, product, store, auth: { user, isAu
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     useEffect(() => {
-        setPage('profile')
+        setPage('profile');
+        setMainNav('store');
         getOrderById(match.params.orderId)
         window.addEventListener('resize', () => handleWindowSizeChange());
 
@@ -141,6 +142,7 @@ DetailOrder.propTypes = {
     store: PropTypes.object.isRequired,
     getOrderById: PropTypes.func.isRequired,
     setPage: PropTypes.func.isRequired,
+    setMainNav: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -149,4 +151,4 @@ const mapStateToProps = state => ({
     store: state.store
 });
 
-export default connect(mapStateToProps, { getOrderById, setPage })(withRouter(DetailOrder));
+export default connect(mapStateToProps, { getOrderById, setPage, setMainNav })(withRouter(DetailOrder));

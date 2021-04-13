@@ -327,6 +327,9 @@ export const addBannerImg = (imgData, id) => async dispatch => {
 
     let data = new FormData();
     data.append('file', imgData[0]);
+
+    console.log('IMG DATA: ');
+    console.log(imgData[0]);
     
     try {
         const res = await axios.post(`/api/stores/bannerImg/${id}`, data, config);
@@ -339,6 +342,39 @@ export const addBannerImg = (imgData, id) => async dispatch => {
         });
         
         dispatch(setAlert('Image Added', 'success'));
+    } catch (err) {
+        dispatch({
+          type: STORE_ERROR,
+          payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+}
+
+// Update store Img
+export const changeStoreImg = (imgData, id) => async dispatch => {
+    const config = {
+        headers: {
+          'Content-Type': 'image/jpeg'
+        }
+    };
+
+    let data = new FormData();
+    data.append('file', imgData[0]);
+
+    console.log('IMG DATA: ');
+    console.log(imgData[0]);
+    
+    try {
+        const res = await axios.post(`/api/stores/profileImg/${id}`, data, config);
+
+        console.log('Profile img updated');
+
+        dispatch({
+            type: GET_STORE,
+            payload: res.data
+        });
+        
+        dispatch(setAlert('Image Updated', 'success'));
     } catch (err) {
         dispatch({
           type: STORE_ERROR,

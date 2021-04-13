@@ -12,9 +12,9 @@ import { NavItem } from '../../../../header/navbar/NavItem';
 import paymentSignatures from '../../../../../utils/imgs/visa_PNG2.png';
 import paypalLogo from '../../../../../utils/imgs/PayPal_logo_logotype_emblem.png';
 
-// import { deleteStore } from '../../../../../actions/storeActions';
+import { deleteStore, changeStoreImg } from '../../../../../actions/storeActions';
 
-const Main_Edit = ({store, auth: { user }, profile: {profile, loading }}) => {
+const Main_Edit = ({store, deleteStore, changeStoreImg, auth: { user }, profile: {profile, loading }}) => {
 
     // Toggle Forms
     const [slideForm1, setSlideForm1] = useState(false);
@@ -28,6 +28,7 @@ const Main_Edit = ({store, auth: { user }, profile: {profile, loading }}) => {
     const [displayImageModal, toggleImageModal] = useState(false);
 
     const [fileUploadState, setFileUploadState] = useState('');
+    const [files, setFiles] = useState([]);
 
     const [categoryToggle, setCategoryToggle] = useState(false);
 
@@ -63,6 +64,52 @@ const Main_Edit = ({store, auth: { user }, profile: {profile, loading }}) => {
             setFileUploadState(document.getElementById('fileButton').value);
         }
     }
+
+    const fileChanged = e => {
+        let fileList = [];
+        for (var i = 0; i < e.target.files.length; i++) {
+            if(!e.target.files[i]) return;
+            fileList.push(e.target.files[i])
+        }
+
+        changeStoreImg(fileList, store.store._id);
+        // } else {
+        //   editProduct(data, detailProduct._id, store._id, history);
+        // }
+
+        console.log('STORE IMG ID: ');
+        console.log(store.store._id);
+        
+        toggleImageModal(false);
+
+        window.location.reload();
+
+        // setFiles(fileList);
+        // setFormData({ ...formData, [e.target.name]: e.target.files[0] });
+    }
+
+    // const fileChanged = e => {
+    //     console.log(files)
+    //     let fileList = [];
+    //     files.map(file => fileList.push(file));
+    //     for (var i = 0; i < e.target.files.length; i++) {
+    //       if(!e.target.files[i]) return;
+    //       fileList.push(e.target.files[i])
+    //     }
+    //     setFiles(fileList);
+    // }
+
+    // const handleDrop = newFiles => {
+    //     console.log(files)
+    //     let fileList = [];
+    //     files.map(file => fileList.push(file));
+    //     for (var i = 0; i < newFiles.length; i++) {
+    //       if(!newFiles[i]) return;
+    //       fileList.push(newFiles[i])
+    //     }
+    //     setFiles(fileList);
+    // }
+    
 
     const startStripeAuthorization = async () => {
         console.log('STARTING AUTH!!!!!');
@@ -686,7 +733,7 @@ const Main_Edit = ({store, auth: { user }, profile: {profile, loading }}) => {
                     </div>
                     <div style={{display:'flex', alignItems:'center', justifyContent:'center', height:'50px', borderBottom:'1px solid rgb(214,214,214', width:'100%'}}>
                         <div>
-                            <input id="fileButton" type="file" hidden />
+                            <input onChange={fileChanged} id="fileButton" type="file" hidden />
                             <p onClick={fileUploadButton} style={{margin:'0', fontSize:'1rem', color:'#0098d3'}}>Update Photo</p>
                             {fileUploadState}
                             </div>
@@ -707,6 +754,8 @@ Main_Edit.propTypes = {
     auth: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired,
+    deleteStore: PropTypes.func.isRequired,
+    changeStoreImg: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -715,4 +764,4 @@ const mapStateToProps = state => ({
     store: state.store
 });
 
-export default connect(mapStateToProps)(Main_Edit);
+export default connect(mapStateToProps, {deleteStore, changeStoreImg})(Main_Edit);
